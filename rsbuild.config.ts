@@ -21,7 +21,7 @@ export default defineConfig({
     }),
   ],
   output: {
-    assetPrefix: './',
+    assetPrefix: '/frontend-junior-study/',
   },
   html: {
     title: 'Frontend Study | Deep JavaScript',
