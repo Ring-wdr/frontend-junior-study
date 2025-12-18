@@ -1,16 +1,54 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  createHashRouter,
+  Outlet,
+  RouterProvider,
+  useNavigation,
+} from 'react-router-dom';
 import MainPage from './page/main-page';
-import Week1Page from './page/week1/page';
 import './App.css';
 
-const router = createBrowserRouter([
+// Loading Fallback Component
+const LoadingSpinner = () => (
+  <div className="flex items-center justify-center min-h-screen bg-gray-50 fixed inset-0 z-50 backdrop-blur-sm">
+    <div className="flex flex-col items-center gap-4">
+      <div className="w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin" />
+      <p className="text-gray-900 font-medium animate-pulse">
+        Loading Deep JS...
+      </p>
+    </div>
+  </div>
+);
+
+const RootLayout = () => {
+  const navigation = useNavigation();
+  const isLoading = navigation.state === 'loading';
+
+  return (
+    <>
+      {isLoading && <LoadingSpinner />}
+      <Outlet />
+    </>
+  );
+};
+
+const router = createHashRouter([
   {
     path: '/',
-    element: <MainPage />,
-  },
-  {
-    path: '/week-1',
-    element: <Week1Page />,
+    element: <RootLayout />,
+    children: [
+      {
+        index: true,
+        element: <MainPage />,
+      },
+      {
+        path: 'week-1',
+        // Router v7 way: lazy load the module and return { Component }
+        lazy: async () => {
+          const { default: Week1Page } = await import('./page/week1/page');
+          return { Component: Week1Page };
+        },
+      },
+    ],
   },
 ]);
 
