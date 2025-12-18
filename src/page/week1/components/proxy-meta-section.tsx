@@ -44,7 +44,7 @@ export const ProxyMetaSection = () => {
   const clearLogs = () => setLogs([]);
 
   return (
-    <Card className="p-6">
+    <Card className="p-6" data-testid="proxy-meta-section">
       <div className="flex justify-between items-start mb-6 text-left">
         <div>
           <Badge color="indigo">Meta Programming</Badge>

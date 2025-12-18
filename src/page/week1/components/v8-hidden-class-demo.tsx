@@ -75,6 +75,7 @@ export const V8HiddenClassDemo = () => {
             setMode('good');
             createGoodObjects();
           }}
+          data-testid="v8-good-pattern"
           className={cn(
             'flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all',
             mode === 'good'
@@ -91,6 +92,7 @@ export const V8HiddenClassDemo = () => {
             setMode('bad');
             createBadObjects();
           }}
+          data-testid="v8-bad-pattern"
           className={cn(
             'flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all',
             mode === 'bad'
@@ -104,6 +106,7 @@ export const V8HiddenClassDemo = () => {
         <button
           type="button"
           onClick={reset}
+          data-testid="v8-reset"
           className="px-4 py-2 bg-gray-500 text-white rounded-lg font-medium text-sm hover:bg-gray-600 transition-all"
         >
           Reset

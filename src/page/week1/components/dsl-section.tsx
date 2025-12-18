@@ -3,7 +3,7 @@ import { Card } from '../../../components/ui/card';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const DslSection = () => (
-  <Card className="p-6">
+  <Card className="p-6" data-testid="dsl-section">
     <div className="flex justify-between items-start mb-6 text-left">
       <div>
         <Badge color="teal">DSL</Badge>

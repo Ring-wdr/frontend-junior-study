@@ -5,7 +5,7 @@ import { AbortControllerDemo } from './abort-controller-demo';
 import { PromiseVisualizer } from './promise-visualizer';
 
 export const AsyncSection = () => (
-  <Card className="p-6">
+  <Card className="p-6" data-testid="async-section">
     <div className="flex justify-between items-start mb-6 text-left">
       <div>
         <Badge color="orange">Async</Badge>

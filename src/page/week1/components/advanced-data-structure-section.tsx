@@ -12,7 +12,7 @@ export const AdvancedDataStructureSection = () => {
   const [activeTab, setActiveTab] = useState<'map' | 'set' | 'weak'>('map');
 
   return (
-    <Card className="p-6">
+    <Card className="p-6" data-testid="advanced-data-structure-section">
       <div className="flex justify-between items-start mb-6 text-left">
         <div>
           <Badge color="pink">Data Structures</Badge>

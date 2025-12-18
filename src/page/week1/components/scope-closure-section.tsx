@@ -3,7 +3,7 @@ import { Card } from '../../../components/ui/card';
 import { ClosureDemo } from './closure-demo';
 
 export const ScopeClosureSection = () => (
-  <Card className="p-6">
+  <Card className="p-6" data-testid="scope-closure-section">
     <div className="flex justify-between items-start mb-4 text-left">
       <div>
         <Badge color="green">Scope</Badge>

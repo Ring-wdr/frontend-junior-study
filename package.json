@@ -10,7 +10,12 @@
     "format": "biome format --write",
     "preview": "rsbuild preview",
     "test": "rstest",
-    "test:watch": "rstest --watch"
+    "test:watch": "rstest --watch",
+    "test:week1": "rstest tests/week1",
+    "test:week1:runtime": "rstest tests/week1/runtime",
+    "test:week1:core": "rstest tests/week1/core",
+    "test:week1:async": "rstest tests/week1/async",
+    "test:week1:advanced": "rstest tests/week1/advanced"
   },
   "dependencies": {
     "@babel/plugin-syntax-jsx": "^7.27.1",

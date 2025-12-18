@@ -3,7 +3,7 @@ import { Card } from '../../../components/ui/card';
 import { EventLoopVisualizer } from './event-loop-visualizer';
 
 export const EventLoopSection = () => (
-  <Card className="p-6">
+  <Card className="p-6" data-testid="event-loop-section">
     <div className="flex justify-between items-start mb-4 text-left">
       <div>
         <Badge color="blue">Runtime</Badge>

@@ -3,7 +3,7 @@ import { Card } from '../../../components/ui/card';
 import { V8HiddenClassDemo } from './v8-hidden-class-demo';
 
 export const OptimizationSection = () => (
-  <Card className="p-6">
+  <Card className="p-6" data-testid="optimization-section">
     <div className="flex justify-between items-start mb-4 text-left">
       <div>
         <Badge color="blue">Advanced</Badge>

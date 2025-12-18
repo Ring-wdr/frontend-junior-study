@@ -148,6 +148,7 @@ export const EventLoopVisualizer = () => {
           type="button"
           onClick={nextStep}
           disabled={step >= steps.length}
+          data-testid="event-loop-next-step"
           className={cn(
             'flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all',
             step >= steps.length
@@ -161,6 +162,7 @@ export const EventLoopVisualizer = () => {
         <button
           type="button"
           onClick={runAll}
+          data-testid="event-loop-run-all"
           className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg font-medium text-sm hover:bg-green-600 transition-all"
         >
           <Play className="w-4 h-4" />
@@ -169,6 +171,7 @@ export const EventLoopVisualizer = () => {
         <button
           type="button"
           onClick={reset}
+          data-testid="event-loop-reset"
           className="flex items-center gap-2 px-4 py-2 bg-gray-500 text-white rounded-lg font-medium text-sm hover:bg-gray-600 transition-all"
         >
           <RotateCcw className="w-4 h-4" />

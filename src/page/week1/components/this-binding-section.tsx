@@ -3,7 +3,7 @@ import { Card } from '../../../components/ui/card';
 import { ThisBindingDemo } from './this-binding-demo';
 
 export const ThisBindingSection = () => (
-  <Card className="p-6">
+  <Card className="p-6" data-testid="this-binding-section">
     <div className="flex justify-between items-start mb-4 text-left">
       <div>
         <Badge color="purple">Core</Badge>

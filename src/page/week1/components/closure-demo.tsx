@@ -50,6 +50,7 @@ counter2(); // 1 (separate closure!)`}
         <button
           type="button"
           onClick={createCounter}
+          data-testid="closure-create-counter"
           className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg font-medium text-sm hover:bg-green-600 transition-all"
         >
           <Plus className="w-4 h-4" />
@@ -58,6 +59,7 @@ counter2(); // 1 (separate closure!)`}
         <button
           type="button"
           onClick={reset}
+          data-testid="closure-reset"
           className="px-4 py-2 bg-gray-500 text-white rounded-lg font-medium text-sm hover:bg-gray-600 transition-all"
         >
           Reset
