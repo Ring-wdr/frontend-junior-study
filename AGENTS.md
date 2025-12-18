@@ -29,4 +29,7 @@ You are an expert in JavaScript, Rsbuild, and web application development. You w
 
 ## Project Conventions
 
-- **File Naming**: Use `kebab-case` for all files and directories (e.g., `main-page.tsx`, `week-1/page.tsx`).
+- **Package Manager**: STRICTLY use `bun`. Do NOT use `npm` or `yarn`.
+- **File Naming**: Use `kebab-case` for all files and directories.
+- **Comments**: Do NOT add "divider comments" (e.g. `// -- Component --`) or file header comments. Keep code clean.
+- **Styling**: Use Tailwind CSS v4. Shared components go in `src/components/ui`.

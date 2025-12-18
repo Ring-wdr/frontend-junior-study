@@ -1,4 +1,3 @@
-import type React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AsyncSection } from './components/async-section';
@@ -6,8 +5,6 @@ import { EventLoopSection } from './components/event-loop-section';
 import { OptimizationSection } from './components/optimization-section';
 import { ScopeClosureSection } from './components/scope-closure-section';
 import { ThisBindingSection } from './components/this-binding-section';
-
-// -- Main Component --
 
 const tabs = ['all', 'runtime', 'core', 'async'] as const;
 type Tab = (typeof tabs)[number];
