@@ -19,19 +19,25 @@ export const ProxyMetaSection = () => {
 
     if (prop === 'secret') {
       setLogs((prev) => [
-        `[${timestamp}] 🛑 Blocked access to 'secret'`,
+        `[${timestamp}] 🛑 Trap Triggered → Blocked access to 'secret'`,
         ...prev,
       ]);
       return;
     }
 
-    setLogs((prev) => [`[${timestamp}] 👁️ Accessed '${prop}'`, ...prev]);
+    setLogs((prev) => [
+      `[${timestamp}] 👁️ Trap Triggered → Reflect.get('${prop}')`,
+      ...prev,
+    ]);
   };
 
   const handleSet = () => {
     // Simulate Proxy Trap
     const timestamp = new Date().toLocaleTimeString();
-    setLogs((prev) => [`[${timestamp}] 📝 Set 'message' to 'Hi!'`, ...prev]);
+    setLogs((prev) => [
+      `[${timestamp}] 📝 Trap Triggered → Reflect.set('message', 'Hi!')`,
+      ...prev,
+    ]);
     setTargetObj((prev) => ({ ...prev, message: 'Hi!' }));
   };
 
@@ -67,7 +73,13 @@ const handler = {
       return null;
     }
     console.log(\`Accessed \${prop}\`);
-    return Reflect.get(...arguments);
+    // Forward operation using Reflect
+    return Reflect.get(target, prop, receiver);
+  },
+  set(target, prop, value, receiver) {
+      console.log(\`Setting \${prop} = \${value}\`);
+      // Forward operation using Reflect
+      return Reflect.set(target, prop, value, receiver);
   }
 };
 
@@ -126,11 +138,14 @@ const proxy = new Proxy(target, handler);`}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   className={cn(
-                    'py-1',
-                    log.includes('Blocked') ? 'text-red-400' : 'text-green-400',
+                    'py-1 border-l-2 pl-2',
+                    log.includes('Blocked')
+                      ? 'text-red-400 border-red-500 bg-red-900/10'
+                      : 'text-green-400 border-green-500 bg-green-900/10',
                   )}
                 >
-                  {log}
+                  <span className="font-bold mr-2">{log.split('→')[0]}</span>
+                  <span>{log.split('→')[1]}</span>
                 </motion.div>
               ))}
             </AnimatePresence>

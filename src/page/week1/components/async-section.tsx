@@ -1,6 +1,7 @@
 import { Badge } from '../../../components/ui/badge';
 import { Card } from '../../../components/ui/card';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { AbortControllerDemo } from './abort-controller-demo';
 import { PromiseVisualizer } from './promise-visualizer';
 
 export const AsyncSection = () => (
@@ -92,6 +93,17 @@ promise.then(console.log); // 'Done!' after 1s`}
 // 'Error!'`}
         />
       </div>
+    </div>
+
+    <div className="mt-8 border-t border-gray-100 pt-6">
+      <h4 className="font-bold text-gray-900 mb-3 text-red-600">
+        AbortController (Cancel Async Tasks)
+      </h4>
+      <p className="text-sm text-gray-600 mb-6">
+        Fetch requests (and other async tasks) can be cancelled using{' '}
+        <code>AbortController</code>.
+      </p>
+      <AbortControllerDemo />
     </div>
   </Card>
 );

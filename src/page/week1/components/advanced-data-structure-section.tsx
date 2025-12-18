@@ -6,6 +6,7 @@ import { Card } from '../../../components/ui/card';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 import { GcDemo } from './gc-demo';
+import { MapObjectComparison } from './map-object-comparison';
 
 export const AdvancedDataStructureSection = () => {
   const [activeTab, setActiveTab] = useState<'map' | 'set' | 'weak'>('map');
@@ -65,17 +66,9 @@ export const AdvancedDataStructureSection = () => {
                 <li>Better performance for frequent additions/removals.</li>
               </ul>
             </div>
-            <CodeBlock
-              language="javascript"
-              code={`const map = new Map();
-const keyObj = { id: 1 };
-
-map.set(keyObj, 'Object as key');
-map.set('name', 'Alice');
-
-console.log(map.get(keyObj)); // 'Object as key'
-console.log(map.size); // 2`}
-            />
+            <div className="mt-6">
+              <MapObjectComparison />
+            </div>
           </motion.div>
         )}
 
