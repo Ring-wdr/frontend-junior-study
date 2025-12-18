@@ -1,11 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Play, Plus } from 'lucide-react';
 import { useState } from 'react';
-import { CodeBlock } from '../../../components/ui/code-block';
-import { cn } from '../../../lib/utils';
 
 export const ClosureDemo = () => {
-  const [count, setCount] = useState(0);
   const [counters, setCounters] = useState<number[]>([]);
   const [showExplanation, setShowExplanation] = useState(false);
 
@@ -85,11 +82,11 @@ counter2(); // 1 (separate closure!)`}</pre>
         <AnimatePresence>
           {counters.map((value, index) => (
             <motion.div
-              key={index}
+              key={value}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
-              className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl border-2 border-purple-200"
+              className="bg-linear-to-br from-purple-50 to-purple-100 p-6 rounded-xl border-2 border-purple-200"
             >
               <div className="text-center">
                 <div className="text-xs font-mono text-purple-600 mb-2">

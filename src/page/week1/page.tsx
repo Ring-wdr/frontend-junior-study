@@ -13,9 +13,9 @@ type Tab = (typeof tabs)[number];
 const sections = [
   { id: 'runtime', component: <EventLoopSection /> },
   { id: 'core', component: <ThisBindingSection /> },
-  { id: 'core', component: <ScopeClosureSection /> },
+  { id: 'closures', component: <ScopeClosureSection /> },
   { id: 'async', component: <AsyncSection /> },
-  { id: 'runtime', component: <OptimizationSection /> },
+  { id: 'optimization', component: <OptimizationSection /> },
 ];
 
 export default function Week1Page() {
