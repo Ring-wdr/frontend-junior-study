@@ -86,7 +86,8 @@ counter2(); // 1 (separate closure!)`}
         <AnimatePresence>
           {counters.map((value, index) => (
             <motion.div
-              key={value}
+              // biome-ignore lint/suspicious/noArrayIndexKey: value dont represent unique key
+              key={index}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
