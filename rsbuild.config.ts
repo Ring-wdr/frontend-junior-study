@@ -25,7 +25,7 @@ export default defineConfig({
   },
   html: {
     title: 'Frontend Study | Deep JavaScript',
-    favicon: '/frontend-junior-study/icon.png',
+    favicon: './public/icon.png',
     meta: {
       description:
         'Interactive Deep JavaScript Study Materials. Visualizing Event Loop, Closures, Garbage Collection, and more.',
