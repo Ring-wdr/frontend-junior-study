@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Play, Plus } from 'lucide-react';
 import { useState } from 'react';
+import { CodeBlock } from '../../../components/ui/code-block';
 
 export const ClosureDemo = () => {
   const [counters, setCounters] = useState<number[]>([]);
@@ -25,7 +26,9 @@ export const ClosureDemo = () => {
   return (
     <div className="space-y-6">
       <div className="bg-gray-900 text-gray-100 p-4 rounded-xl font-mono text-xs overflow-x-auto">
-        <pre>{`function createCounter() {
+        <CodeBlock
+          language="javascript"
+          code={`function createCounter() {
   let count = 0; // Private variable (closure)
   
   return function() {
@@ -39,7 +42,8 @@ const counter2 = createCounter();
 
 counter1(); // 1
 counter1(); // 2
-counter2(); // 1 (separate closure!)`}</pre>
+counter2(); // 1 (separate closure!)`}
+        />
       </div>
 
       <div className="flex gap-2">
