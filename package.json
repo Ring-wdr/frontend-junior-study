@@ -13,7 +13,11 @@
     "test:watch": "rstest --watch"
   },
   "dependencies": {
+    "@babel/plugin-syntax-jsx": "^7.27.1",
+    "@babel/plugin-syntax-typescript": "^7.27.1",
     "@types/react-syntax-highlighter": "^15.5.13",
+    "babel-loader": "^10.0.0",
+    "babel-plugin-react-compiler": "^1.0.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.562.0",
     "motion": "^12.23.26",
