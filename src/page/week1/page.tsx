@@ -1,21 +1,27 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '../../lib/utils';
+import { AdvancedDataStructureSection } from './components/advanced-data-structure-section';
 import { AsyncSection } from './components/async-section';
+import { DslSection } from './components/dsl-section';
 import { EventLoopSection } from './components/event-loop-section';
 import { OptimizationSection } from './components/optimization-section';
+import { ProxyMetaSection } from './components/proxy-meta-section';
 import { ScopeClosureSection } from './components/scope-closure-section';
 import { ThisBindingSection } from './components/this-binding-section';
 
-const tabs = ['all', 'runtime', 'core', 'async'] as const;
+const tabs = ['all', 'runtime', 'core', 'async', 'advanced'] as const;
 type Tab = (typeof tabs)[number];
 
 const sections = [
   { id: 'runtime', component: <EventLoopSection /> },
   { id: 'core', component: <ThisBindingSection /> },
-  { id: 'closures', component: <ScopeClosureSection /> },
+  { id: 'core', component: <ScopeClosureSection /> },
   { id: 'async', component: <AsyncSection /> },
-  { id: 'optimization', component: <OptimizationSection /> },
+  { id: 'advanced', component: <AdvancedDataStructureSection /> },
+  { id: 'runtime', component: <OptimizationSection /> },
+  { id: 'advanced', component: <ProxyMetaSection /> },
+  { id: 'advanced', component: <DslSection /> },
 ];
 
 export default function Week1Page() {
@@ -61,7 +67,7 @@ export default function Week1Page() {
       <main className="w-full max-w-2xl px-6 pb-20 space-y-6">
         {filteredSections.map((section, idx) => (
           <div
-            key={section.id}
+            key={`${section.id}-${idx}`}
             className="animate-in fade-in slide-in-from-bottom-4 duration-500"
             style={{ animationDelay: `${idx * 100}ms` }}
           >
