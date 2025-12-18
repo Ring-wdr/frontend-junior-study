@@ -1,6 +1,7 @@
-import { describe, expect, rs, test } from '@rstest/core';
-import { render, screen, within } from '@testing-library/react';
+import { afterEach, describe, expect, rs, test } from '@rstest/core';
+import { cleanup, render, screen, within } from '@testing-library/react';
 import type React from 'react';
+import type { ComponentProps } from 'react';
 import { OptimizationSection } from '../../../src/page/week1/components/optimization-section';
 
 // Mock framer-motion
@@ -12,7 +13,7 @@ rs.mock('framer-motion', async () => {
       <>{children}</>
     ),
     motion: {
-      div: ({ children, ...props }: Record<string, unknown>) => {
+      div: ({ children, ...props }: ComponentProps<'div'>) => {
         // biome-ignore lint: exclude style from props
         const { style, ...divProps } = props;
         return <div {...divProps}>{children}</div>;
@@ -22,6 +23,9 @@ rs.mock('framer-motion', async () => {
 });
 
 describe('OptimizationSection', () => {
+  afterEach(() => {
+    cleanup();
+  });
   test('renders section with badge and title', () => {
     render(<OptimizationSection />);
 
@@ -35,7 +39,9 @@ describe('OptimizationSection', () => {
 
     const section = screen.getByTestId('optimization-section');
     expect(
-      within(section).getByText('Visualize how V8 optimizes objects with consistent shapes.'),
+      within(section).getByText(
+        'Visualize how V8 optimizes objects with consistent shapes.',
+      ),
     ).toBeInTheDocument();
   });
 

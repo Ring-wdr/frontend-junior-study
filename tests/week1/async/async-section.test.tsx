@@ -1,5 +1,5 @@
-import { describe, expect, rs, test } from '@rstest/core';
-import { render, screen, within } from '@testing-library/react';
+import { afterEach, describe, expect, rs, test } from '@rstest/core';
+import { cleanup, render, screen, within } from '@testing-library/react';
 import type React from 'react';
 import { AsyncSection } from '../../../src/page/week1/components/async-section';
 
@@ -22,6 +22,9 @@ rs.mock('framer-motion', async () => {
 });
 
 describe('AsyncSection', () => {
+  afterEach(() => {
+    cleanup();
+  });
   test('renders section with badge and title', () => {
     render(<AsyncSection />);
 
@@ -45,22 +48,22 @@ describe('AsyncSection', () => {
     render(<AsyncSection />);
 
     const section = screen.getByTestId('async-section');
-    expect(within(section).getByText('Promise.all')).toBeInTheDocument();
+    expect(within(section).getByRole('button', { name: /Promise\.all/ })).toBeInTheDocument();
     expect(
       within(section).getByText('Wait for all to fulfill. Rejects immediately if any rejects.'),
     ).toBeInTheDocument();
 
-    expect(within(section).getByText('Promise.allSettled')).toBeInTheDocument();
+    expect(within(section).getByRole('button', { name: /Promise\.allSettled/ })).toBeInTheDocument();
     expect(
       within(section).getByText('Wait for all to finish, regardless of status. Never rejects.'),
     ).toBeInTheDocument();
 
-    expect(within(section).getByText('Promise.race')).toBeInTheDocument();
+    expect(within(section).getByRole('button', { name: /Promise\.race/ })).toBeInTheDocument();
     expect(
       within(section).getByText('First settled promise (resolve OR reject) determines the result.'),
     ).toBeInTheDocument();
 
-    expect(within(section).getByText('Promise.any')).toBeInTheDocument();
+    expect(within(section).getByRole('button', { name: /Promise\.any/ })).toBeInTheDocument();
     expect(
       within(section).getByText('Wait for first fulfilled. Rejects only if ALL reject.'),
     ).toBeInTheDocument();

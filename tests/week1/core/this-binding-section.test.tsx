@@ -1,5 +1,5 @@
-import { describe, expect, rs, test } from '@rstest/core';
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { afterEach, describe, expect, rs, test } from '@rstest/core';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import type React from 'react';
 import { ThisBindingSection } from '../../../src/page/week1/components/this-binding-section';
 
@@ -9,12 +9,19 @@ rs.mock('framer-motion', async () => {
   return {
     ...actual,
     motion: {
-      div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+      div: ({ children, ...props }: any) => {
+        // biome-ignore lint: exclude style from props
+        const { style, ...divProps } = props;
+        return <div {...divProps}>{children}</div>;
+      },
     },
   };
 });
 
 describe('ThisBindingSection', () => {
+  afterEach(() => {
+    cleanup();
+  });
   test('renders section with badge and title', () => {
     render(<ThisBindingSection />);
 

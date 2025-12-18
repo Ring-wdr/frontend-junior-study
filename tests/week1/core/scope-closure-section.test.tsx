@@ -1,5 +1,5 @@
-import { describe, expect, rs, test } from '@rstest/core';
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { afterEach, describe, expect, rs, test } from '@rstest/core';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import type React from 'react';
 import { ScopeClosureSection } from '../../../src/page/week1/components/scope-closure-section';
 
@@ -22,6 +22,9 @@ rs.mock('framer-motion', async () => {
 });
 
 describe('ScopeClosureSection', () => {
+  afterEach(() => {
+    cleanup();
+  });
   test('renders section with badge and title', () => {
     render(<ScopeClosureSection />);
 

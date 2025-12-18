@@ -8,12 +8,14 @@ import {
 } from '@rstest/core';
 import {
   act,
+  cleanup,
   fireEvent,
   render,
   screen,
   waitFor,
 } from '@testing-library/react';
 import type React from 'react';
+import type { ComponentProps } from 'react';
 import { EventLoopVisualizer } from '../../../src/page/week1/components/event-loop-visualizer';
 
 // Mock framer-motion to avoid animation issues in tests
@@ -25,7 +27,11 @@ rs.mock('framer-motion', async () => {
       <>{children}</>
     ),
     motion: {
-      div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+      div: ({ children, ...props }: ComponentProps<'div'>) => {
+        // biome-ignore lint: exclude style from props
+        const { style, ...divProps } = props;
+        return <div {...divProps}>{children}</div>;
+      },
     },
   };
 });
@@ -36,6 +42,7 @@ describe('EventLoopVisualizer', () => {
   });
 
   afterEach(() => {
+    cleanup();
     rs.useRealTimers();
   });
 

@@ -1,8 +1,11 @@
-import { describe, expect, test } from '@rstest/core';
-import { render, screen, within } from '@testing-library/react';
+import { afterEach, describe, expect, test } from '@rstest/core';
+import { cleanup, render, screen, within } from '@testing-library/react';
 import { DslSection } from '../../../src/page/week1/components/dsl-section';
 
 describe('DslSection', () => {
+  afterEach(() => {
+    cleanup();
+  });
   test('renders section with badge and title', () => {
     render(<DslSection />);
 

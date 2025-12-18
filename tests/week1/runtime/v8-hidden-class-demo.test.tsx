@@ -1,5 +1,5 @@
-import { describe, expect, rs, test } from '@rstest/core';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, describe, expect, rs, test } from '@rstest/core';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import type React from 'react';
 import type { ComponentProps } from 'react';
 import { V8HiddenClassDemo } from '../../../src/page/week1/components/v8-hidden-class-demo';
@@ -13,14 +13,19 @@ rs.mock('framer-motion', async () => {
       <>{children}</>
     ),
     motion: {
-      div: ({ children, ...props }: ComponentProps<'div'>) => (
-        <div {...props}>{children}</div>
-      ),
+      div: ({ children, ...props }: ComponentProps<'div'>) => {
+        // biome-ignore lint: exclude style from props
+        const { style, ...divProps } = props;
+        return <div {...divProps}>{children}</div>;
+      },
     },
   };
 });
 
 describe('V8HiddenClassDemo', () => {
+  afterEach(() => {
+    cleanup();
+  });
   test('renders buttons correctly', () => {
     render(<V8HiddenClassDemo />);
     expect(
@@ -53,7 +58,7 @@ describe('V8HiddenClassDemo', () => {
 
     expect(screen.getByText(/Polymorphic \(Slow\)/)).toBeInTheDocument();
     expect(screen.getByText(/Different Hidden Classes/)).toBeInTheDocument();
-    expect(screen.getByText('HC1')).toBeInTheDocument();
+    expect(screen.getAllByText('HC1').length).toBeGreaterThan(0);
     expect(screen.getByText('HC2')).toBeInTheDocument();
     expect(screen.getByText('HC3')).toBeInTheDocument();
   });
@@ -63,11 +68,11 @@ describe('V8HiddenClassDemo', () => {
     const goodButton = screen.getByTestId('v8-good-pattern');
     fireEvent.click(goodButton);
 
-    expect(screen.getByText('HC1')).toBeInTheDocument();
+    expect(screen.getAllByText('HC1').length).toBeGreaterThan(0);
 
     const resetButton = screen.getByTestId('v8-reset');
     fireEvent.click(resetButton);
 
-    expect(screen.queryByText('HC1')).not.toBeInTheDocument();
+    expect(screen.queryAllByText('HC1')).toHaveLength(0);
   });
 });

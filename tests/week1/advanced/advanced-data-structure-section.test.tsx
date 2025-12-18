@@ -1,5 +1,5 @@
-import { describe, expect, rs, test } from '@rstest/core';
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { afterEach, describe, expect, rs, test } from '@rstest/core';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import type React from 'react';
 import { AdvancedDataStructureSection } from '../../../src/page/week1/components/advanced-data-structure-section';
 
@@ -22,6 +22,9 @@ rs.mock('framer-motion', async () => {
 });
 
 describe('AdvancedDataStructureSection', () => {
+  afterEach(() => {
+    cleanup();
+  });
   test('renders section with badge and title', () => {
     render(<AdvancedDataStructureSection />);
 
@@ -43,9 +46,9 @@ describe('AdvancedDataStructureSection', () => {
     render(<AdvancedDataStructureSection />);
 
     const section = screen.getByTestId('advanced-data-structure-section');
-    expect(within(section).getByText('Map')).toBeInTheDocument();
-    expect(within(section).getByText('Set')).toBeInTheDocument();
-    expect(within(section).getByText('WeakMap/Ref')).toBeInTheDocument();
+    expect(within(section).getByRole('button', { name: /map/i })).toBeInTheDocument();
+    expect(within(section).getByRole('button', { name: /set/i })).toBeInTheDocument();
+    expect(within(section).getByRole('button', { name: /WeakMap/i })).toBeInTheDocument();
   });
 
   test('displays Map tab content by default', () => {
