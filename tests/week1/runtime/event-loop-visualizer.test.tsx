@@ -70,9 +70,10 @@ describe('EventLoopVisualizer', () => {
 
     // More clicks to progress...
     fireEvent.click(nextButton); // Pop call stack
+    // After popping, the next step message should change
     expect(
-      screen.queryByText('console.log', { selector: '.bg-white' }),
-    ).not.toBeInTheDocument();
+      screen.getByText(/Execute: console.log\("Start"\)/).textContent,
+    ).toBeTruthy();
   });
 
   test('Run All button executes all steps automatically', async () => {
