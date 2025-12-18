@@ -1,16 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Play, RotateCcw, SkipForward } from 'lucide-react';
 import { useState } from 'react';
+import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
-
-type TaskType = 'sync' | 'microtask' | 'macrotask';
-
-interface Task {
-  id: number;
-  name: string;
-  type: TaskType;
-  executed: boolean;
-}
 
 const sampleCode = `console.log('Start');
 
@@ -139,8 +131,8 @@ export const EventLoopVisualizer = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-gray-900 text-gray-100 p-4 rounded-xl font-mono text-xs overflow-x-auto">
-        <pre>{sampleCode}</pre>
+      <div className="bg-gray-900 text-gray-100 p-1 rounded-xl font-mono text-xs overflow-x-auto">
+        <CodeBlock code={sampleCode} showLineNumbers />
       </div>
 
       <div className="flex gap-2 justify-center">

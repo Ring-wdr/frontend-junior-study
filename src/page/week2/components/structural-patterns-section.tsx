@@ -1,5 +1,6 @@
 import { Badge } from '../../../components/ui/badge';
 import { Card } from '../../../components/ui/card';
+import { CodeBlock } from '../../../components/ui/code-block';
 
 export const StructuralPatternsSection = () => {
   return (
@@ -26,8 +27,8 @@ export const StructuralPatternsSection = () => {
             Attaches additional responsibilities to an object dynamically.
             Flexible alternative to subclassing.
           </p>
-          <pre className="bg-gray-900 text-gray-100 p-2 rounded text-xs overflow-x-auto">
-            {`function readonly(target, key, descriptor) {
+          <CodeBlock
+            code={`function readonly(target, key, descriptor) {
   descriptor.writable = false;
   return descriptor;
 }
@@ -36,7 +37,8 @@ class Example {
   @readonly
   name = "Fixed";
 }`}
-          </pre>
+            className="text-xs"
+          />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

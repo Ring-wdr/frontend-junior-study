@@ -1,5 +1,6 @@
 import { Badge } from '../../../components/ui/badge';
 import { Card } from '../../../components/ui/card';
+import { CodeBlock } from '../../../components/ui/code-block';
 
 export const CreationPatternsSection = () => {
   return (
@@ -26,8 +27,8 @@ export const CreationPatternsSection = () => {
               Ensures a class has only one instance and provides a global point
               of access to it.
             </p>
-            <pre className="bg-gray-900 text-gray-100 p-2 rounded text-xs overflow-x-auto">
-              {`const Singleton = (function() {
+            <CodeBlock
+              code={`const Singleton = (function() {
   let instance;
   function createInstance() {
     return new Object("I am the instance");
@@ -41,7 +42,8 @@ export const CreationPatternsSection = () => {
     }
   };
 })();`}
-            </pre>
+              className="text-xs"
+            />
           </div>
 
           <div className="space-y-4">

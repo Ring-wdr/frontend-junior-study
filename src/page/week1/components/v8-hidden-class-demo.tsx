@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { AlertCircle, CheckCircle, Play } from 'lucide-react';
+import { AlertCircle, CheckCircle } from 'lucide-react';
 import { useState } from 'react';
+import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
 interface ObjectShape {
@@ -123,14 +124,15 @@ export const V8HiddenClassDemo = () => {
             All objects share the same hidden class. V8 can optimize property
             access.
           </p>
-          <pre className="mt-2 text-xs bg-green-900 text-green-100 p-2 rounded">
-            {`class Point {
+          <CodeBlock
+            code={`class Point {
   constructor(x, y) {
     this.x = x; // Always same order
     this.y = y;
   }
 }`}
-          </pre>
+            className="mt-2 text-xs"
+          />
         </div>
       )}
 
@@ -144,11 +146,12 @@ export const V8HiddenClassDemo = () => {
             Different property orders create different hidden classes. V8 cannot
             optimize.
           </p>
-          <pre className="mt-2 text-xs bg-red-900 text-red-100 p-2 rounded">
-            {`const p1 = { x: 1, y: 2 };
+          <CodeBlock
+            code={`const p1 = { x: 1, y: 2 };
 const p2 = { y: 2, x: 1 }; // Different order!
 const p3 = { x: 1 }; // Missing property!`}
-          </pre>
+            className="mt-2 text-xs"
+          />
         </div>
       )}
 
