@@ -1,0 +1,69 @@
+import { Badge } from '../../../components/ui/badge';
+import { Card } from '../../../components/ui/card';
+
+export const BehavioralPatternsSection = () => {
+  return (
+    <Card className="p-6">
+      <div className="flex justify-between items-start mb-4">
+        <div>
+          <Badge className="bg-green-100 text-green-800 hover:bg-green-200">
+            Design Patterns
+          </Badge>
+          <h3 className="text-xl font-bold mt-2 text-gray-900">
+            Behavioral Patterns
+          </h3>
+          <p className="text-gray-500 text-sm mt-1">
+            Patterns concerned with algorithms and the assignment of
+            responsibilities between objects.
+          </p>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <h4 className="font-semibold text-gray-900 mb-2">Observer</h4>
+          <p className="text-sm text-gray-700 mb-2">
+            Lets you define a subscription mechanism to notify multiple objects
+            about any events that happen to the object they're observing.
+          </p>
+          <div className="text-sm text-gray-600 italic">
+            Common in JS: Event Listeners, RxJS, Redux (Flux).
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <h4 className="font-semibold text-gray-900 mb-1">Strategy</h4>
+            <p className="text-sm text-gray-700">
+              Defines a family of algorithms, encapsulates each one, and makes
+              them interchangeable.
+            </p>
+          </div>
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <h4 className="font-semibold text-gray-900 mb-1">State</h4>
+            <p className="text-sm text-gray-700">
+              Lets an object alter its behavior when its internal state changes.
+              It appears as if the object changed its class.
+            </p>
+          </div>
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <h4 className="font-semibold text-gray-900 mb-1">Command</h4>
+            <p className="text-sm text-gray-700">
+              Turns a request into a stand-alone object that contains all
+              information about the request.
+            </p>
+          </div>
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <h4 className="font-semibold text-gray-900 mb-1">
+              Template Method
+            </h4>
+            <p className="text-sm text-gray-700">
+              Defines the skeleton of an algorithm in the superclass but lets
+              subclasses override specific steps.
+            </p>
+          </div>
+        </div>
+      </div>
+    </Card>
+  );
+};

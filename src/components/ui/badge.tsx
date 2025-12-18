@@ -1,4 +1,5 @@
 import type React from 'react';
+import type { ComponentProps } from 'react';
 import { cn } from '../../lib/utils';
 
 const colors = {
@@ -14,12 +15,13 @@ const colors = {
 export const Badge = ({
   children,
   color = 'blue',
+  ...props
 }: {
-  children: React.ReactNode;
   color?: 'blue' | 'purple' | 'green' | 'orange' | 'pink' | 'indigo' | 'teal';
-}) => {
+} & ComponentProps<'span'>) => {
   return (
     <span
+      {...props}
       className={cn('px-2 py-1 rounded-md text-xs font-medium', colors[color])}
     >
       {children}
