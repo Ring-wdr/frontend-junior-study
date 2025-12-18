@@ -1,4 +1,5 @@
 import type React from 'react';
+import { cn } from '../../lib/utils';
 
 export const Badge = ({
   children,
@@ -15,7 +16,7 @@ export const Badge = ({
   };
   return (
     <span
-      className={`px-2 py-1 rounded-md text-xs font-medium ${colors[color]}`}
+      className={cn('px-2 py-1 rounded-md text-xs font-medium', colors[color])}
     >
       {children}
     </span>

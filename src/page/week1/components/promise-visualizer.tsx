@@ -1,6 +1,7 @@
 import { CheckCircle2, Play, RefreshCw, XCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useCallback, useEffect, useState } from 'react';
+import { cn } from '../../../lib/utils';
 
 type PromiseStatus = 'idle' | 'pending' | 'resolved' | 'rejected';
 type CombinatorType = 'all' | 'allSettled' | 'race' | 'any';
@@ -114,11 +115,12 @@ export const PromiseVisualizer = () => {
               setCombinator(type);
               reset();
             }}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+            className={cn(
+              'px-4 py-2 rounded-lg text-sm font-medium transition-all',
               combinator === type
                 ? 'bg-white text-orange-600 shadow-sm border border-orange-100 ring-2 ring-orange-50'
-                : 'text-gray-500 hover:bg-gray-200'
-            }`}
+                : 'text-gray-500 hover:bg-gray-200',
+            )}
           >
             Promise.{type}
           </button>
@@ -127,15 +129,13 @@ export const PromiseVisualizer = () => {
 
       {/* Global Status Display */}
       <div
-        className={`p-4 rounded-xl border-2 transition-colors flex items-center justify-between mx-auto max-w-sm ${
-          globalStatus === 'resolved'
-            ? 'border-green-100 bg-green-50'
-            : globalStatus === 'rejected'
-              ? 'border-red-100 bg-red-50'
-              : globalStatus === 'pending'
-                ? 'border-orange-100 bg-orange-50'
-                : 'border-gray-100 bg-gray-50'
-        }`}
+        className={cn(
+          'p-4 rounded-xl border-2 transition-colors flex items-center justify-between mx-auto max-w-sm',
+          globalStatus === 'resolved' && 'border-green-100 bg-green-50',
+          globalStatus === 'rejected' && 'border-red-100 bg-red-50',
+          globalStatus === 'pending' && 'border-orange-100 bg-orange-50',
+          globalStatus === 'idle' && 'border-gray-100 bg-gray-50',
+        )}
       >
         <span className="font-semibold text-gray-700">Result:</span>
         <div className="flex items-center gap-2">
@@ -149,15 +149,13 @@ export const PromiseVisualizer = () => {
             <RefreshCw className="w-5 h-5 text-orange-600 animate-spin" />
           )}
           <span
-            className={`font-bold ${
-              globalStatus === 'resolved'
-                ? 'text-green-700'
-                : globalStatus === 'rejected'
-                  ? 'text-red-700'
-                  : globalStatus === 'pending'
-                    ? 'text-orange-700'
-                    : 'text-gray-500'
-            }`}
+            className={cn(
+              'font-bold',
+              globalStatus === 'resolved' && 'text-green-700',
+              globalStatus === 'rejected' && 'text-red-700',
+              globalStatus === 'pending' && 'text-orange-700',
+              globalStatus === 'idle' && 'text-gray-500',
+            )}
           >
             {globalResult || 'Idle'}
           </span>
@@ -170,28 +168,24 @@ export const PromiseVisualizer = () => {
             className="relative bg-white border border-gray-200 rounded-xl p-3 flex items-center justify-between shadow-sm overflow-hidden group"
           >
             <div
-              className={`absolute left-0 top-0 bottom-0 w-1 ${
-                p.status === 'resolved'
-                  ? 'bg-green-500'
-                  : p.status === 'rejected'
-                    ? 'bg-red-500'
-                    : p.status === 'pending'
-                      ? 'bg-orange-400'
-                      : 'bg-gray-200'
-              }`}
+              className={cn(
+                'absolute left-0 top-0 bottom-0 w-1',
+                p.status === 'resolved' && 'bg-green-500',
+                p.status === 'rejected' && 'bg-red-500',
+                p.status === 'pending' && 'bg-orange-400',
+                p.status === 'idle' && 'bg-gray-200',
+              )}
             />
 
             <div className="flex items-center gap-3 z-10 pl-2">
               <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center font-mono font-bold text-sm ${
-                  p.status === 'resolved'
-                    ? 'bg-green-100 text-green-700'
-                    : p.status === 'rejected'
-                      ? 'bg-red-100 text-red-700'
-                      : p.status === 'pending'
-                        ? 'bg-orange-100 text-orange-700'
-                        : 'bg-gray-100 text-gray-500'
-                }`}
+                className={cn(
+                  'w-8 h-8 rounded-full flex items-center justify-center font-mono font-bold text-sm',
+                  p.status === 'resolved' && 'bg-green-100 text-green-700',
+                  p.status === 'rejected' && 'bg-red-100 text-red-700',
+                  p.status === 'pending' && 'bg-orange-100 text-orange-700',
+                  p.status === 'idle' && 'bg-gray-100 text-gray-500',
+                )}
               >
                 P{p.id}
               </div>

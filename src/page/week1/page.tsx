@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { cn } from '../../lib/utils';
 import { AsyncSection } from './components/async-section';
 import { EventLoopSection } from './components/event-loop-section';
 import { OptimizationSection } from './components/optimization-section';
@@ -46,11 +47,12 @@ export default function Week1Page() {
             type="button"
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+            className={cn(
+              'px-4 py-1.5 rounded-full text-sm font-medium transition-all',
               activeTab === tab
                 ? 'bg-gray-900 text-white shadow-md'
-                : 'text-gray-600 hover:bg-gray-100'
-            }`}
+                : 'text-gray-600 hover:bg-gray-100',
+            )}
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
           </button>
