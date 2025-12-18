@@ -1,6 +1,13 @@
 import { afterEach, describe, expect, rs, test } from '@rstest/core';
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from '@testing-library/react';
 import type React from 'react';
+import type { ComponentProps } from 'react';
 import { AdvancedDataStructureSection } from '../../../src/page/week1/components/advanced-data-structure-section';
 
 // Mock framer-motion
@@ -12,7 +19,7 @@ rs.mock('framer-motion', async () => {
       <>{children}</>
     ),
     motion: {
-      div: ({ children, ...props }: Record<string, unknown>) => {
+      div: ({ children, ...props }: ComponentProps<'div'>) => {
         // biome-ignore lint: exclude style from props
         const { style, ...divProps } = props;
         return <div {...divProps}>{children}</div>;
@@ -29,7 +36,9 @@ describe('AdvancedDataStructureSection', () => {
     render(<AdvancedDataStructureSection />);
 
     const section = screen.getByTestId('advanced-data-structure-section');
-    expect(within(section).getByText('Advanced Data Structures')).toBeInTheDocument();
+    expect(
+      within(section).getByText('Advanced Data Structures'),
+    ).toBeInTheDocument();
     expect(within(section).getByText('Data Structures')).toBeInTheDocument();
   });
 
@@ -47,9 +56,15 @@ describe('AdvancedDataStructureSection', () => {
 
     const section = screen.getByTestId('advanced-data-structure-section');
     const buttons = within(section).getAllByRole('button');
-    expect(buttons.some((btn) => /map/i.test(btn.textContent || ''))).toBe(true);
-    expect(buttons.some((btn) => /set/i.test(btn.textContent || ''))).toBe(true);
-    expect(buttons.some((btn) => /WeakMap/i.test(btn.textContent || ''))).toBe(true);
+    expect(buttons.some((btn) => /map/i.test(btn.textContent || ''))).toBe(
+      true,
+    );
+    expect(buttons.some((btn) => /set/i.test(btn.textContent || ''))).toBe(
+      true,
+    );
+    expect(buttons.some((btn) => /WeakMap/i.test(btn.textContent || ''))).toBe(
+      true,
+    );
   });
 
   test('displays Map tab content by default', () => {
@@ -85,9 +100,7 @@ describe('AdvancedDataStructureSection', () => {
 
     const section = screen.getByTestId('advanced-data-structure-section');
     const buttons = within(section).getAllByRole('button');
-    const weakTab = buttons.find((btn) =>
-      btn.textContent?.includes('WeakMap'),
-    );
+    const weakTab = buttons.find((btn) => btn.textContent?.includes('WeakMap'));
     if (!weakTab) throw new Error('WeakMap/Ref tab not found');
     fireEvent.click(weakTab);
 
