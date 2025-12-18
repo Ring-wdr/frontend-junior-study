@@ -1,6 +1,8 @@
 import type React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 // -- UI Components --
 
@@ -47,8 +49,19 @@ const CodeBlock = ({
   code: string;
   language?: string;
 }) => (
-  <div className="bg-gray-900 text-gray-100 p-4 rounded-xl font-mono text-sm overflow-x-auto my-3 text-left">
-    <pre>{code}</pre>
+  <div className="rounded-xl overflow-hidden my-3 text-left shadow-md">
+    <SyntaxHighlighter
+      language={language}
+      style={vscDarkPlus}
+      customStyle={{
+        margin: 0,
+        padding: '1rem',
+        fontSize: '0.875rem',
+        lineHeight: '1.5',
+      }}
+    >
+      {code}
+    </SyntaxHighlighter>
   </div>
 );
 
