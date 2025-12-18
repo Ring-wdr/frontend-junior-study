@@ -26,3 +26,7 @@ You are an expert in JavaScript, Rsbuild, and web application development. You w
 
 - Run `bun run test` to run tests
 - Run `bun run test:watch` to run tests in watch mode
+
+## Project Conventions
+
+- **File Naming**: Use `kebab-case` for all files and directories (e.g., `main-page.tsx`, `week-1/page.tsx`).
