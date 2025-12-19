@@ -1,4 +1,10 @@
-import { DemoBox, InfoBox, SectionCard, SectionDivider, SubSection } from '../../../components';
+import {
+  DemoBox,
+  InfoBox,
+  SectionCard,
+  SectionDivider,
+  SubSection,
+} from '../../../components';
 import { CurryingVisualizer } from './currying-visualizer';
 import { ImmutabilityVisualizer } from './immutability-visualizer';
 import { MonadVisualizer } from './monad-visualizer';

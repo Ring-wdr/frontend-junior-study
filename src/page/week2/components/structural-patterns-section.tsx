@@ -1,4 +1,9 @@
-import { DemoBox, SectionCard, SectionDivider, SubSection } from '../../../components';
+import {
+  DemoBox,
+  SectionCard,
+  SectionDivider,
+  SubSection,
+} from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { AdapterVisualizer } from './adapter-visualizer';
 import { BridgeVisualizer } from './bridge-visualizer';

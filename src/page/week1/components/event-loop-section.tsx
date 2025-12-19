@@ -1,4 +1,4 @@
-import { SectionCard, InfoBox } from '../../../components';
+import { InfoBox, SectionCard } from '../../../components';
 import { EventLoopVisualizer } from './event-loop-visualizer';
 
 export const EventLoopSection = () => (

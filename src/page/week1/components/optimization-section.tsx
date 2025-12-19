@@ -12,8 +12,9 @@ export const OptimizationSection = () => (
 
     <div className="mt-6">
       <InfoBox variant="blue" title="Key Takeaway">
-        Always initialize properties in the <strong>exact same order</strong> to help V8
-        share hidden classes and optimize property access (Monomorphism).
+        Always initialize properties in the <strong>exact same order</strong> to
+        help V8 share hidden classes and optimize property access
+        (Monomorphism).
       </InfoBox>
     </div>
   </SectionCard>

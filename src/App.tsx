@@ -50,7 +50,6 @@ const router = createHashRouter([
       },
       {
         path: 'week-2',
-        // Router v7 way: lazy load the module and return { Component }
         lazy: async () => {
           const { default: Week2Page } = await import('./page/week2/page');
           return { Component: Week2Page };
@@ -58,7 +57,6 @@ const router = createHashRouter([
       },
       {
         path: 'week-3',
-        // Router v7 way: lazy load the module and return { Component }
         lazy: async () => {
           const { default: Week3Page } = await import('./page/week3/page');
           return { Component: Week3Page };
@@ -66,7 +64,6 @@ const router = createHashRouter([
       },
       {
         path: 'week-4',
-        // Router v7 way: lazy load the module and return { Component }
         lazy: async () => {
           const { default: Week4Page } = await import('./page/week4/page');
           return { Component: Week4Page };
@@ -74,10 +71,44 @@ const router = createHashRouter([
       },
       {
         path: 'week-5',
-        // Router v7 way: lazy load the module and return { Component }
         lazy: async () => {
           const { default: Week5Page } = await import('./page/week5/page');
           return { Component: Week5Page };
+        },
+      },
+      {
+        path: 'week-6',
+        lazy: async () => {
+          const { default: Week6Page } = await import('./page/week6/page');
+          return { Component: Week6Page };
+        },
+      },
+      {
+        path: 'week-7',
+        lazy: async () => {
+          const { default: Week7Page } = await import('./page/week7/page');
+          return { Component: Week7Page };
+        },
+      },
+      {
+        path: 'week-8',
+        lazy: async () => {
+          const { default: Week8Page } = await import('./page/week8/page');
+          return { Component: Week8Page };
+        },
+      },
+      {
+        path: 'week-9',
+        lazy: async () => {
+          const { default: Week9Page } = await import('./page/week9/page');
+          return { Component: Week9Page };
+        },
+      },
+      {
+        path: 'week-10',
+        lazy: async () => {
+          const { default: Week10Page } = await import('./page/week10/page');
+          return { Component: Week10Page };
         },
       },
     ],

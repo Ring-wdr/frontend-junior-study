@@ -1,4 +1,10 @@
-import { SectionCard, InfoBox, DemoBox, SubSection, SectionDivider } from '../../../components';
+import {
+  DemoBox,
+  InfoBox,
+  SectionCard,
+  SectionDivider,
+  SubSection,
+} from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 // import { VisualizerA, VisualizerB, VisualizerC } from './visualizers';
 
@@ -22,8 +28,8 @@ export const MultipleSubsectionsSection = () => {
         <SubSection title="Concept A" icon iconColor="purple">
           <div className="grid grid-cols-1 gap-6">
             <p className="text-sm text-gray-700">
-              Description of Concept A. Explain what it is, how it works, and why
-              it matters. This should be a clear, concise overview.
+              Description of Concept A. Explain what it is, how it works, and
+              why it matters. This should be a clear, concise overview.
             </p>
 
             <DemoBox>
@@ -53,8 +59,8 @@ const conceptA = () => {
         <SubSection title="Concept B" icon iconColor="blue">
           <div className="grid grid-cols-1 gap-6">
             <p className="text-sm text-gray-700">
-              Description of Concept B. Explain what it is, how it works, and how
-              it differs from Concept A.
+              Description of Concept B. Explain what it is, how it works, and
+              how it differs from Concept A.
             </p>
 
             <DemoBox>
@@ -84,8 +90,8 @@ const conceptB = () => {
         <SubSection title="Concept C" icon iconColor="pink">
           <div className="grid grid-cols-1 gap-6">
             <p className="text-sm text-gray-700">
-              Description of Concept C. Explain what it is, how it works, and how
-              it complements A and B.
+              Description of Concept C. Explain what it is, how it works, and
+              how it complements A and B.
             </p>
 
             <DemoBox>
@@ -113,8 +119,8 @@ const conceptC = () => {
         <InfoBox variant="gray" title="Comparison Summary">
           <div className="space-y-2 text-sm">
             <p>
-              <strong>Concept A:</strong> Best for situations X, Y. Strengths: A1,
-              A2.
+              <strong>Concept A:</strong> Best for situations X, Y. Strengths:
+              A1, A2.
             </p>
             <p>
               <strong>Concept B:</strong> Best for situations Z. Strengths: B1,

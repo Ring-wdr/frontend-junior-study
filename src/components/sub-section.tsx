@@ -31,9 +31,19 @@ export function SubSection({
     <>
       {divider && <div className="h-px bg-gray-100" />}
       <section className={className}>
-        <h4 className={cn('font-semibold text-gray-900 mb-3', icon && 'flex items-center gap-2')}>
+        <h4
+          className={cn(
+            'font-semibold text-gray-900 mb-3',
+            icon && 'flex items-center gap-2',
+          )}
+        >
           {icon && (
-            <span className={cn('w-1.5 h-1.5 rounded-full', iconColorMap[iconColor])} />
+            <span
+              className={cn(
+                'w-1.5 h-1.5 rounded-full',
+                iconColorMap[iconColor],
+              )}
+            />
           )}
           {title}
         </h4>

@@ -13,5 +13,9 @@ export function SectionDivider({
     return <div className={cn('h-4', className)} />;
   }
 
-  return <div className={cn('h-px bg-gray-100 border-t border-gray-100', className)} />;
+  return (
+    <div
+      className={cn('h-px bg-gray-100 border-t border-gray-100', className)}
+    />
+  );
 }

@@ -1,4 +1,9 @@
-import { DemoBox, SectionCard, SectionDivider, SubSection } from '../../../components';
+import {
+  DemoBox,
+  SectionCard,
+  SectionDivider,
+  SubSection,
+} from '../../../components';
 import { ObserverVisualizer } from './observer-visualizer';
 import { StrategyVisualizer } from './strategy-visualizer';
 

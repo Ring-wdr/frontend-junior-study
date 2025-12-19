@@ -15,8 +15,8 @@ export const ModernStateSection = () => {
             <p className="text-sm text-gray-700">
               While Redux is powerful and predictable, its heavy boilerplate and
               strict patterns led to the rise of alternatives focusing on
-              <strong> developer experience</strong>, <strong>less code</strong>,
-              and <strong>better React integration</strong>. These libraries
+              <strong> developer experience</strong>, <strong>less code</strong>
+              , and <strong>better React integration</strong>. These libraries
               offer different philosophies and approaches to state management.
             </p>
 
@@ -45,8 +45,8 @@ export const ModernStateSection = () => {
 
             <InfoBox variant="orange" title="Philosophy">
               <p className="text-sm text-gray-700 mb-2">
-                "Anything that can be derived from the application state,
-                should be derived automatically."
+                "Anything that can be derived from the application state, should
+                be derived automatically."
               </p>
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
                 <li>
@@ -57,8 +57,8 @@ export const ModernStateSection = () => {
                   state changes
                 </li>
                 <li>
-                  <strong>Reactions:</strong> Side effects that respond to
-                  state changes
+                  <strong>Reactions:</strong> Side effects that respond to state
+                  changes
                 </li>
               </ul>
             </InfoBox>
@@ -113,9 +113,9 @@ const Counter = observer(({ store }) => (
         <SubSection title="Recoil" icon iconColor="blue">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Created by Facebook, Recoil brings a more <strong>React-native</strong>{' '}
-              approach to state management using Atoms and Selectors. Designed for
-              Concurrent Mode compatibility.
+              Created by Facebook, Recoil brings a more{' '}
+              <strong>React-native</strong> approach to state management using
+              Atoms and Selectors. Designed for Concurrent Mode compatibility.
             </p>
 
             <InfoBox variant="blue" title="Core Concepts">

@@ -10,13 +10,18 @@ export const MiddlewareSection = () => {
       description="Handling side effects and asynchronous logic in Redux applications."
     >
       <div className="space-y-8">
-        <SubSection title="Understanding Redux Middleware" icon iconColor="purple">
+        <SubSection
+          title="Understanding Redux Middleware"
+          icon
+          iconColor="purple"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Redux by itself is <strong>synchronous</strong>. Middleware provides a
-              third-party extension point between dispatching an action and the moment
-              it reaches the reducer. This enables handling of side effects like API
-              calls, logging, and complex async workflows.
+              Redux by itself is <strong>synchronous</strong>. Middleware
+              provides a third-party extension point between dispatching an
+              action and the moment it reaches the reducer. This enables
+              handling of side effects like API calls, logging, and complex
+              async workflows.
             </p>
 
             <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
@@ -25,9 +30,9 @@ export const MiddlewareSection = () => {
 
             <InfoBox variant="purple" title="Middleware Flow">
               <p className="text-sm text-gray-700">
-                When an action is dispatched, it flows through the middleware chain
-                before reaching the reducer. Each middleware can intercept, modify, or
-                delay actions.
+                When an action is dispatched, it flows through the middleware
+                chain before reaching the reducer. Each middleware can
+                intercept, modify, or delay actions.
               </p>
             </InfoBox>
           </div>
@@ -36,10 +41,10 @@ export const MiddlewareSection = () => {
         <SubSection title="Redux Thunk" icon iconColor="blue">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Redux Thunk is the simplest and most commonly used middleware for handling
-              async operations. It allows action creators to return a function instead of
-              an action object. This function receives <code>dispatch</code> and{' '}
-              <code>getState</code> as arguments.
+              Redux Thunk is the simplest and most commonly used middleware for
+              handling async operations. It allows action creators to return a
+              function instead of an action object. This function receives{' '}
+              <code>dispatch</code> and <code>getState</code> as arguments.
             </p>
 
             <InfoBox variant="blue" title="How It Works">
@@ -52,7 +57,8 @@ export const MiddlewareSection = () => {
                   <code>dispatch</code> and <code>getState</code>
                 </li>
                 <li>
-                  Inside the thunk, perform async tasks and manually dispatch actions
+                  Inside the thunk, perform async tasks and manually dispatch
+                  actions
                 </li>
               </ul>
             </InfoBox>
@@ -86,12 +92,12 @@ store.dispatch(fetchUser(123));`}
             <InfoBox variant="gray" title="Pros & Cons">
               <div className="space-y-2 text-sm text-gray-700">
                 <p>
-                  <strong>✓ Pros:</strong> Simple, minimal setup, good for straightforward
-                  async tasks
+                  <strong>✓ Pros:</strong> Simple, minimal setup, good for
+                  straightforward async tasks
                 </p>
                 <p>
-                  <strong>✗ Cons:</strong> Can lead to complex logic inside thunks, harder
-                  to test complex async flows
+                  <strong>✗ Cons:</strong> Can lead to complex logic inside
+                  thunks, harder to test complex async flows
                 </p>
               </div>
             </InfoBox>
@@ -101,22 +107,25 @@ store.dispatch(fetchUser(123));`}
         <SubSection title="Redux Saga" icon iconColor="purple">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Redux Saga uses Generator functions to handle side effects in a more
-              declarative way. It's more powerful and testable than thunk, making it
-              ideal for complex async workflows.
+              Redux Saga uses Generator functions to handle side effects in a
+              more declarative way. It's more powerful and testable than thunk,
+              making it ideal for complex async workflows.
             </p>
 
             <InfoBox variant="purple" title="Key Concepts">
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Generators:</strong> Functions that can pause and resume
+                  <strong>Generators:</strong> Functions that can pause and
+                  resume
                 </li>
                 <li>
-                  <strong>Effects:</strong> Plain objects describing side effects
-                  (<code>call</code>, <code>put</code>, <code>select</code>, etc.)
+                  <strong>Effects:</strong> Plain objects describing side
+                  effects (<code>call</code>, <code>put</code>,{' '}
+                  <code>select</code>, etc.)
                 </li>
                 <li>
-                  <strong>Watcher Saga:</strong> Monitors actions and triggers worker sagas
+                  <strong>Watcher Saga:</strong> Monitors actions and triggers
+                  worker sagas
                 </li>
               </ul>
             </InfoBox>
@@ -149,11 +158,12 @@ function* rootSaga() {
             <InfoBox variant="gray" title="Pros & Cons">
               <div className="space-y-2 text-sm text-gray-700">
                 <p>
-                  <strong>✓ Pros:</strong> Highly testable, handles race conditions,
-                  cancellation, and complex flows elegantly
+                  <strong>✓ Pros:</strong> Highly testable, handles race
+                  conditions, cancellation, and complex flows elegantly
                 </p>
                 <p>
-                  <strong>✗ Cons:</strong> Steeper learning curve, more boilerplate
+                  <strong>✗ Cons:</strong> Steeper learning curve, more
+                  boilerplate
                 </p>
               </div>
             </InfoBox>
@@ -165,19 +175,21 @@ function* rootSaga() {
             <div className="grid grid-cols-1 gap-4">
               <InfoBox variant="gray" title="Redux Observable">
                 <p className="text-sm text-gray-700 mb-2">
-                  Built on RxJS, it treats actions as streams and handles side effects
-                  using reactive operators. Perfect for complex event handling.
+                  Built on RxJS, it treats actions as streams and handles side
+                  effects using reactive operators. Perfect for complex event
+                  handling.
                 </p>
                 <p className="text-xs text-gray-600 italic">
-                  Use when you need powerful stream manipulation and are comfortable with
-                  reactive programming.
+                  Use when you need powerful stream manipulation and are
+                  comfortable with reactive programming.
                 </p>
               </InfoBox>
 
               <InfoBox variant="gray" title="Redux Promise">
                 <p className="text-sm text-gray-700 mb-2">
-                  Simple middleware that resolves Promise-based actions automatically.
-                  Useful when you want a lightweight alternative to Thunk.
+                  Simple middleware that resolves Promise-based actions
+                  automatically. Useful when you want a lightweight alternative
+                  to Thunk.
                 </p>
               </InfoBox>
             </div>

@@ -1,4 +1,4 @@
-import { SectionCard, InfoBox, DemoBox, SubSection } from '../../../components';
+import { DemoBox, InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 // import { YourVisualizer } from './your-visualizer';
 
@@ -56,7 +56,9 @@ export const BasicSection = () => {
 
         {/* Code Example */}
         <div className="space-y-3">
-          <h4 className="font-semibold text-gray-900">Implementation Example</h4>
+          <h4 className="font-semibold text-gray-900">
+            Implementation Example
+          </h4>
           <CodeBlock
             code={`// Example code showing how to use this concept
 const example = () => {

@@ -49,7 +49,6 @@ export const ProxyMetaSection = () => {
       description="Intercept and redefine fundamental operations."
       testId="proxy-meta-section"
     >
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <CodeBlock

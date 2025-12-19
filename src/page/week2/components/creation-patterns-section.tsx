@@ -1,4 +1,9 @@
-import { DemoBox, SectionCard, SectionDivider, SubSection } from '../../../components';
+import {
+  DemoBox,
+  SectionCard,
+  SectionDivider,
+  SubSection,
+} from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { BuilderVisualizer } from './builder-visualizer';
 import { FactoryVisualizer } from './factory-visualizer';
@@ -12,11 +17,7 @@ export const CreationPatternsSection = () => {
       description="Patterns focused on object creation mechanisms."
     >
       <div className="space-y-8">
-        <SubSection
-          title="Singleton Pattern"
-          icon
-          iconColor="purple"
-        >
+        <SubSection title="Singleton Pattern" icon iconColor="purple">
           <div className="grid grid-cols-1 gap-6">
             <div className="space-y-2">
               <p className="text-sm text-gray-700">

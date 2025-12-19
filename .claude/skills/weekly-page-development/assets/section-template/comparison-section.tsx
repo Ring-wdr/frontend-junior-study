@@ -1,4 +1,4 @@
-import { SectionCard, InfoBox, DemoBox } from '../../../components';
+import { DemoBox, InfoBox, SectionCard } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 // import { ComparisionVisualizer } from './comparison-visualizer';
 
@@ -21,9 +21,9 @@ export const ComparisonSection = () => {
       <div className="space-y-8">
         {/* Overview */}
         <p className="text-sm text-gray-700">
-          This section compares different approaches to solving [the problem]. Each
-          approach has different trade-offs. Understanding when to use each is
-          important for choosing the right tool for your situation.
+          This section compares different approaches to solving [the problem].
+          Each approach has different trade-offs. Understanding when to use each
+          is important for choosing the right tool for your situation.
         </p>
 
         {/* Visual Comparison */}
@@ -32,9 +32,7 @@ export const ComparisonSection = () => {
           <DemoBox>
             {/* <ComparisonVisualizer /> */}
             <div className="p-8 bg-white rounded border border-gray-200">
-              <p className="text-center text-gray-500">
-                Comparison visualizer
-              </p>
+              <p className="text-center text-gray-500">Comparison visualizer</p>
             </div>
           </DemoBox>
         </div>
@@ -44,8 +42,8 @@ export const ComparisonSection = () => {
           <div className="space-y-3">
             <h5 className="font-semibold text-gray-900">Approach A</h5>
             <p className="text-sm text-gray-700">
-              Brief description of Approach A. When you might choose this approach
-              and its main characteristics.
+              Brief description of Approach A. When you might choose this
+              approach and its main characteristics.
             </p>
             <CodeBlock
               code={`// Approach A: Description
@@ -61,8 +59,8 @@ const approachA = () => {
           <div className="space-y-3">
             <h5 className="font-semibold text-gray-900">Approach B</h5>
             <p className="text-sm text-gray-700">
-              Brief description of Approach B. When you might choose this approach
-              and its main characteristics.
+              Brief description of Approach B. When you might choose this
+              approach and its main characteristics.
             </p>
             <CodeBlock
               code={`// Approach B: Description
@@ -81,8 +79,8 @@ const approachB = async () => {
           <h5 className="font-semibold text-gray-900">Approach C</h5>
           <div className="grid grid-cols-1 gap-6">
             <p className="text-sm text-gray-700">
-              Brief description of Approach C. Advanced approach with specific use
-              cases.
+              Brief description of Approach C. Advanced approach with specific
+              use cases.
             </p>
             <CodeBlock
               code={`// Approach C: Description
@@ -117,7 +115,8 @@ const approachC = () => {
             <div className="border-t border-blue-200 pt-3">
               <strong className="block mb-1">Approach B</strong>
               <p className="mb-2">
-                <strong>Pros:</strong> Better performance, caching support, async
+                <strong>Pros:</strong> Better performance, caching support,
+                async
               </p>
               <p>
                 <strong>Cons:</strong> More complex, harder to debug, larger
@@ -147,8 +146,8 @@ const approachC = () => {
               prototyping, or building simple features
             </li>
             <li>
-              <strong>Use Approach B</strong> when you need better performance and
-              caching, in production applications
+              <strong>Use Approach B</strong> when you need better performance
+              and caching, in production applications
             </li>
             <li>
               <strong>Use Approach C</strong> when building complex systems with

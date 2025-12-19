@@ -199,7 +199,9 @@ export const ComponentPatternsVisualizer = () => {
               className="text-xs"
             />
             <div className="text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-200">
-              <p className="mb-1 font-semibold text-gray-900">Key Characteristic:</p>
+              <p className="mb-1 font-semibold text-gray-900">
+                Key Characteristic:
+              </p>
               <p className="text-sm">
                 Sub-components (Tab, TabPanel) communicate via Context provided
                 by parent (Tabs), not via direct prop passing from user.
@@ -246,7 +248,9 @@ export const ComponentPatternsVisualizer = () => {
               className="text-xs"
             />
             <div className="text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-200">
-              <p className="mb-1 font-semibold text-gray-900">Key Characteristic:</p>
+              <p className="mb-1 font-semibold text-gray-900">
+                Key Characteristic:
+              </p>
               <p className="text-sm">
                 The component doesn't decide <em>what</em> to render, but
                 delegates that decision to the <code>render</code> prop
@@ -316,7 +320,9 @@ const ListWithLoading = withLoading(List);
               className="text-xs"
             />
             <div className="text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-200">
-              <p className="mb-1 font-semibold text-gray-900">Key Characteristic:</p>
+              <p className="mb-1 font-semibold text-gray-900">
+                Key Characteristic:
+              </p>
               <p className="text-sm">
                 A function that takes a component and returns a new component
                 ("Wrapper"), injecting new props or behavior (like the Spinner).

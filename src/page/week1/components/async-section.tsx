@@ -19,15 +19,18 @@ export const AsyncSection = () => (
       items={[
         {
           title: 'Promise.all',
-          description: 'Wait for all to fulfill. Rejects immediately if any rejects.',
+          description:
+            'Wait for all to fulfill. Rejects immediately if any rejects.',
         },
         {
           title: 'Promise.allSettled',
-          description: 'Wait for all to finish, regardless of status. Never rejects.',
+          description:
+            'Wait for all to finish, regardless of status. Never rejects.',
         },
         {
           title: 'Promise.race',
-          description: 'First settled promise (resolve OR reject) determines the result.',
+          description:
+            'First settled promise (resolve OR reject) determines the result.',
         },
         {
           title: 'Promise.any',
@@ -37,10 +40,12 @@ export const AsyncSection = () => (
     />
 
     <div className="mt-8">
-      <h4 className="font-bold text-gray-900 mb-3">Promise.withResolvers (ES2024)</h4>
+      <h4 className="font-bold text-gray-900 mb-3">
+        Promise.withResolvers (ES2024)
+      </h4>
       <p className="text-sm text-gray-600 mb-3">
-        Returns an object with a new Promise and its resolve/reject functions. Useful
-        for creating promises that are resolved externally.
+        Returns an object with a new Promise and its resolve/reject functions.
+        Useful for creating promises that are resolved externally.
       </p>
       <CodeBlock
         code={`const { promise, resolve, reject } = Promise.withResolvers();
@@ -54,7 +59,9 @@ promise.then(console.log); // 'Done!' after 1s`}
 
     <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
-        <h4 className="font-bold text-gray-900 text-sm mb-2">Promise.resolve</h4>
+        <h4 className="font-bold text-gray-900 text-sm mb-2">
+          Promise.resolve
+        </h4>
         <p className="text-xs text-gray-500 mb-2">
           Creates an immediately fulfilled promise.
         </p>
@@ -66,7 +73,9 @@ promise.then(console.log); // 'Done!' after 1s`}
       </div>
       <div>
         <h4 className="font-bold text-gray-900 text-sm mb-2">Promise.reject</h4>
-        <p className="text-xs text-gray-500 mb-2">Creates an immediately rejected promise.</p>
+        <p className="text-xs text-gray-500 mb-2">
+          Creates an immediately rejected promise.
+        </p>
         <CodeBlock
           code={`Promise.reject('Error!')
   .catch(console.error);

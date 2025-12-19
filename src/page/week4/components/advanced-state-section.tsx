@@ -12,9 +12,10 @@ export const AdvancedStateSection = () => {
         <SubSection title="RxJS & Redux Observable" icon iconColor="blue">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              RxJS treats state and events as <strong>streams</strong> that can be
-              manipulated using powerful functional operators. <strong>Redux Observable</strong>{' '}
-              integrates RxJS with Redux to handle complex async workflows elegantly.
+              RxJS treats state and events as <strong>streams</strong> that can
+              be manipulated using powerful functional operators.{' '}
+              <strong>Redux Observable</strong> integrates RxJS with Redux to
+              handle complex async workflows elegantly.
             </p>
 
             <InfoBox variant="blue" title="Key Concepts">
@@ -23,12 +24,12 @@ export const AdvancedStateSection = () => {
                   <strong>Observables:</strong> Streams of values over time
                 </li>
                 <li>
-                  <strong>Operators:</strong> Pure functions to transform streams
-                  (map, filter, debounce, etc.)
+                  <strong>Operators:</strong> Pure functions to transform
+                  streams (map, filter, debounce, etc.)
                 </li>
                 <li>
-                  <strong>Epics:</strong> Redux Observable's middleware layer for
-                  handling effects
+                  <strong>Epics:</strong> Redux Observable's middleware layer
+                  for handling effects
                 </li>
               </ul>
             </InfoBox>
@@ -89,11 +90,12 @@ const fetchUserEpic = (action$) =>
                   loading, success, error)
                 </li>
                 <li>
-                  <strong>Events:</strong> Actions that trigger state transitions
+                  <strong>Events:</strong> Actions that trigger state
+                  transitions
                 </li>
                 <li>
-                  <strong>Transitions:</strong> Rules defining which events cause
-                  which state changes
+                  <strong>Transitions:</strong> Rules defining which events
+                  cause which state changes
                 </li>
                 <li>
                   <strong>Context:</strong> Extended state data associated with
@@ -172,15 +174,19 @@ function UserFetcher() {
                   <strong>Testability:</strong> Pure logic makes testing simple
                 </li>
                 <li>
-                  <strong>Visualization:</strong> XState provides visual tools to
-                  see state flows
+                  <strong>Visualization:</strong> XState provides visual tools
+                  to see state flows
                 </li>
               </ul>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title="When to Use Advanced Patterns" icon iconColor="orange">
+        <SubSection
+          title="When to Use Advanced Patterns"
+          icon
+          iconColor="orange"
+        >
           <div className="space-y-4">
             <div className="grid grid-cols-1 gap-4">
               <InfoBox variant="orange" title="Use RxJS Observable when...">
@@ -204,15 +210,19 @@ function UserFetcher() {
               <InfoBox variant="red" title="Warning">
                 <p className="text-sm text-gray-700">
                   These are <strong>advanced patterns</strong> with significant
-                  learning curves. Use them only when simpler solutions
-                  (Redux Thunk, Zustand) prove insufficient.
+                  learning curves. Use them only when simpler solutions (Redux
+                  Thunk, Zustand) prove insufficient.
                 </p>
               </InfoBox>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title="Comparison: All Async Approaches" icon iconColor="blue">
+        <SubSection
+          title="Comparison: All Async Approaches"
+          icon
+          iconColor="blue"
+        >
           <div className="space-y-4">
             <div className="overflow-x-auto">
               <table className="w-full text-xs border-collapse">
@@ -221,7 +231,9 @@ function UserFetcher() {
                     <th className="text-left p-2 font-semibold">Approach</th>
                     <th className="text-left p-2 font-semibold">Complexity</th>
                     <th className="text-left p-2 font-semibold">Best For</th>
-                    <th className="text-left p-2 font-semibold">Learning Curve</th>
+                    <th className="text-left p-2 font-semibold">
+                      Learning Curve
+                    </th>
                   </tr>
                 </thead>
                 <tbody>

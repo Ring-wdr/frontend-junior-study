@@ -17,7 +17,6 @@ export const AdvancedDataStructureSection = () => {
       description="Map, Set, WeakMap, WeakSet, and WeakRef."
       testId="advanced-data-structure-section"
     >
-
       <div className="flex space-x-2 mb-6 border-b border-gray-100 pb-2">
         {(['map', 'set', 'weak'] as const).map((tab) => (
           <button
@@ -73,12 +72,16 @@ export const AdvancedDataStructureSection = () => {
             exit={{ opacity: 0, y: -10 }}
             className="space-y-4 text-left"
           >
-            <InfoBox variant="purple" className="bg-purple-50 border-purple-100">
+            <InfoBox
+              variant="purple"
+              className="bg-purple-50 border-purple-100"
+            >
               <h4 className="font-bold text-purple-900 mb-2 flex items-center gap-2">
                 <Plus className="w-4 h-4" /> Set (Unique Collection)
               </h4>
               <p className="text-sm text-purple-800 mb-2">
-                Stores unique values of any type. Useful for removing duplicates.
+                Stores unique values of any type. Useful for removing
+                duplicates.
               </p>
             </InfoBox>
             <CodeBlock
@@ -102,7 +105,10 @@ set.delete(1);`}
             exit={{ opacity: 0, y: -10 }}
             className="space-y-4 text-left"
           >
-            <InfoBox variant="orange" className="bg-orange-50 border-orange-100">
+            <InfoBox
+              variant="orange"
+              className="bg-orange-50 border-orange-100"
+            >
               <h4 className="font-bold text-orange-900 mb-2 flex items-center gap-2">
                 <Trash2 className="w-4 h-4" /> Weak References (GC Friendly)
               </h4>
@@ -112,8 +118,8 @@ set.delete(1);`}
                 object, it can be garbage collected. Not iterable.
               </p>
               <p className="text-sm text-orange-800 mt-2 border-t border-orange-200 pt-2">
-                <strong>WeakRef (ES2021):</strong> advanced feature to hold a weak
-                reference to an object.
+                <strong>WeakRef (ES2021):</strong> advanced feature to hold a
+                weak reference to an object.
               </p>
             </InfoBox>
 

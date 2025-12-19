@@ -1,7 +1,14 @@
 import type { ComponentProps } from 'react';
 import { cn } from '../../lib/utils';
 
-export type BadgeColor = 'blue' | 'purple' | 'green' | 'orange' | 'pink' | 'indigo' | 'teal';
+export type BadgeColor =
+  | 'blue'
+  | 'purple'
+  | 'green'
+  | 'orange'
+  | 'pink'
+  | 'indigo'
+  | 'teal';
 
 const colors = {
   blue: 'bg-blue-50 text-blue-700',

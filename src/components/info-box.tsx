@@ -67,7 +67,9 @@ export function InfoBox({
         className,
       )}
     >
-      {title && <h4 className={cn('font-semibold mb-2', styles.title)}>{title}</h4>}
+      {title && (
+        <h4 className={cn('font-semibold mb-2', styles.title)}>{title}</h4>
+      )}
       <div className={cn('text-sm', styles.text)}>{children}</div>
     </div>
   );

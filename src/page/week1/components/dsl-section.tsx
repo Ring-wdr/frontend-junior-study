@@ -14,17 +14,17 @@ export const DslSection = () => (
           <div>
             <h4 className="font-bold text-teal-900 mb-2">What is a DSL?</h4>
             <p className="text-sm text-teal-800 mb-4">
-              Unlike General Purpose Languages (GPL) like Java or Python, DSLs are
-              focused on specific tasks.
+              Unlike General Purpose Languages (GPL) like Java or Python, DSLs
+              are focused on specific tasks.
             </p>
             <ul className="list-disc list-inside text-sm text-teal-800 space-y-2">
               <li>
-                <strong>Internal DSL:</strong> Using host language features (e.g.,
-                jQuery, React JSX, builder patterns).
+                <strong>Internal DSL:</strong> Using host language features
+                (e.g., jQuery, React JSX, builder patterns).
               </li>
               <li>
-                <strong>External DSL:</strong> Separate syntax/parser (e.g., SQL,
-                CSS, Regex, Markdown).
+                <strong>External DSL:</strong> Separate syntax/parser (e.g.,
+                SQL, CSS, Regex, Markdown).
               </li>
             </ul>
           </div>

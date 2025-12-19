@@ -15,8 +15,8 @@ export const ContextSection = () => {
             <p className="text-sm text-gray-700">
               Context provides a way to pass data through the component tree
               without manually passing props down at every level. It's React's
-              built-in mechanism for <strong>prop drilling</strong> avoidance and
-              is perfect for <strong>low-frequency state updates</strong>.
+              built-in mechanism for <strong>prop drilling</strong> avoidance
+              and is perfect for <strong>low-frequency state updates</strong>.
             </p>
 
             <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
@@ -26,15 +26,16 @@ export const ContextSection = () => {
             <InfoBox variant="blue" title="Key Components">
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>React.createContext():</strong> Creates a context object
+                  <strong>React.createContext():</strong> Creates a context
+                  object
                 </li>
                 <li>
-                  <strong>Provider:</strong> Wraps components that need access to
-                  the context value
+                  <strong>Provider:</strong> Wraps components that need access
+                  to the context value
                 </li>
                 <li>
-                  <strong>useContext() hook:</strong> Consumes the context value in
-                  functional components
+                  <strong>useContext() hook:</strong> Consumes the context value
+                  in functional components
                 </li>
               </ul>
             </InfoBox>
@@ -104,9 +105,9 @@ function Header() {
         <SubSection title="Best Use Cases" icon iconColor="green">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Context API excels when your global state is <strong>simple</strong>,{' '}
-              <strong>infrequently updated</strong>, and doesn't require complex
-              synchronization logic.
+              Context API excels when your global state is{' '}
+              <strong>simple</strong>, <strong>infrequently updated</strong>,
+              and doesn't require complex synchronization logic.
             </p>
 
             <div className="grid grid-cols-1 gap-4">
@@ -122,7 +123,9 @@ function Header() {
 
               <InfoBox variant="orange" title="Poor Use Cases">
                 <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
-                  <li>Frequently changing data (form inputs, real-time updates)</li>
+                  <li>
+                    Frequently changing data (form inputs, real-time updates)
+                  </li>
                   <li>Complex state with many reducers</li>
                   <li>State requiring async middleware</li>
                   <li>App-wide caching needs</li>
@@ -135,14 +138,15 @@ function Header() {
         <SubSection title="Performance Considerations" icon iconColor="red">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Context has <strong>important limitations</strong> that can lead to
-              performance issues if not handled carefully.
+              Context has <strong>important limitations</strong> that can lead
+              to performance issues if not handled carefully.
             </p>
 
             <InfoBox variant="red" title="The Main Problem">
               <p className="text-sm text-gray-700 mb-3">
-                When a Context value changes, <strong>all consuming components re-render</strong>,
-                regardless of whether they use the changed part of the value.
+                When a Context value changes,{' '}
+                <strong>all consuming components re-render</strong>, regardless
+                of whether they use the changed part of the value.
               </p>
 
               <CodeBlock
@@ -207,7 +211,11 @@ export function ThemeProvider({ children }) {
           </div>
         </SubSection>
 
-        <SubSection title="Context vs Global State Libraries" icon iconColor="purple">
+        <SubSection
+          title="Context vs Global State Libraries"
+          icon
+          iconColor="purple"
+        >
           <div className="space-y-4">
             <InfoBox variant="blue" title="Decision Framework">
               <p className="text-sm text-gray-700 mb-3">
@@ -292,13 +300,15 @@ export function ThemeProvider({ children }) {
                 className="text-xs"
               />
               <p className="text-xs text-gray-600 mt-2">
-                Solution: Create a custom root provider that composes all contexts.
+                Solution: Create a custom root provider that composes all
+                contexts.
               </p>
             </InfoBox>
 
             <InfoBox variant="red" title="Missing Provider Error">
               <p className="text-sm text-gray-700 mb-2">
-                Always add a check when consuming context to provide helpful errors:
+                Always add a check when consuming context to provide helpful
+                errors:
               </p>
               <CodeBlock
                 code={`export function useTheme() {
