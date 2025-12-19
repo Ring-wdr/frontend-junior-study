@@ -1,6 +1,7 @@
 import { Badge } from '../../../components/ui/badge';
 import { Card } from '../../../components/ui/card';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { BuilderVisualizer } from './builder-visualizer';
 import { FactoryVisualizer } from './factory-visualizer';
 import { SingletonVisualizer } from './singleton-visualizer';
 
@@ -97,16 +98,26 @@ export const CreationPatternsSection = () => {
           </div>
         </section>
 
-        {/* Builder Section (Brief) */}
-        <section className="bg-gray-50 p-4 rounded-lg">
-          <h4 className="font-semibold text-gray-900 mb-1 text-sm">
-            Builder Pattern
-          </h4>
-          <p className="text-sm text-gray-700">
-            Separates the construction of a complex object from its
-            representation, allowing you to create different representations
-            with the same construction process.
-          </p>
+        {/* Builder Section */}
+        <section className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="w-1.5 h-1.5 rounded-full bg-pink-500" />
+            <h4 className="font-semibold text-gray-900">Builder Pattern</h4>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6">
+            <p className="text-sm text-gray-700">
+              Separates the construction of a complex object from its
+              representation, allowing you to create different representations
+              with the same construction process.
+            </p>
+            <div className="bg-white p-4 rounded-xl border border-gray-200">
+              <div className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">
+                Interactive Demo
+              </div>
+              <BuilderVisualizer />
+            </div>
+          </div>
         </section>
       </div>
     </Card>

@@ -51,7 +51,8 @@ describe('AsyncSection', () => {
     // Check for Promise combinator descriptions (text may be in cards/tabs)
     expect(
       within(section).getAllByText(/Wait for all to fulfill/).length +
-        within(section).getAllByText(/Rejects immediately if any rejects/).length,
+        within(section).getAllByText(/Rejects immediately if any rejects/)
+          .length,
     ).toBeGreaterThanOrEqual(1);
 
     expect(
@@ -74,7 +75,9 @@ describe('AsyncSection', () => {
     render(<AsyncSection />);
 
     const section = screen.getByTestId('async-section');
-    expect(within(section).getByText('Promise.withResolvers (ES2024)')).toBeInTheDocument();
+    expect(
+      within(section).getByText('Promise.withResolvers (ES2024)'),
+    ).toBeInTheDocument();
     expect(
       within(section).getByText(
         /Returns an object with a new Promise and its resolve\/reject functions/,
@@ -106,6 +109,8 @@ describe('AsyncSection', () => {
     render(<AsyncSection />);
 
     const section = screen.getByTestId('async-section');
-    expect(within(section).getByText('AbortController (Cancel Async Tasks)')).toBeInTheDocument();
+    expect(
+      within(section).getByText('AbortController (Cancel Async Tasks)'),
+    ).toBeInTheDocument();
   });
 });

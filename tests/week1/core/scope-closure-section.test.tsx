@@ -1,5 +1,11 @@
 import { afterEach, describe, expect, rs, test } from '@rstest/core';
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from '@testing-library/react';
 import type React from 'react';
 import { ScopeClosureSection } from '../../../src/page/week1/components/scope-closure-section';
 
@@ -50,7 +56,9 @@ describe('ScopeClosureSection', () => {
 
     const section = screen.getByTestId('scope-closure-section');
     expect(
-      within(section).getByText('Click "Create Counter" to see closures in action!'),
+      within(section).getByText(
+        'Click "Create Counter" to see closures in action!',
+      ),
     ).toBeInTheDocument();
   });
 
@@ -77,9 +85,15 @@ describe('ScopeClosureSection', () => {
     fireEvent.click(createButton);
 
     // Check that all counter labels exist (text appears in code + rendered)
-    expect(within(section).getAllByText(/counter1/i).length).toBeGreaterThanOrEqual(1);
-    expect(within(section).getAllByText(/counter2/i).length).toBeGreaterThanOrEqual(1);
-    expect(within(section).getAllByText(/counter3/i).length).toBeGreaterThanOrEqual(1);
+    expect(
+      within(section).getAllByText(/counter1/i).length,
+    ).toBeGreaterThanOrEqual(1);
+    expect(
+      within(section).getAllByText(/counter2/i).length,
+    ).toBeGreaterThanOrEqual(1);
+    expect(
+      within(section).getAllByText(/counter3/i).length,
+    ).toBeGreaterThanOrEqual(1);
   });
 
   test('shows explanation when counter is created', () => {
@@ -103,13 +117,17 @@ describe('ScopeClosureSection', () => {
     fireEvent.click(createButton);
 
     // Verify counters were created
-    expect(within(section).getAllByText(/counter1/i).length).toBeGreaterThanOrEqual(1);
+    expect(
+      within(section).getAllByText(/counter1/i).length,
+    ).toBeGreaterThanOrEqual(1);
 
     const resetButton = within(section).getByTestId('closure-reset');
     fireEvent.click(resetButton);
 
     expect(
-      within(section).getByText('Click "Create Counter" to see closures in action!'),
+      within(section).getByText(
+        'Click "Create Counter" to see closures in action!',
+      ),
     ).toBeInTheDocument();
   });
 });

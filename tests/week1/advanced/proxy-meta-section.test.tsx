@@ -1,5 +1,11 @@
 import { afterEach, describe, expect, rs, test } from '@rstest/core';
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from '@testing-library/react';
 import type React from 'react';
 import { ProxyMetaSection } from '../../../src/page/week1/components/proxy-meta-section';
 
@@ -38,7 +44,9 @@ describe('ProxyMetaSection', () => {
 
     const section = screen.getByTestId('proxy-meta-section');
     expect(
-      within(section).getByText('Intercept and redefine fundamental operations.'),
+      within(section).getByText(
+        'Intercept and redefine fundamental operations.',
+      ),
     ).toBeInTheDocument();
   });
 

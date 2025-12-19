@@ -1,5 +1,11 @@
 import { afterEach, describe, expect, rs, test } from '@rstest/core';
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from '@testing-library/react';
 import type React from 'react';
 import { ThisBindingSection } from '../../../src/page/week1/components/this-binding-section';
 
@@ -34,18 +40,28 @@ describe('ThisBindingSection', () => {
     render(<ThisBindingSection />);
 
     const section = screen.getByTestId('this-binding-section');
-    expect(within(section).getByTestId('this-binding-default')).toBeInTheDocument();
-    expect(within(section).getByTestId('this-binding-implicit')).toBeInTheDocument();
-    expect(within(section).getByTestId('this-binding-explicit')).toBeInTheDocument();
+    expect(
+      within(section).getByTestId('this-binding-default'),
+    ).toBeInTheDocument();
+    expect(
+      within(section).getByTestId('this-binding-implicit'),
+    ).toBeInTheDocument();
+    expect(
+      within(section).getByTestId('this-binding-explicit'),
+    ).toBeInTheDocument();
     expect(within(section).getByTestId('this-binding-new')).toBeInTheDocument();
-    expect(within(section).getByTestId('this-binding-arrow')).toBeInTheDocument();
+    expect(
+      within(section).getByTestId('this-binding-arrow'),
+    ).toBeInTheDocument();
   });
 
   test('displays implicit binding by default', () => {
     render(<ThisBindingSection />);
 
     const section = screen.getByTestId('this-binding-section');
-    expect(within(section).getByText("Object method call → 'this' is the object")).toBeInTheDocument();
+    expect(
+      within(section).getByText("Object method call → 'this' is the object"),
+    ).toBeInTheDocument();
   });
 
   test('switching to default binding shows its description', () => {

@@ -1,6 +1,8 @@
 import { Badge } from '../../../components/ui/badge';
 import { Card } from '../../../components/ui/card';
+import { CurryingVisualizer } from './currying-visualizer';
 import { ImmutabilityVisualizer } from './immutability-visualizer';
+import { MonadVisualizer } from './monad-visualizer';
 
 export const FpIntroductionSection = () => {
   return (
@@ -64,27 +66,27 @@ export const FpIntroductionSection = () => {
 
         <div className="h-px bg-gray-100" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <h4 className="font-semibold text-gray-900 mb-1">Currying</h4>
-            <p className="text-sm text-gray-700">
-              Translating a function that takes multiple arguments into a
-              sequence of functions each taking a single argument.
+        <div className="grid grid-cols-1 gap-6">
+          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
+              Currying
+            </h4>
+            <p className="text-xs text-gray-600 mb-4">
+              Function taking multiple args to Sequence of functions.
             </p>
+            <CurryingVisualizer />
           </div>
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <h4 className="font-semibold text-gray-900 mb-1">Monads</h4>
-            <p className="text-sm text-gray-700">
-              A design pattern used to describe computations as a series of
-              steps. (Think of it as a container with map/flatMap).
+          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+              Monads (Maybe)
+            </h4>
+            <p className="text-xs text-gray-600 mb-4">
+              Safe chainable computations (Handling Nulls).
             </p>
+            <MonadVisualizer />
           </div>
-        </div>
-
-        <div className="text-sm text-gray-600 bg-gray-50 p-4 rounded-lg italic">
-          "Object-Oriented Programming makes code understandable by
-          encapsulating moving parts. Functional Programming makes code
-          understandable by minimizing moving parts." — Michael Feathers
         </div>
       </div>
     </Card>

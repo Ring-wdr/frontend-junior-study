@@ -54,7 +54,9 @@ describe('EventLoopSection', () => {
     expect(within(section).getByText('Key Rule')).toBeInTheDocument();
     expect(
       within(section).getByText((content) => {
-        return content.includes('Microtasks') && content.includes('are processed');
+        return (
+          content.includes('Microtasks') && content.includes('are processed')
+        );
       }),
     ).toBeInTheDocument();
   });
@@ -84,9 +86,9 @@ describe('EventLoopSection', () => {
       within(section).getAllByText(/console/i).length +
         within(section).getAllByText(/Start/i).length,
     ).toBeGreaterThanOrEqual(2);
-    expect(within(section).getAllByText(/setTimeout/i).length).toBeGreaterThan(0);
-    expect(
-      within(section).getAllByText(/Promise/i).length,
-    ).toBeGreaterThan(0);
+    expect(within(section).getAllByText(/setTimeout/i).length).toBeGreaterThan(
+      0,
+    );
+    expect(within(section).getAllByText(/Promise/i).length).toBeGreaterThan(0);
   });
 });

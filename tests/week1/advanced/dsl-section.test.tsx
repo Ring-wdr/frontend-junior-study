@@ -10,7 +10,9 @@ describe('DslSection', () => {
     render(<DslSection />);
 
     const section = screen.getByTestId('dsl-section');
-    expect(within(section).getByText('Domain-Specific Language')).toBeInTheDocument();
+    expect(
+      within(section).getByText('Domain-Specific Language'),
+    ).toBeInTheDocument();
     expect(within(section).getByText('DSL')).toBeInTheDocument();
   });
 
@@ -19,7 +21,9 @@ describe('DslSection', () => {
 
     const section = screen.getByTestId('dsl-section');
     expect(
-      within(section).getByText('Mini-languages tailored for specific problem domains.'),
+      within(section).getByText(
+        'Mini-languages tailored for specific problem domains.',
+      ),
     ).toBeInTheDocument();
   });
 
@@ -47,7 +51,9 @@ describe('DslSection', () => {
     render(<DslSection />);
 
     const section = screen.getByTestId('dsl-section');
-    expect(within(section).getByText(/React JSX \(Internal DSL\)/)).toBeInTheDocument();
+    expect(
+      within(section).getByText(/React JSX \(Internal DSL\)/),
+    ).toBeInTheDocument();
     expect(
       within(section).getByText(/JSX is a DSL for defining UI structure/),
     ).toBeInTheDocument();
@@ -57,6 +63,8 @@ describe('DslSection', () => {
     render(<DslSection />);
 
     const section = screen.getByTestId('dsl-section');
-    expect(within(section).getByText(/SQL \(External DSL\)/)).toBeInTheDocument();
+    expect(
+      within(section).getByText(/SQL \(External DSL\)/),
+    ).toBeInTheDocument();
   });
 });

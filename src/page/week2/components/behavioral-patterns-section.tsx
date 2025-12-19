@@ -1,6 +1,7 @@
 import { Badge } from '../../../components/ui/badge';
 import { Card } from '../../../components/ui/card';
 import { ObserverVisualizer } from './observer-visualizer';
+import { StrategyVisualizer } from './strategy-visualizer';
 
 export const BehavioralPatternsSection = () => {
   return (
@@ -50,13 +51,16 @@ export const BehavioralPatternsSection = () => {
 
         <div className="h-px bg-gray-100" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <h4 className="font-semibold text-gray-900 mb-1">Strategy</h4>
-            <p className="text-sm text-gray-700">
-              Defines a family of algorithms, encapsulates each one, and makes
-              them interchangeable.
+        <div className="grid grid-cols-1 gap-6">
+          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+              Strategy Pattern
+            </h4>
+            <p className="text-xs text-gray-600 mb-4">
+              Interchangeable algorithms (Payment Methods).
             </p>
+            <StrategyVisualizer />
           </div>
           <div className="bg-gray-50 p-4 rounded-lg">
             <h4 className="font-semibold text-gray-900 mb-1">State</h4>
