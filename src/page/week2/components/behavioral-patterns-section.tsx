@@ -1,5 +1,6 @@
 import { Badge } from '../../../components/ui/badge';
 import { Card } from '../../../components/ui/card';
+import { ObserverVisualizer } from './observer-visualizer';
 
 export const BehavioralPatternsSection = () => {
   return (
@@ -19,17 +20,35 @@ export const BehavioralPatternsSection = () => {
         </div>
       </div>
 
-      <div className="space-y-4">
-        <div className="bg-gray-50 p-4 rounded-lg">
-          <h4 className="font-semibold text-gray-900 mb-2">Observer</h4>
-          <p className="text-sm text-gray-700 mb-2">
-            Lets you define a subscription mechanism to notify multiple objects
-            about any events that happen to the object they're observing.
-          </p>
-          <div className="text-sm text-gray-600 italic">
-            Common in JS: Event Listeners, RxJS, Redux (Flux).
+      <div className="space-y-8">
+        <section>
+          <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+            Observer Pattern
+          </h4>
+          <div className="grid grid-cols-1 gap-6">
+            <div className="space-y-4">
+              <div>
+                <p className="text-sm text-gray-700 mb-2">
+                  Lets you define a subscription mechanism to notify multiple
+                  objects about any events that happen to the object they're
+                  observing.
+                </p>
+                <div className="text-sm text-gray-600 italic bg-gray-50 p-2 rounded">
+                  Common in JS: Event Listeners, RxJS, Redux (Flux).
+                </div>
+              </div>
+            </div>
+            <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
+              <div className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">
+                Interactive Demo
+              </div>
+              <ObserverVisualizer />
+            </div>
           </div>
-        </div>
+        </section>
+
+        <div className="h-px bg-gray-100" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-gray-50 p-4 rounded-lg">

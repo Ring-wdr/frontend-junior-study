@@ -1,6 +1,7 @@
 import { Badge } from '../../../components/ui/badge';
 import { Card } from '../../../components/ui/card';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { DecoratorVisualizer } from './decorator-visualizer';
 
 export const StructuralPatternsSection = () => {
   return (
@@ -20,26 +21,47 @@ export const StructuralPatternsSection = () => {
         </div>
       </div>
 
-      <div className="space-y-4">
-        <div className="bg-gray-50 p-4 rounded-lg">
-          <h4 className="font-semibold text-gray-900 mb-2">Decorator</h4>
-          <p className="text-sm text-gray-700 mb-2">
-            Attaches additional responsibilities to an object dynamically.
-            Flexible alternative to subclassing.
-          </p>
-          <CodeBlock
-            code={`function readonly(target, key, descriptor) {
-  descriptor.writable = false;
-  return descriptor;
-}
-
+      <div className="space-y-8">
+        <section>
+          <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+            Decorator Pattern
+          </h4>
+          <div className="grid grid-cols-1 gap-6">
+            <div>
+              <p className="text-sm text-gray-700 mb-4">
+                Attaches additional responsibilities to an object dynamically.
+                Flexible alternative to subclassing.
+              </p>
+              <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                <div className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">
+                  Interactive Demo
+                </div>
+                <DecoratorVisualizer />
+              </div>
+            </div>
+            <div className="space-y-4">
+              <h5 className="text-sm font-medium text-gray-900">Concept</h5>
+              <div className="bg-indigo-50 p-3 rounded text-sm text-indigo-900">
+                Instead of creating `BorderedCard`, `GlowCard`,
+                `BorderedGlowCard` classes...
+                <br />
+                <br />
+                We create small decorators: `BorderDecorator`, `GlowDecorator`
+                and wrap the base card.
+              </div>
+              <CodeBlock
+                code={`@readonly
 class Example {
-  @readonly
-  name = "Fixed";
+    // ...
 }`}
-            className="text-xs"
-          />
-        </div>
+                className="text-xs"
+              />
+            </div>
+          </div>
+        </section>
+
+        <div className="h-px bg-gray-100" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-gray-50 p-4 rounded-lg">
