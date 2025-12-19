@@ -1,6 +1,7 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import type { BadgeColor } from './ui/badge';
+import { Badge } from './ui/badge';
 import { Card } from './ui/card';
-import { Badge, BadgeColor } from './ui/badge';
 
 interface SectionCardProps {
   badge?: {
