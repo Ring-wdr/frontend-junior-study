@@ -1,4 +1,5 @@
 import { InfoBox, SectionCard } from '../../../components';
+import { ComponentPatternsVisualizer } from './component-patterns-visualizer';
 
 export const ComponentPatternsSection = () => {
   return (
@@ -7,7 +8,9 @@ export const ComponentPatternsSection = () => {
       title="Component Architecture Patterns"
       description="Advanced patterns for component composition and reusability."
     >
-      <div className="space-y-6">
+      <div className="space-y-8">
+        <ComponentPatternsVisualizer />
+
         <InfoBox variant="gray" title="Compound Components">
           <p className="text-sm text-gray-700 mb-2">
             Components that work together to form a complete UI, often sharing

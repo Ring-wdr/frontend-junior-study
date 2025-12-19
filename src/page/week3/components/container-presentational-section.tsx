@@ -1,4 +1,5 @@
 import { InfoBox, SectionCard } from '../../../components';
+import { ContainerPresentationalVisualizer } from './container-presentational-visualizer';
 
 export const ContainerPresentationalSection = () => {
   return (
@@ -8,6 +9,8 @@ export const ContainerPresentationalSection = () => {
       description="A pattern for separating business logic/data fetching from UI rendering."
     >
       <div className="space-y-6">
+        <ContainerPresentationalVisualizer />
+
         <InfoBox variant="gray" title="Core Concept">
           <div className="space-y-4 text-sm text-gray-700">
             <div>

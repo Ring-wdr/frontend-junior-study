@@ -1,4 +1,5 @@
 import { InfoBox, SectionCard } from '../../../components';
+import { AtomicDesignVisualizer } from './atomic-design-visualizer';
 
 export const AtomicDesignSection = () => {
   return (
@@ -8,6 +9,8 @@ export const AtomicDesignSection = () => {
       description="A methodology for creating design systems by breaking them down into five distinct levels."
     >
       <div className="space-y-6">
+        <AtomicDesignVisualizer />
+
         <InfoBox variant="blue" title="What is Atomic Design?">
           <p className="text-sm text-gray-700">
             Atomic Design is a methodology composed of five distinct stages

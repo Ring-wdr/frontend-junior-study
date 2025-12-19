@@ -1,4 +1,5 @@
 import { InfoBox, SectionCard } from '../../../components';
+import { PerformanceVisualizer } from './performance-visualizer';
 
 export const PerformanceSection = () => {
   return (
@@ -7,7 +8,9 @@ export const PerformanceSection = () => {
       title="Performance Patterns"
       description="Techniques to optimize rendering and application performance."
     >
-      <div className="space-y-6">
+      <div className="space-y-8">
+        <PerformanceVisualizer />
+
         <InfoBox variant="gray" title="Memoization">
           <p className="text-sm text-gray-700 mb-2">
             Caching the result of an expensive function call and returning the
