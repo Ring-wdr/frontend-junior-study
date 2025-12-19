@@ -64,6 +64,14 @@ const router = createHashRouter([
           return { Component: Week3Page };
         },
       },
+      {
+        path: 'week-4',
+        // Router v7 way: lazy load the module and return { Component }
+        lazy: async () => {
+          const { default: Week4Page } = await import('./page/week4/page');
+          return { Component: Week4Page };
+        },
+      },
     ],
   },
 ]);
