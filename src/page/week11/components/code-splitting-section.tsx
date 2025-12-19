@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { cn } from '../../../lib/utils';
 
 export function CodeSplittingSection() {
   const [activeTab, setActiveTab] = useState<'react' | 'nextjs'>('react');
@@ -103,20 +104,32 @@ export function CodeSplittingSection() {
             </div>
             <div className="flex bg-slate-800 p-1 rounded-lg">
               <button
+                type="button"
                 onClick={() => {
                   setMode('monolith');
                   resetSimulation();
                 }}
-                className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${mode === 'monolith' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'}`}
+                className={cn(
+                  'px-3 py-1.5 rounded text-sm font-medium transition-colors',
+                  mode === 'monolith'
+                    ? 'bg-indigo-600 text-white'
+                    : 'text-slate-400 hover:text-white',
+                )}
               >
                 Monolithic Bundle (Classic)
               </button>
               <button
+                type="button"
                 onClick={() => {
                   setMode('split');
                   resetSimulation();
                 }}
-                className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${mode === 'split' ? 'bg-green-600 text-white' : 'text-slate-400 hover:text-white'}`}
+                className={cn(
+                  'px-3 py-1.5 rounded text-sm font-medium transition-colors',
+                  mode === 'split'
+                    ? 'bg-green-600 text-white'
+                    : 'text-slate-400 hover:text-white',
+                )}
               >
                 Code Splitting (Modern)
               </button>
@@ -180,6 +193,7 @@ export function CodeSplittingSection() {
                 </div>
               ) : (
                 <button
+                  type="button"
                   onClick={() => simulateLoad('main')}
                   disabled={isSimulating}
                   className="w-full py-1.5 bg-indigo-600 text-white text-xs rounded hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -227,6 +241,7 @@ export function CodeSplittingSection() {
                 </div>
               ) : (
                 <button
+                  type="button"
                   onClick={() => simulateLoad('dashboard')}
                   disabled={!isLoaded.main || (isSimulating as boolean)}
                   className="w-full py-1.5 bg-slate-700 text-slate-300 text-xs rounded hover:bg-green-600 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
@@ -263,6 +278,7 @@ export function CodeSplittingSection() {
                 </div>
               ) : (
                 <button
+                  type="button"
                   onClick={() => simulateLoad('chart')}
                   disabled={!isLoaded.main || (isSimulating as boolean)}
                   className="w-full py-1.5 bg-slate-700 text-slate-300 text-xs rounded hover:bg-pink-600 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"

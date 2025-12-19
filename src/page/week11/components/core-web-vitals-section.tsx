@@ -1,5 +1,4 @@
 import {
-  Activity,
   AlertTriangle,
   CheckCircle2,
   Clock,
@@ -225,12 +224,14 @@ export function CoreWebVitalsSection() {
               {selectedMetric === 'lcp' && (
                 <div className="flex gap-2 bg-white p-1 rounded-md shadow-sm">
                   <button
+                    type="button"
                     onClick={() => setLcpMode('good')}
                     className={`px-3 py-1 rounded ${lcpMode === 'good' ? 'bg-green-100 text-green-700 font-medium' : 'text-gray-500 hover:bg-gray-50'}`}
                   >
                     Good (0.8s)
                   </button>
                   <button
+                    type="button"
                     onClick={() => setLcpMode('bad')}
                     className={`px-3 py-1 rounded ${lcpMode === 'bad' ? 'bg-red-100 text-red-700 font-medium' : 'text-gray-500 hover:bg-gray-50'}`}
                   >
@@ -241,12 +242,14 @@ export function CoreWebVitalsSection() {
               {selectedMetric === 'inp' && (
                 <div className="flex gap-2 bg-white p-1 rounded-md shadow-sm">
                   <button
+                    type="button"
                     onClick={() => setInpMode('good')}
                     className={`px-3 py-1 rounded ${inpMode === 'good' ? 'bg-green-100 text-green-700 font-medium' : 'text-gray-500 hover:bg-gray-50'}`}
                   >
                     Good (50ms)
                   </button>
                   <button
+                    type="button"
                     onClick={() => setInpMode('bad')}
                     className={`px-3 py-1 rounded ${inpMode === 'bad' ? 'bg-red-100 text-red-700 font-medium' : 'text-gray-500 hover:bg-gray-50'}`}
                   >
@@ -257,6 +260,7 @@ export function CoreWebVitalsSection() {
               {selectedMetric === 'cls' && (
                 <div className="flex gap-2 bg-white p-1 rounded-md shadow-sm">
                   <button
+                    type="button"
                     onClick={() => {
                       setClsMode('good');
                       setClsScore(0);
@@ -267,6 +271,7 @@ export function CoreWebVitalsSection() {
                     Good (Fixed)
                   </button>
                   <button
+                    type="button"
                     onClick={() => {
                       setClsMode('bad');
                       setClsScore(0);
@@ -287,6 +292,7 @@ export function CoreWebVitalsSection() {
                 <div className="flex justify-between items-center pb-2 border-b border-gray-100">
                   <div className="h-4 w-24 bg-gray-200 rounded"></div>
                   <button
+                    type="button"
                     onClick={runLcpSim}
                     disabled={lcpState === 'loading'}
                     className="flex items-center gap-1.5 px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded hover:bg-blue-700 disabled:opacity-50"
@@ -346,6 +352,7 @@ export function CoreWebVitalsSection() {
                 </div>
 
                 <button
+                  type="button"
                   onClick={runInpSim}
                   className={`px-6 py-3 rounded-lg font-semibold text-white transition-all active:scale-95 ${
                     inpState === 'processing'
@@ -399,6 +406,7 @@ export function CoreWebVitalsSection() {
                   {/* Simulated Ad/Content injection */}
                   <div className="absolute top-4 right-4 z-10">
                     <button
+                      type="button"
                       onClick={runClsSim}
                       className="p-2 bg-orange-100 text-orange-600 rounded-full hover:bg-orange-200 transition-colors shadow-sm"
                       title="Trigger Content Load"

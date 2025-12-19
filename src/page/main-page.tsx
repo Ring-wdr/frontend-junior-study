@@ -216,6 +216,40 @@ export default function MainPage() {
               </p>
             </div>
           </Link>
+
+          <Link
+            to="/week-13"
+            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
+          >
+            <div className="flex flex-col items-start text-left space-y-2">
+              <span className="text-sm font-semibold text-cyan-600 bg-cyan-50 px-2 py-1 rounded-md group-hover:bg-cyan-100 transition-colors">
+                Week 13
+              </span>
+              <h2 className="text-xl font-semibold group-hover:text-cyan-600 transition-colors">
+                Workers & PWA
+              </h2>
+              <p className="text-sm text-gray-500 line-clamp-2">
+                Web Workers, Service Workers, PWA, IndexedDB, offline-first.
+              </p>
+            </div>
+          </Link>
+
+          <Link
+            to="/week-14"
+            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
+          >
+            <div className="flex flex-col items-start text-left space-y-2">
+              <span className="text-sm font-semibold text-teal-600 bg-teal-50 px-2 py-1 rounded-md group-hover:bg-teal-100 transition-colors">
+                Week 14
+              </span>
+              <h2 className="text-xl font-semibold group-hover:text-teal-600 transition-colors">
+                Accessibility & i18n
+              </h2>
+              <p className="text-sm text-gray-500 line-clamp-2">
+                WCAG, Semantic HTML, ARIA, Focus Management, i18n, RTL support.
+              </p>
+            </div>
+          </Link>
         </div>
       </div>
     </div>

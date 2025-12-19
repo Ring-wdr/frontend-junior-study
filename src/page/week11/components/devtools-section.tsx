@@ -10,6 +10,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { cn } from '../../../lib/utils';
 
 export function DevToolsSection() {
   // Visualizer State
@@ -140,6 +141,7 @@ export function DevToolsSection() {
 
           <div className="flex gap-4 mb-6">
             <button
+              type="button"
               onClick={() => runTask('short')}
               disabled={isBlocking}
               className="flex-1 py-2 bg-green-600 hover:bg-green-700 text-white rounded font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
@@ -147,6 +149,7 @@ export function DevToolsSection() {
               Run Short Task (20ms)
             </button>
             <button
+              type="button"
               onClick={() => runTask('long')}
               disabled={isBlocking}
               className="flex-1 py-2 bg-red-600 hover:bg-red-700 text-white rounded font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
@@ -164,15 +167,17 @@ export function DevToolsSection() {
               {tasks.slice(-15).map((task) => (
                 <div
                   key={task.id}
-                  className={`
-                                relative rounded-t-sm animate-in slide-in-from-right-10 duration-300
-                                ${task.type === 'long' ? 'bg-red-500 w-32' : 'bg-green-500 w-4'}
-                            `}
+                  className={cn(
+                    'relative rounded-t-sm animate-in slide-in-from-right-10 duration-300',
+                    task.type === 'long'
+                      ? 'bg-red-500 w-32'
+                      : 'bg-green-500 w-4',
+                  )}
                   style={{ height: '70%' }}
                 >
                   {task.type === 'long' && (
                     <div className="absolute -top-3 left-0 w-full flex justify-center">
-                      <div className="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[6px] border-t-red-500"></div>
+                      <div className="w-0 h-0 border-l-4 border-l-transparent border-r-4 border-r-transparent border-t-6 border-t-red-500"></div>
                     </div>
                   )}
                   {task.type === 'long' && (
@@ -213,11 +218,14 @@ export function DevToolsSection() {
               </div>
             </div>
             <button
+              type="button"
               onClick={handleInteraction}
-              className={`
-                        px-4 py-2 rounded font-bold text-sm transition-transform active:scale-95
-                        ${isBlocking ? 'bg-gray-600 text-gray-400 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}
-                    `}
+              className={cn(
+                'px-4 py-2 rounded font-bold text-sm transition-transform active:scale-95',
+                isBlocking
+                  ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                  : 'bg-blue-500 text-white hover:bg-blue-600',
+              )}
             >
               Clicked: {clicks}
             </button>
@@ -232,7 +240,7 @@ export function DevToolsSection() {
           )}
         </div>
 
-        <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-6 text-white">
+        <div className="bg-linear-to-br from-gray-900 to-gray-800 rounded-xl p-6 text-white">
           <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
             <Play size={18} /> Performance 탭 사용법
           </h3>

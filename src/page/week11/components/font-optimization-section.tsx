@@ -7,7 +7,7 @@ import {
   Type,
   Zap,
 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export function FontOptimizationSection() {
@@ -57,6 +57,7 @@ export function FontOptimizationSection() {
             </div>
             <div className="flex bg-white p-1 rounded-lg border border-amber-100 shadow-sm">
               <button
+                type="button"
                 onClick={() => {
                   setStrategy('swap');
                   setFontStatus('system');
@@ -66,6 +67,7 @@ export function FontOptimizationSection() {
                 display: swap (FOUT)
               </button>
               <button
+                type="button"
                 onClick={() => {
                   setStrategy('block');
                   setFontStatus('system');
@@ -124,6 +126,7 @@ export function FontOptimizationSection() {
 
             <div className="mt-8 pt-6 border-t border-gray-100 flex justify-between items-center">
               <button
+                type="button"
                 onClick={simulateLoad}
                 disabled={fontStatus === 'loading' || fontStatus === 'custom'}
                 className="flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium shadow-sm"
@@ -177,9 +180,9 @@ export function FontOptimizationSection() {
               {/* Hack to enable Reset */}
               {fontStatus === 'custom' && (
                 <button
+                  type="button"
                   onClick={() => setFontStatus('system')}
                   className="absolute inset-0 w-full h-full opacity-0 cursor-default"
-                  aria-hidden="true"
                 />
               )}
             </div>
