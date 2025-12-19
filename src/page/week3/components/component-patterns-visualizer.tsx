@@ -5,9 +5,9 @@ import {
   createContext,
   type ReactNode,
   useContext,
-  useEffect,
   useState,
 } from 'react';
+import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
 // ==========================================
@@ -151,31 +151,62 @@ export const ComponentPatternsVisualizer = () => {
             Implicit State Sharing
           </h3>
         </div>
-        <Tabs defaultValue="account">
-          <TabList>
-            <Tab id="account">Account</Tab>
-            <Tab id="privacy">Privacy</Tab>
-            <Tab id="settings">Settings</Tab>
-          </TabList>
-          <TabPanel id="account">
-            <h4 className="font-bold">Account Settings</h4>
-            <p className="text-sm text-gray-500">
-              Manage your account details here.
-            </p>
-          </TabPanel>
-          <TabPanel id="privacy">
-            <h4 className="font-bold">Privacy Options</h4>
-            <p className="text-sm text-gray-500">
-              Control who sees your profile.
-            </p>
-          </TabPanel>
-          <TabPanel id="settings">
-            <h4 className="font-bold">General Settings</h4>
-            <p className="text-sm text-gray-500">
-              App preferences and configurations.
-            </p>
-          </TabPanel>
-        </Tabs>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Interactive Demo */}
+          <Tabs defaultValue="account">
+            <TabList>
+              <Tab id="account">Account</Tab>
+              <Tab id="privacy">Privacy</Tab>
+              <Tab id="settings">Settings</Tab>
+            </TabList>
+            <TabPanel id="account">
+              <h4 className="font-bold">Account Settings</h4>
+              <p className="text-sm text-gray-500">
+                Manage your account details here.
+              </p>
+            </TabPanel>
+            <TabPanel id="privacy">
+              <h4 className="font-bold">Privacy Options</h4>
+              <p className="text-sm text-gray-500">
+                Control who sees your profile.
+              </p>
+            </TabPanel>
+            <TabPanel id="settings">
+              <h4 className="font-bold">General Settings</h4>
+              <p className="text-sm text-gray-500">
+                App preferences and configurations.
+              </p>
+            </TabPanel>
+          </Tabs>
+
+          {/* Code Snippet */}
+          <div className="space-y-4">
+            <CodeBlock
+              code={`<Tabs defaultValue="account">
+  <TabList>
+    <Tab id="account">Account</Tab>
+    <Tab id="privacy">Privacy</Tab>
+  </TabList>
+
+  <TabPanel id="account">
+    ...content
+  </TabPanel>
+  <TabPanel id="privacy">
+    ...content
+  </TabPanel>
+</Tabs>`}
+              className="text-xs"
+            />
+            <div className="text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-200">
+              <p className="mb-1 font-semibold text-gray-900">Key Characteristic:</p>
+              <p className="text-sm">
+                Sub-components (Tab, TabPanel) communicate via Context provided
+                by parent (Tabs), not via direct prop passing from user.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Render Props */}
@@ -188,18 +219,42 @@ export const ComponentPatternsVisualizer = () => {
             Logic Reuse via Function Prop
           </h3>
         </div>
-        <MouseTracker
-          render={({ x, y }) => (
-            <div
-              className="absolute pointer-events-none w-6 h-6 bg-pink-500 rounded-full shadow-[0_0_15px_rgba(236,72,153,0.6)] transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-75"
-              style={{ left: x, top: y }}
-            >
-              <span className="absolute top-full left-1/2 -translate-x-1/2 mt-1 text-[10px] text-white whitespace-nowrap bg-black/50 px-1 rounded">
-                {Math.round(x)}, {Math.round(y)}
-              </span>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <MouseTracker
+            render={({ x, y }) => (
+              <div
+                className="absolute pointer-events-none w-6 h-6 bg-pink-500 rounded-full shadow-[0_0_15px_rgba(236,72,153,0.6)] transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-75"
+                style={{ left: x, top: y }}
+              >
+                <span className="absolute top-full left-1/2 -translate-x-1/2 mt-1 text-[10px] text-white whitespace-nowrap bg-black/50 px-1 rounded">
+                  {Math.round(x)}, {Math.round(y)}
+                </span>
+              </div>
+            )}
+          />
+
+          {/* Code Snippet */}
+          <div className="space-y-4">
+            <CodeBlock
+              code={`<MouseTracker
+  render={({ x, y }) => (
+    <div style={{ left: x, top: y }}>
+       {x}, {y}
+    </div>
+  )}
+/>`}
+              className="text-xs"
+            />
+            <div className="text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-200">
+              <p className="mb-1 font-semibold text-gray-900">Key Characteristic:</p>
+              <p className="text-sm">
+                The component doesn't decide <em>what</em> to render, but
+                delegates that decision to the <code>render</code> prop
+                function, sharing its internal state (x, y).
+              </p>
             </div>
-          )}
-        />
+          </div>
+        </div>
       </div>
 
       {/* HOC */}
@@ -213,29 +268,62 @@ export const ComponentPatternsVisualizer = () => {
           </h3>
         </div>
 
-        <div className="flex items-center gap-4 mb-4">
-          <button
-            type="button"
-            onClick={() => setLoading(!loading)}
-            className={cn(
-              'px-4 py-2 text-sm font-medium rounded-lg transition-colors border',
-              loading
-                ? 'bg-red-50 text-red-600 border-red-200 hover:bg-red-100'
-                : 'bg-blue-50 text-blue-600 border-blue-200 hover:bg-blue-100',
-            )}
-          >
-            {loading ? 'Stop Loading' : 'Start Loading'}
-          </button>
-          <span className="text-xs text-gray-500">
-            Passes <code>isLoading={'{' + loading.toString() + '}'}</code> to
-            HOC
-          </span>
-        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <div className="flex items-center gap-4 mb-4">
+              <button
+                type="button"
+                onClick={() => setLoading(!loading)}
+                className={cn(
+                  'px-4 py-2 text-sm font-medium rounded-lg transition-colors border',
+                  loading
+                    ? 'bg-red-50 text-red-600 border-red-200 hover:bg-red-100'
+                    : 'bg-blue-50 text-blue-600 border-blue-200 hover:bg-blue-100',
+                )}
+              >
+                {loading ? 'Stop Loading' : 'Start Loading'}
+              </button>
+              <span className="text-xs text-gray-500">
+                Passes <code>isLoading={'{' + loading.toString() + '}'}</code>{' '}
+                to HOC
+              </span>
+            </div>
 
-        <ListWithLoading
-          isLoading={loading}
-          items={['Message 1', 'Message 2', 'Message 3']}
-        />
+            <ListWithLoading
+              isLoading={loading}
+              items={['Message 1', 'Message 2', 'Message 3']}
+            />
+          </div>
+
+          {/* Code Snippet */}
+          <div className="space-y-4">
+            <CodeBlock
+              code={`// 1. Create HOC
+function withLoading(Wrapped) {
+  return ({ isLoading, ...props }) => (
+    <div className="relative">
+      {isLoading && <Spinner />}
+      <Wrapped {...props} />
+    </div>
+  );
+}
+
+// 2. Wrap Component
+const ListWithLoading = withLoading(List);
+
+// 3. Use It
+<ListWithLoading isLoading={true} />`}
+              className="text-xs"
+            />
+            <div className="text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-200">
+              <p className="mb-1 font-semibold text-gray-900">Key Characteristic:</p>
+              <p className="text-sm">
+                A function that takes a component and returns a new component
+                ("Wrapper"), injecting new props or behavior (like the Spinner).
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

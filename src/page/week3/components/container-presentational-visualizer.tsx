@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Database, LayoutTemplate, Loader2 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { CodeBlock } from '../../../components/ui/code-block';
 
 // Types for our "Data"
 interface DogData {
@@ -75,7 +76,7 @@ export const ContainerPresentationalVisualizer = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<DogData | null>(null);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     // Simulate network delay
     setTimeout(() => {
@@ -88,49 +89,91 @@ export const ContainerPresentationalVisualizer = () => {
       });
       setLoading(false);
     }, 1500);
-  };
+  }, []);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {/* Logical Layer Visualization */}
-      <div className="bg-blue-50 p-4 rounded-xl border border-blue-100 flex flex-col gap-4 relative">
-        <div className="absolute top-2 right-2 text-[10px] font-bold text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full flex items-center gap-1">
-          <Database className="w-3 h-3" />
-          Container
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Logical Layer Visualization */}
+        <div className="bg-blue-50 p-4 rounded-xl border border-blue-100 flex flex-col gap-4 relative">
+          <div className="absolute top-2 right-2 text-[10px] font-bold text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full flex items-center gap-1">
+            <Database className="w-3 h-3" />
+            Container
+          </div>
+          <div className="text-sm font-semibold text-blue-900 mb-2">
+            State Manager
+          </div>
+          <div className="flex-1 font-mono text-xs bg-white/50 p-3 rounded-lg border border-blue-100 space-y-2">
+            <div>
+              <span className="text-gray-400">const</span> [loading, setLoading]
+              ={' '}
+              <span
+                className={`${loading ? 'text-green-600 font-bold' : 'text-gray-600'}`}
+              >
+                {String(loading)}
+              </span>
+              ;
+            </div>
+            <div>
+              <span className="text-gray-400">const</span> [data, setData] ={' '}
+              <span className="text-orange-600">
+                {data ? `{ breed: "${data.breed}" ... }` : 'null'}
+              </span>
+              ;
+            </div>
+            <div className="pt-2 border-t border-blue-100 text-gray-500">
+              {/** biome-ignore lint/suspicious/noCommentText: it really show comment */}
+              // Fetches data, then passes to Presentation
+            </div>
+          </div>
         </div>
-        <div className="text-sm font-semibold text-blue-900 mb-2">
-          State Manager
-        </div>
-        <div className="flex-1 font-mono text-xs bg-white/50 p-3 rounded-lg border border-blue-100 space-y-2">
-          <div>
-            <span className="text-gray-400">const</span> [loading, setLoading] ={' '}
-            <span
-              className={`${loading ? 'text-green-600 font-bold' : 'text-gray-600'}`}
-            >
-              {String(loading)}
-            </span>
-            ;
-          </div>
-          <div>
-            <span className="text-gray-400">const</span> [data, setData] ={' '}
-            <span className="text-orange-600">
-              {data ? `{ breed: "${data.breed}" ... }` : 'null'}
-            </span>
-            ;
-          </div>
-          <div className="pt-2 border-t border-blue-100 text-gray-500">
-            // Fetches data, then passes to Presentation
-          </div>
+
+        {/* UI Layer */}
+        <div>
+          <DogImageCard loading={loading} data={data} onRefresh={fetchData} />
         </div>
       </div>
 
-      {/* UI Layer */}
-      <div>
-        <DogImageCard loading={loading} data={data} onRefresh={fetchData} />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <CodeBlock
+            code={`const DogContainer = () => {
+  const [data, setData] = useState(null);
+
+  // Data fetching logic only
+  useEffect(() => { ... }, []);
+
+  // Passes data down
+  return <DogImageCard data={data} />;
+}`}
+            className="text-xs"
+          />
+        </div>
+        <div>
+          <CodeBlock
+            code={`const DogImageCard = ({ data }) => (
+  <div className="card">
+     {/* UI rendering only */}
+     <img src={data.url} />
+     <h3>{data.breed}</h3>
+  </div>
+);`}
+            className="text-xs"
+          />
+        </div>
+      </div>
+
+      <div className="text-sm text-gray-600 bg-gray-50 p-4 rounded-lg border border-gray-100">
+        <p>
+          The <strong>Container</strong> (left) handles <em>how things work</em>{' '}
+          (fetching data, state), while the <strong>Presentational</strong>{' '}
+          (right) handles <em>how things look</em> (rendering HTML/CSS). This
+          separation makes components more reusable and easier to test.
+        </p>
       </div>
     </div>
   );

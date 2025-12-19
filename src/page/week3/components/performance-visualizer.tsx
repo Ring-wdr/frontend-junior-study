@@ -35,13 +35,20 @@ const MemoizationDemo = () => {
 
   return (
     <div className="space-y-4 border p-4 rounded-xl bg-gray-50">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center gap-2">
         <button
           type="button"
           onClick={() => setCount((c) => c + 1)}
           className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
         >
           Trigger Parent Update (Count: {count})
+        </button>
+        <button
+          type="button"
+          onClick={() => setCount(0)}
+          className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition"
+        >
+          Reset
         </button>
       </div>
 
