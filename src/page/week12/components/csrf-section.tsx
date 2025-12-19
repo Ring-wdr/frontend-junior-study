@@ -9,6 +9,24 @@ export const CsrfSection = () => {
   const [sameSiteValue, setSameSiteValue] = useState<'Strict' | 'Lax' | 'None'>(
     'Lax',
   );
+  const [bankBalance, setBankBalance] = useState(1000);
+  const [lastTransaction, setLastTransaction] = useState<string | null>(null);
+
+  const handleAttack = () => {
+    // Attack simulation logic based on SameSite policy
+    // Strict: Blocks all cross-site
+    // Lax: Blocks cross-site POST (which this simulates)
+    // None: Allows it
+    if (sameSiteValue === 'None') {
+      setBankBalance((prev) => prev - 100);
+      setLastTransaction('Unauthorized Transfer: -$100');
+    } else {
+      setLastTransaction('Blocked by SameSite Policy 🛡️');
+    }
+
+    // Auto clear message
+    setTimeout(() => setLastTransaction(null), 2000);
+  };
 
   const sameSiteExplanations = {
     Strict: {
@@ -36,7 +54,7 @@ export const CsrfSection = () => {
 
   return (
     <SectionCard
-      badge={{ label: 'Security', color: 'red' }}
+      badge={{ label: 'Security', color: 'purple' }}
       title="CSRF & SameSite Cookies"
       description="Protecting against Cross-Site Request Forgery attacks"
     >
@@ -77,49 +95,100 @@ export const CsrfSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title="SameSite Cookie Attribute" icon iconColor="blue">
-          <DemoBox label="SameSite Values Explained">
-            <div className="space-y-4">
-              <div className="flex gap-2">
-                {(['Strict', 'Lax', 'None'] as const).map((value) => (
-                  <button
-                    key={value}
-                    type="button"
-                    onClick={() => setSameSiteValue(value)}
-                    className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${
-                      sameSiteValue === value
-                        ? value === 'Strict'
-                          ? 'bg-green-600 text-white'
-                          : value === 'Lax'
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-red-600 text-white'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                    }`}
-                  >
-                    {value}
-                  </button>
-                ))}
+        <SubSection title="Interactive CSRF Simulator" icon iconColor="blue">
+          <DemoBox label="Attack Playground">
+            <div className="space-y-6">
+              {/* Configuration */}
+              <div className="flex justify-center p-4 bg-gray-50 rounded-lg">
+                <div className="flex gap-2">
+                  {(['Strict', 'Lax', 'None'] as const).map((value) => (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => setSameSiteValue(value)}
+                      className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${
+                        sameSiteValue === value
+                          ? value === 'Strict'
+                            ? 'bg-green-600 text-white shadow-lg scale-105'
+                            : value === 'Lax'
+                              ? 'bg-blue-600 text-white shadow-lg scale-105'
+                              : 'bg-red-600 text-white shadow-lg scale-105'
+                          : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+                      }`}
+                    >
+                      SameSite={value}
+                    </button>
+                  ))}
+                </div>
               </div>
 
-              <div
-                className={`p-4 rounded-lg border ${
-                  sameSiteExplanations[sameSiteValue].color === 'green'
-                    ? 'bg-green-50 border-green-200'
-                    : sameSiteExplanations[sameSiteValue].color === 'blue'
-                      ? 'bg-blue-50 border-blue-200'
-                      : 'bg-red-50 border-red-200'
-                }`}
-              >
-                <p className="text-sm mb-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Victim Website */}
+                <div className="border-4 border-blue-100 rounded-xl overflow-hidden shadow-sm relative">
+                  <div className="bg-blue-600 text-white px-4 py-2 text-sm font-bold flex justify-between items-center">
+                    <span>🏦 Bank.com</span>
+                    <span className="text-xs bg-blue-500 px-2 py-1 rounded">
+                      Authenticated
+                    </span>
+                  </div>
+                  <div className="p-6 space-y-4 bg-white h-full">
+                    <div className="text-center">
+                      <p className="text-gray-500 text-sm">Your Balance</p>
+                      <p className="text-3xl font-bold text-gray-800">
+                        ${bankBalance}
+                      </p>
+                    </div>
+
+                    {lastTransaction && (
+                      <div
+                        className={`p-3 rounded text-sm text-center font-bold animate-pulse ${lastTransaction.includes('Blocked') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}
+                      >
+                        {lastTransaction}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Attacker Website */}
+                <div className="border-4 border-red-100 rounded-xl overflow-hidden shadow-sm relative">
+                  <div className="bg-gray-800 text-white px-4 py-2 text-sm font-bold flex justify-between items-center">
+                    <span>💀 Evil-Site.com</span>
+                  </div>
+                  <div className="p-6 space-y-4 bg-gray-50 h-full flex flex-col justify-center items-center">
+                    <p className="text-center font-bold text-gray-800 text-lg">
+                      CONGRATULATIONS!
+                    </p>
+                    <p className="text-center text-sm text-gray-600">
+                      You won a free iPhone! Click below to claim.
+                    </p>
+
+                    <button
+                      type="button"
+                      onClick={handleAttack}
+                      className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg shadow-md hover:scale-105 transition-transform w-full animate-bounce"
+                    >
+                      🎁 CLAIM PRIZE
+                    </button>
+                    <p className="text-xs text-gray-400 text-center">
+                      (Hidden: POST /transfer to Bank.com)
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gray-100 p-4 rounded-lg text-sm text-gray-700">
+                <p>
+                  <strong>Current Protection:</strong>{' '}
                   {sameSiteExplanations[sameSiteValue].desc}
-                </p>
-                <p className="text-xs text-gray-600 mb-2">
-                  <strong>Example:</strong>{' '}
-                  {sameSiteExplanations[sameSiteValue].example}
-                </p>
-                <p className="text-xs">
-                  <strong>Protection Level:</strong>{' '}
-                  {sameSiteExplanations[sameSiteValue].protection}
+                  {sameSiteValue !== 'None' ? (
+                    <span className="text-green-600 font-bold ml-2">
+                      CSRF Attack Blocked.
+                    </span>
+                  ) : (
+                    <span className="text-red-600 font-bold ml-2">
+                      Vulnerable! Cookie sent.
+                    </span>
+                  )}
                 </p>
               </div>
             </div>

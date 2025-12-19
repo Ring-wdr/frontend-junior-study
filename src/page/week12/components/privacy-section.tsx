@@ -36,7 +36,7 @@ export const PrivacySection = () => {
 
   return (
     <SectionCard
-      badge={{ label: 'Best Practices', color: 'gray' }}
+      badge={{ label: 'Best Practices', color: 'blue' }}
       title="Privacy & Security UX"
       description="Frontend considerations for user privacy and security"
     >
@@ -57,6 +57,67 @@ export const PrivacySection = () => {
           </InfoBox>
         </SubSection>
 
+        <SubSection title="Cookie Consent UX" icon iconColor="blue">
+          <DemoBox label="Consent Banner Simulator">
+            <div className="space-y-4">
+              <div className="bg-gray-800 text-white p-4 rounded-lg shadow-xl relative overflow-hidden">
+                <div className="relative z-10">
+                  <h4 className="font-bold mb-2">We value your privacy</h4>
+                  <p className="text-sm text-gray-300 mb-4">
+                    We use cookies to enhance your browsing experience, serve
+                    personalized ads or content, and analyze our traffic.
+                  </p>
+
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="flex items-center gap-2 bg-gray-700 px-3 py-1 rounded">
+                      <input
+                        type="checkbox"
+                        checked
+                        disabled
+                        className="accent-blue-500"
+                      />
+                      <span className="text-xs">Essential</span>
+                    </div>
+                    <div className="flex items-center gap-2 bg-gray-700 px-3 py-1 rounded">
+                      <input
+                        type="checkbox"
+                        defaultChecked
+                        className="accent-blue-500"
+                      />
+                      <span className="text-xs">Analytics</span>
+                    </div>
+                    <div className="flex items-center gap-2 bg-gray-700 px-3 py-1 rounded">
+                      <input type="checkbox" className="accent-blue-500" />
+                      <span className="text-xs">Marketing</span>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      className="flex-1 bg-white text-gray-900 py-2 rounded font-bold text-sm hover:bg-gray-100"
+                    >
+                      Accept All
+                    </button>
+                    <button
+                      type="button"
+                      className="flex-1 border border-gray-600 text-white py-2 rounded font-bold text-sm hover:bg-gray-700"
+                    >
+                      Reject Non-Essential
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-blue-50 p-3 rounded-lg border border-blue-100 text-xs text-blue-800">
+                <strong>Pro Tip:</strong> Don't use "Dark Patterns". A "Reject
+                All" button should be as visible and easy to click as "Accept
+                All".
+              </div>
+            </div>
+          </DemoBox>
+        </SubSection>
+
         <SubSection
           title="Password Field Best Practices"
           icon
@@ -65,10 +126,14 @@ export const PrivacySection = () => {
           <DemoBox label="Password Strength Indicator">
             <div className="space-y-4">
               <div>
-                <label className="text-sm font-medium block mb-1">
+                <label
+                  htmlFor="password-strength"
+                  className="text-sm font-medium block mb-1"
+                >
                   Enter Password:
                 </label>
                 <input
+                  id="password-strength"
                   type="password"
                   value={password}
                   onChange={(e) => handlePasswordChange(e.target.value)}
@@ -317,9 +382,9 @@ function TwoFactorInput({ onComplete }) {
                 item: 'Implement rate limiting for auth endpoints',
                 category: 'Security',
               },
-            ].map((item, idx) => (
+            ].map((item) => (
               <div
-                key={idx}
+                key={item.item}
                 className="flex items-center gap-3 bg-gray-50 p-3 rounded"
               >
                 <span className="text-green-500">✓</span>

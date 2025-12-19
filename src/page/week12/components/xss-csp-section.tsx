@@ -9,8 +9,6 @@ export const XssCspSection = () => {
   const [unsafeInput, setUnsafeInput] = useState(
     '<script>alert("XSS")</script>',
   );
-  const [sanitizedOutput, setSanitizedOutput] = useState('');
-
   const sanitizeHtml = (input: string) => {
     return input
       .replace(/&/g, '&amp;')
@@ -18,10 +16,6 @@ export const XssCspSection = () => {
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;');
-  };
-
-  const handleSanitize = () => {
-    setSanitizedOutput(sanitizeHtml(unsafeInput));
   };
 
   return (
@@ -66,37 +60,102 @@ export const XssCspSection = () => {
         </SubSection>
 
         <SubSection title="Input Sanitization Demo" icon iconColor="blue">
-          <DemoBox label="HTML Escaping">
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm font-medium block mb-1">
-                  User Input (potentially malicious):
-                </label>
-                <textarea
-                  value={unsafeInput}
-                  onChange={(e) => setUnsafeInput(e.target.value)}
-                  className="w-full p-2 border rounded text-sm font-mono h-20"
-                />
+          <DemoBox label="Reflected XSS Simulator">
+            <div className="space-y-6">
+              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border">
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`w-3 h-3 rounded-full ${unsafeInput.includes('<script>') ? 'bg-red-500 animate-pulse' : 'bg-gray-300'}`}
+                  />
+                  <span className="text-sm font-medium text-gray-700">
+                    Server Status
+                  </span>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setUnsafeInput('')}
+                    className="text-xs text-gray-500 hover:text-gray-900 underline"
+                  >
+                    Reset & Clear
+                  </button>
+                </div>
               </div>
 
-              <button
-                type="button"
-                onClick={handleSanitize}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
-              >
-                Sanitize HTML
-              </button>
-
-              {sanitizedOutput && (
-                <div className="bg-green-50 p-3 rounded border border-green-200">
-                  <p className="text-xs font-semibold text-green-800 mb-2">
-                    Safe Output (Escaped):
-                  </p>
-                  <code className="text-xs text-green-700 break-all">
-                    {sanitizedOutput}
-                  </code>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label
+                    htmlFor="malicious-input"
+                    className="text-sm font-bold text-gray-700"
+                  >
+                    1. Malicious Input
+                  </label>
+                  <textarea
+                    id="malicious-input"
+                    value={unsafeInput}
+                    onChange={(e) => setUnsafeInput(e.target.value)}
+                    className="w-full p-3 border rounded-lg text-sm font-mono h-32 focus:ring-2 focus:ring-blue-500 outline-none"
+                    placeholder="Enter HTML or script..."
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setUnsafeInput('<script>alert("Hacked!")</script>')
+                      }
+                      className="text-xs px-2 py-1 bg-red-100 text-red-700 rounded hover:bg-red-200"
+                    >
+                      Insert Payload 1
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setUnsafeInput('<img src=x onerror=alert(1) />')
+                      }
+                      className="text-xs px-2 py-1 bg-orange-100 text-orange-700 rounded hover:bg-orange-200"
+                    >
+                      Insert Payload 2
+                    </button>
+                  </div>
                 </div>
-              )}
+
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <div className="text-sm font-bold text-red-600 flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-red-600" />
+                      Vulnerable Output (Unescaped)
+                    </div>
+                    <div className="p-3 border-2 border-red-100 bg-red-50/50 rounded-lg h-32 overflow-auto relative">
+                      {/* We simulate the execution for safety reasons instead of actually running it */}
+                      {unsafeInput.includes('<script>') ||
+                      unsafeInput.includes('onerror') ? (
+                        <div className="absolute inset-0 flex items-center justify-center bg-red-900/10 backdrop-blur-[1px]">
+                          <div className="bg-white p-4 rounded shadow-xl border border-red-200 animate-bounce">
+                            <p className="font-bold text-red-600 flex items-center gap-2">
+                              ⚠️ Script Executed!
+                            </p>
+                            <p className="text-xs text-gray-500 mt-1">
+                              XSS Attack Successful
+                            </p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="text-sm">{unsafeInput}</div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="text-sm font-bold text-green-600 flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-green-600" />
+                      Safe Output (Sanitized)
+                    </div>
+                    <div className="p-3 border-2 border-green-100 bg-green-50/50 rounded-lg h-32 overflow-auto font-mono text-sm text-green-800 whitespace-pre-wrap">
+                      {sanitizeHtml(unsafeInput)}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </DemoBox>
         </SubSection>
@@ -206,9 +265,9 @@ module.exports = {
               'Avoid inline event handlers (onclick, onerror, etc.)',
               'Keep dependencies updated to patch XSS vulnerabilities',
               'Use React/frameworks that escape by default',
-            ].map((item, idx) => (
+            ].map((item) => (
               <div
-                key={idx}
+                key={item}
                 className="flex items-center gap-2 text-sm bg-green-50 p-2 rounded"
               >
                 <span className="text-green-500">✓</span>

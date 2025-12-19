@@ -1,12 +1,197 @@
 import {
   AlertTriangle,
   BarChart,
+  Box,
   Code2,
   Package,
   Scissors,
 } from 'lucide-react';
+import { useState } from 'react';
+import { CodeBlock } from '../../../components/ui/code-block';
 
 export function BundleSizeSection() {
+  const [nodes, setNodes] = useState([
+    {
+      id: 'root',
+      name: 'App Root',
+      size: 10,
+      used: true,
+      type: 'root',
+      x: 50,
+      y: 10,
+    },
+    {
+      id: 'utils',
+      name: 'Utils',
+      size: 5,
+      used: true,
+      type: 'group',
+      parent: 'root',
+      x: 25,
+      y: 40,
+    },
+    {
+      id: 'comps',
+      name: 'Components',
+      size: 5,
+      used: true,
+      type: 'group',
+      parent: 'root',
+      x: 75,
+      y: 40,
+    },
+    // Leaves
+    {
+      id: 'fmt',
+      name: 'formatDate',
+      size: 2,
+      used: true,
+      type: 'leaf',
+      parent: 'utils',
+      x: 15,
+      y: 70,
+    },
+    {
+      id: 'math',
+      name: 'heavyMath',
+      size: 50,
+      used: false,
+      type: 'leaf',
+      parent: 'utils',
+      x: 35,
+      y: 70,
+    }, // UNUSED
+    {
+      id: 'head',
+      name: 'Header',
+      size: 10,
+      used: true,
+      type: 'leaf',
+      parent: 'comps',
+      x: 65,
+      y: 70,
+    },
+    {
+      id: 'foot',
+      name: 'Footer',
+      size: 8,
+      used: true,
+      type: 'leaf',
+      parent: 'comps',
+      x: 80,
+      y: 70,
+    },
+    {
+      id: 'modal',
+      name: 'OldModal',
+      size: 30,
+      used: false,
+      type: 'leaf',
+      parent: 'comps',
+      x: 95,
+      y: 70,
+    }, // UNUSED
+  ]);
+
+  const [shaken, setShaken] = useState(false);
+
+  const totalSize = nodes.reduce(
+    (acc, node) => acc + (node.type === 'leaf' ? node.size : 0),
+    0,
+  );
+
+  const shake = () => {
+    setShaken(true);
+    setTimeout(() => {
+      setNodes((prev) => prev.filter((n) => n.used));
+    }, 600); // Animation duration
+  };
+
+  const reset = () => {
+    setShaken(false);
+    setNodes([
+      {
+        id: 'root',
+        name: 'App Root',
+        size: 10,
+        used: true,
+        type: 'root',
+        x: 50,
+        y: 10,
+      },
+      {
+        id: 'utils',
+        name: 'Utils',
+        size: 5,
+        used: true,
+        type: 'group',
+        parent: 'root',
+        x: 25,
+        y: 40,
+      },
+      {
+        id: 'comps',
+        name: 'Components',
+        size: 5,
+        used: true,
+        type: 'group',
+        parent: 'root',
+        x: 75,
+        y: 40,
+      },
+      {
+        id: 'fmt',
+        name: 'formatDate',
+        size: 2,
+        used: true,
+        type: 'leaf',
+        parent: 'utils',
+        x: 15,
+        y: 70,
+      },
+      {
+        id: 'math',
+        name: 'heavyMath',
+        size: 50,
+        used: false,
+        type: 'leaf',
+        parent: 'utils',
+        x: 35,
+        y: 70,
+      },
+      {
+        id: 'head',
+        name: 'Header',
+        size: 10,
+        used: true,
+        type: 'leaf',
+        parent: 'comps',
+        x: 65,
+        y: 70,
+      },
+      {
+        id: 'foot',
+        name: 'Footer',
+        size: 8,
+        used: true,
+        type: 'leaf',
+        parent: 'comps',
+        x: 80,
+        y: 70,
+      },
+      {
+        id: 'modal',
+        name: 'OldModal',
+        size: 30,
+        used: false,
+        type: 'leaf',
+        parent: 'comps',
+        x: 95,
+        y: 70,
+      },
+    ]);
+  };
+
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-6">
@@ -24,6 +209,122 @@ export function BundleSizeSection() {
           직접적인 영향을 미칩니다. 불필요한 코드를 제거하고 효율적으로
           패키징해야 합니다.
         </p>
+
+        {/* Visualizer */}
+        <div className="bg-gray-900 rounded-xl p-6 border border-gray-700 shadow-xl overflow-hidden relative">
+          <div className="flex justify-between items-center mb-8">
+            <div>
+              <h3 className="font-bold text-white flex items-center gap-2">
+                <Scissors size={18} className="text-orange-400" /> Tree Shaking
+                Simulator
+              </h3>
+              <p className="text-xs text-gray-400 mt-1">
+                Remove dead code to reduce bundle size
+              </p>
+            </div>
+            <div className="text-right">
+              <div className="text-3xl font-bold font-mono text-green-400 transition-all duration-500">
+                {totalSize} KB
+              </div>
+              <div className="text-xs text-gray-500">Total Bundle Size</div>
+            </div>
+          </div>
+
+          <div className="relative h-[300px] bg-gray-800 rounded-lg border border-gray-700 mx-auto w-full max-w-lg mb-6">
+            {/* Edges */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none">
+              {nodes.map((node) => {
+                if (!node.parent) return null;
+                const parent = nodes.find((n) => n.id === node.parent);
+                if (!parent) return null;
+
+                // Simple visual opacity for shaken connection
+                const isDying = shaken && !node.used;
+
+                return (
+                  <line
+                    key={`line-${node.id}`}
+                    x1={`${parent.x}%`}
+                    y1={`${parent.y}%`}
+                    x2={`${node.x}%`}
+                    y2={`${node.y}%`}
+                    stroke={isDying ? '#ef4444' : '#4b5563'}
+                    strokeWidth="2"
+                    className={`transition-all duration-500 ${isDying ? 'opacity-0' : 'opacity-50'}`}
+                  />
+                );
+              })}
+            </svg>
+
+            {/* Nodes */}
+            {nodes.map((node) => {
+              const isDying = shaken && !node.used;
+
+              return (
+                <div
+                  key={node.id}
+                  className={`
+                            absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1 transition-all duration-500
+                            ${isDying ? 'translate-y-20 opacity-0 scale-50 rotate-12' : ''}
+                        `}
+                  style={{ left: `${node.x}%`, top: `${node.y}%` }}
+                >
+                  <div
+                    className={`
+                            w-10 h-10 rounded-full flex items-center justify-center border-2 shadow-sm z-10
+                            ${
+                              node.type === 'root'
+                                ? 'bg-indigo-600 border-indigo-400 text-white'
+                                : node.type === 'group'
+                                  ? 'bg-blue-600 border-blue-400 text-white'
+                                  : node.used
+                                    ? 'bg-green-600 border-green-400 text-white'
+                                    : 'bg-red-900/80 border-red-500 text-red-200'
+                            }
+                         `}
+                  >
+                    {node.type === 'root' ? (
+                      <Package size={16} />
+                    ) : node.type === 'group' ? (
+                      <Box size={16} />
+                    ) : (
+                      <Code2 size={16} />
+                    )}
+                  </div>
+                  <div className="text-[10px] text-gray-300 bg-gray-900/80 px-1.5 rounded whitespace-nowrap">
+                    {node.name}{' '}
+                    <span className="text-gray-500">({node.size}KB)</span>
+                  </div>
+                  {!node.used && !shaken && (
+                    <div className="text-[8px] text-red-400 font-bold uppercase animate-pulse">
+                      Unused
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="flex justify-center gap-4">
+            {shaken ? (
+              <button
+                type="button"
+                onClick={reset}
+                className="px-6 py-2 bg-gray-700 text-white rounded-full font-bold hover:bg-gray-600 transition-colors flex items-center gap-2"
+              >
+                Reset
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={shake}
+                className="px-6 py-2 bg-orange-600 text-white rounded-full font-bold hover:bg-orange-700 transition-colors shadow-lg animate-bounce flex items-center gap-2"
+              >
+                <Scissors size={16} /> Run Tree Shaking
+              </button>
+            )}
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="border border-red-200 bg-red-50 rounded-xl p-5">
@@ -105,8 +406,10 @@ export function BundleSizeSection() {
               Tree Shaking 예시
             </span>
           </div>
-          <pre className="text-sm text-gray-300 font-mono overflow-x-auto">
-            {`// ❌ Bad: 전체 라이브러리 번들됨
+          <div className="overflow-hidden rounded-lg">
+            <CodeBlock
+              language="javascript"
+              code={`// ❌ Bad: 전체 라이브러리 번들됨
 import _ from 'lodash';
 _.debounce(fn, 300);
 
@@ -116,7 +419,8 @@ debounce(fn, 300);
 
 // 또는 경로 직접 지정
 import debounce from 'lodash/debounce';`}
-          </pre>
+            />
+          </div>
         </div>
 
         <div className="bg-gray-50 rounded-xl p-5">
@@ -133,8 +437,10 @@ import debounce from 'lodash/debounce';`}
                 webpack-bundle-analyzer
               </h4>
               <div className="bg-gray-900 rounded p-2 overflow-x-auto">
-                <pre className="text-xs text-gray-300 font-mono">
-                  {`// next.config.js
+                <div className="overflow-hidden rounded-lg">
+                  <CodeBlock
+                    language="javascript"
+                    code={`// next.config.js
 const withBundleAnalyzer = require(
   '@next/bundle-analyzer'
 )({
@@ -145,7 +451,8 @@ module.exports = withBundleAnalyzer({});
 
 // 실행
 // ANALYZE=true npm run build`}
-                </pre>
+                  />
+                </div>
               </div>
             </div>
 

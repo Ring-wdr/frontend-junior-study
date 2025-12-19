@@ -4,12 +4,101 @@ import {
   BarChart3,
   Clock,
   Eye,
+  MousePointer2,
   Play,
   Search,
   Zap,
 } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 export function DevToolsSection() {
+  // Visualizer State
+  const [tasks, setTasks] = useState<
+    {
+      id: number;
+      duration: number;
+      type: 'short' | 'long';
+      timestamp: number;
+    }[]
+  >([]);
+  const [isBlocking, setIsBlocking] = useState(false);
+  const [fps, setFps] = useState(60);
+  const [clicks, setClicks] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Animation Loop for FPS and Scrolling
+  useEffect(() => {
+    const lastTime = performance.now();
+    let frameCount = 0;
+    let fpsInterval: NodeJS.Timeout;
+
+    const loop = (time: number) => {
+      if (isBlocking) {
+        // Drop FPS to 0 if blocking
+      } else {
+        frameCount++;
+      }
+
+      // Only update FPS if not completely hung
+      requestAnimationFrame(loop);
+    };
+
+    // FPS Updater
+    fpsInterval = setInterval(() => {
+      if (isBlocking) {
+        setFps(0);
+      } else {
+        setFps(Math.min(60, frameCount)); // Simplified FPS
+      }
+      frameCount = 0;
+    }, 1000);
+
+    const rafId = requestAnimationFrame(loop);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      clearInterval(fpsInterval);
+    };
+  }, [isBlocking]);
+
+  // Auto-scroll timeline
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollLeft = scrollRef.current.scrollWidth;
+    }
+  }, [tasks]);
+
+  const runTask = (type: 'short' | 'long') => {
+    const duration = type === 'short' ? 20 : 1000; // ms
+    const newTask = {
+      id: Date.now(),
+      duration,
+      type,
+      timestamp: Date.now(),
+    };
+
+    setTasks((prev) => [...prev, newTask]);
+
+    if (type === 'long') {
+      setIsBlocking(true);
+      // Simulate main thread blocking (without actually freezing browser for too long visually if possible,
+      // but here we just simulate the state to show UI updates)
+
+      // Actually, let's purposely NOT block the real browser event loop 100% so the user can see the UI update "Blocked" state,
+      // but we will disable interactions.
+      setTimeout(() => {
+        setIsBlocking(false);
+      }, duration);
+    } else {
+      // Short task doesn't block significantly
+    }
+  };
+
+  const handleInteraction = () => {
+    if (isBlocking) return; // Unresponsive
+    setClicks((p) => p + 1);
+  };
+
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-6">
@@ -27,6 +116,121 @@ export function DevToolsSection() {
           <strong>측정 → 문제 확인 → 개선 → 재측정</strong> 프로세스를 반드시
           익혀야 합니다.
         </p>
+
+        {/* Visualizer */}
+        <div className="bg-gray-900 rounded-xl p-6 border border-gray-700 shadow-xl overflow-hidden relative">
+          <div className="flex justify-between items-start mb-6 text-white">
+            <div>
+              <h3 className="font-bold flex items-center gap-2 text-yellow-400">
+                <Activity size={18} /> Main Thread Simulator
+              </h3>
+              <p className="text-xs text-gray-400 mt-1">
+                Simulating tasks on the main thread
+              </p>
+            </div>
+            <div className="flex flex-col items-end gap-1">
+              <div
+                className={`text-2xl font-mono font-bold ${fps < 30 ? 'text-red-500' : 'text-green-400'}`}
+              >
+                {fps} FPS
+              </div>
+              <div className="text-xs text-gray-500">Frame Rate</div>
+            </div>
+          </div>
+
+          <div className="flex gap-4 mb-6">
+            <button
+              onClick={() => runTask('short')}
+              disabled={isBlocking}
+              className="flex-1 py-2 bg-green-600 hover:bg-green-700 text-white rounded font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
+            >
+              Run Short Task (20ms)
+            </button>
+            <button
+              onClick={() => runTask('long')}
+              disabled={isBlocking}
+              className="flex-1 py-2 bg-red-600 hover:bg-red-700 text-white rounded font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
+            >
+              Run Long Task (1s)
+            </button>
+          </div>
+
+          {/* Timeline */}
+          <div
+            className="relative h-24 bg-gray-800 rounded-lg mb-4 overflow-x-hidden flex items-center px-4"
+            ref={scrollRef}
+          >
+            <div className="flex gap-1 items-end h-16 w-full justify-end pr-10">
+              {tasks.slice(-15).map((task) => (
+                <div
+                  key={task.id}
+                  className={`
+                                relative rounded-t-sm animate-in slide-in-from-right-10 duration-300
+                                ${task.type === 'long' ? 'bg-red-500 w-32' : 'bg-green-500 w-4'}
+                            `}
+                  style={{ height: '70%' }}
+                >
+                  {task.type === 'long' && (
+                    <div className="absolute -top-3 left-0 w-full flex justify-center">
+                      <div className="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[6px] border-t-red-500"></div>
+                    </div>
+                  )}
+                  {task.type === 'long' && (
+                    <span className="absolute inset-0 flex items-center justify-center text-[10px] text-white font-bold opacity-80 backdrop-blur-sm">
+                      Long Task
+                    </span>
+                  )}
+                </div>
+              ))}
+              {/* Placeholder for current time */}
+              <div className="h-full w-[1px] bg-yellow-500 absolute right-10 top-0 z-10 opacity-50"></div>
+            </div>
+            <div className="absolute bottom-2 left-4 text-xs text-gray-500 font-mono">
+              Time (ms)
+            </div>
+          </div>
+
+          {/* Interaction Test Area */}
+          <div
+            className={`
+                rounded-lg p-4 border-2 transition-colors duration-200 flex justify-between items-center
+                ${isBlocking ? 'bg-red-900/20 border-red-500/50' : 'bg-gray-800 border-gray-700'}
+            `}
+          >
+            <div className="flex items-center gap-3">
+              <MousePointer2
+                className={isBlocking ? 'text-red-500' : 'text-green-400'}
+              />
+              <div>
+                <div className="text-white font-medium">Interaction Test</div>
+                <div
+                  className={`text-xs ${isBlocking ? 'text-red-400' : 'text-gray-400'}`}
+                >
+                  {isBlocking
+                    ? 'Main Thread Blocked! UI Unresponsive'
+                    : 'UI Responsive'}
+                </div>
+              </div>
+            </div>
+            <button
+              onClick={handleInteraction}
+              className={`
+                        px-4 py-2 rounded font-bold text-sm transition-transform active:scale-95
+                        ${isBlocking ? 'bg-gray-600 text-gray-400 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}
+                    `}
+            >
+              Clicked: {clicks}
+            </button>
+          </div>
+
+          {isBlocking && (
+            <div className="absolute inset-0 bg-black/10 backdrop-blur-[1px] pointer-events-none flex items-center justify-center z-20">
+              <div className="bg-red-600 text-white px-4 py-2 rounded-full font-bold shadow-lg animate-pulse">
+                ⚠️ MAIN THREAD BLOCKED
+              </div>
+            </div>
+          )}
+        </div>
 
         <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-6 text-white">
           <h3 className="font-bold text-lg mb-4 flex items-center gap-2">

@@ -7,6 +7,7 @@ import { NextAuthSection } from './components/nextauth-section';
 import { OAuthSection } from './components/oauth-section';
 import { OidcSection } from './components/oidc-section';
 import { PrivacySection } from './components/privacy-section';
+import { React2ShellSection } from './components/react2shell-section';
 import { XssCspSection } from './components/xss-csp-section';
 
 const tabs = [
@@ -17,6 +18,7 @@ const tabs = [
   'jwt',
   'csrf',
   'xss',
+  'react2shell',
   'privacy',
 ] as const;
 type Tab = (typeof tabs)[number];
@@ -29,6 +31,7 @@ const tabLabels: Record<Tab, string> = {
   jwt: 'JWT vs Session',
   csrf: 'CSRF',
   xss: 'XSS & CSP',
+  react2shell: 'React2Shell (New)',
   privacy: 'Privacy',
 };
 
@@ -37,6 +40,7 @@ const sections = [
   { id: 'oidc', component: <OidcSection /> },
   { id: 'nextauth', component: <NextAuthSection /> },
   { id: 'jwt', component: <JwtSessionSection /> },
+  { id: 'react2shell', component: <React2ShellSection /> },
   { id: 'csrf', component: <CsrfSection /> },
   { id: 'xss', component: <XssCspSection /> },
   { id: 'privacy', component: <PrivacySection /> },

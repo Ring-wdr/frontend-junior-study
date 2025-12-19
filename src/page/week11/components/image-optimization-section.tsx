@@ -1,12 +1,65 @@
-import { CheckCircle2, Code2, Image, Maximize, Zap } from 'lucide-react';
+import {
+  CheckCircle2,
+  Code2,
+  FileImage,
+  Image as ImageIcon,
+  Maximize,
+  Sliders,
+  Zap,
+} from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { CodeBlock } from '../../../components/ui/code-block';
 
 export function ImageOptimizationSection() {
+  const [format, setFormat] = useState<'jpg' | 'webp' | 'avif'>('jpg');
+  const [quality, setQuality] = useState(80);
+  const [sliderPosition, setSliderPosition] = useState(50);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+
+  // Constants for simulation
+  const originalSize = 1200; // KB
+  const formatCoefficients = { jpg: 1, webp: 0.7, avif: 0.5 };
+
+  const optimizedSize = Math.round(
+    originalSize * formatCoefficients[format] * (quality / 100),
+  );
+  const savings = Math.round(
+    ((originalSize - optimizedSize) / originalSize) * 100,
+  );
+
+  // Slider Mouse Events
+  const handleMouseDown = () => (isDragging.current = true);
+  const handleMouseUp = () => (isDragging.current = false);
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging.current || !sliderRef.current) return;
+    const rect = sliderRef.current.getBoundingClientRect();
+    const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+    setSliderPosition((x / rect.width) * 100);
+  };
+
+  // Touch support
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging.current || !sliderRef.current) return;
+    const rect = sliderRef.current.getBoundingClientRect();
+    const x = Math.max(
+      0,
+      Math.min(e.touches[0].clientX - rect.left, rect.width),
+    );
+    setSliderPosition((x / rect.width) * 100);
+  };
+
+  useEffect(() => {
+    window.addEventListener('mouseup', handleMouseUp);
+    return () => window.removeEventListener('mouseup', handleMouseUp);
+  }, []);
+
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-6">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-pink-100 text-pink-600 rounded-lg">
-            <Image size={24} />
+            <ImageIcon size={24} />
           </div>
           <h2 className="text-2xl font-bold text-gray-900">
             이미지 최적화 (가장 효과 큰 영역!)
@@ -17,6 +70,132 @@ export function ImageOptimizationSection() {
           이미지는 웹 페이지 용량의 대부분을 차지합니다. 최적화만 잘해도{' '}
           <strong>LCP를 획기적으로 개선</strong>할 수 있습니다.
         </p>
+
+        {/* Visualizer */}
+        <div className="bg-gray-900 rounded-xl p-6 border border-gray-700 shadow-xl overflow-hidden">
+          <div className="flex justify-between items-end mb-6">
+            <div>
+              <h3 className="font-bold text-white flex items-center gap-2">
+                <Sliders size={18} className="text-pink-400" /> Image
+                Optimization Lab
+              </h3>
+              <p className="text-xs text-gray-400 mt-1">
+                Simulate compression savings and quality
+              </p>
+            </div>
+            <div className="text-right">
+              <div className="text-2xl font-bold text-green-400">
+                -{savings}%
+              </div>
+              <div className="text-xs text-gray-500">Size Reduction</div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            {/* Controls */}
+            <div className="space-y-4 bg-gray-800 p-4 rounded-lg h-fit">
+              <div>
+                <label className="text-xs text-gray-400 font-medium mb-2 block">
+                  Format
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {(['jpg', 'webp', 'avif'] as const).map((f) => (
+                    <button
+                      key={f}
+                      onClick={() => setFormat(f)}
+                      className={`py-1.5 rounded text-xs font-bold uppercase transition-colors ${
+                        format === f
+                          ? 'bg-pink-600 text-white'
+                          : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                      }`}
+                    >
+                      {f}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs text-gray-400 font-medium mb-2 block flex justify-between">
+                  <span>Quality</span>
+                  <span>{quality}%</span>
+                </label>
+                <input
+                  type="range"
+                  min="10"
+                  max="100"
+                  value={quality}
+                  onChange={(e) => setQuality(Number(e.target.value))}
+                  className="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-pink-500"
+                />
+              </div>
+
+              <div className="pt-4 border-t border-gray-700 space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-400">Original:</span>
+                  <span className="text-white font-mono">
+                    {originalSize} KB
+                  </span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-400 font-bold">Optimized:</span>
+                  <span className="text-green-400 font-mono font-bold">
+                    {optimizedSize} KB
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Comparison View */}
+            <div
+              className="col-span-1 md:col-span-2 relative h-[300px] bg-black rounded-lg overflow-hidden select-none cursor-ew-resize border border-gray-700"
+              ref={sliderRef}
+              onMouseMove={handleMouseMove}
+              onTouchMove={handleTouchMove}
+              onMouseDown={handleMouseDown}
+              onTouchStart={handleMouseDown}
+            >
+              {/* Background (Optimized) */}
+              <div
+                className="absolute inset-0 w-full h-full bg-cover bg-center"
+                style={{
+                  backgroundImage:
+                    'url("https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=600&auto=format&fit=crop")',
+                  filter:
+                    quality < 50
+                      ? `blur(${(50 - quality) / 10}px) contrast(${1 + (50 - quality) / 100})`
+                      : 'none',
+                }}
+              >
+                <div className="absolute top-4 right-4 bg-black/60 text-white px-2 py-1 rounded text-xs backdrop-blur-sm">
+                  Optimized ({format.toUpperCase()})
+                </div>
+              </div>
+
+              {/* Foreground (Original) - Clipped */}
+              <div
+                className="absolute inset-0 w-full h-full bg-cover bg-center border-r-2 border-white shadow-[0_0_10px_rgba(0,0,0,0.5)]"
+                style={{
+                  width: `${sliderPosition}%`,
+                  backgroundImage:
+                    'url("https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=600&auto=format&fit=crop")',
+                }}
+              >
+                <div className="absolute top-4 left-4 bg-black/60 text-white px-2 py-1 rounded text-xs backdrop-blur-sm">
+                  Original (JPEG)
+                </div>
+              </div>
+
+              {/* Slider Handle */}
+              <div
+                className="absolute top-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center z-10 pointer-events-none"
+                style={{ left: `calc(${sliderPosition}% - 16px)` }}
+              >
+                <Sliders size={16} className="text-gray-800 rotate-90" />
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-5 border border-blue-100">
@@ -56,8 +235,10 @@ export function ImageOptimizationSection() {
               Responsive Images
             </h3>
             <div className="bg-gray-900 rounded-lg p-3 overflow-x-auto">
-              <pre className="text-xs text-gray-300 font-mono">
-                {`<img
+              <div className="overflow-hidden rounded-lg">
+                <CodeBlock
+                  language="html"
+                  code={`<img
   srcset="
     small.jpg 480w,
     medium.jpg 800w,
@@ -71,7 +252,8 @@ export function ImageOptimizationSection() {
   src="medium.jpg"
   alt="Responsive"
 />`}
-              </pre>
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -83,8 +265,10 @@ export function ImageOptimizationSection() {
               Next.js Image 컴포넌트
             </span>
           </div>
-          <pre className="text-sm text-gray-300 font-mono overflow-x-auto">
-            {`import Image from 'next/image';
+          <div className="overflow-hidden rounded-lg">
+            <CodeBlock
+              language="javascript"
+              code={`import Image from 'next/image';
 
 <Image
   src="/hero.jpg"
@@ -101,7 +285,8 @@ export function ImageOptimizationSection() {
 // ✓ 자동 srcset 생성 (DPR 대응)
 // ✓ 기본 lazy loading
 // ✓ 레이아웃 시프트 방지 (width/height)`}
-          </pre>
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">

@@ -90,57 +90,97 @@ export const OAuthSection = () => {
         </SubSection>
 
         <SubSection title="Authorization Code Flow" icon iconColor="green">
-          <DemoBox label="OAuth 2.0 Flow Visualization">
-            <div className="space-y-4">
-              <div className="flex flex-wrap gap-2 mb-4">
-                {flowSteps.map((_, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => setFlowStep(idx)}
-                    className={`w-8 h-8 rounded-full text-sm font-medium transition-all ${
-                      flowStep === idx
-                        ? 'bg-green-600 text-white'
-                        : flowStep > idx
-                          ? 'bg-green-100 text-green-700'
-                          : 'bg-gray-100 text-gray-500'
-                    }`}
-                  >
-                    {idx + 1}
-                  </button>
-                ))}
+          <DemoBox label="OAuth 2.0 Flow Interactive Map">
+            <div className="space-y-6">
+              {/* Visual Map */}
+              <div className="relative h-48 bg-gray-50 rounded-xl border border-gray-200 p-4 flex items-center justify-between px-8 md:px-16 overflow-hidden">
+                {/* Connecting Line */}
+                <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-200 z-0" />
+
+                {/* Active Progress Line */}
+                <div
+                  className="absolute top-1/2 left-0 h-1 bg-green-500 transition-all duration-500 z-0"
+                  style={{
+                    width: `${(flowStep / (flowSteps.length - 1)) * 100}%`,
+                  }}
+                />
+
+                {/* Actors / Nodes */}
+                {[
+                  { id: 'client', label: 'Client App', icon: '💻' },
+                  { id: 'browser', label: 'Browser', icon: '🌍' },
+                  { id: 'auth', label: 'Auth Server', icon: '🛡️' },
+                  { id: 'api', label: 'API', icon: '📦' },
+                ].map((actor) => {
+                  // Calculate simplified "active" state based on step instructions
+                  // This is a rough mapping for visual effect
+                  // Calculate simplified "active" state based on step instructions
+                  // This is a rough mapping for visual effect
+
+                  return (
+                    <div
+                      key={actor.id}
+                      className="relative z-10 flex flex-col items-center gap-2"
+                    >
+                      <div
+                        className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl border-4 transition-all duration-300 bg-white ${
+                          flowSteps[flowStep].actor.includes(actor.label) ||
+                          (actor.label === 'Browser' && flowStep === 1) // Highlight current actor
+                            ? 'border-green-500 scale-125 shadow-lg'
+                            : 'border-gray-200 grayscale opacity-70'
+                        }`}
+                      >
+                        {actor.icon}
+                      </div>
+                      <span className="text-xs font-bold text-gray-600">
+                        {actor.label}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
 
-              <div className="bg-white p-4 rounded-lg border border-gray-200 min-h-[100px]">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded">
-                    {flowSteps[flowStep].actor}
-                  </span>
-                  <span className="text-sm font-semibold">
-                    Step {flowSteps[flowStep].step}
-                  </span>
+              {/* Step Description */}
+              <div className="bg-white p-6 rounded-xl border border-green-100 shadow-sm text-center relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1 bg-green-500" />
+                <h4 className="text-lg font-bold text-gray-800 mb-2">
+                  Step {flowSteps[flowStep].step}: {flowSteps[flowStep].actor}
+                </h4>
+                <p className="text-gray-600 text-lg transition-all key={flowStep} animate-in fade-in slide-in-from-bottom-2">
+                  {flowSteps[flowStep].title}
+                </p>
+                <div className="mt-4 flex gap-2 justify-center">
+                  {flowSteps.map((_, i) => (
+                    <div
+                      key={i}
+                      className={`w-2 h-2 rounded-full transition-colors ${i === flowStep ? 'bg-green-500' : 'bg-gray-200'}`}
+                    />
+                  ))}
                 </div>
-                <p className="text-gray-700">{flowSteps[flowStep].title}</p>
               </div>
 
-              <div className="flex justify-between">
+              {/* Controls */}
+              <div className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
                 <button
                   type="button"
                   onClick={() => setFlowStep(Math.max(0, flowStep - 1))}
                   disabled={flowStep === 0}
-                  className="px-3 py-1 text-sm bg-gray-100 rounded disabled:opacity-50"
+                  className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
                 >
-                  Previous
+                  ← Previous Step
                 </button>
+                <div className="text-xs font-mono text-gray-400">
+                  {flowStep + 1} / {flowSteps.length}
+                </div>
                 <button
                   type="button"
                   onClick={() =>
                     setFlowStep(Math.min(flowSteps.length - 1, flowStep + 1))
                   }
                   disabled={flowStep === flowSteps.length - 1}
-                  className="px-3 py-1 text-sm bg-green-600 text-white rounded disabled:opacity-50"
+                  className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
                 >
-                  Next
+                  Next Step →
                 </button>
               </div>
             </div>

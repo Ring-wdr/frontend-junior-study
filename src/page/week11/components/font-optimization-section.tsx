@@ -1,6 +1,33 @@
-import { AlertTriangle, Code2, Type, Zap } from 'lucide-react';
+import {
+  AlertTriangle,
+  Code2,
+  Eye,
+  EyeOff,
+  RefreshCw,
+  Type,
+  Zap,
+} from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { CodeBlock } from '../../../components/ui/code-block';
 
 export function FontOptimizationSection() {
+  const [strategy, setStrategy] = useState<'swap' | 'block'>('swap'); // FOUT vs FOIT
+  const [fontStatus, setFontStatus] = useState<'system' | 'loading' | 'custom'>(
+    'system',
+  );
+  const [layoutShift, setLayoutShift] = useState(0);
+
+  const simulateLoad = () => {
+    setFontStatus('loading');
+    setLayoutShift(0);
+
+    setTimeout(() => {
+      setFontStatus('custom');
+      // Simulate layout shift if dimensions change significantly (conceptual)
+      if (strategy === 'swap') setLayoutShift(0.05);
+    }, 1500);
+  };
+
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-6">
@@ -15,6 +42,149 @@ export function FontOptimizationSection() {
           폰트는 <strong>CLS와 LCP</strong>에 직접적인 영향을 미칩니다. FOUT
           (Flash of Unstyled Text)를 방지하고 빠르게 로드하는 전략이 필요합니다.
         </p>
+
+        {/* Visualizer */}
+        <div className="bg-amber-50 rounded-xl p-6 border border-amber-200">
+          <div className="flex justify-between items-center mb-6">
+            <div>
+              <h3 className="font-bold text-amber-900 flex items-center gap-2">
+                <Type size={18} className="text-amber-600" /> Font Loading
+                Simulator
+              </h3>
+              <p className="text-xs text-amber-700 mt-1">
+                Compare FOUT (Swap) vs FOIT (Block)
+              </p>
+            </div>
+            <div className="flex bg-white p-1 rounded-lg border border-amber-100 shadow-sm">
+              <button
+                onClick={() => {
+                  setStrategy('swap');
+                  setFontStatus('system');
+                }}
+                className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${strategy === 'swap' ? 'bg-amber-100 text-amber-800' : 'text-gray-500 hover:text-gray-800'}`}
+              >
+                display: swap (FOUT)
+              </button>
+              <button
+                onClick={() => {
+                  setStrategy('block');
+                  setFontStatus('system');
+                }}
+                className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${strategy === 'block' ? 'bg-amber-100 text-amber-800' : 'text-gray-500 hover:text-gray-800'}`}
+              >
+                display: block (FOIT)
+              </button>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg border border-amber-200 p-8 min-h-[200px] flex flex-col justify-between relative overflow-hidden">
+            <div className="absolute top-4 right-4 text-xs font-mono text-gray-400">
+              Status:{' '}
+              {fontStatus === 'loading'
+                ? 'Downloading Font...'
+                : fontStatus === 'custom'
+                  ? 'Custom Font Applied'
+                  : 'Fallback Font'}
+            </div>
+
+            <div className={`transition-all duration-300`}>
+              <h4
+                className={`text-4xl font-bold mb-4
+                        ${fontStatus === 'loading' && strategy === 'block' ? 'opacity-0' : 'opacity-100'}
+                        ${fontStatus === 'custom' ? 'font-serif' : 'font-sans'}
+                     `}
+                style={{
+                  fontFamily:
+                    fontStatus === 'custom'
+                      ? '"Playfair Display", serif'
+                      : 'sans-serif',
+                  transition: 'opacity 0.2s',
+                }}
+              >
+                The Quick Brown Fox
+              </h4>
+              <p
+                className={`text-lg leading-relaxed text-gray-700 max-w-xl
+                        ${fontStatus === 'loading' && strategy === 'block' ? 'opacity-0' : 'opacity-100'}
+                        ${fontStatus === 'custom' ? 'font-serif' : 'font-sans'}
+                     `}
+                style={{
+                  fontFamily:
+                    fontStatus === 'custom'
+                      ? '"Playfair Display", serif'
+                      : 'sans-serif',
+                  transition: 'opacity 0.2s',
+                }}
+              >
+                Web fonts allow designers to use typography that expresses their
+                brand. However, incorrectly loading them can cause significant
+                layout shifts or invisible text.
+              </p>
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-gray-100 flex justify-between items-center">
+              <button
+                onClick={simulateLoad}
+                disabled={fontStatus === 'loading' || fontStatus === 'custom'}
+                className="flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium shadow-sm"
+              >
+                <RefreshCw
+                  size={16}
+                  className={fontStatus === 'loading' ? 'animate-spin' : ''}
+                />
+                {fontStatus === 'custom'
+                  ? 'Reset to Try Again'
+                  : 'Load Custom Font (2s delay)'}
+              </button>
+
+              {fontStatus === 'custom' && (
+                <div className="flex gap-4">
+                  <div className="text-right">
+                    <div className="text-xs text-gray-500">UX Impact</div>
+                    <div
+                      className={`text-sm font-bold flex items-center gap-1 justify-end ${strategy === 'swap' ? 'text-amber-600' : 'text-red-600'}`}
+                    >
+                      {strategy === 'swap' ? (
+                        <>
+                          <Eye size={14} /> Text Always Visible
+                        </>
+                      ) : (
+                        <>
+                          <EyeOff size={14} /> Text Invisible (3s)
+                        </>
+                      )}
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-xs text-gray-500">CLS Impact</div>
+                    <div
+                      className={`text-sm font-bold flex items-center gap-1 justify-end ${strategy === 'swap' ? 'text-amber-600' : 'text-green-600'}`}
+                    >
+                      {strategy === 'swap' ? (
+                        <>
+                          <AlertTriangle size={14} /> Minor Shift
+                        </>
+                      ) : (
+                        <>
+                          <Zap size={14} /> No Shift
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Hack to enable Reset */}
+              {fontStatus === 'custom' && (
+                <button
+                  onClick={() => setFontStatus('system')}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-default"
+                  aria-hidden="true"
+                />
+              )}
+            </div>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="border border-red-200 bg-red-50 rounded-xl p-5">
@@ -73,8 +243,10 @@ export function FontOptimizationSection() {
               Next.js next/font (권장)
             </span>
           </div>
-          <pre className="text-sm text-gray-300 font-mono overflow-x-auto">
-            {`import { Inter } from 'next/font/google';
+          <div className="overflow-hidden rounded-lg">
+            <CodeBlock
+              language="javascript"
+              code={`import { Inter } from 'next/font/google';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -95,7 +267,8 @@ export default function RootLayout({ children }) {
     </html>
   );
 }`}
-          </pre>
+            />
+          </div>
         </div>
 
         <div className="bg-gray-50 rounded-xl p-5">
@@ -109,15 +282,18 @@ export default function RootLayout({ children }) {
                 Preload 폰트 파일
               </h4>
               <div className="bg-gray-900 rounded p-2 overflow-x-auto">
-                <pre className="text-xs text-gray-300 font-mono">
-                  {`<link
+                <div className="overflow-hidden rounded-lg">
+                  <CodeBlock
+                    language="html"
+                    code={`<link
   rel="preload"
   href="/fonts/inter.woff2"
   as="font"
   type="font/woff2"
   crossorigin
 />`}
-                </pre>
+                  />
+                </div>
               </div>
             </div>
 

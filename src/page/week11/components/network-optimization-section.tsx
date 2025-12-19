@@ -1,6 +1,99 @@
-import { Cloud, Code2, Globe, RefreshCw, Server, Zap } from 'lucide-react';
+import {
+  Cloud,
+  Code2,
+  Globe,
+  Network,
+  RefreshCw,
+  Server,
+  Zap,
+} from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { CodeBlock } from '../../../components/ui/code-block';
+import { cn } from '../../../lib/utils';
 
 export function NetworkOptimizationSection() {
+  const [protocol, setProtocol] = useState<'h1' | 'h2'>('h1');
+  const [requests, setRequests] = useState<
+    {
+      id: number;
+      start: number;
+      duration: number;
+      status: 'pending' | 'active' | 'done';
+    }[]
+  >([]);
+  const [isSimulating, setIsSimulating] = useState(false);
+  const [totalTime, setTotalTime] = useState(0);
+
+  const startSimulation = () => {
+    if (isSimulating) return;
+    setIsSimulating(true);
+    setTotalTime(0);
+
+    // Create 20 pending requests
+    const initialRequests = Array.from({ length: 20 }, (_, i) => ({
+      id: i,
+      start: 0,
+      duration: 500 + Math.random() * 500, // 500-1000ms duration
+      status: 'pending' as const,
+    }));
+    setRequests(initialRequests);
+  };
+
+  useEffect(() => {
+    if (!isSimulating) return;
+
+    let activeCount = 0;
+    const maxConcurrent = protocol === 'h1' ? 6 : 20;
+    const startTime = performance.now();
+
+    const interval = setInterval(() => {
+      const now = performance.now();
+      const elapsed = now - startTime;
+      setTotalTime(Math.floor(elapsed));
+
+      setRequests((prev) => {
+        const next = [...prev];
+
+        // Count active requests
+        activeCount = next.filter((r) => r.status === 'active').length;
+
+        // Should stop?
+        const allDone = next.every((r) => r.status === 'done');
+        if (allDone) {
+          setIsSimulating(false);
+          clearInterval(interval);
+          return next;
+        }
+
+        // Update active requests
+        next.forEach((req) => {
+          if (req.status === 'active') {
+            if (elapsed >= req.start + req.duration) {
+              req.status = 'done';
+              activeCount--; // Decrement active count immediately for the loop logic
+            }
+          }
+        });
+
+        // Start new requests if slots available
+        // Recalculate active count properly
+        activeCount = next.filter((r) => r.status === 'active').length;
+
+        next.forEach((req) => {
+          if (req.status === 'pending' && activeCount < maxConcurrent) {
+            req.status = 'active';
+            req.start = elapsed;
+            activeCount++;
+          }
+        });
+
+        return next;
+      });
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, [isSimulating, protocol]);
+
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-6">
@@ -16,8 +109,141 @@ export function NetworkOptimizationSection() {
           성능이 <strong>극적으로 향상</strong>됩니다.
         </p>
 
+        {/* Visualizer */}
+        <div className="bg-slate-900 rounded-xl p-6 border border-slate-700 shadow-xl overflow-hidden">
+          <div className="flex justify-between items-end mb-6">
+            <div>
+              <h3 className="font-bold text-white flex items-center gap-2">
+                <Network size={18} className="text-teal-400" /> Network
+                Waterfall
+              </h3>
+              <p className="text-xs text-slate-400 mt-1">
+                HTTP/1.1 vs HTTP/2 Multiplexing
+              </p>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="text-right">
+                <div className="text-2xl font-bold text-white font-mono">
+                  {totalTime}ms
+                </div>
+                <div className="text-xs text-slate-500">Total Load Time</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex gap-4 mb-4">
+            <button
+              type="button"
+              onClick={() => {
+                setProtocol('h1');
+                setRequests([]);
+                setTotalTime(0);
+              }}
+              className={cn(
+                `flex-1 py-2 rounded text-sm font-bold transition-all`,
+                protocol === 'h1'
+                  ? 'bg-orange-500 text-white'
+                  : 'bg-slate-800 text-slate-400',
+              )}
+            >
+              HTTP/1.1 (Queued)
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setProtocol('h2');
+                setRequests([]);
+                setTotalTime(0);
+              }}
+              className={cn(
+                `flex-1 py-2 rounded text-sm font-bold transition-all`,
+                protocol === 'h2'
+                  ? 'bg-teal-500 text-white'
+                  : 'bg-slate-800 text-slate-400',
+              )}
+            >
+              HTTP/2 (Multiplexed)
+            </button>
+            <button
+              type="button"
+              onClick={startSimulation}
+              disabled={isSimulating}
+              className="px-4 bg-slate-700 text-white rounded hover:bg-slate-600 disabled:opacity-50"
+            >
+              <RefreshCw
+                size={16}
+                className={isSimulating ? 'animate-spin' : ''}
+              />
+            </button>
+          </div>
+
+          <div className="h-[300px] bg-slate-800 rounded-lg relative overflow-y-auto p-4 border border-slate-700">
+            <div className="absolute top-0 left-0 w-full h-full flex pointer-events-none">
+              <div className="w-[20%] border-r border-slate-700/50 h-full"></div>
+              <div className="w-[20%] border-r border-slate-700/50 h-full"></div>
+              <div className="w-[20%] border-r border-slate-700/50 h-full"></div>
+              <div className="w-[20%] border-r border-slate-700/50 h-full"></div>
+            </div>
+
+            <div className="space-y-1">
+              {requests.length === 0 && !isSimulating && (
+                <div className="text-center text-slate-500 py-20">
+                  Click play to start simulation
+                </div>
+              )}
+              {requests.map((req) => {
+                let width = 0;
+                let left = 0;
+
+                // Simple visual scale logic: 2000ms max width
+                const scale = 300 / 2000; // pixels per ms
+
+                if (req.status === 'pending') {
+                  width = 0;
+                  left = 0;
+                } else if (req.status === 'active') {
+                  const elapsedActive = totalTime - req.start;
+                  width = (Math.min(req.duration, elapsedActive) / 2000) * 100; // %
+                  left = (req.start / 2000) * 100; // %
+                } else {
+                  width = (req.duration / 2000) * 100; // %
+                  left = (req.start / 2000) * 100; // %
+                }
+
+                return (
+                  <div
+                    key={req.id}
+                    className="h-2 w-full bg-slate-700/30 rounded-full relative overflow-hidden"
+                  >
+                    {req.status !== 'pending' && (
+                      <div
+                        className={`absolute h-full rounded-full transition-all duration-75 ${
+                          req.status === 'done'
+                            ? 'bg-teal-400'
+                            : 'bg-orange-400'
+                        }`}
+                        style={{
+                          left: `${left}%`,
+                          width: `${width}%`,
+                          maxWidth: '100%',
+                        }}
+                      ></div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="mt-2 text-xs text-slate-400 flex justify-between">
+            <span>0ms</span>
+            <span>1000ms</span>
+            <span>2000ms+</span>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-5 border border-blue-100">
+          <div className="bg-linear-to-br from-blue-50 to-cyan-50 rounded-xl p-5 border border-blue-100">
             <div className="flex items-center gap-2 mb-3">
               <Server className="text-blue-600" size={20} />
               <h3 className="font-bold text-gray-900">Resource Hints</h3>
@@ -31,10 +257,13 @@ export function NetworkOptimizationSection() {
                   DNS + TCP + TLS 핸드셰이크 미리 수행
                 </p>
                 <div className="bg-gray-900 rounded p-2 mt-2 overflow-x-auto">
-                  <pre className="text-xs text-gray-300 font-mono">
-                    {`<link rel="preconnect"
+                  <div className="overflow-hidden rounded-lg">
+                    <CodeBlock
+                      language="html"
+                      code={`<link rel="preconnect"
       href="https://cdn.example.com" />`}
-                  </pre>
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -67,7 +296,7 @@ export function NetworkOptimizationSection() {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-5 border border-purple-100">
+          <div className="bg-linear-to-br from-purple-50 to-pink-50 rounded-xl p-5 border border-purple-100">
             <div className="flex items-center gap-2 mb-3">
               <Cloud className="text-purple-600" size={20} />
               <h3 className="font-bold text-gray-900">CDN & Edge</h3>
@@ -120,8 +349,10 @@ export function NetworkOptimizationSection() {
               Cache-Control 전략
             </span>
           </div>
-          <pre className="text-sm text-gray-300 font-mono overflow-x-auto">
-            {`// 정적 자원 (JS, CSS, Images) - 장기 캐시 + 해시
+          <div className="overflow-hidden rounded-lg">
+            <CodeBlock
+              language="javascript"
+              code={`// 정적 자원 (JS, CSS, Images) - 장기 캐시 + 해시
 Cache-Control: public, max-age=31536000, immutable
 
 // HTML - 항상 재검증
@@ -132,7 +363,8 @@ Cache-Control: max-age=60, stale-while-revalidate=3600
 
 // 민감한 데이터 - 캐시 금지
 Cache-Control: no-store, private`}
-          </pre>
+            />
+          </div>
         </div>
 
         <div className="bg-gray-50 rounded-xl p-5">

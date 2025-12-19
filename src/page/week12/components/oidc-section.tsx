@@ -108,17 +108,23 @@ export const OidcSection = () => {
                     <p className="text-xs font-semibold text-blue-800 mb-2">
                       Header
                     </p>
-                    <pre className="text-xs text-blue-700">
-                      {JSON.stringify(decodedJwt.header, null, 2)}
-                    </pre>
+                    <div className="overflow-hidden rounded-lg">
+                      <CodeBlock
+                        language="json"
+                        code={JSON.stringify(decodedJwt.header, null, 2)}
+                      />
+                    </div>
                   </div>
                   <div className="bg-green-50 p-3 rounded border border-green-200">
                     <p className="text-xs font-semibold text-green-800 mb-2">
                       Payload (Claims)
                     </p>
-                    <pre className="text-xs text-green-700">
-                      {JSON.stringify(decodedJwt.payload, null, 2)}
-                    </pre>
+                    <div className="overflow-hidden rounded-lg">
+                      <CodeBlock
+                        language="json"
+                        code={JSON.stringify(decodedJwt.payload, null, 2)}
+                      />
+                    </div>
                   </div>
                 </div>
               )}
