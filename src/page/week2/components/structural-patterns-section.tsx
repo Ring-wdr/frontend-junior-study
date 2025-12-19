@@ -1,5 +1,4 @@
-import { Badge } from '../../../components/ui/badge';
-import { Card } from '../../../components/ui/card';
+import { DemoBox, SectionCard, SectionDivider, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { AdapterVisualizer } from './adapter-visualizer';
 import { BridgeVisualizer } from './bridge-visualizer';
@@ -9,40 +8,22 @@ import { ProxyVisualizer } from './proxy-visualizer';
 
 export const StructuralPatternsSection = () => {
   return (
-    <Card className="p-6">
-      <div className="flex justify-between items-start mb-4">
-        <div>
-          <Badge className="bg-indigo-100 text-indigo-800 hover:bg-indigo-200">
-            Design Patterns
-          </Badge>
-          <h3 className="text-xl font-bold mt-2 text-gray-900">
-            Structural Patterns
-          </h3>
-          <p className="text-gray-500 text-sm mt-1">
-            Patterns concerned with how classes and objects are composed to form
-            larger structures.
-          </p>
-        </div>
-      </div>
-
+    <SectionCard
+      badge={{ label: 'Design Patterns', color: 'indigo' }}
+      title="Structural Patterns"
+      description="Patterns concerned with how classes and objects are composed to form larger structures."
+    >
       <div className="space-y-8">
-        <section>
-          <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-            Decorator Pattern
-          </h4>
+        <SubSection title="Decorator Pattern" icon iconColor="purple">
           <div className="grid grid-cols-1 gap-6">
             <div>
               <p className="text-sm text-gray-700 mb-4">
                 Attaches additional responsibilities to an object dynamically.
                 Flexible alternative to subclassing.
               </p>
-              <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                <div className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">
-                  Interactive Demo
-                </div>
+              <DemoBox>
                 <DecoratorVisualizer />
-              </div>
+              </DemoBox>
             </div>
             <div className="space-y-4">
               <h5 className="text-sm font-medium text-gray-900">Concept</h5>
@@ -69,9 +50,9 @@ class UserProfile {
               />
             </div>
           </div>
-        </section>
+        </SubSection>
 
-        <div className="h-px bg-gray-100" />
+        <SectionDivider variant="line" />
 
         <div className="grid grid-cols-1 gap-6">
           <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
@@ -116,6 +97,6 @@ class UserProfile {
           </div>
         </div>
       </div>
-    </Card>
+    </SectionCard>
   );
 };
