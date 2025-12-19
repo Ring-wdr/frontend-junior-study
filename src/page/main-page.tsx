@@ -46,8 +46,25 @@ export default function MainPage() {
             </div>
           </Link>
 
+          <Link
+            to="/week-3"
+            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
+          >
+            <div className="flex flex-col items-start text-left space-y-2">
+              <span className="text-sm font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-md group-hover:bg-blue-100 transition-colors">
+                Week 3
+              </span>
+              <h2 className="text-xl font-semibold group-hover:text-blue-600 transition-colors">
+                Component Patterns
+              </h2>
+              <p className="text-sm text-gray-500 line-clamp-2">
+                Container vs Presentational, and more.
+              </p>
+            </div>
+          </Link>
+
           {/* Placeholders for future weeks */}
-          {[3, 4, 5, 6].map((week) => (
+          {[4, 5, 6].map((week) => (
             <div
               key={week}
               className="p-6 bg-gray-50 rounded-xl border border-gray-100 opacity-50 cursor-not-allowed"
