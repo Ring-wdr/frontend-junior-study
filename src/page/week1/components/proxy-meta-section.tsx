@@ -1,8 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Eye, ShieldAlert, Zap } from 'lucide-react';
 import { useState } from 'react';
-import { Badge } from '../../../components/ui/badge';
-import { Card } from '../../../components/ui/card';
+import { SectionCard } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
@@ -44,18 +43,12 @@ export const ProxyMetaSection = () => {
   const clearLogs = () => setLogs([]);
 
   return (
-    <Card className="p-6" data-testid="proxy-meta-section">
-      <div className="flex justify-between items-start mb-6 text-left">
-        <div>
-          <Badge color="indigo">Meta Programming</Badge>
-          <h3 className="text-xl font-bold mt-2 text-gray-900">
-            Proxy & Reflect
-          </h3>
-          <p className="text-gray-500 text-sm mt-1">
-            Intercept and redefine fundamental operations.
-          </p>
-        </div>
-      </div>
+    <SectionCard
+      badge={{ label: 'Meta Programming', color: 'indigo' }}
+      title="Proxy & Reflect"
+      description="Intercept and redefine fundamental operations."
+      testId="proxy-meta-section"
+    >
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
@@ -152,6 +145,6 @@ const proxy = new Proxy(target, handler);`}
           </div>
         </div>
       </div>
-    </Card>
+    </SectionCard>
   );
 };

@@ -1,26 +1,14 @@
-import { Badge } from '../../../components/ui/badge';
-import { Card } from '../../../components/ui/card';
+import { InfoBox, SectionCard } from '../../../components';
 
 export const OopSolidSection = () => {
   return (
-    <Card className="p-6">
-      <div className="flex justify-between items-start mb-4">
-        <div>
-          <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-200">
-            Object-Oriented Programming
-          </Badge>
-          <h3 className="text-xl font-bold mt-2 text-gray-900">
-            OOP & SOLID Principles
-          </h3>
-          <p className="text-gray-500 text-sm mt-1">
-            Core concepts of Object-Oriented Programming and design principles.
-          </p>
-        </div>
-      </div>
-
+    <SectionCard
+      badge={{ label: 'Object-Oriented Programming', color: 'blue' }}
+      title="OOP & SOLID Principles"
+      description="Core concepts of Object-Oriented Programming and design principles."
+    >
       <div className="space-y-6">
-        <div className="bg-gray-50 p-4 rounded-lg">
-          <h4 className="font-semibold text-gray-900 mb-2">Core Concepts</h4>
+        <InfoBox variant="gray" title="Core Concepts">
           <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
             <li>
               <strong>Encapsulation:</strong> Bundling data and methods that
@@ -36,10 +24,9 @@ export const OopSolidSection = () => {
               each class.
             </li>
           </ul>
-        </div>
+        </InfoBox>
 
-        <div className="bg-gray-50 p-4 rounded-lg">
-          <h4 className="font-semibold text-gray-900 mb-2">SOLID Principles</h4>
+        <InfoBox variant="gray" title="SOLID Principles">
           <ul className="space-y-2 text-sm text-gray-700">
             <li>
               <strong className="text-blue-700">S</strong>ingle Responsibility
@@ -65,8 +52,8 @@ export const OopSolidSection = () => {
               Principle: Depend on abstractions, not on concretions.
             </li>
           </ul>
-        </div>
+        </InfoBox>
       </div>
-    </Card>
+    </SectionCard>
   );
 };

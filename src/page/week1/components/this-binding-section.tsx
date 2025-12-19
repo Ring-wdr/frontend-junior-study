@@ -1,21 +1,13 @@
-import { Badge } from '../../../components/ui/badge';
-import { Card } from '../../../components/ui/card';
+import { SectionCard } from '../../../components';
 import { ThisBindingDemo } from './this-binding-demo';
 
 export const ThisBindingSection = () => (
-  <Card className="p-6" data-testid="this-binding-section">
-    <div className="flex justify-between items-start mb-4 text-left">
-      <div>
-        <Badge color="purple">Core</Badge>
-        <h3 className="text-xl font-bold mt-2 text-gray-900">
-          5 Rules of 'this'
-        </h3>
-        <p className="text-gray-500 text-sm mt-1">
-          Explore how 'this' binding works in different contexts.
-        </p>
-      </div>
-    </div>
-
+  <SectionCard
+    badge={{ label: 'Core', color: 'purple' }}
+    title="5 Rules of 'this'"
+    description="Explore how 'this' binding works in different contexts."
+    testId="this-binding-section"
+  >
     <ThisBindingDemo />
-  </Card>
+  </SectionCard>
 );
