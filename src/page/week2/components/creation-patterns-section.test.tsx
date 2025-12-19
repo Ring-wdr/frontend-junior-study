@@ -33,7 +33,9 @@ describe('CreationPatternsSection', () => {
   it('should display Singleton Pattern description', () => {
     const { container } = render(<CreationPatternsSection />);
 
-    expect(container.textContent).toContain('Ensures a class has only one instance');
+    expect(container.textContent).toContain(
+      'Ensures a class has only one instance',
+    );
   });
 
   it('should render Factory Pattern subsection', () => {
@@ -46,14 +48,18 @@ describe('CreationPatternsSection', () => {
     const { container } = render(<CreationPatternsSection />);
 
     expect(container.textContent).toContain('Factory Method');
-    expect(container.textContent).toContain('Defines an interface for creating an object');
+    expect(container.textContent).toContain(
+      'Defines an interface for creating an object',
+    );
   });
 
   it('should display Abstract Factory information', () => {
     const { container } = render(<CreationPatternsSection />);
 
     expect(container.textContent).toContain('Abstract Factory');
-    expect(container.textContent).toContain('Provides an interface for creating families');
+    expect(container.textContent).toContain(
+      'Provides an interface for creating families',
+    );
   });
 
   it('should render Builder Pattern subsection', () => {
@@ -65,7 +71,9 @@ describe('CreationPatternsSection', () => {
   it('should display Builder Pattern description', () => {
     const { container } = render(<CreationPatternsSection />);
 
-    expect(container.textContent).toContain('Separates the construction of a complex object');
+    expect(container.textContent).toContain(
+      'Separates the construction of a complex object',
+    );
   });
 
   it('should include code examples', () => {

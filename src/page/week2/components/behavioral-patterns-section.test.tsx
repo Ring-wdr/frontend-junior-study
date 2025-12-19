@@ -33,7 +33,9 @@ describe('BehavioralPatternsSection', () => {
   it('should display Observer Pattern description', () => {
     const { container } = render(<BehavioralPatternsSection />);
 
-    expect(container.textContent).toContain('Lets you define a subscription mechanism');
+    expect(container.textContent).toContain(
+      'Lets you define a subscription mechanism',
+    );
   });
 
   it('should display Observer Pattern examples', () => {
@@ -62,14 +64,18 @@ describe('BehavioralPatternsSection', () => {
     const { container } = render(<BehavioralPatternsSection />);
 
     expect(container.textContent).toContain('Command');
-    expect(container.textContent).toContain('Turns a request into a stand-alone object');
+    expect(container.textContent).toContain(
+      'Turns a request into a stand-alone object',
+    );
   });
 
   it('should render Template Method Pattern card', () => {
     const { container } = render(<BehavioralPatternsSection />);
 
     expect(container.textContent).toContain('Template Method');
-    expect(container.textContent).toContain('Defines the skeleton of an algorithm');
+    expect(container.textContent).toContain(
+      'Defines the skeleton of an algorithm',
+    );
   });
 
   it('should have green badge color', () => {

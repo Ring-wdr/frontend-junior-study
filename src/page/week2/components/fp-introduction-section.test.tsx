@@ -33,7 +33,9 @@ describe('FpIntroductionSection', () => {
   it('should display Immutability concept', () => {
     const { container } = render(<FpIntroductionSection />);
 
-    expect(container.textContent).toContain('Data is never modified; instead, a new copy with changes is created');
+    expect(container.textContent).toContain(
+      'Data is never modified; instead, a new copy with changes is created',
+    );
   });
 
   it('should render Core Concepts info box', () => {
@@ -55,14 +57,18 @@ describe('FpIntroductionSection', () => {
     const { container } = render(<FpIntroductionSection />);
 
     expect(container.textContent).toContain('Higher-Order Functions');
-    expect(container.textContent).toContain('Functions that take others as args');
+    expect(container.textContent).toContain(
+      'Functions that take others as args',
+    );
   });
 
   it('should render Currying section', () => {
     const { container } = render(<FpIntroductionSection />);
 
     expect(container.textContent).toContain('Currying');
-    expect(container.textContent).toContain('Function taking multiple args to Sequence of functions');
+    expect(container.textContent).toContain(
+      'Function taking multiple args to Sequence of functions',
+    );
   });
 
   it('should render Monads (Maybe) section', () => {

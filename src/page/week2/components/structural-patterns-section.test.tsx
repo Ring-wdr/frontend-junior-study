@@ -33,7 +33,9 @@ describe('StructuralPatternsSection', () => {
   it('should display Decorator Pattern description', () => {
     const { container } = render(<StructuralPatternsSection />);
 
-    expect(container.textContent).toContain('Attaches additional responsibilities to an object');
+    expect(container.textContent).toContain(
+      'Attaches additional responsibilities to an object',
+    );
   });
 
   it('should display Decorator Pattern concept', () => {
@@ -47,7 +49,9 @@ describe('StructuralPatternsSection', () => {
     const { container } = render(<StructuralPatternsSection />);
 
     expect(container.textContent).toContain('Adapter Pattern');
-    expect(container.textContent).toContain('Collaborate with incompatible interfaces');
+    expect(container.textContent).toContain(
+      'Collaborate with incompatible interfaces',
+    );
   });
 
   it('should render Proxy Pattern card', () => {
@@ -61,7 +65,9 @@ describe('StructuralPatternsSection', () => {
     const { container } = render(<StructuralPatternsSection />);
 
     expect(container.textContent).toContain('Facade Pattern');
-    expect(container.textContent).toContain('Simplified interface for complex subsystems');
+    expect(container.textContent).toContain(
+      'Simplified interface for complex subsystems',
+    );
   });
 
   it('should render Bridge Pattern card', () => {

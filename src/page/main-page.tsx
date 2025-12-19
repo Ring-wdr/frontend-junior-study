@@ -166,22 +166,56 @@ export default function MainPage() {
             </div>
           </Link>
 
-          {/* Placeholders for future weeks */}
-          {[10, 11, 12].map((week) => (
-            <div
-              key={week}
-              className="p-6 bg-gray-50 rounded-xl border border-gray-100 opacity-50 cursor-not-allowed"
-            >
-              <div className="flex flex-col items-start text-left space-y-2">
-                <span className="text-sm font-semibold text-gray-400 bg-gray-100 px-2 py-1 rounded-md">
-                  Week {week}
-                </span>
-                <h2 className="text-xl font-semibold text-gray-300">
-                  Coming Soon
-                </h2>
-              </div>
+          <Link
+            to="/week-10"
+            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
+          >
+            <div className="flex flex-col items-start text-left space-y-2">
+              <span className="text-sm font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-md group-hover:bg-green-100 transition-colors">
+                Week 10
+              </span>
+              <h2 className="text-xl font-semibold group-hover:text-green-600 transition-colors">
+                GSAP Animation
+              </h2>
+              <p className="text-sm text-gray-500 line-clamp-2">
+                GSAP basics, ScrollTrigger, SVG animations, and performance.
+              </p>
             </div>
-          ))}
+          </Link>
+
+          <Link
+            to="/week-11"
+            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
+          >
+            <div className="flex flex-col items-start text-left space-y-2">
+              <span className="text-sm font-semibold text-orange-600 bg-orange-50 px-2 py-1 rounded-md group-hover:bg-orange-100 transition-colors">
+                Week 11
+              </span>
+              <h2 className="text-xl font-semibold group-hover:text-orange-600 transition-colors">
+                Web Performance
+              </h2>
+              <p className="text-sm text-gray-500 line-clamp-2">
+                Core Web Vitals, LCP, INP, CLS, and optimization strategies.
+              </p>
+            </div>
+          </Link>
+
+          <Link
+            to="/week-12"
+            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
+          >
+            <div className="flex flex-col items-start text-left space-y-2">
+              <span className="text-sm font-semibold text-rose-600 bg-rose-50 px-2 py-1 rounded-md group-hover:bg-rose-100 transition-colors">
+                Week 12
+              </span>
+              <h2 className="text-xl font-semibold group-hover:text-rose-600 transition-colors">
+                Auth & Security
+              </h2>
+              <p className="text-sm text-gray-500 line-clamp-2">
+                OAuth 2.0, OIDC, NextAuth.js, JWT, XSS, CSRF protection.
+              </p>
+            </div>
+          </Link>
         </div>
       </div>
     </div>
