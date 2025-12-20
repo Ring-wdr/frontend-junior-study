@@ -29,11 +29,6 @@ export const ImmutabilityVisualizer = () => {
     };
     const newArray = [...currentArray, newItem]; // Copy spread
 
-    // Remove isNew flag from previous
-    // const cleanPrev = currentArray.map((item) => ({ ...item, isNew: false })); // This variable was not used.
-    // Ensure strictly new copy references for existing items (simulating shallow copy where refs are shared but array is new)
-    // Visually we want to show it's a new "Row"
-
     setHistory((prev) => {
       // Keep only last 3 for visualization space
       const newHistory = [...prev, newArray];

@@ -1,6 +1,6 @@
 import gsap from 'gsap';
 import { Play, RotateCcw } from 'lucide-react';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export function GsapBasicsSection() {
@@ -8,18 +8,6 @@ export function GsapBasicsSection() {
   const boxToRef = useRef<HTMLDivElement>(null);
   const boxFromRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
-
-  // State to force re-render/reset animations
-  const [resetKey, setResetKey] = useState(0);
-
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      // gsap.to() demo
-      // Initial state is set by CSS/React, we animate TO new state
-    }, boxToRef); // scope
-    return () => ctx.revert();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resetKey]);
 
   const runTo = () => {
     gsap.to(boxToRef.current, {
@@ -53,7 +41,6 @@ export function GsapBasicsSection() {
   };
 
   const reset = () => {
-    setResetKey((prev) => prev + 1);
     // Helper to manually reset properties if context revert isn't enough for valid re-run visual
     gsap.set([boxToRef.current, boxFromRef.current], { clearProps: 'all' });
     if (timelineRef.current) {

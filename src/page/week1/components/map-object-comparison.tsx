@@ -3,8 +3,6 @@ import { AlertTriangle, CheckCircle, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { CodeBlock } from '../../../components/ui/code-block';
 
-// import { cn } from '../../../lib/utils';
-
 type Entry = {
   keyDisplay: string;
   value: string;
@@ -91,7 +89,7 @@ export const MapObjectComparison = () => {
                   Empty Object
                 </div>
               )}
-              {objEntries.map((entry, i) => (
+              {objEntries.map((entry) => (
                 <motion.div
                   key={step} // Force re-render on step to animate collision
                   initial={{ opacity: 0, scale: 0.9 }}

@@ -29,7 +29,6 @@ export function DevToolsSection() {
 
   // Animation Loop for FPS and Scrolling
   useEffect(() => {
-    const lastTime = performance.now();
     let frameCount = 0;
     let fpsInterval: NodeJS.Timeout;
 

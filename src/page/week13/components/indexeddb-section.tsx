@@ -40,10 +40,6 @@ export const IndexedDBSection = () => {
         store.createIndex('createdAt', 'createdAt', { unique: false });
       }
     };
-
-    return () => {
-      db?.close();
-    };
   }, []);
 
   const loadTodos = (database: IDBDatabase) => {
