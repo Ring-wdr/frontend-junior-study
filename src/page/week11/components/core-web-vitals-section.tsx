@@ -8,81 +8,56 @@ import {
   Zap,
 } from 'lucide-react';
 import { useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 export function CoreWebVitalsSection() {
+  const { t } = useTranslation('week11');
   const [selectedMetric, setSelectedMetric] = useState<'lcp' | 'inp' | 'cls'>(
     'lcp',
   );
 
   const metrics = {
     lcp: {
-      name: 'LCP',
-      fullName: 'Largest Contentful Paint',
+      name: t('week11.coreWebVitals.lcp.name'),
+      fullName: t('week11.coreWebVitals.lcp.fullName'),
       icon: <Clock className="text-blue-600" size={24} />,
       color: 'blue',
-      description:
-        '주요 콘텐츠가 화면에 표시되기까지 걸리는 시간. 사용자가 페이지가 "로드되었다"고 느끼는 순간을 측정합니다.',
-      good: '2.5초 이하',
-      needsImprovement: '2.5초 ~ 4초',
-      poor: '4초 초과',
-      causes: [
-        '큰 히어로 이미지',
-        '느린 서버 응답 (TTFB)',
-        '렌더링 차단 리소스',
-        '느린 폰트 로딩',
-      ],
-      solutions: [
-        'CDN 활용 및 서버 최적화',
-        '이미지 최적화 (WebP, AVIF)',
-        'preconnect / preload 사용',
-        'Critical CSS 인라인화',
-      ],
+      description: t('week11.coreWebVitals.lcp.description'),
+      good: t('week11.coreWebVitals.lcp.good'),
+      needsImprovement: t('week11.coreWebVitals.lcp.needsImprovement'),
+      poor: t('week11.coreWebVitals.lcp.poor'),
+      causes: t('week11.coreWebVitals.lcp.causes', { returnObjects: true }),
+      solutions: t('week11.coreWebVitals.lcp.solutions', {
+        returnObjects: true,
+      }),
     },
     inp: {
-      name: 'INP',
-      fullName: 'Interaction to Next Paint',
+      name: t('week11.coreWebVitals.inp.name'),
+      fullName: t('week11.coreWebVitals.inp.fullName'),
       icon: <MousePointer className="text-purple-600" size={24} />,
       color: 'purple',
-      description:
-        '사용자 인터랙션(클릭, 탭, 키보드)에 대한 반응 지연 시간. FID를 대체하는 새로운 지표입니다.',
-      good: '200ms 이하',
-      needsImprovement: '200ms ~ 500ms',
-      poor: '500ms 초과',
-      causes: [
-        'Long Task (50ms+ 메인 스레드 점유)',
-        '과도한 JavaScript 실행',
-        '동기적 레이아웃 계산',
-        '무거운 이벤트 핸들러',
-      ],
-      solutions: [
-        'Heavy 계산을 Web Worker로 분리',
-        'useTransition으로 UI 블로킹 방지',
-        '코드 스플리팅으로 JS 번들 축소',
-        '이벤트 핸들러 최적화 (debounce/throttle)',
-      ],
+      description: t('week11.coreWebVitals.inp.description'),
+      good: t('week11.coreWebVitals.inp.good'),
+      needsImprovement: t('week11.coreWebVitals.inp.needsImprovement'),
+      poor: t('week11.coreWebVitals.inp.poor'),
+      causes: t('week11.coreWebVitals.inp.causes', { returnObjects: true }),
+      solutions: t('week11.coreWebVitals.inp.solutions', {
+        returnObjects: true,
+      }),
     },
     cls: {
-      name: 'CLS',
-      fullName: 'Cumulative Layout Shift',
+      name: t('week11.coreWebVitals.cls.name'),
+      fullName: t('week11.coreWebVitals.cls.fullName'),
       icon: <Move className="text-orange-600" size={24} />,
       color: 'orange',
-      description:
-        '페이지 로드 중 예기치 않은 레이아웃 이동의 총합. 사용자가 의도치 않게 잘못된 요소를 클릭하게 만듭니다.',
-      good: '0.1 이하',
-      needsImprovement: '0.1 ~ 0.25',
-      poor: '0.25 초과',
-      causes: [
-        '이미지 width/height 미지정',
-        '광고/임베드 영역 미예약',
-        '동적으로 삽입되는 콘텐츠',
-        'FOUT (Flash of Unstyled Text)',
-      ],
-      solutions: [
-        '이미지에 width/height 또는 aspect-ratio 지정',
-        '광고 컨테이너에 min-height 설정',
-        'Skeleton UI로 공간 예약',
-        'font-display: swap + preload',
-      ],
+      description: t('week11.coreWebVitals.cls.description'),
+      good: t('week11.coreWebVitals.cls.good'),
+      needsImprovement: t('week11.coreWebVitals.cls.needsImprovement'),
+      poor: t('week11.coreWebVitals.cls.poor'),
+      causes: t('week11.coreWebVitals.cls.causes', { returnObjects: true }),
+      solutions: t('week11.coreWebVitals.cls.solutions', {
+        returnObjects: true,
+      }),
     },
   };
 
@@ -188,12 +163,13 @@ export function CoreWebVitalsSection() {
           <div className={`p-2 rounded-lg ${colors.bg} ${colors.text}`}>
             {current.icon}
           </div>
-          <h2 className="text-2xl font-bold text-gray-900">Core Web Vitals</h2>
+          <h2 className="text-2xl font-bold text-gray-900">
+            {t('week11.coreWebVitals.title')}
+          </h2>
         </div>
 
         <p className="text-gray-600 leading-relaxed text-lg">
-          Google이 정의한 <strong>사용자 경험의 핵심 지표</strong>입니다. 검색
-          순위에도 영향을 미치며, 실제 사용자가 느끼는 성능을 측정합니다.
+          <Trans t={t} i18nKey="week11.coreWebVitals.description" />
         </p>
 
         <div className="flex gap-2 p-1 bg-gray-100 rounded-lg">
@@ -218,7 +194,7 @@ export function CoreWebVitalsSection() {
           <div className="bg-gray-50 p-4 border-b border-gray-200 flex justify-between items-center">
             <h3 className="font-semibold text-gray-700 flex items-center gap-2">
               <Zap size={16} className="text-yellow-500" />
-              {current.name} Visualizer
+              {current.name} {t('week11.coreWebVitals.visualizerTitle')}
             </h3>
             <div className="flex items-center gap-4 text-sm">
               {selectedMetric === 'lcp' && (
@@ -228,14 +204,14 @@ export function CoreWebVitalsSection() {
                     onClick={() => setLcpMode('good')}
                     className={`px-3 py-1 rounded ${lcpMode === 'good' ? 'bg-green-100 text-green-700 font-medium' : 'text-gray-500 hover:bg-gray-50'}`}
                   >
-                    Good (0.8s)
+                    {t('week11.coreWebVitals.lcp.goodMode')}
                   </button>
                   <button
                     type="button"
                     onClick={() => setLcpMode('bad')}
                     className={`px-3 py-1 rounded ${lcpMode === 'bad' ? 'bg-red-100 text-red-700 font-medium' : 'text-gray-500 hover:bg-gray-50'}`}
                   >
-                    Bad (3.5s)
+                    {t('week11.coreWebVitals.lcp.badMode')}
                   </button>
                 </div>
               )}
@@ -246,14 +222,14 @@ export function CoreWebVitalsSection() {
                     onClick={() => setInpMode('good')}
                     className={`px-3 py-1 rounded ${inpMode === 'good' ? 'bg-green-100 text-green-700 font-medium' : 'text-gray-500 hover:bg-gray-50'}`}
                   >
-                    Good (50ms)
+                    {t('week11.coreWebVitals.inp.goodMode')}
                   </button>
                   <button
                     type="button"
                     onClick={() => setInpMode('bad')}
                     className={`px-3 py-1 rounded ${inpMode === 'bad' ? 'bg-red-100 text-red-700 font-medium' : 'text-gray-500 hover:bg-gray-50'}`}
                   >
-                    Bad (600ms)
+                    {t('week11.coreWebVitals.inp.badMode')}
                   </button>
                 </div>
               )}
@@ -268,7 +244,7 @@ export function CoreWebVitalsSection() {
                     }}
                     className={`px-3 py-1 rounded ${clsMode === 'good' ? 'bg-green-100 text-green-700 font-medium' : 'text-gray-500 hover:bg-gray-50'}`}
                   >
-                    Good (Fixed)
+                    {t('week11.coreWebVitals.cls.goodMode')}
                   </button>
                   <button
                     type="button"
@@ -279,7 +255,7 @@ export function CoreWebVitalsSection() {
                     }}
                     className={`px-3 py-1 rounded ${clsMode === 'bad' ? 'bg-red-100 text-red-700 font-medium' : 'text-gray-500 hover:bg-gray-50'}`}
                   >
-                    Bad (Shift)
+                    {t('week11.coreWebVitals.cls.badMode')}
                   </button>
                 </div>
               )}
@@ -298,7 +274,9 @@ export function CoreWebVitalsSection() {
                     className="flex items-center gap-1.5 px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded hover:bg-blue-700 disabled:opacity-50"
                   >
                     <RotateCcw size={12} />{' '}
-                    {lcpState === 'loading' ? 'Loading...' : 'Reload Page'}
+                    {lcpState === 'loading'
+                      ? t('week11.coreWebVitals.lcp.loading')
+                      : t('week11.coreWebVitals.lcp.reloadPage')}
                   </button>
                 </div>
                 <div className="space-y-3">
@@ -310,18 +288,18 @@ export function CoreWebVitalsSection() {
                   <div className="relative aspect-video bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden border border-gray-200">
                     {lcpState === 'loaded' ? (
                       <div className="w-full h-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl animate-in zoom-in-95 duration-500">
-                        Hero Image
+                        {t('week11.coreWebVitals.lcp.heroImage')}
                       </div>
                     ) : (
                       <div className="text-gray-400 text-sm">
-                        Loading Large Resource...
+                        {t('week11.coreWebVitals.lcp.loadingText')}
                       </div>
                     )}
                   </div>
 
                   <div className="flex justify-between items-center pt-2">
                     <span className="text-sm text-gray-500">
-                      Time:{' '}
+                      {t('week11.coreWebVitals.lcp.time')}{' '}
                       <span className="font-mono text-gray-900">
                         {lcpTime}ms
                       </span>
@@ -333,7 +311,9 @@ export function CoreWebVitalsSection() {
                           : 'bg-green-100 text-green-700'
                       }`}
                     >
-                      {lcpTime > 2500 ? 'Needs Improvement' : 'Good'}
+                      {lcpTime > 2500
+                        ? t('week11.coreWebVitals.lcp.needsImprovementLabel')
+                        : t('week11.coreWebVitals.lcp.goodLabel')}
                     </span>
                   </div>
                 </div>
@@ -344,10 +324,10 @@ export function CoreWebVitalsSection() {
               <div className="w-full max-w-md bg-white rounded-lg shadow-sm border border-gray-200 p-6 flex flex-col items-center gap-6">
                 <div className="text-center space-y-2">
                   <h4 className="font-medium text-gray-900">
-                    Click Response Test
+                    {t('week11.coreWebVitals.inp.clickTest')}
                   </h4>
                   <p className="text-xs text-gray-500">
-                    Test the button responsiveness
+                    {t('week11.coreWebVitals.inp.testButton')}
                   </p>
                 </div>
 
@@ -362,7 +342,9 @@ export function CoreWebVitalsSection() {
                         : 'bg-green-500 hover:bg-green-600'
                   }`}
                 >
-                  {inpState === 'processing' ? 'Processing...' : 'Click Me!'}
+                  {inpState === 'processing'
+                    ? t('week11.coreWebVitals.inp.processing')
+                    : t('week11.coreWebVitals.inp.clickMe')}
                 </button>
 
                 {inpState === 'responded' && (
@@ -376,16 +358,16 @@ export function CoreWebVitalsSection() {
                       className={`text-xs font-medium ${inpTime > 200 ? 'text-red-500' : 'text-green-500'}`}
                     >
                       {inpTime > 200
-                        ? 'Slow (Blocking)'
-                        : 'Fast (Non-blocking)'}
+                        ? t('week11.coreWebVitals.inp.slow')
+                        : t('week11.coreWebVitals.inp.fast')}
                     </div>
                   </div>
                 )}
 
                 <div className="text-xs text-center text-gray-400 max-w-[200px]">
                   {inpMode === 'bad'
-                    ? 'Simulates heavy Work by looping on main thread.'
-                    : 'Simulates lightweight event handler.'}
+                    ? t('week11.coreWebVitals.inp.simulateHeavy')
+                    : t('week11.coreWebVitals.inp.simulateLightweight')}
                 </div>
               </div>
             )}
@@ -394,7 +376,7 @@ export function CoreWebVitalsSection() {
               <div className="w-full max-w-sm bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden flex flex-col h-[320px]">
                 <div className="bg-gray-50 px-4 py-2 border-b border-gray-100 flex justify-between items-center">
                   <span className="text-xs font-medium text-gray-500">
-                    Layout View
+                    {t('week11.coreWebVitals.cls.layoutView')}
                   </span>
                   <span
                     className={`text-xs font-mono font-bold ${clsScore > 0.1 ? 'text-red-600' : 'text-green-600'}`}
@@ -441,10 +423,10 @@ export function CoreWebVitalsSection() {
                     ))}
                     <div className="p-4 bg-blue-50 border border-blue-100 rounded-lg">
                       <h4 className="font-semibold text-blue-900 mb-1">
-                        Target Content
+                        {t('week11.coreWebVitals.cls.targetContent')}
                       </h4>
                       <p className="text-xs text-blue-700">
-                        This is the content the user is trying to read.
+                        {t('week11.coreWebVitals.cls.targetContentDesc')}
                       </p>
                     </div>
                   </div>
@@ -468,7 +450,9 @@ export function CoreWebVitalsSection() {
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div className="text-center p-3 bg-green-100 rounded-lg">
               <CheckCircle2 className="mx-auto text-green-600 mb-1" size={20} />
-              <p className="text-xs text-gray-500">Good</p>
+              <p className="text-xs text-gray-500">
+                {t('week11.coreWebVitals.metrics.good')}
+              </p>
               <p className="font-bold text-green-700">{current.good}</p>
             </div>
             <div className="text-center p-3 bg-yellow-100 rounded-lg">
@@ -476,14 +460,18 @@ export function CoreWebVitalsSection() {
                 className="mx-auto text-yellow-600 mb-1"
                 size={20}
               />
-              <p className="text-xs text-gray-500">Needs Work</p>
+              <p className="text-xs text-gray-500">
+                {t('week11.coreWebVitals.metrics.needsWork')}
+              </p>
               <p className="font-bold text-yellow-700">
                 {current.needsImprovement}
               </p>
             </div>
             <div className="text-center p-3 bg-red-100 rounded-lg">
               <Zap className="mx-auto text-red-600 mb-1" size={20} />
-              <p className="text-xs text-gray-500">Poor</p>
+              <p className="text-xs text-gray-500">
+                {t('week11.coreWebVitals.metrics.poor')}
+              </p>
               <p className="font-bold text-red-700">{current.poor}</p>
             </div>
           </div>
@@ -491,20 +479,22 @@ export function CoreWebVitalsSection() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white/50 rounded-lg p-4">
               <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                <span className="text-red-500">!</span> 주요 원인
+                <span className="text-red-500">!</span>{' '}
+                {t('week11.coreWebVitals.metrics.causes')}
               </h4>
               <ul className="space-y-1.5 text-sm text-gray-600">
-                {current.causes.map((cause) => (
+                {(current.causes as string[]).map((cause) => (
                   <li key={cause}>• {cause}</li>
                 ))}
               </ul>
             </div>
             <div className="bg-white/50 rounded-lg p-4">
               <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-green-500" /> 개선 방법
+                <CheckCircle2 size={16} className="text-green-500" />{' '}
+                {t('week11.coreWebVitals.metrics.solutions')}
               </h4>
               <ul className="space-y-1.5 text-sm text-gray-600">
-                {current.solutions.map((solution) => (
+                {(current.solutions as string[]).map((solution) => (
                   <li key={solution}>• {solution}</li>
                 ))}
               </ul>
@@ -513,8 +503,7 @@ export function CoreWebVitalsSection() {
         </div>
 
         <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm text-gray-600">
-          <strong>측정 도구:</strong> Lighthouse, PageSpeed Insights, Chrome
-          DevTools Performance 탭, Web Vitals 라이브러리, Search Console
+          {t('week11.coreWebVitals.measurementTools')}
         </div>
       </div>
     </div>

@@ -2,67 +2,66 @@ import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { useTranslation } from 'react-i18next';
 
 export const SecuritySection = () => {
+  const { t } = useTranslation('week7');
+
   return (
     <SectionCard
-      badge={{ label: 'Security', color: 'orange' }}
-      title="Sanitization & Security"
-      description="Protecting against XSS, injection attacks, and secure form practices"
+      badge={{ label: t('security.badge'), color: 'orange' }}
+      title={t('security.title')}
+      description={t('security.description')}
     >
       <div className="space-y-8">
         <SubSection
-          title="Frontend Security Responsibility"
+          title={t('security.frontendResponsibility.title')}
           icon
           iconColor="red"
         >
           <InfoBox
             variant="red"
-            title="Critical Point: Server Validation is Essential"
+            title={t('security.frontendResponsibility.criticalPoint.title')}
           >
             <p className="text-sm mb-3">
-              <strong>Frontend security is NOT enough.</strong> Always validate
-              and sanitize on the server. Frontend security only improves UX,
-              not protection.
+              {t('security.frontendResponsibility.criticalPoint.intro')}
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm">
-              <li>Users can bypass frontend validation (disable JavaScript)</li>
-              <li>Attackers can directly send requests to your API</li>
-              <li>Frontend sanitization may have gaps or bugs</li>
+              <li>{t('security.frontendResponsibility.criticalPoint.bypassFrontend')}</li>
+              <li>{t('security.frontendResponsibility.criticalPoint.directRequests')}</li>
+              <li>{t('security.frontendResponsibility.criticalPoint.gaps')}</li>
               <li>
-                <strong>Server is the final defense line</strong>
+                {t('security.frontendResponsibility.criticalPoint.serverFinalDefense')}
               </li>
             </ul>
           </InfoBox>
 
           <div className="mt-4 bg-yellow-50 p-4 rounded border border-yellow-200">
             <p className="text-sm text-yellow-900">
-              <strong>⚠️ Security Layers:</strong>
+              <strong>{t('security.frontendResponsibility.securityLayers.title')}</strong>
             </p>
             <div className="mt-2 text-sm space-y-1">
-              <p>1️⃣ Frontend validation (UX, early error detection)</p>
-              <p>2️⃣ Frontend sanitization (prevent XSS in display)</p>
-              <p>3️⃣ Server validation (MANDATORY - data integrity)</p>
-              <p>4️⃣ Server sanitization (MANDATORY - prevent injection)</p>
+              <p>{t('security.frontendResponsibility.securityLayers.layer1')}</p>
+              <p>{t('security.frontendResponsibility.securityLayers.layer2')}</p>
+              <p>{t('security.frontendResponsibility.securityLayers.layer3')}</p>
+              <p>{t('security.frontendResponsibility.securityLayers.layer4')}</p>
               <p>
-                5️⃣ Database layer (prepared statements, parameterized queries)
+                {t('security.frontendResponsibility.securityLayers.layer5')}
               </p>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title="XSS Prevention" icon iconColor="orange">
-          <InfoBox variant="orange" title="What is XSS (Cross-Site Scripting)?">
+        <SubSection title={t('security.xssPrevention.title')} icon iconColor="orange">
+          <InfoBox variant="orange" title={t('security.xssPrevention.whatIsXSS.title')}>
             <p className="text-sm">
-              Attacker injects malicious script into your site, which runs in
-              other users' browsers, stealing data or performing actions on
-              their behalf.
+              {t('security.xssPrevention.whatIsXSS.description')}
             </p>
           </InfoBox>
 
           <div className="mt-4 space-y-3">
             <p className="text-sm font-semibold text-gray-700">
-              Common XSS Attack Vectors:
+              {t('security.xssPrevention.commonVectors')}
             </p>
             <CodeBlock
               code={`// ❌ VULNERABLE: Directly displaying user input
@@ -94,30 +93,28 @@ const RichCommentDisplay = ({ comment }) => {
             />
           </div>
 
-          <InfoBox variant="green" title="XSS Prevention Rules">
+          <InfoBox variant="green" title={t('security.xssPrevention.preventionRules.title')}>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>Default:</strong> Never use dangerouslySetInnerHTML
+                {t('security.xssPrevention.preventionRules.default')}
               </li>
               <li>
-                <strong>React escapes:</strong> Always render text normally:{' '}
-                <code>{'<div>{text}</div>'}</code>
+                {t('security.xssPrevention.preventionRules.reactEscapes')}
               </li>
               <li>
-                <strong>Rich content:</strong> Only use DOMPurify for innerHTML
+                {t('security.xssPrevention.preventionRules.richContent')}
               </li>
               <li>
-                <strong>URLs:</strong> Validate and sanitize href attributes
+                {t('security.xssPrevention.preventionRules.urls')}
               </li>
               <li>
-                <strong>Event handlers:</strong> Never bind user input to
-                onClick, etc.
+                {t('security.xssPrevention.preventionRules.eventHandlers')}
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="DOMPurify Integration" icon iconColor="blue">
+        <SubSection title={t('security.domPurifyIntegration.title')} icon iconColor="blue">
           <CodeBlock
             code={`import DOMPurify from 'dompurify';
 
@@ -172,32 +169,27 @@ const RichTextForm = () => {
           />
         </SubSection>
 
-        <SubSection title="SQL Injection Prevention" icon iconColor="purple">
-          <InfoBox variant="purple" title="Frontend's Role in SQL Injection">
+        <SubSection title={t('security.sqlInjectionPrevention.title')} icon iconColor="purple">
+          <InfoBox variant="purple" title={t('security.sqlInjectionPrevention.frontendRole.title')}>
             <p className="text-sm mb-3">
-              <strong>Critical:</strong> SQL injection is primarily a backend
-              concern. The frontend can only help with input validation and
-              early filtering.
+              {t('security.sqlInjectionPrevention.frontendRole.critical')}
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>Frontend:</strong> Filter out suspicious patterns (alert
-                user)
+                {t('security.sqlInjectionPrevention.frontendRole.frontend')}
               </li>
               <li>
-                <strong>Backend:</strong> ALWAYS use prepared
-                statements/parameterized queries
+                {t('security.sqlInjectionPrevention.frontendRole.backend')}
               </li>
               <li>
-                <strong>Backend:</strong> Never concatenate user input into SQL
-                strings
+                {t('security.sqlInjectionPrevention.frontendRole.neverConcat')}
               </li>
             </ul>
           </InfoBox>
 
           <div className="mt-4 space-y-3">
             <p className="text-sm font-semibold text-gray-700">
-              Frontend Validation:
+              {t('security.sqlInjectionPrevention.frontendValidation')}
             </p>
             <CodeBlock
               code={`// Zod schema to catch obvious SQL injection attempts
@@ -244,21 +236,19 @@ app.post('/api/user', async (req, res) => {
           </div>
         </SubSection>
 
-        <SubSection title="CSRF Protection" icon iconColor="green">
+        <SubSection title={t('security.csrfProtection.title')} icon iconColor="green">
           <InfoBox
             variant="green"
-            title="What is CSRF (Cross-Site Request Forgery)?"
+            title={t('security.csrfProtection.whatIsCSRF.title')}
           >
             <p className="text-sm mb-3">
-              Attacker tricks user into making unwanted requests to another
-              site. Example: User logged into bank.com, attacker's page makes a
-              transfer request.
+              {t('security.csrfProtection.whatIsCSRF.description')}
             </p>
           </InfoBox>
 
           <div className="mt-4 space-y-3">
             <p className="text-sm font-semibold text-gray-700">
-              CSRF Protection Pattern:
+              {t('security.csrfProtection.protectionPattern')}
             </p>
             <CodeBlock
               code={`// Server generates CSRF token
@@ -315,58 +305,58 @@ app.post('/api/submit', (req, res) => {
           </div>
         </SubSection>
 
-        <SubSection title="Security Checklist" icon iconColor="red">
+        <SubSection title={t('security.securityChecklist.title')} icon iconColor="red">
           <div className="space-y-2">
             <div className="flex items-start gap-3 p-3 bg-red-50 rounded border border-red-200">
               <span className="text-lg">☐</span>
               <p className="text-sm">
-                Server validates ALL form inputs (backend is final)
+                {t('security.securityChecklist.serverValidates')}
               </p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-red-50 rounded border border-red-200">
               <span className="text-lg">☐</span>
               <p className="text-sm">
-                Never use <code>dangerouslySetInnerHTML</code> with user data
+                {t('security.securityChecklist.noDangerouslySet')}
               </p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-red-50 rounded border border-red-200">
               <span className="text-lg">☐</span>
               <p className="text-sm">
-                Sanitize with DOMPurify for rich content display
+                {t('security.securityChecklist.useDOMPurify')}
               </p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-red-50 rounded border border-red-200">
               <span className="text-lg">☐</span>
               <p className="text-sm">
-                Use parameterized SQL queries (not string concatenation)
+                {t('security.securityChecklist.parameterizedSQL')}
               </p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-red-50 rounded border border-red-200">
               <span className="text-lg">☐</span>
               <p className="text-sm">
-                Implement CSRF tokens for state-changing requests
+                {t('security.securityChecklist.implementCSRF')}
               </p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-red-50 rounded border border-red-200">
               <span className="text-lg">☐</span>
-              <p className="text-sm">Use HTTPS for all form submissions</p>
+              <p className="text-sm">{t('security.securityChecklist.useHTTPS')}</p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-red-50 rounded border border-red-200">
               <span className="text-lg">☐</span>
               <p className="text-sm">
-                Mark sensitive form fields with <code>autocomplete="off"</code>
-              </p>
-            </div>
-            <div className="flex items-start gap-3 p-3 bg-red-50 rounded border border-red-200">
-              <span className="text-lg">☐</span>
-              <p className="text-sm">
-                Hash passwords with bcrypt or similar (server-side)
+                {t('security.securityChecklist.autocompleteOff')}
               </p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-red-50 rounded border border-red-200">
               <span className="text-lg">☐</span>
               <p className="text-sm">
-                Set <code>Content-Security-Policy</code> headers
+                {t('security.securityChecklist.hashPasswords')}
+              </p>
+            </div>
+            <div className="flex items-start gap-3 p-3 bg-red-50 rounded border border-red-200">
+              <span className="text-lg">☐</span>
+              <p className="text-sm">
+                {t('security.securityChecklist.cspHeaders')}
               </p>
             </div>
           </div>

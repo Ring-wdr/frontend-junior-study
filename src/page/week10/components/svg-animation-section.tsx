@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 import { RotateCcw } from 'lucide-react';
 import { useLayoutEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 export function SvgAnimationSection() {
   const { t } = useTranslation('week10');
@@ -61,10 +61,9 @@ export function SvgAnimationSection() {
           </button>
         </div>
 
-        <p
-          className="text-gray-600"
-          dangerouslySetInnerHTML={{ __html: t('svg.description') }}
-        ></p>
+        <p className="text-gray-600">
+          <Trans t={t} i18nKey="svg.description" components={{ code: <code /> }} />
+        </p>
 
         <div className="flex justify-center py-10 bg-gray-50 rounded-xl border border-gray-100">
           <svg

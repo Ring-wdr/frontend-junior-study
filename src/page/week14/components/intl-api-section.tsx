@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -8,16 +9,17 @@ import { CodeBlock } from '../../../components/ui/code-block';
 type Locale = 'ko-KR' | 'en-US' | 'de-DE' | 'ja-JP' | 'ar-SA';
 
 export const IntlApiSection = () => {
+  const { t } = useTranslation('week14');
   const [locale, setLocale] = useState<Locale>('ko-KR');
   const [number] = useState(1234567.89);
   const [date] = useState(new Date());
 
-  const localeOptions: { value: Locale; label: string; flag: string }[] = [
-    { value: 'ko-KR', label: '한국어', flag: '🇰🇷' },
-    { value: 'en-US', label: 'English (US)', flag: '🇺🇸' },
-    { value: 'de-DE', label: 'Deutsch', flag: '🇩🇪' },
-    { value: 'ja-JP', label: '日本語', flag: '🇯🇵' },
-    { value: 'ar-SA', label: 'العربية', flag: '🇸🇦' },
+  const localeOptions: { value: Locale; key: string; flag: string }[] = [
+    { value: 'ko-KR', key: 'ko', flag: '🇰🇷' },
+    { value: 'en-US', key: 'en', flag: '🇺🇸' },
+    { value: 'de-DE', key: 'de', flag: '🇩🇪' },
+    { value: 'ja-JP', key: 'ja', flag: '🇯🇵' },
+    { value: 'ar-SA', key: 'ar', flag: '🇸🇦' },
   ];
 
   const formatNumber = (num: number) => {
@@ -52,23 +54,21 @@ export const IntlApiSection = () => {
 
   return (
     <SectionCard
-      badge={{ label: 'Intl', color: 'green' }}
-      title="JavaScript Intl API"
-      description="브라우저 내장 국제화 API로 날짜, 숫자, 통화 포맷팅"
+      badge={{ label: t('intl.badge'), color: 'green' }}
+      title={t('intl.title')}
+      description={t('intl.description')}
     >
       <div className="space-y-8">
-        <SubSection title="Intl API Overview" icon iconColor="green">
-          <InfoBox variant="green" title="Built-in Internationalization">
+        <SubSection title={t('intl.overview.title')} icon iconColor="green">
+          <InfoBox variant="green" title={t('intl.overview.infoTitle')}>
             <p className="text-sm">
-              JavaScript의 <code>Intl</code> 객체는 브라우저에 내장된 강력한
-              국제화 API입니다. 라이브러리 없이도 날짜, 숫자, 통화, 복수형 등을
-              로케일에 맞게 포맷팅할 수 있습니다.
+              {t('intl.overview.infoText')}
             </p>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Interactive: 로케일별 포맷팅" icon iconColor="blue">
-          <DemoBox label="Select Locale to See Differences">
+        <SubSection title={t('intl.liveDemo.title')} icon iconColor="blue">
+          <DemoBox label={t('intl.liveDemo.label')}>
             <div className="space-y-4">
               {/* Locale Selector */}
               <div className="flex gap-2 flex-wrap">
@@ -84,7 +84,7 @@ export const IntlApiSection = () => {
                     }`}
                   >
                     <span>{opt.flag}</span>
-                    <span>{opt.label}</span>
+                    <span>{t(`intl.liveDemo.locales.${opt.key}`)}</span>
                   </button>
                 ))}
               </div>
@@ -94,11 +94,11 @@ export const IntlApiSection = () => {
                 {/* Number Formatting */}
                 <div className="bg-white p-4 rounded-lg border border-gray-200">
                   <h4 className="text-sm font-semibold text-gray-700 mb-2">
-                    NumberFormat
+                    {t('intl.liveDemo.numberFormat')}
                   </h4>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-500">숫자:</span>
+                      <span className="text-gray-500">{t('intl.liveDemo.labels.number')}</span>
                       <span className="font-mono">{formatNumber(number)}</span>
                     </div>
                     <div className="flex justify-between">
@@ -125,29 +125,29 @@ export const IntlApiSection = () => {
                 {/* Date Formatting */}
                 <div className="bg-white p-4 rounded-lg border border-gray-200">
                   <h4 className="text-sm font-semibold text-gray-700 mb-2">
-                    DateTimeFormat
+                    {t('intl.liveDemo.dateTimeFormat')}
                   </h4>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Short:</span>
+                      <span className="text-gray-500">{t('intl.liveDemo.labels.short')}</span>
                       <span className="font-mono">
                         {formatDate(date, 'short')}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Medium:</span>
+                      <span className="text-gray-500">{t('intl.liveDemo.labels.medium')}</span>
                       <span className="font-mono">
                         {formatDate(date, 'medium')}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Long:</span>
+                      <span className="text-gray-500">{t('intl.liveDemo.labels.long')}</span>
                       <span className="font-mono text-xs">
                         {formatDate(date, 'long')}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Time:</span>
+                      <span className="text-gray-500">{t('intl.liveDemo.labels.time')}</span>
                       <span className="font-mono">{formatTime(date)}</span>
                     </div>
                   </div>
@@ -157,7 +157,7 @@ export const IntlApiSection = () => {
               {/* Relative Time */}
               <div className="bg-white p-4 rounded-lg border border-gray-200">
                 <h4 className="text-sm font-semibold text-gray-700 mb-2">
-                  RelativeTimeFormat
+                  {t('intl.liveDemo.relativeTimeFormat')}
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {[
@@ -180,7 +180,7 @@ export const IntlApiSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Intl.NumberFormat" icon iconColor="purple">
+        <SubSection title={t('intl.numberFormat.title')} icon iconColor="purple">
           <CodeBlock
             code={`// Basic number formatting
 new Intl.NumberFormat('de-DE').format(1234567.89)
@@ -219,7 +219,7 @@ new Intl.NumberFormat('en-US', {
           />
         </SubSection>
 
-        <SubSection title="Intl.DateTimeFormat" icon iconColor="orange">
+        <SubSection title={t('intl.dateTimeFormat.title')} icon iconColor="orange">
           <CodeBlock
             code={`// Date formatting
 new Intl.DateTimeFormat('ko-KR').format(new Date())
@@ -254,30 +254,9 @@ new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
           />
         </SubSection>
 
-        <SubSection title="기타 유용한 Intl API" icon iconColor="red">
+        <SubSection title={t('intl.otherApis.title')} icon iconColor="red">
           <div className="space-y-3">
-            {[
-              {
-                api: 'Intl.ListFormat',
-                example: 'new Intl.ListFormat("en").format(["a", "b", "c"])',
-                result: '"a, b, and c"',
-              },
-              {
-                api: 'Intl.PluralRules',
-                example: 'new Intl.PluralRules("en").select(1)',
-                result: '"one"',
-              },
-              {
-                api: 'Intl.Collator',
-                example: '["ä", "a", "z"].sort(new Intl.Collator("de").compare)',
-                result: '["a", "ä", "z"]',
-              },
-              {
-                api: 'Intl.Segmenter',
-                example: 'Segment text into words/sentences',
-                result: 'Text analysis',
-              },
-            ].map((item) => (
+            {(t('intl.otherApis.apis', { returnObjects: true }) as Array<{ api: string; example: string; result: string }>).map((item) => (
               <div
                 key={item.api}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200"

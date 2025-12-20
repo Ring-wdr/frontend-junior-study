@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
@@ -12,7 +12,7 @@ export const ResponsiveSection = () => {
     >
       <div className="space-y-8">
         <SubSection title={t('responsive.mobileFirst.title')} icon iconColor="orange">
-          <p className="text-sm text-gray-700 mb-4" dangerouslySetInnerHTML={{ __html: t('responsive.mobileFirst.content') }} />
+          <p className="text-sm text-gray-700 mb-4"><Trans t={t} i18nKey="responsive.mobileFirst.content" components={{ code: <code /> }} /></p>
 
           <CodeBlock
             code={`<!-- 
@@ -36,10 +36,10 @@ export const ResponsiveSection = () => {
                   <strong>{t('responsive.toolsTechniques.breakpoints')}</strong> {t('responsive.toolsTechniques.breakpointsDesc')}
                 </li>
                 <li>
-                  <strong>{t('responsive.toolsTechniques.fluidTypography')}</strong> <span dangerouslySetInnerHTML={{ __html: t('responsive.toolsTechniques.fluidTypographyDesc') }} />
+                  <strong>{t('responsive.toolsTechniques.fluidTypography')}</strong> <Trans t={t} i18nKey="responsive.toolsTechniques.fluidTypographyDesc" components={{ code: <code /> }} />
                 </li>
                 <li>
-                  <strong>{t('responsive.toolsTechniques.artDirection')}</strong> <span dangerouslySetInnerHTML={{ __html: t('responsive.toolsTechniques.artDirectionDesc') }} />
+                  <strong>{t('responsive.toolsTechniques.artDirection')}</strong> <Trans t={t} i18nKey="responsive.toolsTechniques.artDirectionDesc" components={{ code: <code /> }} />
                 </li>
               </ul>
             </InfoBox>

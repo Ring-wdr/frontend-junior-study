@@ -7,9 +7,12 @@ import {
   Scissors,
 } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export function BundleSizeSection() {
+  const { t } = useTranslation('week11');
+
   const [nodes, setNodes] = useState([
     {
       id: 'root',
@@ -200,14 +203,12 @@ export function BundleSizeSection() {
             <Package size={24} />
           </div>
           <h2 className="text-2xl font-bold text-gray-900">
-            번들 사이즈 최적화
+            {t('bundleSize.title')}
           </h2>
         </div>
 
         <p className="text-gray-600 leading-relaxed text-lg">
-          JavaScript 번들 크기는 <strong>파싱, 컴파일, 실행 시간</strong>에
-          직접적인 영향을 미칩니다. 불필요한 코드를 제거하고 효율적으로
-          패키징해야 합니다.
+          {t('bundleSize.description')}
         </p>
 
         {/* Visualizer */}
@@ -215,18 +216,20 @@ export function BundleSizeSection() {
           <div className="flex justify-between items-center mb-8">
             <div>
               <h3 className="font-bold text-white flex items-center gap-2">
-                <Scissors size={18} className="text-orange-400" /> Tree Shaking
-                Simulator
+                <Scissors size={18} className="text-orange-400" />{' '}
+                {t('bundleSize.simulatorTitle')}
               </h3>
               <p className="text-xs text-gray-400 mt-1">
-                Remove dead code to reduce bundle size
+                {t('bundleSize.simulatorDesc')}
               </p>
             </div>
             <div className="text-right">
               <div className="text-3xl font-bold font-mono text-green-400 transition-all duration-500">
                 {totalSize} KB
               </div>
-              <div className="text-xs text-gray-500">Total Bundle Size</div>
+              <div className="text-xs text-gray-500">
+                {t('bundleSize.totalBundleSize')}
+              </div>
             </div>
           </div>
 
@@ -297,7 +300,7 @@ export function BundleSizeSection() {
                   </div>
                   {!node.used && !shaken && (
                     <div className="text-[8px] text-red-400 font-bold uppercase animate-pulse">
-                      Unused
+                      {t('bundleSize.unused')}
                     </div>
                   )}
                 </div>
@@ -312,7 +315,7 @@ export function BundleSizeSection() {
                 onClick={reset}
                 className="px-6 py-2 bg-gray-700 text-white rounded-full font-bold hover:bg-gray-600 transition-colors flex items-center gap-2"
               >
-                Reset
+                {t('bundleSize.reset')}
               </button>
             ) : (
               <button
@@ -320,7 +323,7 @@ export function BundleSizeSection() {
                 onClick={shake}
                 className="px-6 py-2 bg-orange-600 text-white rounded-full font-bold hover:bg-orange-700 transition-colors shadow-lg animate-bounce flex items-center gap-2"
               >
-                <Scissors size={16} /> Run Tree Shaking
+                <Scissors size={16} /> {t('bundleSize.runTreeShaking')}
               </button>
             )}
           </div>
@@ -330,7 +333,7 @@ export function BundleSizeSection() {
           <div className="border border-red-200 bg-red-50 rounded-xl p-5">
             <h3 className="font-bold text-red-900 mb-3 flex items-center gap-2">
               <AlertTriangle size={18} />
-              피해야 할 패턴
+              {t('bundleSize.avoidPatterns.title')}
             </h3>
             <ul className="space-y-2 text-sm text-red-800">
               <li className="flex items-start gap-2">
@@ -361,7 +364,7 @@ export function BundleSizeSection() {
           <div className="border border-green-200 bg-green-50 rounded-xl p-5">
             <h3 className="font-bold text-green-900 mb-3 flex items-center gap-2">
               <Scissors size={18} />
-              권장 패턴
+              {t('bundleSize.recommendedPatterns.title')}
             </h3>
             <ul className="space-y-2 text-sm text-green-800">
               <li className="flex items-start gap-2">
@@ -426,15 +429,17 @@ import debounce from 'lodash/debounce';`}
         <div className="bg-gray-50 rounded-xl p-5">
           <div className="flex items-center gap-2 mb-4">
             <BarChart className="text-orange-600" size={20} />
-            <h3 className="font-bold text-gray-900">Bundle Analyzer</h3>
+            <h3 className="font-bold text-gray-900">
+              {t('bundleSize.bundleAnalyzer.title')}
+            </h3>
           </div>
           <p className="text-sm text-gray-600 mb-4">
-            번들의 구성을 시각화하여 어떤 패키지가 용량을 차지하는지 분석합니다.
+            {t('bundleSize.bundleAnalyzer.description')}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white rounded-lg p-4 border border-gray-200">
               <h4 className="font-semibold text-gray-900 mb-2">
-                webpack-bundle-analyzer
+                {t('bundleSize.bundleAnalyzer.toolName')}
               </h4>
               <div className="bg-gray-900 rounded p-2 overflow-x-auto">
                 <div className="overflow-hidden rounded-lg">
@@ -457,24 +462,20 @@ module.exports = withBundleAnalyzer({});
             </div>
 
             <div className="bg-white rounded-lg p-4 border border-gray-200">
-              <h4 className="font-semibold text-gray-900 mb-2">분석 포인트</h4>
+              <h4 className="font-semibold text-gray-900 mb-2">
+                {t('bundleSize.bundleAnalyzer.analysisPoints.title')}
+              </h4>
               <ul className="text-sm text-gray-600 space-y-2">
-                <li className="flex items-start gap-2">
-                  <span className="text-orange-500">•</span>
-                  <span>가장 큰 청크 식별</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-orange-500">•</span>
-                  <span>중복 의존성 확인</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-orange-500">•</span>
-                  <span>사용하지 않는 코드 발견</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-orange-500">•</span>
-                  <span>node_modules 비중 확인</span>
-                </li>
+                {(
+                  t('bundleSize.bundleAnalyzer.analysisPoints.items', {
+                    returnObjects: true,
+                  }) as string[]
+                ).map((item, index) => (
+                  <li key={index} className="flex items-start gap-2">
+                    <span className="text-orange-500">•</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -500,10 +501,7 @@ module.exports = withBundleAnalyzer({});
         </div>
 
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-blue-800">
-          <strong>sideEffects:</strong> package.json에{' '}
-          <code>"sideEffects": false</code>를 선언하면 번들러가 사용하지 않는
-          export를 안전하게 제거할 수 있습니다. CSS import가 있다면{' '}
-          <code>"sideEffects": ["*.css"]</code>로 명시하세요.
+          {t('bundleSize.sideEffectsInfo')}
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 
 export const AccessibilitySection = () => {
@@ -14,7 +14,7 @@ export const AccessibilitySection = () => {
           <InfoBox variant="red" title={t('accessibility.checklist.infoTitle')}>
             <ul className="list-disc pl-5 space-y-3 text-sm text-gray-700">
               <li>
-                <strong>{t('accessibility.checklist.focusRings')}</strong> <span dangerouslySetInnerHTML={{ __html: t('accessibility.checklist.focusRingsDesc') }} />
+                <strong>{t('accessibility.checklist.focusRings')}</strong> <Trans t={t} i18nKey="accessibility.checklist.focusRingsDesc" components={{ code: <code /> }} />
                 <br />
                 <code className="bg-red-50 px-1 rounded text-red-600 text-xs mt-1 block w-fit">
                   focus-visible:ring-2

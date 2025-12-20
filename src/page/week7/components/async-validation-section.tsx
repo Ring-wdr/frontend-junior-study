@@ -2,54 +2,51 @@ import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { useTranslation } from 'react-i18next';
 
 export const AsyncValidationSection = () => {
+  const { t } = useTranslation('week7');
+
   return (
     <SectionCard
-      badge={{ label: 'Server Integration', color: 'pink' }}
-      title="Async Validation"
-      description="Server-side validation checks like duplicate email, username availability"
+      badge={{ label: t('asyncValidation.badge'), color: 'pink' }}
+      title={t('asyncValidation.title')}
+      description={t('asyncValidation.description')}
     >
       <div className="space-y-8">
         <SubSection
-          title="The Problem with Real-Time Validation"
+          title={t('asyncValidation.problem.title')}
           icon
           iconColor="red"
         >
-          <InfoBox variant="red" title="Common Issues">
+          <InfoBox variant="red" title={t('asyncValidation.problem.commonIssues.title')}>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>Too many API calls:</strong> Calling API on every
-                keystroke wastes bandwidth
+                {t('asyncValidation.problem.commonIssues.tooManyCalls')}
               </li>
               <li>
-                <strong>UX noise:</strong> Validation errors flickering on every
-                character
+                {t('asyncValidation.problem.commonIssues.uxNoise')}
               </li>
               <li>
-                <strong>Race conditions:</strong> Out-of-order API responses
-                causing incorrect state
+                {t('asyncValidation.problem.commonIssues.raceConditions')}
               </li>
               <li>
-                <strong>Performance:</strong> Too many requests slows down
-                server and client
+                {t('asyncValidation.problem.commonIssues.performance')}
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Debounce Strategy" icon iconColor="purple">
-          <InfoBox variant="purple" title="What is Debouncing?">
+        <SubSection title={t('asyncValidation.debounceStrategy.title')} icon iconColor="purple">
+          <InfoBox variant="purple" title={t('asyncValidation.debounceStrategy.whatIsDebouncing.title')}>
             <p className="text-sm">
-              Debouncing waits for user to stop typing (usually 300-500ms)
-              before making the API call. This dramatically reduces requests
-              while maintaining good UX.
+              {t('asyncValidation.debounceStrategy.whatIsDebouncing.description')}
             </p>
           </InfoBox>
 
           <div className="mt-4 space-y-3">
             <p className="text-sm font-semibold text-gray-700">
-              Debounce Implementation:
+              {t('asyncValidation.debounceStrategy.implementation')}
             </p>
             <CodeBlock
               code={`// Custom debounce hook
@@ -98,10 +95,9 @@ const CheckUsernameForm = () => {
           </div>
         </SubSection>
 
-        <SubSection title="RHF Async Validation" icon iconColor="blue">
+        <SubSection title={t('asyncValidation.rhfAsyncValidation.title')} icon iconColor="blue">
           <p className="text-sm text-gray-700 mb-3">
-            React Hook Form supports async validation through the validate
-            option or async validator functions.
+            {t('asyncValidation.rhfAsyncValidation.description')}
           </p>
 
           <CodeBlock
@@ -157,61 +153,56 @@ const RegisterForm = () => {
           />
         </SubSection>
 
-        <SubSection title="Timing Strategies" icon iconColor="orange">
+        <SubSection title={t('asyncValidation.timingStrategies.title')} icon iconColor="orange">
           <div className="space-y-3">
             <div className="bg-gray-50 p-4 rounded border border-gray-200">
               <p className="font-semibold text-sm text-blue-900 mb-2">
-                Debounce on Change (onChange)
+                {t('asyncValidation.timingStrategies.onChange.title')}
               </p>
               <p className="text-sm text-gray-700">
-                <strong>Best for:</strong> Checking availability, real-time
-                suggestions
+                {t('asyncValidation.timingStrategies.onChange.bestFor')}
               </p>
               <p className="text-sm text-gray-700 mt-1">
-                <strong>UX:</strong> Immediate feedback, may feel expensive
+                {t('asyncValidation.timingStrategies.onChange.ux')}
               </p>
             </div>
 
             <div className="bg-gray-50 p-4 rounded border border-gray-200">
               <p className="font-semibold text-sm text-purple-900 mb-2">
-                Validate on Blur (onBlur)
+                {t('asyncValidation.timingStrategies.onBlur.title')}
               </p>
               <p className="text-sm text-gray-700">
-                <strong>Best for:</strong> Email/username duplicate checks
+                {t('asyncValidation.timingStrategies.onBlur.bestFor')}
               </p>
               <p className="text-sm text-gray-700 mt-1">
-                <strong>UX:</strong> Cleaner, validates when user leaves field
+                {t('asyncValidation.timingStrategies.onBlur.ux')}
               </p>
             </div>
 
             <div className="bg-gray-50 p-4 rounded border border-gray-200">
               <p className="font-semibold text-sm text-green-900 mb-2">
-                Validate on Submit
+                {t('asyncValidation.timingStrategies.onSubmit.title')}
               </p>
               <p className="text-sm text-gray-700">
-                <strong>Best for:</strong> Final server-side validation
+                {t('asyncValidation.timingStrategies.onSubmit.bestFor')}
               </p>
               <p className="text-sm text-gray-700 mt-1">
-                <strong>UX:</strong> Cleanest, but delayed feedback
+                {t('asyncValidation.timingStrategies.onSubmit.ux')}
               </p>
             </div>
           </div>
 
-          <InfoBox variant="green" title="Best Practice">
+          <InfoBox variant="green" title={t('asyncValidation.timingStrategies.bestPractice.title')}>
             <p className="text-sm">
-              Combine strategies: <strong>Sync validation on submit</strong> +
-              <strong>Async validation on blur</strong> (debounced) for optimal
-              UX. This catches errors early without bothering the user.
+              {t('asyncValidation.timingStrategies.bestPractice.description')}
             </p>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Handling Race Conditions" icon iconColor="orange">
-          <InfoBox variant="orange" title="The Problem">
+        <SubSection title={t('asyncValidation.raceConditions.title')} icon iconColor="orange">
+          <InfoBox variant="orange" title={t('asyncValidation.raceConditions.problem.title')}>
             <p className="text-sm">
-              If user types "john@example.com", then deletes and types
-              "jane@example.com", the first request might resolve AFTER the
-              second, causing wrong validation state.
+              {t('asyncValidation.raceConditions.problem.description')}
             </p>
           </InfoBox>
 

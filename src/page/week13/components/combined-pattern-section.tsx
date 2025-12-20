@@ -1,3 +1,4 @@
+import { Trans, useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -5,51 +6,52 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const CombinedPatternSection = () => {
+  const { t } = useTranslation('week13');
+
   return (
     <SectionCard
-      badge={{ label: 'Advanced', color: 'red' }}
-      title="Combined Pattern"
-      description="Integrating Web Worker + Service Worker + IndexedDB"
+      badge={{ label: t('combined.badge'), color: 'red' }}
+      title={t('combined.title')}
+      description={t('combined.description')}
     >
       <div className="space-y-8">
-        <SubSection title="The Powerful Trio" icon iconColor="blue">
-          <InfoBox variant="red" title="Production Architecture">
+        <SubSection title={t('combined.trio.title')} icon iconColor="blue">
+          <InfoBox variant="red" title={t('combined.trio.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              The most powerful offline-capable web apps combine all three
-              technologies. Each handles a specific concern:
+              {t('combined.trio.description')}
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm mt-3">
               <li>
-                <strong>Web Worker:</strong> CPU-intensive processing
+                <Trans t={t} i18nKey="combined.trio.webWorker" />
               </li>
               <li>
-                <strong>Service Worker:</strong> Network resilience & caching
+                <Trans t={t} i18nKey="combined.trio.serviceWorker" />
               </li>
               <li>
-                <strong>IndexedDB:</strong> Persistent data storage
+                <Trans t={t} i18nKey="combined.trio.indexedDB" />
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Architecture Overview" icon iconColor="purple">
-          <DemoBox label="System Architecture">
+        <SubSection title={t('combined.architecture.title')} icon iconColor="purple">
+          <DemoBox label={t('combined.architecture.label')}>
             <div className="bg-white p-6 rounded-lg">
               <div className="flex flex-col gap-4">
                 {/* Main Thread */}
                 <div className="bg-blue-50 p-4 rounded-lg border-2 border-blue-200">
                   <p className="font-bold text-blue-800 text-sm mb-2">
-                    Main Thread (UI)
+                    {t('combined.architecture.mainThread')}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     <span className="text-xs bg-blue-100 px-2 py-1 rounded">
-                      React Components
+                      {t('combined.architecture.reactComponents')}
                     </span>
                     <span className="text-xs bg-blue-100 px-2 py-1 rounded">
-                      User Interactions
+                      {t('combined.architecture.userInteractions')}
                     </span>
                     <span className="text-xs bg-blue-100 px-2 py-1 rounded">
-                      State Management
+                      {t('combined.architecture.stateManagement')}
                     </span>
                   </div>
                 </div>
@@ -58,12 +60,12 @@ export const CombinedPatternSection = () => {
                 <div className="flex justify-center gap-8">
                   <div className="flex flex-col items-center">
                     <div className="w-0.5 h-4 bg-green-400" />
-                    <span className="text-xs text-gray-500">postMessage</span>
+                    <span className="text-xs text-gray-500">{t('combined.architecture.postMessage')}</span>
                     <div className="w-0.5 h-4 bg-green-400" />
                   </div>
                   <div className="flex flex-col items-center">
                     <div className="w-0.5 h-4 bg-purple-400" />
-                    <span className="text-xs text-gray-500">fetch events</span>
+                    <span className="text-xs text-gray-500">{t('combined.architecture.fetchEvents')}</span>
                     <div className="w-0.5 h-4 bg-purple-400" />
                   </div>
                 </div>
@@ -72,27 +74,27 @@ export const CombinedPatternSection = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-green-50 p-4 rounded-lg border-2 border-green-200">
                     <p className="font-bold text-green-800 text-sm mb-2">
-                      Web Worker
+                      {t('combined.architecture.webWorker')}
                     </p>
                     <div className="flex flex-wrap gap-2">
                       <span className="text-xs bg-green-100 px-2 py-1 rounded">
-                        Heavy Processing
+                        {t('combined.architecture.heavyProcessing')}
                       </span>
                       <span className="text-xs bg-green-100 px-2 py-1 rounded">
-                        Data Transform
+                        {t('combined.architecture.dataTransform')}
                       </span>
                     </div>
                   </div>
                   <div className="bg-purple-50 p-4 rounded-lg border-2 border-purple-200">
                     <p className="font-bold text-purple-800 text-sm mb-2">
-                      Service Worker
+                      {t('combined.architecture.serviceWorker')}
                     </p>
                     <div className="flex flex-wrap gap-2">
                       <span className="text-xs bg-purple-100 px-2 py-1 rounded">
-                        Network Proxy
+                        {t('combined.architecture.networkProxy')}
                       </span>
                       <span className="text-xs bg-purple-100 px-2 py-1 rounded">
-                        Cache Strategy
+                        {t('combined.architecture.cacheStrategy')}
                       </span>
                     </div>
                   </div>
@@ -104,17 +106,17 @@ export const CombinedPatternSection = () => {
                 </div>
                 <div className="bg-orange-50 p-4 rounded-lg border-2 border-orange-200 max-w-xs mx-auto">
                   <p className="font-bold text-orange-800 text-sm mb-2 text-center">
-                    IndexedDB
+                    {t('combined.architecture.indexedDB')}
                   </p>
                   <div className="flex flex-wrap gap-2 justify-center">
                     <span className="text-xs bg-orange-100 px-2 py-1 rounded">
-                      User Data
+                      {t('combined.architecture.userData')}
                     </span>
                     <span className="text-xs bg-orange-100 px-2 py-1 rounded">
-                      Sync Queue
+                      {t('combined.architecture.syncQueue')}
                     </span>
                     <span className="text-xs bg-orange-100 px-2 py-1 rounded">
-                      Files/Blobs
+                      {t('combined.architecture.filesBlobs')}
                     </span>
                   </div>
                 </div>
@@ -123,34 +125,34 @@ export const CombinedPatternSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Real-World Examples" icon iconColor="green">
+        <SubSection title={t('combined.realWorldExamples.title')} icon iconColor="green">
           <div className="grid grid-cols-1 gap-3">
             {[
               {
                 icon: '🖼️',
-                title: 'Offline Image Editor',
+                title: t('combined.realWorldExamples.imageEditor'),
                 features: [
-                  'Web Worker: Apply filters, resize',
-                  'IndexedDB: Store edited images',
-                  'Service Worker: Offline access',
+                  t('combined.realWorldExamples.imageEditorFeature1'),
+                  t('combined.realWorldExamples.imageEditorFeature2'),
+                  t('combined.realWorldExamples.imageEditorFeature3'),
                 ],
               },
               {
                 icon: '📝',
-                title: 'Offline Note-Taking App',
+                title: t('combined.realWorldExamples.noteTaking'),
                 features: [
-                  'Web Worker: Full-text search indexing',
-                  'IndexedDB: Store notes & attachments',
-                  'Service Worker: Sync when online',
+                  t('combined.realWorldExamples.noteTakingFeature1'),
+                  t('combined.realWorldExamples.noteTakingFeature2'),
+                  t('combined.realWorldExamples.noteTakingFeature3'),
                 ],
               },
               {
                 icon: '📊',
-                title: 'Data Visualization Dashboard',
+                title: t('combined.realWorldExamples.dashboard'),
                 features: [
-                  'Web Worker: Process large datasets',
-                  'IndexedDB: Cache query results',
-                  'Service Worker: API response caching',
+                  t('combined.realWorldExamples.dashboardFeature1'),
+                  t('combined.realWorldExamples.dashboardFeature2'),
+                  t('combined.realWorldExamples.dashboardFeature3'),
                 ],
               },
             ].map((example) => (
@@ -175,7 +177,7 @@ export const CombinedPatternSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title="Image Processing Example" icon iconColor="orange">
+        <SubSection title={t('combined.imageProcessing.title')} icon iconColor="orange">
           <CodeBlock
             code={`// Main thread: Coordinate everything
 class ImageProcessor {
@@ -250,7 +252,7 @@ self.onmessage = async (e) => {
           />
         </SubSection>
 
-        <SubSection title="Service Worker Integration" icon iconColor="red">
+        <SubSection title={t('combined.serviceWorkerIntegration.title')} icon iconColor="red">
           <CodeBlock
             code={`// sw.js - Service Worker for the combined app
 import { precacheAndRoute } from 'workbox-precaching';
@@ -314,38 +316,38 @@ async function syncPendingImages() {
           />
         </SubSection>
 
-        <SubSection title="Best Practices" icon iconColor="purple">
+        <SubSection title={t('combined.bestPractices.title')} icon iconColor="purple">
           <div className="space-y-3">
-            <InfoBox variant="blue" title="Communication Patterns">
+            <InfoBox variant="blue" title={t('combined.bestPractices.communication')}>
               <ul className="text-sm space-y-1">
-                <li>• Use Transferable Objects for large data</li>
-                <li>• Implement request/response IDs for async handling</li>
-                <li>• Consider Comlink for cleaner Worker APIs</li>
+                <li>{t('combined.bestPractices.communicationItem1')}</li>
+                <li>{t('combined.bestPractices.communicationItem2')}</li>
+                <li>{t('combined.bestPractices.communicationItem3')}</li>
               </ul>
             </InfoBox>
 
-            <InfoBox variant="green" title="Storage Strategy">
+            <InfoBox variant="green" title={t('combined.bestPractices.storage')}>
               <ul className="text-sm space-y-1">
-                <li>• IndexedDB for structured data and blobs</li>
-                <li>• Cache Storage for HTTP responses</li>
-                <li>• Clear old data with versioned cleanups</li>
+                <li>{t('combined.bestPractices.storageItem1')}</li>
+                <li>{t('combined.bestPractices.storageItem2')}</li>
+                <li>{t('combined.bestPractices.storageItem3')}</li>
               </ul>
             </InfoBox>
 
-            <InfoBox variant="purple" title="Error Handling">
+            <InfoBox variant="purple" title={t('combined.bestPractices.errorHandling')}>
               <ul className="text-sm space-y-1">
-                <li>• Graceful fallbacks when Workers fail</li>
-                <li>• Retry logic with exponential backoff</li>
-                <li>• User feedback for long operations</li>
+                <li>{t('combined.bestPractices.errorHandlingItem1')}</li>
+                <li>{t('combined.bestPractices.errorHandlingItem2')}</li>
+                <li>{t('combined.bestPractices.errorHandlingItem3')}</li>
               </ul>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title="Comlink for Cleaner APIs" icon iconColor="blue">
-          <InfoBox variant="gray" title="Simplify Worker Communication">
+        <SubSection title={t('combined.comlink.title')} icon iconColor="blue">
+          <InfoBox variant="gray" title={t('combined.comlink.infoTitle')}>
             <p className="text-sm mb-2">
-              Comlink makes Web Workers feel like local async functions.
+              {t('combined.comlink.description')}
             </p>
           </InfoBox>
 

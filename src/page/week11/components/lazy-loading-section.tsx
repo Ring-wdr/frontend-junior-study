@@ -8,9 +8,11 @@ import {
   Monitor,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export function LazyLoadingSection() {
+  const { t } = useTranslation('week11');
   const [items, setItems] = useState(
     Array.from({ length: 12 }, (_, i) => ({ id: i + 1, loaded: false })),
   );
@@ -69,13 +71,12 @@ export function LazyLoadingSection() {
             <Eye size={24} />
           </div>
           <h2 className="text-2xl font-bold text-gray-900">
-            Lazy Loading 전략
+            {t('week11.lazyLoading.title')}
           </h2>
         </div>
 
         <p className="text-gray-600 leading-relaxed text-lg">
-          사용자가 <strong>실제로 필요로 할 때</strong> 리소스를 로드합니다.
-          초기 로드 시간을 줄이고 불필요한 네트워크 요청을 방지합니다.
+          {t('week11.lazyLoading.description')}
         </p>
 
         {/* Visualizer */}

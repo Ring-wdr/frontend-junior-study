@@ -8,9 +8,11 @@ import {
   Zap,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export function ImageOptimizationSection() {
+  const { t } = useTranslation('week11');
   const [format, setFormat] = useState<'jpg' | 'webp' | 'avif'>('jpg');
   const [quality, setQuality] = useState(80);
   const [sliderPosition, setSliderPosition] = useState(50);
@@ -62,13 +64,12 @@ export function ImageOptimizationSection() {
             <ImageIcon size={24} />
           </div>
           <h2 className="text-2xl font-bold text-gray-900">
-            이미지 최적화 (가장 효과 큰 영역!)
+            {t('week11.imageOptimization.title')}
           </h2>
         </div>
 
         <p className="text-gray-600 leading-relaxed text-lg">
-          이미지는 웹 페이지 용량의 대부분을 차지합니다. 최적화만 잘해도{' '}
-          <strong>LCP를 획기적으로 개선</strong>할 수 있습니다.
+          {t('week11.imageOptimization.description')}
         </p>
 
         {/* Visualizer */}

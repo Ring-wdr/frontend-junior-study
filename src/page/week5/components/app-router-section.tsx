@@ -1,45 +1,57 @@
+import { Trans, useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { AppRouterVisualizer } from './app-router-visualizer';
 
 export const AppRouterSection = () => {
+  const { t } = useTranslation('week5');
   return (
     <SectionCard
-      badge={{ label: 'Next.js 13+', color: 'blue' }}
-      title="Next.js App Router"
-      description="The new file-system based router built on React Server Components."
+      badge={{ label: t('appRouter.badge'), color: 'blue' }}
+      title={t('appRouter.title')}
+      description={t('appRouter.description')}
     >
       <div className="space-y-8">
-        <SubSection title="App Router Fundamentals" icon iconColor="blue">
+        <SubSection
+          title={t('appRouter.fundamentals.title')}
+          icon
+          iconColor="blue"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              The <strong>App Router</strong> is Next.js's new file-system based
-              routing system. Located in the <code>app/</code> directory, it
-              replaces the old <code>pages/</code> directory. It's built on
-              React Server Components and provides powerful features for modern
-              web applications.
+              <Trans t={t} i18nKey="appRouter.fundamentals.intro" components={{ code: <code /> }} />
             </p>
 
-            <InfoBox variant="blue" title="Key Files & Conventions">
+            <InfoBox
+              variant="blue"
+              title={t('appRouter.fundamentals.keyFiles.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <code>page.js/page.tsx</code>: Route segment's unique UI
+                  <Trans t={t} i18nKey="appRouter.fundamentals.keyFiles.page" components={{ code: <code /> }} />
                 </li>
                 <li>
-                  <code>layout.js/layout.tsx</code>: Shared UI for segment and
-                  children
+                  <Trans t={t} i18nKey="appRouter.fundamentals.keyFiles.layout" components={{ code: <code /> }} />
                 </li>
                 <li>
-                  <code>loading.js</code>: Loading UI (Suspense fallback)
+                  <Trans
+                    t={t}
+                    i18nKey="appRouter.fundamentals.keyFiles.loading"
+                    components={{ code: <code /> }}
+                  />
                 </li>
                 <li>
-                  <code>error.js</code>: Error boundary & error UI
+                  <Trans t={t} i18nKey="appRouter.fundamentals.keyFiles.error" components={{ code: <code /> }} />
                 </li>
                 <li>
-                  <code>not-found.js</code>: Custom 404 not found UI
+                  <Trans
+                    t={t}
+                    i18nKey="appRouter.fundamentals.keyFiles.notFound"
+                    components={{ code: <code /> }}
+                  />
                 </li>
                 <li>
-                  <code>route.js</code>: API endpoint (Route Handler)
+                  <Trans t={t} i18nKey="appRouter.fundamentals.keyFiles.route" components={{ code: <code /> }} />
                 </li>
               </ul>
             </InfoBox>
@@ -64,12 +76,10 @@ app/
           </div>
         </SubSection>
 
-        <SubSection title="Layouts & Nested Routing" icon iconColor="green">
+        <SubSection title={t('appRouter.layouts.title')} icon iconColor="green">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Layouts enable code sharing across routes. They don't re-render
-              between navigation and preserve state. Nesting layouts creates a
-              hierarchical UI structure.
+              {t('appRouter.layouts.intro')}
             </p>
 
             <CodeBlock
@@ -103,24 +113,28 @@ export default function DashboardLayout({ children }) {
               className="text-xs"
             />
 
-            <InfoBox variant="green" title="Layout Benefits">
+            <InfoBox
+              variant="green"
+              title={t('appRouter.layouts.benefits.title')}
+            >
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
-                <li>Code reuse across segments</li>
-                <li>State persistence between route changes</li>
-                <li>No unnecessary re-renders</li>
-                <li>Hierarchical UI structure</li>
+                <li>{t('appRouter.layouts.benefits.codeReuse')}</li>
+                <li>{t('appRouter.layouts.benefits.statePersistence')}</li>
+                <li>{t('appRouter.layouts.benefits.noRerenders')}</li>
+                <li>{t('appRouter.layouts.benefits.hierarchical')}</li>
               </ul>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title="Parallel Routes" icon iconColor="purple">
+        <SubSection
+          title={t('appRouter.parallelRoutes.title')}
+          icon
+          iconColor="purple"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              <strong>Parallel Routes</strong> let you render multiple
-              components in the same layout simultaneously. Use them for
-              multi-panel layouts or independent sections that update
-              separately.
+              <Trans t={t} i18nKey="appRouter.parallelRoutes.intro" />
             </p>
 
             <CodeBlock
@@ -149,34 +163,38 @@ export default function DashboardLayout({ children, main, sidebar, analytics }) 
               className="text-xs"
             />
 
-            <InfoBox variant="purple" title="Use Cases">
+            <InfoBox
+              variant="purple"
+              title={t('appRouter.parallelRoutes.useCases.title')}
+            >
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
-                <li>Multi-panel dashboards</li>
-                <li>Tabbed interfaces</li>
-                <li>Analytics sidebars</li>
-                <li>Independent sections with separate loading states</li>
+                <li>{t('appRouter.parallelRoutes.useCases.dashboards')}</li>
+                <li>{t('appRouter.parallelRoutes.useCases.tabs')}</li>
+                <li>{t('appRouter.parallelRoutes.useCases.analyticsSidebars')}</li>
+                <li>
+                  {t('appRouter.parallelRoutes.useCases.independentSections')}
+                </li>
               </ul>
             </InfoBox>
           </div>
         </SubSection>
 
         <SubSection
-          title="Intercepting Routes & Modal Routing"
+          title={t('appRouter.interceptingRoutes.title')}
           icon
           iconColor="orange"
         >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              <strong>Intercepting Routes</strong> allow you to "intercept" a
-              route from another part of your app and show it within the current
-              layout. Perfect for modal dialogs or detail views.
+              <Trans t={t} i18nKey="appRouter.interceptingRoutes.intro" />
             </p>
 
-            <InfoBox variant="orange" title="Modal Routing Pattern">
+            <InfoBox
+              variant="orange"
+              title={t('appRouter.interceptingRoutes.modalPattern.title')}
+            >
               <p className="text-sm text-gray-700 mb-2">
-                Intercept a route to show as a modal while keeping the
-                background content in place. Maintains browser history
-                naturally.
+                {t('appRouter.interceptingRoutes.modalPattern.description')}
               </p>
             </InfoBox>
 
@@ -232,16 +250,31 @@ export default function PhotoModal({ params }) {
               className="text-xs"
             />
 
-            <InfoBox variant="gray" title="Routing Syntax">
+            <InfoBox
+              variant="gray"
+              title={t('appRouter.interceptingRoutes.syntax.title')}
+            >
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
                 <li>
-                  <code>(.)</code>: Match segments on same level
+                  <Trans
+                    t={t}
+                    i18nKey="appRouter.interceptingRoutes.syntax.sameLevel"
+                    components={{ code: <code /> }}
+                  />
                 </li>
                 <li>
-                  <code>(..)</code>: Match segments up one level
+                  <Trans
+                    t={t}
+                    i18nKey="appRouter.interceptingRoutes.syntax.oneUp"
+                    components={{ code: <code /> }}
+                  />
                 </li>
                 <li>
-                  <code>(...)</code>: Match segments up multiple levels
+                  <Trans
+                    t={t}
+                    i18nKey="appRouter.interceptingRoutes.syntax.multiple"
+                    components={{ code: <code /> }}
+                  />
                 </li>
               </ul>
             </InfoBox>
@@ -250,12 +283,14 @@ export default function PhotoModal({ params }) {
 
         <AppRouterVisualizer />
 
-        <SubSection title="Route Groups" icon iconColor="green">
+        <SubSection
+          title={t('appRouter.routeGroups.title')}
+          icon
+          iconColor="green"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              <strong>Route Groups</strong> are folders wrapped in parentheses
-              that don't affect the URL structure. Use them to organize related
-              routes or apply different layouts.
+              <Trans t={t} i18nKey="appRouter.routeGroups.intro" />
             </p>
 
             <CodeBlock

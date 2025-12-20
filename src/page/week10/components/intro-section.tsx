@@ -1,5 +1,5 @@
 import { Cpu, Layers, Milestone, Zap } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 export function IntroSection() {
   const { t } = useTranslation('week10');
@@ -9,10 +9,9 @@ export function IntroSection() {
         <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-linear-to-r from-green-600 to-lime-600">
           {t('intro.title')}
         </h2>
-        <p
-          className="text-gray-600 leading-relaxed text-lg"
-          dangerouslySetInnerHTML={{ __html: t('intro.description') }}
-        ></p>
+        <p className="text-gray-600 leading-relaxed text-lg">
+          <Trans t={t} i18nKey="intro.description" />
+        </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
           <div className="p-5 rounded-xl bg-gray-50 border border-gray-100 flex gap-4 items-start">

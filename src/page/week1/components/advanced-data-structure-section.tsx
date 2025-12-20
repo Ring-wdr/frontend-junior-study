@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Plus, Search, Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
@@ -51,7 +51,7 @@ export const AdvancedDataStructureSection = () => {
                 <Search className="w-4 h-4" /> {t('advancedDataStructure.map.title')}
               </h4>
               <ul className="list-disc list-inside text-sm text-pink-800 space-y-1">
-                <li dangerouslySetInnerHTML={{ __html: t('advancedDataStructure.map.key1') }} />
+                <li><Trans t={t} i18nKey="advancedDataStructure.map.key1" /></li>
                 <li>{t('advancedDataStructure.map.key2')}</li>
                 <li>{t('advancedDataStructure.map.key3')}</li>
                 <li>{t('advancedDataStructure.map.key4')}</li>
@@ -110,8 +110,8 @@ set.delete(1);`}
               <h4 className="font-bold text-orange-900 mb-2 flex items-center gap-2">
                 <Trash2 className="w-4 h-4" /> {t('advancedDataStructure.weak.title')}
               </h4>
-              <p className="text-sm text-orange-800 mb-2" dangerouslySetInnerHTML={{ __html: t('advancedDataStructure.weak.description1') }} />
-              <p className="text-sm text-orange-800 mt-2 border-t border-orange-200 pt-2" dangerouslySetInnerHTML={{ __html: t('advancedDataStructure.weak.description2') }} />
+              <p className="text-sm text-orange-800 mb-2"><Trans t={t} i18nKey="advancedDataStructure.weak.description1" /></p>
+              <p className="text-sm text-orange-800 mt-2 border-t border-orange-200 pt-2"><Trans t={t} i18nKey="advancedDataStructure.weak.description2" /></p>
             </InfoBox>
 
             <div className="mt-8">

@@ -2,41 +2,42 @@ import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { useTranslation } from 'react-i18next';
 
 export const UXDesignSection = () => {
+  const { t } = useTranslation('week7');
+
   return (
     <SectionCard
-      badge={{ label: 'User Experience', color: 'blue' }}
-      title="UX-Focused Form Design"
-      description="Creating forms that delight users and reduce friction"
+      badge={{ label: t('uxDesign.badge'), color: 'blue' }}
+      title={t('uxDesign.title')}
+      description={t('uxDesign.description')}
     >
       <div className="space-y-8">
-        <SubSection title="Error Message Design" icon iconColor="red">
-          <InfoBox variant="red" title="Common Mistakes">
+        <SubSection title={t('uxDesign.errorMessageDesign.title')} icon iconColor="red">
+          <InfoBox variant="red" title={t('uxDesign.errorMessageDesign.commonMistakes.title')}>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>Generic errors:</strong> "Invalid input" (not helpful)
+                {t('uxDesign.errorMessageDesign.commonMistakes.generic')}
               </li>
               <li>
-                <strong>Too technical:</strong> "Field regex validation failed"
+                {t('uxDesign.errorMessageDesign.commonMistakes.tooTechnical')}
               </li>
               <li>
-                <strong>Blaming the user:</strong> "You entered wrong data"
+                {t('uxDesign.errorMessageDesign.commonMistakes.blaming')}
               </li>
               <li>
-                <strong>Appearing too early:</strong> Showing errors while user
-                is typing
+                {t('uxDesign.errorMessageDesign.commonMistakes.tooEarly')}
               </li>
               <li>
-                <strong>Poor visibility:</strong> Error text same color as
-                normal text
+                {t('uxDesign.errorMessageDesign.commonMistakes.poorVisibility')}
               </li>
             </ul>
           </InfoBox>
 
           <div className="mt-4 space-y-3">
             <p className="text-sm font-semibold text-gray-700">
-              Error Message Best Practices:
+              {t('uxDesign.errorMessageDesign.bestPractices')}
             </p>
             <CodeBlock
               code={`// ❌ BAD error messages
@@ -96,60 +97,54 @@ const RegistrationForm = () => {
           </div>
         </SubSection>
 
-        <SubSection title="Validation Timing" icon iconColor="orange">
+        <SubSection title={t('uxDesign.validationTiming.title')} icon iconColor="orange">
           <div className="space-y-3">
             <div className="bg-orange-50 p-4 rounded border border-orange-200">
               <p className="font-semibold text-sm text-orange-900 mb-2">
-                onChange (Real-Time)
+                {t('uxDesign.validationTiming.onChange.title')}
               </p>
               <p className="text-sm text-gray-700 mb-2">
-                <strong>Best for:</strong> Password strength, character count
+                {t('uxDesign.validationTiming.onChange.bestFor')}
               </p>
               <p className="text-sm text-gray-700">
-                <strong>Downside:</strong> Can be annoying, especially with slow
-                debounce
+                {t('uxDesign.validationTiming.onChange.downside')}
               </p>
             </div>
 
             <div className="bg-purple-50 p-4 rounded border border-purple-200">
               <p className="font-semibold text-sm text-purple-900 mb-2">
-                onBlur (Recommended)
+                {t('uxDesign.validationTiming.onBlur.title')}
               </p>
               <p className="text-sm text-gray-700 mb-2">
-                <strong>Best for:</strong> Email validation, username
-                availability
+                {t('uxDesign.validationTiming.onBlur.bestFor')}
               </p>
               <p className="text-sm text-gray-700">
-                <strong>Advantage:</strong> Validates when user leaves field,
-                clean UX
+                {t('uxDesign.validationTiming.onBlur.advantage')}
               </p>
             </div>
 
             <div className="bg-green-50 p-4 rounded border border-green-200">
               <p className="font-semibold text-sm text-green-900 mb-2">
-                onSubmit
+                {t('uxDesign.validationTiming.onSubmit.title')}
               </p>
               <p className="text-sm text-gray-700 mb-2">
-                <strong>Best for:</strong> Cross-field validation, final checks
+                {t('uxDesign.validationTiming.onSubmit.bestFor')}
               </p>
               <p className="text-sm text-gray-700">
-                <strong>Advantage:</strong> No premature errors, user-initiated
-                action
+                {t('uxDesign.validationTiming.onSubmit.advantage')}
               </p>
             </div>
           </div>
 
-          <InfoBox variant="blue" title="Recommended Strategy">
+          <InfoBox variant="blue" title={t('uxDesign.validationTiming.recommendedStrategy.title')}>
             <p className="text-sm">
-              <strong>onBlur + onSubmit:</strong> Validate when user leaves
-              field (catches most errors), then validate on submit (catches
-              remaining issues). This is the best UX balance.
+              {t('uxDesign.validationTiming.recommendedStrategy.description')}
             </p>
           </InfoBox>
         </SubSection>
 
         <SubSection
-          title="Form Reset & Focus Management"
+          title={t('uxDesign.formResetFocus.title')}
           icon
           iconColor="green"
         >
@@ -209,18 +204,16 @@ const RegistrationForm = () => {
           />
         </SubSection>
 
-        <SubSection title="Optimistic UI Updates" icon iconColor="purple">
-          <InfoBox variant="purple" title="What is Optimistic UI?">
+        <SubSection title={t('uxDesign.optimisticUI.title')} icon iconColor="purple">
+          <InfoBox variant="purple" title={t('uxDesign.optimisticUI.whatIsOptimistic.title')}>
             <p className="text-sm">
-              Display the result immediately before server confirms, then revert
-              if it fails. Creates a snappy, responsive feel without actual
-              instant confirmation.
+              {t('uxDesign.optimisticUI.whatIsOptimistic.description')}
             </p>
           </InfoBox>
 
           <div className="mt-4 space-y-3">
             <p className="text-sm font-semibold text-gray-700">
-              useOptimistic Example (React 19):
+              {t('uxDesign.optimisticUI.useOptimisticExample')}
             </p>
             <CodeBlock
               code={`import { useOptimistic } from 'react';
@@ -327,29 +320,26 @@ const TodoForm = ({ todos, onAdd }) => {
         </SubSection>
 
         <SubSection
-          title="Accessibility Best Practices"
+          title={t('uxDesign.a11yBestPractices.title')}
           icon
           iconColor="purple"
         >
-          <InfoBox variant="purple" title="Accessible Form Requirements">
+          <InfoBox variant="purple" title={t('uxDesign.a11yBestPractices.requirements.title')}>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>Labels:</strong> Always associate label with input using
-                htmlFor
+                {t('uxDesign.a11yBestPractices.requirements.labels')}
               </li>
               <li>
-                <strong>ARIA:</strong> aria-label, aria-describedby for errors
+                {t('uxDesign.a11yBestPractices.requirements.aria')}
               </li>
               <li>
-                <strong>Keyboard:</strong> Tab order, Enter to submit, Escape to
-                cancel
+                {t('uxDesign.a11yBestPractices.requirements.keyboard')}
               </li>
               <li>
-                <strong>Screen readers:</strong> Announce errors and required
-                fields
+                {t('uxDesign.a11yBestPractices.requirements.screenReaders')}
               </li>
               <li>
-                <strong>Color:</strong> Don't rely only on color to show errors
+                {t('uxDesign.a11yBestPractices.requirements.color')}
               </li>
             </ul>
           </InfoBox>
@@ -400,7 +390,7 @@ const FormSection = ({ title, children }) => (
           />
         </SubSection>
 
-        <SubSection title="Mobile & Touch Optimization" icon iconColor="blue">
+        <SubSection title={t('uxDesign.mobileTouchOptimization.title')} icon iconColor="blue">
           <CodeBlock
             code={`// Optimize for touch and mobile
 const MobileForm = () => {
@@ -453,57 +443,57 @@ input:focus { font-size: 16px; }
           />
         </SubSection>
 
-        <SubSection title="UX Checklist" icon iconColor="green">
+        <SubSection title={t('uxDesign.uxChecklist.title')} icon iconColor="green">
           <div className="space-y-2">
             <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
               <span className="text-lg">☐</span>
-              <p className="text-sm">Error messages are specific and helpful</p>
+              <p className="text-sm">{t('uxDesign.uxChecklist.specificErrors')}</p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
               <span className="text-lg">☐</span>
               <p className="text-sm">
-                Form validates on blur (not aggressive on change)
+                {t('uxDesign.uxChecklist.validateOnBlur')}
               </p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
               <span className="text-lg">☐</span>
-              <p className="text-sm">Submit button shows loading state</p>
+              <p className="text-sm">{t('uxDesign.uxChecklist.loadingState')}</p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
               <span className="text-lg">☐</span>
-              <p className="text-sm">Form resets after successful submission</p>
-            </div>
-            <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
-              <span className="text-lg">☐</span>
-              <p className="text-sm">
-                Focus is managed (first field on load, button after submit)
-              </p>
+              <p className="text-sm">{t('uxDesign.uxChecklist.resetsAfterSubmit')}</p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
               <span className="text-lg">☐</span>
               <p className="text-sm">
-                Success/error feedback is clear (toast, modal, or text)
+                {t('uxDesign.uxChecklist.focusManaged')}
               </p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
               <span className="text-lg">☐</span>
               <p className="text-sm">
-                Labels are properly associated with inputs
+                {t('uxDesign.uxChecklist.clearFeedback')}
               </p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
               <span className="text-lg">☐</span>
               <p className="text-sm">
-                Form is accessible to keyboard and screen readers
+                {t('uxDesign.uxChecklist.properLabels')}
               </p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
               <span className="text-lg">☐</span>
-              <p className="text-sm">Touch targets are at least 44x44px</p>
+              <p className="text-sm">
+                {t('uxDesign.uxChecklist.accessible')}
+              </p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
               <span className="text-lg">☐</span>
-              <p className="text-sm">Form works on mobile and desktop</p>
+              <p className="text-sm">{t('uxDesign.uxChecklist.touchTargets')}</p>
+            </div>
+            <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
+              <span className="text-lg">☐</span>
+              <p className="text-sm">{t('uxDesign.uxChecklist.worksEverywhere')}</p>
             </div>
           </div>
         </SubSection>

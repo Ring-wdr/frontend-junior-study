@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -6,6 +7,7 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const PrivacySection = () => {
+  const { t } = useTranslation('week12');
   const [passwordStrength, setPasswordStrength] = useState(0);
   const [password, setPassword] = useState('');
 
@@ -25,7 +27,13 @@ export const PrivacySection = () => {
     setPasswordStrength(checkPasswordStrength(value));
   };
 
-  const strengthLabels = ['Very Weak', 'Weak', 'Fair', 'Good', 'Strong'];
+  const strengthLabels = [
+    t('privacy.password.veryWeak'),
+    t('privacy.password.weak'),
+    t('privacy.password.fair'),
+    t('privacy.password.good'),
+    t('privacy.password.strong'),
+  ];
   const strengthColors = [
     'bg-red-500',
     'bg-orange-500',
@@ -36,36 +44,33 @@ export const PrivacySection = () => {
 
   return (
     <SectionCard
-      badge={{ label: 'Best Practices', color: 'blue' }}
-      title="Privacy & Security UX"
-      description="Frontend considerations for user privacy and security"
+      badge={{ label: t('privacy.badge'), color: 'blue' }}
+      title={t('privacy.title')}
+      description={t('privacy.description')}
     >
       <div className="space-y-8">
-        <SubSection title="Data Minimization" icon iconColor="blue">
-          <InfoBox variant="blue" title="Store Only What's Needed">
+        <SubSection title={t('privacy.dataMinimization.title')} icon iconColor="blue">
+          <InfoBox variant="blue" title={t('privacy.dataMinimization.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              Follow the principle of data minimization: only collect, store,
-              and process data that is absolutely necessary. This reduces risk
-              and helps with GDPR/CCPA compliance.
+              {t('privacy.dataMinimization.infoDescription')}
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm mt-3">
-              <li>Store tokens in HttpOnly cookies, not localStorage</li>
-              <li>Don't store sensitive data in client-side state</li>
-              <li>Clear sensitive data from memory after use</li>
-              <li>Mask or truncate sensitive displays (e.g., •••• 4242)</li>
+              <li>{t('privacy.dataMinimization.list1')}</li>
+              <li>{t('privacy.dataMinimization.list2')}</li>
+              <li>{t('privacy.dataMinimization.list3')}</li>
+              <li>{t('privacy.dataMinimization.list4')}</li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Cookie Consent UX" icon iconColor="blue">
-          <DemoBox label="Consent Banner Simulator">
+        <SubSection title={t('privacy.cookieConsent.title')} icon iconColor="blue">
+          <DemoBox label={t('privacy.cookieConsent.demoLabel')}>
             <div className="space-y-4">
               <div className="bg-gray-800 text-white p-4 rounded-lg shadow-xl relative overflow-hidden">
                 <div className="relative z-10">
-                  <h4 className="font-bold mb-2">We value your privacy</h4>
+                  <h4 className="font-bold mb-2">{t('privacy.cookieConsent.bannerTitle')}</h4>
                   <p className="text-sm text-gray-300 mb-4">
-                    We use cookies to enhance your browsing experience, serve
-                    personalized ads or content, and analyze our traffic.
+                    {t('privacy.cookieConsent.bannerDescription')}
                   </p>
 
                   <div className="flex flex-wrap gap-2 mb-4">
@@ -76,7 +81,7 @@ export const PrivacySection = () => {
                         disabled
                         className="accent-blue-500"
                       />
-                      <span className="text-xs">Essential</span>
+                      <span className="text-xs">{t('privacy.cookieConsent.essential')}</span>
                     </div>
                     <div className="flex items-center gap-2 bg-gray-700 px-3 py-1 rounded">
                       <input
@@ -84,11 +89,11 @@ export const PrivacySection = () => {
                         defaultChecked
                         className="accent-blue-500"
                       />
-                      <span className="text-xs">Analytics</span>
+                      <span className="text-xs">{t('privacy.cookieConsent.analytics')}</span>
                     </div>
                     <div className="flex items-center gap-2 bg-gray-700 px-3 py-1 rounded">
                       <input type="checkbox" className="accent-blue-500" />
-                      <span className="text-xs">Marketing</span>
+                      <span className="text-xs">{t('privacy.cookieConsent.marketing')}</span>
                     </div>
                   </div>
 
@@ -97,40 +102,38 @@ export const PrivacySection = () => {
                       type="button"
                       className="flex-1 bg-white text-gray-900 py-2 rounded font-bold text-sm hover:bg-gray-100"
                     >
-                      Accept All
+                      {t('privacy.cookieConsent.acceptAll')}
                     </button>
                     <button
                       type="button"
                       className="flex-1 border border-gray-600 text-white py-2 rounded font-bold text-sm hover:bg-gray-700"
                     >
-                      Reject Non-Essential
+                      {t('privacy.cookieConsent.rejectNonEssential')}
                     </button>
                   </div>
                 </div>
               </div>
 
               <div className="bg-blue-50 p-3 rounded-lg border border-blue-100 text-xs text-blue-800">
-                <strong>Pro Tip:</strong> Don't use "Dark Patterns". A "Reject
-                All" button should be as visible and easy to click as "Accept
-                All".
+                {t('privacy.cookieConsent.proTip')}
               </div>
             </div>
           </DemoBox>
         </SubSection>
 
         <SubSection
-          title="Password Field Best Practices"
+          title={t('privacy.password.title')}
           icon
           iconColor="green"
         >
-          <DemoBox label="Password Strength Indicator">
+          <DemoBox label={t('privacy.password.demoLabel')}>
             <div className="space-y-4">
               <div>
                 <label
                   htmlFor="password-strength"
                   className="text-sm font-medium block mb-1"
                 >
-                  Enter Password:
+                  {t('privacy.password.inputLabel')}
                 </label>
                 <input
                   id="password-strength"
@@ -139,7 +142,7 @@ export const PrivacySection = () => {
                   onChange={(e) => handlePasswordChange(e.target.value)}
                   autoComplete="new-password"
                   className="w-full p-2 border rounded text-sm"
-                  placeholder="Enter a password"
+                  placeholder={t('privacy.password.inputPlaceholder')}
                 />
               </div>
 
@@ -162,8 +165,8 @@ export const PrivacySection = () => {
                       passwordStrength <= 2 ? 'text-red-600' : 'text-green-600'
                     }`}
                   >
-                    Strength:{' '}
-                    {strengthLabels[passwordStrength - 1] || 'Very Weak'}
+                    {t('privacy.password.strength')}{' '}
+                    {strengthLabels[passwordStrength - 1] || strengthLabels[0]}
                   </p>
                 </div>
               )}
@@ -194,7 +197,7 @@ const [showPassword, setShowPassword] = useState(false);
           />
         </SubSection>
 
-        <SubSection title="Secure Logout Implementation" icon iconColor="red">
+        <SubSection title={t('privacy.logout.title')} icon iconColor="red">
           <CodeBlock
             code={`// Complete logout implementation
 async function logout() {
@@ -225,11 +228,10 @@ async function logout() {
           />
         </SubSection>
 
-        <SubSection title="Session Timeout UX" icon iconColor="orange">
-          <InfoBox variant="orange" title="User-Friendly Session Management">
+        <SubSection title={t('privacy.sessionTimeout.title')} icon iconColor="orange">
+          <InfoBox variant="orange" title={t('privacy.sessionTimeout.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              Implement session timeout warnings to prevent data loss and
-              improve user experience. Warn users before their session expires.
+              {t('privacy.sessionTimeout.infoDescription')}
             </p>
           </InfoBox>
 
@@ -274,11 +276,11 @@ function SessionTimeoutWarning() {
         </SubSection>
 
         <SubSection
-          title="Two-Factor Authentication UX"
+          title={t('privacy.twoFactor.title')}
           icon
           iconColor="purple"
         >
-          <DemoBox label="2FA Code Input Pattern">
+          <DemoBox label={t('privacy.twoFactor.demoLabel')}>
             <div className="flex justify-center gap-2">
               {[0, 1, 2, 3, 4, 5].map((idx) => (
                 <input
@@ -291,7 +293,7 @@ function SessionTimeoutWarning() {
               ))}
             </div>
             <p className="text-xs text-gray-500 text-center mt-3">
-              Auto-focus next input on entry for better UX
+              {t('privacy.twoFactor.autoFocusNote')}
             </p>
           </DemoBox>
 
@@ -347,40 +349,40 @@ function TwoFactorInput({ onComplete }) {
           />
         </SubSection>
 
-        <SubSection title="Privacy Compliance Checklist" icon iconColor="green">
+        <SubSection title={t('privacy.compliance.title')} icon iconColor="green">
           <div className="space-y-2">
             {[
               {
-                item: 'Display cookie consent banner before setting non-essential cookies',
-                category: 'GDPR/CCPA',
+                item: t('privacy.compliance.item1'),
+                category: t('privacy.compliance.categoryGDPR'),
               },
               {
-                item: 'Provide clear privacy policy link in footer',
-                category: 'Legal',
+                item: t('privacy.compliance.item2'),
+                category: t('privacy.compliance.categoryLegal'),
               },
               {
-                item: 'Allow users to download their data (data portability)',
-                category: 'GDPR',
+                item: t('privacy.compliance.item3'),
+                category: t('privacy.compliance.categoryGDPR'),
               },
               {
-                item: 'Implement account deletion functionality',
-                category: 'GDPR/CCPA',
+                item: t('privacy.compliance.item4'),
+                category: t('privacy.compliance.categoryGDPR'),
               },
               {
-                item: 'Log security-relevant events (login, password change)',
-                category: 'Security',
+                item: t('privacy.compliance.item5'),
+                category: t('privacy.compliance.categorySecurity'),
               },
               {
-                item: 'Mask sensitive data in logs and error messages',
-                category: 'Security',
+                item: t('privacy.compliance.item6'),
+                category: t('privacy.compliance.categorySecurity'),
               },
               {
-                item: 'Use HTTPS everywhere',
-                category: 'Security',
+                item: t('privacy.compliance.item7'),
+                category: t('privacy.compliance.categorySecurity'),
               },
               {
-                item: 'Implement rate limiting for auth endpoints',
-                category: 'Security',
+                item: t('privacy.compliance.item8'),
+                category: t('privacy.compliance.categorySecurity'),
               },
             ].map((item) => (
               <div

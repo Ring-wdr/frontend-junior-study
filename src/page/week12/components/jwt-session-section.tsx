@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -6,64 +7,44 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const JwtSessionSection = () => {
+  const { t } = useTranslation('week12');
   const [activeComparison, setActiveComparison] = useState<'jwt' | 'session'>(
     'jwt',
   );
 
   const comparisons = {
     jwt: {
-      title: 'JWT (Stateless)',
-      pros: [
-        'No server-side storage needed',
-        'Scales horizontally easily',
-        'Works well with microservices',
-        'Can contain user claims',
-      ],
-      cons: [
-        'Difficult to revoke (until expiry)',
-        'Token size can be large',
-        'Must handle token refresh',
-        'Vulnerable if stored in localStorage',
-      ],
+      title: t('jwt.comparison.jwtTitle'),
+      pros: t('jwt.comparison.jwtPros', { returnObjects: true }) as string[],
+      cons: t('jwt.comparison.jwtCons', { returnObjects: true }) as string[],
       color: 'blue',
     },
     session: {
-      title: 'Session (Stateful)',
-      pros: [
-        'Easy to revoke (delete from store)',
-        'Small cookie size (just session ID)',
-        'Better control over active sessions',
-        'Can store complex session data',
-      ],
-      cons: [
-        'Requires server-side storage',
-        'Scaling requires shared session store',
-        'Session lookup on every request',
-        'Sticky sessions or Redis needed',
-      ],
+      title: t('jwt.comparison.sessionTitle'),
+      pros: t('jwt.comparison.sessionPros', { returnObjects: true }) as string[],
+      cons: t('jwt.comparison.sessionCons', { returnObjects: true }) as string[],
       color: 'green',
     },
   };
 
   return (
     <SectionCard
-      badge={{ label: 'Concepts', color: 'orange' }}
-      title="JWT vs Session Authentication"
-      description="Understanding stateless vs stateful authentication approaches"
+      badge={{ label: t('jwt.badge'), color: 'orange' }}
+      title={t('jwt.title')}
+      description={t('jwt.description')}
     >
       <div className="space-y-8">
-        <SubSection title="JWT Structure" icon iconColor="blue">
-          <InfoBox variant="blue" title="JSON Web Token">
+        <SubSection title={t('jwt.structure.title')} icon iconColor="blue">
+          <InfoBox variant="blue" title={t('jwt.structure.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              JWT is a self-contained token format with three Base64-encoded
-              parts: <strong>Header.Payload.Signature</strong>
+              {t('jwt.structure.infoDescription')}
             </p>
           </InfoBox>
 
           <div className="mt-4 space-y-2">
             <div className="bg-red-50 p-3 rounded border border-red-200">
               <p className="text-xs font-semibold text-red-800">
-                Header (Algorithm & Type)
+                {t('jwt.structure.header')}
               </p>
               <code className="text-xs text-red-700">
                 {`{"alg": "HS256", "typ": "JWT"}`}
@@ -71,7 +52,7 @@ export const JwtSessionSection = () => {
             </div>
             <div className="bg-purple-50 p-3 rounded border border-purple-200">
               <p className="text-xs font-semibold text-purple-800">
-                Payload (Claims)
+                {t('jwt.structure.payload')}
               </p>
               <code className="text-xs text-purple-700">
                 {`{"sub": "123", "name": "John", "exp": 1700000000}`}
@@ -79,7 +60,7 @@ export const JwtSessionSection = () => {
             </div>
             <div className="bg-blue-50 p-3 rounded border border-blue-200">
               <p className="text-xs font-semibold text-blue-800">
-                Signature (Verification)
+                {t('jwt.structure.signature')}
               </p>
               <code className="text-xs text-blue-700">
                 HMACSHA256(base64(header) + "." + base64(payload), secret)
@@ -88,8 +69,8 @@ export const JwtSessionSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title="Comparison" icon iconColor="purple">
-          <DemoBox label="JWT vs Session">
+        <SubSection title={t('jwt.comparison.title')} icon iconColor="purple">
+          <DemoBox label={t('jwt.comparison.demoLabel')}>
             <div className="space-y-4">
               <div className="flex gap-2">
                 <button
@@ -128,7 +109,7 @@ export const JwtSessionSection = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <p className="text-xs font-semibold text-green-700 mb-2">
-                      Pros
+                      {t('jwt.comparison.prosLabel')}
                     </p>
                     <ul className="space-y-1">
                       {comparisons[activeComparison].pros.map((pro, idx) => (
@@ -144,7 +125,7 @@ export const JwtSessionSection = () => {
                   </div>
                   <div>
                     <p className="text-xs font-semibold text-red-700 mb-2">
-                      Cons
+                      {t('jwt.comparison.consLabel')}
                     </p>
                     <ul className="space-y-1">
                       {comparisons[activeComparison].cons.map((con, idx) => (
@@ -164,16 +145,16 @@ export const JwtSessionSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Token Storage Best Practices" icon iconColor="red">
+        <SubSection title={t('jwt.storage.title')} icon iconColor="red">
           <div className="space-y-3">
             <div className="flex items-center gap-3 p-3 bg-red-50 rounded border border-red-200">
               <span className="text-red-500 text-xl">&#10005;</span>
               <div>
                 <p className="font-semibold text-red-900 text-sm">
-                  localStorage
+                  {t('jwt.storage.localStorage')}
                 </p>
                 <p className="text-xs text-red-700">
-                  Vulnerable to XSS attacks - avoid for sensitive tokens
+                  {t('jwt.storage.localStorageDesc')}
                 </p>
               </div>
             </div>
@@ -181,10 +162,10 @@ export const JwtSessionSection = () => {
               <span className="text-green-500 text-xl">&#10003;</span>
               <div>
                 <p className="font-semibold text-green-900 text-sm">
-                  HttpOnly Cookie
+                  {t('jwt.storage.httpOnly')}
                 </p>
                 <p className="text-xs text-green-700">
-                  Not accessible via JavaScript - recommended for tokens
+                  {t('jwt.storage.httpOnlyDesc')}
                 </p>
               </div>
             </div>
@@ -192,17 +173,17 @@ export const JwtSessionSection = () => {
               <span className="text-blue-500 text-xl">&#8776;</span>
               <div>
                 <p className="font-semibold text-blue-900 text-sm">
-                  Memory (in-app state)
+                  {t('jwt.storage.memory')}
                 </p>
                 <p className="text-xs text-blue-700">
-                  Safe but lost on refresh - use with refresh tokens
+                  {t('jwt.storage.memoryDesc')}
                 </p>
               </div>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title="Refresh Token Pattern" icon iconColor="orange">
+        <SubSection title={t('jwt.refresh.title')} icon iconColor="orange">
           <CodeBlock
             code={`// Token refresh implementation
 async function refreshAccessToken() {
@@ -244,13 +225,10 @@ axios.interceptors.response.use(
           />
         </SubSection>
 
-        <SubSection title="Modern Hybrid Approach" icon iconColor="green">
-          <InfoBox variant="green" title="Best Practice">
+        <SubSection title={t('jwt.hybrid.title')} icon iconColor="green">
+          <InfoBox variant="green" title={t('jwt.hybrid.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              Modern apps often use a <strong>hybrid approach</strong>: JWT
-              access tokens (short-lived, in memory) + HttpOnly refresh tokens
-              (long-lived, in cookies). This combines JWT scalability with
-              session-like revocation capabilities.
+              {t('jwt.hybrid.infoDescription')}
             </p>
           </InfoBox>
 

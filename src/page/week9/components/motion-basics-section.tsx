@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -20,10 +20,9 @@ export const MotionBasicsSection = () => {
       <div className="space-y-8">
         <SubSection title={t('motionBasics.whatIsMotionDiv.title')} icon iconColor="blue">
           <InfoBox variant="blue" title={t('motionBasics.whatIsMotionDiv.infoTitle')}>
-            <p
-              className="text-sm leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: t('motionBasics.whatIsMotionDiv.content') }}
-            />
+            <p className="text-sm leading-relaxed">
+              <Trans t={t} i18nKey="motionBasics.whatIsMotionDiv.content" components={{ code: <code /> }} />
+            </p>
             <ul className="list-disc pl-5 space-y-1 text-sm mt-3">
               <li>
                 <strong>{t('motionBasics.whatIsMotionDiv.declarative')}</strong> {t('motionBasics.whatIsMotionDiv.declarativeDesc')}
@@ -88,7 +87,7 @@ export const MotionBasicsSection = () => {
           <div className="mt-4 bg-gray-50 p-4 rounded-lg border border-gray-200">
             <p className="text-xs text-gray-600">
               <strong>{t('motionBasics.demo.note')}</strong>{' '}
-              <span dangerouslySetInnerHTML={{ __html: t('motionBasics.demo.noteDesc') }} />
+              <Trans t={t} i18nKey="motionBasics.demo.noteDesc" components={{ code: <code /> }} />
             </p>
           </div>
         </SubSection>
@@ -122,10 +121,9 @@ export const MotionBasicsSection = () => {
           </div>
 
           <InfoBox variant="green" title={t('motionBasics.animatableProps.performanceTip')}>
-            <p
-              className="text-sm"
-              dangerouslySetInnerHTML={{ __html: t('motionBasics.animatableProps.performanceTipDesc') }}
-            />
+            <p className="text-sm">
+              <Trans t={t} i18nKey="motionBasics.animatableProps.performanceTipDesc" />
+            </p>
           </InfoBox>
         </SubSection>
       </div>

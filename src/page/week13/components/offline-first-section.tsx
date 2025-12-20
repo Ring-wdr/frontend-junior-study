@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -6,6 +7,7 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const OfflineFirstSection = () => {
+  const { t } = useTranslation('week13');
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [connectionHistory, setConnectionHistory] = useState<
     { time: string; status: 'online' | 'offline' }[]
@@ -39,37 +41,35 @@ export const OfflineFirstSection = () => {
 
   return (
     <SectionCard
-      badge={{ label: 'Strategy', color: 'orange' }}
-      title="Offline-First Strategy"
-      description="Design patterns for building reliable offline experiences"
+      badge={{ label: t('offlineFirst.badge'), color: 'orange' }}
+      title={t('offlineFirst.title')}
+      description={t('offlineFirst.description')}
     >
       <div className="space-y-8">
-        <SubSection title="Offline-First Philosophy" icon iconColor="blue">
-          <InfoBox variant="orange" title="Design for Offline First">
+        <SubSection title={t('offlineFirst.philosophy.title')} icon iconColor="blue">
+          <InfoBox variant="orange" title={t('offlineFirst.philosophy.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              Offline-first means designing your application to work{' '}
-              <strong>without network connectivity by default</strong>. The
-              network becomes an enhancement, not a requirement.
+              <Trans t={t} i18nKey="offlineFirst.philosophy.description" />
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm mt-3">
               <li>
-                <strong>Local First:</strong> Store and read data locally
+                <Trans t={t} i18nKey="offlineFirst.philosophy.localFirst" />
               </li>
               <li>
-                <strong>Sync When Possible:</strong> Push changes when online
+                <Trans t={t} i18nKey="offlineFirst.philosophy.syncWhenPossible" />
               </li>
               <li>
-                <strong>Graceful Degradation:</strong> Clear offline indicators
+                <Trans t={t} i18nKey="offlineFirst.philosophy.gracefulDegradation" />
               </li>
               <li>
-                <strong>Conflict Resolution:</strong> Handle sync conflicts
+                <Trans t={t} i18nKey="offlineFirst.philosophy.conflictResolution" />
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Network Status Detection" icon iconColor="green">
-          <DemoBox label="Live Connection Monitor">
+        <SubSection title={t('offlineFirst.networkStatus.title')} icon iconColor="green">
+          <DemoBox label={t('offlineFirst.networkStatus.label')}>
             <div className="space-y-4">
               <div className="flex items-center justify-center gap-4">
                 <div
@@ -83,23 +83,23 @@ export const OfflineFirstSection = () => {
                 </div>
                 <div>
                   <p className="text-lg font-bold text-gray-900">
-                    {isOnline ? 'Online' : 'Offline'}
+                    {isOnline ? t('offlineFirst.networkStatus.online') : t('offlineFirst.networkStatus.offline')}
                   </p>
                   <p className="text-sm text-gray-500">
                     {isOnline
-                      ? 'Connected to network'
-                      : 'No network connection'}
+                      ? t('offlineFirst.networkStatus.onlineDesc')
+                      : t('offlineFirst.networkStatus.offlineDesc')}
                   </p>
                 </div>
               </div>
 
               <div className="bg-white p-3 rounded-lg border border-gray-200">
                 <p className="text-xs font-semibold text-gray-500 mb-2">
-                  Connection History
+                  {t('offlineFirst.networkStatus.connectionHistory')}
                 </p>
                 {connectionHistory.length === 0 ? (
                   <p className="text-xs text-gray-400">
-                    Toggle your network connection to see events
+                    {t('offlineFirst.networkStatus.noHistory')}
                   </p>
                 ) : (
                   <div className="space-y-1">
@@ -125,14 +125,13 @@ export const OfflineFirstSection = () => {
               </div>
 
               <p className="text-xs text-gray-400 text-center">
-                Try toggling your WiFi or using DevTools Network tab to simulate
-                offline
+                {t('offlineFirst.networkStatus.toggleMessage')}
               </p>
             </div>
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Online/Offline Events" icon iconColor="purple">
+        <SubSection title={t('offlineFirst.events.title')} icon iconColor="purple">
           <CodeBlock
             code={`// Basic online/offline detection
 window.addEventListener('online', () => {
@@ -176,12 +175,10 @@ function useOnlineStatus() {
           />
         </SubSection>
 
-        <SubSection title="Background Sync" icon iconColor="orange">
-          <InfoBox variant="blue" title="Service Worker Background Sync">
+        <SubSection title={t('offlineFirst.backgroundSync.title')} icon iconColor="orange">
+          <InfoBox variant="blue" title={t('offlineFirst.backgroundSync.infoTitle')}>
             <p className="text-sm">
-              Background Sync allows you to defer actions until the user has
-              stable connectivity. The Service Worker handles retry
-              automatically.
+              {t('offlineFirst.backgroundSync.description')}
             </p>
           </InfoBox>
 
@@ -227,33 +224,33 @@ async function syncOutbox() {
           />
         </SubSection>
 
-        <SubSection title="Offline UX Principles" icon iconColor="red">
+        <SubSection title={t('offlineFirst.uxPrinciples.title')} icon iconColor="red">
           <div className="grid grid-cols-1 gap-3">
             {[
               {
                 icon: '📡',
-                title: 'Clear Status Indicators',
-                desc: 'Always show users when they are offline with visible banners or icons',
+                title: t('offlineFirst.uxPrinciples.clearStatus'),
+                desc: t('offlineFirst.uxPrinciples.clearStatusDesc'),
               },
               {
                 icon: '💾',
-                title: 'Indicate Cached Data',
-                desc: 'Let users know when data is from cache vs fresh from server',
+                title: t('offlineFirst.uxPrinciples.indicateCached'),
+                desc: t('offlineFirst.uxPrinciples.indicateCachedDesc'),
               },
               {
                 icon: '🔄',
-                title: 'Retry Options',
-                desc: 'Provide manual retry buttons for failed operations',
+                title: t('offlineFirst.uxPrinciples.retryOptions'),
+                desc: t('offlineFirst.uxPrinciples.retryOptionsDesc'),
               },
               {
                 icon: '⏱️',
-                title: 'Queue Actions',
-                desc: 'Save offline actions and process them when back online',
+                title: t('offlineFirst.uxPrinciples.queueActions'),
+                desc: t('offlineFirst.uxPrinciples.queueActionsDesc'),
               },
               {
                 icon: '⚠️',
-                title: 'Conflict Resolution',
-                desc: 'Handle data conflicts gracefully (last-write-wins, merge, user choice)',
+                title: t('offlineFirst.uxPrinciples.conflictResolution'),
+                desc: t('offlineFirst.uxPrinciples.conflictResolutionDesc'),
               },
             ].map((item) => (
               <div
@@ -272,38 +269,38 @@ async function syncOutbox() {
           </div>
         </SubSection>
 
-        <SubSection title="Offline-First Architecture" icon iconColor="green">
-          <DemoBox label="Data Flow Pattern">
+        <SubSection title={t('offlineFirst.architecture.title')} icon iconColor="green">
+          <DemoBox label={t('offlineFirst.architecture.label')}>
             <div className="flex flex-col items-center gap-2 py-4">
               <div className="flex items-center gap-4">
                 <div className="w-24 h-16 bg-blue-100 rounded-lg border-2 border-blue-300 flex items-center justify-center text-sm font-medium text-blue-800">
-                  UI Layer
+                  {t('offlineFirst.architecture.uiLayer')}
                 </div>
               </div>
               <div className="w-0.5 h-6 bg-gray-300" />
               <div className="flex items-center gap-4">
                 <div className="w-24 h-16 bg-purple-100 rounded-lg border-2 border-purple-300 flex items-center justify-center text-sm font-medium text-purple-800 text-center">
-                  Local<br />Store
+                  {t('offlineFirst.architecture.localStore')}
                 </div>
                 <span className="text-gray-400">←→</span>
                 <div className="w-24 h-16 bg-green-100 rounded-lg border-2 border-green-300 flex items-center justify-center text-sm font-medium text-green-800 text-center">
-                  Sync<br />Layer
+                  {t('offlineFirst.architecture.syncLayer')}
                 </div>
               </div>
               <div className="w-0.5 h-6 bg-gray-300" />
               <div className="flex items-center gap-4">
                 <div className="w-24 h-16 bg-orange-100 rounded-lg border-2 border-orange-300 flex items-center justify-center text-sm font-medium text-orange-800 text-center">
-                  Remote<br />Server
+                  {t('offlineFirst.architecture.remoteServer')}
                 </div>
               </div>
             </div>
             <div className="text-xs text-center text-gray-500 mt-2">
-              UI always reads from Local Store. Sync Layer handles server communication.
+              {t('offlineFirst.architecture.flowDesc')}
             </div>
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Implementation Pattern" icon iconColor="blue">
+        <SubSection title={t('offlineFirst.implementation.title')} icon iconColor="blue">
           <CodeBlock
             code={`// Offline-first data layer
 class OfflineFirstStore {

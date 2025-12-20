@@ -2,43 +2,46 @@ import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { useTranslation } from 'react-i18next';
 
 export const ValidationLibrariesSection = () => {
+  const { t } = useTranslation('week7');
+
   return (
     <SectionCard
-      badge={{ label: 'Schema Validation', color: 'green' }}
-      title="Validation Libraries: Zod & Formik"
-      description="Schema-based validation approaches for type-safe forms"
+      badge={{ label: t('validationLibraries.badge'), color: 'green' }}
+      title={t('validationLibraries.title')}
+      description={t('validationLibraries.description')}
     >
       <div className="space-y-8">
         <SubSection
-          title="Zod — Modern TypeScript Validation"
+          title={t('validationLibraries.zod.title')}
           icon
           iconColor="green"
         >
-          <InfoBox variant="green" title="Why Choose Zod?">
+          <InfoBox variant="green" title={t('validationLibraries.zod.whyChoose.title')}>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>TypeScript Native:</strong> Schema = Type definition
+                {t('validationLibraries.zod.whyChoose.tsNative')}
               </li>
               <li>
-                <strong>Tree-shakeable:</strong> Smaller bundle than Yup
+                {t('validationLibraries.zod.whyChoose.treeShakeable')}
               </li>
               <li>
-                <strong>RHF Integration:</strong> Seamless with zodResolver
+                {t('validationLibraries.zod.whyChoose.rhfIntegration')}
               </li>
               <li>
-                <strong>Chainable API:</strong> Elegant schema composition
+                {t('validationLibraries.zod.whyChoose.chainableAPI')}
               </li>
               <li>
-                <strong>Custom validators:</strong> Easy to extend
+                {t('validationLibraries.zod.whyChoose.customValidators')}
               </li>
             </ul>
           </InfoBox>
 
           <div className="mt-4 space-y-3">
             <p className="text-sm font-semibold text-gray-700">
-              Basic Zod Schema:
+              {t('validationLibraries.zod.basicSchema')}
             </p>
             <CodeBlock
               code={`import { z } from 'zod';
@@ -66,7 +69,7 @@ type LoginFormData = z.infer<typeof loginSchema>;`}
 
           <div className="mt-4 space-y-3">
             <p className="text-sm font-semibold text-gray-700">
-              RHF + Zod Integration:
+              {t('validationLibraries.zod.rhfIntegration')}
             </p>
             <CodeBlock
               code={`import { useForm } from 'react-hook-form';
@@ -102,42 +105,37 @@ const LoginForm = () => {
             />
           </div>
 
-          <InfoBox variant="blue" title="Advanced Zod Features">
+          <InfoBox variant="blue" title={t('validationLibraries.zod.advancedFeatures.title')}>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>Refinement:</strong> Custom validation logic
+                {t('validationLibraries.zod.advancedFeatures.refinement')}
               </li>
               <li>
-                <strong>Superrefine:</strong> More control over error messages
+                {t('validationLibraries.zod.advancedFeatures.superrefine')}
               </li>
               <li>
-                <strong>Discriminated Unions:</strong> Type-safe conditional
-                validation
+                {t('validationLibraries.zod.advancedFeatures.discriminatedUnions')}
               </li>
               <li>
-                <strong>Transform:</strong> Modify values during validation
+                {t('validationLibraries.zod.advancedFeatures.transform')}
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Formik — Historical Context" icon iconColor="orange">
-          <InfoBox variant="orange" title="What is Formik?">
+        <SubSection title={t('validationLibraries.formik.title')} icon iconColor="orange">
+          <InfoBox variant="orange" title={t('validationLibraries.formik.whatIsFormik.title')}>
             <p className="text-sm mb-3">
-              Formik was React's first major form library, established in 2017.
-              It provided structured form state management before React Hook
-              Form existed.
+              {t('validationLibraries.formik.whatIsFormik.description')}
             </p>
             <p className="text-sm">
-              <strong>Note:</strong> While still used in legacy projects, RHF is
-              now the community standard due to better performance and simpler
-              API.
+              {t('validationLibraries.formik.whatIsFormik.note')}
             </p>
           </InfoBox>
 
           <div className="mt-4 space-y-3">
             <p className="text-sm font-semibold text-gray-700">
-              Formik vs RHF Comparison:
+              {t('validationLibraries.formik.comparison')}
             </p>
             <CodeBlock
               code={`// FORMIK (Controlled Component Approach)
@@ -190,24 +188,24 @@ const LoginForm = () => {
           <div className="grid grid-cols-1 gap-3 mt-4">
             <div className="bg-gray-50 p-3 rounded border border-gray-200">
               <p className="text-sm font-semibold text-gray-800 mb-2">
-                Formik Pros
+                {t('validationLibraries.formik.pros.title')}
               </p>
               <p className="text-sm text-gray-700">
-                Familiar for React ecosystem veterans, extensive documentation
+                {t('validationLibraries.formik.pros.description')}
               </p>
             </div>
             <div className="bg-red-50 p-3 rounded border border-red-200">
               <p className="text-sm font-semibold text-red-800 mb-2">
-                Formik Cons
+                {t('validationLibraries.formik.cons.title')}
               </p>
               <p className="text-sm text-gray-700">
-                More re-renders (controlled), verbose code, larger bundle
+                {t('validationLibraries.formik.cons.description')}
               </p>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title="Custom Validation Rules" icon iconColor="purple">
+        <SubSection title={t('validationLibraries.customValidation.title')} icon iconColor="purple">
           <CodeBlock
             code={`// Zod Refinement Example
 const passwordSchema = z
@@ -247,28 +245,28 @@ const advancedSchema = z.object({
           />
         </SubSection>
 
-        <SubSection title="When to Use Which" icon iconColor="blue">
+        <SubSection title={t('validationLibraries.whenToUse.title')} icon iconColor="blue">
           <div className="grid grid-cols-1 gap-3">
             <div className="bg-blue-50 p-4 rounded border border-blue-200">
               <p className="font-semibold text-sm mb-2 text-blue-900">
-                Use Zod + RHF
+                {t('validationLibraries.whenToUse.useZodRHF.title')}
               </p>
               <ul className="list-disc pl-5 text-sm space-y-1">
-                <li>New projects with TypeScript</li>
-                <li>Need type-safe validation</li>
-                <li>Performance is critical</li>
-                <li>Want clean, minimal code</li>
+                <li>{t('validationLibraries.whenToUse.useZodRHF.newProjects')}</li>
+                <li>{t('validationLibraries.whenToUse.useZodRHF.typeSafe')}</li>
+                <li>{t('validationLibraries.whenToUse.useZodRHF.performance')}</li>
+                <li>{t('validationLibraries.whenToUse.useZodRHF.cleanCode')}</li>
               </ul>
             </div>
             <div className="bg-orange-50 p-4 rounded border border-orange-200">
               <p className="font-semibold text-sm mb-2 text-orange-900">
-                Use Formik
+                {t('validationLibraries.whenToUse.useFormik.title')}
               </p>
               <ul className="list-disc pl-5 text-sm space-y-1">
-                <li>Maintaining legacy projects</li>
-                <li>Team already familiar with Formik</li>
-                <li>Need specific Formik plugins</li>
-                <li>Large existing codebase to migrate</li>
+                <li>{t('validationLibraries.whenToUse.useFormik.legacy')}</li>
+                <li>{t('validationLibraries.whenToUse.useFormik.teamFamiliar')}</li>
+                <li>{t('validationLibraries.whenToUse.useFormik.plugins')}</li>
+                <li>{t('validationLibraries.whenToUse.useFormik.largeCodebase')}</li>
               </ul>
             </div>
           </div>

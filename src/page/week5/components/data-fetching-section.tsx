@@ -1,38 +1,49 @@
+import { Trans, useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { DataFetchingVisualizer } from './data-fetching-visualizer';
 
 export const DataFetchingSection = () => {
+  const { t } = useTranslation('week5');
   return (
     <SectionCard
-      badge={{ label: 'Data', color: 'orange' }}
-      title="Data Fetching Strategies"
-      description="SSR, ISR with extended fetch, and Client-side options (SWR, React Query)."
+      badge={{ label: t('dataFetching.badge'), color: 'orange' }}
+      title={t('dataFetching.title')}
+      description={t('dataFetching.description')}
     >
       <div className="space-y-8">
-        <SubSection title="Server-Side Fetching" icon iconColor="orange">
+        <SubSection
+          title={t('dataFetching.serverFetching.title')}
+          icon
+          iconColor="orange"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              In Next.js App Router, data fetching uses the standard Web{' '}
-              <code>fetch</code> API,{' '}
-              <strong>extended with caching and revalidation</strong> options.
-              This replaces the old <code>getStaticProps</code> and{' '}
-              <code>getServerSideProps</code> patterns.
+              <Trans t={t} i18nKey="dataFetching.serverFetching.intro" components={{ code: <code /> }} />
             </p>
 
-            <InfoBox variant="orange" title="Fetch Caching Strategy">
+            <InfoBox
+              variant="orange"
+              title={t('dataFetching.serverFetching.strategy.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Static (cache: 'force-cache'):</strong> Data is
-                  fetched at build time and reused indefinitely
+                  <Trans
+                    t={t}
+                    i18nKey="dataFetching.serverFetching.strategy.static"
+                  />
                 </li>
                 <li>
-                  <strong>Dynamic (cache: 'no-store'):</strong> Data is fetched
-                  on every request (like SSR)
+                  <Trans
+                    t={t}
+                    i18nKey="dataFetching.serverFetching.strategy.dynamic"
+                  />
                 </li>
                 <li>
-                  <strong>Incremental (next.revalidate):</strong> Data is cached
-                  but revalidated after a set duration (like ISR)
+                  <Trans
+                    t={t}
+                    i18nKey="dataFetching.serverFetching.strategy.incremental"
+                  />
                 </li>
               </ul>
             </InfoBox>
@@ -76,41 +87,49 @@ export default async function PostsPage() {
         <DataFetchingVisualizer />
 
         <SubSection
-          title="Client-Side Fetching Libraries"
+          title={t('dataFetching.clientLibraries.title')}
           icon
           iconColor="blue"
         >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              For client components, use specialized libraries designed for
-              managing server state, caching, and automatic revalidation. Each
-              has different trade-offs.
+              {t('dataFetching.clientLibraries.intro')}
             </p>
 
             <div className="grid grid-cols-1 gap-4">
-              <InfoBox variant="blue" title="Axios">
+              <InfoBox
+                variant="blue"
+                title={t('dataFetching.clientLibraries.axios.title')}
+              >
                 <p className="text-sm text-gray-700 mb-2">
-                  A lightweight HTTP client library for making requests.
+                  {t('dataFetching.clientLibraries.axios.description')}
                 </p>
                 <ul className="list-disc pl-5 space-y-1 text-xs text-gray-700">
-                  <li>Simple Promise-based API</li>
-                  <li>No built-in caching or state management</li>
-                  <li>Manual error handling</li>
-                  <li>Good for simple requests or API integration</li>
+                  <li>{t('dataFetching.clientLibraries.axios.simpleAPI')}</li>
+                  <li>{t('dataFetching.clientLibraries.axios.noCaching')}</li>
+                  <li>{t('dataFetching.clientLibraries.axios.manualError')}</li>
+                  <li>{t('dataFetching.clientLibraries.axios.goodFor')}</li>
                 </ul>
               </InfoBox>
 
-              <InfoBox variant="red" title="SWR">
+              <InfoBox
+                variant="red"
+                title={t('dataFetching.clientLibraries.swr.title')}
+              >
                 <p className="text-sm text-gray-700 mb-2">
-                  <strong>Stale-While-Revalidate:</strong> Lightweight data
-                  fetching library from Vercel.
+                  <Trans
+                    t={t}
+                    i18nKey="dataFetching.clientLibraries.swr.description"
+                  />
                 </p>
                 <ul className="list-disc pl-5 space-y-1 text-xs text-gray-700">
-                  <li>Automatic caching and revalidation</li>
-                  <li>React hooks-based API</li>
-                  <li>Background refetching</li>
-                  <li>Great for simple to moderate apps</li>
-                  <li>Smaller bundle than React Query (~4KB)</li>
+                  <li>{t('dataFetching.clientLibraries.swr.autoCaching')}</li>
+                  <li>{t('dataFetching.clientLibraries.swr.hooksAPI')}</li>
+                  <li>
+                    {t('dataFetching.clientLibraries.swr.backgroundRefetch')}
+                  </li>
+                  <li>{t('dataFetching.clientLibraries.swr.greatFor')}</li>
+                  <li>{t('dataFetching.clientLibraries.swr.smallerBundle')}</li>
                 </ul>
 
                 <CodeBlock
@@ -131,16 +150,31 @@ function Profile() {
                 />
               </InfoBox>
 
-              <InfoBox variant="orange" title="React Query (TanStack Query)">
+              <InfoBox
+                variant="orange"
+                title={t('dataFetching.clientLibraries.reactQuery.title')}
+              >
                 <p className="text-sm text-gray-700 mb-2">
-                  Powerful server state management for complex applications.
+                  {t('dataFetching.clientLibraries.reactQuery.description')}
                 </p>
                 <ul className="list-disc pl-5 space-y-1 text-xs text-gray-700">
-                  <li>Advanced caching & background sync</li>
-                  <li>Optimistic updates</li>
-                  <li>DevTools for debugging</li>
-                  <li>Pagination & infinite queries</li>
-                  <li>Larger bundle (~15KB) but more features</li>
+                  <li>
+                    {t('dataFetching.clientLibraries.reactQuery.advancedCaching')}
+                  </li>
+                  <li>
+                    {t(
+                      'dataFetching.clientLibraries.reactQuery.optimisticUpdates'
+                    )}
+                  </li>
+                  <li>
+                    {t('dataFetching.clientLibraries.reactQuery.devTools')}
+                  </li>
+                  <li>
+                    {t('dataFetching.clientLibraries.reactQuery.pagination')}
+                  </li>
+                  <li>
+                    {t('dataFetching.clientLibraries.reactQuery.largerBundle')}
+                  </li>
                 </ul>
 
                 <CodeBlock
@@ -175,12 +209,17 @@ function Profile() {
               </InfoBox>
             </div>
 
-            <InfoBox variant="gray" title="Comparison Table">
+            <InfoBox
+              variant="gray"
+              title={t('dataFetching.clientLibraries.comparison.title')}
+            >
               <div className="overflow-x-auto mt-2">
                 <table className="w-full text-xs">
                   <thead>
                     <tr className="border-b">
-                      <th className="text-left p-2">Feature</th>
+                      <th className="text-left p-2">
+                        {t('dataFetching.clientLibraries.comparison.feature')}
+                      </th>
                       <th className="text-left p-2">Axios</th>
                       <th className="text-left p-2">SWR</th>
                       <th className="text-left p-2">React Query</th>
@@ -188,34 +227,68 @@ function Profile() {
                   </thead>
                   <tbody>
                     <tr className="border-b">
-                      <td className="p-2 font-medium">Bundle Size</td>
+                      <td className="p-2 font-medium">
+                        {t('dataFetching.clientLibraries.comparison.bundleSize')}
+                      </td>
                       <td className="p-2">~6KB</td>
                       <td className="p-2">~4KB</td>
                       <td className="p-2">~15KB</td>
                     </tr>
                     <tr className="border-b">
-                      <td className="p-2 font-medium">Caching</td>
-                      <td className="p-2">No</td>
-                      <td className="p-2">Yes</td>
-                      <td className="p-2">Yes (Advanced)</td>
+                      <td className="p-2 font-medium">
+                        {t('dataFetching.clientLibraries.comparison.caching')}
+                      </td>
+                      <td className="p-2">
+                        {t('dataFetching.clientLibraries.comparison.no')}
+                      </td>
+                      <td className="p-2">
+                        {t('dataFetching.clientLibraries.comparison.yes')}
+                      </td>
+                      <td className="p-2">
+                        {t('dataFetching.clientLibraries.comparison.yesAdvanced')}
+                      </td>
                     </tr>
                     <tr className="border-b">
-                      <td className="p-2 font-medium">Revalidation</td>
-                      <td className="p-2">Manual</td>
-                      <td className="p-2">Auto</td>
-                      <td className="p-2">Auto (Smart)</td>
+                      <td className="p-2 font-medium">
+                        {t('dataFetching.clientLibraries.comparison.revalidation')}
+                      </td>
+                      <td className="p-2">
+                        {t('dataFetching.clientLibraries.comparison.manual')}
+                      </td>
+                      <td className="p-2">
+                        {t('dataFetching.clientLibraries.comparison.auto')}
+                      </td>
+                      <td className="p-2">
+                        {t('dataFetching.clientLibraries.comparison.autoSmart')}
+                      </td>
                     </tr>
                     <tr className="border-b">
-                      <td className="p-2 font-medium">DevTools</td>
-                      <td className="p-2">No</td>
-                      <td className="p-2">No</td>
-                      <td className="p-2">Yes</td>
+                      <td className="p-2 font-medium">
+                        {t('dataFetching.clientLibraries.comparison.devTools')}
+                      </td>
+                      <td className="p-2">
+                        {t('dataFetching.clientLibraries.comparison.no')}
+                      </td>
+                      <td className="p-2">
+                        {t('dataFetching.clientLibraries.comparison.no')}
+                      </td>
+                      <td className="p-2">
+                        {t('dataFetching.clientLibraries.comparison.yes')}
+                      </td>
                     </tr>
                     <tr>
-                      <td className="p-2 font-medium">Best For</td>
-                      <td className="p-2">Simple</td>
-                      <td className="p-2">Moderate</td>
-                      <td className="p-2">Complex</td>
+                      <td className="p-2 font-medium">
+                        {t('dataFetching.clientLibraries.comparison.bestFor')}
+                      </td>
+                      <td className="p-2">
+                        {t('dataFetching.clientLibraries.comparison.simple')}
+                      </td>
+                      <td className="p-2">
+                        {t('dataFetching.clientLibraries.comparison.moderate')}
+                      </td>
+                      <td className="p-2">
+                        {t('dataFetching.clientLibraries.comparison.complex')}
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -224,36 +297,65 @@ function Profile() {
           </div>
         </SubSection>
 
-        <SubSection title="Choosing the Right Strategy" icon iconColor="purple">
+        <SubSection
+          title={t('dataFetching.choosingStrategy.title')}
+          icon
+          iconColor="purple"
+        >
           <div className="space-y-4">
-            <InfoBox variant="blue" title="Use Server Fetching when...">
+            <InfoBox
+              variant="blue"
+              title={t('dataFetching.choosingStrategy.useServer.title')}
+            >
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
-                <li>Data doesn't change frequently (static content)</li>
-                <li>You need SEO optimization</li>
-                <li>Building pages with databases or APIs</li>
-                <li>Want zero client-side overhead</li>
+                <li>{t('dataFetching.choosingStrategy.useServer.static')}</li>
+                <li>{t('dataFetching.choosingStrategy.useServer.seo')}</li>
+                <li>{t('dataFetching.choosingStrategy.useServer.dbAPI')}</li>
+                <li>
+                  {t('dataFetching.choosingStrategy.useServer.zeroOverhead')}
+                </li>
               </ul>
             </InfoBox>
 
-            <InfoBox variant="purple" title="Use Client Fetching when...">
+            <InfoBox
+              variant="purple"
+              title={t('dataFetching.choosingStrategy.useClient.title')}
+            >
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
-                <li>Data updates frequently (real-time dashboards)</li>
-                <li>User needs to trigger fetches (search, pagination)</li>
-                <li>Building interactive features</li>
-                <li>Needing background sync and caching</li>
+                <li>{t('dataFetching.choosingStrategy.useClient.frequent')}</li>
+                <li>
+                  {t('dataFetching.choosingStrategy.useClient.userTrigger')}
+                </li>
+                <li>
+                  {t('dataFetching.choosingStrategy.useClient.interactive')}
+                </li>
+                <li>
+                  {t('dataFetching.choosingStrategy.useClient.backgroundSync')}
+                </li>
               </ul>
             </InfoBox>
 
-            <InfoBox variant="green" title="Selection Guide">
+            <InfoBox
+              variant="green"
+              title={t('dataFetching.choosingStrategy.selectionGuide.title')}
+            >
               <p className="text-sm text-gray-700 mb-2">
-                <strong>Blog/Content sites:</strong> Server fetching with ISR
+                <Trans
+                  t={t}
+                  i18nKey="dataFetching.choosingStrategy.selectionGuide.blog"
+                />
               </p>
               <p className="text-sm text-gray-700 mb-2">
-                <strong>Real-time dashboards:</strong> React Query or SWR
+                <Trans
+                  t={t}
+                  i18nKey="dataFetching.choosingStrategy.selectionGuide.dashboard"
+                />
               </p>
               <p className="text-sm text-gray-700">
-                <strong>E-commerce product pages:</strong> Server fetching + SWR
-                for reviews/ratings
+                <Trans
+                  t={t}
+                  i18nKey="dataFetching.choosingStrategy.selectionGuide.ecommerce"
+                />
               </p>
             </InfoBox>
           </div>

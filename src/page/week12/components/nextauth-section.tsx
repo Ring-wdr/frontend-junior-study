@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -6,6 +7,7 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const NextAuthSection = () => {
+  const { t } = useTranslation('week12');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<{ name: string; email: string } | null>(
     null,
@@ -23,38 +25,34 @@ export const NextAuthSection = () => {
 
   return (
     <SectionCard
-      badge={{ label: 'Library', color: 'green' }}
-      title="NextAuth.js (Auth.js)"
-      description="Complete authentication solution for Next.js applications"
+      badge={{ label: t('nextauth.badge'), color: 'green' }}
+      title={t('nextauth.title')}
+      description={t('nextauth.description')}
     >
       <div className="space-y-8">
-        <SubSection title="What is NextAuth.js?" icon iconColor="green">
-          <InfoBox variant="green" title="Full-featured Auth Solution">
+        <SubSection title={t('nextauth.whatIs.title')} icon iconColor="green">
+          <InfoBox variant="green" title={t('nextauth.whatIs.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              NextAuth.js (being rebranded to Auth.js) is a complete
-              authentication solution for Next.js apps. It handles OAuth
-              providers, credentials login, JWT/database sessions, and more.
+              {t('nextauth.whatIs.infoDescription')}
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm mt-3">
               <li>
-                <strong>Multiple Providers:</strong> Google, GitHub, Facebook,
-                credentials, etc.
+                <Trans t={t} i18nKey="nextauth.whatIs.listProviders" />
               </li>
               <li>
-                <strong>Session Modes:</strong> JWT or database sessions
+                <Trans t={t} i18nKey="nextauth.whatIs.listSessions" />
               </li>
               <li>
-                <strong>Built-in Pages:</strong> Sign in, sign out, error pages
+                <Trans t={t} i18nKey="nextauth.whatIs.listPages" />
               </li>
               <li>
-                <strong>SSR Support:</strong> Works with both client and server
-                components
+                <Trans t={t} i18nKey="nextauth.whatIs.listSSR" />
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Basic Setup" icon iconColor="blue">
+        <SubSection title={t('nextauth.setup.title')} icon iconColor="blue">
           <CodeBlock
             code={`// app/api/auth/[...nextauth]/route.ts
 import NextAuth from "next-auth";
@@ -82,7 +80,7 @@ export { handler as GET, handler as POST };`}
           />
         </SubSection>
 
-        <SubSection title="Session Provider Setup" icon iconColor="purple">
+        <SubSection title={t('nextauth.provider.title')} icon iconColor="purple">
           <CodeBlock
             code={`// app/providers.tsx
 "use client";
@@ -108,7 +106,7 @@ export default function RootLayout({ children }) {
           />
         </SubSection>
 
-        <SubSection title="Using Session in Components" icon iconColor="orange">
+        <SubSection title={t('nextauth.usage.title')} icon iconColor="orange">
           <CodeBlock
             code={`// Client Component
 "use client";
@@ -145,8 +143,8 @@ export async function ServerComponent() {
           />
         </SubSection>
 
-        <SubSection title="Session Demo" icon iconColor="red">
-          <DemoBox label="Simulated Authentication">
+        <SubSection title={t('nextauth.demo.title')} icon iconColor="red">
+          <DemoBox label={t('nextauth.demo.demoLabel')}>
             <div className="flex flex-col items-center gap-4">
               {isLoggedIn && user ? (
                 <div className="text-center space-y-3">
@@ -164,12 +162,12 @@ export async function ServerComponent() {
                     onClick={simulateLogout}
                     className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
                   >
-                    Sign out
+                    {t('nextauth.demo.signOutButton')}
                   </button>
                 </div>
               ) : (
                 <div className="text-center space-y-3">
-                  <p className="text-gray-500">Not signed in</p>
+                  <p className="text-gray-500">{t('nextauth.demo.notSignedIn')}</p>
                   <button
                     type="button"
                     onClick={simulateLogin}
@@ -193,7 +191,7 @@ export async function ServerComponent() {
                         d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                       />
                     </svg>
-                    Sign in with Google
+                    {t('nextauth.demo.signInButton')}
                   </button>
                 </div>
               )}
@@ -201,7 +199,7 @@ export async function ServerComponent() {
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Protecting Routes" icon iconColor="green">
+        <SubSection title={t('nextauth.protecting.title')} icon iconColor="green">
           <CodeBlock
             code={`// Middleware-based protection (middleware.ts)
 import { withAuth } from "next-auth/middleware";

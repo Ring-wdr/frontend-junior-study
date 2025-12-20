@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -6,28 +7,23 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const RtlSection = () => {
+  const { t } = useTranslation('week14');
   const [isRtl, setIsRtl] = useState(false);
 
   return (
     <SectionCard
-      badge={{ label: 'RTL', color: 'red' }}
-      title="RTL (Right-to-Left) 지원"
-      description="아랍어, 히브리어 등 RTL 언어를 위한 필수 기능"
+      badge={{ label: t('rtl.badge'), color: 'red' }}
+      title={t('rtl.title')}
+      description={t('rtl.description')}
     >
       <div className="space-y-8">
-        <SubSection title="RTL이 필요한 언어" icon iconColor="red">
-          <InfoBox variant="red" title="RTL Languages">
+        <SubSection title={t('rtl.languages.title')} icon iconColor="red">
+          <InfoBox variant="red" title={t('rtl.languages.infoTitle')}>
             <p className="text-sm mb-3">
-              약 4억 명 이상의 사용자가 RTL 언어를 사용합니다. 글로벌 서비스라면
-              반드시 고려해야 합니다.
+              {t('rtl.languages.infoText')}
             </p>
             <div className="flex flex-wrap gap-2">
-              {[
-                { lang: 'Arabic (العربية)', speakers: '310M+' },
-                { lang: 'Hebrew (עברית)', speakers: '9M+' },
-                { lang: 'Persian (فارسی)', speakers: '110M+' },
-                { lang: 'Urdu (اردو)', speakers: '70M+' },
-              ].map((item) => (
+              {(t('rtl.languages.list', { returnObjects: true }) as Array<{ lang: string; speakers: string }>).map((item) => (
                 <div
                   key={item.lang}
                   className="px-2 py-1 bg-red-100 text-red-700 rounded text-xs"
@@ -39,8 +35,8 @@ export const RtlSection = () => {
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Interactive: LTR vs RTL" icon iconColor="blue">
-          <DemoBox label="Toggle Direction">
+        <SubSection title={t('rtl.liveDemo.title')} icon iconColor="blue">
+          <DemoBox label={t('rtl.liveDemo.label')}>
             <div className="space-y-4">
               <div className="flex gap-2">
                 <button
@@ -52,7 +48,7 @@ export const RtlSection = () => {
                       : 'bg-white text-gray-600 border border-gray-200'
                   }`}
                 >
-                  LTR (English)
+                  {t('rtl.liveDemo.ltr')}
                 </button>
                 <button
                   type="button"
@@ -63,7 +59,7 @@ export const RtlSection = () => {
                       : 'bg-white text-gray-600 border border-gray-200'
                   }`}
                 >
-                  RTL (العربية)
+                  {t('rtl.liveDemo.rtl')}
                 </button>
               </div>
 
@@ -78,18 +74,16 @@ export const RtlSection = () => {
                   </div>
                   <div>
                     <h4 className="font-bold">
-                      {isRtl ? 'محمد أحمد' : 'John Doe'}
+                      {isRtl ? t('rtl.liveDemo.name.rtl') : t('rtl.liveDemo.name.ltr')}
                     </h4>
                     <p className="text-sm text-gray-500">
-                      {isRtl ? 'مطور واجهة أمامية' : 'Frontend Developer'}
+                      {isRtl ? t('rtl.liveDemo.role.rtl') : t('rtl.liveDemo.role.ltr')}
                     </p>
                   </div>
                 </div>
 
                 <p className="text-sm text-gray-600 mb-3">
-                  {isRtl
-                    ? 'هذا مثال على النص العربي الذي يُقرأ من اليمين إلى اليسار.'
-                    : 'This is an example of text that reads from left to right.'}
+                  {isRtl ? t('rtl.liveDemo.text.rtl') : t('rtl.liveDemo.text.ltr')}
                 </p>
 
                 <div className="flex gap-2">
@@ -97,37 +91,35 @@ export const RtlSection = () => {
                     type="button"
                     className="px-3 py-1.5 bg-blue-600 text-white rounded text-sm"
                   >
-                    {isRtl ? 'إرسال' : 'Submit'} →
+                    {isRtl ? t('rtl.liveDemo.submit.rtl') : t('rtl.liveDemo.submit.ltr')} →
                   </button>
                   <button
                     type="button"
                     className="px-3 py-1.5 bg-gray-200 text-gray-700 rounded text-sm"
                   >
-                    {isRtl ? 'إلغاء' : 'Cancel'}
+                    {isRtl ? t('rtl.liveDemo.cancel.rtl') : t('rtl.liveDemo.cancel.ltr')}
                   </button>
                 </div>
               </div>
 
               <div className="text-xs text-gray-500">
-                <code>dir="{isRtl ? 'rtl' : 'ltr'}"</code> - 텍스트 방향, margin,
-                padding, 정렬 모두 변경됨
+                <code>dir="{isRtl ? 'rtl' : 'ltr'}"</code> - {t('rtl.liveDemo.note')}
               </div>
             </div>
           </DemoBox>
         </SubSection>
 
-        <SubSection title="CSS Logical Properties" icon iconColor="green">
-          <InfoBox variant="green" title="Direction-Agnostic CSS">
+        <SubSection title={t('rtl.logicalProperties.title')} icon iconColor="green">
+          <InfoBox variant="green" title={t('rtl.logicalProperties.infoTitle')}>
             <p className="text-sm mb-2">
-              CSS Logical Properties를 사용하면 LTR/RTL을 자동으로 처리합니다.
-              <code>left/right</code> 대신 <code>start/end</code>를 사용하세요.
+              {t('rtl.logicalProperties.infoText')}
             </p>
           </InfoBox>
 
           <div className="mt-3 grid grid-cols-2 gap-3">
             <div className="bg-red-50 p-3 rounded-lg border border-red-200">
               <h4 className="text-sm font-semibold text-red-800 mb-2">
-                ✗ Physical (Avoid)
+                {t('rtl.logicalProperties.physical')}
               </h4>
               <div className="font-mono text-xs space-y-1 text-red-700">
                 <div>margin-left: 1rem;</div>
@@ -138,7 +130,7 @@ export const RtlSection = () => {
             </div>
             <div className="bg-green-50 p-3 rounded-lg border border-green-200">
               <h4 className="text-sm font-semibold text-green-800 mb-2">
-                ✓ Logical (Use)
+                {t('rtl.logicalProperties.logical')}
               </h4>
               <div className="font-mono text-xs space-y-1 text-green-700">
                 <div>margin-inline-start: 1rem;</div>
@@ -150,15 +142,15 @@ export const RtlSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title="Logical Properties 매핑" icon iconColor="purple">
+        <SubSection title={t('rtl.mapping.title')} icon iconColor="purple">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-gray-100">
-                  <th className="p-2 text-left">Physical</th>
-                  <th className="p-2 text-left">Logical</th>
-                  <th className="p-2 text-left">LTR</th>
-                  <th className="p-2 text-left">RTL</th>
+                  <th className="p-2 text-left">{t('rtl.mapping.headers.physical')}</th>
+                  <th className="p-2 text-left">{t('rtl.mapping.headers.logical')}</th>
+                  <th className="p-2 text-left">{t('rtl.mapping.headers.ltr')}</th>
+                  <th className="p-2 text-left">{t('rtl.mapping.headers.rtl')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -216,7 +208,7 @@ export const RtlSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title="Tailwind CSS RTL 지원" icon iconColor="orange">
+        <SubSection title={t('rtl.tailwind.title')} icon iconColor="orange">
           <CodeBlock
             code={`// tailwind.config.js
 module.exports = {
@@ -243,16 +235,9 @@ module.exports = {
           />
         </SubSection>
 
-        <SubSection title="RTL 구현 체크리스트" icon iconColor="blue">
+        <SubSection title={t('rtl.checklist.title')} icon iconColor="blue">
           <div className="space-y-2">
-            {[
-              { item: '<html dir="rtl" lang="ar"> 설정', done: true },
-              { item: 'CSS Logical Properties 사용', done: true },
-              { item: '아이콘 방향 미러링 (←→ 화살표 등)', done: true },
-              { item: '양방향 텍스트(Bidi) 처리', done: false },
-              { item: '숫자/전화번호는 LTR 유지', done: true },
-              { item: '애니메이션 방향 반전', done: false },
-            ].map((check) => (
+            {(t('rtl.checklist.items', { returnObjects: true }) as Array<{ item: string; done: boolean }>).map((check) => (
               <div
                 key={check.item}
                 className={`flex items-center gap-2 p-2 rounded ${

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -56,7 +56,9 @@ export const AccessibilityBasicsSection = () => {
       <div className="space-y-8">
         <SubSection title={t('wcag.whatIsA11y.title')} icon iconColor="blue">
           <InfoBox variant="blue" title={t('wcag.whatIsA11y.infoTitle')}>
-            <p className="text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: t('wcag.whatIsA11y.infoText') }} />
+            <p className="text-sm leading-relaxed">
+              <Trans t={t} i18nKey="wcag.whatIsA11y.infoText" />
+            </p>
             <div className="mt-3 grid grid-cols-2 gap-2">
               {scenarios.map((item) => (
                 <div

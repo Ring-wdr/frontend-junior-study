@@ -6,6 +6,7 @@ import {
   Terminal,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -13,6 +14,7 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const React2ShellSection = () => {
+  const { t } = useTranslation('week12');
   const [isPatched, setIsPatched] = useState(false);
   const [payloadType, setPayloadType] = useState<'legit' | 'malicious'>(
     'legit',
@@ -77,48 +79,42 @@ export const React2ShellSection = () => {
 
   return (
     <SectionCard
-      badge={{ label: 'Critical Vulnerability', color: 'purple' }}
-      title="React2Shell (CVE-2025-55182)"
-      description="The CVSS 10.0 RCE vulnerability in React Server Components"
+      badge={{ label: t('react2shell.badge'), color: 'purple' }}
+      title={t('react2shell.title')}
+      description={t('react2shell.description')}
     >
       <div className="space-y-8">
-        <SubSection title="What is React2Shell?" icon iconColor="red">
-          <InfoBox variant="red" title="Unauthenticated Remote Code Execution">
+        <SubSection title={t('react2shell.whatIs.title')} icon iconColor="red">
+          <InfoBox variant="red" title={t('react2shell.whatIs.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              React2Shell is a critical vulnerability in the React Server
-              Components (RSC) architecture. It exploits an insecure
-              deserialization flaw in the "Flight" protocol used by React to
-              communicate between server and client.
+              {t('react2shell.whatIs.infoDescription')}
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm mt-3">
               <li>
-                <strong>CVSS Score:</strong> 10.0 (Critical)
+                <Trans t={t} i18nKey="react2shell.whatIs.listCVSS" />
               </li>
               <li>
-                <strong>Mechanism:</strong> Malicious payload triggers prototype
-                pollution or code execution during deserialization.
+                <Trans t={t} i18nKey="react2shell.whatIs.listMechanism" />
               </li>
               <li>
-                <strong>Impact:</strong> Full server takeover without
-                authentication.
+                <Trans t={t} i18nKey="react2shell.whatIs.listImpact" />
               </li>
               <li>
-                <strong>Affected:</strong> Next.js &lt; 15.0.5, React &lt;
-                19.0.1 (Experimental/Canary channels).
+                <Trans t={t} i18nKey="react2shell.whatIs.listAffected" />
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Exploit Simulator" icon iconColor="blue">
-          <DemoBox label="Server Action RCE Playground">
+        <SubSection title={t('react2shell.simulator.title')} icon iconColor="blue">
+          <DemoBox label={t('react2shell.simulator.demoLabel')}>
             <div className="space-y-6">
               {/* Controls */}
               <div className="flex flex-col md:flex-row justify-between items-center gap-4 bg-gray-50 p-4 rounded-lg border">
                 <div className="flex items-center gap-4">
                   <div className="flex flex-col">
                     <label className="text-xs font-bold text-gray-500 uppercase">
-                      React Version
+                      {t('react2shell.simulator.versionLabel')}
                     </label>
                     <button
                       onClick={() => setIsPatched(!isPatched)}
@@ -133,7 +129,7 @@ export const React2ShellSection = () => {
                       ) : (
                         <ShieldAlert size={16} />
                       )}
-                      {isPatched ? 'Patched (v19.1.2)' : 'Vulnerable (v19.0.0)'}
+                      {isPatched ? t('react2shell.simulator.patched') : t('react2shell.simulator.vulnerable')}
                     </button>
                   </div>
 
@@ -141,20 +137,20 @@ export const React2ShellSection = () => {
 
                   <div className="flex flex-col w-full md:w-auto">
                     <label className="text-xs font-bold text-gray-500 uppercase">
-                      Payload Type
+                      {t('react2shell.simulator.payloadLabel')}
                     </label>
                     <div className="flex gap-2 mt-1">
                       <button
                         onClick={() => setPayloadType('legit')}
                         className={`px-3 py-1 rounded text-sm transition-colors ${payloadType === 'legit' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 border'}`}
                       >
-                        Normal Data
+                        {t('react2shell.simulator.normalData')}
                       </button>
                       <button
                         onClick={() => setPayloadType('malicious')}
                         className={`px-3 py-1 rounded text-sm transition-colors ${payloadType === 'malicious' ? 'bg-purple-600 text-white' : 'bg-white text-gray-600 border'}`}
                       >
-                        Exploit Payload
+                        {t('react2shell.simulator.exploitPayload')}
                       </button>
                     </div>
                   </div>
@@ -171,7 +167,7 @@ export const React2ShellSection = () => {
                         : 'bg-blue-600 hover:bg-blue-700'
                   }`}
                 >
-                  Send Request
+                  {t('react2shell.simulator.sendButton')}
                 </button>
               </div>
 
@@ -182,7 +178,7 @@ export const React2ShellSection = () => {
                   <div className="bg-gray-100 px-4 py-2 border-b flex items-center gap-2">
                     <Terminal size={16} className="text-gray-600" />
                     <span className="text-xs font-bold text-gray-700">
-                      Attacker Terminal
+                      {t('react2shell.simulator.attackerTerminal')}
                     </span>
                   </div>
                   <div className="p-4 flex-1 bg-gray-900 overflow-hidden">
@@ -202,7 +198,7 @@ export const React2ShellSection = () => {
                     )}
                   </div>
                   <ArrowRight className="mt-2" />
-                  <span className="text-xs mt-1">RSC Flight Protocol</span>
+                  <span className="text-xs mt-1">{t('react2shell.simulator.flightProtocol')}</span>
                 </div>
 
                 {/* Server */}
@@ -222,7 +218,7 @@ export const React2ShellSection = () => {
                   >
                     <div className="flex items-center gap-2">
                       <Server size={16} />
-                      <span className="text-xs font-bold">Target Server</span>
+                      <span className="text-xs font-bold">{t('react2shell.simulator.targetServer')}</span>
                     </div>
                     <span className="text-[10px] bg-black/10 px-2 py-0.5 rounded">
                       {isPatched ? 'React 19.1.2' : 'React 19.0.0'}
@@ -244,7 +240,7 @@ export const React2ShellSection = () => {
                       <div className="space-y-2">
                         {logs.length === 0 ? (
                           <div className="text-center text-gray-400 text-xs mt-10">
-                            Waiting for requests...
+                            {t('react2shell.simulator.waitingRequests')}
                           </div>
                         ) : (
                           logs.map((log, i) => (
@@ -275,7 +271,7 @@ export const React2ShellSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Vulnerable Code Pattern" icon iconColor="purple">
+        <SubSection title={t('react2shell.vulnerable.title')} icon iconColor="purple">
           <CodeBlock
             code={`// SERVER ACTION (Vulnerable in unpatched React)
 "use server";
@@ -299,14 +295,14 @@ POST /path/to/action
           />
         </SubSection>
 
-        <SubSection title="Mitigation Checklist" icon iconColor="green">
+        <SubSection title={t('react2shell.mitigation.title')} icon iconColor="green">
           <div className="space-y-2">
             {[
-              'Upgrade React to v19.0.1, 19.1.2, or latest',
-              'Upgrade Next.js to v15.0.5+ or v14.2.x patches',
-              'Use a WAF to filter malicious payloads (temporary)',
-              'Rotate potentially exposed secrets/keys',
-              'Monitor server logs for unusual deserialization errors',
+              t('react2shell.mitigation.item1'),
+              t('react2shell.mitigation.item2'),
+              t('react2shell.mitigation.item3'),
+              t('react2shell.mitigation.item4'),
+              t('react2shell.mitigation.item5'),
             ].map((item) => (
               <div
                 key={item}

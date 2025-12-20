@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard } from '../../../components';
 import { V8HiddenClassDemo } from './v8-hidden-class-demo';
 
@@ -16,7 +16,7 @@ export const OptimizationSection = () => {
 
       <div className="mt-6">
         <InfoBox variant="blue" title={t('optimization.keyTakeaway.title')}>
-          <span dangerouslySetInnerHTML={{ __html: t('optimization.keyTakeaway.content') }} />
+          <Trans t={t} i18nKey="optimization.keyTakeaway.content" />
         </InfoBox>
       </div>
     </SectionCard>

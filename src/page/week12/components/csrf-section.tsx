@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -6,6 +7,7 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const CsrfSection = () => {
+  const { t } = useTranslation('week12');
   const [sameSiteValue, setSameSiteValue] = useState<'Strict' | 'Lax' | 'None'>(
     'Lax',
   );
@@ -19,9 +21,9 @@ export const CsrfSection = () => {
     // None: Allows it
     if (sameSiteValue === 'None') {
       setBankBalance((prev) => prev - 100);
-      setLastTransaction('Unauthorized Transfer: -$100');
+      setLastTransaction(t('csrf.simulator.transactionUnauthorized'));
     } else {
-      setLastTransaction('Blocked by SameSite Policy 🛡️');
+      setLastTransaction(t('csrf.simulator.transactionBlocked'));
     }
 
     // Auto clear message
@@ -30,14 +32,14 @@ export const CsrfSection = () => {
 
   const sameSiteExplanations = {
     Strict: {
-      desc: 'Cookie is only sent in first-party context. Never sent with cross-site requests.',
+      desc: t('csrf.simulator.strictDesc'),
       example: 'User clicks link from email to your site - NO cookie sent',
       protection:
         'Maximum protection but may break legitimate cross-site navigation',
       color: 'green',
     },
     Lax: {
-      desc: 'Cookie sent with top-level navigation (GET) but not with cross-site POST/AJAX.',
+      desc: t('csrf.simulator.laxDesc'),
       example:
         'Link from other site works, but form POST from other site blocked',
       protection:
@@ -45,7 +47,7 @@ export const CsrfSection = () => {
       color: 'blue',
     },
     None: {
-      desc: 'Cookie sent with all requests including cross-site. Requires Secure flag.',
+      desc: t('csrf.simulator.noneDesc'),
       example: 'Used for cross-site widgets, embedded content, OAuth callbacks',
       protection: 'No CSRF protection - requires other measures',
       color: 'red',
@@ -54,49 +56,47 @@ export const CsrfSection = () => {
 
   return (
     <SectionCard
-      badge={{ label: 'Security', color: 'purple' }}
-      title="CSRF & SameSite Cookies"
-      description="Protecting against Cross-Site Request Forgery attacks"
+      badge={{ label: t('csrf.badge'), color: 'purple' }}
+      title={t('csrf.title')}
+      description={t('csrf.description')}
     >
       <div className="space-y-8">
-        <SubSection title="What is CSRF?" icon iconColor="red">
-          <InfoBox variant="red" title="Cross-Site Request Forgery">
+        <SubSection title={t('csrf.whatIs.title')} icon iconColor="red">
+          <InfoBox variant="red" title={t('csrf.whatIs.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              CSRF exploits the trust a website has in a user's browser. An
-              attacker tricks users into making unwanted requests using their
-              existing authentication cookies.
+              {t('csrf.whatIs.infoDescription')}
             </p>
           </InfoBox>
 
           <div className="mt-4 bg-gray-50 p-4 rounded-lg border">
-            <p className="text-sm font-semibold mb-3">Attack Scenario:</p>
+            <p className="text-sm font-semibold mb-3">{t('csrf.whatIs.scenarioTitle')}</p>
             <ol className="space-y-2 text-sm">
               <li className="flex gap-2">
                 <span className="text-red-500">1.</span>
-                User logs into bank.com (session cookie stored)
+                {t('csrf.whatIs.step1')}
               </li>
               <li className="flex gap-2">
                 <span className="text-red-500">2.</span>
-                User visits malicious site with hidden form
+                {t('csrf.whatIs.step2')}
               </li>
               <li className="flex gap-2">
                 <span className="text-red-500">3.</span>
-                Form auto-submits POST to bank.com/transfer
+                {t('csrf.whatIs.step3')}
               </li>
               <li className="flex gap-2">
                 <span className="text-red-500">4.</span>
-                Browser includes bank.com cookies automatically
+                {t('csrf.whatIs.step4')}
               </li>
               <li className="flex gap-2">
                 <span className="text-red-500">5.</span>
-                Bank processes the unauthorized transfer
+                {t('csrf.whatIs.step5')}
               </li>
             </ol>
           </div>
         </SubSection>
 
-        <SubSection title="Interactive CSRF Simulator" icon iconColor="blue">
-          <DemoBox label="Attack Playground">
+        <SubSection title={t('csrf.simulator.title')} icon iconColor="blue">
+          <DemoBox label={t('csrf.simulator.demoLabel')}>
             <div className="space-y-6">
               {/* Configuration */}
               <div className="flex justify-center p-4 bg-gray-50 rounded-lg">
@@ -126,14 +126,14 @@ export const CsrfSection = () => {
                 {/* Victim Website */}
                 <div className="border-4 border-blue-100 rounded-xl overflow-hidden shadow-sm relative">
                   <div className="bg-blue-600 text-white px-4 py-2 text-sm font-bold flex justify-between items-center">
-                    <span>🏦 Bank.com</span>
+                    <span>🏦 {t('csrf.simulator.bankTitle')}</span>
                     <span className="text-xs bg-blue-500 px-2 py-1 rounded">
-                      Authenticated
+                      {t('csrf.simulator.bankAuth')}
                     </span>
                   </div>
                   <div className="p-6 space-y-4 bg-white h-full">
                     <div className="text-center">
-                      <p className="text-gray-500 text-sm">Your Balance</p>
+                      <p className="text-gray-500 text-sm">{t('csrf.simulator.bankBalance')}</p>
                       <p className="text-3xl font-bold text-gray-800">
                         ${bankBalance}
                       </p>
@@ -152,14 +152,14 @@ export const CsrfSection = () => {
                 {/* Attacker Website */}
                 <div className="border-4 border-red-100 rounded-xl overflow-hidden shadow-sm relative">
                   <div className="bg-gray-800 text-white px-4 py-2 text-sm font-bold flex justify-between items-center">
-                    <span>💀 Evil-Site.com</span>
+                    <span>💀 {t('csrf.simulator.evilTitle')}</span>
                   </div>
                   <div className="p-6 space-y-4 bg-gray-50 h-full flex flex-col justify-center items-center">
                     <p className="text-center font-bold text-gray-800 text-lg">
-                      CONGRATULATIONS!
+                      {t('csrf.simulator.evilCongrats')}
                     </p>
                     <p className="text-center text-sm text-gray-600">
-                      You won a free iPhone! Click below to claim.
+                      {t('csrf.simulator.evilMessage')}
                     </p>
 
                     <button
@@ -167,10 +167,10 @@ export const CsrfSection = () => {
                       onClick={handleAttack}
                       className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg shadow-md hover:scale-105 transition-transform w-full animate-bounce"
                     >
-                      🎁 CLAIM PRIZE
+                      🎁 {t('csrf.simulator.evilButton')}
                     </button>
                     <p className="text-xs text-gray-400 text-center">
-                      (Hidden: POST /transfer to Bank.com)
+                      {t('csrf.simulator.evilHidden')}
                     </p>
                   </div>
                 </div>
@@ -178,15 +178,15 @@ export const CsrfSection = () => {
 
               <div className="bg-gray-100 p-4 rounded-lg text-sm text-gray-700">
                 <p>
-                  <strong>Current Protection:</strong>{' '}
+                  <strong>{t('csrf.simulator.protectionLabel')}</strong>{' '}
                   {sameSiteExplanations[sameSiteValue].desc}
                   {sameSiteValue !== 'None' ? (
                     <span className="text-green-600 font-bold ml-2">
-                      CSRF Attack Blocked.
+                      {t('csrf.simulator.blocked')}
                     </span>
                   ) : (
                     <span className="text-red-600 font-bold ml-2">
-                      Vulnerable! Cookie sent.
+                      {t('csrf.simulator.vulnerable')}
                     </span>
                   )}
                 </p>
@@ -195,7 +195,7 @@ export const CsrfSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Setting Secure Cookies" icon iconColor="purple">
+        <SubSection title={t('csrf.cookies.title')} icon iconColor="purple">
           <CodeBlock
             code={`// Server-side cookie setting (Next.js API route)
 import { cookies } from 'next/headers';
@@ -223,11 +223,10 @@ res.cookie('session', sessionToken, {
           />
         </SubSection>
 
-        <SubSection title="CSRF Token Protection" icon iconColor="orange">
+        <SubSection title={t('csrf.token.title')} icon iconColor="orange">
           <InfoBox variant="orange">
             <p className="text-sm leading-relaxed">
-              For additional protection, especially with SameSite=None, use CSRF
-              tokens. NextAuth.js handles this automatically for its forms.
+              {t('csrf.token.infoDescription')}
             </p>
           </InfoBox>
 
@@ -263,37 +262,37 @@ const csrfToken = await getCsrfToken();`}
           />
         </SubSection>
 
-        <SubSection title="Cookie Security Checklist" icon iconColor="green">
+        <SubSection title={t('csrf.checklist.title')} icon iconColor="green">
           <div className="space-y-2">
             {[
               {
-                attr: 'HttpOnly',
-                desc: 'Prevents JavaScript access (XSS protection)',
+                attr: t('csrf.checklist.httpOnly'),
+                desc: t('csrf.checklist.httpOnlyDesc'),
                 required: true,
               },
               {
-                attr: 'Secure',
-                desc: 'Only transmitted over HTTPS',
+                attr: t('csrf.checklist.secure'),
+                desc: t('csrf.checklist.secureDesc'),
                 required: true,
               },
               {
-                attr: 'SameSite=Lax',
-                desc: 'CSRF protection with good UX balance',
+                attr: t('csrf.checklist.sameSite'),
+                desc: t('csrf.checklist.sameSiteDesc'),
                 required: true,
               },
               {
-                attr: 'Path=/',
-                desc: 'Limit cookie scope as needed',
+                attr: t('csrf.checklist.path'),
+                desc: t('csrf.checklist.pathDesc'),
                 required: false,
               },
               {
-                attr: 'Domain',
-                desc: 'Specify domain for subdomains',
+                attr: t('csrf.checklist.domain'),
+                desc: t('csrf.checklist.domainDesc'),
                 required: false,
               },
               {
-                attr: 'Max-Age/Expires',
-                desc: 'Set appropriate expiration',
+                attr: t('csrf.checklist.maxAge'),
+                desc: t('csrf.checklist.maxAgeDesc'),
                 required: true,
               },
             ].map((item) => (

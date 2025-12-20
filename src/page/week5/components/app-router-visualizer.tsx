@@ -172,6 +172,7 @@ export const AppRouterVisualizer = () => {
                   Home
                 </button>
                 <button
+                  type="button"
                   onClick={() => setActivePath('/dashboard')}
                   className={cn(
                     'hover:text-blue-500',
@@ -182,6 +183,7 @@ export const AppRouterVisualizer = () => {
                   Dashboard
                 </button>
                 <button
+                  type="button"
                   onClick={() => setActivePath('/blog')}
                   className={cn(
                     'hover:text-blue-500',
@@ -191,6 +193,7 @@ export const AppRouterVisualizer = () => {
                   Blog
                 </button>
                 <button
+                  type="button"
                   onClick={() => setActivePath('/blog/my-post')}
                   className={cn(
                     'hover:text-blue-500',

@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
@@ -21,8 +21,8 @@ export const DslSection = () => {
               {t('dsl.whatIsDsl.description')}
             </p>
             <ul className="list-disc list-inside text-sm text-teal-800 space-y-2">
-              <li dangerouslySetInnerHTML={{ __html: t('dsl.whatIsDsl.internal') }} />
-              <li dangerouslySetInnerHTML={{ __html: t('dsl.whatIsDsl.external') }} />
+              <li><Trans t={t} i18nKey="dsl.whatIsDsl.internal" /></li>
+              <li><Trans t={t} i18nKey="dsl.whatIsDsl.external" /></li>
             </ul>
           </div>
         </InfoBox>

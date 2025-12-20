@@ -1,77 +1,94 @@
+import { Trans, useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { ConcurrencyVisualizer } from './concurrency-visualizer';
 
 export const ConcurrencySection = () => {
+  const { t } = useTranslation('week5');
   return (
     <SectionCard
       badge={{ label: 'React 18', color: 'blue' }}
-      title="React 18 Concurrency"
-      description="Understanding Concurrent Rendering, Automatic Batching, and Transitions."
+      title={t('concurrency.title')}
+      description={t('concurrency.description')}
     >
       <div className="space-y-8">
-        <SubSection title="What is Concurrent Rendering?" icon iconColor="blue">
+        <SubSection
+          title={t('concurrency.whatIsConcurrent.title')}
+          icon
+          iconColor="blue"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              React 18 introduces <strong>Concurrent Rendering</strong>, the
-              ability for React to interrupt a rendering task, handle a
-              higher-priority event, and then resume rendering. This foundation
-              enables features like <strong>Transitions</strong>,{' '}
-              <strong>Suspense for data fetching</strong>, and better{' '}
-              <strong>Server-Side Rendering</strong>.
+              <Trans t={t} i18nKey="concurrency.whatIsConcurrent.intro" />
             </p>
-
-            <InfoBox variant="blue" title="Why Concurrency Matters">
+            <InfoBox
+              variant="blue"
+              title={t('concurrency.whatIsConcurrent.whyMatters.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Responsiveness:</strong> User input like typing is
-                  never blocked by background rendering
+                  <Trans
+                    t={t}
+                    i18nKey={
+                      'concurrency.whatIsConcurrent.whyMatters.responsiveness'
+                    }
+                  />
                 </li>
                 <li>
-                  <strong>Interruptible:</strong> React can pause rendering and
-                  prioritize user events
+                  <Trans
+                    t={t}
+                    i18nKey={
+                      'concurrency.whatIsConcurrent.whyMatters.interruptible'
+                    }
+                  />
                 </li>
                 <li>
-                  <strong>Seamless UX:</strong> Apps feel smoother without janky
-                  frames
+                  <Trans
+                    t={t}
+                    i18nKey={
+                      'concurrency.whatIsConcurrent.whyMatters.seamlessUX'
+                    }
+                  />
                 </li>
               </ul>
             </InfoBox>
-
             <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
               <p className="text-sm text-gray-700">
-                <strong>Before React 18:</strong> Rendering was an
-                all-or-nothing operation. Once React started rendering, it
-                couldn't stop until the entire render was complete, blocking
-                user input.
+                <Trans
+                  t={t}
+                  i18nKey={'concurrency.whatIsConcurrent.beforeReact18'}
+                />
               </p>
               <p className="text-sm text-gray-700 mt-2">
-                <strong>React 18:</strong> Rendering is interruptible. React can
-                pause rendering to handle higher-priority updates (like user
-                input) and resume later.
+                <Trans t={t} i18nKey={'concurrency.whatIsConcurrent.react18'} />
               </p>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title="useTransition & Transitions" icon iconColor="purple">
+        <SubSection
+          title={t('concurrency.useTransition.title')}
+          icon
+          iconColor="purple"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              <strong>Transitions</strong> let you mark state updates as
-              non-urgent. React will prioritize urgent updates (like user input)
-              while processing transitions in the background. Use the{' '}
-              <code>useTransition</code> hook to implement this pattern.
+              <Trans t={t} i18nKey="concurrency.useTransition.intro" components={{ code: <code /> }} />
             </p>
 
-            <InfoBox variant="purple" title="useTransition API">
+            <InfoBox
+              variant="purple"
+              title={t('concurrency.useTransition.api.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>isPending:</strong> Boolean indicating if a transition
-                  is in progress
+                  <Trans t={t} i18nKey="concurrency.useTransition.api.isPending" />
                 </li>
                 <li>
-                  <strong>startTransition:</strong> Function to wrap state
-                  updates as non-urgent transitions
+                  <Trans
+                    t={t}
+                    i18nKey="concurrency.useTransition.api.startTransition"
+                  />
                 </li>
               </ul>
             </InfoBox>
@@ -120,12 +137,12 @@ export function SearchUsers() {
               className="text-xs"
             />
 
-            <InfoBox variant="gray" title="Real-World Example">
+            <InfoBox
+              variant="gray"
+              title={t('concurrency.useTransition.realWorldExample.title')}
+            >
               <p className="text-sm text-gray-700">
-                When filtering a list of 10,000+ items: typing in the input
-                (urgent) updates instantly, while the filtered results render in
-                the background (transition). Users see the input respond
-                immediately without janky UI.
+                {t('concurrency.useTransition.realWorldExample.description')}
               </p>
             </InfoBox>
           </div>
@@ -133,21 +150,33 @@ export function SearchUsers() {
 
         <ConcurrencyVisualizer />
 
-        <SubSection title="useDeferredValue" icon iconColor="purple">
+        <SubSection
+          title={t('concurrency.useDeferredValue.title')}
+          icon
+          iconColor="purple"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              <code>useDeferredValue</code> lets you defer re-rendering of a
-              non-urgent part of the tree. It defers a value you pass to it and
-              returns the deferred version.
+              <Trans t={t} i18nKey="concurrency.useDeferredValue.intro" components={{ code: <code /> }} />
             </p>
 
-            <InfoBox variant="purple" title="When to Use useDeferredValue">
+            <InfoBox
+              variant="purple"
+              title={t('concurrency.useDeferredValue.whenToUse.title')}
+            >
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
-                <li>You have an expensive component that depends on a value</li>
-                <li>You want to prioritize the value itself updating</li>
                 <li>
-                  You can't wrap the update in a transition (like in event
-                  handlers)
+                  {t(
+                    'concurrency.useDeferredValue.whenToUse.expensiveComponent'
+                  )}
+                </li>
+                <li>
+                  {t('concurrency.useDeferredValue.whenToUse.prioritizeValue')}
+                </li>
+                <li>
+                  {t(
+                    'concurrency.useDeferredValue.whenToUse.cantWrapTransition'
+                  )}
                 </li>
               </ul>
             </InfoBox>
@@ -178,28 +207,36 @@ function SearchResults() {
               className="text-xs"
             />
 
-            <InfoBox variant="gray" title="useTransition vs useDeferredValue">
+            <InfoBox
+              variant="gray"
+              title={t('concurrency.useDeferredValue.vsUseTransition.title')}
+            >
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
                 <li>
-                  <strong>useTransition:</strong> Wrap setState, you control
-                  when updates happen
+                  <Trans
+                    t={t}
+                    i18nKey="concurrency.useDeferredValue.vsUseTransition.useTransition"
+                  />
                 </li>
                 <li>
-                  <strong>useDeferredValue:</strong> Defer a value, React
-                  automatically defers it
+                  <Trans
+                    t={t}
+                    i18nKey="concurrency.useDeferredValue.vsUseTransition.useDeferredValue"
+                  />
                 </li>
               </ul>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title="Automatic Batching" icon iconColor="green">
+        <SubSection
+          title={t('concurrency.automaticBatching.title')}
+          icon
+          iconColor="green"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              React 18 automatically <strong>batches</strong> state updates that
-              happen within event handlers, promises, and timers. This means
-              multiple setState calls result in a single re-render instead of
-              multiple re-renders.
+              <Trans t={t} i18nKey="concurrency.automaticBatching.intro" />
             </p>
 
             <CodeBlock
@@ -228,26 +265,46 @@ setTimeout(() => {
               className="text-xs"
             />
 
-            <InfoBox variant="green" title="Performance Benefits">
+            <InfoBox
+              variant="green"
+              title={t('concurrency.automaticBatching.performanceBenefits.title')}
+            >
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
-                <li>Fewer re-renders = better performance</li>
-                <li>Automatic - no code changes needed</li>
-                <li>Applies to promises, timers, and native events</li>
                 <li>
-                  Use <code>flushSync</code> if you need synchronous updates
+                  {t(
+                    'concurrency.automaticBatching.performanceBenefits.fewerRerenders'
+                  )}
+                </li>
+                <li>
+                  {t('concurrency.automaticBatching.performanceBenefits.automatic')}
+                </li>
+                <li>
+                  {t('concurrency.automaticBatching.performanceBenefits.appliesTo')}
+                </li>
+                <li>
+                  <Trans
+                    t={t}
+                    i18nKey="concurrency.automaticBatching.performanceBenefits.flushSync"
+                  />
                 </li>
               </ul>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title="Other React 18 Features" icon iconColor="orange">
+        <SubSection
+          title={t('concurrency.otherFeatures.title')}
+          icon
+          iconColor="orange"
+        >
           <div className="space-y-4">
             <div className="grid grid-cols-1 gap-4">
-              <InfoBox variant="blue" title="useId">
+              <InfoBox
+                variant="blue"
+                title={t('concurrency.otherFeatures.useId.title')}
+              >
                 <p className="text-sm text-gray-700 mb-2">
-                  Generates stable unique IDs on both client and server.
-                  Essential for accessibility and hydration mismatches.
+                  {t('concurrency.otherFeatures.useId.description')}
                 </p>
                 <CodeBlock
                   code={`const id = useId();
@@ -256,17 +313,21 @@ return <label htmlFor={id}>Name</label>;`}
                 />
               </InfoBox>
 
-              <InfoBox variant="purple" title="Suspense for Data Fetching">
+              <InfoBox
+                variant="purple"
+                title={t('concurrency.otherFeatures.suspenseForData.title')}
+              >
                 <p className="text-sm text-gray-700 mb-2">
-                  React 18 extends Suspense to work with promises and data
-                  fetching. Enable async rendering on the server.
+                  {t('concurrency.otherFeatures.suspenseForData.description')}
                 </p>
               </InfoBox>
 
-              <InfoBox variant="green" title="Streaming HTML">
+              <InfoBox
+                variant="green"
+                title={t('concurrency.otherFeatures.streamingHTML.title')}
+              >
                 <p className="text-sm text-gray-700 mb-2">
-                  Server can stream HTML chunks as they are generated, enabling
-                  faster First Contentful Paint (FCP).
+                  {t('concurrency.otherFeatures.streamingHTML.description')}
                 </p>
               </InfoBox>
             </div>

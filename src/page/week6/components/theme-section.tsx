@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
@@ -12,7 +12,7 @@ export const ThemeSection = () => {
     >
       <div className="space-y-8">
         <SubSection title={t('theme.cssVariables.title')} icon iconColor="purple">
-          <p className="text-sm text-gray-700 mb-4" dangerouslySetInnerHTML={{ __html: t('theme.cssVariables.content') }} />
+          <p className="text-sm text-gray-700 mb-4"><Trans t={t} i18nKey="theme.cssVariables.content" components={{ code: <code /> }} /></p>
 
           <CodeBlock
             code={`/* globals.css */
@@ -36,7 +36,7 @@ body {
         </SubSection>
 
         <SubSection title={t('theme.tailwindDarkMode.title')} icon iconColor="purple">
-          <p className="text-sm text-gray-700 mb-4" dangerouslySetInnerHTML={{ __html: t('theme.tailwindDarkMode.content') }} />
+          <p className="text-sm text-gray-700 mb-4"><Trans t={t} i18nKey="theme.tailwindDarkMode.content" components={{ code: <code /> }} /></p>
 
           <CodeBlock
             code={`// tailwind.config.js

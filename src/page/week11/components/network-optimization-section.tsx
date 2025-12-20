@@ -8,10 +8,12 @@ import {
   Zap,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
 export function NetworkOptimizationSection() {
+  const { t } = useTranslation('week11');
   const [protocol, setProtocol] = useState<'h1' | 'h2'>('h1');
   const [requests, setRequests] = useState<
     {
@@ -101,12 +103,13 @@ export function NetworkOptimizationSection() {
           <div className="p-2 bg-teal-100 text-teal-600 rounded-lg">
             <Globe size={24} />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900">네트워크 최적화</h2>
+          <h2 className="text-2xl font-bold text-gray-900">
+            {t('week11.networkOptimization.title')}
+          </h2>
         </div>
 
         <p className="text-gray-600 leading-relaxed text-lg">
-          네트워크 레이턴시를 줄이고 캐시를 효과적으로 활용하면 반복 방문 시
-          성능이 <strong>극적으로 향상</strong>됩니다.
+          {t('week11.networkOptimization.description')}
         </p>
 
         {/* Visualizer */}

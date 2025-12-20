@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
@@ -52,10 +52,10 @@ export const TailwindSection = () => {
                 <strong>{t('tailwind.keyFeatures.standardization')}</strong> {t('tailwind.keyFeatures.standardizationDesc')}
               </li>
               <li>
-                <strong>{t('tailwind.keyFeatures.responsiveness')}</strong> <span dangerouslySetInnerHTML={{ __html: t('tailwind.keyFeatures.responsivenessDesc') }} />
+                <strong>{t('tailwind.keyFeatures.responsiveness')}</strong> <Trans t={t} i18nKey="tailwind.keyFeatures.responsivenessDesc" components={{ code: <code /> }} />
               </li>
               <li>
-                <strong>{t('tailwind.keyFeatures.darkMode')}</strong> <span dangerouslySetInnerHTML={{ __html: t('tailwind.keyFeatures.darkModeDesc') }} />
+                <strong>{t('tailwind.keyFeatures.darkMode')}</strong> <Trans t={t} i18nKey="tailwind.keyFeatures.darkModeDesc" components={{ code: <code /> }} />
               </li>
             </ul>
           </InfoBox>

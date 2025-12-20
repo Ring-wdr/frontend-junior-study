@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -32,10 +33,11 @@ const translations: Record<Locale, Record<string, string>> = {
 };
 
 export const I18nBasicsSection = () => {
+  const { t } = useTranslation('week14');
   const [locale, setLocale] = useState<Locale>('ko');
   const [itemCount, setItemCount] = useState(1);
 
-  const t = (key: string, params?: Record<string, string | number>) => {
+  const tDemo = (key: string, params?: Record<string, string | number>) => {
     let text = translations[locale][key] || key;
     if (params) {
       Object.entries(params).forEach(([k, v]) => {
@@ -47,51 +49,42 @@ export const I18nBasicsSection = () => {
 
   return (
     <SectionCard
-      badge={{ label: 'i18n', color: 'blue' }}
-      title="국제화(i18n) 기초"
-      description="글로벌 서비스를 위한 다국어 지원 아키텍처"
+      badge={{ label: t('i18nBasics.badge'), color: 'blue' }}
+      title={t('i18nBasics.title')}
+      description={t('i18nBasics.description')}
     >
       <div className="space-y-8">
-        <SubSection title="국제화의 핵심 요소" icon iconColor="blue">
+        <SubSection title={t('i18nBasics.coreElements.title')} icon iconColor="blue">
           <div className="grid grid-cols-2 gap-3">
             {[
-              { icon: '🌐', title: '언어 (Translation)', desc: '텍스트 번역' },
-              {
-                icon: '📅',
-                title: '날짜/시간',
-                desc: '지역별 포맷 (MM/DD vs DD/MM)',
-              },
-              {
-                icon: '💰',
-                title: '숫자/통화',
-                desc: '1,000 vs 1.000, $100 vs 100원',
-              },
-              { icon: '➡️', title: 'RTL 지원', desc: '아랍어, 히브리어 등' },
-              {
-                icon: '📝',
-                title: '복수형',
-                desc: '1 item vs 2 items',
-              },
-              { icon: '🕐', title: '타임존', desc: 'UTC, KST, PST 등' },
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="bg-blue-50 p-3 rounded-lg border border-blue-100"
-              >
-                <div className="flex items-center gap-2 mb-1">
-                  <span>{item.icon}</span>
-                  <span className="font-medium text-sm text-blue-900">
-                    {item.title}
-                  </span>
+              { icon: '🌐' },
+              { icon: '📅' },
+              { icon: '💰' },
+              { icon: '➡️' },
+              { icon: '📝' },
+              { icon: '🕐' },
+            ].map((item, idx) => {
+              const element = t(`i18nBasics.coreElements.elements.${idx}`, { returnObjects: true }) as { title: string; desc: string };
+              return (
+                <div
+                  key={element.title}
+                  className="bg-blue-50 p-3 rounded-lg border border-blue-100"
+                >
+                  <div className="flex items-center gap-2 mb-1">
+                    <span>{item.icon}</span>
+                    <span className="font-medium text-sm text-blue-900">
+                      {element.title}
+                    </span>
+                  </div>
+                  <p className="text-xs text-blue-700">{element.desc}</p>
                 </div>
-                <p className="text-xs text-blue-700">{item.desc}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </SubSection>
 
-        <SubSection title="Interactive: 다국어 전환" icon iconColor="purple">
-          <DemoBox label="Live Translation Demo">
+        <SubSection title={t('i18nBasics.liveDemo.title')} icon iconColor="purple">
+          <DemoBox label={t('i18nBasics.liveDemo.label')}>
             <div className="space-y-4">
               {/* Locale Selector */}
               <div className="flex gap-2">
@@ -106,16 +99,16 @@ export const I18nBasicsSection = () => {
                         : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
                     }`}
                   >
-                    {l === 'ko' ? '한국어' : l === 'en' ? 'English' : '日本語'}
+                    {t(`i18nBasics.liveDemo.locales.${l}`)}
                   </button>
                 ))}
               </div>
 
               {/* Demo Card */}
               <div className="bg-white p-4 rounded-lg border border-gray-200">
-                <h3 className="text-xl font-bold mb-2">{t('greeting')}</h3>
+                <h3 className="text-xl font-bold mb-2">{tDemo('greeting')}</h3>
                 <p className="text-gray-600 mb-3">
-                  {t('welcome', { name: 'Kim' })}
+                  {tDemo('welcome', { name: 'Kim' })}
                 </p>
 
                 {/* Pluralization Demo */}
@@ -130,8 +123,8 @@ export const I18nBasicsSection = () => {
                   />
                   <span className="text-sm font-medium min-w-[100px]">
                     {locale === 'en' && itemCount !== 1
-                      ? t('items_plural', { count: itemCount })
-                      : t('items', { count: itemCount })}
+                      ? tDemo('items_plural', { count: itemCount })
+                      : tDemo('items', { count: itemCount })}
                   </span>
                 </div>
 
@@ -139,22 +132,22 @@ export const I18nBasicsSection = () => {
                   type="button"
                   className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
                 >
-                  {t('button')}
+                  {tDemo('button')}
                 </button>
               </div>
 
               <div className="text-xs text-gray-500">
-                현재 로케일:{' '}
+                {t('i18nBasics.liveDemo.currentLocale')}{' '}
                 <code className="bg-gray-100 px-1 rounded">{locale}</code>
               </div>
             </div>
           </DemoBox>
         </SubSection>
 
-        <SubSection title="ICU Message Format" icon iconColor="green">
-          <InfoBox variant="green" title="Industry Standard">
+        <SubSection title={t('i18nBasics.icuFormat.title')} icon iconColor="green">
+          <InfoBox variant="green" title={t('i18nBasics.icuFormat.infoTitle')}>
             <p className="text-sm mb-2">
-              ICU Message Format은 복수형, 선택형 메시지 처리의 업계 표준입니다.
+              {t('i18nBasics.icuFormat.infoText')}
             </p>
           </InfoBox>
 
@@ -185,7 +178,7 @@ export const I18nBasicsSection = () => {
           />
         </SubSection>
 
-        <SubSection title="Next.js i18n 구조" icon iconColor="orange">
+        <SubSection title={t('i18nBasics.nextjsStructure.title')} icon iconColor="orange">
           <CodeBlock
             code={`// App Router: [locale]/layout.tsx
 import { getDictionary } from './dictionaries';
@@ -222,11 +215,11 @@ export const getDictionary = async (locale: string) =>
           />
         </SubSection>
 
-        <SubSection title="번역 파일 관리 전략" icon iconColor="red">
+        <SubSection title={t('i18nBasics.fileManagement.title')} icon iconColor="red">
           <div className="space-y-3">
             <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
               <h4 className="font-medium text-sm mb-2">
-                Namespace 기반 분리 (권장)
+                {t('i18nBasics.fileManagement.namespaceTitle')}
               </h4>
               <div className="font-mono text-xs bg-white p-3 rounded border">
                 <div className="text-gray-600">locales/</div>
@@ -241,42 +234,32 @@ export const getDictionary = async (locale: string) =>
               </div>
             </div>
 
-            <InfoBox variant="red" title="번역 누락 체크">
+            <InfoBox variant="red" title={t('i18nBasics.fileManagement.missingKeysTitle')}>
               <p className="text-xs">
-                Jest + JSON Schema를 활용해 번역 키 누락을 CI에서 자동 검증하세요.
+                {t('i18nBasics.fileManagement.missingKeysText')}
               </p>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title="i18n 라이브러리 비교" icon iconColor="purple">
+        <SubSection title={t('i18nBasics.libraryComparison.title')} icon iconColor="purple">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-gray-100">
-                  <th className="p-2 text-left">라이브러리</th>
-                  <th className="p-2 text-left">특징</th>
-                  <th className="p-2 text-left">적합한 경우</th>
+                  <th className="p-2 text-left">{t('i18nBasics.libraryComparison.headers.library')}</th>
+                  <th className="p-2 text-left">{t('i18nBasics.libraryComparison.headers.features')}</th>
+                  <th className="p-2 text-left">{t('i18nBasics.libraryComparison.headers.useCase')}</th>
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-t">
-                  <td className="p-2 font-mono text-purple-600">react-intl</td>
-                  <td className="p-2 text-xs">ICU 완벽 지원, FormatJS</td>
-                  <td className="p-2 text-xs">대규모 엔터프라이즈</td>
-                </tr>
-                <tr className="border-t bg-gray-50">
-                  <td className="p-2 font-mono text-purple-600">i18next</td>
-                  <td className="p-2 text-xs">유연한 플러그인 시스템</td>
-                  <td className="p-2 text-xs">범용적 사용</td>
-                </tr>
-                <tr className="border-t">
-                  <td className="p-2 font-mono text-purple-600">
-                    next-intl
-                  </td>
-                  <td className="p-2 text-xs">Next.js 최적화</td>
-                  <td className="p-2 text-xs">Next.js 프로젝트</td>
-                </tr>
+                {(t('i18nBasics.libraryComparison.libraries', { returnObjects: true }) as Array<{ name: string; features: string; useCase: string }>).map((lib, idx) => (
+                  <tr key={lib.name} className={`border-t ${idx === 1 ? 'bg-gray-50' : ''}`}>
+                    <td className="p-2 font-mono text-purple-600">{lib.name}</td>
+                    <td className="p-2 text-xs">{lib.features}</td>
+                    <td className="p-2 text-xs">{lib.useCase}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

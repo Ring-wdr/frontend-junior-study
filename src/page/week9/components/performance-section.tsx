@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
@@ -76,10 +76,9 @@ npm install @framer/motion-dev
           iconColor="purple"
         >
           <InfoBox variant="purple" title={t('performance.reducedMotion.infoTitle')}>
-            <p
-              className="text-sm leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: t('performance.reducedMotion.content') }}
-            />
+            <p className="text-sm leading-relaxed">
+              <Trans t={t} i18nKey="performance.reducedMotion.content" components={{ code: <code /> }} />
+            </p>
           </InfoBox>
 
           <CodeBlock

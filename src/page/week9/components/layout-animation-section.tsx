@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -30,10 +30,9 @@ export const LayoutAnimationSection = () => {
       <div className="space-y-8">
         <SubSection title={t('layout.magic.title')} icon iconColor="pink">
           <InfoBox variant="purple" title={t('layout.magic.infoTitle')}>
-            <p
-              className="text-sm leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: t('layout.magic.content') }}
-            />
+            <p className="text-sm leading-relaxed">
+              <Trans t={t} i18nKey="layout.magic.content" components={{ code: <code /> }} />
+            </p>
           </InfoBox>
 
           <CodeBlock

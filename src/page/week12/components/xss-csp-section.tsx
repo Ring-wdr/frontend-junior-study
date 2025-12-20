@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -6,6 +7,7 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const XssCspSection = () => {
+  const { t } = useTranslation('week12');
   const [unsafeInput, setUnsafeInput] = useState(
     '<script>alert("XSS")</script>',
   );
@@ -20,47 +22,44 @@ export const XssCspSection = () => {
 
   return (
     <SectionCard
-      badge={{ label: 'Security', color: 'purple' }}
-      title="XSS & Content Security Policy"
-      description="Defending against Cross-Site Scripting attacks"
+      badge={{ label: t('xss.badge'), color: 'purple' }}
+      title={t('xss.title')}
+      description={t('xss.description')}
     >
       <div className="space-y-8">
-        <SubSection title="What is XSS?" icon iconColor="red">
-          <InfoBox variant="red" title="Cross-Site Scripting">
+        <SubSection title={t('xss.whatIs.title')} icon iconColor="red">
+          <InfoBox variant="red" title={t('xss.whatIs.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              XSS allows attackers to inject malicious scripts into web pages
-              viewed by other users. These scripts can steal cookies, session
-              tokens, or perform actions as the victim.
+              {t('xss.whatIs.infoDescription')}
             </p>
           </InfoBox>
 
           <div className="mt-4 grid grid-cols-1 gap-3">
             <div className="bg-red-50 p-3 rounded border border-red-200">
-              <p className="text-sm font-semibold text-red-900">Stored XSS</p>
+              <p className="text-sm font-semibold text-red-900">{t('xss.whatIs.stored')}</p>
               <p className="text-xs text-red-700 mt-1">
-                Malicious script saved in database, affects all users viewing
-                the content
+                {t('xss.whatIs.storedDesc')}
               </p>
             </div>
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
               <p className="text-sm font-semibold text-orange-900">
-                Reflected XSS
+                {t('xss.whatIs.reflected')}
               </p>
               <p className="text-xs text-orange-700 mt-1">
-                Script injected via URL parameters, executed immediately
+                {t('xss.whatIs.reflectedDesc')}
               </p>
             </div>
             <div className="bg-yellow-50 p-3 rounded border border-yellow-200">
-              <p className="text-sm font-semibold text-yellow-900">DOM XSS</p>
+              <p className="text-sm font-semibold text-yellow-900">{t('xss.whatIs.dom')}</p>
               <p className="text-xs text-yellow-700 mt-1">
-                Client-side JavaScript manipulates DOM with untrusted data
+                {t('xss.whatIs.domDesc')}
               </p>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title="Input Sanitization Demo" icon iconColor="blue">
-          <DemoBox label="Reflected XSS Simulator">
+        <SubSection title={t('xss.sanitization.title')} icon iconColor="blue">
+          <DemoBox label={t('xss.sanitization.demoLabel')}>
             <div className="space-y-6">
               <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border">
                 <div className="flex items-center gap-3">
@@ -68,7 +67,7 @@ export const XssCspSection = () => {
                     className={`w-3 h-3 rounded-full ${unsafeInput.includes('<script>') ? 'bg-red-500 animate-pulse' : 'bg-gray-300'}`}
                   />
                   <span className="text-sm font-medium text-gray-700">
-                    Server Status
+                    {t('xss.sanitization.serverStatus')}
                   </span>
                 </div>
                 <div className="flex gap-2">
@@ -77,7 +76,7 @@ export const XssCspSection = () => {
                     onClick={() => setUnsafeInput('')}
                     className="text-xs text-gray-500 hover:text-gray-900 underline"
                   >
-                    Reset & Clear
+                    {t('xss.sanitization.resetButton')}
                   </button>
                 </div>
               </div>
@@ -88,14 +87,14 @@ export const XssCspSection = () => {
                     htmlFor="malicious-input"
                     className="text-sm font-bold text-gray-700"
                   >
-                    1. Malicious Input
+                    {t('xss.sanitization.inputLabel')}
                   </label>
                   <textarea
                     id="malicious-input"
                     value={unsafeInput}
                     onChange={(e) => setUnsafeInput(e.target.value)}
                     className="w-full p-3 border rounded-lg text-sm font-mono h-32 focus:ring-2 focus:ring-blue-500 outline-none"
-                    placeholder="Enter HTML or script..."
+                    placeholder={t('xss.sanitization.inputPlaceholder')}
                   />
                   <div className="flex gap-2">
                     <button
@@ -105,7 +104,7 @@ export const XssCspSection = () => {
                       }
                       className="text-xs px-2 py-1 bg-red-100 text-red-700 rounded hover:bg-red-200"
                     >
-                      Insert Payload 1
+                      {t('xss.sanitization.payload1Button')}
                     </button>
                     <button
                       type="button"
@@ -114,7 +113,7 @@ export const XssCspSection = () => {
                       }
                       className="text-xs px-2 py-1 bg-orange-100 text-orange-700 rounded hover:bg-orange-200"
                     >
-                      Insert Payload 2
+                      {t('xss.sanitization.payload2Button')}
                     </button>
                   </div>
                 </div>
@@ -123,7 +122,7 @@ export const XssCspSection = () => {
                   <div className="space-y-2">
                     <div className="text-sm font-bold text-red-600 flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-red-600" />
-                      Vulnerable Output (Unescaped)
+                      {t('xss.sanitization.vulnerableOutput')}
                     </div>
                     <div className="p-3 border-2 border-red-100 bg-red-50/50 rounded-lg h-32 overflow-auto relative">
                       {/* We simulate the execution for safety reasons instead of actually running it */}
@@ -132,10 +131,10 @@ export const XssCspSection = () => {
                         <div className="absolute inset-0 flex items-center justify-center bg-red-900/10 backdrop-blur-[1px]">
                           <div className="bg-white p-4 rounded shadow-xl border border-red-200 animate-bounce">
                             <p className="font-bold text-red-600 flex items-center gap-2">
-                              ⚠️ Script Executed!
+                              ⚠️ {t('xss.sanitization.scriptExecuted')}
                             </p>
                             <p className="text-xs text-gray-500 mt-1">
-                              XSS Attack Successful
+                              {t('xss.sanitization.xssSuccessful')}
                             </p>
                           </div>
                         </div>
@@ -148,7 +147,7 @@ export const XssCspSection = () => {
                   <div className="space-y-2">
                     <div className="text-sm font-bold text-green-600 flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-green-600" />
-                      Safe Output (Sanitized)
+                      {t('xss.sanitization.safeOutput')}
                     </div>
                     <div className="p-3 border-2 border-green-100 bg-green-50/50 rounded-lg h-32 overflow-auto font-mono text-sm text-green-800 whitespace-pre-wrap">
                       {sanitizeHtml(unsafeInput)}
@@ -160,12 +159,10 @@ export const XssCspSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title="React's Built-in Protection" icon iconColor="green">
-          <InfoBox variant="green" title="Automatic Escaping">
+        <SubSection title={t('xss.react.title')} icon iconColor="green">
+          <InfoBox variant="green" title={t('xss.react.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              React automatically escapes values embedded in JSX, providing
-              built-in XSS protection. However,{' '}
-              <code>dangerouslySetInnerHTML</code> bypasses this protection.
+              {t('xss.react.infoDescription')}
             </p>
           </InfoBox>
 
@@ -187,15 +184,13 @@ return <div dangerouslySetInnerHTML={{ __html: sanitized }} />;`}
         </SubSection>
 
         <SubSection
-          title="Content Security Policy (CSP)"
+          title={t('xss.csp.title')}
           icon
           iconColor="purple"
         >
-          <InfoBox variant="purple" title="Defense in Depth">
+          <InfoBox variant="purple" title={t('xss.csp.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              CSP is an HTTP header that tells browsers which sources of content
-              are trusted. Even if XSS is injected, CSP can prevent it from
-              executing.
+              {t('xss.csp.infoDescription')}
             </p>
           </InfoBox>
 
@@ -228,20 +223,20 @@ module.exports = {
           />
         </SubSection>
 
-        <SubSection title="CSP Directives Reference" icon iconColor="orange">
+        <SubSection title={t('xss.directives.title')} icon iconColor="orange">
           <div className="grid grid-cols-2 gap-2">
             {[
               {
                 directive: 'default-src',
-                desc: 'Fallback for other directives',
+                desc: t('xss.directives.defaultSrc'),
               },
-              { directive: 'script-src', desc: 'JavaScript sources' },
-              { directive: 'style-src', desc: 'CSS sources' },
-              { directive: 'img-src', desc: 'Image sources' },
-              { directive: 'connect-src', desc: 'Fetch/XHR/WebSocket' },
-              { directive: 'font-src', desc: 'Font file sources' },
-              { directive: 'frame-src', desc: 'iframe sources' },
-              { directive: 'frame-ancestors', desc: 'Who can embed this page' },
+              { directive: 'script-src', desc: t('xss.directives.scriptSrc') },
+              { directive: 'style-src', desc: t('xss.directives.styleSrc') },
+              { directive: 'img-src', desc: t('xss.directives.imgSrc') },
+              { directive: 'connect-src', desc: t('xss.directives.connectSrc') },
+              { directive: 'font-src', desc: t('xss.directives.fontSrc') },
+              { directive: 'frame-src', desc: t('xss.directives.frameSrc') },
+              { directive: 'frame-ancestors', desc: t('xss.directives.frameAncestors') },
             ].map((item) => (
               <div
                 key={item.directive}
@@ -254,17 +249,17 @@ module.exports = {
           </div>
         </SubSection>
 
-        <SubSection title="XSS Prevention Checklist" icon iconColor="green">
+        <SubSection title={t('xss.checklist.title')} icon iconColor="green">
           <div className="space-y-2">
             {[
-              'Never use dangerouslySetInnerHTML with untrusted data',
-              'Use DOMPurify to sanitize any HTML that must be rendered',
-              'Validate and sanitize all user inputs server-side',
-              'Implement Content Security Policy headers',
-              'Use HttpOnly cookies for sensitive tokens',
-              'Avoid inline event handlers (onclick, onerror, etc.)',
-              'Keep dependencies updated to patch XSS vulnerabilities',
-              'Use React/frameworks that escape by default',
+              t('xss.checklist.item1'),
+              t('xss.checklist.item2'),
+              t('xss.checklist.item3'),
+              t('xss.checklist.item4'),
+              t('xss.checklist.item5'),
+              t('xss.checklist.item6'),
+              t('xss.checklist.item7'),
+              t('xss.checklist.item8'),
             ].map((item) => (
               <div
                 key={item}
@@ -277,7 +272,7 @@ module.exports = {
           </div>
         </SubSection>
 
-        <SubSection title="Other Security Headers" icon iconColor="blue">
+        <SubSection title={t('xss.otherHeaders.title')} icon iconColor="blue">
           <CodeBlock
             code={`// Additional security headers for Next.js
 const securityHeaders = [

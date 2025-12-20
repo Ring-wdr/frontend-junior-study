@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -19,7 +19,9 @@ export const SemanticHtmlSection = () => {
       <div className="space-y-8">
         <SubSection title={t('semantic.importance.title')} icon iconColor="green">
           <InfoBox variant="green" title={t('semantic.importance.infoTitle')}>
-            <p className="text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: t('semantic.importance.infoText') }} />
+            <p className="text-sm leading-relaxed">
+              <Trans t={t} i18nKey="semantic.importance.infoText" />
+            </p>
           </InfoBox>
         </SubSection>
 

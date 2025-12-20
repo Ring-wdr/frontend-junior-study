@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -6,6 +7,7 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const OidcSection = () => {
+  const { t } = useTranslation('week12');
   const [decodedJwt, setDecodedJwt] = useState<{
     header: object;
     payload: object;
@@ -24,56 +26,52 @@ export const OidcSection = () => {
 
   return (
     <SectionCard
-      badge={{ label: 'Identity', color: 'purple' }}
-      title="OpenID Connect (OIDC)"
-      description="Authentication layer built on top of OAuth 2.0"
+      badge={{ label: t('oidc.badge'), color: 'purple' }}
+      title={t('oidc.title')}
+      description={t('oidc.description')}
     >
       <div className="space-y-8">
-        <SubSection title="OAuth 2.0 vs OIDC" icon iconColor="purple">
-          <InfoBox variant="purple" title="Key Difference">
+        <SubSection title={t('oidc.difference.title')} icon iconColor="purple">
+          <InfoBox variant="purple" title={t('oidc.difference.infoTitle')}>
             <p className="text-sm leading-relaxed mb-3">
-              OAuth 2.0 handles <strong>authorization</strong> (access
-              delegation), while OpenID Connect adds{' '}
-              <strong>authentication</strong> (user identity verification).
+              {t('oidc.difference.infoDescription')}
             </p>
             <div className="grid grid-cols-2 gap-3 mt-3">
               <div className="bg-white p-3 rounded border">
                 <p className="font-semibold text-purple-900 text-sm">
-                  OAuth 2.0
+                  {t('oidc.difference.oauth')}
                 </p>
                 <p className="text-xs text-gray-600 mt-1">
-                  "Can this app access my calendar?"
+                  {t('oidc.difference.oauthExample')}
                 </p>
               </div>
               <div className="bg-white p-3 rounded border">
-                <p className="font-semibold text-purple-900 text-sm">OIDC</p>
+                <p className="font-semibold text-purple-900 text-sm">{t('oidc.difference.oidc')}</p>
                 <p className="text-xs text-gray-600 mt-1">
-                  "Who is this user?"
+                  {t('oidc.difference.oidcExample')}
                 </p>
               </div>
             </div>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="ID Token" icon iconColor="blue">
+        <SubSection title={t('oidc.idToken.title')} icon iconColor="blue">
           <InfoBox variant="blue">
             <p className="text-sm leading-relaxed">
-              OIDC introduces the <strong>ID Token</strong>, a signed JWT
-              containing user identity claims like email, name, and user ID.
-              This token proves who the user is.
+              {t('oidc.idToken.infoDescription')}
             </p>
           </InfoBox>
 
           <div className="mt-4 space-y-3">
-            <p className="text-sm font-medium">Standard Claims in ID Token:</p>
+            <p className="text-sm font-medium">{t('oidc.idToken.claimsTitle')}</p>
             <div className="grid grid-cols-2 gap-2">
               {[
-                { claim: 'sub', desc: 'Subject (unique user ID)' },
-                { claim: 'email', desc: 'User email address' },
-                { claim: 'name', desc: 'Full name' },
-                { claim: 'iss', desc: 'Token issuer' },
-                { claim: 'aud', desc: 'Token audience (client ID)' },
-                { claim: 'exp', desc: 'Expiration time' },
+                { claim: 'sub', desc: t('oidc.idToken.sub') },
+                { claim: 'email', desc: t('oidc.idToken.email') },
+                { claim: 'name', desc: t('oidc.idToken.name') },
+                { claim: 'iss', desc: t('oidc.idToken.iss') },
+                { claim: 'aud', desc: t('oidc.idToken.aud') },
+                { claim: 'exp', desc: t('oidc.idToken.exp') },
               ].map((item) => (
                 <div
                   key={item.claim}
@@ -87,8 +85,8 @@ export const OidcSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title="ID Token Decoder" icon iconColor="green">
-          <DemoBox label="Decode JWT ID Token">
+        <SubSection title={t('oidc.decoder.title')} icon iconColor="green">
+          <DemoBox label={t('oidc.decoder.demoLabel')}>
             <div className="space-y-4">
               <div className="bg-gray-100 p-3 rounded text-xs font-mono break-all">
                 {sampleIdToken}
@@ -99,14 +97,14 @@ export const OidcSection = () => {
                 onClick={decodeJwt}
                 className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm"
               >
-                Decode Token
+                {t('oidc.decoder.decodeButton')}
               </button>
 
               {decodedJwt && (
                 <div className="space-y-3">
                   <div className="bg-blue-50 p-3 rounded border border-blue-200">
                     <p className="text-xs font-semibold text-blue-800 mb-2">
-                      Header
+                      {t('oidc.decoder.header')}
                     </p>
                     <div className="overflow-hidden rounded-lg">
                       <CodeBlock
@@ -117,7 +115,7 @@ export const OidcSection = () => {
                   </div>
                   <div className="bg-green-50 p-3 rounded border border-green-200">
                     <p className="text-xs font-semibold text-green-800 mb-2">
-                      Payload (Claims)
+                      {t('oidc.decoder.payload')}
                     </p>
                     <div className="overflow-hidden rounded-lg">
                       <CodeBlock
@@ -132,7 +130,7 @@ export const OidcSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title="OIDC Scopes" icon iconColor="orange">
+        <SubSection title={t('oidc.scopes.title')} icon iconColor="orange">
           <CodeBlock
             code={`// OIDC requires the 'openid' scope
 const authUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth');
@@ -149,28 +147,28 @@ authUrl.searchParams.set('scope', 'openid email profile');
           />
         </SubSection>
 
-        <SubSection title="OIDC Flow Summary" icon iconColor="red">
+        <SubSection title={t('oidc.flowSummary.title')} icon iconColor="red">
           <div className="space-y-3">
             {[
               {
                 num: 1,
-                text: 'Request authorization with openid scope',
+                text: t('oidc.flowSummary.step1'),
               },
               {
                 num: 2,
-                text: 'User authenticates at identity provider',
+                text: t('oidc.flowSummary.step2'),
               },
               {
                 num: 3,
-                text: 'Receive authorization code',
+                text: t('oidc.flowSummary.step3'),
               },
               {
                 num: 4,
-                text: 'Exchange code for access_token AND id_token',
+                text: t('oidc.flowSummary.step4'),
               },
               {
                 num: 5,
-                text: 'Validate and decode ID token for user info',
+                text: t('oidc.flowSummary.step5'),
               },
             ].map((step) => (
               <div
@@ -187,8 +185,7 @@ authUrl.searchParams.set('scope', 'openid email profile');
 
           <InfoBox variant="gray" className="mt-4">
             <p className="text-sm">
-              Libraries like <strong>NextAuth.js</strong> handle all these steps
-              automatically. You rarely need to implement OIDC manually.
+              {t('oidc.flowSummary.infoDescription')}
             </p>
           </InfoBox>
         </SubSection>

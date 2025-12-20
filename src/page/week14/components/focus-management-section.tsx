@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -6,6 +7,7 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const FocusManagementSection = () => {
+  const { t } = useTranslation('week14');
   const [modalOpen, setModalOpen] = useState(false);
   const [focusHistory, setFocusHistory] = useState<string[]>([]);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -60,35 +62,34 @@ export const FocusManagementSection = () => {
 
   return (
     <SectionCard
-      badge={{ label: 'Focus', color: 'orange' }}
-      title="포커스 관리"
-      description="React SPA에서 가장 자주 깨지는 접근성 포인트"
+      badge={{ label: t('focus.badge'), color: 'orange' }}
+      title={t('focus.title')}
+      description={t('focus.description')}
     >
       <div className="space-y-8">
-        <SubSection title="포커스 관리가 필요한 경우" icon iconColor="orange">
-          <InfoBox variant="orange" title="When to Manage Focus">
+        <SubSection title={t('focus.whenToManage.title')} icon iconColor="orange">
+          <InfoBox variant="orange" title={t('focus.whenToManage.infoTitle')}>
             <ul className="text-sm space-y-2">
               <li>
-                <strong>라우트 이동 시:</strong> 새 페이지의 첫 번째 heading으로
-                focus 이동
+                <strong>{t('focus.whenToManage.cases.0.title')}</strong> {t('focus.whenToManage.cases.0.desc')}
               </li>
               <li>
-                <strong>모달 열릴 때:</strong>
+                <strong>{t('focus.whenToManage.cases.1.title')}</strong>
                 <ul className="list-disc pl-5 mt-1 space-y-1">
-                  <li>모달 내부 첫 요소로 focus 이동</li>
-                  <li>탭 이동이 모달 밖으로 빠져나가지 않도록 trap</li>
-                  <li>닫히면 기존 focus 위치로 복귀</li>
+                  {(t('focus.whenToManage.cases.1.items', { returnObjects: true }) as string[]).map((item, idx) => (
+                    <li key={idx}>{item}</li>
+                  ))}
                 </ul>
               </li>
               <li>
-                <strong>동적 콘텐츠:</strong> 새로 추가된 콘텐츠로 focus 이동
+                <strong>{t('focus.whenToManage.cases.2.title')}</strong> {t('focus.whenToManage.cases.2.desc')}
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Interactive: Focus Trap Modal" icon iconColor="purple">
-          <DemoBox label="Click to Open Modal">
+        <SubSection title={t('focus.trapDemo.title')} icon iconColor="purple">
+          <DemoBox label={t('focus.trapDemo.label')}>
             <div className="space-y-4">
               <button
                 ref={triggerRef}
@@ -96,12 +97,11 @@ export const FocusManagementSection = () => {
                 onClick={() => setModalOpen(true)}
                 className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
               >
-                Open Modal
+                {t('focus.trapDemo.openButton')}
               </button>
 
               <p className="text-xs text-gray-500">
-                모달이 열리면 Tab 키로 탐색해보세요. Focus가 모달 안에
-                갇힙니다(trap).
+                {t('focus.trapDemo.instructions')}
               </p>
 
               {/* Modal */}
@@ -129,22 +129,21 @@ export const FocusManagementSection = () => {
                       id="modal-title"
                       className="text-lg font-bold mb-4"
                     >
-                      Focus Trap Demo
+                      {t('focus.trapDemo.modalTitle')}
                     </h2>
                     <p className="text-sm text-gray-600 mb-4">
-                      Tab 키를 눌러보세요. Focus가 이 모달 안에서만 순환합니다.
-                      ESC를 누르면 닫힙니다.
+                      {t('focus.trapDemo.modalDesc')}
                     </p>
 
                     <div className="space-y-3">
                       <input
                         type="text"
-                        placeholder="Input field 1"
+                        placeholder={t('focus.trapDemo.input1')}
                         className="w-full px-3 py-2 border rounded"
                       />
                       <input
                         type="text"
-                        placeholder="Input field 2"
+                        placeholder={t('focus.trapDemo.input2')}
                         className="w-full px-3 py-2 border rounded"
                       />
                       <div className="flex gap-2">
@@ -153,14 +152,14 @@ export const FocusManagementSection = () => {
                           onClick={() => setModalOpen(false)}
                           className="flex-1 px-3 py-2 bg-gray-200 rounded hover:bg-gray-300"
                         >
-                          Cancel
+                          {t('focus.trapDemo.cancel')}
                         </button>
                         <button
                           type="button"
                           onClick={() => setModalOpen(false)}
                           className="flex-1 px-3 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
                         >
-                          Confirm
+                          {t('focus.trapDemo.confirm')}
                         </button>
                       </div>
                     </div>
@@ -171,11 +170,11 @@ export const FocusManagementSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Focus Indicator Tracker" icon iconColor="blue">
-          <DemoBox label="Tab Through These Buttons">
+        <SubSection title={t('focus.indicatorTracker.title')} icon iconColor="blue">
+          <DemoBox label={t('focus.indicatorTracker.label')}>
             <div className="space-y-3">
               <div className="flex gap-2 flex-wrap">
-                {['Button A', 'Button B', 'Button C', 'Button D'].map((btn) => (
+                {(t('focus.indicatorTracker.buttons', { returnObjects: true }) as string[]).map((btn) => (
                   <button
                     key={btn}
                     type="button"
@@ -192,12 +191,12 @@ export const FocusManagementSection = () => {
 
               <div className="p-3 bg-gray-100 rounded-lg">
                 <div className="text-xs font-semibold text-gray-500 mb-2">
-                  Focus History:
+                  {t('focus.indicatorTracker.historyLabel')}
                 </div>
                 <div className="flex gap-1 flex-wrap">
                   {focusHistory.length === 0 ? (
                     <span className="text-xs text-gray-400">
-                      Tab through buttons...
+                      {t('focus.indicatorTracker.placeholder')}
                     </span>
                   ) : (
                     focusHistory.map((item, idx) => (
@@ -215,7 +214,7 @@ export const FocusManagementSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Focus Trap 구현" icon iconColor="green">
+        <SubSection title={t('focus.implementation.title')} icon iconColor="green">
           <CodeBlock
             code={`// React Focus Trap Hook
 import { useEffect, useRef } from 'react';
@@ -257,30 +256,9 @@ function useFocusTrap(isActive: boolean) {
           />
         </SubSection>
 
-        <SubSection title="라이브러리 추천" icon iconColor="red">
+        <SubSection title={t('focus.libraries.title')} icon iconColor="red">
           <div className="grid grid-cols-2 gap-3">
-            {[
-              {
-                name: 'focus-trap-react',
-                desc: '경량 Focus Trap 라이브러리',
-                use: 'Modal, Dropdown',
-              },
-              {
-                name: 'React Aria',
-                desc: 'Adobe의 접근성 컴포넌트',
-                use: 'Full A11y Suite',
-              },
-              {
-                name: 'Radix UI',
-                desc: '접근성 내장 컴포넌트',
-                use: 'Headless UI',
-              },
-              {
-                name: '@reach/ui',
-                desc: '접근성 우선 컴포넌트',
-                use: 'Modal, Tabs, etc.',
-              },
-            ].map((lib) => (
+            {(t('focus.libraries.libs', { returnObjects: true }) as Array<{ name: string; desc: string; use: string }>).map((lib) => (
               <div
                 key={lib.name}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200"

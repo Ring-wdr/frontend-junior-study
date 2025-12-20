@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -6,64 +7,46 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const DevToolsElementsConsoleSection = () => {
+  const { t } = useTranslation('week15');
   const [activeTab, setActiveTab] = useState(0);
 
+  const features = t('devtoolsElements.features', { returnObjects: true }) as any;
   const elementFeatures = [
     {
-      title: 'DOM Inspection',
+      title: features.domInspection.title,
       icon: '🔍',
-      description: 'HTML 구조 실시간 검사 및 수정',
-      items: [
-        'Elements 패널에서 노드 클릭으로 선택',
-        '우클릭 → "Edit as HTML"로 직접 수정',
-        'Delete 키로 요소 삭제, Ctrl+Z로 복원',
-        'Drag & Drop으로 DOM 순서 변경',
-      ],
+      description: features.domInspection.description,
+      items: features.domInspection.items,
     },
     {
-      title: 'CSS Debugging',
+      title: features.cssDebugging.title,
       icon: '🎨',
-      description: 'CSS 수정 및 우선순위 확인',
-      items: [
-        'Styles 패널에서 실시간 CSS 수정',
-        '취소선 = 무시된 속성 (우선순위 확인)',
-        'Computed 탭에서 최종 계산값 확인',
-        'Filter로 특정 속성만 검색',
-      ],
+      description: features.cssDebugging.description,
+      items: features.cssDebugging.items,
     },
     {
-      title: 'Layout Analysis',
+      title: features.layoutAnalysis.title,
       icon: '📐',
-      description: 'Box Model 및 레이아웃 분석',
-      items: [
-        'Box Model 다이어그램에서 margin/padding 시각화',
-        'Grid/Flexbox 오버레이로 레이아웃 디버깅',
-        'Layout 탭에서 Grid 트랙 정보 확인',
-        '브라우저 뷰포트 크기 조절 테스트',
-      ],
+      description: features.layoutAnalysis.description,
+      items: features.layoutAnalysis.items,
     },
     {
-      title: 'Accessibility',
+      title: features.accessibility.title,
       icon: '♿',
-      description: '접근성 검사 및 개선',
-      items: [
-        'Accessibility 탭에서 ARIA 속성 확인',
-        'Contrast ratio 검사 (색상 피커)',
-        'Accessibility Tree 구조 확인',
-        'Role, State, Properties 정보 제공',
-      ],
+      description: features.accessibility.description,
+      items: features.accessibility.items,
     },
   ];
 
   return (
     <SectionCard
-      badge={{ label: 'DevTools', color: 'blue' }}
-      title="Elements & Console 패널"
-      description="DOM/CSS 디버깅과 강력한 Console 기능 마스터"
+      badge={{ label: t('devtoolsElements.badge'), color: 'blue' }}
+      title={t('devtoolsElements.title')}
+      description={t('devtoolsElements.description')}
     >
       <div className="space-y-8">
-        <SubSection title="Elements 패널 핵심 기능" icon iconColor="blue">
-          <DemoBox label="Feature Explorer">
+        <SubSection title={t('devtoolsElements.elementsTitle')} icon iconColor="blue">
+          <DemoBox label={t('devtoolsElements.featureExplorer')}>
             <div className="space-y-4">
               <div className="flex gap-2 flex-wrap">
                 {elementFeatures.map((feature, idx) => (
@@ -97,7 +80,7 @@ export const DevToolsElementsConsoleSection = () => {
                   </div>
                 </div>
                 <ul className="space-y-2">
-                  {elementFeatures[activeTab].items.map((item) => (
+                  {elementFeatures[activeTab].items.map((item: string) => (
                     <li
                       key={item}
                       className="flex items-start gap-2 text-sm text-gray-700"
@@ -112,12 +95,10 @@ export const DevToolsElementsConsoleSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Console 고급 기능" icon iconColor="green">
-          <InfoBox variant="green" title="console.log 그 이상의 기능들">
+        <SubSection title={t('devtoolsElements.consoleTitle')} icon iconColor="green">
+          <InfoBox variant="green" title={t('devtoolsElements.consoleInfoTitle')}>
             <p className="text-sm leading-relaxed mb-3">
-              Console은 단순 로깅을 넘어 강력한 디버깅 도구입니다.
-              <strong> $0, $1</strong>로 최근 선택 요소 참조,
-              <strong> debug(fn)</strong>으로 함수 호출 시 자동 브레이크!
+              {t('devtoolsElements.consoleInfoDesc')}
             </p>
           </InfoBox>
 
@@ -156,41 +137,10 @@ console.groupEnd();`}
           </div>
         </SubSection>
 
-        <SubSection title="Console 특수 명령어" icon iconColor="purple">
-          <DemoBox label="Special Console Commands">
+        <SubSection title={t('devtoolsElements.consoleCommandsTitle')} icon iconColor="purple">
+          <DemoBox label={t('devtoolsElements.consoleCommandsLabel')}>
             <div className="grid grid-cols-2 gap-3">
-              {[
-                {
-                  cmd: '$0, $1, $2...',
-                  desc: 'Elements에서 선택한 최근 요소들',
-                  example: '$0.classList',
-                },
-                {
-                  cmd: '$$(selector)',
-                  desc: 'querySelectorAll의 축약형',
-                  example: '$$("button")',
-                },
-                {
-                  cmd: 'copy(object)',
-                  desc: '객체를 클립보드로 복사',
-                  example: 'copy($0.outerHTML)',
-                },
-                {
-                  cmd: 'debug(fn)',
-                  desc: '함수 호출 시 자동 브레이크',
-                  example: 'debug(myFunction)',
-                },
-                {
-                  cmd: 'monitor(fn)',
-                  desc: '함수 호출 시 로그 출력',
-                  example: 'monitor(onClick)',
-                },
-                {
-                  cmd: 'monitorEvents(el)',
-                  desc: '요소의 모든 이벤트 로깅',
-                  example: "monitorEvents($0, 'click')",
-                },
-              ].map((item) => (
+              {(t('devtoolsElements.consoleCommands', { returnObjects: true }) as any[]).map((item: any) => (
                 <div
                   key={item.cmd}
                   className="bg-white p-3 rounded-lg border border-gray-200"
@@ -208,17 +158,10 @@ console.groupEnd();`}
           </DemoBox>
         </SubSection>
 
-        <SubSection title="단축키 마스터" icon iconColor="orange">
+        <SubSection title={t('devtoolsElements.shortcutsTitle')} icon iconColor="orange">
           <div className="bg-gradient-to-r from-orange-50 to-yellow-50 p-4 rounded-lg border border-orange-200">
             <div className="grid grid-cols-2 gap-2 text-sm">
-              {[
-                { key: 'Cmd/Ctrl + Shift + C', action: '요소 검사 모드' },
-                { key: 'Cmd/Ctrl + Shift + J', action: 'Console 직접 열기' },
-                { key: 'Cmd/Ctrl + K', action: 'Console 클리어' },
-                { key: 'Cmd/Ctrl + F', action: 'Elements에서 검색' },
-                { key: 'H', action: '요소 숨기기 (Elements)' },
-                { key: 'Esc', action: 'Drawer 토글' },
-              ].map((shortcut) => (
+              {(t('devtoolsElements.shortcuts', { returnObjects: true }) as any[]).map((shortcut: any) => (
                 <div key={shortcut.key} className="flex items-center gap-2">
                   <kbd className="px-2 py-1 bg-white text-xs font-mono rounded border border-gray-300 shadow-sm">
                     {shortcut.key}

@@ -2,40 +2,40 @@ import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { useTranslation } from 'react-i18next';
 
 export const InputHandlingSection = () => {
+  const { t } = useTranslation('week7');
+
   return (
     <SectionCard
-      badge={{ label: 'Input Processing', color: 'orange' }}
-      title="Input Handling: Emoji, Unicode & Whitespace"
-      description="Real-world challenges in processing user input correctly"
+      badge={{ label: t('inputHandling.badge'), color: 'orange' }}
+      title={t('inputHandling.title')}
+      description={t('inputHandling.description')}
     >
       <div className="space-y-8">
-        <SubSection title="The Emoji Problem" icon iconColor="orange">
-          <InfoBox variant="orange" title="Why Emoji is Tricky">
+        <SubSection title={t('inputHandling.emojiProblem.title')} icon iconColor="orange">
+          <InfoBox variant="orange" title={t('inputHandling.emojiProblem.whyTricky.title')}>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                Most emoji are represented by multiple characters in UTF-16
+                {t('inputHandling.emojiProblem.whyTricky.multipleChars')}
               </li>
               <li>
-                <code>'👨‍👩‍👧‍👦'.length === 25</code> but it's one character
-                visually
+                {t('inputHandling.emojiProblem.whyTricky.lengthIssue')}
               </li>
               <li>
-                Some emoji are composed of multiple codepoints (skin tone
-                modifiers)
+                {t('inputHandling.emojiProblem.whyTricky.composed')}
               </li>
               <li>
-                Length validation breaks: "😊🎉✨" looks short but may exceed
-                limits
+                {t('inputHandling.emojiProblem.whyTricky.lengthValidation')}
               </li>
-              <li>Substring operations can split emoji incorrectly</li>
+              <li>{t('inputHandling.emojiProblem.whyTricky.substringOps')}</li>
             </ul>
           </InfoBox>
 
           <div className="mt-4 space-y-3">
             <p className="text-sm font-semibold text-gray-700">
-              Correct Emoji Length Counting:
+              {t('inputHandling.emojiProblem.correctCounting')}
             </p>
             <CodeBlock
               code={`// ❌ WRONG: Using string.length
@@ -62,7 +62,7 @@ const getCharacterCount = (str: string): number => {
             />
           </div>
 
-          <InfoBox variant="blue" title="Practical Example">
+          <InfoBox variant="blue" title={t('inputHandling.emojiProblem.practicalExample.title')}>
             <CodeBlock
               code={`// Input field with emoji support
 <input
@@ -82,26 +82,26 @@ const getCharacterCount = (str: string): number => {
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Unicode Normalization" icon iconColor="blue">
-          <InfoBox variant="blue" title="What is Normalization?">
+        <SubSection title={t('inputHandling.unicodeNormalization.title')} icon iconColor="blue">
+          <InfoBox variant="blue" title={t('inputHandling.unicodeNormalization.whatIsNormalization.title')}>
             <p className="text-sm mb-3">
-              Some characters can be represented multiple ways:
+              {t('inputHandling.unicodeNormalization.whatIsNormalization.intro')}
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <code>é</code> = single codepoint (U+00E9)
+                {t('inputHandling.unicodeNormalization.whatIsNormalization.singleCodepoint')}
               </li>
               <li>
-                <code>é</code> = e (U+0065) + combining accent (U+0301)
+                {t('inputHandling.unicodeNormalization.whatIsNormalization.composed')}
               </li>
-              <li>Both look identical but are different strings!</li>
-              <li>Causes comparison and search failures</li>
+              <li>{t('inputHandling.unicodeNormalization.whatIsNormalization.lookIdentical')}</li>
+              <li>{t('inputHandling.unicodeNormalization.whatIsNormalization.causesFails')}</li>
             </ul>
           </InfoBox>
 
           <div className="mt-4 space-y-3">
             <p className="text-sm font-semibold text-gray-700">
-              Normalization Forms:
+              {t('inputHandling.unicodeNormalization.normalizationForms')}
             </p>
             <CodeBlock
               code={`// NFC (Composed) - Recommended for storage
@@ -138,49 +138,48 @@ const userSchema = z.object({
             />
           </div>
 
-          <InfoBox variant="green" title="When to Normalize">
+          <InfoBox variant="green" title={t('inputHandling.unicodeNormalization.whenToNormalize.title')}>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>Always:</strong> Before storing in database
+                {t('inputHandling.unicodeNormalization.whenToNormalize.beforeStoring')}
               </li>
               <li>
-                <strong>Always:</strong> Before comparing usernames, emails
+                {t('inputHandling.unicodeNormalization.whenToNormalize.beforeComparing')}
               </li>
               <li>
-                <strong>Always:</strong> Before searching/filtering
+                {t('inputHandling.unicodeNormalization.whenToNormalize.beforeSearching')}
               </li>
               <li>
-                <strong>Optional:</strong> On display (browsers normalize
-                automatically)
+                {t('inputHandling.unicodeNormalization.whenToNormalize.onDisplay')}
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Whitespace & Trimming" icon iconColor="green">
-          <InfoBox variant="green" title="Whitespace Types">
+        <SubSection title={t('inputHandling.whitespaceTrimming.title')} icon iconColor="green">
+          <InfoBox variant="green" title={t('inputHandling.whitespaceTrimming.whitespaceTypes.title')}>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>Regular space:</strong> U+0020
+                {t('inputHandling.whitespaceTrimming.whitespaceTypes.regularSpace')}
               </li>
               <li>
-                <strong>Non-breaking space:</strong> U+00A0 (from copy-paste)
+                {t('inputHandling.whitespaceTrimming.whitespaceTypes.nonBreakingSpace')}
               </li>
               <li>
-                <strong>Tab:</strong> U+0009
+                {t('inputHandling.whitespaceTrimming.whitespaceTypes.tab')}
               </li>
               <li>
-                <strong>Zero-width space:</strong> U+200B (invisible!)
+                {t('inputHandling.whitespaceTrimming.whitespaceTypes.zeroWidth')}
               </li>
               <li>
-                <strong>Line break:</strong> U+000A, U+000D
+                {t('inputHandling.whitespaceTrimming.whitespaceTypes.lineBreak')}
               </li>
             </ul>
           </InfoBox>
 
           <div className="mt-4 space-y-3">
             <p className="text-sm font-semibold text-gray-700">
-              Trimming Strategies:
+              {t('inputHandling.whitespaceTrimming.trimmingStrategies')}
             </p>
             <CodeBlock
               code={`// Basic trim (handles U+0020 tabs, newlines)
@@ -218,11 +217,10 @@ const schema = z.object({
           </div>
         </SubSection>
 
-        <SubSection title="Bot Prevention" icon iconColor="purple">
-          <InfoBox variant="purple" title="Honeypot Pattern">
+        <SubSection title={t('inputHandling.botPrevention.title')} icon iconColor="purple">
+          <InfoBox variant="purple" title={t('inputHandling.botPrevention.honeypot.title')}>
             <p className="text-sm">
-              A "honeypot" is a hidden form field that real users never fill,
-              but bots often do. Use it to detect automated submissions.
+              {t('inputHandling.botPrevention.honeypot.description')}
             </p>
           </InfoBox>
 
@@ -275,7 +273,7 @@ app.post('/submit-form', (req, res) => {
         </SubSection>
 
         <SubSection
-          title="Complete Input Sanitization Pattern"
+          title={t('inputHandling.completeSanitization.title')}
           icon
           iconColor="purple"
         >

@@ -8,9 +8,11 @@ import {
   Zap,
 } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export function FontOptimizationSection() {
+  const { t } = useTranslation('week11');
   const [strategy, setStrategy] = useState<'swap' | 'block'>('swap'); // FOUT vs FOIT
   const [fontStatus, setFontStatus] = useState<'system' | 'loading' | 'custom'>(
     'system',
@@ -35,12 +37,13 @@ export function FontOptimizationSection() {
           <div className="p-2 bg-amber-100 text-amber-600 rounded-lg">
             <Type size={24} />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900">폰트 최적화</h2>
+          <h2 className="text-2xl font-bold text-gray-900">
+            {t('week11.fontOptimization.title')}
+          </h2>
         </div>
 
         <p className="text-gray-600 leading-relaxed text-lg">
-          폰트는 <strong>CLS와 LCP</strong>에 직접적인 영향을 미칩니다. FOUT
-          (Flash of Unstyled Text)를 방지하고 빠르게 로드하는 전략이 필요합니다.
+          {t('week11.fontOptimization.description')}
         </p>
 
         {/* Visualizer */}
@@ -48,11 +51,11 @@ export function FontOptimizationSection() {
           <div className="flex justify-between items-center mb-6">
             <div>
               <h3 className="font-bold text-amber-900 flex items-center gap-2">
-                <Type size={18} className="text-amber-600" /> Font Loading
-                Simulator
+                <Type size={18} className="text-amber-600" />{' '}
+                {t('week11.fontOptimization.simulatorTitle')}
               </h3>
               <p className="text-xs text-amber-700 mt-1">
-                Compare FOUT (Swap) vs FOIT (Block)
+                {t('week11.fontOptimization.simulatorDesc')}
               </p>
             </div>
             <div className="flex bg-white p-1 rounded-lg border border-amber-100 shadow-sm">
@@ -64,7 +67,7 @@ export function FontOptimizationSection() {
                 }}
                 className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${strategy === 'swap' ? 'bg-amber-100 text-amber-800' : 'text-gray-500 hover:text-gray-800'}`}
               >
-                display: swap (FOUT)
+                {t('week11.fontOptimization.displaySwap')}
               </button>
               <button
                 type="button"
@@ -74,19 +77,19 @@ export function FontOptimizationSection() {
                 }}
                 className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${strategy === 'block' ? 'bg-amber-100 text-amber-800' : 'text-gray-500 hover:text-gray-800'}`}
               >
-                display: block (FOIT)
+                {t('week11.fontOptimization.displayBlock')}
               </button>
             </div>
           </div>
 
           <div className="bg-white rounded-lg border border-amber-200 p-8 min-h-[200px] flex flex-col justify-between relative overflow-hidden">
             <div className="absolute top-4 right-4 text-xs font-mono text-gray-400">
-              Status:{' '}
+              {t('week11.fontOptimization.status')}{' '}
               {fontStatus === 'loading'
-                ? 'Downloading Font...'
+                ? t('week11.fontOptimization.downloadingFont')
                 : fontStatus === 'custom'
-                  ? 'Custom Font Applied'
-                  : 'Fallback Font'}
+                  ? t('week11.fontOptimization.customFontApplied')
+                  : t('week11.fontOptimization.fallbackFont')}
             </div>
 
             <div className={`transition-all duration-300`}>
@@ -136,40 +139,48 @@ export function FontOptimizationSection() {
                   className={fontStatus === 'loading' ? 'animate-spin' : ''}
                 />
                 {fontStatus === 'custom'
-                  ? 'Reset to Try Again'
-                  : 'Load Custom Font (2s delay)'}
+                  ? t('week11.fontOptimization.resetToTryAgain')
+                  : t('week11.fontOptimization.loadCustomFont')}
               </button>
 
               {fontStatus === 'custom' && (
                 <div className="flex gap-4">
                   <div className="text-right">
-                    <div className="text-xs text-gray-500">UX Impact</div>
+                    <div className="text-xs text-gray-500">
+                      {t('week11.fontOptimization.uxImpact')}
+                    </div>
                     <div
                       className={`text-sm font-bold flex items-center gap-1 justify-end ${strategy === 'swap' ? 'text-amber-600' : 'text-red-600'}`}
                     >
                       {strategy === 'swap' ? (
                         <>
-                          <Eye size={14} /> Text Always Visible
+                          <Eye size={14} />{' '}
+                          {t('week11.fontOptimization.textAlwaysVisible')}
                         </>
                       ) : (
                         <>
-                          <EyeOff size={14} /> Text Invisible (3s)
+                          <EyeOff size={14} />{' '}
+                          {t('week11.fontOptimization.textInvisible')}
                         </>
                       )}
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-xs text-gray-500">CLS Impact</div>
+                    <div className="text-xs text-gray-500">
+                      {t('week11.fontOptimization.clsImpact')}
+                    </div>
                     <div
                       className={`text-sm font-bold flex items-center gap-1 justify-end ${strategy === 'swap' ? 'text-amber-600' : 'text-green-600'}`}
                     >
                       {strategy === 'swap' ? (
                         <>
-                          <AlertTriangle size={14} /> Minor Shift
+                          <AlertTriangle size={14} />{' '}
+                          {t('week11.fontOptimization.minorShift')}
                         </>
                       ) : (
                         <>
-                          <Zap size={14} /> No Shift
+                          <Zap size={14} />{' '}
+                          {t('week11.fontOptimization.noShift')}
                         </>
                       )}
                     </div>
@@ -191,32 +202,38 @@ export function FontOptimizationSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="border border-red-200 bg-red-50 rounded-xl p-5">
-            <h3 className="font-bold text-red-900 mb-3">FOUT / FOIT</h3>
+            <h3 className="font-bold text-red-900 mb-3">
+              {t('week11.fontOptimization.foutFoit.title')}
+            </h3>
             <div className="space-y-3 text-sm text-red-800">
               <div className="bg-white/70 rounded-lg p-3">
-                <strong>FOUT</strong> (Flash of Unstyled Text)
+                <strong>{t('week11.fontOptimization.foutFoit.fout.name')}</strong>{' '}
+                ({t('week11.fontOptimization.foutFoit.fout.fullName')})
                 <p className="text-xs mt-1">
-                  폰트 로드 전 fallback 폰트 → 로드 후 교체 시 깜빡임
+                  {t('week11.fontOptimization.foutFoit.fout.description')}
                 </p>
               </div>
               <div className="bg-white/70 rounded-lg p-3">
-                <strong>FOIT</strong> (Flash of Invisible Text)
+                <strong>{t('week11.fontOptimization.foutFoit.foit.name')}</strong>{' '}
+                ({t('week11.fontOptimization.foutFoit.foit.fullName')})
                 <p className="text-xs mt-1">
-                  폰트 로드 전까지 텍스트가 보이지 않음
+                  {t('week11.fontOptimization.foutFoit.foit.description')}
                 </p>
               </div>
             </div>
           </div>
 
           <div className="border border-green-200 bg-green-50 rounded-xl p-5">
-            <h3 className="font-bold text-green-900 mb-3">font-display 전략</h3>
+            <h3 className="font-bold text-green-900 mb-3">
+              {t('week11.fontOptimization.fontDisplayStrategy.title')}
+            </h3>
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2">
                 <code className="text-xs bg-white px-2 py-1 rounded text-green-700">
                   swap
                 </code>
                 <span className="text-green-800">
-                  fallback 즉시 표시 → 교체 (권장)
+                  {t('week11.fontOptimization.fontDisplayStrategy.swap')}
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -224,7 +241,7 @@ export function FontOptimizationSection() {
                   optional
                 </code>
                 <span className="text-green-800">
-                  캐시된 경우만 사용 (CLS 최소화)
+                  {t('week11.fontOptimization.fontDisplayStrategy.optional')}
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -232,7 +249,7 @@ export function FontOptimizationSection() {
                   fallback
                 </code>
                 <span className="text-green-800">
-                  짧은 block 후 swap (균형)
+                  {t('week11.fontOptimization.fontDisplayStrategy.fallback')}
                 </span>
               </div>
             </div>
@@ -277,12 +294,12 @@ export default function RootLayout({ children }) {
         <div className="bg-gray-50 rounded-xl p-5">
           <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
             <Zap className="text-amber-600" size={20} />
-            폰트 최적화 기법
+            {t('week11.fontOptimization.optimizationTechniques.title')}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white rounded-lg p-4 border border-gray-200">
               <h4 className="font-semibold text-gray-900 mb-2">
-                Preload 폰트 파일
+                {t('week11.fontOptimization.optimizationTechniques.preload.title')}
               </h4>
               <div className="bg-gray-900 rounded p-2 overflow-x-auto">
                 <div className="overflow-hidden rounded-lg">
@@ -302,10 +319,10 @@ export default function RootLayout({ children }) {
 
             <div className="bg-white rounded-lg p-4 border border-gray-200">
               <h4 className="font-semibold text-gray-900 mb-2">
-                서브셋 (Subset)
+                {t('week11.fontOptimization.optimizationTechniques.subset.title')}
               </h4>
               <p className="text-sm text-gray-600 mb-2">
-                사용하는 문자만 포함하여 용량 감소
+                {t('week11.fontOptimization.optimizationTechniques.subset.description')}
               </p>
               <div className="flex flex-wrap gap-2">
                 {['latin', 'latin-ext', 'korean', 'digits'].map((subset) => (
@@ -320,18 +337,20 @@ export default function RootLayout({ children }) {
             </div>
 
             <div className="bg-white rounded-lg p-4 border border-gray-200">
-              <h4 className="font-semibold text-gray-900 mb-2">WOFF2 포맷</h4>
+              <h4 className="font-semibold text-gray-900 mb-2">
+                {t('week11.fontOptimization.optimizationTechniques.woff2.title')}
+              </h4>
               <p className="text-sm text-gray-600">
-                가장 압축률이 높은 웹 폰트 포맷. TTF/OTF 대비 30~50% 작음
+                {t('week11.fontOptimization.optimizationTechniques.woff2.description')}
               </p>
             </div>
 
             <div className="bg-white rounded-lg p-4 border border-gray-200">
               <h4 className="font-semibold text-gray-900 mb-2">
-                Variable Fonts
+                {t('week11.fontOptimization.optimizationTechniques.variable.title')}
               </h4>
               <p className="text-sm text-gray-600">
-                다양한 weight/style을 하나의 파일로. 여러 폰트 파일 대체
+                {t('week11.fontOptimization.optimizationTechniques.variable.description')}
               </p>
             </div>
           </div>
@@ -340,9 +359,7 @@ export default function RootLayout({ children }) {
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex gap-3">
           <AlertTriangle className="text-amber-600 shrink-0" size={20} />
           <div className="text-sm text-amber-800">
-            <strong>한글 폰트 주의:</strong> 한글은 글리프가 많아 용량이
-            큽니다(2~5MB). 반드시 서브셋을 적용하거나 Google Fonts의 자동 서브셋
-            기능을 활용하세요.
+            {t('week11.fontOptimization.koreanFontWarning')}
           </div>
         </div>
       </div>

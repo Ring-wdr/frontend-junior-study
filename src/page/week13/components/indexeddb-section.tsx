@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -13,10 +14,11 @@ interface Todo {
 }
 
 export const IndexedDBSection = () => {
+  const { t } = useTranslation('week13');
   const [todos, setTodos] = useState<Todo[]>([]);
   const [newTodo, setNewTodo] = useState('');
   const [db, setDb] = useState<IDBDatabase | null>(null);
-  const [dbStatus, setDbStatus] = useState<string>('Initializing...');
+  const [dbStatus, setDbStatus] = useState<string>(t('indexedDB.demo.initializing'));
 
   useEffect(() => {
     const request = indexedDB.open('week13-demo', 1);
@@ -28,7 +30,7 @@ export const IndexedDBSection = () => {
     request.onsuccess = () => {
       const database = request.result;
       setDb(database);
-      setDbStatus('Connected');
+      setDbStatus(t('indexedDB.demo.connected'));
       loadTodos(database);
     };
 
@@ -114,86 +116,84 @@ export const IndexedDBSection = () => {
 
   return (
     <SectionCard
-      badge={{ label: 'Storage', color: 'purple' }}
-      title="IndexedDB — Client-Side Database"
-      description="Store large amounts of structured data in the browser"
+      badge={{ label: t('indexedDB.badge'), color: 'purple' }}
+      title={t('indexedDB.title')}
+      description={t('indexedDB.description')}
     >
       <div className="space-y-8">
-        <SubSection title="What is IndexedDB?" icon iconColor="blue">
-          <InfoBox variant="purple" title="Browser Database">
+        <SubSection title={t('indexedDB.whatIs.title')} icon iconColor="blue">
+          <InfoBox variant="purple" title={t('indexedDB.whatIs.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              IndexedDB is a <strong>low-level API</strong> for storing
-              significant amounts of structured data (including files/blobs).
-              Unlike localStorage, it supports transactions and indexing.
+              <Trans t={t} i18nKey="indexedDB.whatIs.description" />
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm mt-3">
               <li>
-                <strong>Large Storage:</strong> MB to GB capacity (quota-based)
+                <Trans t={t} i18nKey="indexedDB.whatIs.largeStorage" />
               </li>
               <li>
-                <strong>Async API:</strong> Non-blocking operations
+                <Trans t={t} i18nKey="indexedDB.whatIs.asyncAPI" />
               </li>
               <li>
-                <strong>Transactions:</strong> ACID-compliant data integrity
+                <Trans t={t} i18nKey="indexedDB.whatIs.transactions" />
               </li>
               <li>
-                <strong>Indexes:</strong> Efficient querying of data
+                <Trans t={t} i18nKey="indexedDB.whatIs.indexes" />
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Storage Comparison" icon iconColor="purple">
+        <SubSection title={t('indexedDB.comparison.title')} icon iconColor="purple">
           <div className="overflow-x-auto">
             <table className="w-full text-sm border-collapse">
               <thead>
                 <tr className="bg-gray-50">
-                  <th className="p-2 text-left border border-gray-200">Feature</th>
-                  <th className="p-2 text-left border border-gray-200">localStorage</th>
-                  <th className="p-2 text-left border border-gray-200">IndexedDB</th>
+                  <th className="p-2 text-left border border-gray-200">{t('indexedDB.comparison.feature')}</th>
+                  <th className="p-2 text-left border border-gray-200">{t('indexedDB.comparison.localStorage')}</th>
+                  <th className="p-2 text-left border border-gray-200">{t('indexedDB.comparison.indexedDB')}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="p-2 border border-gray-200 font-medium">Capacity</td>
-                  <td className="p-2 border border-gray-200">~5MB</td>
-                  <td className="p-2 border border-gray-200 text-green-600">MB - GB</td>
+                  <td className="p-2 border border-gray-200 font-medium">{t('indexedDB.comparison.capacity')}</td>
+                  <td className="p-2 border border-gray-200">{t('indexedDB.comparison.capacityLS')}</td>
+                  <td className="p-2 border border-gray-200 text-green-600">{t('indexedDB.comparison.capacityIDB')}</td>
                 </tr>
                 <tr className="bg-gray-50">
-                  <td className="p-2 border border-gray-200 font-medium">Data Type</td>
-                  <td className="p-2 border border-gray-200">String only</td>
-                  <td className="p-2 border border-gray-200 text-green-600">Any (objects, blobs)</td>
+                  <td className="p-2 border border-gray-200 font-medium">{t('indexedDB.comparison.dataType')}</td>
+                  <td className="p-2 border border-gray-200">{t('indexedDB.comparison.dataTypeLS')}</td>
+                  <td className="p-2 border border-gray-200 text-green-600">{t('indexedDB.comparison.dataTypeIDB')}</td>
                 </tr>
                 <tr>
-                  <td className="p-2 border border-gray-200 font-medium">API</td>
-                  <td className="p-2 border border-gray-200 text-green-600">Sync (simple)</td>
-                  <td className="p-2 border border-gray-200">Async (complex)</td>
+                  <td className="p-2 border border-gray-200 font-medium">{t('indexedDB.comparison.api')}</td>
+                  <td className="p-2 border border-gray-200 text-green-600">{t('indexedDB.comparison.apiLS')}</td>
+                  <td className="p-2 border border-gray-200">{t('indexedDB.comparison.apiIDB')}</td>
                 </tr>
                 <tr className="bg-gray-50">
-                  <td className="p-2 border border-gray-200 font-medium">Indexing</td>
-                  <td className="p-2 border border-gray-200 text-red-600">No</td>
-                  <td className="p-2 border border-gray-200 text-green-600">Yes</td>
+                  <td className="p-2 border border-gray-200 font-medium">{t('indexedDB.comparison.indexing')}</td>
+                  <td className="p-2 border border-gray-200 text-red-600">{t('indexedDB.comparison.indexingLS')}</td>
+                  <td className="p-2 border border-gray-200 text-green-600">{t('indexedDB.comparison.indexingIDB')}</td>
                 </tr>
                 <tr>
-                  <td className="p-2 border border-gray-200 font-medium">Transactions</td>
-                  <td className="p-2 border border-gray-200 text-red-600">No</td>
-                  <td className="p-2 border border-gray-200 text-green-600">Yes</td>
+                  <td className="p-2 border border-gray-200 font-medium">{t('indexedDB.comparison.transactions')}</td>
+                  <td className="p-2 border border-gray-200 text-red-600">{t('indexedDB.comparison.transactionsLS')}</td>
+                  <td className="p-2 border border-gray-200 text-green-600">{t('indexedDB.comparison.transactionsIDB')}</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </SubSection>
 
-        <SubSection title="Live Demo" icon iconColor="green">
-          <DemoBox label="IndexedDB Todo App">
+        <SubSection title={t('indexedDB.demo.title')} icon iconColor="green">
+          <DemoBox label={t('indexedDB.demo.label')}>
             <div className="space-y-4">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-xs font-medium text-gray-500">
-                  Database Status:
+                  {t('indexedDB.demo.dbStatus')}
                 </span>
                 <span
                   className={`text-xs px-2 py-0.5 rounded ${
-                    dbStatus === 'Connected'
+                    dbStatus === t('indexedDB.demo.connected')
                       ? 'bg-green-100 text-green-700'
                       : 'bg-yellow-100 text-yellow-700'
                   }`}
@@ -208,7 +208,7 @@ export const IndexedDBSection = () => {
                   value={newTodo}
                   onChange={(e) => setNewTodo(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && addTodo()}
-                  placeholder="Add a todo..."
+                  placeholder={t('indexedDB.demo.placeholder')}
                   className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
                 <button
@@ -216,14 +216,14 @@ export const IndexedDBSection = () => {
                   onClick={addTodo}
                   className="px-4 py-2 text-sm bg-purple-500 text-white rounded-lg hover:bg-purple-600"
                 >
-                  Add
+                  {t('indexedDB.demo.add')}
                 </button>
               </div>
 
               <div className="space-y-2 max-h-48 overflow-y-auto">
                 {todos.length === 0 ? (
                   <p className="text-sm text-gray-400 text-center py-4">
-                    No todos yet. Add one above!
+                    {t('indexedDB.demo.noTodos')}
                   </p>
                 ) : (
                   todos.map((todo) => (
@@ -264,19 +264,18 @@ export const IndexedDBSection = () => {
                   onClick={clearAll}
                   className="text-xs text-red-500 hover:text-red-700"
                 >
-                  Clear all
+                  {t('indexedDB.demo.clearAll')}
                 </button>
               )}
 
               <p className="text-xs text-gray-400">
-                Data persists in IndexedDB. Refresh the page and your todos will
-                still be here!
+                {t('indexedDB.demo.persistMessage')}
               </p>
             </div>
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Vanilla API Example" icon iconColor="orange">
+        <SubSection title={t('indexedDB.vanillaAPI.title')} icon iconColor="orange">
           <CodeBlock
             code={`// Open database (creates if not exists)
 const request = indexedDB.open('myDatabase', 1);
@@ -312,12 +311,10 @@ request.onsuccess = (event) => {
           />
         </SubSection>
 
-        <SubSection title="Using idb Library (Recommended)" icon iconColor="red">
-          <InfoBox variant="blue" title="Promise-based Wrapper">
+        <SubSection title={t('indexedDB.idbLibrary.title')} icon iconColor="red">
+          <InfoBox variant="blue" title={t('indexedDB.idbLibrary.infoTitle')}>
             <p className="text-sm">
-              The native IndexedDB API is callback-based and verbose. The{' '}
-              <code className="bg-blue-100 px-1 rounded">idb</code> library
-              provides a much cleaner Promise-based interface.
+              <Trans t={t} i18nKey="indexedDB.idbLibrary.description" />
             </p>
           </InfoBox>
 
@@ -360,15 +357,15 @@ await Promise.all([
           />
         </SubSection>
 
-        <SubSection title="Use Cases" icon iconColor="purple">
+        <SubSection title={t('indexedDB.useCases.title')} icon iconColor="purple">
           <div className="grid grid-cols-2 gap-3">
             {[
-              { title: 'Offline-First Apps', desc: 'Notes, todo, documents' },
-              { title: 'File Storage', desc: 'Images, PDFs, blobs' },
-              { title: 'React Query Persist', desc: 'Cache persistence' },
-              { title: 'Form Drafts', desc: 'Auto-save user input' },
-              { title: 'Sync Queue', desc: 'Offline action queue' },
-              { title: 'Analytics Buffer', desc: 'Batch event storage' },
+              { title: t('indexedDB.useCases.offlineFirstApps'), desc: t('indexedDB.useCases.offlineFirstAppsDesc') },
+              { title: t('indexedDB.useCases.fileStorage'), desc: t('indexedDB.useCases.fileStorageDesc') },
+              { title: t('indexedDB.useCases.reactQueryPersist'), desc: t('indexedDB.useCases.reactQueryPersistDesc') },
+              { title: t('indexedDB.useCases.formDrafts'), desc: t('indexedDB.useCases.formDraftsDesc') },
+              { title: t('indexedDB.useCases.syncQueue'), desc: t('indexedDB.useCases.syncQueueDesc') },
+              { title: t('indexedDB.useCases.analyticsBuffer'), desc: t('indexedDB.useCases.analyticsBufferDesc') },
             ].map((item) => (
               <div
                 key={item.title}

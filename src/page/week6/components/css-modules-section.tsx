@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
@@ -12,7 +12,7 @@ export const CssModulesSection = () => {
     >
       <div className="space-y-8">
         <SubSection title={t('cssModules.scopedStyles.title')} icon iconColor="green">
-          <p className="text-sm text-gray-700 mb-4" dangerouslySetInnerHTML={{ __html: t('cssModules.scopedStyles.content') }} />
+          <p className="text-sm text-gray-700 mb-4"><Trans t={t} i18nKey="cssModules.scopedStyles.content" components={{ code: <code /> }} /></p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -55,7 +55,7 @@ export function Button() {
           <InfoBox variant="green" title={t('cssModules.benefits.infoTitle')}>
             <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
               <li>
-                <strong>{t('cssModules.benefits.localScope')}</strong> <span dangerouslySetInnerHTML={{ __html: t('cssModules.benefits.localScopeDesc') }} />
+                <strong>{t('cssModules.benefits.localScope')}</strong> <Trans t={t} i18nKey="cssModules.benefits.localScopeDesc" components={{ code: <code /> }} />
               </li>
               <li>
                 <strong>{t('cssModules.benefits.reuse')}</strong> {t('cssModules.benefits.reuseDesc')}

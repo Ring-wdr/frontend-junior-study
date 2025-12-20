@@ -1,42 +1,36 @@
+import { Trans, useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { OptimizationVisualizer } from './optimization-visualizer';
 
 export const OptimizationSection = () => {
+  const { t } = useTranslation('week5');
   return (
     <SectionCard
-      badge={{ label: 'Optimization', color: 'green' }}
-      title="Optimization & SEO"
-      description="Next.js features for performance and search engine optimization."
+      badge={{ label: t('optimization.badge'), color: 'green' }}
+      title={t('optimization.title')}
+      description={t('optimization.description')}
     >
       <div className="space-y-8">
-        <SubSection title="SEO & Metadata Management" icon iconColor="green">
+        <SubSection title={t('optimization.seo.title')} icon iconColor="green">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              App Router uses the <code>metadata</code> object or{' '}
-              <code>generateMetadata</code> function to define SEO tags,
-              replacing the old <code>Head</code> component. Metadata is used
-              for search engine optimization and social media sharing.
+              <Trans t={t} i18nKey="optimization.seo.intro" components={{ code: <code /> }} />
             </p>
 
-            <InfoBox variant="green" title="Metadata API">
+            <InfoBox variant="green" title={t('optimization.seo.api.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Static Metadata:</strong> Export a{' '}
-                  <code>metadata</code> object for constant SEO information
+                  <Trans t={t} i18nKey="optimization.seo.api.static" components={{ code: <code /> }} />
                 </li>
                 <li>
-                  <strong>Dynamic Metadata:</strong> Use{' '}
-                  <code>generateMetadata</code> function to compute metadata at
-                  request time
+                  <Trans t={t} i18nKey="optimization.seo.api.dynamic" components={{ code: <code /> }} />
                 </li>
                 <li>
-                  <strong>OpenGraph:</strong> Define social media preview images
-                  and text
+                  <Trans t={t} i18nKey="optimization.seo.api.openGraph" />
                 </li>
                 <li>
-                  <strong>Robots & Canonical:</strong> Control indexing and
-                  prevent duplicate content issues
+                  <Trans t={t} i18nKey="optimization.seo.api.robots" />
                 </li>
               </ul>
             </InfoBox>
@@ -95,53 +89,66 @@ export async function generateMetadata({ params }) {
               className="text-xs"
             />
 
-            <InfoBox variant="blue" title="SEO Best Practices">
+            <InfoBox
+              variant="blue"
+              title={t('optimization.seo.bestPractices.title')}
+            >
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
-                <li>Keep titles under 60 characters for desktop display</li>
-                <li>Write compelling meta descriptions (150-160 characters)</li>
-                <li>Use proper heading hierarchy (h1, h2, h3)</li>
-                <li>Include structured data (Schema.org) for rich snippets</li>
-                <li>Ensure mobile responsiveness for mobile-first indexing</li>
-                <li>Optimize Core Web Vitals (LCP, FID, CLS)</li>
+                <li>{t('optimization.seo.bestPractices.titleLength')}</li>
+                <li>{t('optimization.seo.bestPractices.description')}</li>
+                <li>{t('optimization.seo.bestPractices.headingHierarchy')}</li>
+                <li>{t('optimization.seo.bestPractices.structuredData')}</li>
+                <li>{t('optimization.seo.bestPractices.mobileResponsive')}</li>
+                <li>{t('optimization.seo.bestPractices.coreWebVitals')}</li>
               </ul>
             </InfoBox>
           </div>
         </SubSection>
 
         <SubSection
-          title="Image Optimization with next/image"
+          title={t('optimization.imageOptimization.title')}
           icon
           iconColor="blue"
         >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              The <code>next/image</code> component automatically optimizes
-              images for different screen sizes and device pixel ratios, serving
-              modern formats (WebP, AVIF) to supported browsers while
-              maintaining responsive design without layout shift.
+              <Trans t={t} i18nKey="optimization.imageOptimization.intro" components={{ code: <code /> }} />
             </p>
 
-            <InfoBox variant="blue" title="Key Features">
+            <InfoBox
+              variant="blue"
+              title={t('optimization.imageOptimization.keyFeatures.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Automatic Lazy Loading:</strong> Images load only when
-                  near viewport
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.imageOptimization.keyFeatures.lazyLoading"
+                  />
                 </li>
                 <li>
-                  <strong>Responsive Sizing:</strong> Automatic srcset
-                  generation for different screen sizes
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.imageOptimization.keyFeatures.responsiveSizing"
+                  />
                 </li>
                 <li>
-                  <strong>Modern Formats:</strong> Automatic WebP/AVIF serving
-                  with graceful fallback
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.imageOptimization.keyFeatures.modernFormats"
+                  />
                 </li>
                 <li>
-                  <strong>Zero CLS:</strong> Dimensions required, preventing
-                  layout shift
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.imageOptimization.keyFeatures.zeroCLS"
+                  />
                 </li>
                 <li>
-                  <strong>On-Demand Optimization:</strong> Images optimized at
-                  request time, cached for future requests
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.imageOptimization.keyFeatures.onDemand"
+                  />
                 </li>
               </ul>
             </InfoBox>
@@ -186,23 +193,33 @@ export default function Home() {
               className="text-xs"
             />
 
-            <InfoBox variant="purple" title="Image Optimization Tips">
+            <InfoBox
+              variant="purple"
+              title={t('optimization.imageOptimization.tips.title')}
+            >
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
                 <li>
-                  Use <code>priority</code> for above-the-fold images
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.imageOptimization.tips.priority"
+                    components={{ code: <code /> }}
+                  />
                 </li>
                 <li>
-                  Use <code>placeholder="blur"</code> for better UX
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.imageOptimization.tips.placeholder"
+                    components={{ code: <code /> }}
+                  />
                 </li>
                 <li>
-                  Set <code>sizes</code> prop for responsive optimization
+                  <Trans t={t} i18nKey="optimization.imageOptimization.tips.sizes" components={{ code: <code /> }} />
                 </li>
+                <li>{t('optimization.imageOptimization.tips.quality')}</li>
+                <li>{t('optimization.imageOptimization.tips.crop')}</li>
                 <li>
-                  Reduce quality (75-85) to decrease file size without visible
-                  degradation
+                  <Trans t={t} i18nKey="optimization.imageOptimization.tips.svg" />
                 </li>
-                <li>Crop/resize images to exact dimensions needed</li>
-                <li>Use SVG for icons instead of image format</li>
               </ul>
             </InfoBox>
           </div>
@@ -211,35 +228,43 @@ export default function Home() {
         <OptimizationVisualizer />
 
         <SubSection
-          title="Font Optimization with next/font"
+          title={t('optimization.fontOptimization.title')}
           icon
           iconColor="purple"
         >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              <code>next/font</code> automatically optimizes web fonts by
-              downloading font files at build time and hosting them as static
-              assets. This eliminates layout shift and improves page load
-              performance by removing external requests.
+              <Trans t={t} i18nKey="optimization.fontOptimization.intro" components={{ code: <code /> }} />
             </p>
 
-            <InfoBox variant="purple" title="Font Loading Benefits">
+            <InfoBox
+              variant="purple"
+              title={t('optimization.fontOptimization.benefits.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Zero Layout Shift (CLS):</strong> Font metrics are
-                  precomputed to prevent text reflow
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.fontOptimization.benefits.zeroCLS"
+                  />
                 </li>
                 <li>
-                  <strong>Improved Performance:</strong> Fonts served locally,
-                  no external network requests
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.fontOptimization.benefits.performance"
+                  />
                 </li>
                 <li>
-                  <strong>Font Subsetting:</strong> Only load characters used in
-                  your app
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.fontOptimization.benefits.subsetting"
+                  />
                 </li>
                 <li>
-                  <strong>Automatic Fallback:</strong> System fonts display
-                  while custom fonts load
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.fontOptimization.benefits.fallback"
+                  />
                 </li>
               </ul>
             </InfoBox>
@@ -303,58 +328,82 @@ export default function RootLayout({ children }) {
               className="text-xs"
             />
 
-            <InfoBox variant="orange" title="Font Selection Guide">
+            <InfoBox
+              variant="orange"
+              title={t('optimization.fontOptimization.selectionGuide.title')}
+            >
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
                 <li>
-                  <strong>Display:</strong> Large headlines and decorative text
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.fontOptimization.selectionGuide.display"
+                  />
                 </li>
                 <li>
-                  <strong>Swap:</strong> Most readable, prefers fallback
-                  visibility
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.fontOptimization.selectionGuide.swap"
+                  />
                 </li>
                 <li>
-                  <strong>Block:</strong> Hides text while loading (not
-                  recommended)
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.fontOptimization.selectionGuide.block"
+                  />
                 </li>
-                <li>Limit to 2-3 font families for performance</li>
+                <li>{t('optimization.fontOptimization.selectionGuide.limit')}</li>
                 <li>
-                  Use variable fonts when possible for fewer file requests
+                  {t('optimization.fontOptimization.selectionGuide.variable')}
                 </li>
               </ul>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title="Edge Middleware & Redirection" icon iconColor="blue">
+        <SubSection
+          title={t('optimization.middleware.title')}
+          icon
+          iconColor="blue"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Middleware runs at the edge before requests reach your server,
-              enabling authentication, rewriting, redirects, and A/B testing
-              with zero additional latency. Perfect for executing logic close to
-              the user.
+              {t('optimization.middleware.intro')}
             </p>
 
-            <InfoBox variant="blue" title="Middleware Use Cases">
+            <InfoBox
+              variant="blue"
+              title={t('optimization.middleware.useCases.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Authentication:</strong> Check auth tokens and
-                  redirect unauthenticated users
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.middleware.useCases.authentication"
+                  />
                 </li>
                 <li>
-                  <strong>URL Rewriting:</strong> Rewrite URLs internally
-                  without redirects
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.middleware.useCases.rewriting"
+                  />
                 </li>
                 <li>
-                  <strong>A/B Testing:</strong> Route users to different
-                  versions based on cookies
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.middleware.useCases.abTesting"
+                  />
                 </li>
                 <li>
-                  <strong>Geo-routing:</strong> Serve different content based on
-                  user location
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.middleware.useCases.geoRouting"
+                  />
                 </li>
                 <li>
-                  <strong>Bot Detection:</strong> Block or handle bot traffic
-                  early
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.middleware.useCases.botDetection"
+                  />
                 </li>
               </ul>
             </InfoBox>
@@ -402,54 +451,57 @@ export const config = {
         </SubSection>
 
         <SubSection
-          title="Performance Metrics & Best Practices"
+          title={t('optimization.performance.title')}
           icon
           iconColor="orange"
         >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Core Web Vitals are critical metrics used by Google to assess page
-              quality. Next.js provides built-in tools to monitor and optimize
-              these metrics.
+              {t('optimization.performance.intro')}
             </p>
 
             <div className="grid grid-cols-1 gap-4">
-              <InfoBox variant="blue" title="Largest Contentful Paint (LCP)">
+              <InfoBox variant="blue" title={t('optimization.performance.lcp.title')}>
                 <p className="text-sm text-gray-700 mb-2">
-                  Time until the largest content element renders. Target:
-                  &lt;2.5s
+                  <Trans t={t} i18nKey="optimization.performance.lcp.description" />
                 </p>
                 <ul className="list-disc pl-5 space-y-1 text-xs text-gray-700">
                   <li>
-                    Use <code>priority</code> on critical images
+                    <Trans t={t} i18nKey="optimization.performance.lcp.tip1" />
                   </li>
-                  <li>Optimize server response time (TTFB)</li>
-                  <li>Minimize JavaScript blocking main thread</li>
+                  <li>{t('optimization.performance.lcp.tip2')}</li>
+                  <li>{t('optimization.performance.lcp.tip3')}</li>
                 </ul>
               </InfoBox>
 
-              <InfoBox variant="green" title="Cumulative Layout Shift (CLS)">
+              <InfoBox
+                variant="green"
+                title={t('optimization.performance.cls.title')}
+              >
                 <p className="text-sm text-gray-700 mb-2">
-                  Unexpected layout changes. Target: &lt;0.1
+                  <Trans t={t} i18nKey="optimization.performance.cls.description" />
                 </p>
                 <ul className="list-disc pl-5 space-y-1 text-xs text-gray-700">
-                  <li>Always specify image dimensions (next/image)</li>
-                  <li>Preload fonts to avoid font swap shift</li>
-                  <li>Avoid insertions above existing content</li>
+                  <li>{t('optimization.performance.cls.tip1')}</li>
+                  <li>{t('optimization.performance.cls.tip2')}</li>
+                  <li>{t('optimization.performance.cls.tip3')}</li>
                   <li>
-                    Use <code>size-adjust</code> for font metrics
+                    <Trans t={t} i18nKey="optimization.performance.cls.tip4" />
                   </li>
                 </ul>
               </InfoBox>
 
-              <InfoBox variant="purple" title="First Input Delay (FID / INP)">
+              <InfoBox
+                variant="purple"
+                title={t('optimization.performance.fid.title')}
+              >
                 <p className="text-sm text-gray-700 mb-2">
-                  Delay from user interaction to response. Target: &lt;100ms
+                  <Trans t={t} i18nKey="optimization.performance.fid.description" />
                 </p>
                 <ul className="list-disc pl-5 space-y-1 text-xs text-gray-700">
-                  <li>Code splitting to reduce main thread work</li>
-                  <li>Break long tasks into smaller chunks</li>
-                  <li>Use React 18 transitions for non-urgent updates</li>
+                  <li>{t('optimization.performance.fid.tip1')}</li>
+                  <li>{t('optimization.performance.fid.tip2')}</li>
+                  <li>{t('optimization.performance.fid.tip3')}</li>
                 </ul>
               </InfoBox>
             </div>
@@ -479,16 +531,19 @@ export function RootLayout({ children }) {
               className="text-xs"
             />
 
-            <InfoBox variant="gray" title="Quick Optimization Checklist">
+            <InfoBox
+              variant="gray"
+              title={t('optimization.performance.checklist.title')}
+            >
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
-                <li>✓ Use dynamic imports for non-critical code</li>
-                <li>✓ Minimize JavaScript bundle size</li>
-                <li>✓ Enable compression (gzip/brotli) on server</li>
-                <li>✓ Use CDN for static assets</li>
-                <li>✓ Enable caching headers (Cache-Control)</li>
-                <li>✓ Monitor real user metrics with analytics</li>
-                <li>✓ Test on slow 3G / low-end devices</li>
-                <li>✓ Use Lighthouse CI for continuous monitoring</li>
+                <li>{t('optimization.performance.checklist.dynamicImports')}</li>
+                <li>{t('optimization.performance.checklist.minifyJS')}</li>
+                <li>{t('optimization.performance.checklist.compression')}</li>
+                <li>{t('optimization.performance.checklist.cdn')}</li>
+                <li>{t('optimization.performance.checklist.caching')}</li>
+                <li>{t('optimization.performance.checklist.monitoring')}</li>
+                <li>{t('optimization.performance.checklist.testing')}</li>
+                <li>{t('optimization.performance.checklist.lighthouse')}</li>
               </ul>
             </InfoBox>
           </div>

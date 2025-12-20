@@ -7,52 +7,62 @@ import {
   Zap,
 } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
-const renderingSteps = [
-  {
-    name: 'JavaScript',
-    id: 'js',
-    color: 'bg-yellow-400',
-    description: 'JS 실행 및 DOM 조작',
-    details: 'JavaScript가 실행되어 DOM을 변경합니다.',
-  },
-  {
-    name: 'Style',
-    id: 'style',
-    color: 'bg-purple-400',
-    description: 'CSS 계산',
-    details: '변경된 DOM에 어떤 CSS 규칙이 적용되는지 계산합니다.',
-  },
-  {
-    name: 'Layout',
-    id: 'layout',
-    color: 'bg-blue-400',
-    description: '위치/크기 계산',
-    details: '요소들의 크기와 위치를 계산합니다. (Reflow)',
-    triggers: ['width', 'height', 'margin', 'padding', 'font-size'],
-  },
-  {
-    name: 'Paint',
-    id: 'paint',
-    color: 'bg-green-400',
-    description: '픽셀 그리기',
-    details: '실제 픽셀을 채우는 작업입니다. (배경, 텍스트, 이미지)',
-    triggers: ['background-color', 'color', 'border-color', 'box-shadow'],
-  },
-  {
-    name: 'Composite',
-    id: 'composite',
-    color: 'bg-orange-400',
-    description: '레이어 합성',
-    details: '여러 레이어를 합쳐 최종 화면을 만듭니다. (GPU 활용)',
-    triggers: ['transform', 'opacity', 'filter'],
-  },
-];
-
 export function BrowserRenderingSection() {
+  const { t } = useTranslation('week11');
   const [hoveredStep, setHoveredStep] = useState<number | null>(null);
+
+  const renderingSteps = [
+    {
+      name: t('browserRendering.steps.javascript.name'),
+      id: 'js',
+      color: 'bg-yellow-400',
+      description: t('browserRendering.steps.javascript.description'),
+      details: t('browserRendering.steps.javascript.details'),
+      triggers: [t('browserRendering.steps.javascript.triggers')],
+    },
+    {
+      name: t('browserRendering.steps.style.name'),
+      id: 'style',
+      color: 'bg-purple-400',
+      description: t('browserRendering.steps.style.description'),
+      details: t('browserRendering.steps.style.details'),
+      triggers: [t('browserRendering.steps.style.triggers')],
+    },
+    {
+      name: t('browserRendering.steps.layout.name'),
+      id: 'layout',
+      color: 'bg-blue-400',
+      description: t('browserRendering.steps.layout.description'),
+      details: t('browserRendering.steps.layout.details'),
+      triggers: t('browserRendering.steps.layout.triggers')
+        .split(', ')
+        .map((item) => item.trim()),
+    },
+    {
+      name: t('browserRendering.steps.paint.name'),
+      id: 'paint',
+      color: 'bg-green-400',
+      description: t('browserRendering.steps.paint.description'),
+      details: t('browserRendering.steps.paint.details'),
+      triggers: t('browserRendering.steps.paint.triggers')
+        .split(', ')
+        .map((item) => item.trim()),
+    },
+    {
+      name: t('browserRendering.steps.composite.name'),
+      id: 'composite',
+      color: 'bg-orange-400',
+      description: t('browserRendering.steps.composite.description'),
+      details: t('browserRendering.steps.composite.details'),
+      triggers: t('browserRendering.steps.composite.triggers')
+        .split(', ')
+        .map((item) => item.trim()),
+    },
+  ];
 
   // Visualizer States
   const [activeStages, setActiveStages] = useState<string[]>([]);
@@ -95,13 +105,12 @@ export function BrowserRenderingSection() {
             <Layers size={24} />
           </div>
           <h2 className="text-2xl font-bold text-gray-900">
-            브라우저 렌더링 파이프라인
+            {t('browserRendering.title')}
           </h2>
         </div>
 
         <p className="text-gray-600 leading-relaxed text-lg">
-          브라우저가 화면을 그리는 과정을 이해하면, 어떤 코드가 성능을 해치는지
-          알 수 있습니다.
+          {t('browserRendering.description')}
         </p>
 
         {/* Visualizer */}
@@ -109,11 +118,11 @@ export function BrowserRenderingSection() {
           <div className="flex justify-between items-end mb-6">
             <div>
               <h3 className="font-bold text-gray-800 flex items-center gap-2">
-                <RefreshCw size={18} className="text-gray-500" /> Pixel Pipeline
-                Simulator
+                <RefreshCw size={18} className="text-gray-500" />{' '}
+                {t('browserRendering.simulatorTitle')}
               </h3>
               <p className="text-xs text-gray-500 mt-1">
-                Click buttons to see triggered pipeline stages
+                {t('browserRendering.simulatorDesc')}
               </p>
             </div>
             <div className="flex gap-2">
@@ -123,7 +132,7 @@ export function BrowserRenderingSection() {
                 disabled={activeStages.length > 0}
                 className="px-3 py-1.5 bg-red-100 text-red-700 rounded text-sm font-medium hover:bg-red-200 disabled:opacity-50 transition-colors"
               >
-                Change Width (Layout)
+                {t('browserRendering.changeWidthLayout')}
               </button>
               <button
                 type="button"
@@ -131,7 +140,7 @@ export function BrowserRenderingSection() {
                 disabled={activeStages.length > 0}
                 className="px-3 py-1.5 bg-green-100 text-green-700 rounded text-sm font-medium hover:bg-green-200 disabled:opacity-50 transition-colors"
               >
-                Change Color (Paint)
+                {t('browserRendering.changeColorPaint')}
               </button>
               <button
                 type="button"
@@ -139,7 +148,7 @@ export function BrowserRenderingSection() {
                 disabled={activeStages.length > 0}
                 className="px-3 py-1.5 bg-blue-100 text-blue-700 rounded text-sm font-medium hover:bg-blue-200 disabled:opacity-50 transition-colors"
               >
-                Rotate (Composite)
+                {t('browserRendering.rotateComposite')}
               </button>
             </div>
           </div>
@@ -202,7 +211,7 @@ export function BrowserRenderingSection() {
                 transform: `rotate(${demoState.rotate}deg)`,
               }}
             >
-              Box
+              {t('browserRendering.box')}
             </div>
           </div>
 
@@ -216,25 +225,25 @@ export function BrowserRenderingSection() {
                   {renderingSteps[hoveredStep].details}
                 </p>
                 <div className="mt-2 text-xs text-gray-500">
-                  <span className="font-semibold">Triggers: </span>
-                  {(
-                    renderingSteps[hoveredStep].triggers || ['Script execution']
-                  ).join(', ')}
+                  <span className="font-semibold">
+                    {t('browserRendering.triggersLabel')}{' '}
+                  </span>
+                  {renderingSteps[hoveredStep].triggers.join(', ')}
                 </div>
               </div>
             ) : activeStages.length > 0 ? (
               <div className="animate-in fade-in duration-200">
                 <p className="font-bold text-indigo-600">
                   {activeStages.length === 5
-                    ? 'Expensive! Triggers Reflow & Repaint'
+                    ? t('browserRendering.expensiveFull')
                     : activeStages.length === 4
-                      ? 'Moderate. Triggers Repaint'
-                      : 'Cheap! Composite Only (Best Performance)'}
+                      ? t('browserRendering.moderatePaint')
+                      : t('browserRendering.cheapComposite')}
                 </p>
               </div>
             ) : (
               <p className="text-sm text-gray-400">
-                각 단계를 hover하거나 버튼을 클릭하여 파이프라인을 확인하세요
+                {t('browserRendering.hoverMessage')}
               </p>
             )}
           </div>
@@ -244,10 +253,12 @@ export function BrowserRenderingSection() {
           <div className="border border-red-200 bg-red-50 rounded-xl p-5">
             <div className="flex items-center gap-2 mb-3">
               <AlertTriangle className="text-red-600" size={20} />
-              <h3 className="font-bold text-red-900">Layout Thrashing</h3>
+              <h3 className="font-bold text-red-900">
+                {t('browserRendering.layoutThrashing.title')}
+              </h3>
             </div>
             <p className="text-sm text-red-800 mb-3">
-              읽기/쓰기를 번갈아 하면 강제 동기 레이아웃 발생
+              {t('browserRendering.layoutThrashing.description')}
             </p>
             <div className="bg-white/70 rounded-lg p-3 font-mono text-xs text-red-700">
               <CodeBlock
@@ -263,10 +274,12 @@ for (let i = 0; i < 100; i++) {
           <div className="border border-green-200 bg-green-50 rounded-xl p-5">
             <div className="flex items-center gap-2 mb-3">
               <Zap className="text-green-600" size={20} />
-              <h3 className="font-bold text-green-900">Batch Updates</h3>
+              <h3 className="font-bold text-green-900">
+                {t('browserRendering.batchUpdates.title')}
+              </h3>
             </div>
             <p className="text-sm text-green-800 mb-3">
-              읽기 먼저, 쓰기는 나중에 일괄 처리
+              {t('browserRendering.batchUpdates.description')}
             </p>
             <div className="bg-white/70 rounded-lg p-3 font-mono text-xs text-green-700">
               <CodeBlock
@@ -285,12 +298,11 @@ requestAnimationFrame(() => {
           <div className="flex items-center gap-2 mb-2">
             <Cpu className="text-amber-600" size={20} />
             <h4 className="font-semibold text-amber-900">
-              GPU 가속 (Composite Only)
+              {t('browserRendering.gpuAcceleration.title')}
             </h4>
           </div>
           <p className="text-sm text-amber-800 mb-3">
-            아래 속성만 변경하면 Layout/Paint를 건너뛰고 GPU에서 직접
-            처리합니다.
+            {t('browserRendering.gpuAcceleration.description')}
           </p>
           <div className="flex flex-wrap gap-2">
             {['transform', 'opacity', 'filter', 'will-change'].map((prop) => (

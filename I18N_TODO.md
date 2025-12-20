@@ -244,6 +244,9 @@ const { t } = useTranslation('weekX'); // X는 주차 번호
 ### 4. HTML 태그 포함 (strong, code 등)
 ```typescript
 <Trans t={t} i18nKey="concurrency.whatIsConcurrent.intro" />
+
+// which contains code tag
+<Trans t={t} i18nKey="react19.useActionState.intro" components={{ code: <code /> }} />
 ```
 
 ### 5. 배지, 제목 등
