@@ -4,45 +4,35 @@
 
 **(⚠️최신 웹 동향에 따라 내용을 구성했으며, 불필요하거나 React 공식 권고에 반하지 않는 범위 내에서만 다룹니다.)**
 
-- [ ] [Week 1: JavaScript 심화 – 런타임, this, 스코프, 비동기 등](#week-1-javascript-심화-런타임-this-스코프-비동기-등)
+- [ ] [Week 1: JavaScript 심화 – 런타임, this, 스코프, 비동기 등](src/page/week1/README.md)
 
-- [ ] [Week 2: 프로그래밍 패러다임 – 객체지향 디자인 패턴](#week-2-프로그래밍-패러다임-객체지향-디자인-패턴)
+- [ ] [Week 2: 프로그래밍 패러다임 – 객체지향 디자인 패턴](src/page/week2/README.md)
 
-- [ ] [Week 3: 프론트엔드 디자인 패턴 – 컴포넌트 아키텍처](#week-3-프론트엔드-디자인-패턴-컴포넌트-아키텍처)
+- [ ] [Week 3: 프론트엔드 디자인 패턴 – 컴포넌트 아키텍처](src/page/week3/README.md)
 
-- [ ] [Week 4: 상태 관리 – Flux 패턴과 다양한 상태 라이브러리](#week-4-상태-관리-flux-패턴과-다양한-상태-라이브러리)
+- [ ] [Week 4: 전역 상태 관리 (Flux 아키텍처와 Redux 등)](src/page/week4/README.md)
 
-- [ ] [Week 5: React & Next.js 신기능 – 동시성, Hooks 심화, Next 16 특징](#week-5-react-nextjs-신기능-동시성-hooks-심화-next-16-특징)
+- [ ] [Week 5: React & Next.js 신기능 – 동시성, Hooks 심화, Next 13 특징](src/page/week5/README.md)
 
-- [ ] [Week 6: 자바스크립트 심화 (JavaScript Deep Dive)](#week-6-자바스크립트-심화-javascript-deep-dive)
+- [ ] [Week 6: 스타일링 (CSS-in-JS와 Utility-First 등)](src/page/week6/README.md)
 
-- [ ] [Week 7: 프로그래밍 패러다임 (OOP 디자인 패턴 & 함수형 프로그래밍)](#week-7-프로그래밍-패러다임-oop-디자인-패턴-함수형-프로그래밍)
+- [ ] [Week 7: 폼 관리 (Forms & Validation)](src/page/week7/README.md)
 
-- [ ] [Week 8: 디자인 패턴 (현대 프론트엔드 아키텍처 패턴)](#week-8-디자인-패턴-현대-프론트엔드-아키텍처-패턴)
+- [ ] [Week 8: 테스팅 (단위 테스트부터 E2E까지)](src/page/week8/README.md)
 
-- [ ] [Week 9: 상태 관리 (State Management)](#week-9-상태-관리-state-management)
+- [ ] [Week 9: 애니메이션 Part 1 – Framer Motion 및 고급 UI 인터랙션](src/page/week9/README.md)
 
-- [ ] [Week 10: React.js & Next.js 생태계 (최신 동향 파헤치기)](#week-10-reactjs-nextjs-생태계-최신-동향-파헤치기)
+- [ ] [Week 10: 애니메이션 Part 1 – GSAP 및 Scroll 기반 효과](src/page/week10/README.md)
 
-- [ ] [Week 11: 스타일링 (CSS-in-JS와 Utility-First 등)](#week-11-스타일링-css-in-js와-utility-first-등)
+- [ ] [Week 11: 웹 성능 최적화(Core Web Vitals & Rendering Performance)](src/page/week11/README.md)
 
-- [ ] [Week 12: 폼 관리 (Forms & Validation)](#week-12-폼-관리-forms-validation)
+- [ ] [Week 12: 인증 및 보안 (Authentication & Security)](src/page/week12/README.md)
 
-- [ ] [Week 13: 테스팅 (단위 테스트부터 E2E까지)](#week-13-테스팅-단위-테스트부터-e2e까지)
+- [ ] [Week 13: 병렬 처리(Web Workers) & 오프라인 전략(PWA) & IndexedDB](src/page/week13/README.md)
 
-- [ ] [Week 14: 애니메이션 Part 1 – GSAP 및 Scroll 기반 효과](#week-14-애니메이션-part-1-gsap-및-scroll-기반-효과)
+- [ ] [Week 14: 접근성과 국제화 (Accessibility & i18n)](src/page/week14/README.md)
 
-- [ ] [Week 15: 애니메이션 Part 2 – Framer Motion 및 고급 UI 인터랙션](#week-15-애니메이션-part-2-framer-motion-및-고급-ui-인터랙션)
-
-- [ ] [Week 16: 웹 성능 최적화(Core Web Vitals & Rendering Performance)](#week-16-웹-성능-최적화core-web-vitals-rendering-performance)
-
-- [ ] [Week 17: 인증 및 보안 (Authentication & Security)](#week-17-인증-및-보안-authentication-security)
-
-- [ ] [Week 18: 병렬 처리(Web Workers) & 오프라인 전략(PWA) & IndexedDB](#week-18-병렬-처리web-workers-오프라인-전략pwa-indexeddb)
-
-- [ ] [Week 19: 접근성과 국제화 (Accessibility & i18n)](#week-19-접근성과-국제화-accessibility-i18n)
-
-- [ ] [Week 20: 개발 도구 (DevTools 활용 및 번들링 최적화)](#week-20-개발-도구-devtools-활용-및-번들링-최적화)
+- [ ] [Week 15: 개발 도구 (DevTools 활용 및 번들링 최적화)](src/page/week15/README.md)
 
 
 ## Setup
