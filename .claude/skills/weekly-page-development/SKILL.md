@@ -149,6 +149,19 @@ See [layout-patterns.md](references/layout-patterns.md) for:
 
 Use the boilerplate section template in `assets/section-template/` as a starting point when creating new sections.
 
+## i18n (Internationalization) Support
+
+This project uses `i18next` and `react-i18next` for multi-language support (Korean and English).
+
+See [i18n-guide.md](references/i18n-guide.md) for:
+- Supported languages and file structure
+- Using translations in components
+- Translation key naming conventions
+- Simple text and rich text patterns
+- Trans component usage
+- What should and shouldn't be translated
+- Complete workflow and examples
+
 ---
 
 **Pro Tips:**
@@ -156,3 +169,5 @@ Use the boilerplate section template in `assets/section-template/` as a starting
 - Keep sections between 2-4 major subsections for better readability
 - Use DemoBox for every interactive component to clearly label it as interactive
 - Organize content with SubSection + grid layouts for clean visual hierarchy
+- Use `t()` for all user-facing text to support multi-language display
+- Keep translation keys hierarchical and descriptive
