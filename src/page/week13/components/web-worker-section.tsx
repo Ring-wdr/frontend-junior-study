@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -13,27 +13,41 @@ export const WebWorkerSection = () => {
   const [isMainRunning, setIsMainRunning] = useState(false);
   const [isWorkerRunning, setIsWorkerRunning] = useState(false);
   const [animating, setAnimating] = useState(false);
+  const [rotation, setRotation] = useState(0);
+  const animationRef = useRef<number | null>(null);
 
-  const heavyCalculation = (count: number): number => {
-    let sum = 0;
-    for (let i = 0; i < count; i++) {
-      sum += Math.sqrt(i) * Math.sin(i);
+  // JavaScript-based animation (runs on main thread)
+  useEffect(() => {
+    if (animating) {
+      const animate = () => {
+        setRotation((prev) => (prev + 3) % 360);
+        animationRef.current = requestAnimationFrame(animate);
+      };
+      animationRef.current = requestAnimationFrame(animate);
+    } else {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+        animationRef.current = null;
+      }
     }
-    return sum;
-  };
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [animating]);
 
   const runOnMainThread = useCallback(() => {
     setIsMainRunning(true);
     setMainThreadResult('Calculating...');
     const start = performance.now();
 
-    // This will block the UI
-    setTimeout(() => {
-      const result = heavyCalculation(10000000);
-      const duration = (performance.now() - start).toFixed(2);
-      setMainThreadResult(`Result: ${result.toFixed(2)} (${duration}ms)`);
-      setIsMainRunning(false);
-    }, 10);
+    // This will block the UI - synchronous execution
+    const result = heavyCalculation(10000000);
+    const duration = (performance.now() - start).toFixed(2);
+    setMainThreadResult(`Result: ${result.toFixed(2)} (${duration}ms)`);
+    setIsMainRunning(false);
   }, []);
 
   const runOnWorker = useCallback(() => {
@@ -79,27 +93,49 @@ export const WebWorkerSection = () => {
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm mt-3">
               <li>
-                <strong>{t('webWorker.whatIs.separateThread').split(':')[0]}:</strong> {t('webWorker.whatIs.separateThread').split(':')[1]}
+                <Trans t={t} i18nKey="webWorker.whatIs.separateThread" />
               </li>
               <li>
-                <strong>{t('webWorker.whatIs.messagePassing').split(':')[0]}:</strong> {t('webWorker.whatIs.messagePassing').split(':')[1]}
+                <Trans t={t} i18nKey="webWorker.whatIs.messagePassing" />
               </li>
               <li>
-                <strong>{t('webWorker.whatIs.transferable').split(':')[0]}:</strong> {t('webWorker.whatIs.transferable').split(':')[1]}
+                <Trans t={t} i18nKey="webWorker.whatIs.transferable" />
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('webWorker.useCases.title')} icon iconColor="purple">
+        <SubSection
+          title={t('webWorker.useCases.title')}
+          icon
+          iconColor="purple"
+        >
           <div className="grid grid-cols-2 gap-3">
             {[
-              { title: t('webWorker.useCases.largeJson'), desc: t('webWorker.useCases.largeJsonDesc') },
-              { title: t('webWorker.useCases.imageProcessing'), desc: t('webWorker.useCases.imageProcessingDesc') },
-              { title: t('webWorker.useCases.videoAudio'), desc: t('webWorker.useCases.videoAudioDesc') },
-              { title: t('webWorker.useCases.cryptography'), desc: t('webWorker.useCases.cryptographyDesc') },
-              { title: t('webWorker.useCases.mlInference'), desc: t('webWorker.useCases.mlInferenceDesc') },
-              { title: t('webWorker.useCases.compression'), desc: t('webWorker.useCases.compressionDesc') },
+              {
+                title: t('webWorker.useCases.largeJson'),
+                desc: t('webWorker.useCases.largeJsonDesc'),
+              },
+              {
+                title: t('webWorker.useCases.imageProcessing'),
+                desc: t('webWorker.useCases.imageProcessingDesc'),
+              },
+              {
+                title: t('webWorker.useCases.videoAudio'),
+                desc: t('webWorker.useCases.videoAudioDesc'),
+              },
+              {
+                title: t('webWorker.useCases.cryptography'),
+                desc: t('webWorker.useCases.cryptographyDesc'),
+              },
+              {
+                title: t('webWorker.useCases.mlInference'),
+                desc: t('webWorker.useCases.mlInferenceDesc'),
+              },
+              {
+                title: t('webWorker.useCases.compression'),
+                desc: t('webWorker.useCases.compressionDesc'),
+              },
             ].map((item) => (
               <div
                 key={item.title}
@@ -119,21 +155,23 @@ export const WebWorkerSection = () => {
             <div className="space-y-4">
               <div className="flex items-center gap-4 mb-4">
                 <div
-                  className={`w-16 h-16 rounded-lg bg-gradient-to-br from-green-400 to-blue-500 transition-transform ${
-                    animating ? 'animate-spin' : ''
-                  }`}
+                  className="w-16 h-16 rounded-lg bg-gradient-to-br from-green-400 to-blue-500"
+                  style={{ transform: `rotate(${rotation}deg)` }}
                 />
                 <div className="text-sm text-gray-600">
-                  <p className="font-medium">{t('webWorker.demo.animationTest')}</p>
-                  <p className="text-xs">
-                    {t('webWorker.demo.animationDesc')}
+                  <p className="font-medium">
+                    {t('webWorker.demo.animationTest')}
                   </p>
+                  <p className="text-xs">{t('webWorker.demo.animationDesc')}</p>
                   <button
                     type="button"
                     onClick={() => setAnimating(!animating)}
                     className="mt-2 px-3 py-1 text-xs bg-gray-200 rounded hover:bg-gray-300"
                   >
-                    {animating ? t('webWorker.demo.stop') : t('webWorker.demo.start')} Animation
+                    {animating
+                      ? t('webWorker.demo.stop')
+                      : t('webWorker.demo.start')}{' '}
+                    Animation
                   </button>
                 </div>
               </div>
@@ -152,7 +190,9 @@ export const WebWorkerSection = () => {
                     disabled={isMainRunning}
                     className="w-full px-3 py-2 text-sm bg-red-500 text-white rounded hover:bg-red-600 disabled:opacity-50"
                   >
-                    {isMainRunning ? t('webWorker.demo.running') : t('webWorker.demo.runOnMain')}
+                    {isMainRunning
+                      ? t('webWorker.demo.running')
+                      : t('webWorker.demo.runOnMain')}
                   </button>
                   <p className="text-xs mt-2 text-gray-600 min-h-[20px]">
                     {mainThreadResult}
@@ -172,7 +212,9 @@ export const WebWorkerSection = () => {
                     disabled={isWorkerRunning}
                     className="w-full px-3 py-2 text-sm bg-green-500 text-white rounded hover:bg-green-600 disabled:opacity-50"
                   >
-                    {isWorkerRunning ? t('webWorker.demo.running') : t('webWorker.demo.runOnWorker')}
+                    {isWorkerRunning
+                      ? t('webWorker.demo.running')
+                      : t('webWorker.demo.runOnWorker')}
                   </button>
                   <p className="text-xs mt-2 text-gray-600 min-h-[20px]">
                     {workerResult}
@@ -183,7 +225,11 @@ export const WebWorkerSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('webWorker.basicUsage.title')} icon iconColor="orange">
+        <SubSection
+          title={t('webWorker.basicUsage.title')}
+          icon
+          iconColor="orange"
+        >
           <CodeBlock
             code={`// main.js
 const worker = new Worker('./worker.js');
@@ -212,8 +258,15 @@ onmessage = (e) => {
           />
         </SubSection>
 
-        <SubSection title={t('webWorker.transferableObjects.title')} icon iconColor="red">
-          <InfoBox variant="orange" title={t('webWorker.transferableObjects.infoTitle')}>
+        <SubSection
+          title={t('webWorker.transferableObjects.title')}
+          icon
+          iconColor="red"
+        >
+          <InfoBox
+            variant="orange"
+            title={t('webWorker.transferableObjects.infoTitle')}
+          >
             <p className="text-sm mb-3">
               {t('webWorker.transferableObjects.description')}
             </p>
@@ -239,8 +292,15 @@ onmessage = (e) => {
           />
         </SubSection>
 
-        <SubSection title={t('webWorker.sharedArrayBuffer.title')} icon iconColor="purple">
-          <InfoBox variant="purple" title={t('webWorker.sharedArrayBuffer.infoTitle')}>
+        <SubSection
+          title={t('webWorker.sharedArrayBuffer.title')}
+          icon
+          iconColor="purple"
+        >
+          <InfoBox
+            variant="purple"
+            title={t('webWorker.sharedArrayBuffer.infoTitle')}
+          >
             <p className="text-sm">
               {t('webWorker.sharedArrayBuffer.description')}
             </p>
@@ -269,4 +329,12 @@ const value = Atomics.load(view, 0); // 52
       </div>
     </SectionCard>
   );
+};
+
+const heavyCalculation = (count: number): number => {
+  let sum = 0;
+  for (let i = 0; i < count; i++) {
+    sum += Math.sqrt(i) * Math.sin(i);
+  }
+  return sum;
 };

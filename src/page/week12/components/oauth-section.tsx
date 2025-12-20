@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -11,11 +11,23 @@ export const OAuthSection = () => {
   const [flowStep, setFlowStep] = useState(0);
 
   const flowSteps = [
-    { step: 1, title: t('oauth.flow.step1'), actor: t('oauth.flow.actorClient') },
-    { step: 2, title: t('oauth.flow.step2'), actor: t('oauth.flow.actorBrowser') },
+    {
+      step: 1,
+      title: t('oauth.flow.step1'),
+      actor: t('oauth.flow.actorClient'),
+    },
+    {
+      step: 2,
+      title: t('oauth.flow.step2'),
+      actor: t('oauth.flow.actorBrowser'),
+    },
     { step: 3, title: t('oauth.flow.step3'), actor: t('oauth.flow.actorAuth') },
     { step: 4, title: t('oauth.flow.step4'), actor: t('oauth.flow.actorAuth') },
-    { step: 5, title: t('oauth.flow.step5'), actor: t('oauth.flow.actorClient') },
+    {
+      step: 5,
+      title: t('oauth.flow.step5'),
+      actor: t('oauth.flow.actorClient'),
+    },
     { step: 6, title: t('oauth.flow.step6'), actor: t('oauth.flow.actorAuth') },
     {
       step: 7,
@@ -38,13 +50,13 @@ export const OAuthSection = () => {
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm mt-3">
               <li>
-                <strong>{t('oauth.whatIs.listAuthNot').split(':')[0]}:</strong> {t('oauth.whatIs.listAuthNot').split(':')[1]}
+                <Trans t={t} i18nKey="oauth.whatIs.listAuthNot" />
               </li>
               <li>
-                <strong>{t('oauth.whatIs.listAccessToken').split(':')[0]}:</strong> {t('oauth.whatIs.listAccessToken').split(':')[1]}
+                <Trans t={t} i18nKey="oauth.whatIs.listAccessToken" />
               </li>
               <li>
-                <strong>{t('oauth.whatIs.listRefreshToken').split(':')[0]}:</strong> {t('oauth.whatIs.listRefreshToken').split(':')[1]}
+                <Trans t={t} i18nKey="oauth.whatIs.listRefreshToken" />
               </li>
             </ul>
           </InfoBox>

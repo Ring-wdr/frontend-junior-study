@@ -22,9 +22,9 @@
       "title": "What is OAuth 2.0?",
       "infoTitle": "Authorization Protocol",
       "infoDescription": "OAuth 2.0 is a standard protocol for delegating access to third-party services. For example, when your app needs access to a user's Google Calendar, OAuth 2.0 provides a secure way to obtain an access token from Google.",
-      "listAuthNot": "Authorization, not Authentication: OAuth 2.0 handles permission delegation, not user identity verification",
-      "listAccessToken": "Access Tokens: Short-lived credentials for accessing protected resources",
-      "listRefreshToken": "Refresh Tokens: Long-lived tokens to obtain new access tokens without re-authentication"
+      "listAuthNot": "<strong>Authorization, not Authentication</strong>: OAuth 2.0 handles permission delegation, not user identity verification",
+      "listAccessToken": "<strong>Access Tokens</strong>: Short-lived credentials for accessing protected resources",
+      "listRefreshToken": "<strong>Refresh Tokens</strong>: Long-lived tokens to obtain new access tokens without re-authentication"
     },
     "roles": {
       "title": "Key Roles in OAuth 2.0",

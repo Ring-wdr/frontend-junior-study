@@ -19,9 +19,9 @@
       "title": "What is Web Worker?",
       "infoTitle": "Background Processing",
       "description": "JavaScript runs on a single thread, but browsers provide Worker threads to offload CPU-heavy tasks without blocking the main UI thread.",
-      "separateThread": "Separate Thread: Workers run in isolated contexts with no DOM access",
-      "messagePassing": "Message Passing: Communication via postMessage (serialization overhead)",
-      "transferable": "Transferable Objects: Zero-copy transfer for ArrayBuffer"
+      "separateThread": "<strong>Separate Thread</strong>: Workers run in isolated contexts with no DOM access",
+      "messagePassing": "<strong>Message Passing</strong>: Communication via postMessage (serialization overhead)",
+      "transferable": "<strong>Transferable Objects</strong>: Zero-copy transfer for ArrayBuffer"
     },
     "useCases": {
       "title": "Use Cases",

@@ -22,9 +22,9 @@
       "title": "OAuth 2.0이란?",
       "infoTitle": "권한 부여 프로토콜",
       "infoDescription": "OAuth 2.0은 서드파티 서비스에 접근 권한을 위임하는 표준 프로토콜입니다. 예를 들어, 앱이 사용자의 Google 캘린더에 접근해야 할 때, OAuth 2.0은 Google로부터 액세스 토큰을 안전하게 얻는 방법을 제공합니다.",
-      "listAuthNot": "인증이 아닌 권한 부여: OAuth 2.0은 사용자 신원 확인이 아닌 권한 위임을 처리합니다",
-      "listAccessToken": "액세스 토큰: 보호된 리소스에 접근하기 위한 단기 자격 증명",
-      "listRefreshToken": "리프레시 토큰: 재인증 없이 새 액세스 토큰을 얻기 위한 장기 토큰"
+      "listAuthNot": "<strong>인증이 아닌 권한 부여</strong>: OAuth 2.0은 사용자 신원 확인이 아닌 권한 위임을 처리합니다",
+      "listAccessToken": "<strong>액세스 토큰</strong>: 보호된 리소스에 접근하기 위한 단기 자격 증명",
+      "listRefreshToken": "<strong>리프레시 토큰</strong>: 재인증 없이 새 액세스 토큰을 얻기 위한 장기 토큰"
     },
     "roles": {
       "title": "OAuth 2.0의 주요 역할",
