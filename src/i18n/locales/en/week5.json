@@ -2,7 +2,7 @@
   "header": {
     "backToDashboard": "← Back to Dashboard",
     "title": "React & Next.js Advanced",
-    "description": "Concurrency, React 19, Next.js 13 App Router, and Modern Ecosystem."
+    "description": "Concurrency, React 19, Next.js App Router, and Modern Ecosystem."
   },
   "tabs": {
     "all": "All",
@@ -145,13 +145,30 @@
       }
     },
     "useHook": {
-      "title": "The 'use' Hook",
-      "intro": "The <code>use</code> hook unwraps promises or reads context, enabling <strong>Suspense</strong> boundaries. It allows client components to work with promises passed from server components.",
+      "title": "The 'use' api",
+      "intro": "The <code>use</code> api unwraps promises or reads context, enabling <strong>Suspense</strong> boundaries. It allows client components to work with promises passed from server components.",
       "api": {
         "title": "use() API",
         "promises": "<strong>Promises:</strong> Suspends the component until resolved",
         "context": "<strong>Context:</strong> Can read context conditionally",
         "suspense": "<strong>Works with Suspense:</strong> Properly integrates with Suspense boundaries"
+      },
+      "nextjsCaching": "Next.js 16 (Canary) introduces revolutionary caching APIs (<code>use cache</code>, <code>cacheLife</code>, <code>cacheTag</code>) to simplify data fetching."
+    },
+    "nextjs": {
+      "title": "Next.js 16 Caching",
+      "subtitle": "Next.js 16: \"Dynamic by Default\" & Caching",
+      "description": "Next.js 16 moves towards a <strong>\"Dynamic by Default\"</strong> model (unlike the \"Cached by Default\" of v13-14). You now explicitly opt-in to caching with <code>\"use cache\"</code>.",
+      "oldWay": {
+        "title": "Old way (ISR)",
+        "description": "Complex config with <code>revalidate</code> per page/segment. Hard to share cache rules.",
+        "code": "export const revalidate = 3600;"
+      },
+      "newWay": {
+        "title": "New way (use cache)",
+        "description": "Function-level directive. Reusable & Composable.",
+        "code1": "\"use cache\";",
+        "code2": "cacheLife(\"hours\");"
       }
     },
     "rsc": {
@@ -208,7 +225,16 @@
         "title": "How useOptimistic Works",
         "description": "React 19's <code>useOptimistic</code> allows you to show a different state while an async action is pending. Instead of waiting for the server, you immediately show the expected result. If the server fails, React automatically reverts the state."
       },
-      "codePattern": "Code Pattern (React 19)"
+      "codePattern": "Code Pattern (React 19)",
+      "featuresTitle": "React 19 & Next.js 16 Features",
+      "featuresSubtitle": "Explore Optimistic UI and the new Cache Directives.",
+      "demo1": "Demo 1: Auto-Optimistic UI",
+      "demo2": "Demo 2: Next.js 16 \"use cache\"",
+      "cacheStatus": "Cache Status",
+      "cacheInstructions": "Click a strategy to simulate a request. <br /> \"use cache\" creates a static cache entry automatically.",
+      "noUseCache": "no \"use cache\"",
+      "patternUseOptimistic": "Pattern: useOptimistic (React 19)",
+      "patternUseCache": "Pattern: use cache (Next.js 16)"
     }
   },
   "dataFetching": {
@@ -297,8 +323,9 @@
       }
     },
     "visualizer": {
-      "title": "Next.js Caching Visualizer",
-      "subtitle": "Simulate <code>fetch()</code> caching strategies in Next.js 13+.",
+      "title": "Next.js Caching & Comparison Visualizer",
+      "subtitle": "Simulate <code>fetch()</code> strategies vs Client Libraries (SWR, React Query).",
+      "intro": "Use the toggle below to switch between Native server-side fetching and client-side strategies. Observe differences in caching, revalidation, and optimistic updates.",
       "serverTime": "Server Time:",
       "fetchStrategy": "Fetch Strategy",
       "forceCache": "force-cache",
@@ -318,7 +345,26 @@
         "forceCache": "<strong>force-cache:</strong> Caches data indefinitely. Time won't update on subsequent clicks.",
         "noStore": "<strong>no-store:</strong> Fetches fresh data every time. Time matches server time.",
         "revalidate": "<strong>revalidate (5s):</strong> Caches for 5 seconds. Updates only if cache is stale."
-      }
+      },
+      "triggers": "Triggers",
+      "static": "Static",
+      "dynamic": "Dynamic",
+
+      "componentMount": "Component Mount",
+      "windowFocus": "Window Focus",
+      "autoReval": "Auto Reval",
+      "revalidating": "Revalidating...",
+      "lastUpdate": "Last Update",
+      "nativeFetch": "Native fetch()",
+      "swr": "SWR",
+      "reactQuery": "React Query",
+      "server": "Server",
+      "clientStale": "Client (Stale-While-Revalidate)",
+      "serverCache": "Server-side Cache (Data Cache)",
+      "manualControl": "Manual control via <code>cache: 'force-cache'</code> etc.",
+      "clientCache": "Client-side Cache (SWR / React Query)",
+      "autoRevalDesc": "Automatic revalidation on focus/reconnect.",
+      "optimisticUI": "<strong>Optimistic UI:</strong> Shows stale data immediately while fetching fresh data working in background."
     }
   },
   "appRouter": {
@@ -365,7 +411,10 @@
       "intro": "<strong>Intercepting Routes</strong> allow you to \"intercept\" a route from another part of your app and show it within the current layout. Perfect for modal dialogs or detail views.",
       "modalPattern": {
         "title": "Modal Routing Pattern",
-        "description": "Intercept a route to show as a modal while keeping the background content in place. Maintains browser history naturally."
+        "intro": "Intercept a route to show as a modal while keeping the background content in place. Maintains browser history naturally.",
+        "useCase": "Common Use Case: Photo Modal",
+        "softNav": "<strong>Soft Navigation (Link click):</strong> The URL changes to <code>/photo/123</code>, but the content renders in a modal <em>on top</em> of the feed.",
+        "hardNav": "<strong>Hard Navigation (Refresh/Direct):</strong> The URL is still <code>/photo/123</code>, but the generic <code>photo/page.tsx</code> renders as a full page."
       },
       "syntax": {
         "title": "Routing Syntax",
@@ -380,13 +429,15 @@
     },
     "visualizer": {
       "title": "App Router & Nested Layouts",
-      "subtitle": "Explore how the file system maps to the UI. Click folders/files to navigate.",
+      "subtitle": "Explore nested layouts and <strong>Intercepting Routes</strong> (Modals).",
       "projectStructure": "Project Structure",
+      "refresh": "Refresh",
       "rootLayout": "Root Layout",
       "home": "Home",
       "dashboard": "Dashboard",
       "blog": "Blog",
-      "post1": "Post 1",
+      "galleryIntercept": "Gallery (Intercept)",
+      "homePageContent": "Home Page Content",
       "dashboardLayout": "Dashboard Layout",
       "sidebar": "Sidebar",
       "overview": "Overview",
@@ -394,10 +445,30 @@
       "dashboardHome": "Dashboard Home",
       "settingsPage": "Settings Page",
       "blogLayout": "Blog Layout",
-      "readingMode": "Running Header (Reading Mode)",
+      "runningHeader": "Running Header (Reading Mode)",
       "blogIndex": "Blog Index",
-      "dynamicPost": "Dynamic Blog Post:",
-      "layout": "Layout"
+      "dynamicBlogPost": "Dynamic Blog Post",
+      "galleryLayout": "Gallery Layout",
+      "photo": "Photo",
+      "interceptedRoute": "Intercepted Route (.)photo",
+      "closeModal": "Close Modal",
+      "fullPageRender": "Full Page Render (Hard Nav)",
+      "backToGallery": "Back to Gallery",
+      "layout": "Layout",
+      "descriptions": {
+        "rootLayout": "Root Layout (Persistent)",
+        "homePage": "Home Page",
+        "dashboardLayout": "Dashboard Layout (Persistent)",
+        "dashboardHome": "Dashboard Home",
+        "settingsPage": "Settings Page",
+        "blogLayout": "Blog Layout",
+        "dynamicBlogPost": "Dynamic Blog Post",
+        "galleryLayout": "Gallery Layout",
+        "galleryGrid": "Gallery Grid (Main)",
+        "interceptedModal": "Intercepted Modal",
+        "modalContent": "Modal Content (Soft Nav)",
+        "fullPagePhoto": "Full Page Photo (Hard Nav)"
+      }
     }
   },
   "optimization": {

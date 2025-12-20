@@ -257,7 +257,6 @@ export function LoginForm() {
             </InfoBox>
           </div>
         </SubSection>
-
         <SubSection title={t('react19.useHook.title')} icon iconColor="blue">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
@@ -321,6 +320,55 @@ function Comments({ promise }) {
 }`}
               className="text-xs"
             />
+          </div>
+        </SubSection>
+
+        <SubSection title={t('react19.nextjs.title')} icon iconColor="blue">
+          <div className="space-y-4">
+            <p className="text-sm text-gray-700">
+              <Trans
+                t={t}
+                i18nKey="react19.nextjs.description"
+                components={{ strong: <strong />, code: <code /> }}
+              />{' '}
+              <Trans
+                t={t}
+                i18nKey="react19.useHook.nextjsCaching"
+                components={{ code: <code /> }}
+              />
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 bg-white rounded-lg border border-purple-100 shadow-sm">
+                <h4 className="font-bold text-purple-700 mb-2">
+                  {t('react19.nextjs.oldWay.title')}
+                </h4>
+                <p className="text-sm text-gray-600 mb-2">
+                  <Trans
+                    t={t}
+                    i18nKey="react19.nextjs.oldWay.description"
+                    components={{ code: <code /> }}
+                  />
+                </p>
+                <code className="text-xs bg-gray-100 p-1 rounded block">
+                  {t('react19.nextjs.oldWay.code')}
+                </code>
+              </div>
+
+              <div className="p-4 bg-white rounded-lg border border-blue-100 shadow-sm">
+                <h4 className="font-bold text-blue-700 mb-2">
+                  {t('react19.nextjs.newWay.title')}
+                </h4>
+                <p className="text-sm text-gray-600 mb-2">
+                  {t('react19.nextjs.newWay.description')}
+                </p>
+                <code className="text-xs bg-gray-100 p-1 rounded block">
+                  {t('react19.nextjs.newWay.code1')}
+                  <br />
+                  {t('react19.nextjs.newWay.code2')}
+                </code>
+              </div>
+            </div>
           </div>
         </SubSection>
 

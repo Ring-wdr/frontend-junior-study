@@ -1,5 +1,6 @@
 import { CheckCircle2, Clock } from 'lucide-react';
 import { useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
@@ -19,6 +20,7 @@ const sendMessageToServer = async (text: string): Promise<string> => {
 };
 
 export const React19Visualizer = () => {
+  const { t } = useTranslation('week5');
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isPending, setIsPending] = useState(false);
@@ -70,23 +72,28 @@ export const React19Visualizer = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
-              React 19 Optimistic UI
+            <span className="bg-clip-text text-transparent bg-linear-to-r from-blue-500 to-purple-500">
+              {t('react19.visualizer.featuresTitle')}
             </span>
           </h3>
           <p className="text-sm text-gray-500 mt-1">
-            Send messages to see the difference between standard and optimistic
-            updates.
+            {t('react19.visualizer.featuresSubtitle')}
           </p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* DEMO AREA */}
-        <div className="border rounded-xl overflow-hidden bg-gray-50 flex flex-col h-[400px]">
+        {/* OPTIMISTIC UI DEMO */}
+        <div className="border rounded-xl overflow-hidden bg-gray-50 flex flex-col h-[500px]">
+          <div className="bg-white p-3 border-b">
+            <h4 className="text-xs font-bold uppercase text-gray-500">
+              {t('react19.visualizer.demo1')}
+            </h4>
+          </div>
+
           <div className="bg-white p-3 border-b flex items-center justify-between">
             <span className="text-xs font-semibold text-gray-500">
-              Chat Preview
+              {t('react19.visualizer.chatPreview')}
             </span>
             <button
               type="button"
@@ -96,15 +103,15 @@ export const React19Visualizer = () => {
               }}
               className="text-xs text-red-500 hover:underline"
             >
-              Clear
+              {t('react19.visualizer.clear')}
             </button>
           </div>
 
           {/* Message List */}
-          <div className="flex-1 p-4 space-y-4 overflow-y-auto">
+          <div className="flex-1 p-4 space-y-4 overflow-y-auto min-h-0">
             {displayMessages.length === 0 && (
               <div className="text-center text-gray-400 text-sm mt-10 italic">
-                No messages yet.
+                {t('react19.visualizer.noMessages')}
               </div>
             )}
             {displayMessages.map((msg) => (
@@ -128,7 +135,7 @@ export const React19Visualizer = () => {
                 </div>
                 {msg.status === 'sending' && (
                   <div className="text-[10px] opacity-70 mt-1 text-right">
-                    Sending... (Optimistic)
+                    {t('react19.visualizer.sending')}
                   </div>
                 )}
               </div>
@@ -146,83 +153,79 @@ export const React19Visualizer = () => {
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Type a message..."
+              placeholder={t('react19.visualizer.typeMessage')}
               className="w-full px-3 py-2 border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               onKeyDown={(e) => {
                 if (e.nativeEvent.isComposing) return;
-                if (e.key === 'Enter') handleSendOptimistic(); // Default to optimistic for better UX demo
+                if (e.key === 'Enter') handleSendOptimistic();
               }}
             />
             <div className="grid grid-cols-2 gap-2">
               <button
+                type="button"
                 onClick={handleSendStandard}
                 disabled={isPending || !inputValue}
                 className="flex items-center justify-center gap-2 px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium rounded-lg transition-colors disabled:opacity-50"
               >
-                Standard Send (Slow)
+                {t('react19.visualizer.standardSend')}
               </button>
               <button
+                type="button"
                 onClick={handleSendOptimistic}
                 disabled={!inputValue}
                 className="flex items-center justify-center gap-2 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors shadow-sm disabled:opacity-50"
               >
                 <ZapIcon className="w-3 h-3" />
-                Optimistic Send (Fast)
+                {t('react19.visualizer.optimisticSend')}
               </button>
             </div>
           </div>
         </div>
 
-        {/* CODE EXPLANATION */}
-        <div className="space-y-4">
-          <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
-            <h4 className="font-semibold text-blue-900 text-sm mb-2">
-              How useOptimistic Works
+        {/* CACHE DEMO */}
+        <div className="border rounded-xl overflow-hidden bg-gray-50 flex flex-col h-[500px]">
+          <div className="bg-white p-3 border-b">
+            <h4 className="text-xs font-bold uppercase text-gray-500">
+              {t('react19.visualizer.demo2')}
             </h4>
-            <p className="text-xs text-blue-800 leading-relaxed">
-              React 19's <code>useOptimistic</code> allows you to show a
-              different state while an async action is pending. Instead of
-              waiting for the server, you immediately show the expected result.
-              If the server fails, React automatically reverts the state.
-            </p>
           </div>
 
-          <h4 className="text-sm font-semibold text-gray-700 mt-4">
-            Code Pattern (React 19)
+          <CacheDemo />
+        </div>
+      </div>
+
+      {/* CODE EXPLANATION (Combined) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4 border-t">
+        <div>
+          <h4 className="text-sm font-semibold text-gray-700 mb-2">
+            {t('react19.visualizer.patternUseOptimistic')}
           </h4>
           <CodeBlock
-            code={`import { useOptimistic } from 'react';
+            code={`const [optimisticMsgs, addMsg] = 
+  useOptimistic(msgs, (state, newMsg) => [
+      ...state, { text: newMsg, sending: true }
+  ]);
 
-function Chat({ messages, sendMessage }) {
-  // 1. Define optimistic state
-  const [optimisticMessages, addOptimisticMessage] = 
-    useOptimistic(messages, (state, newMessage) => [
-      ...state,
-      { text: newMessage, sending: true }
-    ]);
+// In Server Action
+async function send(data) {
+    addMsg(data.get('msg')); // Instant update
+    await db.save(data.get('msg'));
+}`}
+            className="text-xs"
+          />
+        </div>
+        <div>
+          <h4 className="text-sm font-semibold text-gray-700 mb-2">
+            {t('react19.visualizer.patternUseCache')}
+          </h4>
+          <CodeBlock
+            code={`import { unstable_cacheLife as cacheLife } from 'next/cache';
 
-  async function formAction(formData) {
-    const text = formData.get('message');
-    
-    // 2. Add optimistic update immediately
-    addOptimisticMessage(text);
-    
-    // 3. Perform actual server action
-    await sendMessage(text);
-  }
-
-  return (
-    <div>
-      {optimisticMessages.map((msg, i) => (
-         <div key={i} className={msg.sending ? 'opacity-50' : ''}>
-            {msg.text}
-         </div>
-      ))}
-      <form action={formAction}>
-        <input name="message" />
-      </form>
-    </div>
-  );
+async function getProduct(id) {
+  'use cache'; // Opt-in directive
+  cacheLife('hours'); // Profile-based config
+  
+  return db.product.findUnique({ id });
 }`}
             className="text-xs"
           />
@@ -232,12 +235,121 @@ function Chat({ messages, sendMessage }) {
   );
 };
 
+// --- Sub-component for Cache Demo ---
+const CacheDemo = () => {
+  const { t } = useTranslation('week5');
+  const [freshness, setFreshness] = useState<'stale' | 'fresh'>('stale');
+  const [strategy, setStrategy] = useState<'default' | 'fast' | 'dynamic'>(
+    'default',
+  );
+
+  return (
+    <div className="flex-1 p-6 flex flex-col items-center justify-center space-y-6">
+      <div className="relative w-32 h-32 flex items-center justify-center">
+        <div
+          className={cn(
+            'absolute inset-0 rounded-full border-4 opacity-20',
+            freshness === 'fresh' ? 'border-green-500' : 'border-gray-400',
+          )}
+        />
+        <div
+          className={cn(
+            'absolute inset-0 rounded-full border-4 border-t-transparent animate-spin',
+            freshness === 'fresh' ? 'border-green-500' : 'border-gray-400',
+            // Spin faster if fresh to simulate active keeping? No, maybe just static ring
+            freshness === 'fresh'
+              ? 'animate-[spin_3s_linear_infinite]'
+              : 'animate-none',
+          )}
+        />
+        <div className="text-center">
+          <div
+            className={cn(
+              'text-2xl font-bold',
+              freshness === 'fresh' ? 'text-green-600' : 'text-gray-500',
+            )}
+          >
+            {freshness === 'fresh'
+              ? t('dataFetching.visualizer.hit')
+              : t('dataFetching.visualizer.miss')}
+          </div>
+          <div className="text-[10px] text-gray-400">
+            {' '}
+            {t('react19.visualizer.cacheStatus')}{' '}
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full space-y-4">
+        <div className="grid grid-cols-3 gap-2">
+          {(['default', 'fast', 'dynamic'] as const).map((s) => (
+            <button
+              type="button"
+              key={s}
+              onClick={() => {
+                setStrategy(s);
+                setFreshness('fresh');
+                setTimeout(
+                  () => setFreshness('stale'),
+                  s === 'dynamic' ? 0 : s === 'fast' ? 2000 : 5000,
+                );
+              }}
+              className={cn(
+                'px-2 py-2 text-xs rounded border transition-colors',
+                strategy === s
+                  ? 'bg-indigo-100 border-indigo-500 text-indigo-700'
+                  : 'bg-white border-gray-200',
+              )}
+            >
+              {s === 'default' && 'cacheLife("hours")'}
+              {s === 'fast' && 'cacheLife("seconds")'}
+              {s === 'dynamic' && t('react19.visualizer.noUseCache')}
+            </button>
+          ))}
+        </div>
+
+        <div className="bg-slate-800 text-slate-200 p-3 rounded text-xs font-mono">
+          {strategy === 'default' && (
+            <>
+              <span className="text-purple-400">'use cache'</span>;<br />
+              <span className="text-blue-400">cacheLife</span>(
+              <span className="text-green-400">"hours"</span>);
+            </>
+          )}
+          {strategy === 'fast' && (
+            <>
+              <span className="text-purple-400">'use cache'</span>;<br />
+              <span className="text-blue-400">cacheLife</span>(
+              <span className="text-green-400">"seconds"</span>);
+            </>
+          )}
+          {strategy === 'dynamic' && (
+            <>
+              <span className="text-gray-500">
+                {'// No directive (Dynamic)'}
+              </span>
+            </>
+          )}
+        </div>
+      </div>
+
+      <p className="text-xs text-center text-gray-500 max-w-[80%]">
+        <Trans
+          t={t}
+          i18nKey="react19.visualizer.cacheInstructions"
+          components={{ br: <br /> }}
+        />
+      </p>
+    </div>
+  );
+};
+
 function ZapIcon({ className }: { className?: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      fill="currentColor" // Changed to fill for solid icon
+      fill="currentColor"
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"

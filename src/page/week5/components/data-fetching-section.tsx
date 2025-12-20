@@ -19,7 +19,11 @@ export const DataFetchingSection = () => {
         >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              <Trans t={t} i18nKey="dataFetching.serverFetching.intro" components={{ code: <code /> }} />
+              <Trans
+                t={t}
+                i18nKey="dataFetching.serverFetching.intro"
+                components={{ code: <code /> }}
+              />
             </p>
 
             <InfoBox
@@ -84,7 +88,12 @@ export default async function PostsPage() {
           </div>
         </SubSection>
 
-        <DataFetchingVisualizer />
+        <div className="space-y-4">
+          <p className="text-sm text-gray-600">
+            {t('dataFetching.visualizer.intro')}
+          </p>
+          <DataFetchingVisualizer />
+        </div>
 
         <SubSection
           title={t('dataFetching.clientLibraries.title')}
@@ -159,11 +168,13 @@ function Profile() {
                 </p>
                 <ul className="list-disc pl-5 space-y-1 text-xs text-gray-700">
                   <li>
-                    {t('dataFetching.clientLibraries.reactQuery.advancedCaching')}
+                    {t(
+                      'dataFetching.clientLibraries.reactQuery.advancedCaching',
+                    )}
                   </li>
                   <li>
                     {t(
-                      'dataFetching.clientLibraries.reactQuery.optimisticUpdates'
+                      'dataFetching.clientLibraries.reactQuery.optimisticUpdates',
                     )}
                   </li>
                   <li>
@@ -228,7 +239,9 @@ function Profile() {
                   <tbody>
                     <tr className="border-b">
                       <td className="p-2 font-medium">
-                        {t('dataFetching.clientLibraries.comparison.bundleSize')}
+                        {t(
+                          'dataFetching.clientLibraries.comparison.bundleSize',
+                        )}
                       </td>
                       <td className="p-2">~6KB</td>
                       <td className="p-2">~4KB</td>
@@ -245,12 +258,16 @@ function Profile() {
                         {t('dataFetching.clientLibraries.comparison.yes')}
                       </td>
                       <td className="p-2">
-                        {t('dataFetching.clientLibraries.comparison.yesAdvanced')}
+                        {t(
+                          'dataFetching.clientLibraries.comparison.yesAdvanced',
+                        )}
                       </td>
                     </tr>
                     <tr className="border-b">
                       <td className="p-2 font-medium">
-                        {t('dataFetching.clientLibraries.comparison.revalidation')}
+                        {t(
+                          'dataFetching.clientLibraries.comparison.revalidation',
+                        )}
                       </td>
                       <td className="p-2">
                         {t('dataFetching.clientLibraries.comparison.manual')}

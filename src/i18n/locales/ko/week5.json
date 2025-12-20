@@ -2,7 +2,7 @@
   "header": {
     "backToDashboard": "← 대시보드로 돌아가기",
     "title": "React & Next.js Advanced",
-    "description": "동시성, React 19, Next.js 13 App Router 및 최신 생태계."
+    "description": "동시성, React 19, Next.js App Router 및 최신 생태계."
   },
   "tabs": {
     "all": "전체",
@@ -103,8 +103,8 @@
   },
   "react19": {
     "badge": "React 19 미리보기",
-    "title": "React 19 & 실험적 훅",
-    "description": "useOptimistic, useFormStatus, useActionState 및 'use' 훅과 같은 향후 기능 미리보기.",
+    "title": "React 19 & 실험적 API",
+    "description": "useOptimistic, useFormStatus, useActionState 훅 및 'use' API과 같은 향후 기능 미리보기.",
     "serverActions": {
       "title": "서버 액션 개요",
       "intro": "React 19는 서버에서 실행되며 클라이언트 컴포넌트에서 직접 호출할 수 있는 함수인 <strong>서버 액션</strong>을 도입합니다. 이를 통해 수동 API 라우트 생성이 필요 없습니다.",
@@ -145,13 +145,30 @@
       }
     },
     "useHook": {
-      "title": "'use' 훅",
-      "intro": "<code>use</code> 훅은 프로미스를 언랩하거나 컨텍스트를 읽어 <strong>Suspense</strong> 경계를 활성화합니다. 이를 통해 클라이언트 컴포넌트가 서버 컴포넌트에서 전달된 프로미스와 함께 작동할 수 있습니다.",
+      "title": "'use' API",
+      "intro": "<code>use</code> API는 프로미스를 언랩하거나 컨텍스트를 읽어 <strong>Suspense</strong> 경계를 활성화합니다. 이를 통해 클라이언트 컴포넌트가 서버 컴포넌트에서 전달된 프로미스와 함께 작동할 수 있습니다.",
       "api": {
         "title": "use() API",
         "promises": "<strong>프로미스:</strong> 해결될 때까지 컴포넌트를 일시 중단",
         "context": "<strong>컨텍스트:</strong> 조건부로 컨텍스트를 읽을 수 있음",
         "suspense": "<strong>Suspense와 작동:</strong> Suspense 경계와 적절히 통합"
+      },
+      "nextjsCaching": "Next.js 16 (Canary)은 데이터 페칭을 단순화하는 혁신적인 캐싱 API(<code>use cache</code>, <code>cacheLife</code>, <code>cacheTag</code>)를 도입합니다."
+    },
+    "nextjs": {
+      "title": "Next.js 16 캐싱",
+      "subtitle": "Next.js 16: \"Dynamic by Default\" & 캐싱",
+      "description": "Next.js 16은 <strong>\"Dynamic by Default\"</strong> 모델로 전환합니다 (v13-14의 \"Cached by Default\"와 달리). 이제 <code>\"use cache\"</code>로 명시적으로 캐싱을 선택합니다.",
+      "oldWay": {
+        "title": "기존 방식 (ISR)",
+        "description": "페이지/세그먼트별로 <code>revalidate</code>를 설정하는 복잡한 구성. 캐시 규칙 공유가 어려움.",
+        "code": "export const revalidate = 3600;"
+      },
+      "newWay": {
+        "title": "새로운 방식 (use cache)",
+        "description": "함수 수준 지시어. 재사용 가능하고 조합 가능.",
+        "code1": "\"use cache\";",
+        "code2": "cacheLife(\"hours\");"
       }
     },
     "rsc": {
@@ -208,7 +225,16 @@
         "title": "useOptimistic 작동 방식",
         "description": "React 19의 <code>useOptimistic</code>을 사용하면 비동기 액션이 대기 중인 동안 다른 상태를 표시할 수 있습니다. 서버를 기다리는 대신, 예상되는 결과를 즉시 표시합니다. 서버가 실패하면 React가 자동으로 상태를 되돌립니다."
       },
-      "codePattern": "코드 패턴 (React 19)"
+      "codePattern": "코드 패턴 (React 19)",
+      "featuresTitle": "React 19 & Next.js 16 기능",
+      "featuresSubtitle": "낙관적 UI와 새로운 캐시 지시어를 탐색해보세요.",
+      "demo1": "데모 1: 자동 낙관적 UI",
+      "demo2": "데모 2: Next.js 16 \"use cache\"",
+      "cacheStatus": "캐시 상태",
+      "cacheInstructions": "전략을 클릭하여 요청을 시뮬레이션하세요. <br /> \"use cache\"는 자동으로 정적 캐시 항목을 생성합니다.",
+      "noUseCache": "\"use cache\" 없음",
+      "patternUseOptimistic": "패턴: useOptimistic (React 19)",
+      "patternUseCache": "패턴: use cache (Next.js 16)"
     }
   },
   "dataFetching": {
@@ -297,8 +323,9 @@
       }
     },
     "visualizer": {
-      "title": "Next.js 캐싱 시각화 도구",
-      "subtitle": "Next.js 13+에서 <code>fetch()</code> 캐싱 전략을 시뮬레이션합니다.",
+      "title": "Next.js 캐싱 & 비교 시각화 도구",
+      "subtitle": "<code>fetch()</code> 전략 vs 클라이언트 라이브러리(SWR, React Query) 비교.",
+      "intro": "아래 토글을 사용하여 기본 서버 측 페칭과 클라이언트 측 전략 간에 전환하세요. 캐싱, 재검증 및 낙관적 업데이트의 차이점을 관찰하세요.",
       "serverTime": "서버 시간:",
       "fetchStrategy": "Fetch 전략",
       "forceCache": "force-cache",
@@ -318,7 +345,26 @@
         "forceCache": "<strong>force-cache:</strong> 데이터를 무기한 캐시합니다. 후속 클릭 시 시간이 업데이트되지 않습니다.",
         "noStore": "<strong>no-store:</strong> 매번 새로운 데이터를 페칭합니다. 시간이 서버 시간과 일치합니다.",
         "revalidate": "<strong>revalidate (5초):</strong> 5초 동안 캐시합니다. 캐시가 오래된 경우에만 업데이트합니다."
-      }
+      },
+      "triggers": "트리거",
+      "static": "정적",
+      "dynamic": "동적",
+
+      "componentMount": "컴포넌트 마운트",
+      "windowFocus": "윈도우 포커스",
+      "autoReval": "자동 재검증",
+      "revalidating": "재검증 중...",
+      "lastUpdate": "마지막 업데이트",
+      "nativeFetch": "Native fetch()",
+      "swr": "SWR",
+      "reactQuery": "React Query",
+      "server": "서버",
+      "clientStale": "클라이언트 (Stale-While-Revalidate)",
+      "serverCache": "서버 사이드 캐시 (데이터 캐시)",
+      "manualControl": "<code>cache: 'force-cache'</code> 등을 통한 수동 제어.",
+      "clientCache": "클라이언트 사이드 캐시 (SWR / React Query)",
+      "autoRevalDesc": "포커스/재연결 시 자동 재검증.",
+      "optimisticUI": "<strong>낙관적 UI:</strong> 백그라운드에서 새로운 데이터를 가져오는 동안 오래된 데이터를 즉시 표시합니다."
     }
   },
   "appRouter": {
@@ -365,7 +411,10 @@
       "intro": "<strong>라우트 가로채기</strong>를 사용하면 앱의 다른 부분에서 라우트를 \"가로채서\" 현재 레이아웃 내에서 표시할 수 있습니다. 모달 대화상자나 상세 보기에 완벽합니다.",
       "modalPattern": {
         "title": "모달 라우팅 패턴",
-        "description": "라우트를 가로채서 백그라운드 콘텐츠를 유지하면서 모달로 표시합니다. 브라우저 히스토리를 자연스럽게 유지합니다."
+        "intro": "라우트를 가로채서 백그라운드 콘텐츠를 유지하면서 모달로 표시합니다. 브라우저 히스토리를 자연스럽게 유지합니다.",
+        "useCase": "일반적인 사용 사례: 사진 모달",
+        "softNav": "<strong>소프트 네비게이션 (링크 클릭):</strong> URL이 <code>/photo/123</code>으로 변경되지만, 콘텐츠는 피드 <em>위에</em> 모달로 렌더링됩니다.",
+        "hardNav": "<strong>하드 네비게이션 (새로고침/직접 접근):</strong> URL은 여전히 <code>/photo/123</code>이지만, 일반적인 <code>photo/page.tsx</code>가 전체 페이지로 렌더링됩니다."
       },
       "syntax": {
         "title": "라우팅 구문",
@@ -380,13 +429,15 @@
     },
     "visualizer": {
       "title": "App Router & 중첩 레이아웃",
-      "subtitle": "파일 시스템이 UI에 매핑되는 방식을 탐색하세요. 폴더/파일을 클릭하여 탐색합니다.",
+      "subtitle": "중첩 레이아웃과 <strong>Intercepting Routes</strong> (모달)를 탐색해보세요.",
       "projectStructure": "프로젝트 구조",
+      "refresh": "새로고침",
       "rootLayout": "루트 레이아웃",
       "home": "홈",
       "dashboard": "대시보드",
       "blog": "블로그",
-      "post1": "포스트 1",
+      "galleryIntercept": "갤러리 (가로채기)",
+      "homePageContent": "홈 페이지 콘텐츠",
       "dashboardLayout": "대시보드 레이아웃",
       "sidebar": "사이드바",
       "overview": "개요",
@@ -394,10 +445,30 @@
       "dashboardHome": "대시보드 홈",
       "settingsPage": "설정 페이지",
       "blogLayout": "블로그 레이아웃",
-      "readingMode": "읽기 모드 헤더",
+      "runningHeader": "러닝 헤더 (읽기 모드)",
       "blogIndex": "블로그 인덱스",
-      "dynamicPost": "동적 블로그 포스트:",
-      "layout": "레이아웃"
+      "dynamicBlogPost": "동적 블로그 포스트",
+      "galleryLayout": "갤러리 레이아웃",
+      "photo": "사진",
+      "interceptedRoute": "가로채기 된 경로 (.)photo",
+      "closeModal": "모달 닫기",
+      "fullPageRender": "전체 페이지 렌더링 (하드 네비게이션)",
+      "backToGallery": "갤러리로 돌아가기",
+      "layout": "레이아웃",
+      "descriptions": {
+        "rootLayout": "루트 레이아웃 (지속됨)",
+        "homePage": "홈 페이지",
+        "dashboardLayout": "대시보드 레이아웃 (지속됨)",
+        "dashboardHome": "대시보드 홈",
+        "settingsPage": "설정 페이지",
+        "blogLayout": "블로그 레이아웃",
+        "dynamicBlogPost": "동적 블로그 포스트",
+        "galleryLayout": "갤러리 레이아웃",
+        "galleryGrid": "갤러리 그리드 (메인)",
+        "interceptedModal": "가로채기 된 모달",
+        "modalContent": "모달 콘텐츠 (소프트 네비게이션)",
+        "fullPagePhoto": "전체 페이지 사진 (하드 네비게이션)"
+      }
     }
   },
   "optimization": {

@@ -19,7 +19,11 @@ export const AppRouterSection = () => {
         >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              <Trans t={t} i18nKey="appRouter.fundamentals.intro" components={{ code: <code /> }} />
+              <Trans
+                t={t}
+                i18nKey="appRouter.fundamentals.intro"
+                components={{ code: <code /> }}
+              />
             </p>
 
             <InfoBox
@@ -28,10 +32,18 @@ export const AppRouterSection = () => {
             >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <Trans t={t} i18nKey="appRouter.fundamentals.keyFiles.page" components={{ code: <code /> }} />
+                  <Trans
+                    t={t}
+                    i18nKey="appRouter.fundamentals.keyFiles.page"
+                    components={{ code: <code /> }}
+                  />
                 </li>
                 <li>
-                  <Trans t={t} i18nKey="appRouter.fundamentals.keyFiles.layout" components={{ code: <code /> }} />
+                  <Trans
+                    t={t}
+                    i18nKey="appRouter.fundamentals.keyFiles.layout"
+                    components={{ code: <code /> }}
+                  />
                 </li>
                 <li>
                   <Trans
@@ -41,7 +53,11 @@ export const AppRouterSection = () => {
                   />
                 </li>
                 <li>
-                  <Trans t={t} i18nKey="appRouter.fundamentals.keyFiles.error" components={{ code: <code /> }} />
+                  <Trans
+                    t={t}
+                    i18nKey="appRouter.fundamentals.keyFiles.error"
+                    components={{ code: <code /> }}
+                  />
                 </li>
                 <li>
                   <Trans
@@ -51,7 +67,11 @@ export const AppRouterSection = () => {
                   />
                 </li>
                 <li>
-                  <Trans t={t} i18nKey="appRouter.fundamentals.keyFiles.route" components={{ code: <code /> }} />
+                  <Trans
+                    t={t}
+                    i18nKey="appRouter.fundamentals.keyFiles.route"
+                    components={{ code: <code /> }}
+                  />
                 </li>
               </ul>
             </InfoBox>
@@ -170,7 +190,9 @@ export default function DashboardLayout({ children, main, sidebar, analytics }) 
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
                 <li>{t('appRouter.parallelRoutes.useCases.dashboards')}</li>
                 <li>{t('appRouter.parallelRoutes.useCases.tabs')}</li>
-                <li>{t('appRouter.parallelRoutes.useCases.analyticsSidebars')}</li>
+                <li>
+                  {t('appRouter.parallelRoutes.useCases.analyticsSidebars')}
+                </li>
                 <li>
                   {t('appRouter.parallelRoutes.useCases.independentSections')}
                 </li>
@@ -194,59 +216,59 @@ export default function DashboardLayout({ children, main, sidebar, analytics }) 
               title={t('appRouter.interceptingRoutes.modalPattern.title')}
             >
               <p className="text-sm text-gray-700 mb-2">
-                {t('appRouter.interceptingRoutes.modalPattern.description')}
+                {t('appRouter.interceptingRoutes.modalPattern.intro')}
               </p>
+              <p className="text-sm text-gray-700 mb-2 font-semibold">
+                {t('appRouter.interceptingRoutes.modalPattern.useCase')}
+              </p>
+              <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
+                <li>
+                  <Trans
+                    t={t}
+                    i18nKey="appRouter.interceptingRoutes.modalPattern.softNav"
+                    components={{ strong: <strong />, code: <code />, em: <em /> }}
+                  />
+                </li>
+                <li>
+                  <Trans
+                    t={t}
+                    i18nKey="appRouter.interceptingRoutes.modalPattern.hardNav"
+                    components={{ strong: <strong />, code: <code /> }}
+                  />
+                </li>
+              </ul>
             </InfoBox>
 
             <CodeBlock
-              code={`// Folder structure
-app/
-├── photos/
-│   ├── page.js              // Photo list
-│   ├── [id]/
-│   │   └── page.js          // Full photo page
-│   └── @modal/(.)photo/
-│       ├── @modal/
-│       │   └── [id]/
-│       │       └── page.js  // Modal component
-│       └── default.js       // Empty state
-└── layout.js                // Has @modal slot
-
-// Behavior:
-// - Link from /photos to /photos/123
-//   Shows modal: background is /photos, modal shows /photos/123
-//
-// - Direct visit to /photos/123
-//   Shows full page (no modal background)
-
-// app/layout.js
-export default function RootLayout({ children, modal }) {
+              code={`// 1. Define the Intercepting Route
+// app/gallery/@modal/(..)photo/[id]/page.tsx
+export default function PhotoModal({ params }) {
   return (
-    <>
-      {children}
-      {modal}
-    </>
+    <Modal>
+      <Photo id={params.id} />
+    </Modal>
   );
 }
 
-// app/photos/@modal/(.)photo/[id]/page.js (Modal)
-'use client';
-
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-
-export default function PhotoModal({ params }) {
-  const router = useRouter();
-
+// 2. Define the Default Route (Hard Navigation)
+// app/photo/[id]/page.tsx
+export default function PhotoPage({ params }) {
   return (
-    <div className="modal-overlay" onClick={() => router.back()}>
-      <div className="modal">
-        <button onClick={() => router.back()}>Close</button>
-        <img src={\`/photos/\${params.id}.jpg\`} />
-      </div>
-    </div>
+    <MainLayout>
+      <Photo id={params.id} />
+    </MainLayout>
   );
-}`}
+}
+
+// 3. Link to it normally
+<Link href="/photo/123">View Photo</Link>
+
+/* 
+  When clicking the link from /gallery, Next.js matches 
+  (..)photo/[id] and renders the Modal.
+  
+  When sharing the URL, Next.js renders the full PhotoPage.
+*/`}
               className="text-xs"
             />
 
