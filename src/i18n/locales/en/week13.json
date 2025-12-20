@@ -1,0 +1,334 @@
+{
+  "header": {
+    "title": "Web Workers, PWA & IndexedDB",
+    "description": "Master parallel processing with Web Workers, build offline-capable PWAs with Service Workers, and leverage IndexedDB for client-side storage."
+  },
+  "tabs": {
+    "all": "All",
+    "webworker": "Web Worker",
+    "serviceworker": "Service Worker & PWA",
+    "indexeddb": "IndexedDB",
+    "offline": "Offline-First",
+    "combined": "Combined Pattern"
+  },
+  "webWorker": {
+    "badge": "Parallel",
+    "title": "Web Worker — Browser Multithreading",
+    "description": "Offload CPU-intensive work to background threads",
+    "whatIs": {
+      "title": "What is Web Worker?",
+      "infoTitle": "Background Processing",
+      "description": "JavaScript runs on a single thread, but browsers provide Worker threads to offload CPU-heavy tasks without blocking the main UI thread.",
+      "separateThread": "Separate Thread: Workers run in isolated contexts with no DOM access",
+      "messagePassing": "Message Passing: Communication via postMessage (serialization overhead)",
+      "transferable": "Transferable Objects: Zero-copy transfer for ArrayBuffer"
+    },
+    "useCases": {
+      "title": "Use Cases",
+      "largeJson": "Large JSON Parsing",
+      "largeJsonDesc": "5-50MB data processing",
+      "imageProcessing": "Image Processing",
+      "imageProcessingDesc": "Filters, transformations",
+      "videoAudio": "Video/Audio",
+      "videoAudioDesc": "FFmpeg WASM encoding",
+      "cryptography": "Cryptography",
+      "cryptographyDesc": "Encryption/decryption",
+      "mlInference": "ML Inference",
+      "mlInferenceDesc": "TensorFlow.js models",
+      "compression": "Data Compression",
+      "compressionDesc": "Gzip, LZ compression"
+    },
+    "demo": {
+      "title": "Main Thread vs Worker Demo",
+      "label": "UI Blocking Comparison",
+      "animationTest": "Animation Test",
+      "animationDesc": "Click toggle, then run calculations to see blocking",
+      "start": "Start",
+      "stop": "Stop",
+      "mainThread": "Main Thread",
+      "mainThreadDesc": "Blocks UI during calculation",
+      "runOnMain": "Run on Main",
+      "running": "Running...",
+      "webWorker": "Web Worker",
+      "webWorkerDesc": "UI stays responsive",
+      "runOnWorker": "Run on Worker"
+    },
+    "basicUsage": {
+      "title": "Basic Usage"
+    },
+    "transferableObjects": {
+      "title": "Transferable Objects",
+      "infoTitle": "Zero-Copy Transfer",
+      "description": "postMessage copies data by default. For large ArrayBuffers, use Transferable Objects to transfer ownership without copying."
+    },
+    "sharedArrayBuffer": {
+      "title": "SharedArrayBuffer (Advanced)",
+      "infoTitle": "Shared Memory",
+      "description": "SharedArrayBuffer allows true memory sharing between threads. Use Atomics for synchronization. Requires COOP/COEP headers."
+    }
+  },
+  "serviceWorker": {
+    "badge": "PWA",
+    "title": "Service Worker & PWA",
+    "description": "Build offline-capable web applications with programmable proxy",
+    "whatIs": {
+      "title": "What is Service Worker?",
+      "infoTitle": "Programmable Network Proxy",
+      "description": "Service Worker is a script that runs in the background, separate from the web page. It acts as a programmable proxy layer between your app and the network.",
+      "interceptRequests": "Intercept Requests: Handle fetch events for custom responses",
+      "cacheStorage": "Cache Storage: Store and serve cached resources",
+      "backgroundSync": "Background Sync: Queue requests when offline",
+      "pushNotifications": "Push Notifications: Receive push messages"
+    },
+    "lifecycle": {
+      "title": "Service Worker Lifecycle",
+      "label": "Lifecycle Visualization",
+      "register": "Register",
+      "registerDesc": "navigator.serviceWorker.register()",
+      "install": "Install",
+      "installDesc": "Pre-cache assets",
+      "activate": "Activate",
+      "activateDesc": "Clean old caches",
+      "running": "Running",
+      "runningDesc": "Handle fetch events"
+    },
+    "pwaComponents": {
+      "title": "PWA Components",
+      "manifest": "manifest.json",
+      "manifestDesc": "App metadata",
+      "serviceWorker": "Service Worker",
+      "serviceWorkerDesc": "Offline logic",
+      "https": "HTTPS",
+      "httpsDesc": "Secure origin"
+    },
+    "cacheStrategies": {
+      "title": "Cache Strategies",
+      "label": "Interactive Strategy Explorer",
+      "cacheFirst": "Cache First",
+      "cacheFirstDesc": "Fast, uses cache, falls back to network",
+      "cacheFirstUse": "Static assets, fonts, images",
+      "networkFirst": "Network First",
+      "networkFirstDesc": "Fresh data, falls back to cache",
+      "networkFirstUse": "API calls, dynamic content",
+      "staleWhileRevalidate": "Stale While Revalidate",
+      "staleWhileRevalidateDesc": "Fast from cache, updates in background",
+      "staleWhileRevalidateUse": "Balance of speed and freshness",
+      "networkOnly": "Network Only",
+      "networkOnlyDesc": "Always fetch from network",
+      "networkOnlyUse": "Non-cacheable requests",
+      "cacheOnly": "Cache Only",
+      "cacheOnlyDesc": "Only serve from cache",
+      "cacheOnlyUse": "Pre-cached offline pages"
+    },
+    "registration": {
+      "title": "Registration Example"
+    },
+    "workbox": {
+      "title": "Workbox (Recommended)",
+      "infoTitle": "Production-Ready PWA",
+      "description": "Workbox provides a declarative API for common caching patterns, precaching, routing, and more. Highly recommended for production."
+    }
+  },
+  "indexedDB": {
+    "badge": "Storage",
+    "title": "IndexedDB — Client-Side Database",
+    "description": "Store large amounts of structured data in the browser",
+    "whatIs": {
+      "title": "What is IndexedDB?",
+      "infoTitle": "Browser Database",
+      "description": "IndexedDB is a low-level API for storing significant amounts of structured data (including files/blobs). Unlike localStorage, it supports transactions and indexing.",
+      "largeStorage": "Large Storage: MB to GB capacity (quota-based)",
+      "asyncAPI": "Async API: Non-blocking operations",
+      "transactions": "Transactions: ACID-compliant data integrity",
+      "indexes": "Indexes: Efficient querying of data"
+    },
+    "comparison": {
+      "title": "Storage Comparison",
+      "feature": "Feature",
+      "localStorage": "localStorage",
+      "indexedDB": "IndexedDB",
+      "capacity": "Capacity",
+      "capacityLS": "~5MB",
+      "capacityIDB": "MB - GB",
+      "dataType": "Data Type",
+      "dataTypeLS": "String only",
+      "dataTypeIDB": "Any (objects, blobs)",
+      "api": "API",
+      "apiLS": "Sync (simple)",
+      "apiIDB": "Async (complex)",
+      "indexing": "Indexing",
+      "indexingLS": "No",
+      "indexingIDB": "Yes",
+      "transactions": "Transactions",
+      "transactionsLS": "No",
+      "transactionsIDB": "Yes"
+    },
+    "demo": {
+      "title": "Live Demo",
+      "label": "IndexedDB Todo App",
+      "dbStatus": "Database Status:",
+      "connected": "Connected",
+      "initializing": "Initializing...",
+      "placeholder": "Add a todo...",
+      "add": "Add",
+      "noTodos": "No todos yet. Add one above!",
+      "clearAll": "Clear all",
+      "persistMessage": "Data persists in IndexedDB. Refresh the page and your todos will still be here!"
+    },
+    "vanillaAPI": {
+      "title": "Vanilla API Example"
+    },
+    "idbLibrary": {
+      "title": "Using idb Library (Recommended)",
+      "infoTitle": "Promise-based Wrapper",
+      "description": "The native IndexedDB API is callback-based and verbose. The idb library provides a much cleaner Promise-based interface."
+    },
+    "useCases": {
+      "title": "Use Cases",
+      "offlineFirstApps": "Offline-First Apps",
+      "offlineFirstAppsDesc": "Notes, todo, documents",
+      "fileStorage": "File Storage",
+      "fileStorageDesc": "Images, PDFs, blobs",
+      "reactQueryPersist": "React Query Persist",
+      "reactQueryPersistDesc": "Cache persistence",
+      "formDrafts": "Form Drafts",
+      "formDraftsDesc": "Auto-save user input",
+      "syncQueue": "Sync Queue",
+      "syncQueueDesc": "Offline action queue",
+      "analyticsBuffer": "Analytics Buffer",
+      "analyticsBufferDesc": "Batch event storage"
+    }
+  },
+  "offlineFirst": {
+    "badge": "Strategy",
+    "title": "Offline-First Strategy",
+    "description": "Design patterns for building reliable offline experiences",
+    "philosophy": {
+      "title": "Offline-First Philosophy",
+      "infoTitle": "Design for Offline First",
+      "description": "Offline-first means designing your application to work without network connectivity by default. The network becomes an enhancement, not a requirement.",
+      "localFirst": "Local First: Store and read data locally",
+      "syncWhenPossible": "Sync When Possible: Push changes when online",
+      "gracefulDegradation": "Graceful Degradation: Clear offline indicators",
+      "conflictResolution": "Conflict Resolution: Handle sync conflicts"
+    },
+    "networkStatus": {
+      "title": "Network Status Detection",
+      "label": "Live Connection Monitor",
+      "online": "Online",
+      "offline": "Offline",
+      "onlineDesc": "Connected to network",
+      "offlineDesc": "No network connection",
+      "connectionHistory": "Connection History",
+      "noHistory": "Toggle your network connection to see events",
+      "toggleMessage": "Try toggling your WiFi or using DevTools Network tab to simulate offline"
+    },
+    "events": {
+      "title": "Online/Offline Events"
+    },
+    "backgroundSync": {
+      "title": "Background Sync",
+      "infoTitle": "Service Worker Background Sync",
+      "description": "Background Sync allows you to defer actions until the user has stable connectivity. The Service Worker handles retry automatically."
+    },
+    "uxPrinciples": {
+      "title": "Offline UX Principles",
+      "clearStatus": "Clear Status Indicators",
+      "clearStatusDesc": "Always show users when they are offline with visible banners or icons",
+      "indicateCached": "Indicate Cached Data",
+      "indicateCachedDesc": "Let users know when data is from cache vs fresh from server",
+      "retryOptions": "Retry Options",
+      "retryOptionsDesc": "Provide manual retry buttons for failed operations",
+      "queueActions": "Queue Actions",
+      "queueActionsDesc": "Save offline actions and process them when back online",
+      "conflictResolution": "Conflict Resolution",
+      "conflictResolutionDesc": "Handle data conflicts gracefully (last-write-wins, merge, user choice)"
+    },
+    "architecture": {
+      "title": "Offline-First Architecture",
+      "label": "Data Flow Pattern",
+      "uiLayer": "UI Layer",
+      "localStore": "Local\nStore",
+      "syncLayer": "Sync\nLayer",
+      "remoteServer": "Remote\nServer",
+      "flowDesc": "UI always reads from Local Store. Sync Layer handles server communication."
+    },
+    "implementation": {
+      "title": "Implementation Pattern"
+    }
+  },
+  "combined": {
+    "badge": "Advanced",
+    "title": "Combined Pattern",
+    "description": "Integrating Web Worker + Service Worker + IndexedDB",
+    "trio": {
+      "title": "The Powerful Trio",
+      "infoTitle": "Production Architecture",
+      "description": "The most powerful offline-capable web apps combine all three technologies. Each handles a specific concern:",
+      "webWorker": "Web Worker: CPU-intensive processing",
+      "serviceWorker": "Service Worker: Network resilience & caching",
+      "indexedDB": "IndexedDB: Persistent data storage"
+    },
+    "architecture": {
+      "title": "Architecture Overview",
+      "label": "System Architecture",
+      "mainThread": "Main Thread (UI)",
+      "reactComponents": "React Components",
+      "userInteractions": "User Interactions",
+      "stateManagement": "State Management",
+      "postMessage": "postMessage",
+      "fetchEvents": "fetch events",
+      "webWorker": "Web Worker",
+      "heavyProcessing": "Heavy Processing",
+      "dataTransform": "Data Transform",
+      "serviceWorker": "Service Worker",
+      "networkProxy": "Network Proxy",
+      "cacheStrategy": "Cache Strategy",
+      "indexedDB": "IndexedDB",
+      "userData": "User Data",
+      "syncQueue": "Sync Queue",
+      "filesBlobs": "Files/Blobs"
+    },
+    "realWorldExamples": {
+      "title": "Real-World Examples",
+      "imageEditor": "Offline Image Editor",
+      "imageEditorFeature1": "Web Worker: Apply filters, resize",
+      "imageEditorFeature2": "IndexedDB: Store edited images",
+      "imageEditorFeature3": "Service Worker: Offline access",
+      "noteTaking": "Offline Note-Taking App",
+      "noteTakingFeature1": "Web Worker: Full-text search indexing",
+      "noteTakingFeature2": "IndexedDB: Store notes & attachments",
+      "noteTakingFeature3": "Service Worker: Sync when online",
+      "dashboard": "Data Visualization Dashboard",
+      "dashboardFeature1": "Web Worker: Process large datasets",
+      "dashboardFeature2": "IndexedDB: Cache query results",
+      "dashboardFeature3": "Service Worker: API response caching"
+    },
+    "imageProcessing": {
+      "title": "Image Processing Example"
+    },
+    "serviceWorkerIntegration": {
+      "title": "Service Worker Integration"
+    },
+    "bestPractices": {
+      "title": "Best Practices",
+      "communication": "Communication Patterns",
+      "communicationItem1": "• Use Transferable Objects for large data",
+      "communicationItem2": "• Implement request/response IDs for async handling",
+      "communicationItem3": "• Consider Comlink for cleaner Worker APIs",
+      "storage": "Storage Strategy",
+      "storageItem1": "• IndexedDB for structured data and blobs",
+      "storageItem2": "• Cache Storage for HTTP responses",
+      "storageItem3": "• Clear old data with versioned cleanups",
+      "errorHandling": "Error Handling",
+      "errorHandlingItem1": "• Graceful fallbacks when Workers fail",
+      "errorHandlingItem2": "• Retry logic with exponential backoff",
+      "errorHandlingItem3": "• User feedback for long operations"
+    },
+    "comlink": {
+      "title": "Comlink for Cleaner APIs",
+      "infoTitle": "Simplify Worker Communication",
+      "description": "Comlink makes Web Workers feel like local async functions."
+    }
+  }
+}

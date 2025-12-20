@@ -1,0 +1,412 @@
+{
+  "header": {
+    "title": "State Management",
+    "description": "Deep Dive into Redux, Middleware, Modern Libraries (MobX/Recoil/Zustand), and more."
+  },
+  "tabs": {
+    "all": "All",
+    "fluxRedux": "Flux & Redux",
+    "middleware": "Middleware",
+    "modern": "Modern Libraries",
+    "advanced": "Advanced",
+    "context": "Context API"
+  },
+  "fluxRedux": {
+    "badge": "Architecture & Library",
+    "title": "Flux Architecture & Redux",
+    "description": "Understanding the unidirectional data flow and the most popular state management library.",
+    "fluxArchitecture": {
+      "title": "Flux Architecture",
+      "description": "Flux is a design pattern for managing data flow in applications, proposed by Facebook. It enforces a unidirectional data flow: Action → Dispatcher → Store → View. This cycle ensures predictable state updates and makes it easier to trace where changes originate.",
+      "keyPrinciples": {
+        "title": "Key Principles",
+        "singleDirection": "Single Direction: Data flows in one direction only, preventing circular dependencies.",
+        "centralizedStore": "Centralized Store: All application state lives in a single store.",
+        "pureFunctions": "Pure Functions: Reducers must be pure functions without side effects."
+      }
+    },
+    "reduxCore": {
+      "title": "Redux Core Concepts",
+      "description": "Redux is the most popular implementation of the Flux pattern. It provides a predictable state management solution with powerful developer tools.",
+      "store": {
+        "title": "Store",
+        "description": "The single source of truth for your application state. It holds the entire state tree in one object."
+      },
+      "action": {
+        "title": "Action",
+        "description": "A plain object describing \"what happened\" in the application. Actions are dispatched to trigger state changes."
+      },
+      "reducer": {
+        "title": "Reducer",
+        "description": "A pure function that takes the previous state and an action, then returns the next state. Must be deterministic."
+      },
+      "dispatch": {
+        "title": "Dispatch",
+        "description": "The only way to update the state. Dispatch sends an action to the store, which passes it to the reducer."
+      }
+    },
+    "reduxToolkit": {
+      "title": "Redux Toolkit (RTK)",
+      "description": "Redux Toolkit is the official, recommended way to write Redux logic. It provides utilities to simplify common Redux patterns and reduce boilerplate significantly.",
+      "keyBenefits": {
+        "title": "Key Benefits",
+        "configureStore": "configureStore - Preconfigured store with good defaults",
+        "createSlice": "createSlice - Combines actions and reducers into one definition",
+        "createAsyncThunk": "createAsyncThunk - Handles async operations elegantly",
+        "immer": "Immer integration - Write \"mutating\" code that's actually immutable"
+      }
+    }
+  },
+  "middleware": {
+    "badge": "Asynchronous State",
+    "title": "Redux Middleware",
+    "description": "Handling side effects and asynchronous logic in Redux applications.",
+    "understanding": {
+      "title": "Understanding Redux Middleware",
+      "description": "Redux by itself is synchronous. Middleware provides a third-party extension point between dispatching an action and the moment it reaches the reducer. This enables handling of side effects like API calls, logging, and complex async workflows.",
+      "flow": {
+        "title": "Middleware Flow",
+        "description": "When an action is dispatched, it flows through the middleware chain before reaching the reducer. Each middleware can intercept, modify, or delay actions."
+      }
+    },
+    "thunk": {
+      "title": "Redux Thunk",
+      "description": "Redux Thunk is the simplest and most commonly used middleware for handling async operations. It allows action creators to return a function instead of an action object. This function receives dispatch and getState as arguments.",
+      "howItWorks": {
+        "title": "How It Works",
+        "normalActions": "Normal actions: Return a plain action object",
+        "thunks": "Thunks: Return a function that gets dispatch and getState",
+        "inside": "Inside the thunk, perform async tasks and manually dispatch actions"
+      },
+      "prosAndCons": {
+        "title": "Pros & Cons",
+        "pros": "Pros: Simple, minimal setup, good for straightforward async tasks",
+        "cons": "Cons: Can lead to complex logic inside thunks, harder to test complex async flows"
+      }
+    },
+    "saga": {
+      "title": "Redux Saga",
+      "description": "Redux Saga uses Generator functions to handle side effects in a more declarative way. It's more powerful and testable than thunk, making it ideal for complex async workflows.",
+      "keyConcepts": {
+        "title": "Key Concepts",
+        "generators": "Generators: Functions that can pause and resume",
+        "effects": "Effects: Plain objects describing side effects (call, put, select, etc.)",
+        "watcher": "Watcher Saga: Monitors actions and triggers worker sagas"
+      },
+      "prosAndCons": {
+        "title": "Pros & Cons",
+        "pros": "Pros: Highly testable, handles race conditions, cancellation, and complex flows elegantly",
+        "cons": "Cons: Steeper learning curve, more boilerplate"
+      }
+    },
+    "other": {
+      "title": "Other Middleware",
+      "observable": {
+        "title": "Redux Observable",
+        "description": "Built on RxJS, it treats actions as streams and handles side effects using reactive operators. Perfect for complex event handling.",
+        "useCase": "Use when you need powerful stream manipulation and are comfortable with reactive programming."
+      },
+      "promise": {
+        "title": "Redux Promise",
+        "description": "Simple middleware that resolves Promise-based actions automatically. Useful when you want a lightweight alternative to Thunk."
+      }
+    }
+  },
+  "modern": {
+    "badge": "Modern Libraries",
+    "title": "Modern State Management",
+    "description": "Exploring lighter, more reactive alternatives to Redux: MobX, Recoil, and Zustand.",
+    "evolution": {
+      "title": "Evolution Beyond Redux",
+      "description": "While Redux is powerful and predictable, its heavy boilerplate and strict patterns led to the rise of alternatives focusing on developer experience, less code, and better React integration. These libraries offer different philosophies and approaches to state management.",
+      "commonGoals": {
+        "title": "Common Goals",
+        "reduceBoilerplate": "Reduce boilerplate compared to Redux",
+        "betterIntegration": "Better React integration and hooks support",
+        "improvedDX": "Improved developer experience",
+        "smallerBundle": "Smaller bundle size"
+      }
+    },
+    "mobx": {
+      "title": "MobX",
+      "description": "MobX uses Observable state and decorators to create reactive, automatically updating components. It embraces mutable state rather than immutability.",
+      "philosophy": {
+        "title": "Philosophy",
+        "quote": "Anything that can be derived from the application state, should be derived automatically.",
+        "observableState": "Observable State: Reactive, mutable data",
+        "computedValues": "Computed Values: Automatically update when state changes",
+        "reactions": "Reactions: Side effects that respond to state changes"
+      },
+      "prosAndCons": {
+        "title": "Pros & Cons",
+        "pros": "Pros: Very intuitive, automatic reactivity, minimal boilerplate",
+        "cons": "Cons: Mutable state can be confusing for Redux developers, decorators require Babel setup"
+      }
+    },
+    "recoil": {
+      "title": "Recoil",
+      "description": "Created by Facebook, Recoil brings a more React-native approach to state management using Atoms and Selectors. Designed for Concurrent Mode compatibility.",
+      "coreConcepts": {
+        "title": "Core Concepts",
+        "atoms": "Atoms: Reusable units of state that can be subscribed to",
+        "selectors": "Selectors: Pure functions that derive state from atoms",
+        "hooksFirst": "Hooks-first: Uses React hooks for everything"
+      },
+      "prosAndCons": {
+        "title": "Pros & Cons",
+        "pros": "Pros: Very React-friendly, Concurrent Mode ready, clean API",
+        "cons": "Cons: Still in experimental phase, API may change"
+      }
+    },
+    "zustand": {
+      "title": "Zustand",
+      "description": "A lightweight, simple state management solution that uses a hook-based API. No Provider required, making it extremely straightforward to set up and use.",
+      "why": {
+        "title": "Why Zustand?",
+        "minimal": "Minimal boilerplate",
+        "noProvider": "No Provider Hell",
+        "hookBased": "Hook-based API (familiar to React developers)",
+        "small": "Small bundle size (~1KB)",
+        "typescript": "TypeScript support built-in"
+      },
+      "prosAndCons": {
+        "title": "Pros & Cons",
+        "pros": "Pros: Simplest API, no Provider, great for small to medium apps",
+        "cons": "Cons: Fewer features than Redux/Recoil for very complex state"
+      }
+    },
+    "comparison": {
+      "title": "Comparison Guide",
+      "table": {
+        "feature": "Feature",
+        "redux": "Redux",
+        "mobx": "MobX",
+        "recoil": "Recoil",
+        "zustand": "Zustand",
+        "learningCurve": "Learning Curve",
+        "steep": "Steep",
+        "moderate": "Moderate",
+        "easy": "Easy",
+        "boilerplate": "Boilerplate",
+        "high": "High",
+        "low": "Low",
+        "minimal": "Minimal",
+        "bundleSize": "Bundle Size",
+        "large": "Large",
+        "medium": "Medium",
+        "small": "Small (~1KB)",
+        "devtools": "DevTools",
+        "excellent": "Excellent",
+        "good": "Good",
+        "decent": "Decent",
+        "bestFor": "Best For",
+        "largeApps": "Large apps",
+        "reactiveApps": "Reactive apps",
+        "reactNative": "React-native",
+        "simpleApps": "Simple apps"
+      },
+      "selectionGuide": {
+        "title": "Selection Guide",
+        "redux": "Redux: Large apps needing excellent devtools and middleware",
+        "mobx": "MobX: Apps needing automatic reactivity and mutable patterns",
+        "recoil": "Recoil: React-concurrent-mode-ready apps with granular state",
+        "zustand": "Zustand: Simple to medium apps prioritizing simplicity"
+      }
+    }
+  },
+  "advanced": {
+    "badge": "Advanced Concepts",
+    "title": "Advanced State Patterns",
+    "description": "Handling complex async streams with RxJS and modeling state with State Machines (XState).",
+    "rxjs": {
+      "title": "RxJS & Redux Observable",
+      "description": "RxJS treats state and events as streams that can be manipulated using powerful functional operators. Redux Observable integrates RxJS with Redux to handle complex async workflows elegantly.",
+      "keyConcepts": {
+        "title": "Key Concepts",
+        "observables": "Observables: Streams of values over time",
+        "operators": "Operators: Pure functions to transform streams (map, filter, debounce, etc.)",
+        "epics": "Epics: Redux Observable's middleware layer for handling effects"
+      },
+      "prosAndCons": {
+        "title": "Pros & Cons",
+        "pros": "Pros: Extremely powerful for complex async patterns, composition-friendly",
+        "cons": "Cons: Steep learning curve, RxJS knowledge required, complex to debug"
+      }
+    },
+    "xstate": {
+      "title": "State Machines with XState",
+      "description": "XState uses Finite State Machines (FSM) and Statecharts to model application logic. It helps prevent impossible states by explicitly defining which state transitions are valid.",
+      "coreConcepts": {
+        "title": "Core Concepts",
+        "states": "States: Discrete application states (idle, loading, success, error)",
+        "events": "Events: Actions that trigger state transitions",
+        "transitions": "Transitions: Rules defining which events cause which state changes",
+        "context": "Context: Extended state data associated with the state"
+      },
+      "benefits": {
+        "title": "Benefits",
+        "preventsInvalid": "Prevents Invalid States: State machine explicitly defines valid transitions",
+        "selfDocumenting": "Self-Documenting: State diagram serves as documentation",
+        "testability": "Testability: Pure logic makes testing simple",
+        "visualization": "Visualization: XState provides visual tools to see state flows"
+      }
+    },
+    "when": {
+      "title": "When to Use Advanced Patterns",
+      "rxjs": {
+        "title": "Use RxJS Observable when...",
+        "complex": "Handling complex, interconnected async operations",
+        "debounce": "Needing to debounce, throttle, or batch requests",
+        "streams": "Managing streams of real-time data",
+        "team": "Your team is comfortable with reactive programming"
+      },
+      "xstate": {
+        "title": "Use XState when...",
+        "complex": "State has many complex transitions",
+        "preventing": "Preventing impossible states is critical",
+        "documentation": "You need clear documentation of state flows",
+        "testing": "Testing state logic is a priority"
+      },
+      "warning": {
+        "title": "Warning",
+        "description": "These are advanced patterns with significant learning curves. Use them only when simpler solutions (Redux Thunk, Zustand) prove insufficient."
+      }
+    },
+    "comparisonTable": {
+      "title": "Comparison: All Async Approaches",
+      "approach": "Approach",
+      "complexity": "Complexity",
+      "bestFor": "Best For",
+      "learningCurve": "Learning Curve",
+      "thunk": {
+        "name": "Redux Thunk",
+        "complexity": "Low",
+        "bestFor": "Simple async tasks",
+        "learningCurve": "Easy"
+      },
+      "saga": {
+        "name": "Redux Saga",
+        "complexity": "Medium-High",
+        "bestFor": "Complex async flows",
+        "learningCurve": "Moderate"
+      },
+      "observable": {
+        "name": "RxJS Observable",
+        "complexity": "High",
+        "bestFor": "Stream manipulation",
+        "learningCurve": "Steep"
+      },
+      "xstate": {
+        "name": "XState",
+        "complexity": "Medium",
+        "bestFor": "Complex state logic",
+        "learningCurve": "Moderate"
+      }
+    }
+  },
+  "context": {
+    "badge": "Built-in",
+    "title": "Context API",
+    "description": "React's built-in solution for avoiding prop-drilling and managing global state.",
+    "what": {
+      "title": "What is Context API?",
+      "description": "Context provides a way to pass data through the component tree without manually passing props down at every level. It's React's built-in mechanism for prop drilling avoidance and is perfect for low-frequency state updates.",
+      "keyComponents": {
+        "title": "Key Components",
+        "createContext": "React.createContext(): Creates a context object",
+        "provider": "Provider: Wraps components that need access to the context value",
+        "useContext": "useContext() hook: Consumes the context value in functional components"
+      }
+    },
+    "howToUse": {
+      "title": "How to Use Context",
+      "description": "Context usage involves three main steps: creating the context, providing values, and consuming them in components."
+    },
+    "bestUseCases": {
+      "title": "Best Use Cases",
+      "description": "Context API excels when your global state is simple, infrequently updated, and doesn't require complex synchronization logic.",
+      "good": {
+        "title": "Good Use Cases",
+        "theme": "Theme preferences (light/dark mode)",
+        "language": "Language/localization settings",
+        "auth": "Authentication status and user info",
+        "modal": "Modal/dialog state",
+        "featureFlags": "Feature flags (static configuration)"
+      },
+      "poor": {
+        "title": "Poor Use Cases",
+        "frequently": "Frequently changing data (form inputs, real-time updates)",
+        "complex": "Complex state with many reducers",
+        "async": "State requiring async middleware",
+        "caching": "App-wide caching needs"
+      }
+    },
+    "performance": {
+      "title": "Performance Considerations",
+      "description": "Context has important limitations that can lead to performance issues if not handled carefully.",
+      "mainProblem": {
+        "title": "The Main Problem",
+        "description": "When a Context value changes, all consuming components re-render, regardless of whether they use the changed part of the value."
+      },
+      "optimization": {
+        "title": "Optimization Strategies",
+        "split": "Split contexts: Separate your context into multiple contexts for different concerns",
+        "memoize": "Memoize values: Use useMemo to prevent unnecessary re-renders",
+        "customHooks": "Use custom hooks: Create specific hooks that only select needed values",
+        "selectors": "Implement selectors: Use React.memo on child components"
+      }
+    },
+    "vsGlobalState": {
+      "title": "Context vs Global State Libraries",
+      "decisionFramework": {
+        "title": "Decision Framework",
+        "useContext": "Use Context API when:",
+        "contextWhen": {
+          "simple": "State is simple and hierarchical",
+          "infrequent": "Updates are infrequent",
+          "noAsync": "No complex async logic needed",
+          "small": "Project is small to medium"
+        },
+        "useLibrary": "Use Redux/Zustand/Recoil when:",
+        "libraryWhen": {
+          "complex": "State is complex with many relationships",
+          "frequent": "Updates are frequent",
+          "middleware": "Need middleware for async operations",
+          "devtools": "DevTools and time-travel debugging needed"
+        }
+      },
+      "comparisonTable": {
+        "aspect": "Aspect",
+        "contextApi": "Context API",
+        "redux": "Redux",
+        "zustand": "Zustand",
+        "setup": "Setup",
+        "simple": "Simple",
+        "complex": "Complex",
+        "verySimple": "Very Simple",
+        "performance": "Performance",
+        "requiresCare": "Requires care",
+        "excellent": "Excellent",
+        "devtools": "DevTools",
+        "none": "None",
+        "good": "Good",
+        "for": "For",
+        "simpleApps": "Simple apps",
+        "complexApps": "Complex apps",
+        "mostApps": "Most apps"
+      }
+    },
+    "patterns": {
+      "title": "Common Patterns & Gotchas",
+      "providerHell": {
+        "title": "Provider Hell",
+        "description": "Multiple context providers can lead to deeply nested JSX:",
+        "solution": "Solution: Create a custom root provider that composes all contexts."
+      },
+      "missingProvider": {
+        "title": "Missing Provider Error",
+        "description": "Always add a check when consuming context to provide helpful errors:"
+      }
+    }
+  }
+}

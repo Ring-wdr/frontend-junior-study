@@ -1,0 +1,135 @@
+{
+  "header": {
+    "title": "Internal Mechanism",
+    "description": "Deep dive into the JavaScript Runtime, Execution Context, and Memory Model."
+  },
+  "tabs": {
+    "all": "All",
+    "runtime": "Runtime",
+    "core": "Core",
+    "async": "Async",
+    "advanced": "Advanced"
+  },
+  "eventLoop": {
+    "badge": "Runtime",
+    "title": "Event Loop Visualizer",
+    "description": "Step through the Event Loop to understand how JavaScript handles async code.",
+    "keyRule": {
+      "title": "Key Rule",
+      "content": "Microtasks (Promises, queueMicrotask) are processed immediately after the current script and before any new Macrotask (setTimeout, I/O)."
+    }
+  },
+  "thisBinding": {
+    "badge": "Core",
+    "title": "5 Rules of 'this'",
+    "description": "Explore how 'this' binding works in different contexts."
+  },
+  "scopeClosure": {
+    "badge": "Scope",
+    "title": "Closures",
+    "description": "Create multiple counters to see how closures maintain independent state."
+  },
+  "async": {
+    "badge": "Async",
+    "title": "Promise Visualizer",
+    "description": "Interactively explore how different Promise combinators handle multiple asynchronous tasks.",
+    "promiseAll": {
+      "title": "Promise.all",
+      "description": "Wait for all to fulfill. Rejects immediately if any rejects."
+    },
+    "promiseAllSettled": {
+      "title": "Promise.allSettled",
+      "description": "Wait for all to finish, regardless of status. Never rejects."
+    },
+    "promiseRace": {
+      "title": "Promise.race",
+      "description": "First settled promise (resolve OR reject) determines the result."
+    },
+    "promiseAny": {
+      "title": "Promise.any",
+      "description": "Wait for first fulfilled. Rejects only if ALL reject."
+    },
+    "withResolvers": {
+      "title": "Promise.withResolvers (ES2024)",
+      "description": "Returns an object with a new Promise and its resolve/reject functions. Useful for creating promises that are resolved externally."
+    },
+    "promiseResolve": {
+      "title": "Promise.resolve",
+      "description": "Creates an immediately fulfilled promise."
+    },
+    "promiseReject": {
+      "title": "Promise.reject",
+      "description": "Creates an immediately rejected promise."
+    },
+    "abortController": {
+      "title": "AbortController (Cancel Async Tasks)",
+      "description": "Fetch requests (and other async tasks) can be cancelled using AbortController."
+    }
+  },
+  "advancedDataStructure": {
+    "badge": "Data Structures",
+    "title": "Advanced Data Structures",
+    "description": "Map, Set, WeakMap, WeakSet, and WeakRef.",
+    "tabs": {
+      "map": "Map",
+      "set": "Set",
+      "weak": "WeakMap/Ref"
+    },
+    "map": {
+      "title": "Map vs Object",
+      "key1": "Keys can be any type (objects, functions, primitives).",
+      "key2": "Maintains insertion order.",
+      "key3": "Size property is built-in.",
+      "key4": "Better performance for frequent additions/removals."
+    },
+    "set": {
+      "title": "Set (Unique Collection)",
+      "description": "Stores unique values of any type. Useful for removing duplicates."
+    },
+    "weak": {
+      "title": "Weak References (GC Friendly)",
+      "description1": "WeakMap/WeakSet: Keys must be objects. They are held \"weakly\", meaning if there are no other references to the object, it can be garbage collected. Not iterable.",
+      "description2": "WeakRef (ES2021): advanced feature to hold a weak reference to an object.",
+      "gcTitle": "Garbage Collection Visualizer"
+    }
+  },
+  "optimization": {
+    "badge": "Advanced",
+    "title": "V8 Hidden Classes",
+    "description": "Visualize how V8 optimizes objects with consistent shapes.",
+    "keyTakeaway": {
+      "title": "Key Takeaway",
+      "content": "Always initialize properties in the exact same order to help V8 share hidden classes and optimize property access (Monomorphism)."
+    }
+  },
+  "proxyMeta": {
+    "badge": "Meta Programming",
+    "title": "Proxy & Reflect",
+    "description": "Intercept and redefine fundamental operations.",
+    "buttons": {
+      "readMessage": "Read 'message'",
+      "readSecret": "Read 'secret'",
+      "setMessage": "Set 'message'"
+    },
+    "logs": {
+      "title": "Proxy Logs",
+      "clear": "Clear",
+      "placeholder": "Interactions will appear here..."
+    }
+  },
+  "dsl": {
+    "badge": "DSL",
+    "title": "Domain-Specific Language",
+    "description": "Mini-languages tailored for specific problem domains.",
+    "whatIsDsl": {
+      "title": "What is a DSL?",
+      "description": "Unlike General Purpose Languages (GPL) like Java or Python, DSLs are focused on specific tasks.",
+      "internal": "Internal DSL: Using host language features (e.g., jQuery, React JSX, builder patterns).",
+      "external": "External DSL: Separate syntax/parser (e.g., SQL, CSS, Regex, Markdown)."
+    },
+    "examples": {
+      "reactJsx": "Example: React JSX (Internal DSL)",
+      "sql": "Example: SQL (External DSL)"
+    }
+  }
+}

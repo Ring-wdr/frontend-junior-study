@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { cn } from '../../lib/utils';
 import { CombinedPatternSection } from './components/combined-pattern-section';
 import { IndexedDBSection } from './components/indexeddb-section';
@@ -17,15 +18,6 @@ const tabs = [
 ] as const;
 type Tab = (typeof tabs)[number];
 
-const tabLabels: Record<Tab, string> = {
-  all: 'All',
-  webworker: 'Web Worker',
-  serviceworker: 'Service Worker & PWA',
-  indexeddb: 'IndexedDB',
-  offline: 'Offline-First',
-  combined: 'Combined Pattern',
-};
-
 const sections = [
   { id: 'webworker', component: <WebWorkerSection /> },
   { id: 'serviceworker', component: <ServiceWorkerSection /> },
@@ -35,6 +27,7 @@ const sections = [
 ];
 
 export default function Week13Page() {
+  const { t } = useTranslation('week13');
   const [activeTab, setActiveTab] = useState<Tab>('all');
 
   const filteredSections =
@@ -47,14 +40,13 @@ export default function Week13Page() {
           to="/"
           className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 mb-6 transition-colors"
         >
-          ← Back to Dashboard
+          {t('common:navigation.backToDashboard', '← Back to Dashboard')}
         </Link>
         <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-gray-900">
-          Web Workers, PWA & IndexedDB
+          {t('header.title')}
         </h1>
         <p className="text-lg text-gray-600 max-w-xl mx-auto">
-          Master parallel processing with Web Workers, build offline-capable PWAs
-          with Service Workers, and leverage IndexedDB for client-side storage.
+          {t('header.description')}
         </p>
       </header>
       <div className="sticky top-4 z-10 bg-white/80 backdrop-blur-md p-1.5 rounded-full shadow-sm border border-gray-200 mb-8 flex gap-1 flex-wrap justify-center max-w-[95vw]">
@@ -70,7 +62,7 @@ export default function Week13Page() {
                 : 'text-gray-600 hover:bg-gray-100',
             )}
           >
-            {tabLabels[tab]}
+            {t(`tabs.${tab}`)}
           </button>
         ))}
       </div>

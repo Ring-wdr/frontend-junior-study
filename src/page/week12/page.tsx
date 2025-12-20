@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { cn } from '../../lib/utils';
 import { CsrfSection } from './components/csrf-section';
 import { JwtSessionSection } from './components/jwt-session-section';
@@ -23,17 +24,6 @@ const tabs = [
 ] as const;
 type Tab = (typeof tabs)[number];
 
-const tabLabels: Record<Tab, string> = {
-  all: 'All',
-  oauth: 'OAuth 2.0',
-  oidc: 'OIDC',
-  nextauth: 'NextAuth',
-  jwt: 'JWT vs Session',
-  csrf: 'CSRF',
-  xss: 'XSS & CSP',
-  react2shell: 'React2Shell (New)',
-  privacy: 'Privacy',
-};
 
 const sections = [
   { id: 'oauth', component: <OAuthSection /> },
@@ -47,6 +37,7 @@ const sections = [
 ];
 
 export default function Week12Page() {
+  const { t } = useTranslation('week12');
   const [activeTab, setActiveTab] = useState<Tab>('all');
 
   const filteredSections =
@@ -59,14 +50,13 @@ export default function Week12Page() {
           to="/"
           className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 mb-6 transition-colors"
         >
-          ← Back to Dashboard
+          {t('common.backToDashboard')}
         </Link>
         <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-gray-900">
-          Authentication & Security
+          {t('header.title')}
         </h1>
         <p className="text-lg text-gray-600 max-w-xl mx-auto">
-          Master OAuth 2.0, OpenID Connect, NextAuth.js, JWT authentication, and
-          essential web security concepts like XSS and CSRF protection.
+          {t('header.description')}
         </p>
       </header>
       <div className="sticky top-4 z-10 bg-white/80 backdrop-blur-md p-1.5 rounded-full shadow-sm border border-gray-200 mb-8 flex gap-1 flex-wrap justify-center max-w-[95vw]">
@@ -82,7 +72,7 @@ export default function Week12Page() {
                 : 'text-gray-600 hover:bg-gray-100',
             )}
           >
-            {tabLabels[tab]}
+            {t(`tabs.${tab}`)}
           </button>
         ))}
       </div>

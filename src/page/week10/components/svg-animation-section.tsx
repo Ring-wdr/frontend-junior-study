@@ -1,8 +1,10 @@
 import gsap from 'gsap';
 import { RotateCcw } from 'lucide-react';
 import { useLayoutEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export function SvgAnimationSection() {
+  const { t } = useTranslation('week10');
   const pathRef = useRef<SVGPathElement>(null);
   const circleRef = useRef<SVGCircleElement>(null);
 
@@ -46,21 +48,23 @@ export function SvgAnimationSection() {
     <div className="space-y-6">
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-6">
         <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-bold text-gray-900">SVG Animation</h2>
+          <h2 className="text-2xl font-bold text-gray-900">
+            {t('svg.title')}
+          </h2>
           <button
             type="button"
             onClick={replay}
             className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors text-sm font-medium"
           >
             <RotateCcw size={16} />
-            Replay
+            {t('svg.replay')}
           </button>
         </div>
 
-        <p className="text-gray-600">
-          <code>stroke-dasharray</code>와 <code>stroke-dashoffset</code> 속성을
-          이용하면 손글씨나 라인 드로잉 효과를 구현할 수 있습니다.
-        </p>
+        <p
+          className="text-gray-600"
+          dangerouslySetInnerHTML={{ __html: t('svg.description') }}
+        ></p>
 
         <div className="flex justify-center py-10 bg-gray-50 rounded-xl border border-gray-100">
           <svg

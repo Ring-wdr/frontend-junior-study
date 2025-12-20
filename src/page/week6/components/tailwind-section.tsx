@@ -1,19 +1,19 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const TailwindSection = () => {
+  const { t } = useTranslation('week6');
   return (
     <SectionCard
-      badge={{ label: 'Industry Standard', color: 'blue' }}
-      title="Tailwind CSS"
-      description="A utility-first CSS framework for rapidly building custom user interfaces."
+      badge={{ label: t('tailwind.badge'), color: 'blue' }}
+      title={t('tailwind.title')}
+      description={t('tailwind.description')}
     >
       <div className="space-y-8">
-        <SubSection title="Utility-First" icon iconColor="blue">
+        <SubSection title={t('tailwind.utilityFirst.title')} icon iconColor="blue">
           <p className="text-sm text-gray-700 mb-4">
-            Instead of writing custom CSS, you use pre-existing classes directly
-            in your HTML. This leads to very fast development cycles and
-            consistent UI.
+            {t('tailwind.utilityFirst.content')}
           </p>
           <CodeBlock
             code={`<!-- Traditional CSS -->
@@ -42,24 +42,20 @@ export const TailwindSection = () => {
           />
         </SubSection>
 
-        <SubSection title="Key Features" icon iconColor="blue">
-          <InfoBox variant="blue" title="Why distinct?">
+        <SubSection title={t('tailwind.keyFeatures.title')} icon iconColor="blue">
+          <InfoBox variant="blue" title={t('tailwind.keyFeatures.infoTitle')}>
             <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
               <li>
-                <strong>JIT Engine:</strong> Generates styles on demand, keeping
-                bundle sizes tiny.
+                <strong>{t('tailwind.keyFeatures.jit')}</strong> {t('tailwind.keyFeatures.jitDesc')}
               </li>
               <li>
-                <strong>Standardization:</strong> spacing, colors, and sizes are
-                pre-defined (or customized in config).
+                <strong>{t('tailwind.keyFeatures.standardization')}</strong> {t('tailwind.keyFeatures.standardizationDesc')}
               </li>
               <li>
-                <strong>Responsiveness:</strong> <code>md:flex</code>,{' '}
-                <code>lg:grid</code> prefixes make responsive design trivial.
+                <strong>{t('tailwind.keyFeatures.responsiveness')}</strong> <span dangerouslySetInnerHTML={{ __html: t('tailwind.keyFeatures.responsivenessDesc') }} />
               </li>
               <li>
-                <strong>Dark Mode:</strong> <code>dark:bg-black</code> prefix
-                handles theme switching.
+                <strong>{t('tailwind.keyFeatures.darkMode')}</strong> <span dangerouslySetInnerHTML={{ __html: t('tailwind.keyFeatures.darkModeDesc') }} />
               </li>
             </ul>
           </InfoBox>

@@ -1,13 +1,18 @@
+import { useTranslation } from 'react-i18next';
 import { SectionCard } from '../../../components';
 import { ThisBindingDemo } from './this-binding-demo';
 
-export const ThisBindingSection = () => (
-  <SectionCard
-    badge={{ label: 'Core', color: 'purple' }}
-    title="5 Rules of 'this'"
-    description="Explore how 'this' binding works in different contexts."
-    testId="this-binding-section"
-  >
-    <ThisBindingDemo />
-  </SectionCard>
-);
+export const ThisBindingSection = () => {
+  const { t } = useTranslation('week1');
+
+  return (
+    <SectionCard
+      badge={{ label: t('thisBinding.badge'), color: 'purple' }}
+      title={t('thisBinding.title')}
+      description={t('thisBinding.description')}
+      testId="this-binding-section"
+    >
+      <ThisBindingDemo />
+    </SectionCard>
+  );
+};

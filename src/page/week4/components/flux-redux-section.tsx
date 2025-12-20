@@ -1,62 +1,48 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { FluxFlowVisualizer } from './flux-flow-visualizer';
 
 export const FluxReduxSection = () => {
+  const { t } = useTranslation('week4');
+
   return (
     <SectionCard
-      badge={{ label: 'Architecture & Library', color: 'blue' }}
-      title="Flux Architecture & Redux"
-      description="Understanding the unidirectional data flow and the most popular state management library."
+      badge={{ label: t('fluxRedux.badge'), color: 'blue' }}
+      title={t('fluxRedux.title')}
+      description={t('fluxRedux.description')}
     >
       <div className="space-y-8">
-        <SubSection title="Flux Architecture" icon iconColor="blue">
+        <SubSection title={t('fluxRedux.fluxArchitecture.title')} icon iconColor="blue">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Flux is a design pattern for managing data flow in applications,
-              proposed by Facebook. It enforces a{' '}
-              <strong>unidirectional data flow</strong>:{' '}
-              <strong>Action → Dispatcher → Store → View</strong>. This cycle
-              ensures predictable state updates and makes it easier to trace
-              where changes originate.
+              {t('fluxRedux.fluxArchitecture.description')}
             </p>
 
             <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
               <FluxFlowVisualizer />
             </div>
 
-            <InfoBox variant="blue" title="Key Principles">
+            <InfoBox variant="blue" title={t('fluxRedux.fluxArchitecture.keyPrinciples.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
-                <li>
-                  <strong>Single Direction:</strong> Data flows in one direction
-                  only, preventing circular dependencies.
-                </li>
-                <li>
-                  <strong>Centralized Store:</strong> All application state
-                  lives in a single store.
-                </li>
-                <li>
-                  <strong>Pure Functions:</strong> Reducers must be pure
-                  functions without side effects.
-                </li>
+                <li>{t('fluxRedux.fluxArchitecture.keyPrinciples.singleDirection')}</li>
+                <li>{t('fluxRedux.fluxArchitecture.keyPrinciples.centralizedStore')}</li>
+                <li>{t('fluxRedux.fluxArchitecture.keyPrinciples.pureFunctions')}</li>
               </ul>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title="Redux Core Concepts" icon iconColor="blue">
+        <SubSection title={t('fluxRedux.reduxCore.title')} icon iconColor="blue">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Redux is the most popular implementation of the Flux pattern. It
-              provides a predictable state management solution with powerful
-              developer tools.
+              {t('fluxRedux.reduxCore.description')}
             </p>
 
             <div className="grid grid-cols-1 gap-4">
-              <InfoBox variant="gray" title="Store">
+              <InfoBox variant="gray" title={t('fluxRedux.reduxCore.store.title')}>
                 <p className="text-sm text-gray-700">
-                  The single source of truth for your application state. It
-                  holds the entire state tree in one object.
+                  {t('fluxRedux.reduxCore.store.description')}
                 </p>
                 <CodeBlock
                   code={`const store = createStore(rootReducer);
@@ -65,10 +51,9 @@ const state = store.getState(); // Get current state`}
                 />
               </InfoBox>
 
-              <InfoBox variant="gray" title="Action">
+              <InfoBox variant="gray" title={t('fluxRedux.reduxCore.action.title')}>
                 <p className="text-sm text-gray-700">
-                  A plain object describing "what happened" in the application.
-                  Actions are dispatched to trigger state changes.
+                  {t('fluxRedux.reduxCore.action.description')}
                 </p>
                 <CodeBlock
                   code={`const incrementAction = {
@@ -79,10 +64,9 @@ const state = store.getState(); // Get current state`}
                 />
               </InfoBox>
 
-              <InfoBox variant="gray" title="Reducer">
+              <InfoBox variant="gray" title={t('fluxRedux.reduxCore.reducer.title')}>
                 <p className="text-sm text-gray-700">
-                  A pure function that takes the previous state and an action,
-                  then returns the next state. Must be deterministic.
+                  {t('fluxRedux.reduxCore.reducer.description')}
                 </p>
                 <CodeBlock
                   code={`const counterReducer = (state = 0, action) => {
@@ -95,10 +79,9 @@ const state = store.getState(); // Get current state`}
                 />
               </InfoBox>
 
-              <InfoBox variant="gray" title="Dispatch">
+              <InfoBox variant="gray" title={t('fluxRedux.reduxCore.dispatch.title')}>
                 <p className="text-sm text-gray-700">
-                  The only way to update the state. Dispatch sends an action to
-                  the store, which passes it to the reducer.
+                  {t('fluxRedux.reduxCore.dispatch.description')}
                 </p>
                 <CodeBlock
                   code={`store.dispatch({ type: 'INCREMENT', payload: 1 });`}
@@ -109,32 +92,18 @@ const state = store.getState(); // Get current state`}
           </div>
         </SubSection>
 
-        <SubSection title="Redux Toolkit (RTK)" icon iconColor="green">
+        <SubSection title={t('fluxRedux.reduxToolkit.title')} icon iconColor="green">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Redux Toolkit is the official, recommended way to write Redux
-              logic. It provides utilities to simplify common Redux patterns and
-              reduce boilerplate significantly.
+              {t('fluxRedux.reduxToolkit.description')}
             </p>
 
-            <InfoBox variant="green" title="Key Benefits">
+            <InfoBox variant="green" title={t('fluxRedux.reduxToolkit.keyBenefits.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
-                <li>
-                  <code>configureStore</code> - Preconfigured store with good
-                  defaults
-                </li>
-                <li>
-                  <code>createSlice</code> - Combines actions and reducers into
-                  one definition
-                </li>
-                <li>
-                  <code>createAsyncThunk</code> - Handles async operations
-                  elegantly
-                </li>
-                <li>
-                  Immer integration - Write "mutating" code that's actually
-                  immutable
-                </li>
+                <li>{t('fluxRedux.reduxToolkit.keyBenefits.configureStore')}</li>
+                <li>{t('fluxRedux.reduxToolkit.keyBenefits.createSlice')}</li>
+                <li>{t('fluxRedux.reduxToolkit.keyBenefits.createAsyncThunk')}</li>
+                <li>{t('fluxRedux.reduxToolkit.keyBenefits.immer')}</li>
               </ul>
             </InfoBox>
 

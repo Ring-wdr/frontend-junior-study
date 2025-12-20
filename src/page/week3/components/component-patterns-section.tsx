@@ -1,43 +1,40 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard } from '../../../components';
 import { ComponentPatternsVisualizer } from './component-patterns-visualizer';
 
 export const ComponentPatternsSection = () => {
+  const { t } = useTranslation('week3');
+
   return (
     <SectionCard
-      badge={{ label: 'Advanced Patterns', color: 'pink' }}
-      title="Component Architecture Patterns"
-      description="Advanced patterns for component composition and reusability."
+      badge={{ label: t('patterns.badge'), color: 'pink' }}
+      title={t('patterns.title')}
+      description={t('patterns.description')}
     >
       <div className="space-y-8">
         <ComponentPatternsVisualizer />
 
-        <InfoBox variant="gray" title="Compound Components">
+        <InfoBox variant="gray" title={t('patterns.compoundComponents.title')}>
           <p className="text-sm text-gray-700 mb-2">
-            Components that work together to form a complete UI, often sharing
-            state implicitly (e.g., via Context API). Users can arrange the
-            sub-components flexibly.
+            {t('patterns.compoundComponents.description')}
           </p>
           <div className="bg-gray-100 p-2 rounded font-mono text-xs">
             {`<Select>\n  <Select.Option value="1">Option 1</Select.Option>\n  <Select.Option value="2">Option 2</Select.Option>\n</Select>`}
           </div>
         </InfoBox>
 
-        <InfoBox variant="gray" title="Render Props">
+        <InfoBox variant="gray" title={t('patterns.renderProps.title')}>
           <p className="text-sm text-gray-700 mb-2">
-            A technique for sharing code between React components using a prop
-            whose value is a function.
+            {t('patterns.renderProps.description')}
           </p>
           <div className="bg-gray-100 p-2 rounded font-mono text-xs">
             {`<DataProvider render={data => (\n  <h1>Hello {data.target}</h1>\n)}/>`}
           </div>
         </InfoBox>
 
-        <InfoBox variant="gray" title="Higher-Order Components (HOC)">
+        <InfoBox variant="gray" title={t('patterns.hoc.title')}>
           <p className="text-sm text-gray-700 mb-2">
-            A function that takes a component and returns a new component,
-            typically to inject props or logic. Popular in the past (e.g., Redux{' '}
-            <code>connect</code>), but often replaced by Hooks today to avoid
-            "Wrapper Hell".
+            {t('patterns.hoc.description')}
           </p>
         </InfoBox>
       </div>

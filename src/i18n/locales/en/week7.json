@@ -1,0 +1,455 @@
+{
+  "header": {
+    "title": "Forms & Validation",
+    "description": "Master professional form management: React Hook Form, Zod, async validation, security, and UX best practices."
+  },
+  "tabs": {
+    "all": "All",
+    "essence": "Essence",
+    "rhf": "React Hook Form",
+    "validation": "Validation",
+    "async": "Async",
+    "input": "Input Handling",
+    "security": "Security",
+    "ux": "UX Design"
+  },
+  "formEssence": {
+    "badge": "Fundamentals",
+    "title": "Form Management Essence",
+    "description": "Understanding the core principles of form handling in React",
+    "whatIsForm": {
+      "title": "What is a Form?",
+      "definition": {
+        "title": "Form Definition",
+        "intro": "A form is a complex system that combines:",
+        "ui": "UI: Input elements, labels, buttons",
+        "state": "State: Current input values",
+        "validation": "Validation: Rules and error checking",
+        "errorHandling": "Error Handling: Displaying validation errors",
+        "submission": "Submission: Processing and API integration"
+      }
+    },
+    "controlledVsUncontrolled": {
+      "title": "Controlled vs Uncontrolled",
+      "controlled": {
+        "title": "Controlled Components"
+      },
+      "uncontrolled": {
+        "title": "Uncontrolled Components"
+      },
+      "bestPractice": {
+        "title": "Best Practice",
+        "description": "Modern libraries like React Hook Form use a hybrid approach: minimal controlled components for better performance while maintaining predictability."
+      }
+    },
+    "whyFormsAreComplex": {
+      "title": "Why Forms Are Complex",
+      "performance": "Performance: Too many re-renders with fully controlled components",
+      "stateManagement": "State Management: Tracking multiple input states is tedious",
+      "validation": "Validation: Real-time + submit-time + async validation coordination",
+      "errorMessages": "Error Messages: Displaying and clearing errors appropriately",
+      "edgeCases": "Edge Cases: Emoji handling, Unicode normalization, XSS prevention"
+    },
+    "commonRequirements": {
+      "title": "Common Form Requirements"
+    }
+  },
+  "reactHookForm": {
+    "badge": "Modern Standard",
+    "title": "React Hook Form",
+    "description": "Uncontrolled, high-performance form state management",
+    "whyRHF": {
+      "title": "Why React Hook Form?",
+      "keyAdvantages": {
+        "title": "Key Advantages",
+        "uncontrolled": "Uncontrolled-based: Minimal re-renders (only on changes)",
+        "smallBundle": "Small bundle: ~9KB minified",
+        "typeSafe": "Type-safe: Excellent TypeScript support",
+        "registerAPI": "Register API: Simple input field registration",
+        "formState": "formState object: Tracks isDirty, isTouched, errors, etc.",
+        "watchSetValue": "Watch, setValue: Programmatic value access",
+        "controller": "Controller: Works with custom/3rd-party inputs"
+      }
+    },
+    "basicSetup": {
+      "title": "Basic Setup"
+    },
+    "coreMethods": {
+      "title": "Core Methods",
+      "register": {
+        "title": "register(name, options)",
+        "description": "Registers an input field with validation rules. Returns object to spread on input element."
+      },
+      "handleSubmit": {
+        "title": "handleSubmit(callback)",
+        "description": "Validates form on submit and calls callback with validated data."
+      },
+      "watch": {
+        "title": "watch(fieldName?)",
+        "description": "Watches field value(s) and triggers re-renders on change. Useful for conditional logic."
+      },
+      "setValue": {
+        "title": "setValue(name, value)",
+        "description": "Programmatically set field value without re-registering."
+      },
+      "reset": {
+        "title": "reset(defaultValues?)",
+        "description": "Reset form to initial state or provided default values."
+      },
+      "controller": {
+        "title": "Controller",
+        "description": "Wrap custom/3rd-party input components to integrate with React Hook Form."
+      }
+    },
+    "controllerForCustom": {
+      "title": "Controller for Custom Inputs"
+    },
+    "formStateObject": {
+      "title": "formState Object",
+      "importantProps": {
+        "title": "Important formState Properties",
+        "isDirty": "isDirty: Has user modified any field?",
+        "isTouched": "isTouched: Has user interacted with this field?",
+        "errors": "errors: Object containing field validation errors",
+        "isSubmitting": "isSubmitting: Is form currently being submitted?",
+        "isValidating": "isValidating: Is async validation running?",
+        "isValid": "isValid: Is form valid according to rules?",
+        "dirtyFields": "dirtyFields: Which fields have been modified?",
+        "touchedFields": "touchedFields: Which fields have been interacted with?"
+      }
+    },
+    "formStateTracking": {
+      "title": "Form State Tracking Example"
+    }
+  },
+  "validationLibraries": {
+    "badge": "Schema Validation",
+    "title": "Validation Libraries: Zod & Formik",
+    "description": "Schema-based validation approaches for type-safe forms",
+    "zod": {
+      "title": "Zod — Modern TypeScript Validation",
+      "whyChoose": {
+        "title": "Why Choose Zod?",
+        "tsNative": "TypeScript Native: Schema = Type definition",
+        "treeShakeable": "Tree-shakeable: Smaller bundle than Yup",
+        "rhfIntegration": "RHF Integration: Seamless with zodResolver",
+        "chainableAPI": "Chainable API: Elegant schema composition",
+        "customValidators": "Custom validators: Easy to extend"
+      },
+      "basicSchema": "Basic Zod Schema:",
+      "rhfIntegration": "RHF + Zod Integration:",
+      "advancedFeatures": {
+        "title": "Advanced Zod Features",
+        "refinement": "Refinement: Custom validation logic",
+        "superrefine": "Superrefine: More control over error messages",
+        "discriminatedUnions": "Discriminated Unions: Type-safe conditional validation",
+        "transform": "Transform: Modify values during validation"
+      }
+    },
+    "formik": {
+      "title": "Formik — Historical Context",
+      "whatIsFormik": {
+        "title": "What is Formik?",
+        "description": "Formik was React's first major form library, established in 2017. It provided structured form state management before React Hook Form existed.",
+        "note": "Note: While still used in legacy projects, RHF is now the community standard due to better performance and simpler API."
+      },
+      "comparison": "Formik vs RHF Comparison:",
+      "pros": {
+        "title": "Formik Pros",
+        "description": "Familiar for React ecosystem veterans, extensive documentation"
+      },
+      "cons": {
+        "title": "Formik Cons",
+        "description": "More re-renders (controlled), verbose code, larger bundle"
+      }
+    },
+    "customValidation": {
+      "title": "Custom Validation Rules"
+    },
+    "whenToUse": {
+      "title": "When to Use Which",
+      "useZodRHF": {
+        "title": "Use Zod + RHF",
+        "newProjects": "New projects with TypeScript",
+        "typeSafe": "Need type-safe validation",
+        "performance": "Performance is critical",
+        "cleanCode": "Want clean, minimal code"
+      },
+      "useFormik": {
+        "title": "Use Formik",
+        "legacy": "Maintaining legacy projects",
+        "teamFamiliar": "Team already familiar with Formik",
+        "plugins": "Need specific Formik plugins",
+        "largeCodebase": "Large existing codebase to migrate"
+      }
+    }
+  },
+  "asyncValidation": {
+    "badge": "Server Integration",
+    "title": "Async Validation",
+    "description": "Server-side validation checks like duplicate email, username availability",
+    "problem": {
+      "title": "The Problem with Real-Time Validation",
+      "commonIssues": {
+        "title": "Common Issues",
+        "tooManyCalls": "Too many API calls: Calling API on every keystroke wastes bandwidth",
+        "uxNoise": "UX noise: Validation errors flickering on every character",
+        "raceConditions": "Race conditions: Out-of-order API responses causing incorrect state",
+        "performance": "Performance: Too many requests slows down server and client"
+      }
+    },
+    "debounceStrategy": {
+      "title": "Debounce Strategy",
+      "whatIsDebouncing": {
+        "title": "What is Debouncing?",
+        "description": "Debouncing waits for user to stop typing (usually 300-500ms) before making the API call. This dramatically reduces requests while maintaining good UX."
+      },
+      "implementation": "Debounce Implementation:"
+    },
+    "rhfAsyncValidation": {
+      "title": "RHF Async Validation",
+      "description": "React Hook Form supports async validation through the validate option or async validator functions."
+    },
+    "timingStrategies": {
+      "title": "Timing Strategies",
+      "onChange": {
+        "title": "Debounce on Change (onChange)",
+        "bestFor": "Best for: Checking availability, real-time suggestions",
+        "ux": "UX: Immediate feedback, may feel expensive"
+      },
+      "onBlur": {
+        "title": "Validate on Blur (onBlur)",
+        "bestFor": "Best for: Email/username duplicate checks",
+        "ux": "UX: Cleaner, validates when user leaves field"
+      },
+      "onSubmit": {
+        "title": "Validate on Submit",
+        "bestFor": "Best for: Final server-side validation",
+        "ux": "UX: Cleanest, but delayed feedback"
+      },
+      "bestPractice": {
+        "title": "Best Practice",
+        "description": "Combine strategies: Sync validation on submit + Async validation on blur (debounced) for optimal UX. This catches errors early without bothering the user."
+      }
+    },
+    "raceConditions": {
+      "title": "Handling Race Conditions",
+      "problem": {
+        "title": "The Problem",
+        "description": "If user types \"john@example.com\", then deletes and types \"jane@example.com\", the first request might resolve AFTER the second, causing wrong validation state."
+      }
+    }
+  },
+  "inputHandling": {
+    "badge": "Input Processing",
+    "title": "Input Handling: Emoji, Unicode & Whitespace",
+    "description": "Real-world challenges in processing user input correctly",
+    "emojiProblem": {
+      "title": "The Emoji Problem",
+      "whyTricky": {
+        "title": "Why Emoji is Tricky",
+        "multipleChars": "Most emoji are represented by multiple characters in UTF-16",
+        "lengthIssue": "'👨‍👩‍👧‍👦'.length === 25 but it's one character visually",
+        "composed": "Some emoji are composed of multiple codepoints (skin tone modifiers)",
+        "lengthValidation": "Length validation breaks: \"😊🎉✨\" looks short but may exceed limits",
+        "substringOps": "Substring operations can split emoji incorrectly"
+      },
+      "correctCounting": "Correct Emoji Length Counting:",
+      "practicalExample": {
+        "title": "Practical Example"
+      }
+    },
+    "unicodeNormalization": {
+      "title": "Unicode Normalization",
+      "whatIsNormalization": {
+        "title": "What is Normalization?",
+        "intro": "Some characters can be represented multiple ways:",
+        "singleCodepoint": "é = single codepoint (U+00E9)",
+        "composed": "é = e (U+0065) + combining accent (U+0301)",
+        "lookIdentical": "Both look identical but are different strings!",
+        "causesFails": "Causes comparison and search failures"
+      },
+      "normalizationForms": "Normalization Forms:",
+      "whenToNormalize": {
+        "title": "When to Normalize",
+        "beforeStoring": "Always: Before storing in database",
+        "beforeComparing": "Always: Before comparing usernames, emails",
+        "beforeSearching": "Always: Before searching/filtering",
+        "onDisplay": "Optional: On display (browsers normalize automatically)"
+      }
+    },
+    "whitespaceTrimming": {
+      "title": "Whitespace & Trimming",
+      "whitespaceTypes": {
+        "title": "Whitespace Types",
+        "regularSpace": "Regular space: U+0020",
+        "nonBreakingSpace": "Non-breaking space: U+00A0 (from copy-paste)",
+        "tab": "Tab: U+0009",
+        "zeroWidth": "Zero-width space: U+200B (invisible!)",
+        "lineBreak": "Line break: U+000A, U+000D"
+      },
+      "trimmingStrategies": "Trimming Strategies:"
+    },
+    "botPrevention": {
+      "title": "Bot Prevention",
+      "honeypot": {
+        "title": "Honeypot Pattern",
+        "description": "A \"honeypot\" is a hidden form field that real users never fill, but bots often do. Use it to detect automated submissions."
+      }
+    },
+    "completeSanitization": {
+      "title": "Complete Input Sanitization Pattern"
+    }
+  },
+  "security": {
+    "badge": "Security",
+    "title": "Sanitization & Security",
+    "description": "Protecting against XSS, injection attacks, and secure form practices",
+    "frontendResponsibility": {
+      "title": "Frontend Security Responsibility",
+      "criticalPoint": {
+        "title": "Critical Point: Server Validation is Essential",
+        "intro": "Frontend security is NOT enough. Always validate and sanitize on the server. Frontend security only improves UX, not protection.",
+        "bypassFrontend": "Users can bypass frontend validation (disable JavaScript)",
+        "directRequests": "Attackers can directly send requests to your API",
+        "gaps": "Frontend sanitization may have gaps or bugs",
+        "serverFinalDefense": "Server is the final defense line"
+      },
+      "securityLayers": {
+        "title": "Security Layers:",
+        "layer1": "1️⃣ Frontend validation (UX, early error detection)",
+        "layer2": "2️⃣ Frontend sanitization (prevent XSS in display)",
+        "layer3": "3️⃣ Server validation (MANDATORY - data integrity)",
+        "layer4": "4️⃣ Server sanitization (MANDATORY - prevent injection)",
+        "layer5": "5️⃣ Database layer (prepared statements, parameterized queries)"
+      }
+    },
+    "xssPrevention": {
+      "title": "XSS Prevention",
+      "whatIsXSS": {
+        "title": "What is XSS (Cross-Site Scripting)?",
+        "description": "Attacker injects malicious script into your site, which runs in other users' browsers, stealing data or performing actions on their behalf."
+      },
+      "commonVectors": "Common XSS Attack Vectors:",
+      "preventionRules": {
+        "title": "XSS Prevention Rules",
+        "default": "Default: Never use dangerouslySetInnerHTML",
+        "reactEscapes": "React escapes: Always render text normally: <div>{text}</div>",
+        "richContent": "Rich content: Only use DOMPurify for innerHTML",
+        "urls": "URLs: Validate and sanitize href attributes",
+        "eventHandlers": "Event handlers: Never bind user input to onClick, etc."
+      }
+    },
+    "domPurifyIntegration": {
+      "title": "DOMPurify Integration"
+    },
+    "sqlInjectionPrevention": {
+      "title": "SQL Injection Prevention",
+      "frontendRole": {
+        "title": "Frontend's Role in SQL Injection",
+        "critical": "Critical: SQL injection is primarily a backend concern. The frontend can only help with input validation and early filtering.",
+        "frontend": "Frontend: Filter out suspicious patterns (alert user)",
+        "backend": "Backend: ALWAYS use prepared statements/parameterized queries",
+        "neverConcat": "Backend: Never concatenate user input into SQL strings"
+      },
+      "frontendValidation": "Frontend Validation:"
+    },
+    "csrfProtection": {
+      "title": "CSRF Protection",
+      "whatIsCSRF": {
+        "title": "What is CSRF (Cross-Site Request Forgery)?",
+        "description": "Attacker tricks user into making unwanted requests to another site. Example: User logged into bank.com, attacker's page makes a transfer request."
+      },
+      "protectionPattern": "CSRF Protection Pattern:"
+    },
+    "securityChecklist": {
+      "title": "Security Checklist",
+      "serverValidates": "Server validates ALL form inputs (backend is final)",
+      "noDangerouslySet": "Never use dangerouslySetInnerHTML with user data",
+      "useDOMPurify": "Sanitize with DOMPurify for rich content display",
+      "parameterizedSQL": "Use parameterized SQL queries (not string concatenation)",
+      "implementCSRF": "Implement CSRF tokens for state-changing requests",
+      "useHTTPS": "Use HTTPS for all form submissions",
+      "autocompleteOff": "Mark sensitive form fields with autocomplete=\"off\"",
+      "hashPasswords": "Hash passwords with bcrypt or similar (server-side)",
+      "cspHeaders": "Set Content-Security-Policy headers"
+    }
+  },
+  "uxDesign": {
+    "badge": "User Experience",
+    "title": "UX-Focused Form Design",
+    "description": "Creating forms that delight users and reduce friction",
+    "errorMessageDesign": {
+      "title": "Error Message Design",
+      "commonMistakes": {
+        "title": "Common Mistakes",
+        "generic": "Generic errors: \"Invalid input\" (not helpful)",
+        "tooTechnical": "Too technical: \"Field regex validation failed\"",
+        "blaming": "Blaming the user: \"You entered wrong data\"",
+        "tooEarly": "Appearing too early: Showing errors while user is typing",
+        "poorVisibility": "Poor visibility: Error text same color as normal text"
+      },
+      "bestPractices": "Error Message Best Practices:"
+    },
+    "validationTiming": {
+      "title": "Validation Timing",
+      "onChange": {
+        "title": "onChange (Real-Time)",
+        "bestFor": "Best for: Password strength, character count",
+        "downside": "Downside: Can be annoying, especially with slow debounce"
+      },
+      "onBlur": {
+        "title": "onBlur (Recommended)",
+        "bestFor": "Best for: Email validation, username availability",
+        "advantage": "Advantage: Validates when user leaves field, clean UX"
+      },
+      "onSubmit": {
+        "title": "onSubmit",
+        "bestFor": "Best for: Cross-field validation, final checks",
+        "advantage": "Advantage: No premature errors, user-initiated action"
+      },
+      "recommendedStrategy": {
+        "title": "Recommended Strategy",
+        "description": "onBlur + onSubmit: Validate when user leaves field (catches most errors), then validate on submit (catches remaining issues). This is the best UX balance."
+      }
+    },
+    "formResetFocus": {
+      "title": "Form Reset & Focus Management"
+    },
+    "optimisticUI": {
+      "title": "Optimistic UI Updates",
+      "whatIsOptimistic": {
+        "title": "What is Optimistic UI?",
+        "description": "Display the result immediately before server confirms, then revert if it fails. Creates a snappy, responsive feel without actual instant confirmation."
+      },
+      "useOptimisticExample": "useOptimistic Example (React 19):"
+    },
+    "a11yBestPractices": {
+      "title": "Accessibility Best Practices",
+      "requirements": {
+        "title": "Accessible Form Requirements",
+        "labels": "Labels: Always associate label with input using htmlFor",
+        "aria": "ARIA: aria-label, aria-describedby for errors",
+        "keyboard": "Keyboard: Tab order, Enter to submit, Escape to cancel",
+        "screenReaders": "Screen readers: Announce errors and required fields",
+        "color": "Color: Don't rely only on color to show errors"
+      }
+    },
+    "mobileTouchOptimization": {
+      "title": "Mobile & Touch Optimization"
+    },
+    "uxChecklist": {
+      "title": "UX Checklist",
+      "specificErrors": "Error messages are specific and helpful",
+      "validateOnBlur": "Form validates on blur (not aggressive on change)",
+      "loadingState": "Submit button shows loading state",
+      "resetsAfterSubmit": "Form resets after successful submission",
+      "focusManaged": "Focus is managed (first field on load, button after submit)",
+      "clearFeedback": "Success/error feedback is clear (toast, modal, or text)",
+      "properLabels": "Labels are properly associated with inputs",
+      "accessible": "Form is accessible to keyboard and screen readers",
+      "touchTargets": "Touch targets are at least 44x44px",
+      "worksEverywhere": "Form works on mobile and desktop"
+    }
+  }
+}

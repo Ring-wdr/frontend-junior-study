@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import {
   DemoBox,
   InfoBox,
@@ -10,37 +11,38 @@ import { ImmutabilityVisualizer } from './immutability-visualizer';
 import { MonadVisualizer } from './monad-visualizer';
 
 export const FpIntroductionSection = () => {
+  const { t } = useTranslation('week2');
   return (
     <SectionCard
-      badge={{ label: 'Functional Programming', color: 'orange' }}
-      title="Introduction to FP"
-      description="Programming paradigm where programs are constructed by applying and composing functions."
+      badge={{ label: t('fp.badge'), color: 'orange' }}
+      title={t('fp.title')}
+      description={t('fp.description')}
     >
       <div className="space-y-8">
-        <SubSection title="Immutability" icon iconColor="orange">
+        <SubSection title={t('fp.immutability.title')} icon iconColor="orange">
           <div className="grid grid-cols-1 gap-6">
             <div>
               <p className="text-sm text-gray-700 mb-4">
-                Data is never modified; instead, a new copy with changes is
-                created. This leads to predictable state changes (Redux style).
+                {t('fp.immutability.description')}
               </p>
               <DemoBox>
                 <ImmutabilityVisualizer />
               </DemoBox>
             </div>
             <div className="space-y-4">
-              <InfoBox variant="orange" title="Core Concepts">
+              <InfoBox variant="orange" title={t('fp.immutability.coreConcepts.title')}>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-orange-800">
                   <li>
-                    <strong>Pure Functions:</strong> Given the same input,
-                    always return the same output and has no side effects.
+                    <strong>{t('fp.immutability.coreConcepts.pureFunctions.label')}</strong>{' '}
+                    {t('fp.immutability.coreConcepts.pureFunctions.description')}
                   </li>
                   <li>
-                    <strong>Immutability:</strong> Avoid shared mutable state.
+                    <strong>{t('fp.immutability.coreConcepts.immutability.label')}</strong>{' '}
+                    {t('fp.immutability.coreConcepts.immutability.description')}
                   </li>
                   <li>
-                    <strong>Higher-Order Functions:</strong> Functions that take
-                    others as args.
+                    <strong>{t('fp.immutability.coreConcepts.higherOrderFunctions.label')}</strong>{' '}
+                    {t('fp.immutability.coreConcepts.higherOrderFunctions.description')}
                   </li>
                 </ul>
               </InfoBox>
@@ -54,20 +56,20 @@ export const FpIntroductionSection = () => {
           <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
             <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
-              Currying
+              {t('fp.currying.title')}
             </h4>
             <p className="text-xs text-gray-600 mb-4">
-              Function taking multiple args to Sequence of functions.
+              {t('fp.currying.description')}
             </p>
             <CurryingVisualizer />
           </div>
           <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
             <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-              Monads (Maybe)
+              {t('fp.monads.title')}
             </h4>
             <p className="text-xs text-gray-600 mb-4">
-              Safe chainable computations (Handling Nulls).
+              {t('fp.monads.description')}
             </p>
             <MonadVisualizer />
           </div>

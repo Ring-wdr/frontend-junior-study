@@ -1,0 +1,150 @@
+{
+  "header": {
+    "title": "Modern Styling Strategies",
+    "description": "Mastering Design Systems, Utility-First CSS, CSS-in-JS, and Responsive Design."
+  },
+  "tabs": {
+    "all": "All",
+    "foundation": "Foundation",
+    "cssModules": "CSS Modules",
+    "cssInJs": "CSS-in-JS",
+    "tailwind": "Tailwind",
+    "responsive": "Responsive",
+    "advanced": "Advanced"
+  },
+  "designSystem": {
+    "badge": "Foundation",
+    "title": "Design Systems & Design Tokens",
+    "description": "The standardization of UI values (colors, spacing, typography) is the first step in scalable styling.",
+    "whatAreTokens": {
+      "title": "What are Design Tokens?",
+      "content": "Design tokens are the atomic parts of a design system: colors, spacing, typography, radii, etc. They replace hard-coded values with meaningful names, ensuring consistency across the product."
+    },
+    "whyUse": {
+      "title": "Why use them?",
+      "infoTitle": "Collaboration & Maintenance",
+      "consistency": "Consistency:",
+      "consistencyDesc": "Ensures the same 'blue' is used everywhere.",
+      "maintainability": "Maintainability:",
+      "maintainabilityDesc": "Change one token value to update the entire app (e.g., Rebranding).",
+      "communication": "Communication:",
+      "communicationDesc": "Common language between designers and developers."
+    }
+  },
+  "cssModules": {
+    "badge": "Maintainability",
+    "title": "CSS Modules",
+    "description": "A CSS file in which all class names are scoped locally by default.",
+    "scopedStyles": {
+      "title": "Scoped Styles",
+      "content": "CSS Modules generate unique class names for each file, preventing global namespace collision. Files typically end with <code>.module.css</code>."
+    },
+    "benefits": {
+      "title": "Benefits",
+      "infoTitle": "Why CSS Modules?",
+      "localScope": "Local Scope:",
+      "localScopeDesc": "No more worry about breaking other pages when changing a class (e.g., <code>.container</code>).",
+      "reuse": "Reuse:",
+      "reuseDesc": "Can compose styles from other files.",
+      "learning": "Zero Learning Curve:",
+      "learningDesc": "It's just standard CSS syntax."
+    }
+  },
+  "cssInJs": {
+    "badge": "Dynamic",
+    "title": "CSS-in-JS (Emotion / Styled-components)",
+    "description": "Writing CSS styles directly within JavaScript files, enabling powerful dynamic styling.",
+    "emotionStyled": {
+      "title": "Emotion / Styled-components",
+      "content": "Leverage tagged template literals to write CSS. This allows using JavaScript variables and logic directly in styles."
+    },
+    "prosCons": {
+      "title": "Pros & Cons",
+      "infoTitle": "Trade-offs",
+      "pros": "Pros:",
+      "prosItems": {
+        "dynamic": "Dynamic styling with JS props",
+        "critical": "Critical CSS automatic extraction",
+        "isolation": "Component-level isolation",
+        "theming": "Theming support (ThemeProvider)"
+      },
+      "cons": "Cons:",
+      "consItems": {
+        "runtime": "Runtime Overhead:",
+        "runtimeDesc": "Library must parse styles at runtime.",
+        "bundle": "Larger bundle size compared to utility classes.",
+        "ssr": "Setup needed for SSR (Next.js App Router limitation)."
+      }
+    }
+  },
+  "tailwind": {
+    "badge": "Industry Standard",
+    "title": "Tailwind CSS",
+    "description": "A utility-first CSS framework for rapidly building custom user interfaces.",
+    "utilityFirst": {
+      "title": "Utility-First",
+      "content": "Instead of writing custom CSS, you use pre-existing classes directly in your HTML. This leads to very fast development cycles and consistent UI."
+    },
+    "keyFeatures": {
+      "title": "Key Features",
+      "infoTitle": "Why distinct?",
+      "jit": "JIT Engine:",
+      "jitDesc": "Generates styles on demand, keeping bundle sizes tiny.",
+      "standardization": "Standardization:",
+      "standardizationDesc": "spacing, colors, and sizes are pre-defined (or customized in config).",
+      "responsiveness": "Responsiveness:",
+      "responsivenessDesc": "<code>md:flex</code>, <code>lg:grid</code> prefixes make responsive design trivial.",
+      "darkMode": "Dark Mode:",
+      "darkModeDesc": "<code>dark:bg-black</code> prefix handles theme switching."
+    }
+  },
+  "responsive": {
+    "badge": "Essential",
+    "title": "Responsive Design Strategy",
+    "description": "Creating interfaces that adapt seamlessly to any screen size, from mobile phones to large desktops.",
+    "mobileFirst": {
+      "title": "Mobile-First Approach",
+      "content": "Design for the smallest screen first, then add complexity for larger screens. In Tailwind, this means unwrapped classes target mobile, and <code>md:</code>, <code>lg:</code> target larger screens."
+    },
+    "toolsTechniques": {
+      "title": "Tools & Techniques",
+      "infoTitle": "Techniques",
+      "breakpoints": "Breakpoints:",
+      "breakpointsDesc": "Standardize widths (e.g., sm: 640px, md: 768px, lg: 1024px).",
+      "fluidTypography": "Fluid Typography:",
+      "fluidTypographyDesc": "Use <code>clamp()</code> for smooth font scaling. <br /><code>font-size: clamp(1rem, 2.5vw, 2rem);</code>",
+      "artDirection": "Art Direction:",
+      "artDirectionDesc": "Use <code>&lt;picture&gt;</code> to serve different images for different screens to save bandwidth."
+    }
+  },
+  "theme": {
+    "badge": "UX",
+    "title": "Theme Systems",
+    "description": "Implementing Dark/Light modes and custom themes effectively.",
+    "cssVariables": {
+      "title": "CSS Variables Strategy",
+      "content": "Define semantic color names mapped to CSS variables. Changing the class on <code>&lt;html&gt;</code> swaps the variable values."
+    },
+    "tailwindDarkMode": {
+      "title": "Tailwind Dark Mode",
+      "content": "Tailwind supports dark mode out-of-the-box with the <code>dark:</code> prefix. It can use system preference (`media`) or a class selector (`class`)."
+    }
+  },
+  "accessibility": {
+    "badge": "A11y",
+    "title": "Accessibility (A11y) & Styling",
+    "description": "ensure your styles do not exclude users. Valid HTML and thoughtful CSS are key.",
+    "checklist": {
+      "title": "Checklist",
+      "infoTitle": "Critical Rules",
+      "focusRings": "Focus Rings:",
+      "focusRingsDesc": "Never set <code>outline: none</code> on focusable elements without replacing it. Is users navigate via keyboard, they must see where they are.",
+      "contrast": "Contrast Ratio:",
+      "contrastDesc": "Ensure text has sufficient contrast against the background (WCAG AA/AAA).",
+      "reducedMotion": "Reduced Motion:",
+      "reducedMotionDesc": "Respect user preference for standard motion.",
+      "colorAlone": "Don't rely on color alone:",
+      "colorAloneDesc": "Use icons or text labels along with color to convey state (error, success)."
+    }
+  }
+}

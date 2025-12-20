@@ -1,21 +1,24 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard } from '../../../components';
 import { V8HiddenClassDemo } from './v8-hidden-class-demo';
 
-export const OptimizationSection = () => (
-  <SectionCard
-    badge={{ label: 'Advanced', color: 'blue' }}
-    title="V8 Hidden Classes"
-    description="Visualize how V8 optimizes objects with consistent shapes."
-    testId="optimization-section"
-  >
-    <V8HiddenClassDemo />
+export const OptimizationSection = () => {
+  const { t } = useTranslation('week1');
 
-    <div className="mt-6">
-      <InfoBox variant="blue" title="Key Takeaway">
-        Always initialize properties in the <strong>exact same order</strong> to
-        help V8 share hidden classes and optimize property access
-        (Monomorphism).
-      </InfoBox>
-    </div>
-  </SectionCard>
-);
+  return (
+    <SectionCard
+      badge={{ label: t('optimization.badge'), color: 'blue' }}
+      title={t('optimization.title')}
+      description={t('optimization.description')}
+      testId="optimization-section"
+    >
+      <V8HiddenClassDemo />
+
+      <div className="mt-6">
+        <InfoBox variant="blue" title={t('optimization.keyTakeaway.title')}>
+          <span dangerouslySetInnerHTML={{ __html: t('optimization.keyTakeaway.content') }} />
+        </InfoBox>
+      </div>
+    </SectionCard>
+  );
+};

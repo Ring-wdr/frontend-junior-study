@@ -1,0 +1,334 @@
+{
+  "header": {
+    "title": "Web Workers, PWA & IndexedDB",
+    "description": "Web Worker로 병렬 처리를 마스터하고, Service Worker로 오프라인 지원 PWA를 구축하며, IndexedDB로 클라이언트 측 스토리지를 활용하세요."
+  },
+  "tabs": {
+    "all": "전체",
+    "webworker": "Web Worker",
+    "serviceworker": "Service Worker & PWA",
+    "indexeddb": "IndexedDB",
+    "offline": "Offline-First",
+    "combined": "통합 패턴"
+  },
+  "webWorker": {
+    "badge": "병렬",
+    "title": "Web Worker — 브라우저 멀티스레딩",
+    "description": "CPU 집약적인 작업을 백그라운드 스레드로 분리",
+    "whatIs": {
+      "title": "Web Worker란?",
+      "infoTitle": "백그라운드 처리",
+      "description": "JavaScript는 단일 스레드에서 실행되지만, 브라우저는 메인 UI 스레드를 차단하지 않고 CPU 집약적인 작업을 처리할 수 있는 Worker 스레드를 제공합니다.",
+      "separateThread": "별도 스레드: Worker는 DOM 접근 없이 격리된 컨텍스트에서 실행",
+      "messagePassing": "메시지 전달: postMessage를 통한 통신 (직렬화 오버헤드)",
+      "transferable": "전송 가능 객체: ArrayBuffer의 복사 없는 전송"
+    },
+    "useCases": {
+      "title": "사용 사례",
+      "largeJson": "대용량 JSON 파싱",
+      "largeJsonDesc": "5-50MB 데이터 처리",
+      "imageProcessing": "이미지 처리",
+      "imageProcessingDesc": "필터, 변환",
+      "videoAudio": "비디오/오디오",
+      "videoAudioDesc": "FFmpeg WASM 인코딩",
+      "cryptography": "암호화",
+      "cryptographyDesc": "암호화/복호화",
+      "mlInference": "ML 추론",
+      "mlInferenceDesc": "TensorFlow.js 모델",
+      "compression": "데이터 압축",
+      "compressionDesc": "Gzip, LZ 압축"
+    },
+    "demo": {
+      "title": "메인 스레드 vs Worker 데모",
+      "label": "UI 차단 비교",
+      "animationTest": "애니메이션 테스트",
+      "animationDesc": "토글을 클릭한 후 계산을 실행하여 차단 확인",
+      "start": "시작",
+      "stop": "정지",
+      "mainThread": "메인 스레드",
+      "mainThreadDesc": "계산 중 UI 차단",
+      "runOnMain": "메인에서 실행",
+      "running": "실행 중...",
+      "webWorker": "Web Worker",
+      "webWorkerDesc": "UI가 반응형 유지",
+      "runOnWorker": "Worker에서 실행"
+    },
+    "basicUsage": {
+      "title": "기본 사용법"
+    },
+    "transferableObjects": {
+      "title": "전송 가능 객체",
+      "infoTitle": "복사 없는 전송",
+      "description": "postMessage는 기본적으로 데이터를 복사합니다. 대용량 ArrayBuffer의 경우, 전송 가능 객체를 사용하여 복사 없이 소유권을 전송하세요."
+    },
+    "sharedArrayBuffer": {
+      "title": "SharedArrayBuffer (고급)",
+      "infoTitle": "공유 메모리",
+      "description": "SharedArrayBuffer는 스레드 간 진정한 메모리 공유를 허용합니다. 동기화를 위해 Atomics를 사용하세요. COOP/COEP 헤더가 필요합니다."
+    }
+  },
+  "serviceWorker": {
+    "badge": "PWA",
+    "title": "Service Worker & PWA",
+    "description": "프로그래밍 가능한 프록시로 오프라인 지원 웹 앱 구축",
+    "whatIs": {
+      "title": "Service Worker란?",
+      "infoTitle": "프로그래밍 가능한 네트워크 프록시",
+      "description": "Service Worker는 웹 페이지와 별도로 백그라운드에서 실행되는 스크립트입니다. 앱과 네트워크 사이의 프로그래밍 가능한 프록시 계층 역할을 합니다.",
+      "interceptRequests": "요청 가로채기: 커스텀 응답을 위한 fetch 이벤트 처리",
+      "cacheStorage": "캐시 저장소: 캐시된 리소스 저장 및 제공",
+      "backgroundSync": "백그라운드 동기화: 오프라인일 때 요청 대기열",
+      "pushNotifications": "푸시 알림: 푸시 메시지 수신"
+    },
+    "lifecycle": {
+      "title": "Service Worker 생명주기",
+      "label": "생명주기 시각화",
+      "register": "등록",
+      "registerDesc": "navigator.serviceWorker.register()",
+      "install": "설치",
+      "installDesc": "에셋 사전 캐싱",
+      "activate": "활성화",
+      "activateDesc": "오래된 캐시 정리",
+      "running": "실행",
+      "runningDesc": "fetch 이벤트 처리"
+    },
+    "pwaComponents": {
+      "title": "PWA 구성 요소",
+      "manifest": "manifest.json",
+      "manifestDesc": "앱 메타데이터",
+      "serviceWorker": "Service Worker",
+      "serviceWorkerDesc": "오프라인 로직",
+      "https": "HTTPS",
+      "httpsDesc": "보안 출처"
+    },
+    "cacheStrategies": {
+      "title": "캐시 전략",
+      "label": "인터랙티브 전략 탐색기",
+      "cacheFirst": "캐시 우선",
+      "cacheFirstDesc": "빠르고, 캐시를 사용하며, 네트워크로 폴백",
+      "cacheFirstUse": "정적 에셋, 폰트, 이미지",
+      "networkFirst": "네트워크 우선",
+      "networkFirstDesc": "최신 데이터, 캐시로 폴백",
+      "networkFirstUse": "API 호출, 동적 콘텐츠",
+      "staleWhileRevalidate": "재검증 중 이전 버전 제공",
+      "staleWhileRevalidateDesc": "캐시에서 빠르게 제공, 백그라운드에서 업데이트",
+      "staleWhileRevalidateUse": "속도와 최신성의 균형",
+      "networkOnly": "네트워크만",
+      "networkOnlyDesc": "항상 네트워크에서 가져오기",
+      "networkOnlyUse": "캐시 불가능한 요청",
+      "cacheOnly": "캐시만",
+      "cacheOnlyDesc": "캐시에서만 제공",
+      "cacheOnlyUse": "사전 캐시된 오프라인 페이지"
+    },
+    "registration": {
+      "title": "등록 예제"
+    },
+    "workbox": {
+      "title": "Workbox (권장)",
+      "infoTitle": "프로덕션 준비 완료 PWA",
+      "description": "Workbox는 일반적인 캐싱 패턴, 사전 캐싱, 라우팅 등을 위한 선언적 API를 제공합니다. 프로덕션에 강력히 권장됩니다."
+    }
+  },
+  "indexedDB": {
+    "badge": "저장소",
+    "title": "IndexedDB — 클라이언트 측 데이터베이스",
+    "description": "브라우저에 대용량의 구조화된 데이터 저장",
+    "whatIs": {
+      "title": "IndexedDB란?",
+      "infoTitle": "브라우저 데이터베이스",
+      "description": "IndexedDB는 파일/블롭을 포함한 상당한 양의 구조화된 데이터를 저장하기 위한 저수준 API입니다. localStorage와 달리 트랜잭션과 인덱싱을 지원합니다.",
+      "largeStorage": "대용량 저장소: MB ~ GB 용량 (할당량 기반)",
+      "asyncAPI": "비동기 API: 논블로킹 작업",
+      "transactions": "트랜잭션: ACID 호환 데이터 무결성",
+      "indexes": "인덱스: 효율적인 데이터 쿼리"
+    },
+    "comparison": {
+      "title": "저장소 비교",
+      "feature": "기능",
+      "localStorage": "localStorage",
+      "indexedDB": "IndexedDB",
+      "capacity": "용량",
+      "capacityLS": "~5MB",
+      "capacityIDB": "MB - GB",
+      "dataType": "데이터 타입",
+      "dataTypeLS": "문자열만",
+      "dataTypeIDB": "모든 타입 (객체, 블롭)",
+      "api": "API",
+      "apiLS": "동기 (간단)",
+      "apiIDB": "비동기 (복잡)",
+      "indexing": "인덱싱",
+      "indexingLS": "없음",
+      "indexingIDB": "있음",
+      "transactions": "트랜잭션",
+      "transactionsLS": "없음",
+      "transactionsIDB": "있음"
+    },
+    "demo": {
+      "title": "라이브 데모",
+      "label": "IndexedDB Todo 앱",
+      "dbStatus": "데이터베이스 상태:",
+      "connected": "연결됨",
+      "initializing": "초기화 중...",
+      "placeholder": "할 일 추가...",
+      "add": "추가",
+      "noTodos": "아직 할 일이 없습니다. 위에서 추가하세요!",
+      "clearAll": "모두 지우기",
+      "persistMessage": "데이터가 IndexedDB에 유지됩니다. 페이지를 새로고침해도 할 일이 그대로 있습니다!"
+    },
+    "vanillaAPI": {
+      "title": "바닐라 API 예제"
+    },
+    "idbLibrary": {
+      "title": "idb 라이브러리 사용 (권장)",
+      "infoTitle": "Promise 기반 래퍼",
+      "description": "네이티브 IndexedDB API는 콜백 기반이고 장황합니다. idb 라이브러리는 훨씬 깔끔한 Promise 기반 인터페이스를 제공합니다."
+    },
+    "useCases": {
+      "title": "사용 사례",
+      "offlineFirstApps": "오프라인 우선 앱",
+      "offlineFirstAppsDesc": "메모, 할 일, 문서",
+      "fileStorage": "파일 저장소",
+      "fileStorageDesc": "이미지, PDF, 블롭",
+      "reactQueryPersist": "React Query 영속화",
+      "reactQueryPersistDesc": "캐시 영속화",
+      "formDrafts": "폼 초안",
+      "formDraftsDesc": "사용자 입력 자동 저장",
+      "syncQueue": "동기화 큐",
+      "syncQueueDesc": "오프라인 액션 큐",
+      "analyticsBuffer": "분석 버퍼",
+      "analyticsBufferDesc": "배치 이벤트 저장"
+    }
+  },
+  "offlineFirst": {
+    "badge": "전략",
+    "title": "Offline-First 전략",
+    "description": "안정적인 오프라인 경험을 구축하기 위한 디자인 패턴",
+    "philosophy": {
+      "title": "Offline-First 철학",
+      "infoTitle": "오프라인 우선 설계",
+      "description": "Offline-first는 네트워크 연결 없이도 기본적으로 작동하도록 애플리케이션을 설계하는 것을 의미합니다. 네트워크는 필수가 아닌 향상 요소가 됩니다.",
+      "localFirst": "로컬 우선: 데이터를 로컬에 저장하고 읽기",
+      "syncWhenPossible": "가능할 때 동기화: 온라인일 때 변경사항 푸시",
+      "gracefulDegradation": "우아한 저하: 명확한 오프라인 표시",
+      "conflictResolution": "충돌 해결: 동기화 충돌 처리"
+    },
+    "networkStatus": {
+      "title": "네트워크 상태 감지",
+      "label": "실시간 연결 모니터",
+      "online": "온라인",
+      "offline": "오프라인",
+      "onlineDesc": "네트워크 연결됨",
+      "offlineDesc": "네트워크 연결 없음",
+      "connectionHistory": "연결 기록",
+      "noHistory": "네트워크 연결을 토글하여 이벤트 확인",
+      "toggleMessage": "WiFi를 토글하거나 DevTools 네트워크 탭을 사용하여 오프라인 시뮬레이션"
+    },
+    "events": {
+      "title": "온라인/오프라인 이벤트"
+    },
+    "backgroundSync": {
+      "title": "백그라운드 동기화",
+      "infoTitle": "Service Worker 백그라운드 동기화",
+      "description": "백그라운드 동기화를 사용하면 사용자가 안정적인 연결을 할 때까지 작업을 연기할 수 있습니다. Service Worker가 재시도를 자동으로 처리합니다."
+    },
+    "uxPrinciples": {
+      "title": "오프라인 UX 원칙",
+      "clearStatus": "명확한 상태 표시",
+      "clearStatusDesc": "배너나 아이콘으로 사용자가 오프라인임을 항상 표시",
+      "indicateCached": "캐시된 데이터 표시",
+      "indicateCachedDesc": "데이터가 캐시에서 온 것인지 서버에서 온 최신 데이터인지 알림",
+      "retryOptions": "재시도 옵션",
+      "retryOptionsDesc": "실패한 작업에 대한 수동 재시도 버튼 제공",
+      "queueActions": "액션 대기열",
+      "queueActionsDesc": "오프라인 액션을 저장하고 온라인 상태가 되면 처리",
+      "conflictResolution": "충돌 해결",
+      "conflictResolutionDesc": "데이터 충돌을 우아하게 처리 (마지막 쓰기 우선, 병합, 사용자 선택)"
+    },
+    "architecture": {
+      "title": "Offline-First 아키텍처",
+      "label": "데이터 흐름 패턴",
+      "uiLayer": "UI 계층",
+      "localStore": "로컬\n저장소",
+      "syncLayer": "동기화\n계층",
+      "remoteServer": "원격\n서버",
+      "flowDesc": "UI는 항상 로컬 저장소에서 읽습니다. 동기화 계층이 서버 통신을 처리합니다."
+    },
+    "implementation": {
+      "title": "구현 패턴"
+    }
+  },
+  "combined": {
+    "badge": "고급",
+    "title": "통합 패턴",
+    "description": "Web Worker + Service Worker + IndexedDB 통합",
+    "trio": {
+      "title": "강력한 트리오",
+      "infoTitle": "프로덕션 아키텍처",
+      "description": "가장 강력한 오프라인 지원 웹 앱은 세 가지 기술을 모두 결합합니다. 각각은 특정 관심사를 처리합니다:",
+      "webWorker": "Web Worker: CPU 집약적 처리",
+      "serviceWorker": "Service Worker: 네트워크 복원력 및 캐싱",
+      "indexedDB": "IndexedDB: 영구 데이터 저장소"
+    },
+    "architecture": {
+      "title": "아키텍처 개요",
+      "label": "시스템 아키텍처",
+      "mainThread": "메인 스레드 (UI)",
+      "reactComponents": "React 컴포넌트",
+      "userInteractions": "사용자 인터랙션",
+      "stateManagement": "상태 관리",
+      "postMessage": "postMessage",
+      "fetchEvents": "fetch 이벤트",
+      "webWorker": "Web Worker",
+      "heavyProcessing": "무거운 처리",
+      "dataTransform": "데이터 변환",
+      "serviceWorker": "Service Worker",
+      "networkProxy": "네트워크 프록시",
+      "cacheStrategy": "캐시 전략",
+      "indexedDB": "IndexedDB",
+      "userData": "사용자 데이터",
+      "syncQueue": "동기화 큐",
+      "filesBlobs": "파일/블롭"
+    },
+    "realWorldExamples": {
+      "title": "실제 예제",
+      "imageEditor": "오프라인 이미지 편집기",
+      "imageEditorFeature1": "Web Worker: 필터 적용, 크기 조정",
+      "imageEditorFeature2": "IndexedDB: 편집된 이미지 저장",
+      "imageEditorFeature3": "Service Worker: 오프라인 접근",
+      "noteTaking": "오프라인 메모 앱",
+      "noteTakingFeature1": "Web Worker: 전체 텍스트 검색 인덱싱",
+      "noteTakingFeature2": "IndexedDB: 메모 및 첨부파일 저장",
+      "noteTakingFeature3": "Service Worker: 온라인 시 동기화",
+      "dashboard": "데이터 시각화 대시보드",
+      "dashboardFeature1": "Web Worker: 대용량 데이터셋 처리",
+      "dashboardFeature2": "IndexedDB: 쿼리 결과 캐싱",
+      "dashboardFeature3": "Service Worker: API 응답 캐싱"
+    },
+    "imageProcessing": {
+      "title": "이미지 처리 예제"
+    },
+    "serviceWorkerIntegration": {
+      "title": "Service Worker 통합"
+    },
+    "bestPractices": {
+      "title": "모범 사례",
+      "communication": "통신 패턴",
+      "communicationItem1": "• 대용량 데이터에 전송 가능 객체 사용",
+      "communicationItem2": "• 비동기 처리를 위한 요청/응답 ID 구현",
+      "communicationItem3": "• 더 깔끔한 Worker API를 위해 Comlink 고려",
+      "storage": "저장소 전략",
+      "storageItem1": "• 구조화된 데이터와 블롭은 IndexedDB 사용",
+      "storageItem2": "• HTTP 응답은 캐시 저장소 사용",
+      "storageItem3": "• 버전 관리된 정리로 오래된 데이터 삭제",
+      "errorHandling": "오류 처리",
+      "errorHandlingItem1": "• Worker 실패 시 우아한 폴백",
+      "errorHandlingItem2": "• 지수 백오프를 사용한 재시도 로직",
+      "errorHandlingItem3": "• 긴 작업에 대한 사용자 피드백"
+    },
+    "comlink": {
+      "title": "더 깔끔한 API를 위한 Comlink",
+      "infoTitle": "Worker 통신 간소화",
+      "description": "Comlink는 Web Worker를 로컬 비동기 함수처럼 느껴지게 만듭니다."
+    }
+  }
+}

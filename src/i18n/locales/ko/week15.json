@@ -1,0 +1,639 @@
+{
+  "header": {
+    "title": "DevTools & Bundling",
+    "description": "Chrome DevTools 마스터, 번들링 최적화, 그리고 Observability를 통해 시니어 프론트엔드 개발자의 필수 역량을 갖추세요."
+  },
+  "tabs": {
+    "all": "All",
+    "elements": "Elements/Console",
+    "sources": "Sources/Network",
+    "performance": "Performance/Memory",
+    "bundling": "Bundling",
+    "optimization": "Bundle Optimization",
+    "observability": "Observability",
+    "vitals": "Web Vitals"
+  },
+  "devtoolsElements": {
+    "badge": "DevTools",
+    "title": "Elements & Console 패널",
+    "description": "DOM/CSS 디버깅과 강력한 Console 기능 마스터",
+    "elementsTitle": "Elements 패널 핵심 기능",
+    "featureExplorer": "Feature Explorer",
+    "consoleTitle": "Console 고급 기능",
+    "consoleInfoTitle": "console.log 그 이상의 기능들",
+    "consoleInfoDesc": "Console은 단순 로깅을 넘어 강력한 디버깅 도구입니다. $0, $1로 최근 선택 요소 참조, debug(fn)으로 함수 호출 시 자동 브레이크!",
+    "consoleCommandsTitle": "Console 특수 명령어",
+    "consoleCommandsLabel": "Special Console Commands",
+    "shortcutsTitle": "단축키 마스터",
+    "features": {
+      "domInspection": {
+        "title": "DOM Inspection",
+        "description": "HTML 구조 실시간 검사 및 수정",
+        "items": [
+          "Elements 패널에서 노드 클릭으로 선택",
+          "우클릭 → \"Edit as HTML\"로 직접 수정",
+          "Delete 키로 요소 삭제, Ctrl+Z로 복원",
+          "Drag & Drop으로 DOM 순서 변경"
+        ]
+      },
+      "cssDebugging": {
+        "title": "CSS Debugging",
+        "description": "CSS 수정 및 우선순위 확인",
+        "items": [
+          "Styles 패널에서 실시간 CSS 수정",
+          "취소선 = 무시된 속성 (우선순위 확인)",
+          "Computed 탭에서 최종 계산값 확인",
+          "Filter로 특정 속성만 검색"
+        ]
+      },
+      "layoutAnalysis": {
+        "title": "Layout Analysis",
+        "description": "Box Model 및 레이아웃 분석",
+        "items": [
+          "Box Model 다이어그램에서 margin/padding 시각화",
+          "Grid/Flexbox 오버레이로 레이아웃 디버깅",
+          "Layout 탭에서 Grid 트랙 정보 확인",
+          "브라우저 뷰포트 크기 조절 테스트"
+        ]
+      },
+      "accessibility": {
+        "title": "Accessibility",
+        "description": "접근성 검사 및 개선",
+        "items": [
+          "Accessibility 탭에서 ARIA 속성 확인",
+          "Contrast ratio 검사 (색상 피커)",
+          "Accessibility Tree 구조 확인",
+          "Role, State, Properties 정보 제공"
+        ]
+      }
+    },
+    "consoleCommands": [
+      {
+        "cmd": "$0, $1, $2...",
+        "desc": "Elements에서 선택한 최근 요소들",
+        "example": "$0.classList"
+      },
+      {
+        "cmd": "$$(selector)",
+        "desc": "querySelectorAll의 축약형",
+        "example": "$$(\"button\")"
+      },
+      {
+        "cmd": "copy(object)",
+        "desc": "객체를 클립보드로 복사",
+        "example": "copy($0.outerHTML)"
+      },
+      {
+        "cmd": "debug(fn)",
+        "desc": "함수 호출 시 자동 브레이크",
+        "example": "debug(myFunction)"
+      },
+      {
+        "cmd": "monitor(fn)",
+        "desc": "함수 호출 시 로그 출력",
+        "example": "monitor(onClick)"
+      },
+      {
+        "cmd": "monitorEvents(el)",
+        "desc": "요소의 모든 이벤트 로깅",
+        "example": "monitorEvents($0, 'click')"
+      }
+    ],
+    "shortcuts": [
+      { "key": "Cmd/Ctrl + Shift + C", "action": "요소 검사 모드" },
+      { "key": "Cmd/Ctrl + Shift + J", "action": "Console 직접 열기" },
+      { "key": "Cmd/Ctrl + K", "action": "Console 클리어" },
+      { "key": "Cmd/Ctrl + F", "action": "Elements에서 검색" },
+      { "key": "H", "action": "요소 숨기기 (Elements)" },
+      { "key": "Esc", "action": "Drawer 토글" }
+    ]
+  },
+  "devtoolsSources": {
+    "badge": "Debug",
+    "title": "Sources & Network 패널",
+    "description": "진짜 디버깅 실력과 네트워크 분석 능력 갖추기",
+    "breakpointsTitle": "Breakpoint 종류 마스터",
+    "breakpointsInfoTitle": "디버깅 실력이 곧 실력이다",
+    "breakpointsInfoDesc": "console.log로 디버깅하는 시대는 지났습니다. Breakpoint와 Step through를 활용하면 버그를 훨씬 빠르게 찾을 수 있습니다.",
+    "breakpointsLabel": "Breakpoint Types",
+    "debugControlTitle": "디버깅 컨트롤",
+    "scopeWatchTitle": "Scope & Watch",
+    "scopeWatchLabel": "Debugging Context",
+    "scopePanelTitle": "Scope 패널",
+    "watchPanelTitle": "Watch 패널",
+    "networkTitle": "Network 패널 분석",
+    "networkInfoTitle": "네트워크 분석의 핵심",
+    "networkInfoDesc": "리소스 병목을 찾을 때 필수! TTFB, 페이로드 크기, 캐싱 정책을 확인하세요.",
+    "asyncTitle": "Async Stack Traces",
+    "asyncDesc": "Settings → Preferences → Async stack traces를 활성화하면 Promise, setTimeout, async/await의 전체 호출 스택을 추적할 수 있습니다. 비동기 버그 디버깅에 필수!",
+    "breakpointTypes": [
+      {
+        "name": "Line Breakpoint",
+        "desc": "특정 코드 라인에서 멈춤",
+        "how": "라인 번호 클릭",
+        "tip": "가장 기본적인 디버깅 방법"
+      },
+      {
+        "name": "Conditional",
+        "desc": "조건이 참일 때만 멈춤",
+        "how": "우클릭 → Add conditional breakpoint",
+        "tip": "i === 5 같은 조건 설정"
+      },
+      {
+        "name": "XHR/Fetch",
+        "desc": "특정 URL 요청 시 멈춤",
+        "how": "XHR/fetch Breakpoints 섹션",
+        "tip": "URL 일부 문자열 매칭"
+      },
+      {
+        "name": "DOM",
+        "desc": "DOM 변경 시 멈춤",
+        "how": "Elements → 우클릭 → Break on",
+        "tip": "subtree/attribute/removal 선택"
+      },
+      {
+        "name": "Event Listener",
+        "desc": "특정 이벤트 발생 시 멈춤",
+        "how": "Event Listener Breakpoints",
+        "tip": "click, scroll, keyboard 등"
+      }
+    ],
+    "debugControls": [
+      { "name": "Resume", "shortcut": "F8", "desc": "다음 브레이크포인트까지 실행" },
+      { "name": "Step Over", "shortcut": "F10", "desc": "현재 라인 실행, 함수 내부 안 들어감" },
+      { "name": "Step Into", "shortcut": "F11", "desc": "함수 내부로 진입" },
+      { "name": "Step Out", "shortcut": "Shift+F11", "desc": "현재 함수에서 나감" },
+      { "name": "Pause", "shortcut": "F8", "desc": "실행 중인 스크립트 일시정지" },
+      { "name": "Restart", "shortcut": "Ctrl+Shift+F8", "desc": "현재 함수 처음부터 다시" }
+    ],
+    "scopeItems": [
+      { "label": "Local:", "desc": "현재 함수의 지역 변수" },
+      { "label": "Closure:", "desc": "클로저로 캡처된 변수" },
+      { "label": "Global:", "desc": "window 객체의 속성들" }
+    ],
+    "watchItems": [
+      "특정 변수/표현식을 지속적으로 모니터링",
+      "user.profile?.name 같은 표현식 가능",
+      "배열 길이, 객체 속성 등 실시간 추적"
+    ],
+    "networkFeatures": [
+      {
+        "label": "Headers",
+        "desc": "요청/응답 헤더 확인",
+        "check": ["Cache-Control", "Content-Type", "Authorization"]
+      },
+      {
+        "label": "Timing",
+        "desc": "요청 각 단계 시간 분석",
+        "check": ["DNS Lookup", "TTFB", "Content Download"]
+      },
+      {
+        "label": "Throttling",
+        "desc": "네트워크 속도 제한 테스트",
+        "check": ["Slow 3G", "Fast 3G", "Offline"]
+      },
+      {
+        "label": "Filter",
+        "desc": "리소스 타입별 필터링",
+        "check": ["XHR", "JS", "CSS", "Img", "Font"]
+      }
+    ]
+  },
+  "devtoolsPerformance": {
+    "badge": "Perf",
+    "title": "Performance & Memory 패널",
+    "description": "렌더링 병목 분석과 메모리 누수 탐지",
+    "recordingTitle": "Performance 녹화 분석",
+    "recordingInfoTitle": "성능 튜닝의 핵심 도구",
+    "recordingInfoDesc": "Performance 패널은 프론트엔드 성능 최적화의 핵심 도구입니다. 프레임 분석, Long Task 탐지, 레이아웃 시프트 확인까지 모든 것이 가능합니다.",
+    "recordingLabel": "Key Metrics",
+    "stepsTitle": "Performance 녹화 단계",
+    "memoryTitle": "Memory 패널 - 누수 탐지",
+    "memoryInfoTitle": "메모리 누수는 SPA의 적",
+    "memoryInfoDesc": "대규모 SPA에서 메모리 누수는 점점 앱을 느리게 만듭니다. Detached DOM nodes와 Heap snapshot으로 누수를 찾으세요.",
+    "leakPatternsTitle": "흔한 메모리 누수 패턴",
+    "leakPatternsLabel": "Memory Leak Patterns",
+    "metrics": [
+      {
+        "name": "FPS",
+        "desc": "Frames Per Second - 초당 프레임 수",
+        "target": "60fps 유지",
+        "issue": "프레임 드롭은 버벅임의 원인"
+      },
+      {
+        "name": "Long Task",
+        "desc": "50ms 이상 실행되는 JavaScript 작업",
+        "target": "50ms 이하로 분할",
+        "issue": "메인 스레드 블로킹 → 입력 지연"
+      },
+      {
+        "name": "Layout Shift",
+        "desc": "레이아웃이 갑자기 변경되는 현상",
+        "target": "CLS 0.1 이하",
+        "issue": "사용자 클릭 실수 유발"
+      },
+      {
+        "name": "Scripting",
+        "desc": "JavaScript 실행 시간",
+        "target": "전체 시간의 30% 이하",
+        "issue": "파싱, 컴파일, 실행 비용"
+      }
+    ],
+    "recordingSteps": [
+      { "step": 1, "title": "녹화 시작", "desc": "Ctrl+E 또는 Record 버튼 클릭" },
+      { "step": 2, "title": "사용자 시나리오 실행", "desc": "스크롤, 클릭, 입력 등 테스트할 동작 수행" },
+      { "step": 3, "title": "녹화 중지", "desc": "Stop 버튼 클릭 (5초 이내 권장)" },
+      { "step": 4, "title": "프레임 차트 분석", "desc": "Main 스레드에서 Long Task 확인" },
+      { "step": 5, "title": "병목 지점 확대", "desc": "빨간색/노란색 영역 클릭하여 상세 확인" }
+    ],
+    "memoryTools": [
+      {
+        "title": "Heap Snapshot",
+        "desc": "현재 메모리 상태 캡처",
+        "use": "전후 비교로 누수 확인"
+      },
+      {
+        "title": "Allocation Timeline",
+        "desc": "시간에 따른 할당 추적",
+        "use": "어떤 동작이 메모리 증가시키는지"
+      },
+      {
+        "title": "Allocation Sampling",
+        "desc": "함수별 메모리 할당량",
+        "use": "비용이 큰 함수 식별"
+      },
+      {
+        "title": "Detached Elements",
+        "desc": "DOM에서 분리된 노드들",
+        "use": "이벤트 리스너 누수의 원인"
+      }
+    ],
+    "leakPatterns": [
+      {
+        "pattern": "Event Listener 미해제",
+        "code": "useEffect(() => { window.addEventListener(...); }, []);",
+        "fix": "cleanup 함수에서 removeEventListener"
+      },
+      {
+        "pattern": "setInterval 미정리",
+        "code": "setInterval(() => { ... }, 1000);",
+        "fix": "clearInterval in useEffect cleanup"
+      },
+      {
+        "pattern": "클로저가 DOM 참조 유지",
+        "code": "const el = document.getElementById(...);",
+        "fix": "필요 없으면 null 할당"
+      },
+      {
+        "pattern": "구독 미해제",
+        "code": "observable.subscribe(...);",
+        "fix": "unsubscribe in cleanup"
+      }
+    ]
+  },
+  "bundling": {
+    "badge": "Build",
+    "title": "번들링 이해 (Webpack/Vite/Rollup)",
+    "description": "모던 프론트엔드 빌드 도구의 핵심 개념",
+    "comparisonTitle": "번들러 비교",
+    "comparisonLabel": "Bundler Comparison",
+    "webpackTitle": "Webpack 핵심 개념",
+    "viteTitle": "Vite - 현대 프론트엔드 표준",
+    "viteInfoTitle": "왜 Vite인가?",
+    "viteInfoDesc": "Vite는 ES Modules를 활용해 번들 없이 개발 서버를 실행합니다. Webpack 대비 10-100배 빠른 Cold Start를 제공하며, 프로덕션 빌드는 Rollup을 사용합니다.",
+    "viteDiffTitle": "Vite vs Webpack 차이",
+    "viteDiffWebpack": "Webpack (Bundle-based)",
+    "viteDiffWebpackCode": "모든 모듈 → 번들 생성 → 서버 시작",
+    "viteDiffWebpackNote": "느린 Cold Start",
+    "viteDiffVite": "Vite (ESM-based)",
+    "viteDiffViteCode": "서버 시작 → 요청 시 모듈 변환",
+    "viteDiffViteNote": "즉각적인 시작",
+    "conceptsTitle": "핵심 빌드 개념",
+    "prosLabel": "장점",
+    "consLabel": "단점",
+    "bundlers": [
+      {
+        "name": "Webpack",
+        "status": "레거시 표준",
+        "pros": ["풍부한 생태계", "세밀한 설정", "검증된 안정성"],
+        "cons": ["느린 빌드", "복잡한 설정", "러닝 커브"]
+      },
+      {
+        "name": "Vite",
+        "status": "현대 표준",
+        "pros": ["빠른 dev 서버", "ES Modules 기반", "간단한 설정"],
+        "cons": ["CommonJS 호환 이슈", "상대적으로 새로움"]
+      },
+      {
+        "name": "Rollup",
+        "status": "라이브러리용",
+        "pros": ["최적의 tree shaking", "작은 번들", "ES Module 출력"],
+        "cons": ["앱 빌드에 부적합", "플러그인 생태계 작음"]
+      }
+    ],
+    "webpackConcepts": [
+      {
+        "concept": "Entry",
+        "desc": "번들링 시작점",
+        "example": "entry: \"./src/index.js\""
+      },
+      {
+        "concept": "Output",
+        "desc": "번들 출력 경로",
+        "example": "output: { path, filename }"
+      },
+      {
+        "concept": "Loaders",
+        "desc": "파일 변환기",
+        "example": "babel-loader, ts-loader"
+      },
+      {
+        "concept": "Plugins",
+        "desc": "번들 최적화/변환",
+        "example": "HtmlWebpackPlugin"
+      },
+      {
+        "concept": "Mode",
+        "desc": "development/production",
+        "example": "자동 최적화 설정"
+      },
+      {
+        "concept": "DevServer",
+        "desc": "개발 서버 + HMR",
+        "example": "webpack-dev-server"
+      }
+    ],
+    "buildConcepts": [
+      {
+        "term": "Tree Shaking",
+        "desc": "사용하지 않는 코드를 번들에서 제거",
+        "tip": "ES Modules + sideEffects: false 필요"
+      },
+      {
+        "term": "Code Splitting",
+        "desc": "번들을 여러 청크로 분리",
+        "tip": "dynamic import()로 구현"
+      },
+      {
+        "term": "HMR (Hot Module Replacement)",
+        "desc": "전체 새로고침 없이 모듈만 교체",
+        "tip": "개발 생산성 향상"
+      },
+      {
+        "term": "Source Maps",
+        "desc": "번들된 코드를 원본에 매핑",
+        "tip": "디버깅 필수, production에선 비활성화"
+      }
+    ]
+  },
+  "bundleOptimization": {
+    "badge": "Optimize",
+    "title": "번들 최적화 전략",
+    "description": "번들 분석과 최적화로 성능 극대화하기",
+    "analyzerTitle": "Bundle Analyzer",
+    "analyzerInfoTitle": "번들 분석의 중요성",
+    "analyzerInfoDesc": "어떤 라이브러리가 번들을 비대하게 만드는지 시각화합니다. moment.js, lodash 전체 import 등 숨겨진 비용을 발견하세요.",
+    "analyzerLabel": "Bundle Analyzer Demo",
+    "analyzerButtonShow": "번들 분석 시뮬레이션",
+    "analyzerButtonHide": "분석 결과 숨기기",
+    "analyzerResultTitle": "번들 구성 (Total: 1.2MB)",
+    "analyzerWarning": "⚠️ lodash + moment.js가 전체 번들의 68%를 차지합니다!",
+    "libraryTitle": "라이브러리 최적화",
+    "dynamicImportTitle": "Dynamic Import (Code Splitting)",
+    "dynamicImportInfoDesc": "Best Practice: 라우트별 분할 + 조건부 렌더링 컴포넌트 분할을 조합하세요. 초기 번들 크기를 줄이고 필요할 때만 코드를 로드합니다.",
+    "treeShakingTitle": "sideEffects와 Tree Shaking",
+    "treeShakingInfoTitle": "Tree Shaking이 안 되는 경우",
+    "treeShakingInfoDesc": "CommonJS 모듈, side effects가 있는 코드, 또는 sideEffects 플래그가 없으면 Tree shaking이 작동하지 않습니다.",
+    "checklistTitle": "최적화 체크리스트",
+    "beforeLabel": "BEFORE",
+    "afterLabel": "AFTER",
+    "bundleItems": [
+      { "name": "react + react-dom", "size": "128KB", "percent": 10.7, "issue": false },
+      { "name": "lodash (전체)", "size": "531KB", "percent": 44.3, "issue": true },
+      { "name": "moment.js", "size": "288KB", "percent": 24, "issue": true },
+      { "name": "axios", "size": "14KB", "percent": 1.2, "issue": false },
+      { "name": "app code", "size": "239KB", "percent": 19.8, "issue": false }
+    ],
+    "libraryOptimizations": [
+      {
+        "before": "import _ from \"lodash\"",
+        "after": "import debounce from \"lodash-es/debounce\"",
+        "saving": "~500KB → ~2KB",
+        "tip": "lodash-es 사용 + 개별 함수 import"
+      },
+      {
+        "before": "import moment from \"moment\"",
+        "after": "import { format } from \"date-fns\"",
+        "saving": "~288KB → ~12KB",
+        "tip": "date-fns 또는 dayjs로 교체"
+      },
+      {
+        "before": "import * as Icons from \"@heroicons/react\"",
+        "after": "import { HomeIcon } from \"@heroicons/react/24/solid\"",
+        "saving": "Tree shake 가능",
+        "tip": "개별 아이콘만 import"
+      },
+      {
+        "before": "import Chart from \"chart.js\"",
+        "after": "import { Chart, registerables } from \"chart.js\"",
+        "saving": "필요한 컴포넌트만 등록",
+        "tip": "Chart.register() 사용"
+      }
+    ],
+    "checklistItems": [
+      "Bundle Analyzer로 큰 의존성 식별",
+      "moment.js → date-fns/dayjs 교체",
+      "lodash → lodash-es + 개별 import",
+      "Dynamic import로 코드 분할",
+      "package.json에 sideEffects 설정",
+      "이미지/폰트 최적화 (WebP, WOFF2)",
+      "gzip/brotli 압축 활성화",
+      "Source map은 production에서 비활성화"
+    ]
+  },
+  "observability": {
+    "badge": "Monitor",
+    "title": "Observability (에러 모니터링)",
+    "description": "Sentry로 실서비스 에러 추적 및 성능 모니터링",
+    "whyTitle": "왜 에러 모니터링이 필수인가?",
+    "whyInfoTitle": "프론트엔드 에러는 숨는다",
+    "whyInfoDesc": "프론트엔드 에러는 서버 로그에 남지 않습니다. 사용자가 \"안 돼요\"라고 할 때 이미 수많은 에러가 발생했을 수 있습니다. 실시간 에러 수집 시스템은 프로덕션 필수입니다.",
+    "featuresTitle": "Sentry 핵심 기능",
+    "featuresLabel": "Feature Explorer",
+    "integrationTitle": "React 프로젝트에 Sentry 연동",
+    "sourcemapTitle": "Source Map 업로드",
+    "sourcemapInfoTitle": "원본 코드 라인 표시",
+    "sourcemapInfoDesc": "프로덕션 빌드는 minify되어 스택 트레이스가 읽기 어렵습니다. Source Map을 업로드하면 원본 파일명과 라인 번호가 표시됩니다.",
+    "loggingTitle": "체계적인 로깅 구조",
+    "bestPracticesTitle": "모니터링 Best Practices",
+    "sentryFeatures": [
+      {
+        "name": "Error Tracking",
+        "desc": "JS 에러 자동 수집 및 분류",
+        "details": [
+          "스택 트레이스 + 소스맵으로 원본 코드 위치 표시",
+          "에러 빈도, 영향받은 사용자 수 집계",
+          "Release별 에러 추적으로 회귀 감지"
+        ]
+      },
+      {
+        "name": "Breadcrumbs",
+        "desc": "에러 발생 전 사용자 행동 기록",
+        "details": [
+          "클릭, 네비게이션, API 호출 등 자동 기록",
+          "에러 발생까지의 경로 추적",
+          "커스텀 breadcrumb 추가 가능"
+        ]
+      },
+      {
+        "name": "Performance",
+        "desc": "트랜잭션 및 성능 모니터링",
+        "details": [
+          "페이지 로드, API 응답 시간 측정",
+          "Apdex 점수로 사용자 경험 수치화",
+          "느린 트랜잭션 자동 샘플링"
+        ]
+      },
+      {
+        "name": "Session Replay",
+        "desc": "사용자 세션 재생 (유료)",
+        "details": [
+          "에러 발생 전후 화면 녹화",
+          "마우스 움직임, 클릭 재현",
+          "민감 정보 자동 마스킹"
+        ]
+      }
+    ],
+    "bestPractices": [
+      {
+        "title": "Release 태깅",
+        "desc": "버전별 에러 추적으로 회귀 감지"
+      },
+      {
+        "title": "환경 분리",
+        "desc": "dev/staging/prod 환경별 필터링"
+      },
+      {
+        "title": "알림 설정",
+        "desc": "Slack/Email 알림으로 즉시 대응"
+      },
+      {
+        "title": "샘플링 조정",
+        "desc": "트래픽에 따라 샘플링 비율 조정"
+      },
+      {
+        "title": "Issue 할당",
+        "desc": "팀원에게 자동 할당 규칙 설정"
+      },
+      {
+        "title": "PII 마스킹",
+        "desc": "민감 정보 자동 필터링"
+      }
+    ]
+  },
+  "webVitals": {
+    "badge": "Vitals",
+    "title": "Web Vitals 수집",
+    "description": "실사용자 환경에서 성능 측정 및 개선",
+    "introTitle": "Core Web Vitals란?",
+    "introInfoTitle": "Google의 성능 지표",
+    "introInfoDesc": "Core Web Vitals는 LCP, INP, CLS 세 가지 지표로 구성됩니다. 실제 사용자 경험을 측정하며, SEO 랭킹에도 영향을 미칩니다.",
+    "metricsTitle": "지표 상세 분석",
+    "metricsLabel": "Web Vitals Explorer",
+    "collectionTitle": "Web Vitals 수집 코드",
+    "environmentTitle": "측정 환경의 차이",
+    "environmentInfoTitle": "Lab vs Field Data",
+    "environmentInfoDesc": "Lab Data (Lighthouse)는 시뮬레이션 환경이고, Field Data (RUM)는 실제 사용자 환경입니다. 두 데이터 모두 중요하지만, Field Data가 실제 사용자 경험을 반영합니다.",
+    "labDataTitle": "Lab Data (Synthetic)",
+    "fieldDataTitle": "Field Data (RUM)",
+    "dashboardTitle": "성능 대시보드 구축",
+    "priorityTitle": "성능 개선 우선순위",
+    "priorityLabel": "Optimization Priority",
+    "goodLabel": "Good",
+    "poorLabel": "Poor",
+    "improvementLabel": "개선 방법",
+    "vitals": [
+      {
+        "name": "LCP",
+        "fullName": "Largest Contentful Paint",
+        "desc": "가장 큰 콘텐츠가 화면에 그려지는 시간",
+        "good": "2.5s 이하",
+        "poor": "4.0s 초과",
+        "improve": ["이미지 최적화 (WebP, lazy load)", "서버 응답 시간 개선", "Critical CSS 인라인"]
+      },
+      {
+        "name": "INP",
+        "fullName": "Interaction to Next Paint",
+        "desc": "사용자 인터랙션 후 다음 페인트까지 시간",
+        "good": "200ms 이하",
+        "poor": "500ms 초과",
+        "improve": ["Long Task 분할", "메인 스레드 블로킹 최소화", "Web Worker 활용"]
+      },
+      {
+        "name": "CLS",
+        "fullName": "Cumulative Layout Shift",
+        "desc": "예상치 못한 레이아웃 이동량",
+        "good": "0.1 이하",
+        "poor": "0.25 초과",
+        "improve": ["이미지/영상에 크기 속성 지정", "폰트 로드 최적화 (font-display)", "동적 콘텐츠에 공간 예약"]
+      },
+      {
+        "name": "FCP",
+        "fullName": "First Contentful Paint",
+        "desc": "첫 번째 콘텐츠가 그려지는 시간",
+        "good": "1.8s 이하",
+        "poor": "3.0s 초과",
+        "improve": ["렌더 블로킹 리소스 제거", "CSS/JS 최적화", "CDN 활용"]
+      },
+      {
+        "name": "TTFB",
+        "fullName": "Time to First Byte",
+        "desc": "서버 첫 응답까지 걸리는 시간",
+        "good": "0.8s 이하",
+        "poor": "1.8s 초과",
+        "improve": ["서버 최적화", "CDN 엣지 캐싱", "데이터베이스 쿼리 최적화"]
+      }
+    ],
+    "labDataItems": [
+      "Lighthouse / PageSpeed Insights",
+      "일관된 환경에서 테스트",
+      "개발 중 빠른 피드백",
+      "CI/CD 파이프라인 통합"
+    ],
+    "fieldDataItems": [
+      "CrUX Report / web-vitals",
+      "실제 사용자 기기/네트워크",
+      "다양한 조건 반영",
+      "SEO 랭킹에 사용됨"
+    ],
+    "dashboards": [
+      {
+        "tool": "Vercel Analytics",
+        "desc": "Next.js 통합, 자동 Web Vitals 수집",
+        "link": "vercel.com/analytics"
+      },
+      {
+        "tool": "Sentry Performance",
+        "desc": "Web Vitals + Transaction 통합 모니터링",
+        "link": "sentry.io"
+      },
+      {
+        "tool": "Google Analytics 4",
+        "desc": "Web Vitals 이벤트 자동 수집",
+        "link": "analytics.google.com"
+      },
+      {
+        "tool": "Custom Dashboard",
+        "desc": "Grafana + Prometheus로 자체 구축",
+        "link": "grafana.com"
+      }
+    ],
+    "priorities": [
+      { "priority": 1, "action": "LCP 개선: 히어로 이미지 최적화", "impact": "High" },
+      { "priority": 2, "action": "CLS 개선: 이미지/폰트 크기 지정", "impact": "High" },
+      { "priority": 3, "action": "INP 개선: Long Task 분할", "impact": "Medium" },
+      { "priority": 4, "action": "FCP 개선: Critical CSS 인라인", "impact": "Medium" },
+      { "priority": 5, "action": "TTFB 개선: CDN/캐싱 최적화", "impact": "Low" }
+    ]
+  }
+}

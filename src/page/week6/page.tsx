@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { cn } from '../../lib/utils';
 import { AccessibilitySection } from './components/accessibility-section';
@@ -38,6 +39,7 @@ const sections = [
 ];
 
 export default function Week6Page() {
+  const { t } = useTranslation('week6');
   const [activeTab, setActiveTab] = useState<Tab>('all');
 
   const filteredSections =
@@ -50,14 +52,13 @@ export default function Week6Page() {
           to="/"
           className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 mb-6 transition-colors"
         >
-          ← Back to Dashboard
+          {t('common:navigation.backToDashboard', '← Back to Dashboard')}
         </Link>
         <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-gray-900">
-          Modern Styling Strategies
+          {t('header.title')}
         </h1>
         <p className="text-lg text-gray-600 max-w-xl mx-auto">
-          Mastering Design Systems, Utility-First CSS, CSS-in-JS, and Responsive
-          Design.
+          {t('header.description')}
         </p>
       </header>
       <div className="sticky top-4 z-10 bg-white/80 backdrop-blur-md p-1.5 rounded-full shadow-sm border border-gray-200 mb-8 flex gap-1 flex-wrap justify-center max-w-[95vw]">
@@ -74,18 +75,18 @@ export default function Week6Page() {
             )}
           >
             {tab === 'all'
-              ? 'All'
+              ? t('tabs.all')
               : tab === 'foundation'
-                ? 'Foundation'
+                ? t('tabs.foundation')
                 : tab === 'css-modules'
-                  ? 'CSS Modules'
+                  ? t('tabs.cssModules')
                   : tab === 'css-in-js'
-                    ? 'CSS-in-JS'
+                    ? t('tabs.cssInJs')
                     : tab === 'tailwind'
-                      ? 'Tailwind'
+                      ? t('tabs.tailwind')
                       : tab === 'responsive'
-                        ? 'Responsive'
-                        : 'Advanced'}
+                        ? t('tabs.responsive')
+                        : t('tabs.advanced')}
           </button>
         ))}
       </div>

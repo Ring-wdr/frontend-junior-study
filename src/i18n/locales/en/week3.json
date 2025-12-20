@@ -1,0 +1,103 @@
+{
+  "header": {
+    "title": "Component Architecture",
+    "description": "Explore Front-end Design Patterns, Atomic Design, and Performance Optimizations."
+  },
+  "tabs": {
+    "all": "All",
+    "atomic": "Atomic Design",
+    "container": "Container/Presentational",
+    "patterns": "Component Patterns",
+    "performance": "Performance"
+  },
+  "atomic": {
+    "badge": "Front-end Architecture",
+    "title": "Atomic Design",
+    "description": "A methodology for creating design systems by breaking them down into five distinct levels.",
+    "whatIs": {
+      "title": "What is Atomic Design?",
+      "content": "Atomic Design is a methodology composed of five distinct stages working together to create interface design systems in a more deliberate and hierarchical manner."
+    },
+    "fiveLevels": {
+      "title": "The Five Levels",
+      "atoms": {
+        "label": "Atoms:",
+        "description": "The basic building blocks of matter (e.g., Buttons, Inputs, Labels)."
+      },
+      "molecules": {
+        "label": "Molecules:",
+        "description": "Groups of atoms bonded together to be the smallest fundamental units of the compound (e.g., Search Form combining Input and Button)."
+      },
+      "organisms": {
+        "label": "Organisms:",
+        "description": "Groups of molecules joined together to form a relatively complex, distinct section of an interface (e.g., Header)."
+      },
+      "templates": {
+        "label": "Templates:",
+        "description": "Page-level objects that place components into a layout and articulate the design's underlying content structure."
+      },
+      "pages": {
+        "label": "Pages:",
+        "description": "Specific instances of templates that show what a UI looks like with real representative content in place."
+      }
+    }
+  },
+  "container": {
+    "badge": "Design Pattern",
+    "title": "Container vs Presentational",
+    "description": "A pattern for separating business logic/data fetching from UI rendering.",
+    "coreConcept": {
+      "title": "Core Concept",
+      "presentational": {
+        "label": "Presentational Components:",
+        "item1": "Concerned with how things look.",
+        "item2": "Receive data and callbacks via props.",
+        "item3": "Rarely have their own state (except for UI state).",
+        "item4": "Often written as functional components."
+      },
+      "container": {
+        "label": "Container Components:",
+        "item1": "Concerned with how things work.",
+        "item2": "Provide data and behavior to presentational or other container components.",
+        "item3": "Often stateful, serving as data sources."
+      }
+    },
+    "evolutionWithHooks": {
+      "title": "Evolution with Hooks",
+      "content": "In modern React, this pattern involves Custom Hooks. Instead of wrapping a component in a Container, we can extract the business logic into a hook (e.g., useDogImages) and use it directly within the component. This achieves the same separation of concerns with less nesting."
+    }
+  },
+  "patterns": {
+    "badge": "Advanced Patterns",
+    "title": "Component Architecture Patterns",
+    "description": "Advanced patterns for component composition and reusability.",
+    "compoundComponents": {
+      "title": "Compound Components",
+      "description": "Components that work together to form a complete UI, often sharing state implicitly (e.g., via Context API). Users can arrange the sub-components flexibly."
+    },
+    "renderProps": {
+      "title": "Render Props",
+      "description": "A technique for sharing code between React components using a prop whose value is a function."
+    },
+    "hoc": {
+      "title": "Higher-Order Components (HOC)",
+      "description": "A function that takes a component and returns a new component, typically to inject props or logic. Popular in the past (e.g., Redux connect), but often replaced by Hooks today to avoid \"Wrapper Hell\"."
+    }
+  },
+  "performance": {
+    "badge": "Optimization",
+    "title": "Performance Patterns",
+    "description": "Techniques to optimize rendering and application performance.",
+    "memoization": {
+      "title": "Memoization",
+      "description": "Caching the result of an expensive function call and returning the cached result when the inputs occur again.",
+      "reactMemo": "HOC to skip re-rendering a component if its props haven't changed.",
+      "useMemo": "Hook to memoize a computed value.",
+      "useCallback": "Hook to memoize a callback function definition."
+    },
+    "virtualization": {
+      "title": "Virtualization (Windowing)",
+      "description": "Rendering only the items in a list that are currently visible (plus a small buffer) instead of the entire list. This significantly improves performance for large datasets. Libraries like react-window or react-virtualized are commonly used."
+    }
+  }
+}

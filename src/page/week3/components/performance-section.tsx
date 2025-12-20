@@ -1,43 +1,39 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard } from '../../../components';
 import { PerformanceVisualizer } from './performance-visualizer';
 
 export const PerformanceSection = () => {
+  const { t } = useTranslation('week3');
+
   return (
     <SectionCard
-      badge={{ label: 'Optimization', color: 'green' }}
-      title="Performance Patterns"
-      description="Techniques to optimize rendering and application performance."
+      badge={{ label: t('performance.badge'), color: 'green' }}
+      title={t('performance.title')}
+      description={t('performance.description')}
     >
       <div className="space-y-8">
         <PerformanceVisualizer />
 
-        <InfoBox variant="gray" title="Memoization">
+        <InfoBox variant="gray" title={t('performance.memoization.title')}>
           <p className="text-sm text-gray-700 mb-2">
-            Caching the result of an expensive function call and returning the
-            cached result when the inputs occur again.
+            {t('performance.memoization.description')}
           </p>
           <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
             <li>
-              <code>React.memo</code>: HOC to skip re-rendering a component if
-              its props haven't changed.
+              <code>React.memo</code>: {t('performance.memoization.reactMemo')}
             </li>
             <li>
-              <code>useMemo</code>: Hook to memoize a computed value.
+              <code>useMemo</code>: {t('performance.memoization.useMemo')}
             </li>
             <li>
-              <code>useCallback</code>: Hook to memoize a callback function
-              definition.
+              <code>useCallback</code>: {t('performance.memoization.useCallback')}
             </li>
           </ul>
         </InfoBox>
 
-        <InfoBox variant="gray" title="Virtualization (Windowing)">
+        <InfoBox variant="gray" title={t('performance.virtualization.title')}>
           <p className="text-sm text-gray-700">
-            Rendering only the items in a list that are currently visible (plus
-            a small buffer) instead of the entire list. This significantly
-            improves performance for large datasets. Libraries like{' '}
-            <code>react-window</code> or <code>react-virtualized</code> are
-            commonly used.
+            {t('performance.virtualization.description')}
           </p>
         </InfoBox>
       </div>

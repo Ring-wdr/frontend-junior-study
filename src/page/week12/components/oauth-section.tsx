@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -6,49 +7,44 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const OAuthSection = () => {
+  const { t } = useTranslation('week12');
   const [flowStep, setFlowStep] = useState(0);
 
   const flowSteps = [
-    { step: 1, title: 'User clicks "Login with Google"', actor: 'Client App' },
-    { step: 2, title: 'Redirect to Authorization Server', actor: 'Browser' },
-    { step: 3, title: 'User authenticates & consents', actor: 'Auth Server' },
-    { step: 4, title: 'Auth code sent to redirect URI', actor: 'Auth Server' },
-    { step: 5, title: 'Exchange code for tokens', actor: 'Client App' },
-    { step: 6, title: 'Access Token received', actor: 'Auth Server' },
+    { step: 1, title: t('oauth.flow.step1'), actor: t('oauth.flow.actorClient') },
+    { step: 2, title: t('oauth.flow.step2'), actor: t('oauth.flow.actorBrowser') },
+    { step: 3, title: t('oauth.flow.step3'), actor: t('oauth.flow.actorAuth') },
+    { step: 4, title: t('oauth.flow.step4'), actor: t('oauth.flow.actorAuth') },
+    { step: 5, title: t('oauth.flow.step5'), actor: t('oauth.flow.actorClient') },
+    { step: 6, title: t('oauth.flow.step6'), actor: t('oauth.flow.actorAuth') },
     {
       step: 7,
-      title: 'Use token to access resources',
-      actor: 'Resource Server',
+      title: t('oauth.flow.step7'),
+      actor: t('oauth.flow.actorApi'),
     },
   ];
 
   return (
     <SectionCard
-      badge={{ label: 'Protocol', color: 'blue' }}
-      title="OAuth 2.0 Fundamentals"
-      description="Understanding authorization delegation for third-party access"
+      badge={{ label: t('oauth.badge'), color: 'blue' }}
+      title={t('oauth.title')}
+      description={t('oauth.description')}
     >
       <div className="space-y-8">
-        <SubSection title="What is OAuth 2.0?" icon iconColor="blue">
-          <InfoBox variant="blue" title="Authorization Protocol">
+        <SubSection title={t('oauth.whatIs.title')} icon iconColor="blue">
+          <InfoBox variant="blue" title={t('oauth.whatIs.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              OAuth 2.0 is a standard protocol for delegating access to
-              third-party services. For example, when your app needs access to a
-              user's Google Calendar, OAuth 2.0 provides a secure way to obtain
-              an access token from Google.
+              {t('oauth.whatIs.infoDescription')}
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm mt-3">
               <li>
-                <strong>Authorization, not Authentication:</strong> OAuth 2.0
-                handles permission delegation, not user identity verification
+                <strong>{t('oauth.whatIs.listAuthNot').split(':')[0]}:</strong> {t('oauth.whatIs.listAuthNot').split(':')[1]}
               </li>
               <li>
-                <strong>Access Tokens:</strong> Short-lived credentials for
-                accessing protected resources
+                <strong>{t('oauth.whatIs.listAccessToken').split(':')[0]}:</strong> {t('oauth.whatIs.listAccessToken').split(':')[1]}
               </li>
               <li>
-                <strong>Refresh Tokens:</strong> Long-lived tokens to obtain new
-                access tokens without re-authentication
+                <strong>{t('oauth.whatIs.listRefreshToken').split(':')[0]}:</strong> {t('oauth.whatIs.listRefreshToken').split(':')[1]}
               </li>
             </ul>
           </InfoBox>

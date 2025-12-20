@@ -1,0 +1,532 @@
+{
+  "header": {
+    "backToDashboard": "← 대시보드로 돌아가기",
+    "title": "React & Next.js Advanced",
+    "description": "동시성, React 19, Next.js 13 App Router 및 최신 생태계."
+  },
+  "tabs": {
+    "all": "전체",
+    "react18": "React 18",
+    "react19": "React 19",
+    "appRouter": "App Router",
+    "data": "데이터 페칭",
+    "optimization": "최적화"
+  },
+  "concurrency": {
+    "badge": "React 18",
+    "title": "React 18 동시성",
+    "description": "동시 렌더링, 자동 배칭 및 트랜지션 이해하기.",
+    "whatIsConcurrent": {
+      "title": "동시 렌더링이란?",
+      "intro": "React 18은 React가 렌더링 작업을 중단하고, 우선순위가 높은 이벤트를 처리한 후 렌더링을 재개할 수 있는 기능인 <strong>동시 렌더링</strong>을 도입했습니다. 이 기반을 통해 <strong>트랜지션</strong>, <strong>데이터 페칭을 위한 Suspense</strong>, 그리고 더 나은 <strong>서버 사이드 렌더링</strong>과 같은 기능이 가능해집니다.",
+      "whyMatters": {
+        "title": "동시성이 중요한 이유",
+        "responsiveness": "<strong>반응성:</strong> 타이핑과 같은 사용자 입력이 백그라운드 렌더링에 의해 차단되지 않습니다",
+        "interruptible": "<strong>중단 가능:</strong> React가 렌더링을 일시 중지하고 사용자 이벤트를 우선시할 수 있습니다",
+        "seamlessUX": "<strong>원활한 UX:</strong> 버벅거리는 프레임 없이 앱이 부드럽게 느껴집니다"
+      },
+      "beforeReact18": "<strong>React 18 이전:</strong> 렌더링은 전체를 한 번에 처리하는 작업이었습니다. React가 렌더링을 시작하면, 전체 렌더링이 완료될 때까지 중단할 수 없어 사용자 입력을 차단했습니다.",
+      "react18": "<strong>React 18:</strong> 렌더링은 중단 가능합니다. React는 우선순위가 높은 업데이트(예: 사용자 입력)를 처리하기 위해 렌더링을 일시 중지하고 나중에 재개할 수 있습니다."
+    },
+    "useTransition": {
+      "title": "useTransition & 트랜지션",
+      "intro": "<strong>트랜지션</strong>을 사용하면 상태 업데이트를 긴급하지 않은 것으로 표시할 수 있습니다. React는 백그라운드에서 트랜지션을 처리하면서 긴급한 업데이트(예: 사용자 입력)를 우선시합니다. <code>useTransition</code> 훅을 사용하여 이 패턴을 구현하세요.",
+      "api": {
+        "title": "useTransition API",
+        "isPending": "<strong>isPending:</strong> 트랜지션이 진행 중인지를 나타내는 불리언 값",
+        "startTransition": "<strong>startTransition:</strong> 상태 업데이트를 긴급하지 않은 트랜지션으로 래핑하는 함수"
+      },
+      "realWorldExample": {
+        "title": "실제 예시",
+        "description": "10,000개 이상의 항목을 필터링할 때: 입력란에 타이핑(긴급)하면 즉시 업데이트되고, 필터링된 결과는 백그라운드(트랜지션)에서 렌더링됩니다. 사용자는 버벅거리는 UI 없이 입력이 즉시 반응하는 것을 볼 수 있습니다."
+      }
+    },
+    "useDeferredValue": {
+      "title": "useDeferredValue",
+      "intro": "<code>useDeferredValue</code>는 트리의 긴급하지 않은 부분의 리렌더링을 연기할 수 있게 해줍니다. 전달한 값을 연기하고 연기된 버전을 반환합니다.",
+      "whenToUse": {
+        "title": "useDeferredValue를 사용하는 경우",
+        "expensiveComponent": "값에 의존하는 비용이 많이 드는 컴포넌트가 있는 경우",
+        "prioritizeValue": "값 자체의 업데이트를 우선시하고 싶은 경우",
+        "cantWrapTransition": "업데이트를 트랜지션으로 래핑할 수 없는 경우(예: 이벤트 핸들러에서)"
+      },
+      "vsUseTransition": {
+        "title": "useTransition vs useDeferredValue",
+        "useTransition": "<strong>useTransition:</strong> setState를 래핑하여 업데이트 시점을 제어합니다",
+        "useDeferredValue": "<strong>useDeferredValue:</strong> 값을 연기하면 React가 자동으로 연기합니다"
+      }
+    },
+    "automaticBatching": {
+      "title": "자동 배칭",
+      "intro": "React 18은 이벤트 핸들러, 프로미스, 타이머 내에서 발생하는 상태 업데이트를 자동으로 <strong>배칭</strong>합니다. 이는 여러 개의 setState 호출이 여러 번의 리렌더링 대신 단일 리렌더링으로 이어진다는 것을 의미합니다.",
+      "performanceBenefits": {
+        "title": "성능 이점",
+        "fewerRerenders": "더 적은 리렌더링 = 더 나은 성능",
+        "automatic": "자동 - 코드 변경 필요 없음",
+        "appliesTo": "프로미스, 타이머, 네이티브 이벤트에 적용",
+        "flushSync": "동기 업데이트가 필요한 경우 <code>flushSync</code> 사용"
+      }
+    },
+    "otherFeatures": {
+      "title": "기타 React 18 기능",
+      "useId": {
+        "title": "useId",
+        "description": "클라이언트와 서버 모두에서 안정적인 고유 ID를 생성합니다. 접근성과 하이드레이션 불일치에 필수적입니다."
+      },
+      "suspenseForData": {
+        "title": "데이터 페칭을 위한 Suspense",
+        "description": "React 18은 Suspense를 프로미스와 데이터 페칭에서 작동하도록 확장합니다. 서버에서 비동기 렌더링을 활성화합니다."
+      },
+      "streamingHTML": {
+        "title": "스트리밍 HTML",
+        "description": "서버는 생성되는 대로 HTML 청크를 스트리밍할 수 있어 더 빠른 First Contentful Paint (FCP)를 가능하게 합니다."
+      }
+    },
+    "visualizer": {
+      "title": "블로킹 vs 동시 렌더링",
+      "subtitle": "아래에 빠르게 입력하여 React 18이 UI를 반응형으로 유지하는 방법을 확인하세요.",
+      "blockingOld": "블로킹 (기존)",
+      "concurrentNew": "동시 (새로운)",
+      "uiIndicator": "UI 반응성 표시기 (회전 = 양호)",
+      "typeFast": "여기에 빠르게 입력하세요...",
+      "inputStatus": "입력 상태:",
+      "updatedImmediately": "즉시 업데이트됨",
+      "listRender": "리스트 렌더링:",
+      "pendingBackground": "대기 중 (백그라운드)...",
+      "updated": "업데이트됨",
+      "blockingNotice": "'회전 표시기'가 타이핑하는 동안 끊기는 것을 확인하세요. 메인 스레드가 리스트 렌더링에 의해 차단됩니다.",
+      "concurrentNotice": "'회전 표시기'가 부드럽게 유지됩니다. 리스트는 UI를 정지시키지 않고 백그라운드에서 효율적으로 작동합니다.",
+      "heavyOutput": "무거운 렌더링 출력 (50개 항목 x 1ms)",
+      "codePattern": "코드 패턴",
+      "startTyping": "타이핑 시작..."
+    }
+  },
+  "react19": {
+    "badge": "React 19 미리보기",
+    "title": "React 19 & 실험적 훅",
+    "description": "useOptimistic, useFormStatus, useActionState 및 'use' 훅과 같은 향후 기능 미리보기.",
+    "serverActions": {
+      "title": "서버 액션 개요",
+      "intro": "React 19는 서버에서 실행되며 클라이언트 컴포넌트에서 직접 호출할 수 있는 함수인 <strong>서버 액션</strong>을 도입합니다. 이를 통해 수동 API 라우트 생성이 필요 없습니다.",
+      "benefits": {
+        "title": "서버 액션의 이점",
+        "zeroLatency": "낙관적 UI를 통한 지연 시간 없는 상태 업데이트",
+        "autoRevalidation": "변경 후 데이터 자동 재검증",
+        "noAPIRoutes": "API 라우트를 수동으로 만들 필요 없음",
+        "directDB": "자격 증명을 노출하지 않고 데이터베이스에 직접 액세스",
+        "progressive": "점진적 향상과 함께 작동"
+      }
+    },
+    "useOptimistic": {
+      "title": "useOptimistic 훅",
+      "intro": "<code>useOptimistic</code>은 낙관적 UI 업데이트를 활성화합니다. 서버 액션이 백그라운드에서 완료되는 동안 UI가 즉시 업데이트됩니다. 실패하면 UI가 자동으로 되돌아갑니다.",
+      "howItWorks": {
+        "title": "useOptimistic 작동 방식",
+        "step1": "사용자가 액션을 트리거",
+        "step2": "낙관적 업데이트가 즉시 렌더링",
+        "step3": "서버 액션이 백그라운드에서 처리",
+        "step4": "성공: UI가 업데이트된 상태로 유지, 데이터가 서버와 동기화",
+        "step5": "실패: UI가 이전 상태로 되돌아감"
+      }
+    },
+    "useFormStatus": {
+      "title": "useFormStatus 훅",
+      "intro": "<code>useFormStatus</code>는 폼의 제출 상태에 대한 정보를 제공합니다. 폼 제출 중 로딩 상태를 표시하고 제출 버튼을 비활성화하는 데 유용합니다."
+    },
+    "useActionState": {
+      "title": "useActionState 훅",
+      "intro": "<code>useActionState</code> (이전의 <code>useFormState</code>)는 서버 액션의 상태와 결과를 처리합니다. 대기 상태, 폼 데이터 및 액션 결과를 추적합니다.",
+      "benefits": {
+        "title": "useActionState 이점",
+        "autoPending": "자동 대기 상태 추적",
+        "errorHandling": "내장된 에러 처리",
+        "formData": "폼 데이터 액세스",
+        "cleaner": "수동 useState 패턴보다 깔끔함"
+      }
+    },
+    "useHook": {
+      "title": "'use' 훅",
+      "intro": "<code>use</code> 훅은 프로미스를 언랩하거나 컨텍스트를 읽어 <strong>Suspense</strong> 경계를 활성화합니다. 이를 통해 클라이언트 컴포넌트가 서버 컴포넌트에서 전달된 프로미스와 함께 작동할 수 있습니다.",
+      "api": {
+        "title": "use() API",
+        "promises": "<strong>프로미스:</strong> 해결될 때까지 컴포넌트를 일시 중단",
+        "context": "<strong>컨텍스트:</strong> 조건부로 컨텍스트를 읽을 수 있음",
+        "suspense": "<strong>Suspense와 작동:</strong> Suspense 경계와 적절히 통합"
+      }
+    },
+    "rsc": {
+      "title": "React 서버 컴포넌트 (RSC)",
+      "intro": "<strong>서버 컴포넌트</strong>는 서버에서만 실행됩니다. 데이터베이스에 직접 액세스하고, 민감한 데이터를 안전하게 유지하며, <strong>번들 크기에 영향을 주지 않습니다</strong>.",
+      "serverComponents": {
+        "title": "서버 컴포넌트",
+        "serverOnly": "서버에서만 실행 (Next.js 13+ App Router의 기본값)",
+        "directDB": "데이터베이스/API 직접 액세스",
+        "noBundle": "클라이언트 JS 번들에 영향 없음",
+        "noHooks": "훅이나 상태를 사용할 수 없음",
+        "perfectFor": "데이터 페칭 및 렌더링에 완벽"
+      },
+      "clientComponents": {
+        "title": "클라이언트 컴포넌트",
+        "standard": "표준 React 컴포넌트 (<code>'use client'</code> 지시어 사용)",
+        "useHooks": "훅, 상태 및 효과를 사용할 수 있음",
+        "interactivity": "사용자 상호작용 처리",
+        "sentBrowser": "JavaScript로 브라우저에 전송",
+        "receiveData": "서버 컴포넌트로부터 데이터를 받을 수 있음"
+      },
+      "whenToUse": {
+        "title": "각각을 사용하는 경우",
+        "server": "<strong>서버 컴포넌트:</strong> 데이터 페칭, 데이터베이스 쿼리, 민감한 작업",
+        "client": "<strong>클라이언트 컴포넌트:</strong> 폼, 버튼, 이벤트 핸들러, 브라우저 API"
+      }
+    },
+    "transition": {
+      "title": "React 19로의 전환",
+      "keyChanges": {
+        "title": "React 18에서의 주요 변경 사항",
+        "serverActions": "서버 액션이 일급 시민이 됨",
+        "newHooks": "서버-클라이언트 패턴에 최적화된 새로운 훅",
+        "formHandling": "개선된 폼 처리",
+        "nextjsIntegration": "Next.js와의 더 나은 통합",
+        "enhancedBoundaries": "향상된 에러 경계 및 Suspense"
+      },
+      "resources": {
+        "title": "학습 자료",
+        "description": "React 19는 아직 진화 중입니다. 최신 기능은 공식 React 블로그와 RFC 토론을 확인하세요. 실용적인 예시는 Next.js 문서가 최고의 자료입니다."
+      }
+    },
+    "visualizer": {
+      "title": "React 19 낙관적 UI",
+      "subtitle": "표준 업데이트와 낙관적 업데이트의 차이를 보기 위해 메시지를 보내세요.",
+      "chatPreview": "채팅 미리보기",
+      "clear": "지우기",
+      "noMessages": "아직 메시지가 없습니다.",
+      "sending": "전송 중... (낙관적)",
+      "typeMessage": "메시지를 입력하세요...",
+      "standardSend": "표준 전송 (느림)",
+      "optimisticSend": "낙관적 전송 (빠름)",
+      "howItWorks": {
+        "title": "useOptimistic 작동 방식",
+        "description": "React 19의 <code>useOptimistic</code>을 사용하면 비동기 액션이 대기 중인 동안 다른 상태를 표시할 수 있습니다. 서버를 기다리는 대신, 예상되는 결과를 즉시 표시합니다. 서버가 실패하면 React가 자동으로 상태를 되돌립니다."
+      },
+      "codePattern": "코드 패턴 (React 19)"
+    }
+  },
+  "dataFetching": {
+    "badge": "데이터",
+    "title": "데이터 페칭 전략",
+    "description": "SSR, 확장된 fetch를 사용한 ISR 및 클라이언트 측 옵션 (SWR, React Query).",
+    "serverFetching": {
+      "title": "서버 사이드 페칭",
+      "intro": "Next.js App Router에서 데이터 페칭은 <strong>캐싱 및 재검증</strong> 옵션으로 확장된 표준 Web <code>fetch</code> API를 사용합니다. 이는 기존의 <code>getStaticProps</code> 및 <code>getServerSideProps</code> 패턴을 대체합니다.",
+      "strategy": {
+        "title": "Fetch 캐싱 전략",
+        "static": "<strong>정적 (cache: 'force-cache'):</strong> 데이터가 빌드 시점에 페칭되어 무기한 재사용됨",
+        "dynamic": "<strong>동적 (cache: 'no-store'):</strong> 모든 요청마다 데이터가 페칭됨 (SSR과 같음)",
+        "incremental": "<strong>증분 (next.revalidate):</strong> 데이터가 캐시되지만 설정된 기간 후 재검증됨 (ISR과 같음)"
+      }
+    },
+    "clientLibraries": {
+      "title": "클라이언트 사이드 페칭 라이브러리",
+      "intro": "클라이언트 컴포넌트의 경우, 서버 상태 관리, 캐싱 및 자동 재검증을 위해 설계된 전문 라이브러리를 사용하세요. 각각 다른 장단점이 있습니다.",
+      "axios": {
+        "title": "Axios",
+        "description": "요청을 만들기 위한 경량 HTTP 클라이언트 라이브러리.",
+        "simpleAPI": "간단한 Promise 기반 API",
+        "noCaching": "내장된 캐싱이나 상태 관리 없음",
+        "manualError": "수동 에러 처리",
+        "goodFor": "간단한 요청이나 API 통합에 적합"
+      },
+      "swr": {
+        "title": "SWR",
+        "description": "<strong>Stale-While-Revalidate:</strong> Vercel의 경량 데이터 페칭 라이브러리.",
+        "autoCaching": "자동 캐싱 및 재검증",
+        "hooksAPI": "React 훅 기반 API",
+        "backgroundRefetch": "백그라운드 재페칭",
+        "greatFor": "간단하거나 중간 규모의 앱에 적합",
+        "smallerBundle": "React Query보다 작은 번들 (~4KB)"
+      },
+      "reactQuery": {
+        "title": "React Query (TanStack Query)",
+        "description": "복잡한 애플리케이션을 위한 강력한 서버 상태 관리.",
+        "advancedCaching": "고급 캐싱 및 백그라운드 동기화",
+        "optimisticUpdates": "낙관적 업데이트",
+        "devTools": "디버깅을 위한 DevTools",
+        "pagination": "페이지네이션 및 무한 쿼리",
+        "largerBundle": "더 큰 번들 (~15KB)이지만 더 많은 기능"
+      },
+      "comparison": {
+        "title": "비교 표",
+        "feature": "기능",
+        "bundleSize": "번들 크기",
+        "caching": "캐싱",
+        "revalidation": "재검증",
+        "manual": "수동",
+        "auto": "자동",
+        "autoSmart": "자동 (스마트)",
+        "devTools": "DevTools",
+        "no": "아니오",
+        "yes": "예",
+        "yesAdvanced": "예 (고급)",
+        "bestFor": "가장 적합한 경우",
+        "simple": "간단함",
+        "moderate": "중간",
+        "complex": "복잡함"
+      }
+    },
+    "choosingStrategy": {
+      "title": "올바른 전략 선택하기",
+      "useServer": {
+        "title": "서버 페칭을 사용하는 경우...",
+        "static": "데이터가 자주 변경되지 않는 경우 (정적 콘텐츠)",
+        "seo": "SEO 최적화가 필요한 경우",
+        "dbAPI": "데이터베이스나 API로 페이지를 구축하는 경우",
+        "zeroOverhead": "클라이언트 측 오버헤드가 없기를 원하는 경우"
+      },
+      "useClient": {
+        "title": "클라이언트 페칭을 사용하는 경우...",
+        "frequent": "데이터가 자주 업데이트되는 경우 (실시간 대시보드)",
+        "userTrigger": "사용자가 페칭을 트리거해야 하는 경우 (검색, 페이지네이션)",
+        "interactive": "대화형 기능을 구축하는 경우",
+        "backgroundSync": "백그라운드 동기화 및 캐싱이 필요한 경우"
+      },
+      "selectionGuide": {
+        "title": "선택 가이드",
+        "blog": "<strong>블로그/콘텐츠 사이트:</strong> ISR과 함께 서버 페칭",
+        "dashboard": "<strong>실시간 대시보드:</strong> React Query 또는 SWR",
+        "ecommerce": "<strong>전자상거래 제품 페이지:</strong> 서버 페칭 + 리뷰/평가용 SWR"
+      }
+    },
+    "visualizer": {
+      "title": "Next.js 캐싱 시각화 도구",
+      "subtitle": "Next.js 13+에서 <code>fetch()</code> 캐싱 전략을 시뮬레이션합니다.",
+      "serverTime": "서버 시간:",
+      "fetchStrategy": "Fetch 전략",
+      "forceCache": "force-cache",
+      "default": "기본값",
+      "noStore": "no-store",
+      "ssr": "SSR",
+      "revalidate": "next: { revalidate: 5 }",
+      "isr": "ISR",
+      "fetching": "페칭 중...",
+      "hit": "HIT",
+      "miss": "MISS",
+      "stale": "STALE",
+      "clientData": "클라이언트 데이터",
+      "fetchedAt": "페칭 시간",
+      "noData": "아직 페칭된 데이터가 없습니다",
+      "explanation": {
+        "forceCache": "<strong>force-cache:</strong> 데이터를 무기한 캐시합니다. 후속 클릭 시 시간이 업데이트되지 않습니다.",
+        "noStore": "<strong>no-store:</strong> 매번 새로운 데이터를 페칭합니다. 시간이 서버 시간과 일치합니다.",
+        "revalidate": "<strong>revalidate (5초):</strong> 5초 동안 캐시합니다. 캐시가 오래된 경우에만 업데이트합니다."
+      }
+    }
+  },
+  "appRouter": {
+    "badge": "Next.js 13+",
+    "title": "Next.js App Router",
+    "description": "React 서버 컴포넌트 위에 구축된 새로운 파일 시스템 기반 라우터.",
+    "fundamentals": {
+      "title": "App Router 기초",
+      "intro": "<strong>App Router</strong>는 Next.js의 새로운 파일 시스템 기반 라우팅 시스템입니다. <code>app/</code> 디렉토리에 위치하며, 기존의 <code>pages/</code> 디렉토리를 대체합니다. React 서버 컴포넌트 위에 구축되었으며 현대적인 웹 애플리케이션을 위한 강력한 기능을 제공합니다.",
+      "keyFiles": {
+        "title": "주요 파일 및 규칙",
+        "page": "<code>page.js/page.tsx</code>: 라우트 세그먼트의 고유한 UI",
+        "layout": "<code>layout.js/layout.tsx</code>: 세그먼트와 자식을 위한 공유 UI",
+        "loading": "<code>loading.js</code>: 로딩 UI (Suspense fallback)",
+        "error": "<code>error.js</code>: 에러 경계 및 에러 UI",
+        "notFound": "<code>not-found.js</code>: 커스텀 404 not found UI",
+        "route": "<code>route.js</code>: API 엔드포인트 (Route Handler)"
+      }
+    },
+    "layouts": {
+      "title": "레이아웃 및 중첩 라우팅",
+      "intro": "레이아웃은 라우트 간 코드 공유를 가능하게 합니다. 탐색 중에 리렌더링되지 않으며 상태를 유지합니다. 중첩 레이아웃은 계층적 UI 구조를 생성합니다.",
+      "benefits": {
+        "title": "레이아웃 이점",
+        "codeReuse": "세그먼트 간 코드 재사용",
+        "statePersistence": "라우트 변경 간 상태 지속",
+        "noRerenders": "불필요한 리렌더링 없음",
+        "hierarchical": "계층적 UI 구조"
+      }
+    },
+    "parallelRoutes": {
+      "title": "병렬 라우트",
+      "intro": "<strong>병렬 라우트</strong>를 사용하면 동일한 레이아웃에서 여러 컴포넌트를 동시에 렌더링할 수 있습니다. 다중 패널 레이아웃이나 독립적으로 업데이트되는 섹션에 사용하세요.",
+      "useCases": {
+        "title": "사용 사례",
+        "dashboards": "다중 패널 대시보드",
+        "tabs": "탭 인터페이스",
+        "analyticsSidebars": "분석 사이드바",
+        "independentSections": "별도의 로딩 상태를 가진 독립적인 섹션"
+      }
+    },
+    "interceptingRoutes": {
+      "title": "라우트 가로채기 및 모달 라우팅",
+      "intro": "<strong>라우트 가로채기</strong>를 사용하면 앱의 다른 부분에서 라우트를 \"가로채서\" 현재 레이아웃 내에서 표시할 수 있습니다. 모달 대화상자나 상세 보기에 완벽합니다.",
+      "modalPattern": {
+        "title": "모달 라우팅 패턴",
+        "description": "라우트를 가로채서 백그라운드 콘텐츠를 유지하면서 모달로 표시합니다. 브라우저 히스토리를 자연스럽게 유지합니다."
+      },
+      "syntax": {
+        "title": "라우팅 구문",
+        "sameLevel": "<code>(.)</code>: 같은 레벨의 세그먼트와 일치",
+        "oneUp": "<code>(..)</code>: 한 단계 위의 세그먼트와 일치",
+        "multiple": "<code>(...)</code>: 여러 단계 위의 세그먼트와 일치"
+      }
+    },
+    "routeGroups": {
+      "title": "라우트 그룹",
+      "intro": "<strong>라우트 그룹</strong>은 URL 구조에 영향을 주지 않는 괄호로 감싼 폴더입니다. 관련 라우트를 구성하거나 다른 레이아웃을 적용하는 데 사용하세요."
+    },
+    "visualizer": {
+      "title": "App Router & 중첩 레이아웃",
+      "subtitle": "파일 시스템이 UI에 매핑되는 방식을 탐색하세요. 폴더/파일을 클릭하여 탐색합니다.",
+      "projectStructure": "프로젝트 구조",
+      "rootLayout": "루트 레이아웃",
+      "home": "홈",
+      "dashboard": "대시보드",
+      "blog": "블로그",
+      "post1": "포스트 1",
+      "dashboardLayout": "대시보드 레이아웃",
+      "sidebar": "사이드바",
+      "overview": "개요",
+      "settings": "설정",
+      "dashboardHome": "대시보드 홈",
+      "settingsPage": "설정 페이지",
+      "blogLayout": "블로그 레이아웃",
+      "readingMode": "읽기 모드 헤더",
+      "blogIndex": "블로그 인덱스",
+      "dynamicPost": "동적 블로그 포스트:",
+      "layout": "레이아웃"
+    }
+  },
+  "optimization": {
+    "badge": "최적화",
+    "title": "최적화 & SEO",
+    "description": "성능 및 검색 엔진 최적화를 위한 Next.js 기능.",
+    "seo": {
+      "title": "SEO & 메타데이터 관리",
+      "intro": "App Router는 <code>metadata</code> 객체 또는 <code>generateMetadata</code> 함수를 사용하여 SEO 태그를 정의하며, 기존의 <code>Head</code> 컴포넌트를 대체합니다. 메타데이터는 검색 엔진 최적화와 소셜 미디어 공유에 사용됩니다.",
+      "api": {
+        "title": "메타데이터 API",
+        "static": "<strong>정적 메타데이터:</strong> 상수 SEO 정보를 위해 <code>metadata</code> 객체를 내보냅니다",
+        "dynamic": "<strong>동적 메타데이터:</strong> 요청 시간에 메타데이터를 계산하기 위해 <code>generateMetadata</code> 함수를 사용합니다",
+        "openGraph": "<strong>OpenGraph:</strong> 소셜 미디어 미리보기 이미지 및 텍스트를 정의합니다",
+        "robots": "<strong>Robots & Canonical:</strong> 색인을 제어하고 중복 콘텐츠 문제를 방지합니다"
+      },
+      "bestPractices": {
+        "title": "SEO 모범 사례",
+        "titleLength": "데스크톱 표시를 위해 제목을 60자 이하로 유지",
+        "description": "매력적인 메타 설명 작성 (150-160자)",
+        "headingHierarchy": "적절한 제목 계층 사용 (h1, h2, h3)",
+        "structuredData": "리치 스니펫을 위한 구조화된 데이터 포함 (Schema.org)",
+        "mobileResponsive": "모바일 우선 색인을 위한 모바일 반응성 보장",
+        "coreWebVitals": "Core Web Vitals 최적화 (LCP, FID, CLS)"
+      }
+    },
+    "imageOptimization": {
+      "title": "next/image를 사용한 이미지 최적화",
+      "intro": "<code>next/image</code> 컴포넌트는 다양한 화면 크기와 디바이스 픽셀 비율에 맞게 이미지를 자동으로 최적화하며, 지원하는 브라우저에 최신 형식(WebP, AVIF)을 제공하면서 레이아웃 시프트 없이 반응형 디자인을 유지합니다.",
+      "keyFeatures": {
+        "title": "주요 기능",
+        "lazyLoading": "<strong>자동 지연 로딩:</strong> 뷰포트 근처에 있을 때만 이미지 로드",
+        "responsiveSizing": "<strong>반응형 크기 조정:</strong> 다양한 화면 크기에 대한 자동 srcset 생성",
+        "modernFormats": "<strong>최신 형식:</strong> 우아한 폴백과 함께 자동 WebP/AVIF 제공",
+        "zeroCLS": "<strong>CLS 없음:</strong> 레이아웃 시프트를 방지하는 필수 치수",
+        "onDemand": "<strong>온디맨드 최적화:</strong> 요청 시 이미지가 최적화되고 향후 요청을 위해 캐시됨"
+      },
+      "tips": {
+        "title": "이미지 최적화 팁",
+        "priority": "스크롤 없이 볼 수 있는 이미지에 <code>priority</code> 사용",
+        "placeholder": "더 나은 UX를 위해 <code>placeholder=\"blur\"</code> 사용",
+        "sizes": "반응형 최적화를 위해 <code>sizes</code> 속성 설정",
+        "quality": "눈에 띄는 품질 저하 없이 파일 크기를 줄이기 위해 품질 감소 (75-85)",
+        "crop": "필요한 정확한 치수로 이미지 자르기/크기 조정",
+        "svg": "이미지 형식 대신 아이콘에 SVG 사용"
+      }
+    },
+    "fontOptimization": {
+      "title": "next/font를 사용한 폰트 최적화",
+      "intro": "<code>next/font</code>는 빌드 시점에 폰트 파일을 다운로드하고 정적 자산으로 호스팅하여 웹 폰트를 자동으로 최적화합니다. 이는 레이아웃 시프트를 제거하고 외부 요청을 제거하여 페이지 로드 성능을 향상시킵니다.",
+      "benefits": {
+        "title": "폰트 로딩 이점",
+        "zeroCLS": "<strong>레이아웃 시프트 없음 (CLS):</strong> 텍스트 리플로우를 방지하기 위해 폰트 메트릭이 사전 계산됨",
+        "performance": "<strong>성능 향상:</strong> 폰트가 로컬에서 제공되며 외부 네트워크 요청 없음",
+        "subsetting": "<strong>폰트 서브셋팅:</strong> 앱에서 사용되는 문자만 로드",
+        "fallback": "<strong>자동 폴백:</strong> 커스텀 폰트가 로드되는 동안 시스템 폰트 표시"
+      },
+      "selectionGuide": {
+        "title": "폰트 선택 가이드",
+        "display": "<strong>Display:</strong> 큰 제목 및 장식 텍스트",
+        "swap": "<strong>Swap:</strong> 가장 읽기 쉬우며, 폴백 가시성 선호",
+        "block": "<strong>Block:</strong> 로딩 중 텍스트 숨김 (권장하지 않음)",
+        "limit": "성능을 위해 2-3개의 폰트 패밀리로 제한",
+        "variable": "더 적은 파일 요청을 위해 가능한 경우 가변 폰트 사용"
+      }
+    },
+    "middleware": {
+      "title": "엣지 미들웨어 및 리디렉션",
+      "intro": "미들웨어는 요청이 서버에 도달하기 전에 엣지에서 실행되어 인증, 재작성, 리디렉트 및 A/B 테스팅을 추가 지연 없이 가능하게 합니다. 사용자에게 가까운 위치에서 로직을 실행하는 데 완벽합니다.",
+      "useCases": {
+        "title": "미들웨어 사용 사례",
+        "authentication": "<strong>인증:</strong> 인증 토큰을 확인하고 인증되지 않은 사용자를 리디렉트",
+        "rewriting": "<strong>URL 재작성:</strong> 리디렉트 없이 내부적으로 URL을 재작성",
+        "abTesting": "<strong>A/B 테스팅:</strong> 쿠키를 기반으로 사용자를 다른 버전으로 라우팅",
+        "geoRouting": "<strong>지역 라우팅:</strong> 사용자 위치에 따라 다른 콘텐츠 제공",
+        "botDetection": "<strong>봇 감지:</strong> 봇 트래픽을 조기에 차단하거나 처리"
+      }
+    },
+    "performance": {
+      "title": "성능 지표 및 모범 사례",
+      "intro": "Core Web Vitals는 페이지 품질을 평가하기 위해 Google에서 사용하는 중요한 지표입니다. Next.js는 이러한 지표를 모니터링하고 최적화하기 위한 내장 도구를 제공합니다.",
+      "lcp": {
+        "title": "Largest Contentful Paint (LCP)",
+        "description": "가장 큰 콘텐츠 요소가 렌더링될 때까지의 시간. 목표: &lt;2.5초",
+        "tip1": "중요한 이미지에 <code>priority</code> 사용",
+        "tip2": "서버 응답 시간 최적화 (TTFB)",
+        "tip3": "메인 스레드를 차단하는 JavaScript 최소화"
+      },
+      "cls": {
+        "title": "Cumulative Layout Shift (CLS)",
+        "description": "예기치 않은 레이아웃 변경. 목표: &lt;0.1",
+        "tip1": "항상 이미지 치수 지정 (next/image)",
+        "tip2": "폰트 스왑 시프트를 피하기 위해 폰트 미리 로드",
+        "tip3": "기존 콘텐츠 위에 삽입 방지",
+        "tip4": "폰트 메트릭에 <code>size-adjust</code> 사용"
+      },
+      "fid": {
+        "title": "First Input Delay (FID / INP)",
+        "description": "사용자 상호작용에서 응답까지의 지연. 목표: &lt;100ms",
+        "tip1": "메인 스레드 작업을 줄이기 위한 코드 분할",
+        "tip2": "긴 작업을 더 작은 청크로 나누기",
+        "tip3": "긴급하지 않은 업데이트에 React 18 트랜지션 사용"
+      },
+      "checklist": {
+        "title": "빠른 최적화 체크리스트",
+        "dynamicImports": "✓ 중요하지 않은 코드에 동적 임포트 사용",
+        "minifyJS": "✓ JavaScript 번들 크기 최소화",
+        "compression": "✓ 서버에서 압축 활성화 (gzip/brotli)",
+        "cdn": "✓ 정적 자산에 CDN 사용",
+        "caching": "✓ 캐싱 헤더 활성화 (Cache-Control)",
+        "monitoring": "✓ 분석으로 실제 사용자 지표 모니터링",
+        "testing": "✓ 느린 3G / 저사양 디바이스에서 테스트",
+        "lighthouse": "✓ 지속적인 모니터링을 위해 Lighthouse CI 사용"
+      }
+    },
+    "visualizer": {
+      "title": "이미지 최적화 & CLS",
+      "subtitle": "공간을 예약하는 것이 Cumulative Layout Shift (CLS)를 방지하는 방법을 확인하세요.",
+      "unoptimized": "최적화되지 않음 (표준 img)",
+      "optimized": "최적화됨 (next/image)",
+      "loadContent": "콘텐츠 로드",
+      "loading": "로딩 중...",
+      "reloadToTry": "다시 시도하려면 다시 로드",
+      "clsDetected": "CLS 감지됨! (점수: {score})",
+      "stableLayout": "안정적인 레이아웃 (CLS: 0)",
+      "beautifulLandscapes": "아름다운 풍경",
+      "description1": "세계 곳곳에서 가장 숨막히는 전망을 발견하세요. 산봉우리에서 평온한 호수까지, 자연은 끝없는 영감을 제공합니다.",
+      "description2": "사진은 이러한 순간을 영원히 포착할 수 있게 해줍니다. 장비에 관한 것이 아니라 관점에 관한 것입니다.",
+      "whyItMatters": "<strong>중요한 이유:</strong> <strong>최적화되지 않은</strong> 모드에서는 브라우저가 다운로드할 때까지 이미지 높이를 알 수 없습니다. 이는 아래 콘텐츠가 점프하는 원인이 되어 (CLS) 사용자를 좌절시킵니다. <strong>Next/Image</strong> (최적화됨)는 width/height 속성을 강제하여 로딩 중에도 안정적인 레이아웃을 보장하면서 즉시 공간을 예약합니다."
+    }
+  }
+}

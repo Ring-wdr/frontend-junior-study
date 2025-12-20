@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { cn } from '../../lib/utils';
 import { AccessibilityBasicsSection } from './components/accessibility-basics-section';
@@ -21,29 +22,30 @@ const tabs = [
 ] as const;
 type Tab = (typeof tabs)[number];
 
-const tabLabels: Record<Tab, string> = {
-  all: 'All',
-  wcag: 'WCAG Basics',
-  semantic: 'Semantic HTML',
-  aria: 'ARIA',
-  focus: 'Focus Management',
-  i18n: 'i18n Basics',
-  intl: 'Intl API',
-  rtl: 'RTL Support',
-};
-
-const sections = [
-  { id: 'wcag', component: <AccessibilityBasicsSection /> },
-  { id: 'semantic', component: <SemanticHtmlSection /> },
-  { id: 'aria', component: <AriaSection /> },
-  { id: 'focus', component: <FocusManagementSection /> },
-  { id: 'i18n', component: <I18nBasicsSection /> },
-  { id: 'intl', component: <IntlApiSection /> },
-  { id: 'rtl', component: <RtlSection /> },
-];
-
 export default function Week14Page() {
+  const { t } = useTranslation('week14');
   const [activeTab, setActiveTab] = useState<Tab>('all');
+
+  const tabLabels: Record<Tab, string> = {
+    all: t('tabs.all'),
+    wcag: t('tabs.wcag'),
+    semantic: t('tabs.semantic'),
+    aria: t('tabs.aria'),
+    focus: t('tabs.focus'),
+    i18n: t('tabs.i18n'),
+    intl: t('tabs.intl'),
+    rtl: t('tabs.rtl'),
+  };
+
+  const sections = [
+    { id: 'wcag', component: <AccessibilityBasicsSection /> },
+    { id: 'semantic', component: <SemanticHtmlSection /> },
+    { id: 'aria', component: <AriaSection /> },
+    { id: 'focus', component: <FocusManagementSection /> },
+    { id: 'i18n', component: <I18nBasicsSection /> },
+    { id: 'intl', component: <IntlApiSection /> },
+    { id: 'rtl', component: <RtlSection /> },
+  ];
 
   const filteredSections =
     activeTab === 'all' ? sections : sections.filter((s) => s.id === activeTab);
@@ -55,14 +57,13 @@ export default function Week14Page() {
           to="/"
           className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 mb-6 transition-colors"
         >
-          ← Back to Dashboard
+          {t('common:navigation.backToDashboard', '← Back to Dashboard')}
         </Link>
         <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-gray-900">
-          Accessibility & i18n
+          {t('header.title')}
         </h1>
         <p className="text-lg text-gray-600 max-w-xl mx-auto">
-          Build inclusive web applications with proper accessibility (A11y) and
-          internationalization (i18n) support for global audiences.
+          {t('header.description')}
         </p>
       </header>
       <div className="sticky top-4 z-10 bg-white/80 backdrop-blur-md p-1.5 rounded-full shadow-sm border border-gray-200 mb-8 flex gap-1 flex-wrap justify-center max-w-[95vw]">

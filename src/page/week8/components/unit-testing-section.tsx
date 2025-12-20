@@ -1,54 +1,50 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const UnitTestingSection = () => {
+  const { t } = useTranslation('week8');
+
   return (
     <SectionCard
-      badge={{ label: 'React Testing Library', color: 'green' }}
-      title="Unit Testing with React Testing Library"
-      description="Testing React components the way users interact with them."
+      badge={{ label: t('unitTesting.badge'), color: 'green' }}
+      title={t('unitTesting.title')}
+      description={t('unitTesting.description')}
     >
       <div className="space-y-8">
         <SubSection
-          title="React Testing Library Philosophy"
+          title={t('unitTesting.philosophy.title')}
           icon
           iconColor="green"
         >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              React Testing Library's guiding principle is:{' '}
-              <strong>"Test the behavior, not the implementation."</strong> This
-              means writing tests from the user's perspective, not based on how
-              the component is coded.
+              {t('unitTesting.philosophy.description')}
             </p>
 
             <InfoBox
               variant="green"
-              title="Core Philosophy: User-Centric Testing"
+              title={t('unitTesting.philosophy.corePhilosophy.title')}
             >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Don't test state:</strong> Users don't see state; they
-                  see rendered output
+                  <strong>Don't test state:</strong> {t('unitTesting.philosophy.corePhilosophy.dontTestState')}
                 </li>
                 <li>
-                  <strong>Don't test implementation:</strong> How the component
-                  works shouldn't matter
+                  <strong>Don't test implementation:</strong> {t('unitTesting.philosophy.corePhilosophy.dontTestImplementation')}
                 </li>
                 <li>
-                  <strong>Test what users see:</strong> Focus on DOM elements,
-                  buttons, text, and accessibility
+                  <strong>Test what users see:</strong> {t('unitTesting.philosophy.corePhilosophy.testWhatUsersSee')}
                 </li>
                 <li>
-                  <strong>Simulate user interactions:</strong> Click, type,
-                  submit forms
+                  <strong>Simulate user interactions:</strong> {t('unitTesting.philosophy.corePhilosophy.simulateUserInteractions')}
                 </li>
               </ul>
             </InfoBox>
 
             <div className="bg-red-50 p-4 rounded-lg border border-red-200">
               <p className="text-sm text-gray-700 font-semibold">
-                ❌ DON'T do this:
+                {t('unitTesting.philosophy.dontDoThis')}
               </p>
               <CodeBlock
                 code={`// BAD: Testing implementation details
@@ -60,7 +56,7 @@ expect(component.instance().handleClick).toBeDefined();`}
 
             <div className="bg-green-50 p-4 rounded-lg border border-green-200">
               <p className="text-sm text-gray-700 font-semibold">
-                ✅ DO this instead:
+                {t('unitTesting.philosophy.doThisInstead')}
               </p>
               <CodeBlock
                 code={`// GOOD: Testing user-visible behavior
@@ -73,12 +69,10 @@ await userEvent.click(button);`}
           </div>
         </SubSection>
 
-        <SubSection title="Core Queries: getByRole" icon iconColor="blue">
+        <SubSection title={t('unitTesting.queries.title')} icon iconColor="blue">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              The most recommended query is <strong>getByRole</strong>, as it
-              aligns with how assistive technologies interact with the DOM. It
-              also encourages semantic HTML.
+              {t('unitTesting.queries.description')}
             </p>
 
             <CodeBlock
@@ -97,7 +91,7 @@ test('renders button with correct text', () => {
 
             <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
               <p className="text-sm font-semibold text-gray-800 mb-2">
-                Common Roles:
+                {t('unitTesting.queries.commonRoles')}
               </p>
               <div className="grid grid-cols-2 gap-3 text-sm text-gray-700">
                 <div>
@@ -135,12 +129,10 @@ test('renders button with correct text', () => {
           </div>
         </SubSection>
 
-        <SubSection title="User Interactions" icon iconColor="blue">
+        <SubSection title={t('unitTesting.userInteractions.title')} icon iconColor="blue">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Use <strong>userEvent</strong> (not fireEvent) to simulate user
-              interactions. userEvent is more realistic and triggers all the
-              events a real user would trigger.
+              {t('unitTesting.userInteractions.description')}
             </p>
 
             <CodeBlock
@@ -163,26 +155,23 @@ test('increments counter on button click', async () => {
               className="text-xs"
             />
 
-            <InfoBox variant="blue" title="userEvent vs fireEvent">
+            <InfoBox variant="blue" title={t('unitTesting.userInteractions.comparison.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>userEvent:</strong> Simulates real user behavior
-                  (setup(), click(), type(), etc.)
+                  <strong>userEvent:</strong> {t('unitTesting.userInteractions.comparison.userEvent')}
                 </li>
                 <li>
-                  <strong>fireEvent:</strong> Directly triggers DOM events
-                  (older approach, less realistic)
+                  <strong>fireEvent:</strong> {t('unitTesting.userInteractions.comparison.fireEvent')}
                 </li>
               </ul>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title="Async Testing Patterns" icon iconColor="purple">
+        <SubSection title={t('unitTesting.asyncTesting.title')} icon iconColor="purple">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Use <strong>findBy</strong> or <strong>waitFor</strong> when
-              testing asynchronous operations like API calls.
+              {t('unitTesting.asyncTesting.description')}
             </p>
 
             <CodeBlock
@@ -207,24 +196,24 @@ test('shows error message on failed request', async () => {
 
             <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
               <p className="text-sm text-gray-700 font-semibold mb-2">
-                Query Priority:
+                {t('unitTesting.asyncTesting.queryPriority.title')}
               </p>
               <ol className="list-decimal pl-5 space-y-1 text-sm text-gray-700">
                 <li>
-                  <strong>getBy*:</strong> Throws if not found (immediate)
+                  <strong>getBy*:</strong> {t('unitTesting.asyncTesting.queryPriority.getBy')}
                 </li>
                 <li>
-                  <strong>findBy*:</strong> Returns promise (waits for element)
+                  <strong>findBy*:</strong> {t('unitTesting.asyncTesting.queryPriority.findBy')}
                 </li>
                 <li>
-                  <strong>queryBy*:</strong> Returns null if not found
+                  <strong>queryBy*:</strong> {t('unitTesting.asyncTesting.queryPriority.queryBy')}
                 </li>
               </ol>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title="Example: Testing a Form" icon iconColor="blue">
+        <SubSection title={t('unitTesting.formExample.title')} icon iconColor="blue">
           <div className="space-y-4">
             <CodeBlock
               code={`import { render, screen, waitFor } from '@testing-library/react';

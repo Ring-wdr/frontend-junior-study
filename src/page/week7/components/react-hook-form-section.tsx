@@ -1,47 +1,48 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const ReactHookFormSection = () => {
+  const { t } = useTranslation('week7');
+
   return (
     <SectionCard
-      badge={{ label: 'Modern Standard', color: 'purple' }}
-      title="React Hook Form"
-      description="Uncontrolled, high-performance form state management"
+      badge={{ label: t('reactHookForm.badge'), color: 'purple' }}
+      title={t('reactHookForm.title')}
+      description={t('reactHookForm.description')}
     >
       <div className="space-y-8">
-        <SubSection title="Why React Hook Form?" icon iconColor="purple">
-          <InfoBox variant="purple" title="Key Advantages">
+        <SubSection title={t('reactHookForm.whyRHF.title')} icon iconColor="purple">
+          <InfoBox variant="purple" title={t('reactHookForm.whyRHF.keyAdvantages.title')}>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>Uncontrolled-based:</strong> Minimal re-renders (only on
-                changes)
+                <strong>Uncontrolled-based:</strong> {t('reactHookForm.whyRHF.keyAdvantages.uncontrolled')}
               </li>
               <li>
-                <strong>Small bundle:</strong> ~9KB minified
+                <strong>Small bundle:</strong> {t('reactHookForm.whyRHF.keyAdvantages.smallBundle')}
               </li>
               <li>
-                <strong>Type-safe:</strong> Excellent TypeScript support
+                <strong>Type-safe:</strong> {t('reactHookForm.whyRHF.keyAdvantages.typeSafe')}
               </li>
               <li>
-                <strong>Register API:</strong> Simple input field registration
+                <strong>Register API:</strong> {t('reactHookForm.whyRHF.keyAdvantages.registerAPI')}
               </li>
               <li>
-                <strong>formState object:</strong> Tracks isDirty, isTouched,
-                errors, etc.
+                <strong>formState object:</strong> {t('reactHookForm.whyRHF.keyAdvantages.formState')}
               </li>
               <li>
-                <strong>Watch, setValue:</strong> Programmatic value access
+                <strong>Watch, setValue:</strong> {t('reactHookForm.whyRHF.keyAdvantages.watchSetValue')}
               </li>
               <li>
-                <strong>Controller:</strong> Works with custom/3rd-party inputs
+                <strong>Controller:</strong> {t('reactHookForm.whyRHF.keyAdvantages.controller')}
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Basic Setup" icon iconColor="blue">
+        <SubSection title={t('reactHookForm.basicSetup.title')} icon iconColor="blue">
           <CodeBlock
             code={`import { useForm } from 'react-hook-form';
 
@@ -90,64 +91,61 @@ const MyForm = () => {
           />
         </SubSection>
 
-        <SubSection title="Core Methods" icon iconColor="green">
+        <SubSection title={t('reactHookForm.coreMethods.title')} icon iconColor="green">
           <div className="space-y-3">
             <div className="bg-green-50 p-4 rounded border border-green-200">
               <p className="font-semibold text-sm mb-2">
-                register(name, options)
+                {t('reactHookForm.coreMethods.register.title')}
               </p>
               <p className="text-sm text-gray-700">
-                Registers an input field with validation rules. Returns object
-                to spread on input element.
+                {t('reactHookForm.coreMethods.register.description')}
               </p>
             </div>
 
             <div className="bg-green-50 p-4 rounded border border-green-200">
               <p className="font-semibold text-sm mb-2">
-                handleSubmit(callback)
+                {t('reactHookForm.coreMethods.handleSubmit.title')}
               </p>
               <p className="text-sm text-gray-700">
-                Validates form on submit and calls callback with validated data.
+                {t('reactHookForm.coreMethods.handleSubmit.description')}
               </p>
             </div>
 
             <div className="bg-green-50 p-4 rounded border border-green-200">
-              <p className="font-semibold text-sm mb-2">watch(fieldName?)</p>
+              <p className="font-semibold text-sm mb-2">{t('reactHookForm.coreMethods.watch.title')}</p>
               <p className="text-sm text-gray-700">
-                Watches field value(s) and triggers re-renders on change. Useful
-                for conditional logic.
-              </p>
-            </div>
-
-            <div className="bg-green-50 p-4 rounded border border-green-200">
-              <p className="font-semibold text-sm mb-2">
-                setValue(name, value)
-              </p>
-              <p className="text-sm text-gray-700">
-                Programmatically set field value without re-registering.
+                {t('reactHookForm.coreMethods.watch.description')}
               </p>
             </div>
 
             <div className="bg-green-50 p-4 rounded border border-green-200">
               <p className="font-semibold text-sm mb-2">
-                reset(defaultValues?)
+                {t('reactHookForm.coreMethods.setValue.title')}
               </p>
               <p className="text-sm text-gray-700">
-                Reset form to initial state or provided default values.
+                {t('reactHookForm.coreMethods.setValue.description')}
               </p>
             </div>
 
             <div className="bg-green-50 p-4 rounded border border-green-200">
-              <p className="font-semibold text-sm mb-2">Controller</p>
+              <p className="font-semibold text-sm mb-2">
+                {t('reactHookForm.coreMethods.reset.title')}
+              </p>
               <p className="text-sm text-gray-700">
-                Wrap custom/3rd-party input components to integrate with React
-                Hook Form.
+                {t('reactHookForm.coreMethods.reset.description')}
+              </p>
+            </div>
+
+            <div className="bg-green-50 p-4 rounded border border-green-200">
+              <p className="font-semibold text-sm mb-2">{t('reactHookForm.coreMethods.controller.title')}</p>
+              <p className="text-sm text-gray-700">
+                {t('reactHookForm.coreMethods.controller.description')}
               </p>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title="Controller for Custom Inputs" icon iconColor="pink">
+        <SubSection title={t('reactHookForm.controllerForCustom.title')} icon iconColor="pink">
           <CodeBlock
             code={`import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers';
@@ -184,41 +182,38 @@ const MyForm = () => {
           />
         </SubSection>
 
-        <SubSection title="formState Object" icon iconColor="orange">
-          <InfoBox variant="orange" title="Important formState Properties">
+        <SubSection title={t('reactHookForm.formStateObject.title')} icon iconColor="orange">
+          <InfoBox variant="orange" title={t('reactHookForm.formStateObject.importantProps.title')}>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>isDirty:</strong> Has user modified any field?
+                <strong>isDirty:</strong> {t('reactHookForm.formStateObject.importantProps.isDirty')}
               </li>
               <li>
-                <strong>isTouched:</strong> Has user interacted with this field?
+                <strong>isTouched:</strong> {t('reactHookForm.formStateObject.importantProps.isTouched')}
               </li>
               <li>
-                <strong>errors:</strong> Object containing field validation
-                errors
+                <strong>errors:</strong> {t('reactHookForm.formStateObject.importantProps.errors')}
               </li>
               <li>
-                <strong>isSubmitting:</strong> Is form currently being
-                submitted?
+                <strong>isSubmitting:</strong> {t('reactHookForm.formStateObject.importantProps.isSubmitting')}
               </li>
               <li>
-                <strong>isValidating:</strong> Is async validation running?
+                <strong>isValidating:</strong> {t('reactHookForm.formStateObject.importantProps.isValidating')}
               </li>
               <li>
-                <strong>isValid:</strong> Is form valid according to rules?
+                <strong>isValid:</strong> {t('reactHookForm.formStateObject.importantProps.isValid')}
               </li>
               <li>
-                <strong>dirtyFields:</strong> Which fields have been modified?
+                <strong>dirtyFields:</strong> {t('reactHookForm.formStateObject.importantProps.dirtyFields')}
               </li>
               <li>
-                <strong>touchedFields:</strong> Which fields have been
-                interacted with?
+                <strong>touchedFields:</strong> {t('reactHookForm.formStateObject.importantProps.touchedFields')}
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Form State Tracking Example" icon iconColor="blue">
+        <SubSection title={t('reactHookForm.formStateTracking.title')} icon iconColor="blue">
           <CodeBlock
             code={`const MyForm = () => {
   const {

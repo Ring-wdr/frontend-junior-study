@@ -1,0 +1,532 @@
+{
+  "header": {
+    "backToDashboard": "← Back to Dashboard",
+    "title": "React & Next.js Advanced",
+    "description": "Concurrency, React 19, Next.js 13 App Router, and Modern Ecosystem."
+  },
+  "tabs": {
+    "all": "All",
+    "react18": "React 18",
+    "react19": "React 19",
+    "appRouter": "App Router",
+    "data": "Data Fetching",
+    "optimization": "Optimization"
+  },
+  "concurrency": {
+    "badge": "React 18",
+    "title": "React 18 Concurrency",
+    "description": "Understanding Concurrent Rendering, Automatic Batching, and Transitions.",
+    "whatIsConcurrent": {
+      "title": "What is Concurrent Rendering?",
+      "intro": "React 18 introduces <strong>Concurrent Rendering</strong>, the ability for React to interrupt a rendering task, handle a higher-priority event, and then resume rendering. This foundation enables features like <strong>Transitions</strong>, <strong>Suspense for data fetching</strong>, and better <strong>Server-Side Rendering</strong>.",
+      "whyMatters": {
+        "title": "Why Concurrency Matters",
+        "responsiveness": "<strong>Responsiveness:</strong> User input like typing is never blocked by background rendering",
+        "interruptible": "<strong>Interruptible:</strong> React can pause rendering and prioritize user events",
+        "seamlessUX": "<strong>Seamless UX:</strong> Apps feel smoother without janky frames"
+      },
+      "beforeReact18": "<strong>Before React 18:</strong> Rendering was an all-or-nothing operation. Once React started rendering, it couldn't stop until the entire render was complete, blocking user input.",
+      "react18": "<strong>React 18:</strong> Rendering is interruptible. React can pause rendering to handle higher-priority updates (like user input) and resume later."
+    },
+    "useTransition": {
+      "title": "useTransition & Transitions",
+      "intro": "<strong>Transitions</strong> let you mark state updates as non-urgent. React will prioritize urgent updates (like user input) while processing transitions in the background. Use the <code>useTransition</code> hook to implement this pattern.",
+      "api": {
+        "title": "useTransition API",
+        "isPending": "<strong>isPending:</strong> Boolean indicating if a transition is in progress",
+        "startTransition": "<strong>startTransition:</strong> Function to wrap state updates as non-urgent transitions"
+      },
+      "realWorldExample": {
+        "title": "Real-World Example",
+        "description": "When filtering a list of 10,000+ items: typing in the input (urgent) updates instantly, while the filtered results render in the background (transition). Users see the input respond immediately without janky UI."
+      }
+    },
+    "useDeferredValue": {
+      "title": "useDeferredValue",
+      "intro": "<code>useDeferredValue</code> lets you defer re-rendering of a non-urgent part of the tree. It defers a value you pass to it and returns the deferred version.",
+      "whenToUse": {
+        "title": "When to Use useDeferredValue",
+        "expensiveComponent": "You have an expensive component that depends on a value",
+        "prioritizeValue": "You want to prioritize the value itself updating",
+        "cantWrapTransition": "You can't wrap the update in a transition (like in event handlers)"
+      },
+      "vsUseTransition": {
+        "title": "useTransition vs useDeferredValue",
+        "useTransition": "<strong>useTransition:</strong> Wrap setState, you control when updates happen",
+        "useDeferredValue": "<strong>useDeferredValue:</strong> Defer a value, React automatically defers it"
+      }
+    },
+    "automaticBatching": {
+      "title": "Automatic Batching",
+      "intro": "React 18 automatically <strong>batches</strong> state updates that happen within event handlers, promises, and timers. This means multiple setState calls result in a single re-render instead of multiple re-renders.",
+      "performanceBenefits": {
+        "title": "Performance Benefits",
+        "fewerRerenders": "Fewer re-renders = better performance",
+        "automatic": "Automatic - no code changes needed",
+        "appliesTo": "Applies to promises, timers, and native events",
+        "flushSync": "Use <code>flushSync</code> if you need synchronous updates"
+      }
+    },
+    "otherFeatures": {
+      "title": "Other React 18 Features",
+      "useId": {
+        "title": "useId",
+        "description": "Generates stable unique IDs on both client and server. Essential for accessibility and hydration mismatches."
+      },
+      "suspenseForData": {
+        "title": "Suspense for Data Fetching",
+        "description": "React 18 extends Suspense to work with promises and data fetching. Enable async rendering on the server."
+      },
+      "streamingHTML": {
+        "title": "Streaming HTML",
+        "description": "Server can stream HTML chunks as they are generated, enabling faster First Contentful Paint (FCP)."
+      }
+    },
+    "visualizer": {
+      "title": "Blocking vs Concurrent Rendering",
+      "subtitle": "Type quickly below to see how React 18 keeps the UI responsive.",
+      "blockingOld": "Blocking (Old)",
+      "concurrentNew": "Concurrent (New)",
+      "uiIndicator": "UI Responsiveness Indicator (Spinning = Good)",
+      "typeFast": "Type fast here...",
+      "inputStatus": "Input Status:",
+      "updatedImmediately": "Updated Immediately",
+      "listRender": "List Render:",
+      "pendingBackground": "Pending (Background)...",
+      "updated": "Updated",
+      "blockingNotice": "Notice how the 'Spinner' stutters while you type. The main thread is blocked by rendering the list.",
+      "concurrentNotice": "Notice the 'Spinner' stays smooth. The list acts efficiently in the background without freezing the UI.",
+      "heavyOutput": "Heavy Render Output (50 items x 1ms)",
+      "codePattern": "Code Pattern",
+      "startTyping": "Start typing..."
+    }
+  },
+  "react19": {
+    "badge": "React 19 Preview",
+    "title": "React 19 & Experimental Hooks",
+    "description": "Preview of upcoming features like useOptimistic, useFormStatus, useActionState, and the 'use' hook.",
+    "serverActions": {
+      "title": "Server Actions Overview",
+      "intro": "React 19 introduces <strong>Server Actions</strong> – functions that run on the server and can be called directly from client components. This eliminates the need for manual API route creation.",
+      "benefits": {
+        "title": "Benefits of Server Actions",
+        "zeroLatency": "Zero-latency state updates with optimistic UI",
+        "autoRevalidation": "Automatic re-validation of data after mutations",
+        "noAPIRoutes": "No need to manually create API routes",
+        "directDB": "Direct database access without exposing credentials",
+        "progressive": "Works with progressive enhancement"
+      }
+    },
+    "useOptimistic": {
+      "title": "useOptimistic Hook",
+      "intro": "<code>useOptimistic</code> enables optimistic UI updates. The UI updates immediately while the server action completes in the background. If it fails, the UI automatically reverts.",
+      "howItWorks": {
+        "title": "How useOptimistic Works",
+        "step1": "User triggers an action",
+        "step2": "Optimistic update renders immediately",
+        "step3": "Server action processes in background",
+        "step4": "Success: UI stays updated, Data syncs with server",
+        "step5": "Failure: UI reverts to previous state"
+      }
+    },
+    "useFormStatus": {
+      "title": "useFormStatus Hook",
+      "intro": "<code>useFormStatus</code> provides information about the form's submission state. Useful for showing loading states and disabling submit buttons during form submission."
+    },
+    "useActionState": {
+      "title": "useActionState Hook",
+      "intro": "<code>useActionState</code> (formerly <code>useFormState</code>) handles the state and result of a server action. It tracks pending state, form data, and the action result.",
+      "benefits": {
+        "title": "useActionState Benefits",
+        "autoPending": "Automatic pending state tracking",
+        "errorHandling": "Error handling built-in",
+        "formData": "Access to form data",
+        "cleaner": "Cleaner than manual useState patterns"
+      }
+    },
+    "useHook": {
+      "title": "The 'use' Hook",
+      "intro": "The <code>use</code> hook unwraps promises or reads context, enabling <strong>Suspense</strong> boundaries. It allows client components to work with promises passed from server components.",
+      "api": {
+        "title": "use() API",
+        "promises": "<strong>Promises:</strong> Suspends the component until resolved",
+        "context": "<strong>Context:</strong> Can read context conditionally",
+        "suspense": "<strong>Works with Suspense:</strong> Properly integrates with Suspense boundaries"
+      }
+    },
+    "rsc": {
+      "title": "React Server Components (RSC)",
+      "intro": "<strong>Server Components</strong> run exclusively on the server. They enable direct database access, keep sensitive data secure, and have <strong>zero bundle size impact</strong>.",
+      "serverComponents": {
+        "title": "Server Components",
+        "serverOnly": "Run on server only (default in Next.js 13+ App Router)",
+        "directDB": "Direct database/API access",
+        "noBundle": "No client JS bundle impact",
+        "noHooks": "Can't use hooks or state",
+        "perfectFor": "Perfect for data fetching & rendering"
+      },
+      "clientComponents": {
+        "title": "Client Components",
+        "standard": "Standard React components (use <code>'use client'</code> directive)",
+        "useHooks": "Can use hooks, state, and effects",
+        "interactivity": "Handle user interactivity",
+        "sentBrowser": "Sent to browser as JavaScript",
+        "receiveData": "Can receive data from server components"
+      },
+      "whenToUse": {
+        "title": "When to Use Each",
+        "server": "<strong>Server Components:</strong> Fetching data, database queries, sensitive operations",
+        "client": "<strong>Client Components:</strong> Forms, buttons, event handlers, browser APIs"
+      }
+    },
+    "transition": {
+      "title": "Transition to React 19",
+      "keyChanges": {
+        "title": "Key Changes from React 18",
+        "serverActions": "Server Actions become first-class citizen",
+        "newHooks": "New hooks optimized for server-client patterns",
+        "formHandling": "Improved form handling",
+        "nextjsIntegration": "Better integration with Next.js",
+        "enhancedBoundaries": "Enhanced error boundaries and Suspense"
+      },
+      "resources": {
+        "title": "Learning Resources",
+        "description": "React 19 is still evolving. Check the official React blog and RFC discussions for latest features. Next.js documentation is the best resource for practical examples."
+      }
+    },
+    "visualizer": {
+      "title": "React 19 Optimistic UI",
+      "subtitle": "Send messages to see the difference between standard and optimistic updates.",
+      "chatPreview": "Chat Preview",
+      "clear": "Clear",
+      "noMessages": "No messages yet.",
+      "sending": "Sending... (Optimistic)",
+      "typeMessage": "Type a message...",
+      "standardSend": "Standard Send (Slow)",
+      "optimisticSend": "Optimistic Send (Fast)",
+      "howItWorks": {
+        "title": "How useOptimistic Works",
+        "description": "React 19's <code>useOptimistic</code> allows you to show a different state while an async action is pending. Instead of waiting for the server, you immediately show the expected result. If the server fails, React automatically reverts the state."
+      },
+      "codePattern": "Code Pattern (React 19)"
+    }
+  },
+  "dataFetching": {
+    "badge": "Data",
+    "title": "Data Fetching Strategies",
+    "description": "SSR, ISR with extended fetch, and Client-side options (SWR, React Query).",
+    "serverFetching": {
+      "title": "Server-Side Fetching",
+      "intro": "In Next.js App Router, data fetching uses the standard Web <code>fetch</code> API, <strong>extended with caching and revalidation</strong> options. This replaces the old <code>getStaticProps</code> and <code>getServerSideProps</code> patterns.",
+      "strategy": {
+        "title": "Fetch Caching Strategy",
+        "static": "<strong>Static (cache: 'force-cache'):</strong> Data is fetched at build time and reused indefinitely",
+        "dynamic": "<strong>Dynamic (cache: 'no-store'):</strong> Data is fetched on every request (like SSR)",
+        "incremental": "<strong>Incremental (next.revalidate):</strong> Data is cached but revalidated after a set duration (like ISR)"
+      }
+    },
+    "clientLibraries": {
+      "title": "Client-Side Fetching Libraries",
+      "intro": "For client components, use specialized libraries designed for managing server state, caching, and automatic revalidation. Each has different trade-offs.",
+      "axios": {
+        "title": "Axios",
+        "description": "A lightweight HTTP client library for making requests.",
+        "simpleAPI": "Simple Promise-based API",
+        "noCaching": "No built-in caching or state management",
+        "manualError": "Manual error handling",
+        "goodFor": "Good for simple requests or API integration"
+      },
+      "swr": {
+        "title": "SWR",
+        "description": "<strong>Stale-While-Revalidate:</strong> Lightweight data fetching library from Vercel.",
+        "autoCaching": "Automatic caching and revalidation",
+        "hooksAPI": "React hooks-based API",
+        "backgroundRefetch": "Background refetching",
+        "greatFor": "Great for simple to moderate apps",
+        "smallerBundle": "Smaller bundle than React Query (~4KB)"
+      },
+      "reactQuery": {
+        "title": "React Query (TanStack Query)",
+        "description": "Powerful server state management for complex applications.",
+        "advancedCaching": "Advanced caching & background sync",
+        "optimisticUpdates": "Optimistic updates",
+        "devTools": "DevTools for debugging",
+        "pagination": "Pagination & infinite queries",
+        "largerBundle": "Larger bundle (~15KB) but more features"
+      },
+      "comparison": {
+        "title": "Comparison Table",
+        "feature": "Feature",
+        "bundleSize": "Bundle Size",
+        "caching": "Caching",
+        "revalidation": "Revalidation",
+        "manual": "Manual",
+        "auto": "Auto",
+        "autoSmart": "Auto (Smart)",
+        "devTools": "DevTools",
+        "no": "No",
+        "yes": "Yes",
+        "yesAdvanced": "Yes (Advanced)",
+        "bestFor": "Best For",
+        "simple": "Simple",
+        "moderate": "Moderate",
+        "complex": "Complex"
+      }
+    },
+    "choosingStrategy": {
+      "title": "Choosing the Right Strategy",
+      "useServer": {
+        "title": "Use Server Fetching when...",
+        "static": "Data doesn't change frequently (static content)",
+        "seo": "You need SEO optimization",
+        "dbAPI": "Building pages with databases or APIs",
+        "zeroOverhead": "Want zero client-side overhead"
+      },
+      "useClient": {
+        "title": "Use Client Fetching when...",
+        "frequent": "Data updates frequently (real-time dashboards)",
+        "userTrigger": "User needs to trigger fetches (search, pagination)",
+        "interactive": "Building interactive features",
+        "backgroundSync": "Needing background sync and caching"
+      },
+      "selectionGuide": {
+        "title": "Selection Guide",
+        "blog": "<strong>Blog/Content sites:</strong> Server fetching with ISR",
+        "dashboard": "<strong>Real-time dashboards:</strong> React Query or SWR",
+        "ecommerce": "<strong>E-commerce product pages:</strong> Server fetching + SWR for reviews/ratings"
+      }
+    },
+    "visualizer": {
+      "title": "Next.js Caching Visualizer",
+      "subtitle": "Simulate <code>fetch()</code> caching strategies in Next.js 13+.",
+      "serverTime": "Server Time:",
+      "fetchStrategy": "Fetch Strategy",
+      "forceCache": "force-cache",
+      "default": "Default",
+      "noStore": "no-store",
+      "ssr": "SSR",
+      "revalidate": "next: { revalidate: 5 }",
+      "isr": "ISR",
+      "fetching": "Fetching...",
+      "hit": "HIT",
+      "miss": "MISS",
+      "stale": "STALE",
+      "clientData": "Client Data",
+      "fetchedAt": "Fetched at",
+      "noData": "No data fetched yet",
+      "explanation": {
+        "forceCache": "<strong>force-cache:</strong> Caches data indefinitely. Time won't update on subsequent clicks.",
+        "noStore": "<strong>no-store:</strong> Fetches fresh data every time. Time matches server time.",
+        "revalidate": "<strong>revalidate (5s):</strong> Caches for 5 seconds. Updates only if cache is stale."
+      }
+    }
+  },
+  "appRouter": {
+    "badge": "Next.js 13+",
+    "title": "Next.js App Router",
+    "description": "The new file-system based router built on React Server Components.",
+    "fundamentals": {
+      "title": "App Router Fundamentals",
+      "intro": "The <strong>App Router</strong> is Next.js's new file-system based routing system. Located in the <code>app/</code> directory, it replaces the old <code>pages/</code> directory. It's built on React Server Components and provides powerful features for modern web applications.",
+      "keyFiles": {
+        "title": "Key Files & Conventions",
+        "page": "<code>page.js/page.tsx</code>: Route segment's unique UI",
+        "layout": "<code>layout.js/layout.tsx</code>: Shared UI for segment and children",
+        "loading": "<code>loading.js</code>: Loading UI (Suspense fallback)",
+        "error": "<code>error.js</code>: Error boundary & error UI",
+        "notFound": "<code>not-found.js</code>: Custom 404 not found UI",
+        "route": "<code>route.js</code>: API endpoint (Route Handler)"
+      }
+    },
+    "layouts": {
+      "title": "Layouts & Nested Routing",
+      "intro": "Layouts enable code sharing across routes. They don't re-render between navigation and preserve state. Nesting layouts creates a hierarchical UI structure.",
+      "benefits": {
+        "title": "Layout Benefits",
+        "codeReuse": "Code reuse across segments",
+        "statePersistence": "State persistence between route changes",
+        "noRerenders": "No unnecessary re-renders",
+        "hierarchical": "Hierarchical UI structure"
+      }
+    },
+    "parallelRoutes": {
+      "title": "Parallel Routes",
+      "intro": "<strong>Parallel Routes</strong> let you render multiple components in the same layout simultaneously. Use them for multi-panel layouts or independent sections that update separately.",
+      "useCases": {
+        "title": "Use Cases",
+        "dashboards": "Multi-panel dashboards",
+        "tabs": "Tabbed interfaces",
+        "analyticsSidebars": "Analytics sidebars",
+        "independentSections": "Independent sections with separate loading states"
+      }
+    },
+    "interceptingRoutes": {
+      "title": "Intercepting Routes & Modal Routing",
+      "intro": "<strong>Intercepting Routes</strong> allow you to \"intercept\" a route from another part of your app and show it within the current layout. Perfect for modal dialogs or detail views.",
+      "modalPattern": {
+        "title": "Modal Routing Pattern",
+        "description": "Intercept a route to show as a modal while keeping the background content in place. Maintains browser history naturally."
+      },
+      "syntax": {
+        "title": "Routing Syntax",
+        "sameLevel": "<code>(.)</code>: Match segments on same level",
+        "oneUp": "<code>(..)</code>: Match segments up one level",
+        "multiple": "<code>(...)</code>: Match segments up multiple levels"
+      }
+    },
+    "routeGroups": {
+      "title": "Route Groups",
+      "intro": "<strong>Route Groups</strong> are folders wrapped in parentheses that don't affect the URL structure. Use them to organize related routes or apply different layouts."
+    },
+    "visualizer": {
+      "title": "App Router & Nested Layouts",
+      "subtitle": "Explore how the file system maps to the UI. Click folders/files to navigate.",
+      "projectStructure": "Project Structure",
+      "rootLayout": "Root Layout",
+      "home": "Home",
+      "dashboard": "Dashboard",
+      "blog": "Blog",
+      "post1": "Post 1",
+      "dashboardLayout": "Dashboard Layout",
+      "sidebar": "Sidebar",
+      "overview": "Overview",
+      "settings": "Settings",
+      "dashboardHome": "Dashboard Home",
+      "settingsPage": "Settings Page",
+      "blogLayout": "Blog Layout",
+      "readingMode": "Running Header (Reading Mode)",
+      "blogIndex": "Blog Index",
+      "dynamicPost": "Dynamic Blog Post:",
+      "layout": "Layout"
+    }
+  },
+  "optimization": {
+    "badge": "Optimization",
+    "title": "Optimization & SEO",
+    "description": "Next.js features for performance and search engine optimization.",
+    "seo": {
+      "title": "SEO & Metadata Management",
+      "intro": "App Router uses the <code>metadata</code> object or <code>generateMetadata</code> function to define SEO tags, replacing the old <code>Head</code> component. Metadata is used for search engine optimization and social media sharing.",
+      "api": {
+        "title": "Metadata API",
+        "static": "<strong>Static Metadata:</strong> Export a <code>metadata</code> object for constant SEO information",
+        "dynamic": "<strong>Dynamic Metadata:</strong> Use <code>generateMetadata</code> function to compute metadata at request time",
+        "openGraph": "<strong>OpenGraph:</strong> Define social media preview images and text",
+        "robots": "<strong>Robots & Canonical:</strong> Control indexing and prevent duplicate content issues"
+      },
+      "bestPractices": {
+        "title": "SEO Best Practices",
+        "titleLength": "Keep titles under 60 characters for desktop display",
+        "description": "Write compelling meta descriptions (150-160 characters)",
+        "headingHierarchy": "Use proper heading hierarchy (h1, h2, h3)",
+        "structuredData": "Include structured data (Schema.org) for rich snippets",
+        "mobileResponsive": "Ensure mobile responsiveness for mobile-first indexing",
+        "coreWebVitals": "Optimize Core Web Vitals (LCP, FID, CLS)"
+      }
+    },
+    "imageOptimization": {
+      "title": "Image Optimization with next/image",
+      "intro": "The <code>next/image</code> component automatically optimizes images for different screen sizes and device pixel ratios, serving modern formats (WebP, AVIF) to supported browsers while maintaining responsive design without layout shift.",
+      "keyFeatures": {
+        "title": "Key Features",
+        "lazyLoading": "<strong>Automatic Lazy Loading:</strong> Images load only when near viewport",
+        "responsiveSizing": "<strong>Responsive Sizing:</strong> Automatic srcset generation for different screen sizes",
+        "modernFormats": "<strong>Modern Formats:</strong> Automatic WebP/AVIF serving with graceful fallback",
+        "zeroCLS": "<strong>Zero CLS:</strong> Dimensions required, preventing layout shift",
+        "onDemand": "<strong>On-Demand Optimization:</strong> Images optimized at request time, cached for future requests"
+      },
+      "tips": {
+        "title": "Image Optimization Tips",
+        "priority": "Use <code>priority</code> on critical images",
+        "placeholder": "Use <code>placeholder=\"blur\"</code> for better UX",
+        "sizes": "Set <code>sizes</code> prop for responsive optimization",
+        "quality": "Reduce quality (75-85) to decrease file size without visible degradation",
+        "crop": "Crop/resize images to exact dimensions needed",
+        "svg": "Use SVG for icons instead of image format"
+      }
+    },
+    "fontOptimization": {
+      "title": "Font Optimization with next/font",
+      "intro": "<code>next/font</code> automatically optimizes web fonts by downloading font files at build time and hosting them as static assets. This eliminates layout shift and improves page load performance by removing external requests.",
+      "benefits": {
+        "title": "Font Loading Benefits",
+        "zeroCLS": "<strong>Zero Layout Shift (CLS):</strong> Font metrics are precomputed to prevent text reflow",
+        "performance": "<strong>Improved Performance:</strong> Fonts served locally, no external network requests",
+        "subsetting": "<strong>Font Subsetting:</strong> Only load characters used in your app",
+        "fallback": "<strong>Automatic Fallback:</strong> System fonts display while custom fonts load"
+      },
+      "selectionGuide": {
+        "title": "Font Selection Guide",
+        "display": "<strong>Display:</strong> Large headlines and decorative text",
+        "swap": "<strong>Swap:</strong> Most readable, prefers fallback visibility",
+        "block": "<strong>Block:</strong> Hides text while loading (not recommended)",
+        "limit": "Limit to 2-3 font families for performance",
+        "variable": "Use variable fonts when possible for fewer file requests"
+      }
+    },
+    "middleware": {
+      "title": "Edge Middleware & Redirection",
+      "intro": "Middleware runs at the edge before requests reach your server, enabling authentication, rewriting, redirects, and A/B testing with zero additional latency. Perfect for executing logic close to the user.",
+      "useCases": {
+        "title": "Middleware Use Cases",
+        "authentication": "<strong>Authentication:</strong> Check auth tokens and redirect unauthenticated users",
+        "rewriting": "<strong>URL Rewriting:</strong> Rewrite URLs internally without redirects",
+        "abTesting": "<strong>A/B Testing:</strong> Route users to different versions based on cookies",
+        "geoRouting": "<strong>Geo-routing:</strong> Serve different content based on user location",
+        "botDetection": "<strong>Bot Detection:</strong> Block or handle bot traffic early"
+      }
+    },
+    "performance": {
+      "title": "Performance Metrics & Best Practices",
+      "intro": "Core Web Vitals are critical metrics used by Google to assess page quality. Next.js provides built-in tools to monitor and optimize these metrics.",
+      "lcp": {
+        "title": "Largest Contentful Paint (LCP)",
+        "description": "Time until the largest content element renders. Target: &lt;2.5s",
+        "tip1": "Use <code>priority</code> on critical images",
+        "tip2": "Optimize server response time (TTFB)",
+        "tip3": "Minimize JavaScript blocking main thread"
+      },
+      "cls": {
+        "title": "Cumulative Layout Shift (CLS)",
+        "description": "Unexpected layout changes. Target: &lt;0.1",
+        "tip1": "Always specify image dimensions (next/image)",
+        "tip2": "Preload fonts to avoid font swap shift",
+        "tip3": "Avoid insertions above existing content",
+        "tip4": "Use <code>size-adjust</code> for font metrics"
+      },
+      "fid": {
+        "title": "First Input Delay (FID / INP)",
+        "description": "Delay from user interaction to response. Target: &lt;100ms",
+        "tip1": "Code splitting to reduce main thread work",
+        "tip2": "Break long tasks into smaller chunks",
+        "tip3": "Use React 18 transitions for non-urgent updates"
+      },
+      "checklist": {
+        "title": "Quick Optimization Checklist",
+        "dynamicImports": "✓ Use dynamic imports for non-critical code",
+        "minifyJS": "✓ Minimize JavaScript bundle size",
+        "compression": "✓ Enable compression (gzip/brotli) on server",
+        "cdn": "✓ Use CDN for static assets",
+        "caching": "✓ Enable caching headers (Cache-Control)",
+        "monitoring": "✓ Monitor real user metrics with analytics",
+        "testing": "✓ Test on slow 3G / low-end devices",
+        "lighthouse": "✓ Use Lighthouse CI for continuous monitoring"
+      }
+    },
+    "visualizer": {
+      "title": "Image Optimization & CLS",
+      "subtitle": "See how reserving space prevents Cumulative Layout Shift (CLS).",
+      "unoptimized": "Unoptimized (Standard img)",
+      "optimized": "Optimized (next/image)",
+      "loadContent": "Load Content",
+      "loading": "Loading...",
+      "reloadToTry": "Reload to try again",
+      "clsDetected": "CLS Detected! (Score: {score})",
+      "stableLayout": "Stable Layout (CLS: 0)",
+      "beautifulLandscapes": "Beautiful Landscapes",
+      "description1": "Discover the most breathtaking views from around the world. From mountain peaks to serene lakes, nature offers endless inspiration.",
+      "description2": "Photography allows us to capture these moments forever. It's not just about the gear, but about the perspective.",
+      "whyItMatters": "<strong>Why it matters:</strong> In the <strong>Unoptimized</strong> mode, the browser doesn't know the image height until it downloads. This causes content below it to jump (CLS), frustrating users. <strong>Next/Image</strong> (Optimized) enforces width/height props to reserve space immediately, ensuring a stable layout even while loading."
+    }
+  }
+}

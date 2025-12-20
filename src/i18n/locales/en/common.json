@@ -1,0 +1,12 @@
+{
+  "navigation": {
+    "backToDashboard": "← Back to Dashboard"
+  },
+  "ui": {
+    "interactiveDemo": "Interactive Demo"
+  },
+  "language": {
+    "ko": "한국어",
+    "en": "English"
+  }
+}

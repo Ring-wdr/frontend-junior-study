@@ -1,46 +1,49 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const FormEssenceSection = () => {
+  const { t } = useTranslation('week7');
+
   return (
     <SectionCard
-      badge={{ label: 'Fundamentals', color: 'blue' }}
-      title="Form Management Essence"
-      description="Understanding the core principles of form handling in React"
+      badge={{ label: t('formEssence.badge'), color: 'blue' }}
+      title={t('formEssence.title')}
+      description={t('formEssence.description')}
     >
       <div className="space-y-8">
-        <SubSection title="What is a Form?" icon iconColor="blue">
-          <InfoBox variant="blue" title="Form Definition">
+        <SubSection title={t('formEssence.whatIsForm.title')} icon iconColor="blue">
+          <InfoBox variant="blue" title={t('formEssence.whatIsForm.definition.title')}>
             <p className="text-sm leading-relaxed">
-              A form is a complex system that combines:
+              {t('formEssence.whatIsForm.definition.intro')}
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm mt-3">
               <li>
-                <strong>UI:</strong> Input elements, labels, buttons
+                <strong>UI:</strong> {t('formEssence.whatIsForm.definition.ui')}
               </li>
               <li>
-                <strong>State:</strong> Current input values
+                <strong>State:</strong> {t('formEssence.whatIsForm.definition.state')}
               </li>
               <li>
-                <strong>Validation:</strong> Rules and error checking
+                <strong>Validation:</strong> {t('formEssence.whatIsForm.definition.validation')}
               </li>
               <li>
-                <strong>Error Handling:</strong> Displaying validation errors
+                <strong>Error Handling:</strong> {t('formEssence.whatIsForm.definition.errorHandling')}
               </li>
               <li>
-                <strong>Submission:</strong> Processing and API integration
+                <strong>Submission:</strong> {t('formEssence.whatIsForm.definition.submission')}
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Controlled vs Uncontrolled" icon iconColor="purple">
+        <SubSection title={t('formEssence.controlledVsUncontrolled.title')} icon iconColor="purple">
           <div className="space-y-4">
             <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
               <h4 className="font-semibold text-sm mb-2 text-blue-900">
-                Controlled Components
+                {t('formEssence.controlledVsUncontrolled.controlled.title')}
               </h4>
               <CodeBlock
                 code={`// React state controls input value
@@ -60,7 +63,7 @@ const [email, setEmail] = useState('');
 
             <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
               <h4 className="font-semibold text-sm mb-2 text-purple-900">
-                Uncontrolled Components
+                {t('formEssence.controlledVsUncontrolled.uncontrolled.title')}
               </h4>
               <CodeBlock
                 code={`// DOM controls input value (via ref)
@@ -79,51 +82,44 @@ const email = emailRef.current.value;
             </div>
           </div>
 
-          <InfoBox variant="green" title="Best Practice">
+          <InfoBox variant="green" title={t('formEssence.controlledVsUncontrolled.bestPractice.title')}>
             <p className="text-sm">
-              Modern libraries like <strong>React Hook Form</strong> use a
-              hybrid approach: minimal controlled components for better
-              performance while maintaining predictability.
+              {t('formEssence.controlledVsUncontrolled.bestPractice.description')}
             </p>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Why Forms Are Complex" icon iconColor="orange">
+        <SubSection title={t('formEssence.whyFormsAreComplex.title')} icon iconColor="orange">
           <div className="grid grid-cols-1 gap-3">
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
               <p className="text-sm">
-                <strong>Performance:</strong> Too many re-renders with fully
-                controlled components
+                <strong>Performance:</strong> {t('formEssence.whyFormsAreComplex.performance')}
               </p>
             </div>
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
               <p className="text-sm">
-                <strong>State Management:</strong> Tracking multiple input
-                states is tedious
+                <strong>State Management:</strong> {t('formEssence.whyFormsAreComplex.stateManagement')}
               </p>
             </div>
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
               <p className="text-sm">
-                <strong>Validation:</strong> Real-time + submit-time + async
-                validation coordination
+                <strong>Validation:</strong> {t('formEssence.whyFormsAreComplex.validation')}
               </p>
             </div>
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
               <p className="text-sm">
-                <strong>Error Messages:</strong> Displaying and clearing errors
-                appropriately
+                <strong>Error Messages:</strong> {t('formEssence.whyFormsAreComplex.errorMessages')}
               </p>
             </div>
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
               <p className="text-sm">
-                <strong>Edge Cases:</strong> Emoji handling, Unicode
-                normalization, XSS prevention
+                <strong>Edge Cases:</strong> {t('formEssence.whyFormsAreComplex.edgeCases')}
               </p>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title="Common Form Requirements" icon iconColor="pink">
+        <SubSection title={t('formEssence.commonRequirements.title')} icon iconColor="pink">
           <CodeBlock
             code={`// Typical form lifecycle
 1. Initialize form state & validation schema

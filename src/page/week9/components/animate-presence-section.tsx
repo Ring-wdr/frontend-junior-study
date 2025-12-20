@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -7,11 +8,12 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const AnimatePresenceSection = () => {
+  const { t } = useTranslation('week9');
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState([
-    { id: 1, text: 'Welcome!' },
-    { id: 2, text: 'New message received' },
-    { id: 3, text: 'Update available' },
+    { id: 1, text: t('presence.toast.welcome') },
+    { id: 2, text: t('presence.toast.newMessage') },
+    { id: 3, text: t('presence.toast.updateAvailable') },
   ]);
 
   const removeNotification = (id: number) => {
@@ -22,29 +24,27 @@ export const AnimatePresenceSection = () => {
     const newId = Date.now();
     setNotifications([
       ...notifications,
-      { id: newId, text: `Notification ${newId}` },
+      { id: newId, text: `${t('presence.toast.notification')} ${newId}` },
     ]);
   };
 
   return (
     <SectionCard
-      badge={{ label: 'Essential', color: 'orange' }}
-      title="AnimatePresence"
-      description="Animate components when they mount and unmount"
+      badge={{ label: t('presence.badge'), color: 'orange' }}
+      title={t('presence.title')}
+      description={t('presence.description')}
     >
       <div className="space-y-8">
-        <SubSection title="The Problem" icon iconColor="red">
-          <InfoBox variant="red" title="Why AnimatePresence?">
-            <p className="text-sm leading-relaxed">
-              React immediately removes elements from the DOM when they unmount.
-              This means exit animations are impossible without{' '}
-              <code>AnimatePresence</code>, which keeps elements in the DOM
-              during their exit animation.
-            </p>
+        <SubSection title={t('presence.problem.title')} icon iconColor="red">
+          <InfoBox variant="red" title={t('presence.problem.infoTitle')}>
+            <p
+              className="text-sm leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: t('presence.problem.content') }}
+            />
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Basic Usage" icon iconColor="blue">
+        <SubSection title={t('presence.basicUsage.title')} icon iconColor="blue">
           <CodeBlock
             code={`import { AnimatePresence, motion } from "framer-motion";
 
@@ -69,15 +69,15 @@ export const AnimatePresenceSection = () => {
           />
         </SubSection>
 
-        <SubSection title="Modal Example" icon iconColor="purple">
-          <DemoBox label="Modal with Exit Animation">
+        <SubSection title={t('presence.modal.title')} icon iconColor="purple">
+          <DemoBox label={t('presence.modal.demoLabel')}>
             <div className="relative">
               <button
                 type="button"
                 onClick={() => setIsOpen(true)}
                 className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
               >
-                Open Modal
+                {t('presence.modal.openModal')}
               </button>
 
               <AnimatePresence>
@@ -103,17 +103,17 @@ export const AnimatePresenceSection = () => {
                     >
                       <div className="bg-white rounded-xl p-6 shadow-2xl max-w-sm mx-4 pointer-events-auto">
                         <h3 className="text-lg font-bold mb-2">
-                          Animated Modal
+                          {t('presence.modal.modalTitle')}
                         </h3>
                         <p className="text-gray-600 text-sm mb-4">
-                          This modal has smooth enter and exit animations!
+                          {t('presence.modal.modalContent')}
                         </p>
                         <button
                           type="button"
                           onClick={() => setIsOpen(false)}
                           className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
                         >
-                          Close
+                          {t('presence.modal.close')}
                         </button>
                       </div>
                     </motion.div>
@@ -124,15 +124,15 @@ export const AnimatePresenceSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Toast Notifications" icon iconColor="green">
-          <DemoBox label="Dismissible Notifications">
+        <SubSection title={t('presence.toast.title')} icon iconColor="green">
+          <DemoBox label={t('presence.toast.demoLabel')}>
             <div className="space-y-3">
               <button
                 type="button"
                 onClick={addNotification}
                 className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
               >
-                Add Notification
+                {t('presence.toast.addNotification')}
               </button>
 
               <div className="space-y-2 min-h-[100px]">
@@ -164,31 +164,30 @@ export const AnimatePresenceSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title="AnimatePresence Modes" icon iconColor="orange">
+        <SubSection title={t('presence.modes.title')} icon iconColor="orange">
           <div className="grid grid-cols-1 gap-3">
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
               <p className="text-sm font-semibold text-orange-900">
-                mode="sync" (default)
+                {t('presence.modes.sync')}
               </p>
               <p className="text-xs text-orange-700 mt-1">
-                Enter and exit animations happen simultaneously
+                {t('presence.modes.syncDesc')}
               </p>
             </div>
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
               <p className="text-sm font-semibold text-orange-900">
-                mode="wait"
+                {t('presence.modes.wait')}
               </p>
               <p className="text-xs text-orange-700 mt-1">
-                Wait for exit to complete before entering (good for page
-                transitions)
+                {t('presence.modes.waitDesc')}
               </p>
             </div>
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
               <p className="text-sm font-semibold text-orange-900">
-                mode="popLayout"
+                {t('presence.modes.popLayout')}
               </p>
               <p className="text-xs text-orange-700 mt-1">
-                Exiting elements are removed from layout flow immediately
+                {t('presence.modes.popLayoutDesc')}
               </p>
             </div>
           </div>
@@ -209,23 +208,23 @@ export const AnimatePresenceSection = () => {
           />
         </SubSection>
 
-        <SubSection title="Use Cases" icon iconColor="pink">
-          <InfoBox variant="purple" title="Common Applications">
+        <SubSection title={t('presence.useCases.title')} icon iconColor="pink">
+          <InfoBox variant="purple" title={t('presence.useCases.infoTitle')}>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>Modals & Dialogs:</strong> Fade/scale in and out
+                <strong>{t('presence.useCases.modals')}</strong> {t('presence.useCases.modalsDesc')}
               </li>
               <li>
-                <strong>Toast notifications:</strong> Slide in and dismiss
+                <strong>{t('presence.useCases.toast')}</strong> {t('presence.useCases.toastDesc')}
               </li>
               <li>
-                <strong>Dropdowns:</strong> Expand and collapse menus
+                <strong>{t('presence.useCases.dropdowns')}</strong> {t('presence.useCases.dropdownsDesc')}
               </li>
               <li>
-                <strong>Page transitions:</strong> Crossfade between routes
+                <strong>{t('presence.useCases.pageTransitions')}</strong> {t('presence.useCases.pageTransitionsDesc')}
               </li>
               <li>
-                <strong>Accordions:</strong> Smooth content reveal
+                <strong>{t('presence.useCases.accordions')}</strong> {t('presence.useCases.accordionsDesc')}
               </li>
             </ul>
           </InfoBox>

@@ -1,19 +1,19 @@
+import { useTranslation } from 'react-i18next';
 import { SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const ThemeSection = () => {
+  const { t } = useTranslation('week6');
   return (
     <SectionCard
-      badge={{ label: 'UX', color: 'purple' }}
-      title="Theme Systems"
-      description="Implementing Dark/Light modes and custom themes effectively."
+      badge={{ label: t('theme.badge'), color: 'purple' }}
+      title={t('theme.title')}
+      description={t('theme.description')}
     >
       <div className="space-y-8">
-        <SubSection title="CSS Variables Strategy" icon iconColor="purple">
-          <p className="text-sm text-gray-700 mb-4">
-            Define semantic color names mapped to CSS variables. Changing the
-            class on <code>&lt;html&gt;</code> swaps the variable values.
-          </p>
+        <SubSection title={t('theme.cssVariables.title')} icon iconColor="purple">
+          <p className="text-sm text-gray-700 mb-4" dangerouslySetInnerHTML={{ __html: t('theme.cssVariables.content') }} />
+
           <CodeBlock
             code={`/* globals.css */
 :root {
@@ -35,12 +35,9 @@ body {
           />
         </SubSection>
 
-        <SubSection title="Tailwind Dark Mode" icon iconColor="purple">
-          <p className="text-sm text-gray-700 mb-4">
-            Tailwind supports dark mode out-of-the-box with the{' '}
-            <code>dark:</code> prefix. It can use system preference (`media`) or
-            a class selector (`class`).
-          </p>
+        <SubSection title={t('theme.tailwindDarkMode.title')} icon iconColor="purple">
+          <p className="text-sm text-gray-700 mb-4" dangerouslySetInnerHTML={{ __html: t('theme.tailwindDarkMode.content') }} />
+
           <CodeBlock
             code={`// tailwind.config.js
 module.exports = {

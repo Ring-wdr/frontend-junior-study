@@ -1,11 +1,13 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Eye, ShieldAlert, Zap } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SectionCard } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
 export const ProxyMetaSection = () => {
+  const { t } = useTranslation('week1');
   const [logs, setLogs] = useState<string[]>([]);
   const [targetObj, setTargetObj] = useState({
     message: 'Hello',
@@ -44,9 +46,9 @@ export const ProxyMetaSection = () => {
 
   return (
     <SectionCard
-      badge={{ label: 'Meta Programming', color: 'indigo' }}
-      title="Proxy & Reflect"
-      description="Intercept and redefine fundamental operations."
+      badge={{ label: t('proxyMeta.badge'), color: 'indigo' }}
+      title={t('proxyMeta.title')}
+      description={t('proxyMeta.description')}
       testId="proxy-meta-section"
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -84,41 +86,41 @@ const proxy = new Proxy(target, handler);`}
               onClick={() => handleAccess('message')}
               className="flex items-center gap-2 px-3 py-2 bg-indigo-50 text-indigo-700 rounded-lg text-sm font-medium hover:bg-indigo-100 transition-colors"
             >
-              <Eye className="w-4 h-4" /> Read 'message'
+              <Eye className="w-4 h-4" /> {t('proxyMeta.buttons.readMessage')}
             </button>
             <button
               type="button"
               onClick={() => handleAccess('secret')}
               className="flex items-center gap-2 px-3 py-2 bg-red-50 text-red-700 rounded-lg text-sm font-medium hover:bg-red-100 transition-colors"
             >
-              <ShieldAlert className="w-4 h-4" /> Read 'secret'
+              <ShieldAlert className="w-4 h-4" /> {t('proxyMeta.buttons.readSecret')}
             </button>
             <button
               type="button"
               onClick={handleSet}
               className="flex items-center gap-2 px-3 py-2 bg-green-50 text-green-700 rounded-lg text-sm font-medium hover:bg-green-100 transition-colors"
             >
-              <Zap className="w-4 h-4" /> Set 'message'
+              <Zap className="w-4 h-4" /> {t('proxyMeta.buttons.setMessage')}
             </button>
           </div>
         </div>
 
         <div className="bg-gray-900 rounded-xl p-4 text-left border border-gray-800 flex flex-col h-full min-h-[200px]">
           <div className="flex justify-between items-center mb-2 border-b border-gray-800 pb-2">
-            <span className="text-xs font-mono text-gray-400">Proxy Logs</span>
+            <span className="text-xs font-mono text-gray-400">{t('proxyMeta.logs.title')}</span>
             <button
               type="button"
               onClick={clearLogs}
               className="text-xs text-indigo-400 hover:text-indigo-300"
             >
-              Clear
+              {t('proxyMeta.logs.clear')}
             </button>
           </div>
           <div className="flex-1 overflow-y-auto space-y-1 font-mono text-xs max-h-[200px]">
             <AnimatePresence initial={false}>
               {logs.length === 0 && (
                 <span className="text-gray-600 italic">
-                  Interactions will appear here...
+                  {t('proxyMeta.logs.placeholder')}
                 </span>
               )}
               {logs.map((log, i) => (

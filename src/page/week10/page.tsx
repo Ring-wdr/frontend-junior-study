@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { cn } from '../../lib/utils';
 import { EasingSection } from './components/easing-section';
@@ -29,6 +30,7 @@ const sections = [
 ];
 
 export default function Week10Page() {
+  const { t } = useTranslation('week10');
   const [activeTab, setActiveTab] = useState<Tab>('all');
 
   const filteredSections =
@@ -41,14 +43,13 @@ export default function Week10Page() {
           to="/"
           className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 mb-6 transition-colors"
         >
-          ← Back to Dashboard
+          {t('common:navigation.backToDashboard', '← Back to Dashboard')}
         </Link>
         <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-gray-900">
-          Animation w/ GSAP
+          {t('header.title')}
         </h1>
         <p className="text-lg text-gray-600 max-w-xl mx-auto">
-          GSAP와 ScrollTrigger를 활용한 고성능 웹 애니메이션 및 인터랙티브
-          스토리텔링
+          {t('header.description')}
         </p>
       </header>
 
@@ -65,19 +66,7 @@ export default function Week10Page() {
                 : 'text-gray-600 hover:bg-gray-100',
             )}
           >
-            {tab === 'all'
-              ? 'All'
-              : tab === 'intro'
-                ? 'Why Animation'
-                : tab === 'basics'
-                  ? 'GSAP Basics'
-                  : tab === 'easing'
-                    ? 'Easing'
-                    : tab === 'scroll'
-                      ? 'ScrollTrigger'
-                      : tab === 'svg'
-                        ? 'SVG Draw'
-                        : 'Performance'}
+            {t(`tabs.${tab}`)}
           </button>
         ))}
       </div>

@@ -1,0 +1,639 @@
+{
+  "header": {
+    "title": "DevTools & Bundling",
+    "description": "Master Chrome DevTools, bundle optimization, and observability to acquire essential senior frontend developer skills."
+  },
+  "tabs": {
+    "all": "All",
+    "elements": "Elements/Console",
+    "sources": "Sources/Network",
+    "performance": "Performance/Memory",
+    "bundling": "Bundling",
+    "optimization": "Bundle Optimization",
+    "observability": "Observability",
+    "vitals": "Web Vitals"
+  },
+  "devtoolsElements": {
+    "badge": "DevTools",
+    "title": "Elements & Console Panel",
+    "description": "Master DOM/CSS debugging and powerful Console features",
+    "elementsTitle": "Core Elements Panel Features",
+    "featureExplorer": "Feature Explorer",
+    "consoleTitle": "Advanced Console Features",
+    "consoleInfoTitle": "Beyond console.log",
+    "consoleInfoDesc": "Console is more than just logging—it's a powerful debugging tool. Use $0, $1 to reference recently selected elements, and debug(fn) to auto-break on function calls!",
+    "consoleCommandsTitle": "Special Console Commands",
+    "consoleCommandsLabel": "Special Console Commands",
+    "shortcutsTitle": "Keyboard Shortcuts Master",
+    "features": {
+      "domInspection": {
+        "title": "DOM Inspection",
+        "description": "Real-time HTML structure inspection and modification",
+        "items": [
+          "Click nodes in Elements panel to select",
+          "Right-click → \"Edit as HTML\" for direct editing",
+          "Delete key to remove elements, Ctrl+Z to restore",
+          "Drag & Drop to reorder DOM elements"
+        ]
+      },
+      "cssDebugging": {
+        "title": "CSS Debugging",
+        "description": "Modify CSS and check specificity",
+        "items": [
+          "Real-time CSS editing in Styles panel",
+          "Strikethrough = ignored property (check specificity)",
+          "Check computed values in Computed tab",
+          "Filter to search for specific properties"
+        ]
+      },
+      "layoutAnalysis": {
+        "title": "Layout Analysis",
+        "description": "Box Model and layout analysis",
+        "items": [
+          "Visualize margin/padding in Box Model diagram",
+          "Debug layout with Grid/Flexbox overlays",
+          "Check Grid track information in Layout tab",
+          "Test with browser viewport resize"
+        ]
+      },
+      "accessibility": {
+        "title": "Accessibility",
+        "description": "Accessibility inspection and improvement",
+        "items": [
+          "Check ARIA attributes in Accessibility tab",
+          "Test contrast ratio (color picker)",
+          "Review Accessibility Tree structure",
+          "View Role, State, Properties information"
+        ]
+      }
+    },
+    "consoleCommands": [
+      {
+        "cmd": "$0, $1, $2...",
+        "desc": "Recently selected elements in Elements",
+        "example": "$0.classList"
+      },
+      {
+        "cmd": "$$(selector)",
+        "desc": "Shorthand for querySelectorAll",
+        "example": "$$(\"button\")"
+      },
+      {
+        "cmd": "copy(object)",
+        "desc": "Copy object to clipboard",
+        "example": "copy($0.outerHTML)"
+      },
+      {
+        "cmd": "debug(fn)",
+        "desc": "Auto-break on function call",
+        "example": "debug(myFunction)"
+      },
+      {
+        "cmd": "monitor(fn)",
+        "desc": "Log when function is called",
+        "example": "monitor(onClick)"
+      },
+      {
+        "cmd": "monitorEvents(el)",
+        "desc": "Log all events on element",
+        "example": "monitorEvents($0, 'click')"
+      }
+    ],
+    "shortcuts": [
+      { "key": "Cmd/Ctrl + Shift + C", "action": "Element inspection mode" },
+      { "key": "Cmd/Ctrl + Shift + J", "action": "Open Console directly" },
+      { "key": "Cmd/Ctrl + K", "action": "Clear Console" },
+      { "key": "Cmd/Ctrl + F", "action": "Search in Elements" },
+      { "key": "H", "action": "Hide element (Elements)" },
+      { "key": "Esc", "action": "Toggle Drawer" }
+    ]
+  },
+  "devtoolsSources": {
+    "badge": "Debug",
+    "title": "Sources & Network Panel",
+    "description": "Master real debugging skills and network analysis",
+    "breakpointsTitle": "Master Breakpoint Types",
+    "breakpointsInfoTitle": "Debugging skill is the real skill",
+    "breakpointsInfoDesc": "Debugging with console.log is outdated. Use Breakpoints and Step through to find bugs much faster.",
+    "breakpointsLabel": "Breakpoint Types",
+    "debugControlTitle": "Debug Controls",
+    "scopeWatchTitle": "Scope & Watch",
+    "scopeWatchLabel": "Debugging Context",
+    "scopePanelTitle": "Scope Panel",
+    "watchPanelTitle": "Watch Panel",
+    "networkTitle": "Network Panel Analysis",
+    "networkInfoTitle": "Network Analysis Essentials",
+    "networkInfoDesc": "Essential for finding resource bottlenecks! Check TTFB, payload size, and caching policies.",
+    "asyncTitle": "Async Stack Traces",
+    "asyncDesc": "Enable Settings → Preferences → Async stack traces to track the full call stack of Promise, setTimeout, and async/await. Essential for debugging async bugs!",
+    "breakpointTypes": [
+      {
+        "name": "Line Breakpoint",
+        "desc": "Pause at specific code line",
+        "how": "Click line number",
+        "tip": "Most basic debugging method"
+      },
+      {
+        "name": "Conditional",
+        "desc": "Pause only when condition is true",
+        "how": "Right-click → Add conditional breakpoint",
+        "tip": "Set conditions like i === 5"
+      },
+      {
+        "name": "XHR/Fetch",
+        "desc": "Pause on specific URL request",
+        "how": "XHR/fetch Breakpoints section",
+        "tip": "Match partial URL strings"
+      },
+      {
+        "name": "DOM",
+        "desc": "Pause on DOM modification",
+        "how": "Elements → Right-click → Break on",
+        "tip": "Choose subtree/attribute/removal"
+      },
+      {
+        "name": "Event Listener",
+        "desc": "Pause on specific event",
+        "how": "Event Listener Breakpoints",
+        "tip": "click, scroll, keyboard, etc."
+      }
+    ],
+    "debugControls": [
+      { "name": "Resume", "shortcut": "F8", "desc": "Run to next breakpoint" },
+      { "name": "Step Over", "shortcut": "F10", "desc": "Execute current line, don't enter functions" },
+      { "name": "Step Into", "shortcut": "F11", "desc": "Enter into function" },
+      { "name": "Step Out", "shortcut": "Shift+F11", "desc": "Exit current function" },
+      { "name": "Pause", "shortcut": "F8", "desc": "Pause running script" },
+      { "name": "Restart", "shortcut": "Ctrl+Shift+F8", "desc": "Restart current function" }
+    ],
+    "scopeItems": [
+      { "label": "Local:", "desc": "Local variables in current function" },
+      { "label": "Closure:", "desc": "Variables captured by closure" },
+      { "label": "Global:", "desc": "Properties on window object" }
+    ],
+    "watchItems": [
+      "Continuously monitor specific variables/expressions",
+      "Expressions like user.profile?.name are possible",
+      "Track array length, object properties in real-time"
+    ],
+    "networkFeatures": [
+      {
+        "label": "Headers",
+        "desc": "View request/response headers",
+        "check": ["Cache-Control", "Content-Type", "Authorization"]
+      },
+      {
+        "label": "Timing",
+        "desc": "Analyze timing for each request phase",
+        "check": ["DNS Lookup", "TTFB", "Content Download"]
+      },
+      {
+        "label": "Throttling",
+        "desc": "Test network speed limitations",
+        "check": ["Slow 3G", "Fast 3G", "Offline"]
+      },
+      {
+        "label": "Filter",
+        "desc": "Filter by resource type",
+        "check": ["XHR", "JS", "CSS", "Img", "Font"]
+      }
+    ]
+  },
+  "devtoolsPerformance": {
+    "badge": "Perf",
+    "title": "Performance & Memory Panel",
+    "description": "Rendering bottleneck analysis and memory leak detection",
+    "recordingTitle": "Performance Recording Analysis",
+    "recordingInfoTitle": "Core Tool for Performance Tuning",
+    "recordingInfoDesc": "The Performance panel is the core tool for frontend performance optimization. Analyze frames, detect Long Tasks, and check layout shifts—everything is possible.",
+    "recordingLabel": "Key Metrics",
+    "stepsTitle": "Performance Recording Steps",
+    "memoryTitle": "Memory Panel - Leak Detection",
+    "memoryInfoTitle": "Memory Leaks are SPA's Enemy",
+    "memoryInfoDesc": "In large SPAs, memory leaks gradually slow down the app. Find leaks with Detached DOM nodes and Heap snapshots.",
+    "leakPatternsTitle": "Common Memory Leak Patterns",
+    "leakPatternsLabel": "Memory Leak Patterns",
+    "metrics": [
+      {
+        "name": "FPS",
+        "desc": "Frames Per Second",
+        "target": "Maintain 60fps",
+        "issue": "Frame drops cause jank"
+      },
+      {
+        "name": "Long Task",
+        "desc": "JavaScript tasks running over 50ms",
+        "target": "Split into under 50ms",
+        "issue": "Main thread blocking → input delay"
+      },
+      {
+        "name": "Layout Shift",
+        "desc": "Unexpected layout changes",
+        "target": "CLS under 0.1",
+        "issue": "Causes user misclicks"
+      },
+      {
+        "name": "Scripting",
+        "desc": "JavaScript execution time",
+        "target": "Under 30% of total time",
+        "issue": "Parse, compile, execute cost"
+      }
+    ],
+    "recordingSteps": [
+      { "step": 1, "title": "Start Recording", "desc": "Press Ctrl+E or click Record button" },
+      { "step": 2, "title": "Execute User Scenario", "desc": "Perform actions to test: scroll, click, input, etc." },
+      { "step": 3, "title": "Stop Recording", "desc": "Click Stop button (recommended within 5 seconds)" },
+      { "step": 4, "title": "Analyze Frame Chart", "desc": "Check Long Tasks in Main thread" },
+      { "step": 5, "title": "Zoom into Bottlenecks", "desc": "Click red/yellow areas for details" }
+    ],
+    "memoryTools": [
+      {
+        "title": "Heap Snapshot",
+        "desc": "Capture current memory state",
+        "use": "Compare before/after to find leaks"
+      },
+      {
+        "title": "Allocation Timeline",
+        "desc": "Track allocation over time",
+        "use": "See which actions increase memory"
+      },
+      {
+        "title": "Allocation Sampling",
+        "desc": "Memory allocation by function",
+        "use": "Identify expensive functions"
+      },
+      {
+        "title": "Detached Elements",
+        "desc": "Nodes detached from DOM",
+        "use": "Cause of event listener leaks"
+      }
+    ],
+    "leakPatterns": [
+      {
+        "pattern": "Event Listener not removed",
+        "code": "useEffect(() => { window.addEventListener(...); }, []);",
+        "fix": "removeEventListener in cleanup function"
+      },
+      {
+        "pattern": "setInterval not cleared",
+        "code": "setInterval(() => { ... }, 1000);",
+        "fix": "clearInterval in useEffect cleanup"
+      },
+      {
+        "pattern": "Closure retains DOM reference",
+        "code": "const el = document.getElementById(...);",
+        "fix": "Assign null when not needed"
+      },
+      {
+        "pattern": "Subscription not unsubscribed",
+        "code": "observable.subscribe(...);",
+        "fix": "unsubscribe in cleanup"
+      }
+    ]
+  },
+  "bundling": {
+    "badge": "Build",
+    "title": "Understanding Bundling (Webpack/Vite/Rollup)",
+    "description": "Core concepts of modern frontend build tools",
+    "comparisonTitle": "Bundler Comparison",
+    "comparisonLabel": "Bundler Comparison",
+    "webpackTitle": "Webpack Core Concepts",
+    "viteTitle": "Vite - Modern Frontend Standard",
+    "viteInfoTitle": "Why Vite?",
+    "viteInfoDesc": "Vite uses ES Modules to run a dev server without bundling. It provides 10-100x faster Cold Start compared to Webpack, and uses Rollup for production builds.",
+    "viteDiffTitle": "Vite vs Webpack Difference",
+    "viteDiffWebpack": "Webpack (Bundle-based)",
+    "viteDiffWebpackCode": "All modules → Create bundle → Start server",
+    "viteDiffWebpackNote": "Slow Cold Start",
+    "viteDiffVite": "Vite (ESM-based)",
+    "viteDiffViteCode": "Start server → Transform modules on request",
+    "viteDiffViteNote": "Instant start",
+    "conceptsTitle": "Core Build Concepts",
+    "prosLabel": "Pros",
+    "consLabel": "Cons",
+    "bundlers": [
+      {
+        "name": "Webpack",
+        "status": "Legacy Standard",
+        "pros": ["Rich ecosystem", "Fine-grained configuration", "Proven stability"],
+        "cons": ["Slow build", "Complex configuration", "Learning curve"]
+      },
+      {
+        "name": "Vite",
+        "status": "Modern Standard",
+        "pros": ["Fast dev server", "ES Modules based", "Simple configuration"],
+        "cons": ["CommonJS compatibility issues", "Relatively new"]
+      },
+      {
+        "name": "Rollup",
+        "status": "For Libraries",
+        "pros": ["Optimal tree shaking", "Small bundles", "ES Module output"],
+        "cons": ["Not ideal for app builds", "Smaller plugin ecosystem"]
+      }
+    ],
+    "webpackConcepts": [
+      {
+        "concept": "Entry",
+        "desc": "Bundling starting point",
+        "example": "entry: \"./src/index.js\""
+      },
+      {
+        "concept": "Output",
+        "desc": "Bundle output path",
+        "example": "output: { path, filename }"
+      },
+      {
+        "concept": "Loaders",
+        "desc": "File transformers",
+        "example": "babel-loader, ts-loader"
+      },
+      {
+        "concept": "Plugins",
+        "desc": "Bundle optimization/transformation",
+        "example": "HtmlWebpackPlugin"
+      },
+      {
+        "concept": "Mode",
+        "desc": "development/production",
+        "example": "Auto optimization settings"
+      },
+      {
+        "concept": "DevServer",
+        "desc": "Dev server + HMR",
+        "example": "webpack-dev-server"
+      }
+    ],
+    "buildConcepts": [
+      {
+        "term": "Tree Shaking",
+        "desc": "Remove unused code from bundle",
+        "tip": "Requires ES Modules + sideEffects: false"
+      },
+      {
+        "term": "Code Splitting",
+        "desc": "Split bundle into multiple chunks",
+        "tip": "Implement with dynamic import()"
+      },
+      {
+        "term": "HMR (Hot Module Replacement)",
+        "desc": "Replace modules without full refresh",
+        "tip": "Improves dev productivity"
+      },
+      {
+        "term": "Source Maps",
+        "desc": "Map bundled code to source",
+        "tip": "Essential for debugging, disable in production"
+      }
+    ]
+  },
+  "bundleOptimization": {
+    "badge": "Optimize",
+    "title": "Bundle Optimization Strategies",
+    "description": "Maximize performance with bundle analysis and optimization",
+    "analyzerTitle": "Bundle Analyzer",
+    "analyzerInfoTitle": "Importance of Bundle Analysis",
+    "analyzerInfoDesc": "Visualize which libraries bloat your bundle. Discover hidden costs like moment.js, full lodash imports, etc.",
+    "analyzerLabel": "Bundle Analyzer Demo",
+    "analyzerButtonShow": "Simulate Bundle Analysis",
+    "analyzerButtonHide": "Hide Analysis Results",
+    "analyzerResultTitle": "Bundle Composition (Total: 1.2MB)",
+    "analyzerWarning": "⚠️ lodash + moment.js make up 68% of the total bundle!",
+    "libraryTitle": "Library Optimization",
+    "dynamicImportTitle": "Dynamic Import (Code Splitting)",
+    "dynamicImportInfoDesc": "Best Practice: Combine route-based splitting + conditional rendering component splitting. Reduce initial bundle size and load code only when needed.",
+    "treeShakingTitle": "sideEffects and Tree Shaking",
+    "treeShakingInfoTitle": "When Tree Shaking Doesn't Work",
+    "treeShakingInfoDesc": "Tree shaking won't work with CommonJS modules, code with side effects, or without the sideEffects flag.",
+    "checklistTitle": "Optimization Checklist",
+    "beforeLabel": "BEFORE",
+    "afterLabel": "AFTER",
+    "bundleItems": [
+      { "name": "react + react-dom", "size": "128KB", "percent": 10.7, "issue": false },
+      { "name": "lodash (full)", "size": "531KB", "percent": 44.3, "issue": true },
+      { "name": "moment.js", "size": "288KB", "percent": 24, "issue": true },
+      { "name": "axios", "size": "14KB", "percent": 1.2, "issue": false },
+      { "name": "app code", "size": "239KB", "percent": 19.8, "issue": false }
+    ],
+    "libraryOptimizations": [
+      {
+        "before": "import _ from \"lodash\"",
+        "after": "import debounce from \"lodash-es/debounce\"",
+        "saving": "~500KB → ~2KB",
+        "tip": "Use lodash-es + individual function imports"
+      },
+      {
+        "before": "import moment from \"moment\"",
+        "after": "import { format } from \"date-fns\"",
+        "saving": "~288KB → ~12KB",
+        "tip": "Replace with date-fns or dayjs"
+      },
+      {
+        "before": "import * as Icons from \"@heroicons/react\"",
+        "after": "import { HomeIcon } from \"@heroicons/react/24/solid\"",
+        "saving": "Tree shakeable",
+        "tip": "Import individual icons only"
+      },
+      {
+        "before": "import Chart from \"chart.js\"",
+        "after": "import { Chart, registerables } from \"chart.js\"",
+        "saving": "Register only needed components",
+        "tip": "Use Chart.register()"
+      }
+    ],
+    "checklistItems": [
+      "Identify large dependencies with Bundle Analyzer",
+      "Replace moment.js → date-fns/dayjs",
+      "Replace lodash → lodash-es + individual imports",
+      "Code split with dynamic import",
+      "Set sideEffects in package.json",
+      "Optimize images/fonts (WebP, WOFF2)",
+      "Enable gzip/brotli compression",
+      "Disable source maps in production"
+    ]
+  },
+  "observability": {
+    "badge": "Monitor",
+    "title": "Observability (Error Monitoring)",
+    "description": "Production error tracking and performance monitoring with Sentry",
+    "whyTitle": "Why Error Monitoring is Essential?",
+    "whyInfoTitle": "Frontend Errors Hide",
+    "whyInfoDesc": "Frontend errors don't appear in server logs. When users say \"it doesn't work,\" countless errors may have already occurred. Real-time error collection systems are production essentials.",
+    "featuresTitle": "Sentry Core Features",
+    "featuresLabel": "Feature Explorer",
+    "integrationTitle": "Sentry Integration in React Projects",
+    "sourcemapTitle": "Source Map Upload",
+    "sourcemapInfoTitle": "Display Original Code Lines",
+    "sourcemapInfoDesc": "Production builds are minified, making stack traces hard to read. Upload Source Maps to see original filenames and line numbers.",
+    "loggingTitle": "Structured Logging",
+    "bestPracticesTitle": "Monitoring Best Practices",
+    "sentryFeatures": [
+      {
+        "name": "Error Tracking",
+        "desc": "Auto-collect and classify JS errors",
+        "details": [
+          "Show original code location with stack trace + source maps",
+          "Aggregate error frequency, affected user count",
+          "Track errors by release to detect regressions"
+        ]
+      },
+      {
+        "name": "Breadcrumbs",
+        "desc": "Record user actions before error",
+        "details": [
+          "Auto-record clicks, navigation, API calls, etc.",
+          "Track path leading to error",
+          "Add custom breadcrumbs"
+        ]
+      },
+      {
+        "name": "Performance",
+        "desc": "Transaction and performance monitoring",
+        "details": [
+          "Measure page load, API response times",
+          "Quantify user experience with Apdex score",
+          "Auto-sample slow transactions"
+        ]
+      },
+      {
+        "name": "Session Replay",
+        "desc": "Replay user sessions (paid)",
+        "details": [
+          "Record screen before/after error",
+          "Replay mouse movement, clicks",
+          "Auto-mask sensitive information"
+        ]
+      }
+    ],
+    "bestPractices": [
+      {
+        "title": "Release Tagging",
+        "desc": "Track errors by version to detect regressions"
+      },
+      {
+        "title": "Environment Separation",
+        "desc": "Filter by dev/staging/prod environments"
+      },
+      {
+        "title": "Alert Configuration",
+        "desc": "Respond immediately with Slack/Email alerts"
+      },
+      {
+        "title": "Sampling Adjustment",
+        "desc": "Adjust sampling rate based on traffic"
+      },
+      {
+        "title": "Issue Assignment",
+        "desc": "Set auto-assignment rules to team members"
+      },
+      {
+        "title": "PII Masking",
+        "desc": "Auto-filter sensitive information"
+      }
+    ]
+  },
+  "webVitals": {
+    "badge": "Vitals",
+    "title": "Web Vitals Collection",
+    "description": "Measure and improve performance in real user environments",
+    "introTitle": "What are Core Web Vitals?",
+    "introInfoTitle": "Google's Performance Metrics",
+    "introInfoDesc": "Core Web Vitals consist of three metrics: LCP, INP, CLS. They measure real user experience and affect SEO rankings.",
+    "metricsTitle": "Detailed Metrics Analysis",
+    "metricsLabel": "Web Vitals Explorer",
+    "collectionTitle": "Web Vitals Collection Code",
+    "environmentTitle": "Measurement Environment Differences",
+    "environmentInfoTitle": "Lab vs Field Data",
+    "environmentInfoDesc": "Lab Data (Lighthouse) is simulated, while Field Data (RUM) is from real users. Both are important, but Field Data reflects actual user experience.",
+    "labDataTitle": "Lab Data (Synthetic)",
+    "fieldDataTitle": "Field Data (RUM)",
+    "dashboardTitle": "Building Performance Dashboard",
+    "priorityTitle": "Performance Improvement Priority",
+    "priorityLabel": "Optimization Priority",
+    "goodLabel": "Good",
+    "poorLabel": "Poor",
+    "improvementLabel": "How to Improve",
+    "vitals": [
+      {
+        "name": "LCP",
+        "fullName": "Largest Contentful Paint",
+        "desc": "Time for largest content to render",
+        "good": "Under 2.5s",
+        "poor": "Over 4.0s",
+        "improve": ["Optimize images (WebP, lazy load)", "Improve server response time", "Inline Critical CSS"]
+      },
+      {
+        "name": "INP",
+        "fullName": "Interaction to Next Paint",
+        "desc": "Time from user interaction to next paint",
+        "good": "Under 200ms",
+        "poor": "Over 500ms",
+        "improve": ["Split Long Tasks", "Minimize main thread blocking", "Use Web Workers"]
+      },
+      {
+        "name": "CLS",
+        "fullName": "Cumulative Layout Shift",
+        "desc": "Amount of unexpected layout shifts",
+        "good": "Under 0.1",
+        "poor": "Over 0.25",
+        "improve": ["Set size attributes on images/videos", "Optimize font loading (font-display)", "Reserve space for dynamic content"]
+      },
+      {
+        "name": "FCP",
+        "fullName": "First Contentful Paint",
+        "desc": "Time for first content to render",
+        "good": "Under 1.8s",
+        "poor": "Over 3.0s",
+        "improve": ["Remove render-blocking resources", "Optimize CSS/JS", "Use CDN"]
+      },
+      {
+        "name": "TTFB",
+        "fullName": "Time to First Byte",
+        "desc": "Time to first server response",
+        "good": "Under 0.8s",
+        "poor": "Over 1.8s",
+        "improve": ["Optimize server", "CDN edge caching", "Optimize database queries"]
+      }
+    ],
+    "labDataItems": [
+      "Lighthouse / PageSpeed Insights",
+      "Test in consistent environment",
+      "Fast feedback during development",
+      "CI/CD pipeline integration"
+    ],
+    "fieldDataItems": [
+      "CrUX Report / web-vitals",
+      "Real user devices/networks",
+      "Reflects various conditions",
+      "Used for SEO ranking"
+    ],
+    "dashboards": [
+      {
+        "tool": "Vercel Analytics",
+        "desc": "Next.js integration, auto Web Vitals collection",
+        "link": "vercel.com/analytics"
+      },
+      {
+        "tool": "Sentry Performance",
+        "desc": "Integrated Web Vitals + Transaction monitoring",
+        "link": "sentry.io"
+      },
+      {
+        "tool": "Google Analytics 4",
+        "desc": "Auto Web Vitals event collection",
+        "link": "analytics.google.com"
+      },
+      {
+        "tool": "Custom Dashboard",
+        "desc": "Self-hosted with Grafana + Prometheus",
+        "link": "grafana.com"
+      }
+    ],
+    "priorities": [
+      { "priority": 1, "action": "Improve LCP: Optimize hero image", "impact": "High" },
+      { "priority": 2, "action": "Improve CLS: Set image/font sizes", "impact": "High" },
+      { "priority": 3, "action": "Improve INP: Split Long Tasks", "impact": "Medium" },
+      { "priority": 4, "action": "Improve FCP: Inline Critical CSS", "impact": "Medium" },
+      { "priority": 5, "action": "Improve TTFB: CDN/caching optimization", "impact": "Low" }
+    ]
+  }
+}

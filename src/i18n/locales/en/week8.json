@@ -1,0 +1,396 @@
+{
+  "header": {
+    "title": "Frontend Testing",
+    "description": "Unit, Integration, and E2E Testing: Building a comprehensive testing strategy from scratch."
+  },
+  "tabs": {
+    "all": "All",
+    "fundamentals": "Fundamentals",
+    "unit": "Unit Testing",
+    "integration": "Integration",
+    "vitest": "Vitest",
+    "e2e": "E2E",
+    "bestPractices": "Best Practices"
+  },
+  "fundamentals": {
+    "badge": "Testing Pyramid",
+    "title": "Testing Fundamentals",
+    "description": "Understanding the three levels of testing and why they matter.",
+    "pyramid": {
+      "title": "The Testing Pyramid",
+      "description": "The testing pyramid illustrates the relationship between different types of tests. It emphasizes writing more unit tests, a moderate amount of integration tests, and fewer E2E tests.",
+      "e2e": "E2E (10%)",
+      "integration": "Integration (30%)",
+      "unit": "Unit (60%)",
+      "whyPyramid": {
+        "title": "Why This Pyramid?",
+        "unitTests": "Unit Tests: Fast, cheap, and easy to write. Perfect for testing pure functions and isolated components.",
+        "integrationTests": "Integration Tests: Verify that different modules work together (e.g., API → state → UI).",
+        "e2eTests": "E2E Tests: Expensive and slow, but catch real-world scenarios. Use sparingly for critical paths."
+      }
+    },
+    "unitTesting": {
+      "title": "Unit Testing",
+      "description": "Unit tests isolate a single function or component and test it in isolation. They're the fastest and cheapest form of testing.",
+      "bestTargets": "Best Unit Test Targets:",
+      "targetList": {
+        "pureFunctions": "Pure functions (utilities, helpers, calculations)",
+        "components": "React components with minimal dependencies",
+        "hooks": "Custom hooks with simple logic"
+      }
+    },
+    "integrationTesting": {
+      "title": "Integration Testing",
+      "description": "Integration tests verify that multiple components and modules work together correctly. Typically, they test the full flow: API call → state update → UI render.",
+      "commonScenario": {
+        "title": "Common Integration Test Scenario",
+        "description": "User clicks a button → Component makes API request → MSW intercepts and responds → Component updates state → New content appears on screen"
+      }
+    },
+    "e2eTesting": {
+      "title": "End-to-End (E2E) Testing",
+      "description": "E2E tests run in a real browser and simulate user actions. They're the slowest and most expensive, but they catch issues that unit and integration tests might miss.",
+      "whenToUse": "When to use E2E tests: Critical user journeys like login, checkout, or critical workflows. Avoid testing every interaction; focus on happy paths and key error cases."
+    },
+    "testRatio": {
+      "title": "Test Ratio in Practice",
+      "recommendedDistribution": "Recommended Test Distribution:",
+      "unitTests": "Unit Tests: 60-70% - Validate logic in isolation",
+      "integrationTests": "Integration Tests: 20-30% - Verify component interactions",
+      "e2eTests": "E2E Tests: 5-10% - Test critical user flows",
+      "conclusion": "This ratio ensures fast feedback (unit tests run instantly), reasonable coverage (integration tests catch real issues), and confidence in critical paths (E2E tests verify the whole system)."
+    }
+  },
+  "unitTesting": {
+    "badge": "React Testing Library",
+    "title": "Unit Testing with React Testing Library",
+    "description": "Testing React components the way users interact with them.",
+    "philosophy": {
+      "title": "React Testing Library Philosophy",
+      "description": "React Testing Library's guiding principle is: \"Test the behavior, not the implementation.\" This means writing tests from the user's perspective, not based on how the component is coded.",
+      "corePhilosophy": {
+        "title": "Core Philosophy: User-Centric Testing",
+        "dontTestState": "Don't test state: Users don't see state; they see rendered output",
+        "dontTestImplementation": "Don't test implementation: How the component works shouldn't matter",
+        "testWhatUsersSee": "Test what users see: Focus on DOM elements, buttons, text, and accessibility",
+        "simulateUserInteractions": "Simulate user interactions: Click, type, submit forms"
+      },
+      "dontDoThis": "DON'T do this:",
+      "doThisInstead": "DO this instead:"
+    },
+    "queries": {
+      "title": "Core Queries: getByRole",
+      "description": "The most recommended query is getByRole, as it aligns with how assistive technologies interact with the DOM. It also encourages semantic HTML.",
+      "commonRoles": "Common Roles:"
+    },
+    "userInteractions": {
+      "title": "User Interactions",
+      "description": "Use userEvent (not fireEvent) to simulate user interactions. userEvent is more realistic and triggers all the events a real user would trigger.",
+      "comparison": {
+        "title": "userEvent vs fireEvent",
+        "userEvent": "userEvent: Simulates real user behavior (setup(), click(), type(), etc.)",
+        "fireEvent": "fireEvent: Directly triggers DOM events (older approach, less realistic)"
+      }
+    },
+    "asyncTesting": {
+      "title": "Async Testing Patterns",
+      "description": "Use findBy or waitFor when testing asynchronous operations like API calls.",
+      "queryPriority": {
+        "title": "Query Priority:",
+        "getBy": "getBy*: Throws if not found (immediate)",
+        "findBy": "findBy*: Returns promise (waits for element)",
+        "queryBy": "queryBy*: Returns null if not found"
+      }
+    },
+    "formExample": {
+      "title": "Example: Testing a Form"
+    }
+  },
+  "integrationTesting": {
+    "badge": "MSW + RTL",
+    "title": "Integration Testing with MSW",
+    "description": "Testing component interactions with mocked API responses.",
+    "whatIsMSW": {
+      "title": "What is MSW?",
+      "description": "Mock Service Worker (MSW) is a library that intercepts HTTP requests at the browser level and returns mock responses. It's perfect for testing how your components handle API calls without depending on a real backend.",
+      "whyMSW": {
+        "title": "Why MSW for Integration Tests?",
+        "noBackend": "No backend dependency: Test frontend logic independently",
+        "realistic": "Realistic scenarios: Simulate API errors, delays, and edge cases",
+        "deterministic": "Deterministic tests: Same responses every time",
+        "fast": "Fast execution: No network delays"
+      },
+      "flow": "Flow: Component → fetch() → MSW intercepts → Mock response returned → Component updates UI"
+    },
+    "setup": {
+      "title": "Setting Up MSW in Tests",
+      "description": "Create a test setup file that initializes MSW handlers for your tests."
+    },
+    "loadingSuccess": {
+      "title": "Testing Loading & Success States",
+      "description": "Write tests that verify your component handles loading, success, and error states correctly."
+    },
+    "errorScenarios": {
+      "title": "Testing Error Scenarios",
+      "description": "Override MSW handlers in specific tests to simulate API errors."
+    },
+    "userInteractions": {
+      "title": "Testing User Interactions with API",
+      "description": "Test the full flow: user action → API call → state update → UI change."
+    },
+    "delays": {
+      "title": "Mocking Request Delays",
+      "description": "Simulate network delays to test loading states and timeouts."
+    },
+    "bestPractices": {
+      "title": "Best Practices for Integration Tests",
+      "guidelines": {
+        "title": "Integration Testing Guidelines",
+        "happyPath": "Test the happy path: Main user flow should work",
+        "errorCases": "Test error cases: API errors, network issues, timeouts",
+        "edgeCases": "Test edge cases: Empty states, large responses, slow networks",
+        "useMSW": "Use MSW: Mock APIs, not fetch directly",
+        "dontMockComponents": "Don't mock components: Test real component integration"
+      }
+    }
+  },
+  "vitest": {
+    "badge": "Jest vs Vitest",
+    "title": "Jest vs Vitest: Choosing Your Test Runner",
+    "description": "Understanding the differences and when to use each.",
+    "jest": {
+      "title": "Jest: The Industry Standard",
+      "description": "Jest is the most widely used testing framework for JavaScript. It provides everything out-of-the-box: test runner, assertion library, mocking utilities, and coverage reporting.",
+      "strengths": {
+        "title": "Jest Strengths",
+        "mature": "Mature ecosystem: Well-documented, tons of Stack Overflow answers",
+        "builtin": "Built-in tools: No need for external libraries",
+        "familiar": "Familiar syntax: Many developers know it"
+      },
+      "weaknesses": {
+        "title": "Jest Weaknesses",
+        "slow": "Slower: Transform overhead makes tests sometimes slow",
+        "complex": "Complex configuration: Can require setup for modern tooling"
+      }
+    },
+    "vitest": {
+      "title": "Vitest: The Modern Alternative",
+      "description": "Vitest is a modern testing framework built on Vite. It offers Jest-compatible APIs but with significantly better performance.",
+      "strengths": {
+        "title": "Vitest Strengths",
+        "fast": "Super fast: Leverages Vite's ES modules and instant HMR",
+        "compatible": "Jest compatible: Same syntax, easy migration",
+        "modern": "Modern tooling: Works seamlessly with modern build tools",
+        "watch": "Watch mode: Intelligent, fast feedback"
+      },
+      "considerations": {
+        "title": "Vitest Considerations",
+        "newer": "Newer: Smaller community, but growing fast",
+        "viteDependent": "Vite dependent: Requires Vite-based project"
+      }
+    },
+    "comparison": {
+      "title": "Head-to-Head Comparison",
+      "feature": "Feature",
+      "jest": "Jest",
+      "vitest": "Vitest",
+      "performance": "Performance",
+      "moderate": "Moderate",
+      "veryFast": "Very Fast",
+      "apiCompatibility": "API Compatibility",
+      "full": "Full",
+      "jestLike": "Jest-like",
+      "setupComplexity": "Setup Complexity",
+      "simple": "Simple",
+      "communitySize": "Community Size",
+      "hmrSupport": "HMR Support",
+      "no": "No",
+      "yes": "Yes"
+    },
+    "setup": {
+      "title": "Setting Up Vitest",
+      "description": "If you're starting a new project with Vite, Vitest is the recommended choice."
+    },
+    "migration": {
+      "title": "Migrating from Jest to Vitest",
+      "description": "Migration is usually straightforward since Vitest is Jest-compatible.",
+      "checklist": {
+        "title": "Migration Checklist",
+        "install": "Install Vitest:",
+        "createConfig": "Create vitest.config.ts: Use config above",
+        "updatePackage": "Update package.json: Change test script to use vitest",
+        "replaceJest": "Replace jest.fn() with vi.fn(): Usually just import change",
+        "runTests": "Run tests: Most should pass without changes"
+      }
+    },
+    "recommendation": {
+      "title": "Recommendation",
+      "newProjects": "For new projects: Use Vitest if you're already using Vite. You'll get better performance and faster feedback loops.",
+      "existingProjects": "For existing Jest projects: Keep Jest unless you're planning to migrate to Vite anyway. The effort isn't worth it for small projects."
+    }
+  },
+  "e2e": {
+    "badge": "Playwright & Cypress",
+    "title": "End-to-End (E2E) Testing",
+    "description": "Testing complete user journeys in a real browser environment.",
+    "whatIsE2E": {
+      "title": "What is E2E Testing?",
+      "description": "End-to-End tests run your application in a real browser and simulate real user interactions. They test the complete flow from entry point to exit, catching issues that unit and integration tests might miss.",
+      "useCases": {
+        "title": "E2E Testing Use Cases",
+        "criticalJourneys": "Critical user journeys: Login, checkout, payment",
+        "crossBrowser": "Cross-browser compatibility: Ensure app works on Chrome, Firefox, Safari",
+        "visualRegression": "Visual regression: Detect unintended UI changes",
+        "realWorld": "Real-world scenarios: Network issues, slow connections"
+      },
+      "warning": "Important: E2E Tests Are Slow",
+      "warningDescription": "E2E tests are slow and brittle because they depend on real browser behavior. Use them sparingly (5-10% of your test suite) for critical paths only."
+    },
+    "playwright": {
+      "title": "Playwright: Enterprise-Grade Testing",
+      "description": "Playwright is built by Microsoft and is optimized for modern web applications. It's fast, reliable, and CI-friendly.",
+      "strengths": {
+        "title": "Playwright Strengths",
+        "fast": "Fast: Optimized execution and parallel testing",
+        "crossBrowser": "Cross-browser: Chromium, Firefox, WebKit out of the box",
+        "ciFriendly": "CI-friendly: Works great in headless mode",
+        "dx": "Developer experience: Great UI for debugging and recording tests"
+      }
+    },
+    "cypress": {
+      "title": "Cypress: Developer Experience Champion",
+      "description": "Cypress prioritizes developer experience with an interactive interface, excellent debugging tools, and test recording.",
+      "strengths": {
+        "title": "Cypress Strengths",
+        "bestDX": "Best DX: Interactive test runner with visual feedback",
+        "recording": "Recording: Built-in test recording",
+        "debugging": "Debugging: Time-travel debugging, console access",
+        "dashboard": "Dashboard: Cloud recording and analytics"
+      },
+      "limitations": {
+        "title": "Cypress Limitations",
+        "singleBrowser": "Single browser: Limited cross-browser support",
+        "jsOnly": "JavaScript only: Can't test multi-tab or mobile"
+      }
+    },
+    "comparison": {
+      "title": "Playwright vs Cypress",
+      "feature": "Feature",
+      "playwright": "Playwright",
+      "cypress": "Cypress",
+      "speed": "Speed",
+      "veryFast": "Very Fast",
+      "moderate": "Moderate",
+      "browsers": "Browsers",
+      "threeBrowsers": "3 (Chromium, FF, WebKit)",
+      "oneBrowser": "1 (Chrome-based)",
+      "dx": "DX",
+      "good": "Good",
+      "excellent": "Excellent",
+      "ciSetup": "CI Setup",
+      "easy": "Easy",
+      "learningCurve": "Learning Curve",
+      "moderateCurve": "Moderate",
+      "easyCurve": "Easy"
+    },
+    "bestPractices": {
+      "title": "Best Practices for E2E Tests",
+      "guidelines": {
+        "title": "E2E Testing Guidelines",
+        "criticalPaths": "Test critical user paths: Login, checkout, core features",
+        "avoidDetails": "Avoid testing details: Don't test every button and input",
+        "meaningfulWaits": "Use meaningful waits: Wait for elements by role, not arbitrary delays",
+        "keepIsolated": "Keep tests isolated: Each test should be independent",
+        "testData": "Use test data carefully: Reset database between tests"
+      }
+    },
+    "ci": {
+      "title": "Running E2E Tests in CI",
+      "description": "Configure your CI/CD pipeline to run E2E tests on every push."
+    }
+  },
+  "bestPractices": {
+    "badge": "Mocking & Best Practices",
+    "title": "Mocking Strategies & Testing Antipatterns",
+    "description": "How to mock effectively and avoid common testing pitfalls.",
+    "mockTypes": {
+      "title": "Types of Mocks",
+      "description": "Mocking is essential for testing, but too much mocking can make tests unrealistic. Use mocks strategically.",
+      "summary": {
+        "title": "Mock Types Summary",
+        "fn": "vi.fn(): Create mock functions to track calls",
+        "mock": "vi.mock(): Replace entire modules with mocks",
+        "spy": "vi.spyOn(): Spy on real functions without replacing them",
+        "msw": "MSW: Mock HTTP requests at the network level"
+      }
+    },
+    "whenToMock": {
+      "title": "When to Mock",
+      "doMock": "DO mock these:",
+      "doMockList": {
+        "apis": "External APIs and network requests (use MSW)",
+        "slowOps": "Slow operations (database, file system, crypto functions)",
+        "browserApis": "Browser APIs (localStorage, geolocation)",
+        "externalDeps": "External dependencies you don't control",
+        "sideEffects": "Side effects you want to verify (analytics, logging)"
+      },
+      "dontMock": "DON'T mock these:",
+      "dontMockList": {
+        "ownCode": "Your own application code",
+        "businessLogic": "Core business logic",
+        "reactComponents": "React components you're testing",
+        "simpleUtils": "Simple utilities like date formatting",
+        "unrealistic": "Things that would make your test unrealistic"
+      }
+    },
+    "antipatterns": {
+      "title": "Testing Antipatterns to Avoid",
+      "description": "Common mistakes that make tests brittle and unreliable.",
+      "antipattern1": "ANTIPATTERN 1: Testing implementation details",
+      "correct1": "CORRECT: Test what user sees",
+      "antipattern2": "ANTIPATTERN 2: Over-mocking",
+      "correct2": "CORRECT: Mock external dependencies, test real logic",
+      "antipattern3": "ANTIPATTERN 3: Snapshot testing",
+      "correct3": "CORRECT: Test specific behavior",
+      "antipattern4": "ANTIPATTERN 4: Unnecessary waitFor",
+      "correct4": "CORRECT: Use findBy for async operations",
+      "antipattern5": "ANTIPATTERN 5: Timing-dependent tests",
+      "correct5": "CORRECT: Use async utilities"
+    },
+    "mockingBestPractices": {
+      "title": "Mocking Best Practices",
+      "goldenRules": {
+        "title": "Golden Rules of Mocking",
+        "boundary": "Mock at the boundary: Mock network calls, file I/O, not business logic",
+        "keepSimple": "Keep mocks simple: Complex mocks indicate complex dependencies",
+        "useMSW": "Use MSW for HTTP: It's the most realistic way to mock APIs",
+        "testBehavior": "Test behavior, not implementation: Change implementation without changing tests",
+        "resetMocks": "Reset mocks between tests: Prevent test pollution"
+      }
+    },
+    "commonScenarios": {
+      "title": "Testing Common Scenarios",
+      "description": "Practical examples for common testing situations."
+    },
+    "testOrganization": {
+      "title": "Test Organization & Maintenance",
+      "keepMaintainable": {
+        "title": "Keeping Tests Maintainable",
+        "oneConcept": "One concept per test: Test should have a single assertion idea",
+        "clearNames": "Clear test names: Describe what's being tested",
+        "arrangeActAssert": "Arrange-Act-Assert pattern: Organize tests clearly",
+        "reusableUtils": "Reusable test utilities: Extract common test setup",
+        "runFrequently": "Run tests frequently: Catch issues early"
+      }
+    },
+    "strategy": {
+      "title": "Testing Strategy Summary",
+      "yourStrategy": "Your Testing Strategy:",
+      "unitTests": "60-70% Unit Tests: Test pure functions and components in isolation",
+      "integrationTests": "20-30% Integration Tests: Use RTL + MSW to test component interactions",
+      "e2eTests": "5-10% E2E Tests: Use Playwright for critical user journeys",
+      "mockStrategically": "Mock strategically: External APIs and slow operations only",
+      "testBehavior": "Test behavior: Not implementation details or internals"
+    }
+  }
+}

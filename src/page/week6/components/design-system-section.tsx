@@ -1,19 +1,19 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const DesignSystemSection = () => {
+  const { t } = useTranslation('week6');
   return (
     <SectionCard
-      badge={{ label: 'Foundation', color: 'blue' }}
-      title="Design Systems & Design Tokens"
-      description="The standardization of UI values (colors, spacing, typography) is the first step in scalable styling."
+      badge={{ label: t('designSystem.badge'), color: 'blue' }}
+      title={t('designSystem.title')}
+      description={t('designSystem.description')}
     >
       <div className="space-y-8">
-        <SubSection title="What are Design Tokens?" icon iconColor="blue">
+        <SubSection title={t('designSystem.whatAreTokens.title')} icon iconColor="blue">
           <p className="text-sm text-gray-700 mb-4">
-            Design tokens are the atomic parts of a design system: colors,
-            spacing, typography, radii, etc. They replace hard-coded values with
-            meaningful names, ensuring consistency across the product.
+            {t('designSystem.whatAreTokens.content')}
           </p>
           <CodeBlock
             code={`:root {
@@ -33,20 +33,17 @@ export const DesignSystemSection = () => {
           />
         </SubSection>
 
-        <SubSection title="Why use them?" icon iconColor="purple">
-          <InfoBox variant="gray" title="Collaboration & Maintenance">
+        <SubSection title={t('designSystem.whyUse.title')} icon iconColor="purple">
+          <InfoBox variant="gray" title={t('designSystem.whyUse.infoTitle')}>
             <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
               <li>
-                <strong>Consistency:</strong> Ensures the same 'blue' is used
-                everywhere.
+                <strong>{t('designSystem.whyUse.consistency')}</strong> {t('designSystem.whyUse.consistencyDesc')}
               </li>
               <li>
-                <strong>Maintainability:</strong> Change one token value to
-                update the entire app (e.g., Rebranding).
+                <strong>{t('designSystem.whyUse.maintainability')}</strong> {t('designSystem.whyUse.maintainabilityDesc')}
               </li>
               <li>
-                <strong>Communication:</strong> Common language between
-                designers and developers.
+                <strong>{t('designSystem.whyUse.communication')}</strong> {t('designSystem.whyUse.communicationDesc')}
               </li>
             </ul>
           </InfoBox>

@@ -1,0 +1,95 @@
+{
+  "header": {
+    "title": "Animation w/ GSAP",
+    "description": "High-performance web animations and interactive storytelling using GSAP and ScrollTrigger"
+  },
+  "tabs": {
+    "all": "All",
+    "intro": "Why Animation",
+    "basics": "GSAP Basics",
+    "easing": "Easing",
+    "scroll": "ScrollTrigger",
+    "svg": "SVG Draw",
+    "performance": "Performance"
+  },
+  "intro": {
+    "title": "Why JS Animation?",
+    "description": "There are situations where CSS alone is not sufficient. When you need complex timing control, sequential/parallel movements, SVG or Canvas area control, and scroll-based interactions, the JS animation library <b>GSAP</b> becomes a powerful tool.",
+    "features": {
+      "timing": {
+        "title": "Precise Timing Control",
+        "description": "Complex sequences, delays, and speed control that are difficult with CSS."
+      },
+      "complex": {
+        "title": "Complex Movements",
+        "description": "Create timelines where multiple elements interact and move sequentially."
+      },
+      "beyond": {
+        "title": "Beyond DOM Control",
+        "description": "Animate properties of SVG, Canvas, and Three.js objects."
+      },
+      "scroll": {
+        "title": "Scroll Interaction",
+        "description": "Easily implement effects where UI changes or pins based on scroll progress."
+      }
+    }
+  },
+  "basics": {
+    "title": "GSAP Basic Syntax",
+    "resetAll": "Reset All",
+    "to": {
+      "title": "gsap.to()",
+      "description": "Animate from current state to specified values"
+    },
+    "from": {
+      "title": "gsap.from()",
+      "description": "Animate from specified state to original state"
+    },
+    "timeline": {
+      "title": "gsap.timeline()",
+      "description": "Combine multiple animations sequentially/parallel"
+    }
+  },
+  "easing": {
+    "title": "Easing (Acceleration)",
+    "description": "The most important factor determining the feel of an animation. \"Start fast and stop smoothly\" is the basic principle of UI motion.",
+    "selectEasing": "Select Easing",
+    "runAnimation": "Run Animation",
+    "animating": "Animating...",
+    "start": "Start (0%)",
+    "end": "End (100%)"
+  },
+  "scrollTrigger": {
+    "title": "ScrollTrigger",
+    "description": "Control animations based on scroll position. Try scrolling inside the box below.",
+    "scrollDown": "Scroll Down",
+    "triggerAnimation": "Trigger Animation",
+    "scrubAnimation": "Scrub Animation",
+    "scrubDescription": "Moves in sync with scroll speed.",
+    "pinnedSection": "Pinned Section",
+    "pinnedDescription": "This section is pinned for a moment.",
+    "endOfContent": "End of Content",
+    "codeSnippet": "Code Snippet"
+  },
+  "svg": {
+    "title": "SVG Animation",
+    "replay": "Replay",
+    "description": "Using <code>stroke-dasharray</code> and <code>stroke-dashoffset</code> properties, you can implement handwriting or line drawing effects."
+  },
+  "performance": {
+    "title": "Performance Optimization",
+    "description": "Even fancy animations harm user experience if they stutter. You must understand the browser's rendering pipeline and only touch optimized properties.",
+    "good": {
+      "title": "Good (Cheap Properties)",
+      "description": "Utilizes GPU acceleration and does not trigger Layout (Reflow)."
+    },
+    "bad": {
+      "title": "Bad (Expensive Properties)",
+      "description": "Forces layout recalculation and drastically degrades performance."
+    },
+    "devtools": {
+      "title": "Using DevTools:",
+      "description": "In the Performance tab, start recording to check if FPS drops below 60 and if 'Layout Shift' occurs."
+    }
+  }
+}

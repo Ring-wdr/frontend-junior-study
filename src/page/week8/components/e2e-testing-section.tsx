@@ -1,84 +1,74 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const E2ETestingSection = () => {
+  const { t } = useTranslation('week8');
+
   return (
     <SectionCard
-      badge={{ label: 'Playwright & Cypress', color: 'orange' }}
-      title="End-to-End (E2E) Testing"
-      description="Testing complete user journeys in a real browser environment."
+      badge={{ label: t('e2e.badge'), color: 'orange' }}
+      title={t('e2e.title')}
+      description={t('e2e.description')}
     >
       <div className="space-y-8">
-        <SubSection title="What is E2E Testing?" icon iconColor="red">
+        <SubSection title={t('e2e.whatIsE2E.title')} icon iconColor="red">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              End-to-End tests run your application in a real browser and
-              simulate real user interactions. They test the complete flow from
-              entry point to exit, catching issues that unit and integration
-              tests might miss.
+              {t('e2e.whatIsE2E.description')}
             </p>
 
-            <InfoBox variant="red" title="E2E Testing Use Cases">
+            <InfoBox variant="red" title={t('e2e.whatIsE2E.useCases.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Critical user journeys:</strong> Login, checkout,
-                  payment
+                  <strong>Critical user journeys:</strong> {t('e2e.whatIsE2E.useCases.criticalJourneys')}
                 </li>
                 <li>
-                  <strong>Cross-browser compatibility:</strong> Ensure app works
-                  on Chrome, Firefox, Safari
+                  <strong>Cross-browser compatibility:</strong> {t('e2e.whatIsE2E.useCases.crossBrowser')}
                 </li>
                 <li>
-                  <strong>Visual regression:</strong> Detect unintended UI
-                  changes
+                  <strong>Visual regression:</strong> {t('e2e.whatIsE2E.useCases.visualRegression')}
                 </li>
                 <li>
-                  <strong>Real-world scenarios:</strong> Network issues, slow
-                  connections
+                  <strong>Real-world scenarios:</strong> {t('e2e.whatIsE2E.useCases.realWorld')}
                 </li>
               </ul>
             </InfoBox>
 
             <div className="bg-red-50 p-4 rounded-lg border border-red-200">
               <p className="text-sm text-gray-700 font-semibold mb-2">
-                ⚠️ Important: E2E Tests Are Slow
+                ⚠️ {t('e2e.whatIsE2E.warning')}
               </p>
               <p className="text-sm text-gray-700">
-                E2E tests are slow and brittle because they depend on real
-                browser behavior. Use them sparingly (5-10% of your test suite)
-                for critical paths only.
+                {t('e2e.whatIsE2E.warningDescription')}
               </p>
             </div>
           </div>
         </SubSection>
 
         <SubSection
-          title="Playwright: Enterprise-Grade Testing"
+          title={t('e2e.playwright.title')}
           icon
           iconColor="blue"
         >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Playwright is built by Microsoft and is optimized for modern web
-              applications. It's fast, reliable, and CI-friendly.
+              {t('e2e.playwright.description')}
             </p>
 
-            <InfoBox variant="blue" title="Playwright Strengths">
+            <InfoBox variant="blue" title={t('e2e.playwright.strengths.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>⚡ Fast:</strong> Optimized execution and parallel
-                  testing
+                  <strong>⚡ Fast:</strong> {t('e2e.playwright.strengths.fast')}
                 </li>
                 <li>
-                  <strong>🌐 Cross-browser:</strong> Chromium, Firefox, WebKit
-                  out of the box
+                  <strong>🌐 Cross-browser:</strong> {t('e2e.playwright.strengths.crossBrowser')}
                 </li>
                 <li>
-                  <strong>CI-friendly:</strong> Works great in headless mode
+                  <strong>CI-friendly:</strong> {t('e2e.playwright.strengths.ciFriendly')}
                 </li>
                 <li>
-                  <strong>Developer experience:</strong> Great UI for debugging
-                  and recording tests
+                  <strong>Developer experience:</strong> {t('e2e.playwright.strengths.dx')}
                 </li>
               </ul>
             </InfoBox>
@@ -114,43 +104,39 @@ test('user can login and see dashboard', async ({ page }) => {
         </SubSection>
 
         <SubSection
-          title="Cypress: Developer Experience Champion"
+          title={t('e2e.cypress.title')}
           icon
           iconColor="green"
         >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Cypress prioritizes developer experience with an interactive
-              interface, excellent debugging tools, and test recording.
+              {t('e2e.cypress.description')}
             </p>
 
-            <InfoBox variant="green" title="Cypress Strengths">
+            <InfoBox variant="green" title={t('e2e.cypress.strengths.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>🎨 Best DX:</strong> Interactive test runner with
-                  visual feedback
+                  <strong>🎨 Best DX:</strong> {t('e2e.cypress.strengths.bestDX')}
                 </li>
                 <li>
-                  <strong>📹 Recording:</strong> Built-in test recording
+                  <strong>📹 Recording:</strong> {t('e2e.cypress.strengths.recording')}
                 </li>
                 <li>
-                  <strong>⏱️ Debugging:</strong> Time-travel debugging, console
-                  access
+                  <strong>⏱️ Debugging:</strong> {t('e2e.cypress.strengths.debugging')}
                 </li>
                 <li>
-                  <strong>📊 Dashboard:</strong> Cloud recording and analytics
+                  <strong>📊 Dashboard:</strong> {t('e2e.cypress.strengths.dashboard')}
                 </li>
               </ul>
             </InfoBox>
 
-            <InfoBox variant="red" title="Cypress Limitations">
+            <InfoBox variant="red" title={t('e2e.cypress.limitations.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Single browser:</strong> Limited cross-browser support
+                  <strong>Single browser:</strong> {t('e2e.cypress.limitations.singleBrowser')}
                 </li>
                 <li>
-                  <strong>JavaScript only:</strong> Can't test multi-tab or
-                  mobile
+                  <strong>JavaScript only:</strong> {t('e2e.cypress.limitations.jsOnly')}
                 </li>
               </ul>
             </InfoBox>
@@ -176,60 +162,60 @@ describe('Login Flow', () => {
           </div>
         </SubSection>
 
-        <SubSection title="Playwright vs Cypress" icon iconColor="purple">
+        <SubSection title={t('e2e.comparison.title')} icon iconColor="purple">
           <div className="space-y-4">
             <div className="overflow-x-auto">
               <table className="w-full text-sm border-collapse">
                 <thead>
                   <tr className="border-b border-gray-300">
                     <th className="px-4 py-2 text-left font-semibold text-gray-800">
-                      Feature
+                      {t('e2e.comparison.feature')}
                     </th>
                     <th className="px-4 py-2 text-left font-semibold text-gray-800">
-                      Playwright
+                      {t('e2e.comparison.playwright')}
                     </th>
                     <th className="px-4 py-2 text-left font-semibold text-gray-800">
-                      Cypress
+                      {t('e2e.comparison.cypress')}
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b border-gray-200 hover:bg-gray-50">
                     <td className="px-4 py-2 font-medium text-gray-700">
-                      Speed
+                      {t('e2e.comparison.speed')}
                     </td>
-                    <td className="px-4 py-2 text-gray-600">⚡ Very Fast</td>
-                    <td className="px-4 py-2 text-gray-600">🟡 Moderate</td>
+                    <td className="px-4 py-2 text-gray-600">⚡ {t('e2e.comparison.veryFast')}</td>
+                    <td className="px-4 py-2 text-gray-600">🟡 {t('e2e.comparison.moderate')}</td>
                   </tr>
                   <tr className="border-b border-gray-200 hover:bg-gray-50">
                     <td className="px-4 py-2 font-medium text-gray-700">
-                      Browsers
+                      {t('e2e.comparison.browsers')}
                     </td>
                     <td className="px-4 py-2 text-gray-600">
-                      3 (Chromium, FF, WebKit)
+                      {t('e2e.comparison.threeBrowsers')}
                     </td>
                     <td className="px-4 py-2 text-gray-600">
-                      1 (Chrome-based)
+                      {t('e2e.comparison.oneBrowser')}
                     </td>
                   </tr>
                   <tr className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="px-4 py-2 font-medium text-gray-700">DX</td>
-                    <td className="px-4 py-2 text-gray-600">Good</td>
-                    <td className="px-4 py-2 text-gray-600">🌟 Excellent</td>
-                  </tr>
-                  <tr className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="px-4 py-2 font-medium text-gray-700">
-                      CI Setup
-                    </td>
-                    <td className="px-4 py-2 text-gray-600">✅ Easy</td>
-                    <td className="px-4 py-2 text-gray-600">🟡 Moderate</td>
+                    <td className="px-4 py-2 font-medium text-gray-700">{t('e2e.comparison.dx')}</td>
+                    <td className="px-4 py-2 text-gray-600">{t('e2e.comparison.good')}</td>
+                    <td className="px-4 py-2 text-gray-600">🌟 {t('e2e.comparison.excellent')}</td>
                   </tr>
                   <tr className="border-b border-gray-200 hover:bg-gray-50">
                     <td className="px-4 py-2 font-medium text-gray-700">
-                      Learning Curve
+                      {t('e2e.comparison.ciSetup')}
                     </td>
-                    <td className="px-4 py-2 text-gray-600">Moderate</td>
-                    <td className="px-4 py-2 text-gray-600">🟢 Easy</td>
+                    <td className="px-4 py-2 text-gray-600">✅ {t('e2e.comparison.easy')}</td>
+                    <td className="px-4 py-2 text-gray-600">🟡 {t('e2e.comparison.moderate')}</td>
+                  </tr>
+                  <tr className="border-b border-gray-200 hover:bg-gray-50">
+                    <td className="px-4 py-2 font-medium text-gray-700">
+                      {t('e2e.comparison.learningCurve')}
+                    </td>
+                    <td className="px-4 py-2 text-gray-600">{t('e2e.comparison.moderateCurve')}</td>
+                    <td className="px-4 py-2 text-gray-600">🟢 {t('e2e.comparison.easyCurve')}</td>
                   </tr>
                 </tbody>
               </table>
@@ -237,29 +223,24 @@ describe('Login Flow', () => {
           </div>
         </SubSection>
 
-        <SubSection title="Best Practices for E2E Tests" icon iconColor="blue">
+        <SubSection title={t('e2e.bestPractices.title')} icon iconColor="blue">
           <div className="space-y-4">
-            <InfoBox variant="blue" title="E2E Testing Guidelines">
+            <InfoBox variant="blue" title={t('e2e.bestPractices.guidelines.title')}>
               <ol className="list-decimal pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Test critical user paths:</strong> Login, checkout,
-                  core features
+                  <strong>Test critical user paths:</strong> {t('e2e.bestPractices.guidelines.criticalPaths')}
                 </li>
                 <li>
-                  <strong>Avoid testing details:</strong> Don't test every
-                  button and input
+                  <strong>Avoid testing details:</strong> {t('e2e.bestPractices.guidelines.avoidDetails')}
                 </li>
                 <li>
-                  <strong>Use meaningful waits:</strong> Wait for elements by
-                  role, not arbitrary delays
+                  <strong>Use meaningful waits:</strong> {t('e2e.bestPractices.guidelines.meaningfulWaits')}
                 </li>
                 <li>
-                  <strong>Keep tests isolated:</strong> Each test should be
-                  independent
+                  <strong>Keep tests isolated:</strong> {t('e2e.bestPractices.guidelines.keepIsolated')}
                 </li>
                 <li>
-                  <strong>Use test data carefully:</strong> Reset database
-                  between tests
+                  <strong>Use test data carefully:</strong> {t('e2e.bestPractices.guidelines.testData')}
                 </li>
               </ol>
             </InfoBox>
@@ -296,10 +277,10 @@ test('form has email input field', async ({ page }) => {
           </div>
         </SubSection>
 
-        <SubSection title="Running E2E Tests in CI" icon iconColor="orange">
+        <SubSection title={t('e2e.ci.title')} icon iconColor="orange">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Configure your CI/CD pipeline to run E2E tests on every push.
+              {t('e2e.ci.description')}
             </p>
 
             <CodeBlock

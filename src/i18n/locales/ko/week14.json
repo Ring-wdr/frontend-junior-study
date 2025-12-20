@@ -1,0 +1,578 @@
+{
+  "header": {
+    "title": "Accessibility & i18n",
+    "description": "Build inclusive web applications with proper accessibility (A11y) and internationalization (i18n) support for global audiences."
+  },
+  "tabs": {
+    "all": "All",
+    "wcag": "WCAG Basics",
+    "semantic": "Semantic HTML",
+    "aria": "ARIA",
+    "focus": "Focus Management",
+    "i18n": "i18n Basics",
+    "intl": "Intl API",
+    "rtl": "RTL Support"
+  },
+  "wcag": {
+    "badge": "A11y",
+    "title": "WCAG 웹 접근성 기초",
+    "description": "WCAG 2.1 핵심 4대 원칙과 접근성의 본질적 가치 이해",
+    "whatIsA11y": {
+      "title": "접근성이란?",
+      "infoTitle": "Web Accessibility (A11y)",
+      "infoText": "접근성은 단순히 장애를 위한 것이 아닙니다. 다양한 상황(저조도, 소음, 터치 제한, 모바일 환경 등)에서 모든 사용자가 제품의 기능을 동등하게 활용할 수 있게 하는 것입니다.",
+      "scenarios": {
+        "lowLight": "저조도 환경",
+        "noise": "소음 환경",
+        "temporaryDisability": "일시적 장애",
+        "mobile": "모바일 사용"
+      }
+    },
+    "principles": {
+      "title": "WCAG 2.1 핵심 4대 원칙",
+      "label": "POUR Principles",
+      "perceivable": {
+        "description": "모든 사용자가 콘텐츠를 인지할 수 있어야 함",
+        "items": [
+          "대체 텍스트 제공 (이미지, 비디오 등)",
+          "명도 대비(contrast) 4.5:1 이상 준수",
+          "텍스트는 선택 가능하고 확대 가능해야 함",
+          "자막 및 오디오 설명 제공"
+        ]
+      },
+      "operable": {
+        "description": "UI 컴포넌트와 내비게이션이 조작 가능해야 함",
+        "items": [
+          "모든 기능은 키보드로 접근 가능",
+          "포커스가 보이고 이동 흐름이 자연스러움",
+          "충분한 시간 제공 (시간 제한 조절)",
+          "발작 유발 콘텐츠 금지 (깜빡임)"
+        ]
+      },
+      "understandable": {
+        "description": "정보와 UI 조작이 이해 가능해야 함",
+        "items": [
+          "폼 라벨 명확히 제공",
+          "에러 메시지는 구체적으로",
+          "일관된 내비게이션 구조",
+          "예측 가능한 동작"
+        ]
+      },
+      "robust": {
+        "description": "다양한 사용자 에이전트가 해석 가능해야 함",
+        "items": [
+          "보조 기술(Screen Reader)이 인식 가능",
+          "시맨틱 태그 사용 필수",
+          "ARIA는 필요한 곳에서만",
+          "표준 준수 마크업"
+        ]
+      }
+    },
+    "contrastChecker": {
+      "title": "명도 대비 체커",
+      "label": "Contrast Ratio Demo",
+      "pass": "✓ 4.54:1 (WCAG AA)",
+      "fail": "✗ 2.85:1 (Fail)",
+      "guideline": "WCAG AA 기준: 일반 텍스트 4.5:1, 큰 텍스트(18px+) 3:1 이상"
+    },
+    "testingTools": {
+      "title": "접근성 테스트 도구",
+      "tools": [
+        {
+          "name": "axe DevTools",
+          "desc": "가장 강력한 자동화 도구",
+          "badge": "Essential"
+        },
+        {
+          "name": "Lighthouse",
+          "desc": "Chrome 내장 성능/접근성 검사",
+          "badge": "Built-in"
+        },
+        {
+          "name": "WAVE",
+          "desc": "시각적 접근성 평가",
+          "badge": "Visual"
+        },
+        {
+          "name": "VoiceOver/NVDA",
+          "desc": "스크린리더 실제 테스트",
+          "badge": "Manual"
+        }
+      ]
+    }
+  },
+  "semantic": {
+    "badge": "HTML",
+    "title": "시맨틱 HTML - 최강의 접근성 도구",
+    "description": "접근성의 80%는 HTML을 올바르게 사용하는 것만으로 해결됩니다",
+    "importance": {
+      "title": "시맨틱 태그의 중요성",
+      "infoTitle": "Why Semantic HTML?",
+      "infoText": "시맨틱 HTML은 스크린리더와 검색 엔진이 페이지 구조를 이해하는 기반입니다. <div>와 <span>만 사용하면 보조 기술이 콘텐츠의 의미를 파악할 수 없습니다."
+    },
+    "goodVsBad": {
+      "title": "Interactive: Good vs Bad",
+      "label": "Toggle to Compare",
+      "goodButton": "✓ Good (Semantic)",
+      "badButton": "✗ Bad (Div Soup)",
+      "badWarning": "⚠️ 스크린리더가 구조를 인식할 수 없음, 키보드 네비게이션 불가",
+      "goodMessage": "✓ 스크린리더가 landmark로 인식, 키보드 네비게이션 가능"
+    },
+    "coreElements": {
+      "title": "핵심 시맨틱 요소",
+      "elements": [
+        {
+          "tag": "<button>",
+          "wrong": "<div onclick>",
+          "desc": "클릭 가능한 액션"
+        },
+        {
+          "tag": "<a href>",
+          "wrong": "<span onclick>",
+          "desc": "페이지 이동 링크"
+        },
+        {
+          "tag": "<label for>",
+          "wrong": "<span>",
+          "desc": "폼 필드 레이블"
+        },
+        {
+          "tag": "<nav>",
+          "wrong": "<div class=\"nav\">",
+          "desc": "내비게이션 영역"
+        },
+        {
+          "tag": "<main>",
+          "wrong": "<div class=\"main\">",
+          "desc": "주요 콘텐츠 영역"
+        },
+        {
+          "tag": "<header>/<footer>",
+          "wrong": "<div>",
+          "desc": "페이지/섹션 헤더/푸터"
+        }
+      ]
+    },
+    "formAccessibility": {
+      "title": "폼 접근성",
+      "tips": [
+        "for와 id로 레이블 연결 필수",
+        "fieldset과 legend로 그룹화",
+        "aria-describedby로 힌트/에러 연결"
+      ]
+    },
+    "headingHierarchy": {
+      "title": "Heading 계층 구조",
+      "label": "Document Outline",
+      "warning": "⚠️ h1 → h3처럼 레벨을 건너뛰지 마세요. 스크린리더 사용자는 heading 목록으로 페이지를 탐색합니다."
+    }
+  },
+  "aria": {
+    "badge": "WAI-ARIA",
+    "title": "ARIA의 올바른 사용",
+    "description": "HTML을 먼저 쓰고, ARIA는 없는 기능을 보완하는 기술",
+    "firstRule": {
+      "title": "ARIA의 첫 번째 규칙",
+      "infoTitle": "First Rule of ARIA",
+      "quote": "\"ARIA를 사용하지 않아도 된다면, 사용하지 마세요.\"",
+      "explanation": "네이티브 HTML 요소가 이미 접근성을 제공합니다. ARIA는 HTML로 표현할 수 없는 기능(예: 커스텀 컴포넌트)에만 사용하세요. ARIA를 남용하면 접근성이 악화됩니다."
+    },
+    "commonAttributes": {
+      "title": "자주 쓰는 ARIA 속성",
+      "attributes": [
+        {
+          "attr": "role",
+          "desc": "요소의 역할 정의",
+          "example": "role=\"dialog\", role=\"alert\", role=\"tablist\""
+        },
+        {
+          "attr": "aria-label",
+          "desc": "접근 가능한 이름 제공",
+          "example": "aria-label=\"Close menu\""
+        },
+        {
+          "attr": "aria-labelledby",
+          "desc": "다른 요소의 ID로 이름 참조",
+          "example": "aria-labelledby=\"modal-title\""
+        },
+        {
+          "attr": "aria-describedby",
+          "desc": "추가 설명 연결",
+          "example": "aria-describedby=\"password-hint\""
+        },
+        {
+          "attr": "aria-expanded",
+          "desc": "확장/축소 상태",
+          "example": "aria-expanded=\"true\""
+        },
+        {
+          "attr": "aria-live",
+          "desc": "동적 콘텐츠 알림",
+          "example": "aria-live=\"polite\""
+        }
+      ]
+    },
+    "ariaExpanded": {
+      "title": "Interactive: aria-expanded",
+      "label": "Accordion Pattern",
+      "buttonText": "What is aria-expanded?",
+      "explanation": "aria-expanded는 스크린리더에게 현재 요소가 확장되었는지 축소되었는지 알려줍니다. 토글 버튼, 아코디언, 드롭다운 메뉴 등에 필수적입니다."
+    },
+    "ariaLive": {
+      "title": "Interactive: aria-live",
+      "label": "Live Region Demo",
+      "instructions": "버튼을 클릭하면 스크린리더가 알림을 읽어줍니다:",
+      "addToCart": "Add to Cart",
+      "submitForm": "Submit Form",
+      "clear": "Clear",
+      "notification1": "Item added to cart!",
+      "notification2": "Form submitted successfully",
+      "placeholder": "Notifications will appear here..."
+    },
+    "modalPattern": {
+      "title": "모달 다이얼로그 패턴"
+    },
+    "antiPatterns": {
+      "title": "ARIA 안티패턴",
+      "patterns": [
+        {
+          "bad": "<div role=\"button\">Click</div>",
+          "good": "<button>Click</button>",
+          "reason": "Native element already has semantics"
+        },
+        {
+          "bad": "aria-hidden=\"true\" on focusable element",
+          "good": "Remove element from tab order first",
+          "reason": "Creates invisible but focusable element"
+        },
+        {
+          "bad": "aria-label on <div> without role",
+          "good": "Add appropriate role or use native element",
+          "reason": "aria-label only works with certain roles"
+        }
+      ]
+    }
+  },
+  "focus": {
+    "badge": "Focus",
+    "title": "포커스 관리",
+    "description": "React SPA에서 가장 자주 깨지는 접근성 포인트",
+    "whenToManage": {
+      "title": "포커스 관리가 필요한 경우",
+      "infoTitle": "When to Manage Focus",
+      "cases": [
+        {
+          "title": "라우트 이동 시:",
+          "desc": "새 페이지의 첫 번째 heading으로 focus 이동"
+        },
+        {
+          "title": "모달 열릴 때:",
+          "items": [
+            "모달 내부 첫 요소로 focus 이동",
+            "탭 이동이 모달 밖으로 빠져나가지 않도록 trap",
+            "닫히면 기존 focus 위치로 복귀"
+          ]
+        },
+        {
+          "title": "동적 콘텐츠:",
+          "desc": "새로 추가된 콘텐츠로 focus 이동"
+        }
+      ]
+    },
+    "trapDemo": {
+      "title": "Interactive: Focus Trap Modal",
+      "label": "Click to Open Modal",
+      "openButton": "Open Modal",
+      "instructions": "모달이 열리면 Tab 키로 탐색해보세요. Focus가 모달 안에 갇힙니다(trap).",
+      "modalTitle": "Focus Trap Demo",
+      "modalDesc": "Tab 키를 눌러보세요. Focus가 이 모달 안에서만 순환합니다. ESC를 누르면 닫힙니다.",
+      "input1": "Input field 1",
+      "input2": "Input field 2",
+      "cancel": "Cancel",
+      "confirm": "Confirm"
+    },
+    "indicatorTracker": {
+      "title": "Focus Indicator Tracker",
+      "label": "Tab Through These Buttons",
+      "historyLabel": "Focus History:",
+      "placeholder": "Tab through buttons...",
+      "buttons": ["Button A", "Button B", "Button C", "Button D"]
+    },
+    "implementation": {
+      "title": "Focus Trap 구현"
+    },
+    "libraries": {
+      "title": "라이브러리 추천",
+      "libs": [
+        {
+          "name": "focus-trap-react",
+          "desc": "경량 Focus Trap 라이브러리",
+          "use": "Modal, Dropdown"
+        },
+        {
+          "name": "React Aria",
+          "desc": "Adobe의 접근성 컴포넌트",
+          "use": "Full A11y Suite"
+        },
+        {
+          "name": "Radix UI",
+          "desc": "접근성 내장 컴포넌트",
+          "use": "Headless UI"
+        },
+        {
+          "name": "@reach/ui",
+          "desc": "접근성 우선 컴포넌트",
+          "use": "Modal, Tabs, etc."
+        }
+      ]
+    }
+  },
+  "i18nBasics": {
+    "badge": "i18n",
+    "title": "국제화(i18n) 기초",
+    "description": "글로벌 서비스를 위한 다국어 지원 아키텍처",
+    "coreElements": {
+      "title": "국제화의 핵심 요소",
+      "elements": [
+        {
+          "title": "언어 (Translation)",
+          "desc": "텍스트 번역"
+        },
+        {
+          "title": "날짜/시간",
+          "desc": "지역별 포맷 (MM/DD vs DD/MM)"
+        },
+        {
+          "title": "숫자/통화",
+          "desc": "1,000 vs 1.000, $100 vs 100원"
+        },
+        {
+          "title": "RTL 지원",
+          "desc": "아랍어, 히브리어 등"
+        },
+        {
+          "title": "복수형",
+          "desc": "1 item vs 2 items"
+        },
+        {
+          "title": "타임존",
+          "desc": "UTC, KST, PST 등"
+        }
+      ]
+    },
+    "liveDemo": {
+      "title": "Interactive: 다국어 전환",
+      "label": "Live Translation Demo",
+      "locales": {
+        "ko": "한국어",
+        "en": "English",
+        "ja": "日本語"
+      },
+      "currentLocale": "현재 로케일:"
+    },
+    "icuFormat": {
+      "title": "ICU Message Format",
+      "infoTitle": "Industry Standard",
+      "infoText": "ICU Message Format은 복수형, 선택형 메시지 처리의 업계 표준입니다."
+    },
+    "nextjsStructure": {
+      "title": "Next.js i18n 구조"
+    },
+    "fileManagement": {
+      "title": "번역 파일 관리 전략",
+      "namespaceTitle": "Namespace 기반 분리 (권장)",
+      "missingKeysTitle": "번역 누락 체크",
+      "missingKeysText": "Jest + JSON Schema를 활용해 번역 키 누락을 CI에서 자동 검증하세요."
+    },
+    "libraryComparison": {
+      "title": "i18n 라이브러리 비교",
+      "headers": {
+        "library": "라이브러리",
+        "features": "특징",
+        "useCase": "적합한 경우"
+      },
+      "libraries": [
+        {
+          "name": "react-intl",
+          "features": "ICU 완벽 지원, FormatJS",
+          "useCase": "대규모 엔터프라이즈"
+        },
+        {
+          "name": "i18next",
+          "features": "유연한 플러그인 시스템",
+          "useCase": "범용적 사용"
+        },
+        {
+          "name": "next-intl",
+          "features": "Next.js 최적화",
+          "useCase": "Next.js 프로젝트"
+        }
+      ]
+    }
+  },
+  "intl": {
+    "badge": "Intl",
+    "title": "JavaScript Intl API",
+    "description": "브라우저 내장 국제화 API로 날짜, 숫자, 통화 포맷팅",
+    "overview": {
+      "title": "Intl API Overview",
+      "infoTitle": "Built-in Internationalization",
+      "infoText": "JavaScript의 Intl 객체는 브라우저에 내장된 강력한 국제화 API입니다. 라이브러리 없이도 날짜, 숫자, 통화, 복수형 등을 로케일에 맞게 포맷팅할 수 있습니다."
+    },
+    "liveDemo": {
+      "title": "Interactive: 로케일별 포맷팅",
+      "label": "Select Locale to See Differences",
+      "locales": {
+        "ko": "한국어",
+        "en": "English (US)",
+        "de": "Deutsch",
+        "ja": "日本語",
+        "ar": "العربية"
+      },
+      "numberFormat": "NumberFormat",
+      "dateTimeFormat": "DateTimeFormat",
+      "relativeTimeFormat": "RelativeTimeFormat",
+      "labels": {
+        "number": "숫자:",
+        "short": "Short:",
+        "medium": "Medium:",
+        "long": "Long:",
+        "time": "Time:"
+      }
+    },
+    "numberFormat": {
+      "title": "Intl.NumberFormat"
+    },
+    "dateTimeFormat": {
+      "title": "Intl.DateTimeFormat"
+    },
+    "otherApis": {
+      "title": "기타 유용한 Intl API",
+      "apis": [
+        {
+          "api": "Intl.ListFormat",
+          "example": "new Intl.ListFormat(\"en\").format([\"a\", \"b\", \"c\"])",
+          "result": "\"a, b, and c\""
+        },
+        {
+          "api": "Intl.PluralRules",
+          "example": "new Intl.PluralRules(\"en\").select(1)",
+          "result": "\"one\""
+        },
+        {
+          "api": "Intl.Collator",
+          "example": "[\"ä\", \"a\", \"z\"].sort(new Intl.Collator(\"de\").compare)",
+          "result": "[\"a\", \"ä\", \"z\"]"
+        },
+        {
+          "api": "Intl.Segmenter",
+          "example": "Segment text into words/sentences",
+          "result": "Text analysis"
+        }
+      ]
+    }
+  },
+  "rtl": {
+    "badge": "RTL",
+    "title": "RTL (Right-to-Left) 지원",
+    "description": "아랍어, 히브리어 등 RTL 언어를 위한 필수 기능",
+    "languages": {
+      "title": "RTL이 필요한 언어",
+      "infoTitle": "RTL Languages",
+      "infoText": "약 4억 명 이상의 사용자가 RTL 언어를 사용합니다. 글로벌 서비스라면 반드시 고려해야 합니다.",
+      "list": [
+        {
+          "lang": "Arabic (العربية)",
+          "speakers": "310M+"
+        },
+        {
+          "lang": "Hebrew (עברית)",
+          "speakers": "9M+"
+        },
+        {
+          "lang": "Persian (فارسی)",
+          "speakers": "110M+"
+        },
+        {
+          "lang": "Urdu (اردو)",
+          "speakers": "70M+"
+        }
+      ]
+    },
+    "liveDemo": {
+      "title": "Interactive: LTR vs RTL",
+      "label": "Toggle Direction",
+      "ltr": "LTR (English)",
+      "rtl": "RTL (العربية)",
+      "name": {
+        "ltr": "John Doe",
+        "rtl": "محمد أحمد"
+      },
+      "role": {
+        "ltr": "Frontend Developer",
+        "rtl": "مطور واجهة أمامية"
+      },
+      "text": {
+        "ltr": "This is an example of text that reads from left to right.",
+        "rtl": "هذا مثال على النص العربي الذي يُقرأ من اليمين إلى اليسار."
+      },
+      "submit": {
+        "ltr": "Submit",
+        "rtl": "إرسال"
+      },
+      "cancel": {
+        "ltr": "Cancel",
+        "rtl": "إلغاء"
+      },
+      "note": "텍스트 방향, margin, padding, 정렬 모두 변경됨"
+    },
+    "logicalProperties": {
+      "title": "CSS Logical Properties",
+      "infoTitle": "Direction-Agnostic CSS",
+      "infoText": "CSS Logical Properties를 사용하면 LTR/RTL을 자동으로 처리합니다. left/right 대신 start/end를 사용하세요.",
+      "physical": "✗ Physical (Avoid)",
+      "logical": "✓ Logical (Use)"
+    },
+    "mapping": {
+      "title": "Logical Properties 매핑",
+      "headers": {
+        "physical": "Physical",
+        "logical": "Logical",
+        "ltr": "LTR",
+        "rtl": "RTL"
+      }
+    },
+    "tailwind": {
+      "title": "Tailwind CSS RTL 지원"
+    },
+    "checklist": {
+      "title": "RTL 구현 체크리스트",
+      "items": [
+        {
+          "item": "<html dir=\"rtl\" lang=\"ar\"> 설정",
+          "done": true
+        },
+        {
+          "item": "CSS Logical Properties 사용",
+          "done": true
+        },
+        {
+          "item": "아이콘 방향 미러링 (←→ 화살표 등)",
+          "done": true
+        },
+        {
+          "item": "양방향 텍스트(Bidi) 처리",
+          "done": false
+        },
+        {
+          "item": "숫자/전화번호는 LTR 유지",
+          "done": true
+        },
+        {
+          "item": "애니메이션 방향 반전",
+          "done": false
+        }
+      ]
+    }
+  }
+}

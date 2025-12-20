@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { cn } from '../../lib/utils';
 import { BehavioralPatternsSection } from './components/behavioral-patterns-section';
@@ -26,6 +27,7 @@ const sections = [
 ];
 
 export default function Week2Page() {
+  const { t } = useTranslation('week2');
   const [activeTab, setActiveTab] = useState<Tab>('all');
 
   const filteredSections =
@@ -38,14 +40,13 @@ export default function Week2Page() {
           to="/"
           className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 mb-6 transition-colors"
         >
-          ← Back to Dashboard
+          {t('common:navigation.backToDashboard', '← Back to Dashboard')}
         </Link>
         <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-gray-900">
-          Programming Paradigms
+          {t('header.title')}
         </h1>
         <p className="text-lg text-gray-600 max-w-xl mx-auto">
-          Explore Object-Oriented Design Patterns and the shift towards
-          Functional Programming.
+          {t('header.description')}
         </p>
       </header>
       <div className="sticky top-4 z-10 bg-white/80 backdrop-blur-md p-1.5 rounded-full shadow-sm border border-gray-200 mb-8 flex gap-1 flex-wrap justify-center max-w-[95vw]">
@@ -61,11 +62,7 @@ export default function Week2Page() {
                 : 'text-gray-600 hover:bg-gray-100',
             )}
           >
-            {tab === 'oop'
-              ? 'OOP & SOLID'
-              : tab === 'fp'
-                ? 'Functional'
-                : tab.charAt(0).toUpperCase() + tab.slice(1)}
+            {t(`tabs.${tab}`)}
           </button>
         ))}
       </div>

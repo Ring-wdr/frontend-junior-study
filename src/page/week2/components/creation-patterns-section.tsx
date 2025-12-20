@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import {
   DemoBox,
   SectionCard,
@@ -10,19 +11,19 @@ import { FactoryVisualizer } from './factory-visualizer';
 import { SingletonVisualizer } from './singleton-visualizer';
 
 export const CreationPatternsSection = () => {
+  const { t } = useTranslation('week2');
   return (
     <SectionCard
-      badge={{ label: 'Design Patterns', color: 'purple' }}
-      title="Creation Patterns"
-      description="Patterns focused on object creation mechanisms."
+      badge={{ label: t('creation.badge'), color: 'purple' }}
+      title={t('creation.title')}
+      description={t('creation.description')}
     >
       <div className="space-y-8">
-        <SubSection title="Singleton Pattern" icon iconColor="purple">
+        <SubSection title={t('creation.singleton.title')} icon iconColor="purple">
           <div className="grid grid-cols-1 gap-6">
             <div className="space-y-2">
               <p className="text-sm text-gray-700">
-                Ensures a class has only one instance and provides a global
-                point of access to it.
+                {t('creation.singleton.description')}
               </p>
               <CodeBlock
                 code={`const Singleton = (function() {
@@ -49,7 +50,7 @@ export const CreationPatternsSection = () => {
         <SectionDivider variant="line" />
 
         <SubSection
-          title="Factory Pattern"
+          title={t('creation.factory.title')}
           icon
           iconColor="blue"
           divider={false}
@@ -58,20 +59,18 @@ export const CreationPatternsSection = () => {
             <div className="space-y-4">
               <div>
                 <h5 className="text-sm font-medium text-gray-900 mb-1">
-                  Factory Method
+                  {t('creation.factory.method.title')}
                 </h5>
                 <p className="text-sm text-gray-700 mb-2">
-                  Defines an interface for creating an object, but let
-                  subclasses decide which class to instantiate.
+                  {t('creation.factory.method.description')}
                 </p>
               </div>
               <div>
                 <h5 className="text-sm font-medium text-gray-900 mb-1">
-                  Abstract Factory
+                  {t('creation.factory.abstract.title')}
                 </h5>
                 <p className="text-sm text-gray-700">
-                  Provides an interface for creating families of related or
-                  dependent objects.
+                  {t('creation.factory.abstract.description')}
                 </p>
               </div>
             </div>
@@ -82,7 +81,7 @@ export const CreationPatternsSection = () => {
         </SubSection>
 
         <SubSection
-          title="Builder Pattern"
+          title={t('creation.builder.title')}
           icon
           iconColor="pink"
           divider={false}
@@ -90,9 +89,7 @@ export const CreationPatternsSection = () => {
         >
           <div className="grid grid-cols-1 gap-6">
             <p className="text-sm text-gray-700">
-              Separates the construction of a complex object from its
-              representation, allowing you to create different representations
-              with the same construction process.
+              {t('creation.builder.description')}
             </p>
             <div className="bg-white p-4 rounded-xl border border-gray-200">
               <DemoBox>

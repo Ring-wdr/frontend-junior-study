@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -6,28 +7,24 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const SemanticHtmlSection = () => {
+  const { t } = useTranslation('week14');
   const [showBad, setShowBad] = useState(false);
 
   return (
     <SectionCard
-      badge={{ label: 'HTML', color: 'green' }}
-      title="시맨틱 HTML - 최강의 접근성 도구"
-      description="접근성의 80%는 HTML을 올바르게 사용하는 것만으로 해결됩니다"
+      badge={{ label: t('semantic.badge'), color: 'green' }}
+      title={t('semantic.title')}
+      description={t('semantic.description')}
     >
       <div className="space-y-8">
-        <SubSection title="시맨틱 태그의 중요성" icon iconColor="green">
-          <InfoBox variant="green" title="Why Semantic HTML?">
-            <p className="text-sm leading-relaxed">
-              시맨틱 HTML은 스크린리더와 검색 엔진이 페이지 구조를 이해하는
-              기반입니다. <code>&lt;div&gt;</code>와{' '}
-              <code>&lt;span&gt;</code>만 사용하면 보조 기술이 콘텐츠의 의미를
-              파악할 수 없습니다.
-            </p>
+        <SubSection title={t('semantic.importance.title')} icon iconColor="green">
+          <InfoBox variant="green" title={t('semantic.importance.infoTitle')}>
+            <p className="text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: t('semantic.importance.infoText') }} />
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Interactive: Good vs Bad" icon iconColor="blue">
-          <DemoBox label="Toggle to Compare">
+        <SubSection title={t('semantic.goodVsBad.title')} icon iconColor="blue">
+          <DemoBox label={t('semantic.goodVsBad.label')}>
             <div className="space-y-4">
               <div className="flex gap-2">
                 <button
@@ -39,7 +36,7 @@ export const SemanticHtmlSection = () => {
                       : 'bg-gray-100 text-gray-600'
                   }`}
                 >
-                  ✓ Good (Semantic)
+                  {t('semantic.goodVsBad.goodButton')}
                 </button>
                 <button
                   type="button"
@@ -50,7 +47,7 @@ export const SemanticHtmlSection = () => {
                       : 'bg-gray-100 text-gray-600'
                   }`}
                 >
-                  ✗ Bad (Div Soup)
+                  {t('semantic.goodVsBad.badButton')}
                 </button>
               </div>
 
@@ -101,54 +98,18 @@ export const SemanticHtmlSection = () => {
                 className={`text-sm p-3 rounded ${showBad ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}
               >
                 {showBad ? (
-                  <span>
-                    ⚠️ 스크린리더가 구조를 인식할 수 없음, 키보드 네비게이션
-                    불가
-                  </span>
+                  <span>{t('semantic.goodVsBad.badWarning')}</span>
                 ) : (
-                  <span>
-                    ✓ 스크린리더가 landmark로 인식, 키보드 네비게이션 가능
-                  </span>
+                  <span>{t('semantic.goodVsBad.goodMessage')}</span>
                 )}
               </div>
             </div>
           </DemoBox>
         </SubSection>
 
-        <SubSection title="핵심 시맨틱 요소" icon iconColor="purple">
+        <SubSection title={t('semantic.coreElements.title')} icon iconColor="purple">
           <div className="grid grid-cols-2 gap-3">
-            {[
-              {
-                tag: '<button>',
-                wrong: '<div onclick>',
-                desc: '클릭 가능한 액션',
-              },
-              {
-                tag: '<a href>',
-                wrong: '<span onclick>',
-                desc: '페이지 이동 링크',
-              },
-              {
-                tag: '<label for>',
-                wrong: '<span>',
-                desc: '폼 필드 레이블',
-              },
-              {
-                tag: '<nav>',
-                wrong: '<div class="nav">',
-                desc: '내비게이션 영역',
-              },
-              {
-                tag: '<main>',
-                wrong: '<div class="main">',
-                desc: '주요 콘텐츠 영역',
-              },
-              {
-                tag: '<header>/<footer>',
-                wrong: '<div>',
-                desc: '페이지/섹션 헤더/푸터',
-              },
-            ].map((item) => (
+            {(t('semantic.coreElements.elements', { returnObjects: true }) as Array<{tag: string, wrong: string, desc: string}>).map((item) => (
               <div
                 key={item.tag}
                 className="bg-white p-3 rounded-lg border border-gray-200"
@@ -168,7 +129,7 @@ export const SemanticHtmlSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title="폼 접근성" icon iconColor="orange">
+        <SubSection title={t('semantic.formAccessibility.title')} icon iconColor="orange">
           <CodeBlock
             code={`<!-- Accessible Form Pattern -->
 <form>
@@ -208,21 +169,15 @@ export const SemanticHtmlSection = () => {
           />
           <InfoBox variant="orange" className="mt-3">
             <ul className="text-xs space-y-1">
-              <li>
-                • <code>for</code>와 <code>id</code>로 레이블 연결 필수
-              </li>
-              <li>
-                • <code>fieldset</code>과 <code>legend</code>로 그룹화
-              </li>
-              <li>
-                • <code>aria-describedby</code>로 힌트/에러 연결
-              </li>
+              {(t('semantic.formAccessibility.tips', { returnObjects: true }) as string[]).map((tip, idx) => (
+                <li key={idx}>• {tip}</li>
+              ))}
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Heading 계층 구조" icon iconColor="red">
-          <DemoBox label="Document Outline">
+        <SubSection title={t('semantic.headingHierarchy.title')} icon iconColor="red">
+          <DemoBox label={t('semantic.headingHierarchy.label')}>
             <div className="bg-white p-4 rounded-lg border border-gray-200">
               <div className="space-y-1 font-mono text-sm">
                 <div className="text-gray-800">
@@ -246,8 +201,7 @@ export const SemanticHtmlSection = () => {
               </div>
             </div>
             <p className="text-xs text-gray-500 mt-2">
-              ⚠️ h1 → h3처럼 레벨을 건너뛰지 마세요. 스크린리더 사용자는 heading
-              목록으로 페이지를 탐색합니다.
+              {t('semantic.headingHierarchy.warning')}
             </p>
           </DemoBox>
         </SubSection>

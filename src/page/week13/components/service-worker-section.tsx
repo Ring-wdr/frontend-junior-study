@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -6,42 +7,43 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const ServiceWorkerSection = () => {
+  const { t } = useTranslation('week13');
   const [activeStrategy, setActiveStrategy] = useState<string>('cache-first');
 
   const strategies = [
     {
       id: 'cache-first',
-      name: 'Cache First',
-      desc: 'Fast, uses cache, falls back to network',
-      use: 'Static assets, fonts, images',
+      name: t('serviceWorker.cacheStrategies.cacheFirst'),
+      desc: t('serviceWorker.cacheStrategies.cacheFirstDesc'),
+      use: t('serviceWorker.cacheStrategies.cacheFirstUse'),
       color: 'blue',
     },
     {
       id: 'network-first',
-      name: 'Network First',
-      desc: 'Fresh data, falls back to cache',
-      use: 'API calls, dynamic content',
+      name: t('serviceWorker.cacheStrategies.networkFirst'),
+      desc: t('serviceWorker.cacheStrategies.networkFirstDesc'),
+      use: t('serviceWorker.cacheStrategies.networkFirstUse'),
       color: 'green',
     },
     {
       id: 'stale-while-revalidate',
-      name: 'Stale While Revalidate',
-      desc: 'Fast from cache, updates in background',
-      use: 'Balance of speed and freshness',
+      name: t('serviceWorker.cacheStrategies.staleWhileRevalidate'),
+      desc: t('serviceWorker.cacheStrategies.staleWhileRevalidateDesc'),
+      use: t('serviceWorker.cacheStrategies.staleWhileRevalidateUse'),
       color: 'purple',
     },
     {
       id: 'network-only',
-      name: 'Network Only',
-      desc: 'Always fetch from network',
-      use: 'Non-cacheable requests',
+      name: t('serviceWorker.cacheStrategies.networkOnly'),
+      desc: t('serviceWorker.cacheStrategies.networkOnlyDesc'),
+      use: t('serviceWorker.cacheStrategies.networkOnlyUse'),
       color: 'orange',
     },
     {
       id: 'cache-only',
-      name: 'Cache Only',
-      desc: 'Only serve from cache',
-      use: 'Pre-cached offline pages',
+      name: t('serviceWorker.cacheStrategies.cacheOnly'),
+      desc: t('serviceWorker.cacheStrategies.cacheOnlyDesc'),
+      use: t('serviceWorker.cacheStrategies.cacheOnlyUse'),
       color: 'red',
     },
   ];

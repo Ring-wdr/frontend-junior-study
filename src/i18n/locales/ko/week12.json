@@ -1,0 +1,440 @@
+{
+  "header": {
+    "title": "인증과 보안",
+    "description": "OAuth 2.0, OpenID Connect, NextAuth.js, JWT 인증 및 XSS, CSRF 보호와 같은 필수 웹 보안 개념을 학습합니다."
+  },
+  "tabs": {
+    "all": "전체",
+    "oauth": "OAuth 2.0",
+    "oidc": "OIDC",
+    "nextauth": "NextAuth",
+    "jwt": "JWT vs Session",
+    "csrf": "CSRF",
+    "xss": "XSS & CSP",
+    "react2shell": "React2Shell (신규)",
+    "privacy": "프라이버시"
+  },
+  "oauth": {
+    "badge": "프로토콜",
+    "title": "OAuth 2.0 기초",
+    "description": "서드파티 접근을 위한 권한 위임 이해하기",
+    "whatIs": {
+      "title": "OAuth 2.0이란?",
+      "infoTitle": "권한 부여 프로토콜",
+      "infoDescription": "OAuth 2.0은 서드파티 서비스에 접근 권한을 위임하는 표준 프로토콜입니다. 예를 들어, 앱이 사용자의 Google 캘린더에 접근해야 할 때, OAuth 2.0은 Google로부터 액세스 토큰을 안전하게 얻는 방법을 제공합니다.",
+      "listAuthNot": "인증이 아닌 권한 부여: OAuth 2.0은 사용자 신원 확인이 아닌 권한 위임을 처리합니다",
+      "listAccessToken": "액세스 토큰: 보호된 리소스에 접근하기 위한 단기 자격 증명",
+      "listRefreshToken": "리프레시 토큰: 재인증 없이 새 액세스 토큰을 얻기 위한 장기 토큰"
+    },
+    "roles": {
+      "title": "OAuth 2.0의 주요 역할",
+      "resourceOwner": "리소스 소유자",
+      "resourceOwnerDesc": "데이터를 소유한 사용자",
+      "client": "클라이언트",
+      "clientDesc": "접근을 요청하는 애플리케이션",
+      "authServer": "인증 서버",
+      "authServerDesc": "토큰을 발급 (예: Google OAuth)",
+      "resourceServer": "리소스 서버",
+      "resourceServerDesc": "보호된 리소스를 호스팅 (API)"
+    },
+    "flow": {
+      "title": "인가 코드 플로우",
+      "demoLabel": "OAuth 2.0 플로우 인터랙티브 맵",
+      "step1": "사용자가 'Google로 로그인' 클릭",
+      "step2": "인증 서버로 리다이렉트",
+      "step3": "사용자 인증 및 동의",
+      "step4": "리다이렉트 URI로 인가 코드 전송",
+      "step5": "코드를 토큰으로 교환",
+      "step6": "액세스 토큰 수신",
+      "step7": "토큰을 사용하여 리소스 접근",
+      "actorClient": "Client App",
+      "actorBrowser": "Browser",
+      "actorAuth": "Auth Server",
+      "actorApi": "API",
+      "labelClient": "Client App",
+      "labelBrowser": "Browser",
+      "labelAuth": "Auth Server",
+      "labelApi": "API",
+      "prevButton": "← 이전 단계",
+      "nextButton": "다음 단계 →"
+    },
+    "authUrl": {
+      "title": "인증 URL 예제"
+    },
+    "tokenExchange": {
+      "title": "토큰 교환",
+      "securityNote": "보안 참고사항",
+      "securityDescription": "client_secret은 절대 프론트엔드에 노출되어서는 안 됩니다. 토큰 교환은 항상 안전한 백엔드 서버에서 이루어져야 합니다."
+    }
+  },
+  "oidc": {
+    "badge": "신원",
+    "title": "OpenID Connect (OIDC)",
+    "description": "OAuth 2.0 위에 구축된 인증 레이어",
+    "difference": {
+      "title": "OAuth 2.0 vs OIDC",
+      "infoTitle": "핵심 차이점",
+      "infoDescription": "OAuth 2.0은 권한 부여(접근 위임)를 처리하고, OpenID Connect는 인증(사용자 신원 확인)을 추가합니다.",
+      "oauth": "OAuth 2.0",
+      "oauthExample": "\"이 앱이 내 캘린더에 접근할 수 있나요?\"",
+      "oidc": "OIDC",
+      "oidcExample": "\"이 사용자는 누구인가요?\""
+    },
+    "idToken": {
+      "title": "ID 토큰",
+      "infoDescription": "OIDC는 이메일, 이름, 사용자 ID와 같은 사용자 신원 클레임을 포함하는 서명된 JWT인 ID 토큰을 도입합니다. 이 토큰은 사용자가 누구인지 증명합니다.",
+      "claimsTitle": "ID 토큰의 표준 클레임:",
+      "sub": "고유 사용자 ID",
+      "email": "사용자 이메일 주소",
+      "name": "전체 이름",
+      "iss": "토큰 발급자",
+      "aud": "토큰 대상 (클라이언트 ID)",
+      "exp": "만료 시간"
+    },
+    "decoder": {
+      "title": "ID 토큰 디코더",
+      "demoLabel": "JWT ID 토큰 디코드",
+      "decodeButton": "토큰 디코드",
+      "header": "헤더",
+      "payload": "페이로드 (클레임)"
+    },
+    "scopes": {
+      "title": "OIDC 스코프"
+    },
+    "flowSummary": {
+      "title": "OIDC 플로우 요약",
+      "step1": "openid 스코프로 인증 요청",
+      "step2": "신원 공급자에서 사용자 인증",
+      "step3": "인가 코드 수신",
+      "step4": "코드를 access_token과 id_token으로 교환",
+      "step5": "사용자 정보를 위해 ID 토큰 검증 및 디코드",
+      "infoDescription": "NextAuth.js와 같은 라이브러리는 이 모든 단계를 자동으로 처리합니다. OIDC를 수동으로 구현할 필요는 거의 없습니다."
+    }
+  },
+  "nextauth": {
+    "badge": "라이브러리",
+    "title": "NextAuth.js (Auth.js)",
+    "description": "Next.js 애플리케이션을 위한 완전한 인증 솔루션",
+    "whatIs": {
+      "title": "NextAuth.js란?",
+      "infoTitle": "풀 기능 인증 솔루션",
+      "infoDescription": "NextAuth.js (Auth.js로 리브랜딩 중)는 Next.js 앱을 위한 완전한 인증 솔루션입니다. OAuth 제공자, 자격 증명 로그인, JWT/데이터베이스 세션 등을 처리합니다.",
+      "listProviders": "다중 제공자: Google, GitHub, Facebook, 자격 증명 등",
+      "listSessions": "세션 모드: JWT 또는 데이터베이스 세션",
+      "listPages": "내장 페이지: 로그인, 로그아웃, 오류 페이지",
+      "listSSR": "SSR 지원: 클라이언트 및 서버 컴포넌트 모두 작동"
+    },
+    "setup": {
+      "title": "기본 설정"
+    },
+    "provider": {
+      "title": "세션 프로바이더 설정"
+    },
+    "usage": {
+      "title": "컴포넌트에서 세션 사용하기"
+    },
+    "demo": {
+      "title": "세션 데모",
+      "demoLabel": "시뮬레이션된 인증",
+      "notSignedIn": "로그인하지 않음",
+      "signInButton": "Google로 로그인",
+      "signOutButton": "로그아웃"
+    },
+    "protecting": {
+      "title": "라우트 보호"
+    }
+  },
+  "jwt": {
+    "badge": "개념",
+    "title": "JWT vs 세션 인증",
+    "description": "상태 비저장 vs 상태 저장 인증 방식 이해하기",
+    "structure": {
+      "title": "JWT 구조",
+      "infoTitle": "JSON Web Token",
+      "infoDescription": "JWT는 세 개의 Base64 인코딩된 부분으로 구성된 자체 포함 토큰 형식입니다: Header.Payload.Signature",
+      "header": "헤더 (알고리즘 & 타입)",
+      "payload": "페이로드 (클레임)",
+      "signature": "서명 (검증)"
+    },
+    "comparison": {
+      "title": "비교",
+      "demoLabel": "JWT vs 세션",
+      "jwtTitle": "JWT (상태 비저장)",
+      "sessionTitle": "세션 (상태 저장)",
+      "prosLabel": "장점",
+      "consLabel": "단점",
+      "jwtPros": [
+        "서버 측 저장소 불필요",
+        "수평 확장이 쉬움",
+        "마이크로서비스와 잘 작동",
+        "사용자 클레임 포함 가능"
+      ],
+      "jwtCons": [
+        "취소하기 어려움 (만료까지)",
+        "토큰 크기가 클 수 있음",
+        "토큰 갱신 처리 필요",
+        "localStorage에 저장 시 취약"
+      ],
+      "sessionPros": [
+        "쉽게 취소 가능 (저장소에서 삭제)",
+        "작은 쿠키 크기 (세션 ID만)",
+        "활성 세션에 대한 더 나은 제어",
+        "복잡한 세션 데이터 저장 가능"
+      ],
+      "sessionCons": [
+        "서버 측 저장소 필요",
+        "확장 시 공유 세션 저장소 필요",
+        "매 요청마다 세션 조회",
+        "스티키 세션 또는 Redis 필요"
+      ]
+    },
+    "storage": {
+      "title": "토큰 저장 모범 사례",
+      "localStorage": "localStorage",
+      "localStorageDesc": "XSS 공격에 취약 - 중요한 토큰에는 사용 금지",
+      "httpOnly": "HttpOnly Cookie",
+      "httpOnlyDesc": "JavaScript로 접근 불가 - 토큰에 권장",
+      "memory": "메모리 (인앱 상태)",
+      "memoryDesc": "안전하지만 새로고침 시 손실 - 리프레시 토큰과 함께 사용"
+    },
+    "refresh": {
+      "title": "리프레시 토큰 패턴"
+    },
+    "hybrid": {
+      "title": "현대적인 하이브리드 접근법",
+      "infoTitle": "모범 사례",
+      "infoDescription": "현대 앱은 종종 하이브리드 접근법을 사용합니다: JWT 액세스 토큰(단기, 메모리) + HttpOnly 리프레시 토큰(장기, 쿠키). 이는 JWT 확장성과 세션과 같은 취소 기능을 결합합니다."
+    }
+  },
+  "csrf": {
+    "badge": "보안",
+    "title": "CSRF & SameSite 쿠키",
+    "description": "크로스 사이트 요청 위조 공격으로부터 보호하기",
+    "whatIs": {
+      "title": "CSRF란?",
+      "infoTitle": "크로스 사이트 요청 위조",
+      "infoDescription": "CSRF는 웹사이트가 사용자의 브라우저에 대해 가진 신뢰를 악용합니다. 공격자는 사용자를 속여 기존 인증 쿠키를 사용하여 원치 않는 요청을 만들도록 합니다.",
+      "scenarioTitle": "공격 시나리오:",
+      "step1": "사용자가 bank.com에 로그인 (세션 쿠키 저장됨)",
+      "step2": "사용자가 숨겨진 폼이 있는 악성 사이트 방문",
+      "step3": "폼이 bank.com/transfer로 자동 제출됨",
+      "step4": "브라우저가 자동으로 bank.com 쿠키 포함",
+      "step5": "은행이 승인되지 않은 이체 처리"
+    },
+    "simulator": {
+      "title": "인터랙티브 CSRF 시뮬레이터",
+      "demoLabel": "공격 플레이그라운드",
+      "bankTitle": "Bank.com",
+      "bankAuth": "인증됨",
+      "bankBalance": "잔액",
+      "evilTitle": "Evil-Site.com",
+      "evilCongrats": "축하합니다!",
+      "evilMessage": "무료 iPhone을 받으셨습니다! 아래를 클릭하여 수령하세요.",
+      "evilButton": "경품 수령",
+      "evilHidden": "(숨겨짐: Bank.com으로 POST /transfer)",
+      "protectionLabel": "현재 보호:",
+      "blocked": "CSRF 공격 차단됨.",
+      "vulnerable": "취약합니다! 쿠키가 전송됨.",
+      "strictDesc": "쿠키는 자사 컨텍스트에서만 전송됩니다. 크로스 사이트 요청과 함께 전송되지 않습니다.",
+      "laxDesc": "쿠키는 최상위 탐색(GET)과 함께 전송되지만 크로스 사이트 POST/AJAX와는 전송되지 않습니다.",
+      "noneDesc": "쿠키는 크로스 사이트를 포함한 모든 요청과 함께 전송됩니다. Secure 플래그가 필요합니다.",
+      "transactionUnauthorized": "승인되지 않은 이체: -$100",
+      "transactionBlocked": "SameSite 정책에 의해 차단됨 🛡️"
+    },
+    "cookies": {
+      "title": "안전한 쿠키 설정"
+    },
+    "token": {
+      "title": "CSRF 토큰 보호",
+      "infoDescription": "추가 보호를 위해, 특히 SameSite=None을 사용할 때는 CSRF 토큰을 사용하세요. NextAuth.js는 자동으로 폼에 대해 이를 처리합니다."
+    },
+    "checklist": {
+      "title": "쿠키 보안 체크리스트",
+      "httpOnly": "HttpOnly",
+      "httpOnlyDesc": "JavaScript 접근 방지 (XSS 보호)",
+      "secure": "Secure",
+      "secureDesc": "HTTPS를 통해서만 전송",
+      "sameSite": "SameSite=Lax",
+      "sameSiteDesc": "좋은 UX 균형으로 CSRF 보호",
+      "path": "Path=/",
+      "pathDesc": "필요에 따라 쿠키 범위 제한",
+      "domain": "Domain",
+      "domainDesc": "서브도메인에 대한 도메인 지정",
+      "maxAge": "Max-Age/Expires",
+      "maxAgeDesc": "적절한 만료 설정"
+    }
+  },
+  "xss": {
+    "badge": "보안",
+    "title": "XSS & Content Security Policy",
+    "description": "크로스 사이트 스크립팅 공격으로부터 방어하기",
+    "whatIs": {
+      "title": "XSS란?",
+      "infoTitle": "크로스 사이트 스크립팅",
+      "infoDescription": "XSS는 공격자가 다른 사용자가 보는 웹 페이지에 악성 스크립트를 주입할 수 있게 합니다. 이러한 스크립트는 쿠키, 세션 토큰을 훔치거나 피해자로서 작업을 수행할 수 있습니다.",
+      "stored": "저장형 XSS",
+      "storedDesc": "악성 스크립트가 데이터베이스에 저장되어 콘텐츠를 보는 모든 사용자에게 영향",
+      "reflected": "반사형 XSS",
+      "reflectedDesc": "URL 매개변수를 통해 주입된 스크립트가 즉시 실행됨",
+      "dom": "DOM XSS",
+      "domDesc": "클라이언트 측 JavaScript가 신뢰할 수 없는 데이터로 DOM을 조작"
+    },
+    "sanitization": {
+      "title": "입력 살균 데모",
+      "demoLabel": "반사형 XSS 시뮬레이터",
+      "serverStatus": "서버 상태",
+      "resetButton": "초기화 및 지우기",
+      "inputLabel": "1. 악성 입력",
+      "inputPlaceholder": "HTML 또는 스크립트 입력...",
+      "payload1Button": "페이로드 1 삽입",
+      "payload2Button": "페이로드 2 삽입",
+      "vulnerableOutput": "취약한 출력 (이스케이프 안 됨)",
+      "safeOutput": "안전한 출력 (살균됨)",
+      "scriptExecuted": "스크립트 실행됨!",
+      "xssSuccessful": "XSS 공격 성공"
+    },
+    "react": {
+      "title": "React의 내장 보호",
+      "infoTitle": "자동 이스케이프",
+      "infoDescription": "React는 JSX에 포함된 값을 자동으로 이스케이프하여 내장 XSS 보호를 제공합니다. 그러나 dangerouslySetInnerHTML은 이 보호를 우회합니다."
+    },
+    "csp": {
+      "title": "Content Security Policy (CSP)",
+      "infoTitle": "심층 방어",
+      "infoDescription": "CSP는 브라우저에게 어떤 콘텐츠 소스를 신뢰하는지 알려주는 HTTP 헤더입니다. XSS가 주입되더라도 CSP가 실행을 방지할 수 있습니다."
+    },
+    "directives": {
+      "title": "CSP 지시문 참조",
+      "defaultSrc": "다른 지시문의 폴백",
+      "scriptSrc": "JavaScript 소스",
+      "styleSrc": "CSS 소스",
+      "imgSrc": "이미지 소스",
+      "connectSrc": "Fetch/XHR/WebSocket",
+      "fontSrc": "폰트 파일 소스",
+      "frameSrc": "iframe 소스",
+      "frameAncestors": "이 페이지를 포함할 수 있는 대상"
+    },
+    "checklist": {
+      "title": "XSS 방지 체크리스트",
+      "item1": "신뢰할 수 없는 데이터로 dangerouslySetInnerHTML 사용 금지",
+      "item2": "렌더링해야 하는 HTML은 DOMPurify로 살균",
+      "item3": "모든 사용자 입력을 서버 측에서 검증 및 살균",
+      "item4": "Content Security Policy 헤더 구현",
+      "item5": "중요한 토큰에 HttpOnly 쿠키 사용",
+      "item6": "인라인 이벤트 핸들러 사용 금지 (onclick, onerror 등)",
+      "item7": "XSS 취약점 패치를 위해 종속성 최신 상태 유지",
+      "item8": "기본적으로 이스케이프하는 React/프레임워크 사용"
+    },
+    "otherHeaders": {
+      "title": "기타 보안 헤더"
+    }
+  },
+  "react2shell": {
+    "badge": "치명적인 취약점",
+    "title": "React2Shell (CVE-2025-55182)",
+    "description": "React Server Components의 CVSS 10.0 RCE 취약점",
+    "whatIs": {
+      "title": "React2Shell이란?",
+      "infoTitle": "인증되지 않은 원격 코드 실행",
+      "infoDescription": "React2Shell은 React Server Components (RSC) 아키텍처의 치명적인 취약점입니다. 서버와 클라이언트 간 통신에 사용되는 'Flight' 프로토콜의 안전하지 않은 역직렬화 결함을 악용합니다.",
+      "listCVSS": "CVSS 점수: 10.0 (치명적)",
+      "listMechanism": "메커니즘: 악성 페이로드가 역직렬화 중 프로토타입 오염 또는 코드 실행을 유발",
+      "listImpact": "영향: 인증 없이 서버 완전 장악",
+      "listAffected": "영향받는 버전: Next.js < 15.0.5, React < 19.0.1 (실험적/카나리 채널)"
+    },
+    "simulator": {
+      "title": "익스플로잇 시뮬레이터",
+      "demoLabel": "서버 액션 RCE 플레이그라운드",
+      "versionLabel": "React 버전",
+      "payloadLabel": "페이로드 타입",
+      "normalData": "정상 데이터",
+      "exploitPayload": "익스플로잇 페이로드",
+      "sendButton": "요청 보내기",
+      "attackerTerminal": "공격자 터미널",
+      "flightProtocol": "RSC Flight 프로토콜",
+      "targetServer": "대상 서버",
+      "waitingRequests": "요청 대기 중...",
+      "patched": "패치됨 (v19.1.2)",
+      "vulnerable": "취약함 (v19.0.0)"
+    },
+    "vulnerable": {
+      "title": "취약한 코드 패턴"
+    },
+    "mitigation": {
+      "title": "완화 체크리스트",
+      "item1": "React를 v19.0.1, 19.1.2 또는 최신 버전으로 업그레이드",
+      "item2": "Next.js를 v15.0.5+ 또는 v14.2.x 패치로 업그레이드",
+      "item3": "악성 페이로드 필터링을 위해 WAF 사용 (임시)",
+      "item4": "잠재적으로 노출된 비밀/키 교체",
+      "item5": "비정상적인 역직렬화 오류에 대한 서버 로그 모니터링"
+    }
+  },
+  "privacy": {
+    "badge": "모범 사례",
+    "title": "프라이버시 & 보안 UX",
+    "description": "사용자 프라이버시와 보안을 위한 프론트엔드 고려사항",
+    "dataMinimization": {
+      "title": "데이터 최소화",
+      "infoTitle": "필요한 것만 저장",
+      "infoDescription": "데이터 최소화 원칙을 따르세요: 절대적으로 필요한 데이터만 수집, 저장, 처리하세요. 이는 위험을 줄이고 GDPR/CCPA 준수에 도움이 됩니다.",
+      "list1": "토큰은 localStorage가 아닌 HttpOnly 쿠키에 저장",
+      "list2": "클라이언트 측 상태에 중요한 데이터 저장 금지",
+      "list3": "사용 후 메모리에서 중요한 데이터 지우기",
+      "list4": "중요한 표시를 마스킹하거나 자르기 (예: •••• 4242)"
+    },
+    "cookieConsent": {
+      "title": "쿠키 동의 UX",
+      "demoLabel": "동의 배너 시뮬레이터",
+      "bannerTitle": "귀하의 프라이버시를 중요하게 생각합니다",
+      "bannerDescription": "당사는 귀하의 브라우징 경험을 향상시키고, 맞춤형 광고나 콘텐츠를 제공하며, 트래픽을 분석하기 위해 쿠키를 사용합니다.",
+      "essential": "필수",
+      "analytics": "분석",
+      "marketing": "마케팅",
+      "acceptAll": "모두 수락",
+      "rejectNonEssential": "비필수 거부",
+      "proTip": "팁: '다크 패턴'을 사용하지 마세요. '모두 거부' 버튼은 '모두 수락'만큼 눈에 띄고 클릭하기 쉬워야 합니다."
+    },
+    "password": {
+      "title": "비밀번호 필드 모범 사례",
+      "demoLabel": "비밀번호 강도 표시기",
+      "inputLabel": "비밀번호 입력:",
+      "inputPlaceholder": "비밀번호 입력",
+      "strength": "강도:",
+      "veryWeak": "매우 약함",
+      "weak": "약함",
+      "fair": "보통",
+      "good": "좋음",
+      "strong": "강함"
+    },
+    "logout": {
+      "title": "안전한 로그아웃 구현"
+    },
+    "sessionTimeout": {
+      "title": "세션 타임아웃 UX",
+      "infoTitle": "사용자 친화적인 세션 관리",
+      "infoDescription": "데이터 손실을 방지하고 사용자 경험을 개선하기 위해 세션 타임아웃 경고를 구현하세요. 세션이 만료되기 전에 사용자에게 경고하세요."
+    },
+    "twoFactor": {
+      "title": "2단계 인증 UX",
+      "demoLabel": "2FA 코드 입력 패턴",
+      "autoFocusNote": "더 나은 UX를 위해 입력 시 다음 입력으로 자동 포커스"
+    },
+    "compliance": {
+      "title": "프라이버시 준수 체크리스트",
+      "item1": "필수가 아닌 쿠키를 설정하기 전에 쿠키 동의 배너 표시",
+      "item2": "바닥글에 명확한 개인정보 보호정책 링크 제공",
+      "item3": "사용자가 데이터를 다운로드할 수 있도록 허용 (데이터 이동성)",
+      "item4": "계정 삭제 기능 구현",
+      "item5": "보안 관련 이벤트 로깅 (로그인, 비밀번호 변경)",
+      "item6": "로그 및 오류 메시지에서 중요한 데이터 마스킹",
+      "item7": "모든 곳에서 HTTPS 사용",
+      "item8": "인증 엔드포인트에 대한 속도 제한 구현",
+      "categoryGDPR": "GDPR/CCPA",
+      "categoryLegal": "법적",
+      "categorySecurity": "보안"
+    }
+  },
+  "common": {
+    "backToDashboard": "← 대시보드로 돌아가기"
+  }
+}

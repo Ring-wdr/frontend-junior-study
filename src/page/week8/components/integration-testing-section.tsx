@@ -1,57 +1,52 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const IntegrationTestingSection = () => {
+  const { t } = useTranslation('week8');
+
   return (
     <SectionCard
-      badge={{ label: 'MSW + RTL', color: 'orange' }}
-      title="Integration Testing with MSW"
-      description="Testing component interactions with mocked API responses."
+      badge={{ label: t('integrationTesting.badge'), color: 'orange' }}
+      title={t('integrationTesting.title')}
+      description={t('integrationTesting.description')}
     >
       <div className="space-y-8">
-        <SubSection title="What is MSW?" icon iconColor="orange">
+        <SubSection title={t('integrationTesting.whatIsMSW.title')} icon iconColor="orange">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              <strong>Mock Service Worker (MSW)</strong> is a library that
-              intercepts HTTP requests at the browser level and returns mock
-              responses. It's perfect for testing how your components handle API
-              calls without depending on a real backend.
+              {t('integrationTesting.whatIsMSW.description')}
             </p>
 
-            <InfoBox variant="orange" title="Why MSW for Integration Tests?">
+            <InfoBox variant="orange" title={t('integrationTesting.whatIsMSW.whyMSW.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>No backend dependency:</strong> Test frontend logic
-                  independently
+                  <strong>No backend dependency:</strong> {t('integrationTesting.whatIsMSW.whyMSW.noBackend')}
                 </li>
                 <li>
-                  <strong>Realistic scenarios:</strong> Simulate API errors,
-                  delays, and edge cases
+                  <strong>Realistic scenarios:</strong> {t('integrationTesting.whatIsMSW.whyMSW.realistic')}
                 </li>
                 <li>
-                  <strong>Deterministic tests:</strong> Same responses every
-                  time
+                  <strong>Deterministic tests:</strong> {t('integrationTesting.whatIsMSW.whyMSW.deterministic')}
                 </li>
                 <li>
-                  <strong>Fast execution:</strong> No network delays
+                  <strong>Fast execution:</strong> {t('integrationTesting.whatIsMSW.whyMSW.fast')}
                 </li>
               </ul>
             </InfoBox>
 
             <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
               <p className="text-sm text-gray-700">
-                <strong>Flow:</strong> Component → fetch() → MSW intercepts →
-                Mock response returned → Component updates UI
+                <strong>Flow:</strong> {t('integrationTesting.whatIsMSW.flow')}
               </p>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title="Setting Up MSW in Tests" icon iconColor="blue">
+        <SubSection title={t('integrationTesting.setup.title')} icon iconColor="blue">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Create a test setup file that initializes MSW handlers for your
-              tests.
+              {t('integrationTesting.setup.description')}
             </p>
 
             <CodeBlock
@@ -107,14 +102,13 @@ afterAll(() => server.close());`}
         </SubSection>
 
         <SubSection
-          title="Testing Loading & Success States"
+          title={t('integrationTesting.loadingSuccess.title')}
           icon
           iconColor="green"
         >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Write tests that verify your component handles loading, success,
-              and error states correctly.
+              {t('integrationTesting.loadingSuccess.description')}
             </p>
 
             <CodeBlock
@@ -139,10 +133,10 @@ test('displays loading state then todos', async () => {
           </div>
         </SubSection>
 
-        <SubSection title="Testing Error Scenarios" icon iconColor="red">
+        <SubSection title={t('integrationTesting.errorScenarios.title')} icon iconColor="red">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Override MSW handlers in specific tests to simulate API errors.
+              {t('integrationTesting.errorScenarios.description')}
             </p>
 
             <CodeBlock
@@ -172,14 +166,13 @@ test('displays error message when API fails', async () => {
         </SubSection>
 
         <SubSection
-          title="Testing User Interactions with API"
+          title={t('integrationTesting.userInteractions.title')}
           icon
           iconColor="blue"
         >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Test the full flow: user action → API call → state update → UI
-              change.
+              {t('integrationTesting.userInteractions.description')}
             </p>
 
             <CodeBlock
@@ -207,10 +200,10 @@ test('displays error message when API fails', async () => {
           </div>
         </SubSection>
 
-        <SubSection title="Mocking Request Delays" icon iconColor="purple">
+        <SubSection title={t('integrationTesting.delays.title')} icon iconColor="purple">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Simulate network delays to test loading states and timeouts.
+              {t('integrationTesting.delays.description')}
             </p>
 
             <CodeBlock
@@ -244,31 +237,27 @@ test('shows loading spinner during slow requests', async () => {
         </SubSection>
 
         <SubSection
-          title="Best Practices for Integration Tests"
+          title={t('integrationTesting.bestPractices.title')}
           icon
           iconColor="blue"
         >
           <div className="space-y-4">
-            <InfoBox variant="blue" title="Integration Testing Guidelines">
+            <InfoBox variant="blue" title={t('integrationTesting.bestPractices.guidelines.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Test the happy path:</strong> Main user flow should
-                  work
+                  <strong>Test the happy path:</strong> {t('integrationTesting.bestPractices.guidelines.happyPath')}
                 </li>
                 <li>
-                  <strong>Test error cases:</strong> API errors, network issues,
-                  timeouts
+                  <strong>Test error cases:</strong> {t('integrationTesting.bestPractices.guidelines.errorCases')}
                 </li>
                 <li>
-                  <strong>Test edge cases:</strong> Empty states, large
-                  responses, slow networks
+                  <strong>Test edge cases:</strong> {t('integrationTesting.bestPractices.guidelines.edgeCases')}
                 </li>
                 <li>
-                  <strong>Use MSW:</strong> Mock APIs, not fetch directly
+                  <strong>Use MSW:</strong> {t('integrationTesting.bestPractices.guidelines.useMSW')}
                 </li>
                 <li>
-                  <strong>Don't mock components:</strong> Test real component
-                  integration
+                  <strong>Don't mock components:</strong> {t('integrationTesting.bestPractices.guidelines.dontMockComponents')}
                 </li>
               </ul>
             </InfoBox>

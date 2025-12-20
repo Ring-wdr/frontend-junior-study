@@ -1,55 +1,53 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard } from '../../../components';
 
 export const OopSolidSection = () => {
+  const { t } = useTranslation('week2');
   return (
     <SectionCard
-      badge={{ label: 'Object-Oriented Programming', color: 'blue' }}
-      title="OOP & SOLID Principles"
-      description="Core concepts of Object-Oriented Programming and design principles."
+      badge={{ label: t('oop.badge'), color: 'blue' }}
+      title={t('oop.title')}
+      description={t('oop.description')}
     >
       <div className="space-y-6">
-        <InfoBox variant="gray" title="Core Concepts">
+        <InfoBox variant="gray" title={t('oop.coreConcepts.title')}>
           <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
             <li>
-              <strong>Encapsulation:</strong> Bundling data and methods that
-              work on that data within one unit.
+              <strong>{t('oop.coreConcepts.encapsulation.label')}</strong>{' '}
+              {t('oop.coreConcepts.encapsulation.description')}
             </li>
             <li>
-              <strong>Inheritance:</strong> Mechanism where a new class derives
-              properties and characteristics from an existing class.
+              <strong>{t('oop.coreConcepts.inheritance.label')}</strong>{' '}
+              {t('oop.coreConcepts.inheritance.description')}
             </li>
             <li>
-              <strong>Polymorphism:</strong> The ability of different classes to
-              respond to function calls with the same name in a way specific to
-              each class.
+              <strong>{t('oop.coreConcepts.polymorphism.label')}</strong>{' '}
+              {t('oop.coreConcepts.polymorphism.description')}
             </li>
           </ul>
         </InfoBox>
 
-        <InfoBox variant="gray" title="SOLID Principles">
+        <InfoBox variant="gray" title={t('oop.solidPrinciples.title')}>
           <ul className="space-y-2 text-sm text-gray-700">
             <li>
-              <strong className="text-blue-700">S</strong>ingle Responsibility
-              Principle: A class should have one and only one reason to change.
+              <strong className="text-blue-700">S</strong>
+              {t('oop.solidPrinciples.single')}
             </li>
             <li>
-              <strong className="text-blue-700">O</strong>pen-Closed Principle:
-              Objects or entities should be open for extension but closed for
-              modification.
+              <strong className="text-blue-700">O</strong>
+              {t('oop.solidPrinciples.open')}
             </li>
             <li>
-              <strong className="text-blue-700">L</strong>iskov Substitution
-              Principle: Objects of a superclass shall be replaceable with
-              objects of its subclasses.
+              <strong className="text-blue-700">L</strong>
+              {t('oop.solidPrinciples.liskov')}
             </li>
             <li>
-              <strong className="text-blue-700">I</strong>nterface Segregation
-              Principle: A client should never be forced to implement an
-              interface that it doesn't use.
+              <strong className="text-blue-700">I</strong>
+              {t('oop.solidPrinciples.interface')}
             </li>
             <li>
-              <strong className="text-blue-700">D</strong>ependency Inversion
-              Principle: Depend on abstractions, not on concretions.
+              <strong className="text-blue-700">D</strong>
+              {t('oop.solidPrinciples.dependency')}
             </li>
           </ul>
         </InfoBox>

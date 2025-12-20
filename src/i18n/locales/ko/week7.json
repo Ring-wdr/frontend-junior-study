@@ -1,0 +1,455 @@
+{
+  "header": {
+    "title": "Forms & Validation",
+    "description": "전문적인 폼 관리 마스터하기: React Hook Form, Zod, 비동기 검증, 보안, UX 모범 사례."
+  },
+  "tabs": {
+    "all": "전체",
+    "essence": "본질",
+    "rhf": "React Hook Form",
+    "validation": "검증",
+    "async": "비동기",
+    "input": "입력 처리",
+    "security": "보안",
+    "ux": "UX 디자인"
+  },
+  "formEssence": {
+    "badge": "기본 개념",
+    "title": "폼 관리의 본질",
+    "description": "React에서 폼 처리의 핵심 원칙 이해하기",
+    "whatIsForm": {
+      "title": "폼이란 무엇인가?",
+      "definition": {
+        "title": "폼 정의",
+        "intro": "폼은 다음을 결합한 복잡한 시스템입니다:",
+        "ui": "UI: 입력 요소, 레이블, 버튼",
+        "state": "상태: 현재 입력 값",
+        "validation": "검증: 규칙 및 오류 확인",
+        "errorHandling": "오류 처리: 검증 오류 표시",
+        "submission": "제출: 처리 및 API 통합"
+      }
+    },
+    "controlledVsUncontrolled": {
+      "title": "제어 컴포넌트 vs 비제어 컴포넌트",
+      "controlled": {
+        "title": "제어 컴포넌트"
+      },
+      "uncontrolled": {
+        "title": "비제어 컴포넌트"
+      },
+      "bestPractice": {
+        "title": "모범 사례",
+        "description": "React Hook Form과 같은 최신 라이브러리는 하이브리드 접근 방식을 사용합니다: 예측 가능성을 유지하면서 더 나은 성능을 위해 최소한의 제어 컴포넌트를 사용합니다."
+      }
+    },
+    "whyFormsAreComplex": {
+      "title": "왜 폼이 복잡한가",
+      "performance": "성능: 완전히 제어되는 컴포넌트에서 너무 많은 리렌더링",
+      "stateManagement": "상태 관리: 여러 입력 상태 추적이 번거로움",
+      "validation": "검증: 실시간 + 제출 시 + 비동기 검증 조정",
+      "errorMessages": "오류 메시지: 적절하게 오류 표시 및 지우기",
+      "edgeCases": "엣지 케이스: 이모지 처리, 유니코드 정규화, XSS 방지"
+    },
+    "commonRequirements": {
+      "title": "일반적인 폼 요구사항"
+    }
+  },
+  "reactHookForm": {
+    "badge": "현대적 표준",
+    "title": "React Hook Form",
+    "description": "비제어 기반, 고성능 폼 상태 관리",
+    "whyRHF": {
+      "title": "왜 React Hook Form인가?",
+      "keyAdvantages": {
+        "title": "주요 장점",
+        "uncontrolled": "비제어 기반: 최소한의 리렌더링 (변경 시에만)",
+        "smallBundle": "작은 번들: ~9KB 압축",
+        "typeSafe": "타입 안전: 뛰어난 TypeScript 지원",
+        "registerAPI": "등록 API: 간단한 입력 필드 등록",
+        "formState": "formState 객체: isDirty, isTouched, errors 등 추적",
+        "watchSetValue": "Watch, setValue: 프로그래밍 방식 값 액세스",
+        "controller": "Controller: 커스텀/서드파티 입력과 작동"
+      }
+    },
+    "basicSetup": {
+      "title": "기본 설정"
+    },
+    "coreMethods": {
+      "title": "핵심 메서드",
+      "register": {
+        "title": "register(name, options)",
+        "description": "검증 규칙과 함께 입력 필드를 등록합니다. 입력 요소에 전개할 객체를 반환합니다."
+      },
+      "handleSubmit": {
+        "title": "handleSubmit(callback)",
+        "description": "제출 시 폼을 검증하고 검증된 데이터로 콜백을 호출합니다."
+      },
+      "watch": {
+        "title": "watch(fieldName?)",
+        "description": "필드 값을 감시하고 변경 시 리렌더링을 트리거합니다. 조건부 로직에 유용합니다."
+      },
+      "setValue": {
+        "title": "setValue(name, value)",
+        "description": "재등록 없이 프로그래밍 방식으로 필드 값을 설정합니다."
+      },
+      "reset": {
+        "title": "reset(defaultValues?)",
+        "description": "폼을 초기 상태 또는 제공된 기본값으로 재설정합니다."
+      },
+      "controller": {
+        "title": "Controller",
+        "description": "커스텀/서드파티 입력 컴포넌트를 래핑하여 React Hook Form과 통합합니다."
+      }
+    },
+    "controllerForCustom": {
+      "title": "커스텀 입력을 위한 Controller"
+    },
+    "formStateObject": {
+      "title": "formState 객체",
+      "importantProps": {
+        "title": "중요한 formState 속성",
+        "isDirty": "isDirty: 사용자가 필드를 수정했나요?",
+        "isTouched": "isTouched: 사용자가 이 필드와 상호작용했나요?",
+        "errors": "errors: 필드 검증 오류를 포함하는 객체",
+        "isSubmitting": "isSubmitting: 폼이 현재 제출 중인가요?",
+        "isValidating": "isValidating: 비동기 검증이 실행 중인가요?",
+        "isValid": "isValid: 규칙에 따라 폼이 유효한가요?",
+        "dirtyFields": "dirtyFields: 어떤 필드가 수정되었나요?",
+        "touchedFields": "touchedFields: 어떤 필드와 상호작용했나요?"
+      }
+    },
+    "formStateTracking": {
+      "title": "폼 상태 추적 예제"
+    }
+  },
+  "validationLibraries": {
+    "badge": "스키마 검증",
+    "title": "검증 라이브러리: Zod & Formik",
+    "description": "타입 안전 폼을 위한 스키마 기반 검증 접근 방식",
+    "zod": {
+      "title": "Zod — 현대적 TypeScript 검증",
+      "whyChoose": {
+        "title": "왜 Zod를 선택하나요?",
+        "tsNative": "TypeScript 네이티브: 스키마 = 타입 정의",
+        "treeShakeable": "트리 쉐이킹 가능: Yup보다 작은 번들",
+        "rhfIntegration": "RHF 통합: zodResolver와의 매끄러운 통합",
+        "chainableAPI": "체이너블 API: 우아한 스키마 구성",
+        "customValidators": "커스텀 검증기: 확장하기 쉬움"
+      },
+      "basicSchema": "기본 Zod 스키마:",
+      "rhfIntegration": "RHF + Zod 통합:",
+      "advancedFeatures": {
+        "title": "고급 Zod 기능",
+        "refinement": "Refinement: 커스텀 검증 로직",
+        "superrefine": "Superrefine: 오류 메시지에 대한 더 많은 제어",
+        "discriminatedUnions": "Discriminated Unions: 타입 안전 조건부 검증",
+        "transform": "Transform: 검증 중 값 수정"
+      }
+    },
+    "formik": {
+      "title": "Formik — 역사적 맥락",
+      "whatIsFormik": {
+        "title": "Formik이란?",
+        "description": "Formik은 2017년에 설립된 React의 첫 번째 주요 폼 라이브러리였습니다. React Hook Form이 존재하기 전에 구조화된 폼 상태 관리를 제공했습니다.",
+        "note": "참고: 레거시 프로젝트에서 여전히 사용되지만, 더 나은 성능과 간단한 API로 인해 RHF가 현재 커뮤니티 표준입니다."
+      },
+      "comparison": "Formik vs RHF 비교:",
+      "pros": {
+        "title": "Formik 장점",
+        "description": "React 생태계 베테랑에게 친숙하고, 광범위한 문서"
+      },
+      "cons": {
+        "title": "Formik 단점",
+        "description": "더 많은 리렌더링 (제어), 장황한 코드, 더 큰 번들"
+      }
+    },
+    "customValidation": {
+      "title": "커스텀 검증 규칙"
+    },
+    "whenToUse": {
+      "title": "언제 무엇을 사용할까",
+      "useZodRHF": {
+        "title": "Zod + RHF 사용",
+        "newProjects": "TypeScript를 사용하는 새 프로젝트",
+        "typeSafe": "타입 안전 검증 필요",
+        "performance": "성능이 중요함",
+        "cleanCode": "깔끔하고 최소한의 코드 원함"
+      },
+      "useFormik": {
+        "title": "Formik 사용",
+        "legacy": "레거시 프로젝트 유지 관리",
+        "teamFamiliar": "팀이 이미 Formik에 익숙함",
+        "plugins": "특정 Formik 플러그인 필요",
+        "largeCodebase": "마이그레이션할 큰 기존 코드베이스"
+      }
+    }
+  },
+  "asyncValidation": {
+    "badge": "서버 통합",
+    "title": "비동기 검증",
+    "description": "중복 이메일, 사용자명 가용성과 같은 서버 측 검증 확인",
+    "problem": {
+      "title": "실시간 검증의 문제",
+      "commonIssues": {
+        "title": "일반적인 문제",
+        "tooManyCalls": "너무 많은 API 호출: 매 키 입력마다 API를 호출하면 대역폭 낭비",
+        "uxNoise": "UX 노이즈: 모든 문자마다 검증 오류가 깜박임",
+        "raceConditions": "경쟁 상태: 순서가 맞지 않는 API 응답으로 인한 잘못된 상태",
+        "performance": "성능: 너무 많은 요청이 서버와 클라이언트를 느리게 함"
+      }
+    },
+    "debounceStrategy": {
+      "title": "디바운스 전략",
+      "whatIsDebouncing": {
+        "title": "디바운싱이란?",
+        "description": "디바운싱은 API 호출을 하기 전에 사용자가 타이핑을 멈추기를 기다립니다 (일반적으로 300-500ms). 이는 좋은 UX를 유지하면서 요청을 극적으로 줄입니다."
+      },
+      "implementation": "디바운스 구현:"
+    },
+    "rhfAsyncValidation": {
+      "title": "RHF 비동기 검증",
+      "description": "React Hook Form은 검증 옵션 또는 비동기 검증기 함수를 통해 비동기 검증을 지원합니다."
+    },
+    "timingStrategies": {
+      "title": "타이밍 전략",
+      "onChange": {
+        "title": "변경 시 디바운스 (onChange)",
+        "bestFor": "최적 사용처: 가용성 확인, 실시간 제안",
+        "ux": "UX: 즉각적인 피드백, 비용이 많이 들 수 있음"
+      },
+      "onBlur": {
+        "title": "블러 시 검증 (onBlur)",
+        "bestFor": "최적 사용처: 이메일/사용자명 중복 확인",
+        "ux": "UX: 더 깔끔하고, 사용자가 필드를 떠날 때 검증"
+      },
+      "onSubmit": {
+        "title": "제출 시 검증",
+        "bestFor": "최적 사용처: 최종 서버 측 검증",
+        "ux": "UX: 가장 깔끔하지만, 지연된 피드백"
+      },
+      "bestPractice": {
+        "title": "모범 사례",
+        "description": "전략을 결합하세요: 제출 시 동기 검증 + 블러 시 비동기 검증 (디바운스)으로 최적의 UX를 제공합니다. 이는 사용자를 괴롭히지 않으면서 오류를 조기에 포착합니다."
+      }
+    },
+    "raceConditions": {
+      "title": "경쟁 상태 처리",
+      "problem": {
+        "title": "문제",
+        "description": "사용자가 \"john@example.com\"을 입력한 다음 삭제하고 \"jane@example.com\"을 입력하면, 첫 번째 요청이 두 번째 요청 이후에 해결되어 잘못된 검증 상태가 발생할 수 있습니다."
+      }
+    }
+  },
+  "inputHandling": {
+    "badge": "입력 처리",
+    "title": "입력 처리: 이모지, 유니코드 및 공백",
+    "description": "사용자 입력을 올바르게 처리하는 실제 과제",
+    "emojiProblem": {
+      "title": "이모지 문제",
+      "whyTricky": {
+        "title": "왜 이모지가 까다로운가",
+        "multipleChars": "대부분의 이모지는 UTF-16에서 여러 문자로 표현됩니다",
+        "lengthIssue": "'👨‍👩‍👧‍👦'.length === 25이지만 시각적으로는 한 문자입니다",
+        "composed": "일부 이모지는 여러 코드포인트로 구성됩니다 (피부색 수정자)",
+        "lengthValidation": "길이 검증 중단: \"😊🎉✨\"는 짧아 보이지만 제한을 초과할 수 있습니다",
+        "substringOps": "부분 문자열 작업이 이모지를 잘못 분할할 수 있습니다"
+      },
+      "correctCounting": "올바른 이모지 길이 계산:",
+      "practicalExample": {
+        "title": "실용적인 예제"
+      }
+    },
+    "unicodeNormalization": {
+      "title": "유니코드 정규화",
+      "whatIsNormalization": {
+        "title": "정규화란?",
+        "intro": "일부 문자는 여러 방식으로 표현될 수 있습니다:",
+        "singleCodepoint": "é = 단일 코드포인트 (U+00E9)",
+        "composed": "é = e (U+0065) + 결합 악센트 (U+0301)",
+        "lookIdentical": "둘 다 동일하게 보이지만 다른 문자열입니다!",
+        "causesFails": "비교 및 검색 실패 원인"
+      },
+      "normalizationForms": "정규화 형식:",
+      "whenToNormalize": {
+        "title": "언제 정규화할까",
+        "beforeStoring": "항상: 데이터베이스에 저장하기 전",
+        "beforeComparing": "항상: 사용자명, 이메일 비교 전",
+        "beforeSearching": "항상: 검색/필터링 전",
+        "onDisplay": "선택사항: 표시 시 (브라우저가 자동으로 정규화)"
+      }
+    },
+    "whitespaceTrimming": {
+      "title": "공백 및 트리밍",
+      "whitespaceTypes": {
+        "title": "공백 유형",
+        "regularSpace": "일반 공백: U+0020",
+        "nonBreakingSpace": "줄 바꿈 없는 공백: U+00A0 (복사-붙여넣기에서)",
+        "tab": "탭: U+0009",
+        "zeroWidth": "너비 0 공백: U+200B (보이지 않음!)",
+        "lineBreak": "줄 바꿈: U+000A, U+000D"
+      },
+      "trimmingStrategies": "트리밍 전략:"
+    },
+    "botPrevention": {
+      "title": "봇 방지",
+      "honeypot": {
+        "title": "허니팟 패턴",
+        "description": "\"허니팟\"은 실제 사용자는 절대 채우지 않지만 봇은 종종 채우는 숨겨진 폼 필드입니다. 자동 제출을 감지하는 데 사용하세요."
+      }
+    },
+    "completeSanitization": {
+      "title": "완전한 입력 정제 패턴"
+    }
+  },
+  "security": {
+    "badge": "보안",
+    "title": "정제 및 보안",
+    "description": "XSS, 인젝션 공격 및 안전한 폼 관행으로부터 보호",
+    "frontendResponsibility": {
+      "title": "프론트엔드 보안 책임",
+      "criticalPoint": {
+        "title": "중요한 점: 서버 검증이 필수",
+        "intro": "프론트엔드 보안만으로는 충분하지 않습니다. 항상 서버에서 검증하고 정제하세요. 프론트엔드 보안은 UX만 개선하고 보호는 하지 않습니다.",
+        "bypassFrontend": "사용자는 프론트엔드 검증을 우회할 수 있습니다 (JavaScript 비활성화)",
+        "directRequests": "공격자는 API에 직접 요청을 보낼 수 있습니다",
+        "gaps": "프론트엔드 정제에 빈틈이나 버그가 있을 수 있습니다",
+        "serverFinalDefense": "서버는 최종 방어선입니다"
+      },
+      "securityLayers": {
+        "title": "보안 계층:",
+        "layer1": "1️⃣ 프론트엔드 검증 (UX, 초기 오류 감지)",
+        "layer2": "2️⃣ 프론트엔드 정제 (표시에서 XSS 방지)",
+        "layer3": "3️⃣ 서버 검증 (필수 - 데이터 무결성)",
+        "layer4": "4️⃣ 서버 정제 (필수 - 인젝션 방지)",
+        "layer5": "5️⃣ 데이터베이스 계층 (준비된 문, 매개변수화된 쿼리)"
+      }
+    },
+    "xssPrevention": {
+      "title": "XSS 방지",
+      "whatIsXSS": {
+        "title": "XSS (크로스 사이트 스크립팅)란?",
+        "description": "공격자가 사이트에 악성 스크립트를 주입하여 다른 사용자의 브라우저에서 실행되어 데이터를 훔치거나 대신 작업을 수행합니다."
+      },
+      "commonVectors": "일반적인 XSS 공격 벡터:",
+      "preventionRules": {
+        "title": "XSS 방지 규칙",
+        "default": "기본: dangerouslySetInnerHTML을 절대 사용하지 마세요",
+        "reactEscapes": "React 이스케이프: 항상 텍스트를 정상적으로 렌더링하세요: <div>{text}</div>",
+        "richContent": "리치 콘텐츠: innerHTML에는 DOMPurify만 사용",
+        "urls": "URL: href 속성 검증 및 정제",
+        "eventHandlers": "이벤트 핸들러: onClick 등에 사용자 입력을 절대 바인딩하지 마세요"
+      }
+    },
+    "domPurifyIntegration": {
+      "title": "DOMPurify 통합"
+    },
+    "sqlInjectionPrevention": {
+      "title": "SQL 인젝션 방지",
+      "frontendRole": {
+        "title": "SQL 인젝션에서 프론트엔드의 역할",
+        "critical": "중요: SQL 인젝션은 주로 백엔드 문제입니다. 프론트엔드는 입력 검증 및 초기 필터링으로만 도움을 줄 수 있습니다.",
+        "frontend": "프론트엔드: 의심스러운 패턴 필터링 (사용자에게 경고)",
+        "backend": "백엔드: 항상 준비된 문/매개변수화된 쿼리 사용",
+        "neverConcat": "백엔드: 절대 SQL 문자열에 사용자 입력을 연결하지 마세요"
+      },
+      "frontendValidation": "프론트엔드 검증:"
+    },
+    "csrfProtection": {
+      "title": "CSRF 보호",
+      "whatIsCSRF": {
+        "title": "CSRF (크로스 사이트 요청 위조)란?",
+        "description": "공격자가 사용자를 속여 다른 사이트에 원치 않는 요청을 하도록 합니다. 예: 사용자가 bank.com에 로그인했고, 공격자의 페이지가 송금 요청을 합니다."
+      },
+      "protectionPattern": "CSRF 보호 패턴:"
+    },
+    "securityChecklist": {
+      "title": "보안 체크리스트",
+      "serverValidates": "서버가 모든 폼 입력을 검증합니다 (백엔드가 최종)",
+      "noDangerouslySet": "사용자 데이터와 함께 dangerouslySetInnerHTML을 절대 사용하지 마세요",
+      "useDOMPurify": "리치 콘텐츠 표시에 DOMPurify로 정제",
+      "parameterizedSQL": "매개변수화된 SQL 쿼리 사용 (문자열 연결 안 함)",
+      "implementCSRF": "상태 변경 요청에 CSRF 토큰 구현",
+      "useHTTPS": "모든 폼 제출에 HTTPS 사용",
+      "autocompleteOff": "민감한 폼 필드에 autocomplete=\"off\" 표시",
+      "hashPasswords": "bcrypt 또는 유사한 것으로 비밀번호 해싱 (서버 측)",
+      "cspHeaders": "Content-Security-Policy 헤더 설정"
+    }
+  },
+  "uxDesign": {
+    "badge": "사용자 경험",
+    "title": "UX 중심 폼 디자인",
+    "description": "사용자를 기쁘게 하고 마찰을 줄이는 폼 만들기",
+    "errorMessageDesign": {
+      "title": "오류 메시지 디자인",
+      "commonMistakes": {
+        "title": "일반적인 실수",
+        "generic": "일반적인 오류: \"잘못된 입력\" (도움이 안 됨)",
+        "tooTechnical": "너무 기술적: \"필드 정규식 검증 실패\"",
+        "blaming": "사용자 비난: \"잘못된 데이터를 입력했습니다\"",
+        "tooEarly": "너무 일찍 나타남: 사용자가 타이핑하는 동안 오류 표시",
+        "poorVisibility": "낮은 가시성: 오류 텍스트가 일반 텍스트와 같은 색상"
+      },
+      "bestPractices": "오류 메시지 모범 사례:"
+    },
+    "validationTiming": {
+      "title": "검증 타이밍",
+      "onChange": {
+        "title": "onChange (실시간)",
+        "bestFor": "최적 사용처: 비밀번호 강도, 문자 수",
+        "downside": "단점: 성가실 수 있음, 특히 느린 디바운스에서"
+      },
+      "onBlur": {
+        "title": "onBlur (권장)",
+        "bestFor": "최적 사용처: 이메일 검증, 사용자명 가용성",
+        "advantage": "장점: 사용자가 필드를 떠날 때 검증, 깔끔한 UX"
+      },
+      "onSubmit": {
+        "title": "onSubmit",
+        "bestFor": "최적 사용처: 교차 필드 검증, 최종 확인",
+        "advantage": "장점: 조기 오류 없음, 사용자 시작 작업"
+      },
+      "recommendedStrategy": {
+        "title": "권장 전략",
+        "description": "onBlur + onSubmit: 사용자가 필드를 떠날 때 검증 (대부분의 오류 포착), 그런 다음 제출 시 검증 (나머지 문제 포착). 이것이 최고의 UX 균형입니다."
+      }
+    },
+    "formResetFocus": {
+      "title": "폼 재설정 및 포커스 관리"
+    },
+    "optimisticUI": {
+      "title": "낙관적 UI 업데이트",
+      "whatIsOptimistic": {
+        "title": "낙관적 UI란?",
+        "description": "서버가 확인하기 전에 즉시 결과를 표시한 다음 실패하면 되돌립니다. 실제 즉각적인 확인 없이 빠르고 반응적인 느낌을 만듭니다."
+      },
+      "useOptimisticExample": "useOptimistic 예제 (React 19):"
+    },
+    "a11yBestPractices": {
+      "title": "접근성 모범 사례",
+      "requirements": {
+        "title": "접근 가능한 폼 요구사항",
+        "labels": "레이블: 항상 htmlFor를 사용하여 레이블을 입력과 연결",
+        "aria": "ARIA: 오류에 대한 aria-label, aria-describedby",
+        "keyboard": "키보드: 탭 순서, Enter로 제출, Escape로 취소",
+        "screenReaders": "화면 판독기: 오류 및 필수 필드 발표",
+        "color": "색상: 오류를 표시하는 데 색상만 의존하지 마세요"
+      }
+    },
+    "mobileTouchOptimization": {
+      "title": "모바일 및 터치 최적화"
+    },
+    "uxChecklist": {
+      "title": "UX 체크리스트",
+      "specificErrors": "오류 메시지가 구체적이고 도움이 됩니다",
+      "validateOnBlur": "폼이 블러 시 검증 (변경 시 공격적이지 않음)",
+      "loadingState": "제출 버튼이 로딩 상태를 표시합니다",
+      "resetsAfterSubmit": "성공적인 제출 후 폼이 재설정됩니다",
+      "focusManaged": "포커스가 관리됩니다 (로드 시 첫 번째 필드, 제출 후 버튼)",
+      "clearFeedback": "성공/오류 피드백이 명확합니다 (토스트, 모달 또는 텍스트)",
+      "properLabels": "레이블이 입력과 올바르게 연결됩니다",
+      "accessible": "폼이 키보드 및 화면 판독기에 접근 가능합니다",
+      "touchTargets": "터치 타겟이 최소 44x44px입니다",
+      "worksEverywhere": "폼이 모바일 및 데스크톱에서 작동합니다"
+    }
+  }
+}

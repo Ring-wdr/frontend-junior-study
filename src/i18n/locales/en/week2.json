@@ -1,0 +1,153 @@
+{
+  "header": {
+    "title": "Programming Paradigms",
+    "description": "Explore Object-Oriented Design Patterns and the shift towards Functional Programming."
+  },
+  "tabs": {
+    "all": "All",
+    "oop": "OOP & SOLID",
+    "creation": "Creation",
+    "structural": "Structural",
+    "behavioral": "Behavioral",
+    "fp": "Functional"
+  },
+  "oop": {
+    "badge": "Object-Oriented Programming",
+    "title": "OOP & SOLID Principles",
+    "description": "Core concepts of Object-Oriented Programming and design principles.",
+    "coreConcepts": {
+      "title": "Core Concepts",
+      "encapsulation": {
+        "label": "Encapsulation:",
+        "description": "Bundling data and methods that work on that data within one unit."
+      },
+      "inheritance": {
+        "label": "Inheritance:",
+        "description": "Mechanism where a new class derives properties and characteristics from an existing class."
+      },
+      "polymorphism": {
+        "label": "Polymorphism:",
+        "description": "The ability of different classes to respond to function calls with the same name in a way specific to each class."
+      }
+    },
+    "solidPrinciples": {
+      "title": "SOLID Principles",
+      "single": "ingle Responsibility Principle: A class should have one and only one reason to change.",
+      "open": "pen-Closed Principle: Objects or entities should be open for extension but closed for modification.",
+      "liskov": "iskov Substitution Principle: Objects of a superclass shall be replaceable with objects of its subclasses.",
+      "interface": "nterface Segregation Principle: A client should never be forced to implement an interface that it doesn't use.",
+      "dependency": "ependency Inversion Principle: Depend on abstractions, not on concretions."
+    }
+  },
+  "creation": {
+    "badge": "Design Patterns",
+    "title": "Creation Patterns",
+    "description": "Patterns focused on object creation mechanisms.",
+    "singleton": {
+      "title": "Singleton Pattern",
+      "description": "Ensures a class has only one instance and provides a global point of access to it."
+    },
+    "factory": {
+      "title": "Factory Pattern",
+      "method": {
+        "title": "Factory Method",
+        "description": "Defines an interface for creating an object, but let subclasses decide which class to instantiate."
+      },
+      "abstract": {
+        "title": "Abstract Factory",
+        "description": "Provides an interface for creating families of related or dependent objects."
+      }
+    },
+    "builder": {
+      "title": "Builder Pattern",
+      "description": "Separates the construction of a complex object from its representation, allowing you to create different representations with the same construction process."
+    }
+  },
+  "structural": {
+    "badge": "Design Patterns",
+    "title": "Structural Patterns",
+    "description": "Patterns concerned with how classes and objects are composed to form larger structures.",
+    "decorator": {
+      "title": "Decorator Pattern",
+      "description": "Attaches additional responsibilities to an object dynamically. Flexible alternative to subclassing.",
+      "concept": {
+        "title": "Concept",
+        "description": "Modern TypeScript & ES: @Decorators.\n\nWe annotate classes or methods with `@DecoratorName`. Under the hood, this \"wraps\" the original class/method with new logic (logging, validation, etc.)."
+      }
+    },
+    "adapter": {
+      "title": "Adapter Pattern",
+      "description": "Collaborate with incompatible interfaces (Plug Adapter)."
+    },
+    "proxy": {
+      "title": "Proxy Pattern",
+      "description": "A placeholder to control access (security, lazy loading)."
+    },
+    "facade": {
+      "title": "Facade Pattern",
+      "description": "Simplified interface for complex subsystems (Smart Home)."
+    },
+    "bridge": {
+      "title": "Bridge Pattern",
+      "description": "Connecting Abstractions (Remote) to Implementations (Device)."
+    }
+  },
+  "behavioral": {
+    "badge": "Design Patterns",
+    "title": "Behavioral Patterns",
+    "description": "Patterns concerned with algorithms and the assignment of responsibilities between objects.",
+    "observer": {
+      "title": "Observer Pattern",
+      "description": "Lets you define a subscription mechanism to notify multiple objects about any events that happen to the object they're observing.",
+      "note": "Common in JS: Event Listeners, RxJS, Redux (Flux)."
+    },
+    "strategy": {
+      "title": "Strategy Pattern",
+      "description": "Interchangeable algorithms (Payment Methods)."
+    },
+    "state": {
+      "title": "State",
+      "description": "Lets an object alter its behavior when its internal state changes. It appears as if the object changed its class."
+    },
+    "command": {
+      "title": "Command",
+      "description": "Turns a request into a stand-alone object that contains all information about the request."
+    },
+    "templateMethod": {
+      "title": "Template Method",
+      "description": "Defines the skeleton of an algorithm in the superclass but lets subclasses override specific steps."
+    }
+  },
+  "fp": {
+    "badge": "Functional Programming",
+    "title": "Introduction to FP",
+    "description": "Programming paradigm where programs are constructed by applying and composing functions.",
+    "immutability": {
+      "title": "Immutability",
+      "description": "Data is never modified; instead, a new copy with changes is created. This leads to predictable state changes (Redux style).",
+      "coreConcepts": {
+        "title": "Core Concepts",
+        "pureFunctions": {
+          "label": "Pure Functions:",
+          "description": "Given the same input, always return the same output and has no side effects."
+        },
+        "immutability": {
+          "label": "Immutability:",
+          "description": "Avoid shared mutable state."
+        },
+        "higherOrderFunctions": {
+          "label": "Higher-Order Functions:",
+          "description": "Functions that take others as args."
+        }
+      }
+    },
+    "currying": {
+      "title": "Currying",
+      "description": "Function taking multiple args to Sequence of functions."
+    },
+    "monads": {
+      "title": "Monads (Maybe)",
+      "description": "Safe chainable computations (Handling Nulls)."
+    }
+  }
+}

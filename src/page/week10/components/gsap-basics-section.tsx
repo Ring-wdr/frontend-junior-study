@@ -1,8 +1,10 @@
 import gsap from 'gsap';
 import { Play, RotateCcw } from 'lucide-react';
 import { useLayoutEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export function GsapBasicsSection() {
+  const { t } = useTranslation('week10');
   const boxToRef = useRef<HTMLDivElement>(null);
   const boxFromRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
@@ -65,14 +67,16 @@ export function GsapBasicsSection() {
     <div className="space-y-8">
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">GSAP 기본 문법</h2>
+          <h2 className="text-2xl font-bold text-gray-900">
+            {t('basics.title')}
+          </h2>
           <button
             type="button"
             onClick={reset}
             className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
           >
             <RotateCcw size={16} />
-            Reset All
+            {t('basics.resetAll')}
           </button>
         </div>
 
@@ -89,7 +93,9 @@ export function GsapBasicsSection() {
             </div>
             <div>
               <div className="flex justify-between items-center mb-2">
-                <h3 className="font-semibold text-gray-900">gsap.to()</h3>
+                <h3 className="font-semibold text-gray-900">
+                  {t('basics.to.title')}
+                </h3>
                 <button
                   type="button"
                   onClick={runTo}
@@ -99,7 +105,7 @@ export function GsapBasicsSection() {
                 </button>
               </div>
               <p className="text-sm text-gray-500 mb-3">
-                현재 상태에서 지정한 값으로 애니메이션
+                {t('basics.to.description')}
               </p>
               <pre className="bg-gray-900 text-gray-100 p-3 rounded-lg text-xs overflow-x-auto">
                 {`gsap.to(".box", { 
@@ -123,7 +129,9 @@ export function GsapBasicsSection() {
             </div>
             <div>
               <div className="flex justify-between items-center mb-2">
-                <h3 className="font-semibold text-gray-900">gsap.from()</h3>
+                <h3 className="font-semibold text-gray-900">
+                  {t('basics.from.title')}
+                </h3>
                 <button
                   type="button"
                   onClick={runFrom}
@@ -133,7 +141,7 @@ export function GsapBasicsSection() {
                 </button>
               </div>
               <p className="text-sm text-gray-500 mb-3">
-                지정한 상태에서 원래 상태로 애니메이션
+                {t('basics.from.description')}
               </p>
               <pre className="bg-gray-900 text-gray-100 p-3 rounded-lg text-xs overflow-x-auto">
                 {`gsap.from(".box", { 
@@ -163,7 +171,9 @@ export function GsapBasicsSection() {
             </div>
             <div>
               <div className="flex justify-between items-center mb-2">
-                <h3 className="font-semibold text-gray-900">gsap.timeline()</h3>
+                <h3 className="font-semibold text-gray-900">
+                  {t('basics.timeline.title')}
+                </h3>
                 <button
                   type="button"
                   onClick={runTimeline}
@@ -173,7 +183,7 @@ export function GsapBasicsSection() {
                 </button>
               </div>
               <p className="text-sm text-gray-500 mb-3">
-                여러 애니메이션을 순차적/병렬로 조합
+                {t('basics.timeline.description')}
               </p>
               <pre className="bg-gray-900 text-gray-100 p-3 rounded-lg text-xs overflow-x-auto">
                 {`const tl = gsap.timeline();

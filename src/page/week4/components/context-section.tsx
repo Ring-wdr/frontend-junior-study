@@ -1,52 +1,42 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { ContextVisualizer } from './context-visualizer';
 
 export const ContextSection = () => {
+  const { t } = useTranslation('week4');
+
   return (
     <SectionCard
-      badge={{ label: 'Built-in', color: 'blue' }}
-      title="Context API"
-      description="React's built-in solution for avoiding prop-drilling and managing global state."
+      badge={{ label: t('context.badge'), color: 'blue' }}
+      title={t('context.title')}
+      description={t('context.description')}
     >
       <div className="space-y-8">
-        <SubSection title="What is Context API?" icon iconColor="blue">
+        <SubSection title={t('context.what.title')} icon iconColor="blue">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Context provides a way to pass data through the component tree
-              without manually passing props down at every level. It's React's
-              built-in mechanism for <strong>prop drilling</strong> avoidance
-              and is perfect for <strong>low-frequency state updates</strong>.
+              {t('context.what.description')}
             </p>
 
             <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
               <ContextVisualizer />
             </div>
 
-            <InfoBox variant="blue" title="Key Components">
+            <InfoBox variant="blue" title={t('context.what.keyComponents.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
-                <li>
-                  <strong>React.createContext():</strong> Creates a context
-                  object
-                </li>
-                <li>
-                  <strong>Provider:</strong> Wraps components that need access
-                  to the context value
-                </li>
-                <li>
-                  <strong>useContext() hook:</strong> Consumes the context value
-                  in functional components
-                </li>
+                <li>{t('context.what.keyComponents.createContext')}</li>
+                <li>{t('context.what.keyComponents.provider')}</li>
+                <li>{t('context.what.keyComponents.useContext')}</li>
               </ul>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title="How to Use Context" icon iconColor="green">
+        <SubSection title={t('context.howToUse.title')} icon iconColor="green">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Context usage involves three main steps: creating the context,
-              providing values, and consuming them in components.
+              {t('context.howToUse.description')}
             </p>
 
             <CodeBlock
@@ -102,51 +92,44 @@ function Header() {
           </div>
         </SubSection>
 
-        <SubSection title="Best Use Cases" icon iconColor="green">
+        <SubSection title={t('context.bestUseCases.title')} icon iconColor="green">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Context API excels when your global state is{' '}
-              <strong>simple</strong>, <strong>infrequently updated</strong>,
-              and doesn't require complex synchronization logic.
+              {t('context.bestUseCases.description')}
             </p>
 
             <div className="grid grid-cols-1 gap-4">
-              <InfoBox variant="green" title="Good Use Cases">
+              <InfoBox variant="green" title={t('context.bestUseCases.good.title')}>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
-                  <li>Theme preferences (light/dark mode)</li>
-                  <li>Language/localization settings</li>
-                  <li>Authentication status and user info</li>
-                  <li>Modal/dialog state</li>
-                  <li>Feature flags (static configuration)</li>
+                  <li>{t('context.bestUseCases.good.theme')}</li>
+                  <li>{t('context.bestUseCases.good.language')}</li>
+                  <li>{t('context.bestUseCases.good.auth')}</li>
+                  <li>{t('context.bestUseCases.good.modal')}</li>
+                  <li>{t('context.bestUseCases.good.featureFlags')}</li>
                 </ul>
               </InfoBox>
 
-              <InfoBox variant="orange" title="Poor Use Cases">
+              <InfoBox variant="orange" title={t('context.bestUseCases.poor.title')}>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
-                  <li>
-                    Frequently changing data (form inputs, real-time updates)
-                  </li>
-                  <li>Complex state with many reducers</li>
-                  <li>State requiring async middleware</li>
-                  <li>App-wide caching needs</li>
+                  <li>{t('context.bestUseCases.poor.frequently')}</li>
+                  <li>{t('context.bestUseCases.poor.complex')}</li>
+                  <li>{t('context.bestUseCases.poor.async')}</li>
+                  <li>{t('context.bestUseCases.poor.caching')}</li>
                 </ul>
               </InfoBox>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title="Performance Considerations" icon iconColor="red">
+        <SubSection title={t('context.performance.title')} icon iconColor="red">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Context has <strong>important limitations</strong> that can lead
-              to performance issues if not handled carefully.
+              {t('context.performance.description')}
             </p>
 
-            <InfoBox variant="red" title="The Main Problem">
+            <InfoBox variant="red" title={t('context.performance.mainProblem.title')}>
               <p className="text-sm text-gray-700 mb-3">
-                When a Context value changes,{' '}
-                <strong>all consuming components re-render</strong>, regardless
-                of whether they use the changed part of the value.
+                {t('context.performance.mainProblem.description')}
               </p>
 
               <CodeBlock
@@ -162,24 +145,12 @@ const ThemeContext = createContext();
               />
             </InfoBox>
 
-            <InfoBox variant="purple" title="Optimization Strategies">
+            <InfoBox variant="purple" title={t('context.performance.optimization.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
-                <li>
-                  <strong>Split contexts:</strong> Separate your context into
-                  multiple contexts for different concerns
-                </li>
-                <li>
-                  <strong>Memoize values:</strong> Use useMemo to prevent
-                  unnecessary re-renders
-                </li>
-                <li>
-                  <strong>Use custom hooks:</strong> Create specific hooks that
-                  only select needed values
-                </li>
-                <li>
-                  <strong>Implement selectors:</strong> Use React.memo on child
-                  components
-                </li>
+                <li>{t('context.performance.optimization.split')}</li>
+                <li>{t('context.performance.optimization.memoize')}</li>
+                <li>{t('context.performance.optimization.customHooks')}</li>
+                <li>{t('context.performance.optimization.selectors')}</li>
               </ul>
             </InfoBox>
 
@@ -212,30 +183,30 @@ export function ThemeProvider({ children }) {
         </SubSection>
 
         <SubSection
-          title="Context vs Global State Libraries"
+          title={t('context.vsGlobalState.title')}
           icon
           iconColor="purple"
         >
           <div className="space-y-4">
-            <InfoBox variant="blue" title="Decision Framework">
+            <InfoBox variant="blue" title={t('context.vsGlobalState.decisionFramework.title')}>
               <p className="text-sm text-gray-700 mb-3">
-                <strong>Use Context API when:</strong>
+                <strong>{t('context.vsGlobalState.decisionFramework.useContext')}</strong>
               </p>
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700 mb-3">
-                <li>State is simple and hierarchical</li>
-                <li>Updates are infrequent</li>
-                <li>No complex async logic needed</li>
-                <li>Project is small to medium</li>
+                <li>{t('context.vsGlobalState.decisionFramework.contextWhen.simple')}</li>
+                <li>{t('context.vsGlobalState.decisionFramework.contextWhen.infrequent')}</li>
+                <li>{t('context.vsGlobalState.decisionFramework.contextWhen.noAsync')}</li>
+                <li>{t('context.vsGlobalState.decisionFramework.contextWhen.small')}</li>
               </ul>
 
               <p className="text-sm text-gray-700 mb-3">
-                <strong>Use Redux/Zustand/Recoil when:</strong>
+                <strong>{t('context.vsGlobalState.decisionFramework.useLibrary')}</strong>
               </p>
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
-                <li>State is complex with many relationships</li>
-                <li>Updates are frequent</li>
-                <li>Need middleware for async operations</li>
-                <li>DevTools and time-travel debugging needed</li>
+                <li>{t('context.vsGlobalState.decisionFramework.libraryWhen.complex')}</li>
+                <li>{t('context.vsGlobalState.decisionFramework.libraryWhen.frequent')}</li>
+                <li>{t('context.vsGlobalState.decisionFramework.libraryWhen.middleware')}</li>
+                <li>{t('context.vsGlobalState.decisionFramework.libraryWhen.devtools')}</li>
               </ul>
             </InfoBox>
 
@@ -243,36 +214,36 @@ export function ThemeProvider({ children }) {
               <table className="w-full text-xs border-collapse">
                 <thead>
                   <tr className="border-b border-gray-300 bg-gray-50">
-                    <th className="text-left p-2 font-semibold">Aspect</th>
-                    <th className="text-left p-2 font-semibold">Context API</th>
-                    <th className="text-left p-2 font-semibold">Redux</th>
-                    <th className="text-left p-2 font-semibold">Zustand</th>
+                    <th className="text-left p-2 font-semibold">{t('context.vsGlobalState.comparisonTable.aspect')}</th>
+                    <th className="text-left p-2 font-semibold">{t('context.vsGlobalState.comparisonTable.contextApi')}</th>
+                    <th className="text-left p-2 font-semibold">{t('context.vsGlobalState.comparisonTable.redux')}</th>
+                    <th className="text-left p-2 font-semibold">{t('context.vsGlobalState.comparisonTable.zustand')}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b border-gray-200">
-                    <td className="p-2 font-medium">Setup</td>
-                    <td className="p-2">Simple</td>
-                    <td className="p-2">Complex</td>
-                    <td className="p-2">Very Simple</td>
+                    <td className="p-2 font-medium">{t('context.vsGlobalState.comparisonTable.setup')}</td>
+                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.simple')}</td>
+                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.complex')}</td>
+                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.verySimple')}</td>
                   </tr>
                   <tr className="border-b border-gray-200">
-                    <td className="p-2 font-medium">Performance</td>
-                    <td className="p-2">Requires care</td>
-                    <td className="p-2">Excellent</td>
-                    <td className="p-2">Excellent</td>
+                    <td className="p-2 font-medium">{t('context.vsGlobalState.comparisonTable.performance')}</td>
+                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.requiresCare')}</td>
+                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.excellent')}</td>
+                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.excellent')}</td>
                   </tr>
                   <tr className="border-b border-gray-200">
-                    <td className="p-2 font-medium">DevTools</td>
-                    <td className="p-2">None</td>
-                    <td className="p-2">Excellent</td>
-                    <td className="p-2">Good</td>
+                    <td className="p-2 font-medium">{t('context.vsGlobalState.comparisonTable.devtools')}</td>
+                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.none')}</td>
+                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.excellent')}</td>
+                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.good')}</td>
                   </tr>
                   <tr>
-                    <td className="p-2 font-medium">For</td>
-                    <td className="p-2">Simple apps</td>
-                    <td className="p-2">Complex apps</td>
-                    <td className="p-2">Most apps</td>
+                    <td className="p-2 font-medium">{t('context.vsGlobalState.comparisonTable.for')}</td>
+                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.simpleApps')}</td>
+                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.complexApps')}</td>
+                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.mostApps')}</td>
                   </tr>
                 </tbody>
               </table>
@@ -280,11 +251,11 @@ export function ThemeProvider({ children }) {
           </div>
         </SubSection>
 
-        <SubSection title="Common Patterns & Gotchas" icon iconColor="orange">
+        <SubSection title={t('context.patterns.title')} icon iconColor="orange">
           <div className="space-y-4">
-            <InfoBox variant="orange" title="Provider Hell">
+            <InfoBox variant="orange" title={t('context.patterns.providerHell.title')}>
               <p className="text-sm text-gray-700 mb-2">
-                Multiple context providers can lead to deeply nested JSX:
+                {t('context.patterns.providerHell.description')}
               </p>
               <CodeBlock
                 code={`// Bad: Provider Hell
@@ -300,15 +271,13 @@ export function ThemeProvider({ children }) {
                 className="text-xs"
               />
               <p className="text-xs text-gray-600 mt-2">
-                Solution: Create a custom root provider that composes all
-                contexts.
+                {t('context.patterns.providerHell.solution')}
               </p>
             </InfoBox>
 
-            <InfoBox variant="red" title="Missing Provider Error">
+            <InfoBox variant="red" title={t('context.patterns.missingProvider.title')}>
               <p className="text-sm text-gray-700 mb-2">
-                Always add a check when consuming context to provide helpful
-                errors:
+                {t('context.patterns.missingProvider.description')}
               </p>
               <CodeBlock
                 code={`export function useTheme() {

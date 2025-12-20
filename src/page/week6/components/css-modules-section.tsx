@@ -1,20 +1,19 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const CssModulesSection = () => {
+  const { t } = useTranslation('week6');
   return (
     <SectionCard
-      badge={{ label: 'Maintainability', color: 'green' }}
-      title="CSS Modules"
-      description="A CSS file in which all class names are scoped locally by default."
+      badge={{ label: t('cssModules.badge'), color: 'green' }}
+      title={t('cssModules.title')}
+      description={t('cssModules.description')}
     >
       <div className="space-y-8">
-        <SubSection title="Scoped Styles" icon iconColor="green">
-          <p className="text-sm text-gray-700 mb-4">
-            CSS Modules generate unique class names for each file, preventing
-            global namespace collision. Files typically end with{' '}
-            <code>.module.css</code>.
-          </p>
+        <SubSection title={t('cssModules.scopedStyles.title')} icon iconColor="green">
+          <p className="text-sm text-gray-700 mb-4" dangerouslySetInnerHTML={{ __html: t('cssModules.scopedStyles.content') }} />
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <h4 className="text-xs font-semibold mb-2">Button.module.css</h4>
@@ -52,19 +51,17 @@ export function Button() {
           </div>
         </SubSection>
 
-        <SubSection title="Benefits" icon iconColor="green">
-          <InfoBox variant="green" title="Why CSS Modules?">
+        <SubSection title={t('cssModules.benefits.title')} icon iconColor="green">
+          <InfoBox variant="green" title={t('cssModules.benefits.infoTitle')}>
             <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
               <li>
-                <strong>Local Scope:</strong> No more worry about breaking other
-                pages when changing a class (e.g., <code>.container</code>).
+                <strong>{t('cssModules.benefits.localScope')}</strong> <span dangerouslySetInnerHTML={{ __html: t('cssModules.benefits.localScopeDesc') }} />
               </li>
               <li>
-                <strong>Reuse:</strong> Can compose styles from other files.
+                <strong>{t('cssModules.benefits.reuse')}</strong> {t('cssModules.benefits.reuseDesc')}
               </li>
               <li>
-                <strong>Zero Learning Curve:</strong> It's just standard CSS
-                syntax.
+                <strong>{t('cssModules.benefits.learning')}</strong> {t('cssModules.benefits.learningDesc')}
               </li>
             </ul>
           </InfoBox>

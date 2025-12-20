@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { cn } from '../../lib/utils';
 import { BrowserRenderingSection } from './components/browser-rendering-section';
 import { BundleSizeSection } from './components/bundle-size-section';
@@ -38,6 +39,7 @@ const sections = [
 ];
 
 export default function Week11Page() {
+  const { t } = useTranslation('week11');
   const [activeTab, setActiveTab] = useState<Tab>('all');
 
   const filteredSections =
@@ -50,14 +52,13 @@ export default function Week11Page() {
           to="/"
           className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 mb-6 transition-colors"
         >
-          ← Back to Dashboard
+          {t('header.backToDashboard')}
         </Link>
         <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-gray-900">
-          Web Performance Optimization
+          {t('header.title')}
         </h1>
         <p className="text-lg text-gray-600 max-w-xl mx-auto">
-          Core Web Vitals, 렌더링 성능 분석, 이미지/폰트/번들 최적화까지
-          프론트엔드 성능 최적화의 핵심을 학습합니다.
+          {t('header.description')}
         </p>
       </header>
 
@@ -74,25 +75,7 @@ export default function Week11Page() {
                 : 'text-gray-600 hover:bg-gray-100',
             )}
           >
-            {tab === 'all'
-              ? 'All'
-              : tab === 'vitals'
-                ? 'Core Vitals'
-                : tab === 'rendering'
-                  ? 'Rendering'
-                  : tab === 'devtools'
-                    ? 'DevTools'
-                    : tab === 'splitting'
-                      ? 'Splitting'
-                      : tab === 'lazy'
-                        ? 'Lazy Load'
-                        : tab === 'images'
-                          ? 'Images'
-                          : tab === 'fonts'
-                            ? 'Fonts'
-                            : tab === 'network'
-                              ? 'Network'
-                              : 'Bundle'}
+            {t(`tabs.${tab}`)}
           </button>
         ))}
       </div>

@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 
 export const AccessibilityBasicsSection = () => {
+  const { t } = useTranslation('week14');
   const [activeTab, setActiveTab] = useState(0);
 
   const wcagPrinciples = [
@@ -12,73 +14,51 @@ export const AccessibilityBasicsSection = () => {
       title: 'Perceivable',
       icon: '👁️',
       color: 'blue',
-      description: '모든 사용자가 콘텐츠를 인지할 수 있어야 함',
-      items: [
-        '대체 텍스트 제공 (이미지, 비디오 등)',
-        '명도 대비(contrast) 4.5:1 이상 준수',
-        '텍스트는 선택 가능하고 확대 가능해야 함',
-        '자막 및 오디오 설명 제공',
-      ],
+      description: t('wcag.principles.perceivable.description'),
+      items: t('wcag.principles.perceivable.items', { returnObjects: true }) as string[],
     },
     {
       title: 'Operable',
       icon: '⌨️',
       color: 'green',
-      description: 'UI 컴포넌트와 내비게이션이 조작 가능해야 함',
-      items: [
-        '모든 기능은 키보드로 접근 가능',
-        '포커스가 보이고 이동 흐름이 자연스러움',
-        '충분한 시간 제공 (시간 제한 조절)',
-        '발작 유발 콘텐츠 금지 (깜빡임)',
-      ],
+      description: t('wcag.principles.operable.description'),
+      items: t('wcag.principles.operable.items', { returnObjects: true }) as string[],
     },
     {
       title: 'Understandable',
       icon: '💡',
       color: 'orange',
-      description: '정보와 UI 조작이 이해 가능해야 함',
-      items: [
-        '폼 라벨 명확히 제공',
-        '에러 메시지는 구체적으로',
-        '일관된 내비게이션 구조',
-        '예측 가능한 동작',
-      ],
+      description: t('wcag.principles.understandable.description'),
+      items: t('wcag.principles.understandable.items', { returnObjects: true }) as string[],
     },
     {
       title: 'Robust',
       icon: '🛡️',
       color: 'purple',
-      description: '다양한 사용자 에이전트가 해석 가능해야 함',
-      items: [
-        '보조 기술(Screen Reader)이 인식 가능',
-        '시맨틱 태그 사용 필수',
-        'ARIA는 필요한 곳에서만',
-        '표준 준수 마크업',
-      ],
+      description: t('wcag.principles.robust.description'),
+      items: t('wcag.principles.robust.items', { returnObjects: true }) as string[],
     },
+  ];
+
+  const scenarios = [
+    { icon: '🌓', text: t('wcag.whatIsA11y.scenarios.lowLight') },
+    { icon: '🔇', text: t('wcag.whatIsA11y.scenarios.noise') },
+    { icon: '🤚', text: t('wcag.whatIsA11y.scenarios.temporaryDisability') },
+    { icon: '📱', text: t('wcag.whatIsA11y.scenarios.mobile') },
   ];
 
   return (
     <SectionCard
-      badge={{ label: 'A11y', color: 'blue' }}
-      title="WCAG 웹 접근성 기초"
-      description="WCAG 2.1 핵심 4대 원칙과 접근성의 본질적 가치 이해"
+      badge={{ label: t('wcag.badge'), color: 'blue' }}
+      title={t('wcag.title')}
+      description={t('wcag.description')}
     >
       <div className="space-y-8">
-        <SubSection title="접근성이란?" icon iconColor="blue">
-          <InfoBox variant="blue" title="Web Accessibility (A11y)">
-            <p className="text-sm leading-relaxed">
-              접근성은 단순히 장애를 위한 것이 아닙니다. 다양한 상황(저조도,
-              소음, 터치 제한, 모바일 환경 등)에서 모든 사용자가 제품의 기능을
-              <strong>동등하게 활용</strong>할 수 있게 하는 것입니다.
-            </p>
+        <SubSection title={t('wcag.whatIsA11y.title')} icon iconColor="blue">
+          <InfoBox variant="blue" title={t('wcag.whatIsA11y.infoTitle')}>
+            <p className="text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: t('wcag.whatIsA11y.infoText') }} />
             <div className="mt-3 grid grid-cols-2 gap-2">
-              {[
-                { icon: '🌓', text: '저조도 환경' },
-                { icon: '🔇', text: '소음 환경' },
-                { icon: '🤚', text: '일시적 장애' },
-                { icon: '📱', text: '모바일 사용' },
-              ].map((item) => (
+              {scenarios.map((item) => (
                 <div
                   key={item.text}
                   className="flex items-center gap-2 text-xs bg-blue-100 p-2 rounded"
@@ -91,8 +71,8 @@ export const AccessibilityBasicsSection = () => {
           </InfoBox>
         </SubSection>
 
-        <SubSection title="WCAG 2.1 핵심 4대 원칙" icon iconColor="purple">
-          <DemoBox label="POUR Principles">
+        <SubSection title={t('wcag.principles.title')} icon iconColor="purple">
+          <DemoBox label={t('wcag.principles.label')}>
             <div className="space-y-4">
               {/* Tab Navigation */}
               <div className="flex gap-2 flex-wrap">
@@ -143,8 +123,8 @@ export const AccessibilityBasicsSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title="명도 대비 체커" icon iconColor="green">
-          <DemoBox label="Contrast Ratio Demo">
+        <SubSection title={t('wcag.contrastChecker.title')} icon iconColor="green">
+          <DemoBox label={t('wcag.contrastChecker.label')}>
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
                 <div className="bg-white p-3 rounded border text-center">
@@ -158,7 +138,7 @@ export const AccessibilityBasicsSection = () => {
                     #767676 on #FFFFFF
                   </div>
                   <div className="text-xs mt-1 text-green-600 font-medium">
-                    ✓ 4.54:1 (WCAG AA)
+                    {t('wcag.contrastChecker.pass')}
                   </div>
                 </div>
                 <div className="bg-white p-3 rounded border text-center">
@@ -172,43 +152,22 @@ export const AccessibilityBasicsSection = () => {
                     #999999 on #FFFFFF
                   </div>
                   <div className="text-xs mt-1 text-red-600 font-medium">
-                    ✗ 2.85:1 (Fail)
+                    {t('wcag.contrastChecker.fail')}
                   </div>
                 </div>
               </div>
               <InfoBox variant="gray">
                 <p className="text-xs">
-                  WCAG AA 기준: 일반 텍스트 4.5:1, 큰 텍스트(18px+) 3:1 이상
+                  {t('wcag.contrastChecker.guideline')}
                 </p>
               </InfoBox>
             </div>
           </DemoBox>
         </SubSection>
 
-        <SubSection title="접근성 테스트 도구" icon iconColor="orange">
+        <SubSection title={t('wcag.testingTools.title')} icon iconColor="orange">
           <div className="grid grid-cols-2 gap-3">
-            {[
-              {
-                name: 'axe DevTools',
-                desc: '가장 강력한 자동화 도구',
-                badge: 'Essential',
-              },
-              {
-                name: 'Lighthouse',
-                desc: 'Chrome 내장 성능/접근성 검사',
-                badge: 'Built-in',
-              },
-              {
-                name: 'WAVE',
-                desc: '시각적 접근성 평가',
-                badge: 'Visual',
-              },
-              {
-                name: 'VoiceOver/NVDA',
-                desc: '스크린리더 실제 테스트',
-                badge: 'Manual',
-              },
-            ].map((tool) => (
+            {(t('wcag.testingTools.tools', { returnObjects: true }) as Array<{name: string, desc: string, badge: string}>).map((tool) => (
               <div
                 key={tool.name}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200"

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { cn } from '../../lib/utils';
 import { DevToolsElementsConsoleSection } from './components/devtools-elements-console-section';
 import { DevToolsSourcesNetworkSection } from './components/devtools-sources-network-section';
@@ -21,17 +22,6 @@ const tabs = [
 ] as const;
 type Tab = (typeof tabs)[number];
 
-const tabLabels: Record<Tab, string> = {
-  all: 'All',
-  elements: 'Elements/Console',
-  sources: 'Sources/Network',
-  performance: 'Performance/Memory',
-  bundling: 'Bundling',
-  optimization: 'Bundle Optimization',
-  observability: 'Observability',
-  vitals: 'Web Vitals',
-};
-
 const sections = [
   { id: 'elements', component: <DevToolsElementsConsoleSection /> },
   { id: 'sources', component: <DevToolsSourcesNetworkSection /> },
@@ -43,6 +33,7 @@ const sections = [
 ];
 
 export default function Week15Page() {
+  const { t } = useTranslation('week15');
   const [activeTab, setActiveTab] = useState<Tab>('all');
 
   const filteredSections =
@@ -55,14 +46,13 @@ export default function Week15Page() {
           to="/"
           className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 mb-6 transition-colors"
         >
-          ← Back to Dashboard
+          {t('common:navigation.backToDashboard', '← Back to Dashboard')}
         </Link>
         <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-gray-900">
-          DevTools & Bundling
+          {t('header.title')}
         </h1>
         <p className="text-lg text-gray-600 max-w-xl mx-auto">
-          Chrome DevTools 마스터, 번들링 최적화, 그리고 Observability를 통해
-          시니어 프론트엔드 개발자의 필수 역량을 갖추세요.
+          {t('header.description')}
         </p>
       </header>
       <div className="sticky top-4 z-10 bg-white/80 backdrop-blur-md p-1.5 rounded-full shadow-sm border border-gray-200 mb-8 flex gap-1 flex-wrap justify-center max-w-[95vw]">
@@ -78,7 +68,7 @@ export default function Week15Page() {
                 : 'text-gray-600 hover:bg-gray-100',
             )}
           >
-            {tabLabels[tab]}
+            {t(`tabs.${tab}`)}
           </button>
         ))}
       </div>

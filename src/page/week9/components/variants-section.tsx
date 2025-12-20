@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -22,38 +23,36 @@ const itemVariants = {
 };
 
 export const VariantsSection = () => {
+  const { t } = useTranslation('week9');
   const [isVisible, setIsVisible] = useState(false);
 
   return (
     <SectionCard
-      badge={{ label: 'Advanced', color: 'purple' }}
-      title="Variants"
-      description="State-based animation patterns for complex orchestration"
+      badge={{ label: t('variants.badge'), color: 'purple' }}
+      title={t('variants.title')}
+      description={t('variants.description')}
     >
       <div className="space-y-8">
-        <SubSection title="What are Variants?" icon iconColor="purple">
-          <InfoBox variant="purple" title="Variants Concept">
+        <SubSection title={t('variants.whatAreVariants.title')} icon iconColor="purple">
+          <InfoBox variant="purple" title={t('variants.whatAreVariants.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              Variants are named animation states that can be referenced by
-              string. They enable:
+              {t('variants.whatAreVariants.content')}
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm mt-3">
               <li>
-                <strong>Reusability:</strong> Define once, use everywhere
+                <strong>{t('variants.whatAreVariants.reusability')}</strong> {t('variants.whatAreVariants.reusabilityDesc')}
               </li>
               <li>
-                <strong>Propagation:</strong> Child components inherit parent
-                states
+                <strong>{t('variants.whatAreVariants.propagation')}</strong> {t('variants.whatAreVariants.propagationDesc')}
               </li>
               <li>
-                <strong>Orchestration:</strong> Stagger, delay, and sequence
-                animations
+                <strong>{t('variants.whatAreVariants.orchestration')}</strong> {t('variants.whatAreVariants.orchestrationDesc')}
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Basic Variants Pattern" icon iconColor="blue">
+        <SubSection title={t('variants.basicPattern.title')} icon iconColor="blue">
           <CodeBlock
             code={`const boxVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -72,7 +71,7 @@ export const VariantsSection = () => {
           />
         </SubSection>
 
-        <SubSection title="Stagger Children" icon iconColor="green">
+        <SubSection title={t('variants.staggerChildren.title')} icon iconColor="green">
           <CodeBlock
             code={`const container = {
   hidden: { opacity: 0 },
@@ -99,14 +98,14 @@ const item = {
             className="text-xs"
           />
 
-          <DemoBox label="Stagger Animation Demo">
+          <DemoBox label={t('variants.staggerChildren.demoLabel')}>
             <div className="flex flex-col items-center gap-4">
               <button
                 type="button"
                 onClick={() => setIsVisible(!isVisible)}
                 className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
               >
-                {isVisible ? 'Reset' : 'Animate List'}
+                {isVisible ? t('variants.staggerChildren.reset') : t('variants.staggerChildren.animateList')}
               </button>
 
               <motion.div
@@ -130,12 +129,10 @@ const item = {
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Variant Propagation" icon iconColor="orange">
-          <InfoBox variant="orange" title="How Propagation Works">
+        <SubSection title={t('variants.variantPropagation.title')} icon iconColor="orange">
+          <InfoBox variant="orange" title={t('variants.variantPropagation.infoTitle')}>
             <p className="text-sm">
-              When a parent component changes to a new variant, all children
-              with the same variant names automatically animate to match. This
-              creates coordinated animations without explicit wiring.
+              {t('variants.variantPropagation.content')}
             </p>
           </InfoBox>
 
@@ -160,36 +157,36 @@ const item = {
           />
         </SubSection>
 
-        <SubSection title="Orchestration Options" icon iconColor="pink">
+        <SubSection title={t('variants.orchestrationOptions.title')} icon iconColor="pink">
           <div className="grid grid-cols-1 gap-3">
             <div className="bg-pink-50 p-3 rounded border border-pink-200">
               <p className="text-sm font-semibold text-pink-900">
-                staggerChildren
+                {t('variants.orchestrationOptions.staggerChildren')}
               </p>
               <p className="text-xs text-pink-700 mt-1">
-                Delay between each child animation start
+                {t('variants.orchestrationOptions.staggerChildrenDesc')}
               </p>
             </div>
             <div className="bg-pink-50 p-3 rounded border border-pink-200">
               <p className="text-sm font-semibold text-pink-900">
-                staggerDirection
+                {t('variants.orchestrationOptions.staggerDirection')}
               </p>
               <p className="text-xs text-pink-700 mt-1">
-                1 = first to last, -1 = last to first
+                {t('variants.orchestrationOptions.staggerDirectionDesc')}
               </p>
             </div>
             <div className="bg-pink-50 p-3 rounded border border-pink-200">
               <p className="text-sm font-semibold text-pink-900">
-                delayChildren
+                {t('variants.orchestrationOptions.delayChildren')}
               </p>
               <p className="text-xs text-pink-700 mt-1">
-                Wait before starting children animations
+                {t('variants.orchestrationOptions.delayChildrenDesc')}
               </p>
             </div>
             <div className="bg-pink-50 p-3 rounded border border-pink-200">
-              <p className="text-sm font-semibold text-pink-900">when</p>
+              <p className="text-sm font-semibold text-pink-900">{t('variants.orchestrationOptions.when')}</p>
               <p className="text-xs text-pink-700 mt-1">
-                "beforeChildren" | "afterChildren"
+                {t('variants.orchestrationOptions.whenDesc')}
               </p>
             </div>
           </div>

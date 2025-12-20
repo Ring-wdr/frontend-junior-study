@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -7,6 +8,7 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const LayoutAnimationSection = () => {
+  const { t } = useTranslation('week9');
   const [isExpanded, setIsExpanded] = useState(false);
   const [items, setItems] = useState([1, 2, 3, 4]);
   const [isGrid, setIsGrid] = useState(true);
@@ -21,19 +23,17 @@ export const LayoutAnimationSection = () => {
 
   return (
     <SectionCard
-      badge={{ label: 'Magic', color: 'pink' }}
-      title="Layout Animation"
-      description="Automatic smooth transitions when layout changes"
+      badge={{ label: t('layout.badge'), color: 'pink' }}
+      title={t('layout.title')}
+      description={t('layout.description')}
     >
       <div className="space-y-8">
-        <SubSection title="The Magic of layout Prop" icon iconColor="pink">
-          <InfoBox variant="purple" title="What Layout Animation Does">
-            <p className="text-sm leading-relaxed">
-              When you add the <code>layout</code> prop, Framer Motion
-              automatically animates between layout changes (position, size)
-              using performant transforms. This is nearly impossible to achieve
-              with CSS alone.
-            </p>
+        <SubSection title={t('layout.magic.title')} icon iconColor="pink">
+          <InfoBox variant="purple" title={t('layout.magic.infoTitle')}>
+            <p
+              className="text-sm leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: t('layout.magic.content') }}
+            />
           </InfoBox>
 
           <CodeBlock
@@ -48,8 +48,8 @@ export const LayoutAnimationSection = () => {
           />
         </SubSection>
 
-        <SubSection title="Accordion Example" icon iconColor="blue">
-          <DemoBox label="Click to Expand/Collapse">
+        <SubSection title={t('layout.accordion.title')} icon iconColor="blue">
+          <DemoBox label={t('layout.accordion.demoLabel')}>
             <motion.div
               layout
               onClick={() => setIsExpanded(!isExpanded)}
@@ -57,7 +57,7 @@ export const LayoutAnimationSection = () => {
               style={{ borderRadius: 16 }}
             >
               <motion.h4 layout="position" className="font-bold">
-                Click Me!
+                {t('layout.accordion.clickMe')}
               </motion.h4>
               {isExpanded && (
                 <motion.p
@@ -65,16 +65,14 @@ export const LayoutAnimationSection = () => {
                   animate={{ opacity: 1 }}
                   className="mt-3 text-sm text-blue-100"
                 >
-                  This content smoothly expands and collapses. The parent
-                  container automatically animates its size change, and the
-                  title stays in position using layout="position".
+                  {t('layout.accordion.content')}
                 </motion.p>
               )}
             </motion.div>
           </DemoBox>
         </SubSection>
 
-        <SubSection title="List Reordering" icon iconColor="green">
+        <SubSection title={t('layout.listReordering.title')} icon iconColor="green">
           <CodeBlock
             code={`// Each item needs layout prop
 {items.map((item) => (
@@ -92,7 +90,7 @@ export const LayoutAnimationSection = () => {
             className="text-xs"
           />
 
-          <DemoBox label="Click Items to Remove">
+          <DemoBox label={t('layout.listReordering.demoLabel')}>
             <div className="space-y-3">
               <div className="flex gap-2 flex-wrap">
                 {items.map((item) => (
@@ -113,7 +111,7 @@ export const LayoutAnimationSection = () => {
               </div>
               {items.length === 0 && (
                 <p className="text-gray-500 text-sm text-center py-4">
-                  All items removed!
+                  {t('layout.listReordering.allRemoved')}
                 </p>
               )}
               <button
@@ -121,21 +119,21 @@ export const LayoutAnimationSection = () => {
                 onClick={resetItems}
                 className="px-3 py-1 text-sm bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
               >
-                Reset Items
+                {t('layout.listReordering.reset')}
               </button>
             </div>
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Grid ↔ List Toggle" icon iconColor="purple">
-          <DemoBox label="Toggle Layout Mode">
+        <SubSection title={t('layout.gridListToggle.title')} icon iconColor="purple">
+          <DemoBox label={t('layout.gridListToggle.demoLabel')}>
             <div className="space-y-4">
               <button
                 type="button"
                 onClick={() => setIsGrid(!isGrid)}
                 className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
               >
-                Switch to {isGrid ? 'List' : 'Grid'}
+                {t('layout.gridListToggle.switchTo')} {isGrid ? t('layout.gridListToggle.list') : t('layout.gridListToggle.grid')}
               </button>
 
               <motion.div
@@ -150,7 +148,7 @@ export const LayoutAnimationSection = () => {
                       isGrid ? 'h-16' : 'h-12 px-4'
                     }`}
                   >
-                    Item {num}
+                    {t('layout.gridListToggle.item')} {num}
                   </motion.div>
                 ))}
               </motion.div>
@@ -158,36 +156,36 @@ export const LayoutAnimationSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Layout Prop Options" icon iconColor="orange">
+        <SubSection title={t('layout.layoutPropOptions.title')} icon iconColor="orange">
           <div className="grid grid-cols-1 gap-3">
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
-              <p className="text-sm font-semibold text-orange-900">layout</p>
+              <p className="text-sm font-semibold text-orange-900">{t('layout.layoutPropOptions.layout')}</p>
               <p className="text-xs text-orange-700 mt-1">
-                Animate both position and size changes
+                {t('layout.layoutPropOptions.layoutDesc')}
               </p>
             </div>
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
               <p className="text-sm font-semibold text-orange-900">
-                layout="position"
+                {t('layout.layoutPropOptions.layoutPosition')}
               </p>
               <p className="text-xs text-orange-700 mt-1">
-                Only animate position, not size (prevents text distortion)
+                {t('layout.layoutPropOptions.layoutPositionDesc')}
               </p>
             </div>
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
               <p className="text-sm font-semibold text-orange-900">
-                layout="size"
+                {t('layout.layoutPropOptions.layoutSize')}
               </p>
               <p className="text-xs text-orange-700 mt-1">
-                Only animate size changes, not position
+                {t('layout.layoutPropOptions.layoutSizeDesc')}
               </p>
             </div>
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
               <p className="text-sm font-semibold text-orange-900">
-                layoutId="shared-id"
+                {t('layout.layoutPropOptions.layoutId')}
               </p>
               <p className="text-xs text-orange-700 mt-1">
-                Shared layout animations across different components
+                {t('layout.layoutPropOptions.layoutIdDesc')}
               </p>
             </div>
           </div>

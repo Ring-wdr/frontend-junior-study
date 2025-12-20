@@ -1,6 +1,7 @@
 import gsap from 'gsap';
 import { Play } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '../../../lib/utils';
 
 const easings = [
@@ -16,6 +17,7 @@ const easings = [
 ] as const;
 
 export function EasingSection() {
+  const { t } = useTranslation('week10');
   const boxRef = useRef<HTMLDivElement>(null);
   const [selectedEasing, setSelectedEasing] = useState<string>('power2.out');
   const [isPlaying, setIsPlaying] = useState(false);
@@ -41,16 +43,15 @@ export function EasingSection() {
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-6">
-        <h2 className="text-2xl font-bold text-gray-900">Easing (가속도)</h2>
-        <p className="text-gray-600">
-          애니메이션의 느낌을 결정하는 가장 중요한 요소입니다. "빠르게 시작해서
-          부드럽게 멈추는" 것이 UI 모션의 기본 원칙입니다.
-        </p>
+        <h2 className="text-2xl font-bold text-gray-900">{t('easing.title')}</h2>
+        <p className="text-gray-600">{t('easing.description')}</p>
 
         <div className="flex flex-col md:flex-row gap-8 items-start">
           {/* Controls */}
           <div className="w-full md:w-1/3 space-y-2">
-            <h3 className="font-semibold text-gray-700 mb-2">Select Easing</h3>
+            <h3 className="font-semibold text-gray-700 mb-2">
+              {t('easing.selectEasing')}
+            </h3>
             <div className="flex flex-wrap gap-2">
               {easings.map((ease) => (
                 <button
@@ -89,7 +90,7 @@ export function EasingSection() {
                 className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md active:scale-95"
               >
                 <Play size={18} fill="currentColor" />
-                {isPlaying ? 'Animating...' : 'Run Animation'}
+                {isPlaying ? t('easing.animating') : t('easing.runAnimation')}
               </button>
             </div>
 
@@ -117,8 +118,8 @@ export function EasingSection() {
             </div>
 
             <div className="mt-8 flex justify-between text-xs text-gray-400 font-mono w-full pr-16">
-              <span>Start (0%)</span>
-              <span>End (100%)</span>
+              <span>{t('easing.start')}</span>
+              <span>{t('easing.end')}</span>
             </div>
           </div>
         </div>

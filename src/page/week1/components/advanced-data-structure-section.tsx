@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Plus, Search, Trash2 } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
@@ -8,13 +9,14 @@ import { GcDemo } from './gc-demo';
 import { MapObjectComparison } from './map-object-comparison';
 
 export const AdvancedDataStructureSection = () => {
+  const { t } = useTranslation('week1');
   const [activeTab, setActiveTab] = useState<'map' | 'set' | 'weak'>('map');
 
   return (
     <SectionCard
-      badge={{ label: 'Data Structures', color: 'pink' }}
-      title="Advanced Data Structures"
-      description="Map, Set, WeakMap, WeakSet, and WeakRef."
+      badge={{ label: t('advancedDataStructure.badge'), color: 'pink' }}
+      title={t('advancedDataStructure.title')}
+      description={t('advancedDataStructure.description')}
       testId="advanced-data-structure-section"
     >
       <div className="flex space-x-2 mb-6 border-b border-gray-100 pb-2">
@@ -30,7 +32,7 @@ export const AdvancedDataStructureSection = () => {
                 : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50',
             )}
           >
-            {tab === 'weak' ? 'WeakMap/Ref' : tab}
+            {t(`advancedDataStructure.tabs.${tab}`)}
           </button>
         ))}
       </div>
@@ -46,16 +48,13 @@ export const AdvancedDataStructureSection = () => {
           >
             <InfoBox variant="blue" className="bg-pink-50 border-pink-100">
               <h4 className="font-bold text-pink-900 mb-2 flex items-center gap-2">
-                <Search className="w-4 h-4" /> Map vs Object
+                <Search className="w-4 h-4" /> {t('advancedDataStructure.map.title')}
               </h4>
               <ul className="list-disc list-inside text-sm text-pink-800 space-y-1">
-                <li>
-                  Keys can be <strong>any type</strong> (objects, functions,
-                  primitives).
-                </li>
-                <li>Maintains insertion order.</li>
-                <li>Size property is built-in.</li>
-                <li>Better performance for frequent additions/removals.</li>
+                <li dangerouslySetInnerHTML={{ __html: t('advancedDataStructure.map.key1') }} />
+                <li>{t('advancedDataStructure.map.key2')}</li>
+                <li>{t('advancedDataStructure.map.key3')}</li>
+                <li>{t('advancedDataStructure.map.key4')}</li>
               </ul>
             </InfoBox>
             <div className="mt-6">
@@ -77,11 +76,10 @@ export const AdvancedDataStructureSection = () => {
               className="bg-purple-50 border-purple-100"
             >
               <h4 className="font-bold text-purple-900 mb-2 flex items-center gap-2">
-                <Plus className="w-4 h-4" /> Set (Unique Collection)
+                <Plus className="w-4 h-4" /> {t('advancedDataStructure.set.title')}
               </h4>
               <p className="text-sm text-purple-800 mb-2">
-                Stores unique values of any type. Useful for removing
-                duplicates.
+                {t('advancedDataStructure.set.description')}
               </p>
             </InfoBox>
             <CodeBlock
@@ -110,22 +108,15 @@ set.delete(1);`}
               className="bg-orange-50 border-orange-100"
             >
               <h4 className="font-bold text-orange-900 mb-2 flex items-center gap-2">
-                <Trash2 className="w-4 h-4" /> Weak References (GC Friendly)
+                <Trash2 className="w-4 h-4" /> {t('advancedDataStructure.weak.title')}
               </h4>
-              <p className="text-sm text-orange-800 mb-2">
-                <strong>WeakMap/WeakSet:</strong> Keys must be objects. They are
-                held "weakly", meaning if there are no other references to the
-                object, it can be garbage collected. Not iterable.
-              </p>
-              <p className="text-sm text-orange-800 mt-2 border-t border-orange-200 pt-2">
-                <strong>WeakRef (ES2021):</strong> advanced feature to hold a
-                weak reference to an object.
-              </p>
+              <p className="text-sm text-orange-800 mb-2" dangerouslySetInnerHTML={{ __html: t('advancedDataStructure.weak.description1') }} />
+              <p className="text-sm text-orange-800 mt-2 border-t border-orange-200 pt-2" dangerouslySetInnerHTML={{ __html: t('advancedDataStructure.weak.description2') }} />
             </InfoBox>
 
             <div className="mt-8">
               <h5 className="font-bold text-gray-800 mb-4 px-2 border-l-4 border-orange-400">
-                Garbage Collection Visualizer
+                {t('advancedDataStructure.weak.gcTitle')}
               </h5>
               <GcDemo />
             </div>

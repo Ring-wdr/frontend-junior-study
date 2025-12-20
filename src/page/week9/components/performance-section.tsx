@@ -1,57 +1,57 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const PerformanceSection = () => {
+  const { t } = useTranslation('week9');
+
   return (
     <SectionCard
-      badge={{ label: 'Best Practices', color: 'indigo' }}
-      title="Performance & Accessibility"
-      description="Optimize animations for performance and inclusive design"
+      badge={{ label: t('performance.badge'), color: 'indigo' }}
+      title={t('performance.title')}
+      description={t('performance.description')}
     >
       <div className="space-y-8">
-        <SubSection title="Performance Tips" icon iconColor="green">
+        <SubSection title={t('performance.performanceTips.title')} icon iconColor="green">
           <div className="grid grid-cols-1 gap-3">
             <div className="bg-green-50 p-3 rounded border border-green-200">
               <p className="text-sm font-semibold text-green-900">
-                Use Transform Properties
+                {t('performance.performanceTips.useTransform')}
               </p>
               <p className="text-xs text-green-700 mt-1">
-                x, y, scale, rotate are GPU-accelerated. Avoid animating width,
-                height, top, left.
+                {t('performance.performanceTips.useTransformDesc')}
               </p>
             </div>
             <div className="bg-green-50 p-3 rounded border border-green-200">
               <p className="text-sm font-semibold text-green-900">
-                Limit Simultaneous Animations
+                {t('performance.performanceTips.limitSimultaneous')}
               </p>
               <p className="text-xs text-green-700 mt-1">
-                Too many animating elements at once can cause jank. Be
-                selective.
+                {t('performance.performanceTips.limitSimultaneousDesc')}
               </p>
             </div>
             <div className="bg-green-50 p-3 rounded border border-green-200">
               <p className="text-sm font-semibold text-green-900">
-                Use will-change Sparingly
+                {t('performance.performanceTips.willChange')}
               </p>
               <p className="text-xs text-green-700 mt-1">
-                Framer Motion handles this automatically. Don't add it manually.
+                {t('performance.performanceTips.willChangeDesc')}
               </p>
             </div>
             <div className="bg-green-50 p-3 rounded border border-green-200">
               <p className="text-sm font-semibold text-green-900">
-                Layout Animations Are Expensive
+                {t('performance.performanceTips.layoutExpensive')}
               </p>
               <p className="text-xs text-green-700 mt-1">
-                Use layout prop judiciously. Consider layout="position" when
-                possible.
+                {t('performance.performanceTips.layoutExpensiveDesc')}
               </p>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title="Measuring Performance" icon iconColor="blue">
+        <SubSection title={t('performance.measuring.title')} icon iconColor="blue">
           <CodeBlock
             code={`// Use Chrome DevTools Performance tab
 1. Open DevTools → Performance
@@ -71,16 +71,15 @@ npm install @framer/motion-dev
         </SubSection>
 
         <SubSection
-          title="Accessibility: Reduced Motion"
+          title={t('performance.reducedMotion.title')}
           icon
           iconColor="purple"
         >
-          <InfoBox variant="purple" title="Respecting User Preferences">
-            <p className="text-sm leading-relaxed">
-              Some users experience motion sickness or have vestibular
-              disorders. Always respect the <code>prefers-reduced-motion</code>{' '}
-              system preference.
-            </p>
+          <InfoBox variant="purple" title={t('performance.reducedMotion.infoTitle')}>
+            <p
+              className="text-sm leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: t('performance.reducedMotion.content') }}
+            />
           </InfoBox>
 
           <CodeBlock
@@ -118,66 +117,60 @@ function Component() {
           />
         </SubSection>
 
-        <SubSection title="Animation Anti-patterns" icon iconColor="red">
+        <SubSection title={t('performance.antiPatterns.title')} icon iconColor="red">
           <div className="grid grid-cols-1 gap-3">
             <div className="bg-red-50 p-3 rounded border border-red-200">
               <p className="text-sm font-semibold text-red-900">
-                Animating Layout Properties
+                {t('performance.antiPatterns.animatingLayout')}
               </p>
               <p className="text-xs text-red-700 mt-1">
-                width/height cause reflow. Use scale transform instead.
+                {t('performance.antiPatterns.animatingLayoutDesc')}
               </p>
             </div>
             <div className="bg-red-50 p-3 rounded border border-red-200">
               <p className="text-sm font-semibold text-red-900">
-                Too Many layout Props
+                {t('performance.antiPatterns.tooManyLayout')}
               </p>
               <p className="text-xs text-red-700 mt-1">
-                Each layout animation requires measuring. Use sparingly.
+                {t('performance.antiPatterns.tooManyLayoutDesc')}
               </p>
             </div>
             <div className="bg-red-50 p-3 rounded border border-red-200">
               <p className="text-sm font-semibold text-red-900">
-                Animating Everything
+                {t('performance.antiPatterns.animatingEverything')}
               </p>
               <p className="text-xs text-red-700 mt-1">
-                Purposeless animation is distracting. Each animation should
-                serve UX.
+                {t('performance.antiPatterns.animatingEverythingDesc')}
               </p>
             </div>
             <div className="bg-red-50 p-3 rounded border border-red-200">
               <p className="text-sm font-semibold text-red-900">
-                Long Durations
+                {t('performance.antiPatterns.longDurations')}
               </p>
               <p className="text-xs text-red-700 mt-1">
-                Keep animations under 300ms for UI. Users perceive long
-                animations as slow.
+                {t('performance.antiPatterns.longDurationsDesc')}
               </p>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title="Good Animation Principles" icon iconColor="orange">
-          <InfoBox variant="orange" title="UX Guidelines">
+        <SubSection title={t('performance.goodPrinciples.title')} icon iconColor="orange">
+          <InfoBox variant="orange" title={t('performance.goodPrinciples.infoTitle')}>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>Purpose:</strong> Every animation should communicate
-                something
+                <strong>{t('performance.goodPrinciples.purpose')}</strong> {t('performance.goodPrinciples.purposeDesc')}
               </li>
               <li>
-                <strong>Speed:</strong> 200-300ms for most UI interactions
+                <strong>{t('performance.goodPrinciples.speed')}</strong> {t('performance.goodPrinciples.speedDesc')}
               </li>
               <li>
-                <strong>Consistency:</strong> Same elements should animate the
-                same way
+                <strong>{t('performance.goodPrinciples.consistency')}</strong> {t('performance.goodPrinciples.consistencyDesc')}
               </li>
               <li>
-                <strong>Subtlety:</strong> Animations should enhance, not
-                distract
+                <strong>{t('performance.goodPrinciples.subtlety')}</strong> {t('performance.goodPrinciples.subtletyDesc')}
               </li>
               <li>
-                <strong>Interruptibility:</strong> Animations should be
-                cancellable
+                <strong>{t('performance.goodPrinciples.interruptibility')}</strong> {t('performance.goodPrinciples.interruptibilityDesc')}
               </li>
             </ul>
           </InfoBox>
@@ -203,8 +196,8 @@ const timings = {
           />
         </SubSection>
 
-        <SubSection title="Resources" icon iconColor="pink">
-          <InfoBox variant="purple" title="Learn More">
+        <SubSection title={t('performance.resources.title')} icon iconColor="pink">
+          <InfoBox variant="purple" title={t('performance.resources.infoTitle')}>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
                 <a

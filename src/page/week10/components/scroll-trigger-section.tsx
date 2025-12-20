@@ -1,10 +1,12 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLayoutEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function ScrollTriggerSection() {
+  const { t } = useTranslation('week10');
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
 
@@ -54,11 +56,10 @@ export function ScrollTriggerSection() {
   return (
     <div className="space-y-6" ref={containerRef}>
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-6">
-        <h2 className="text-2xl font-bold text-gray-900">ScrollTrigger</h2>
-        <p className="text-gray-600">
-          스크롤 위치에 따라 애니메이션을 제어합니다. 아래 박스 내부를
-          스크롤해보세요.
-        </p>
+        <h2 className="text-2xl font-bold text-gray-900">
+          {t('scrollTrigger.title')}
+        </h2>
+        <p className="text-gray-600">{t('scrollTrigger.description')}</p>
 
         {/* Mock Window/Phone Frame */}
         <div className="mx-auto max-w-md border-8 border-gray-800 rounded-4xl overflow-hidden shadow-2xl bg-white relative">
@@ -74,7 +75,7 @@ export function ScrollTriggerSection() {
             {/* Hero */}
             <div className="h-[300px] flex items-center justify-center bg-linear-to-br from-blue-500 to-cyan-400 text-white flex-col gap-2">
               <span className="text-sm font-medium opacity-80">
-                Scroll Down
+                {t('scrollTrigger.scrollDown')}
               </span>
               <div className="animate-bounce">↓</div>
             </div>
@@ -82,7 +83,7 @@ export function ScrollTriggerSection() {
             {/* Section 1: Fade In */}
             <div className="fade-section py-20 px-6 space-y-4">
               <h3 className="text-xl font-bold text-gray-800 mb-6">
-                Trigger Animation
+                {t('scrollTrigger.triggerAnimation')}
               </h3>
               <div className="fade-item p-4 bg-white rounded-xl shadow-sm border border-gray-100">
                 Item 1
@@ -98,32 +99,38 @@ export function ScrollTriggerSection() {
             {/* Section 2: Scrub */}
             <div className="scrub-section py-20 px-6 bg-gray-100 overflow-hidden">
               <h3 className="text-xl font-bold text-gray-800 mb-12">
-                Scrub Animation
+                {t('scrollTrigger.scrubAnimation')}
               </h3>
               <div className="scrub-box w-16 h-16 bg-orange-500 rounded-lg shadow-md flex items-center justify-center text-white font-bold text-xs">
                 SCRUB
               </div>
               <p className="text-xs text-gray-500 mt-4">
-                스크롤 속도에 맞춰 움직입니다.
+                {t('scrollTrigger.scrubDescription')}
               </p>
             </div>
 
             {/* Section 3: Pin */}
             <div className="pin-section h-[400px] bg-indigo-600 flex items-center justify-center text-white">
               <div className="text-center p-6">
-                <h3 className="text-2xl font-bold mb-2">Pinned Section</h3>
-                <p className="opacity-80">이 섹션은 잠시 고정됩니다.</p>
+                <h3 className="text-2xl font-bold mb-2">
+                  {t('scrollTrigger.pinnedSection')}
+                </h3>
+                <p className="opacity-80">
+                  {t('scrollTrigger.pinnedDescription')}
+                </p>
               </div>
             </div>
 
             <div className="h-[300px] bg-white flex items-center justify-center text-gray-400">
-              End of Content
+              {t('scrollTrigger.endOfContent')}
             </div>
           </div>
         </div>
 
         <div className="mt-4 p-4 bg-gray-50 rounded-lg text-sm text-gray-500">
-          <h4 className="font-semibold text-gray-900 mb-2">Code Snippet</h4>
+          <h4 className="font-semibold text-gray-900 mb-2">
+            {t('scrollTrigger.codeSnippet')}
+          </h4>
           <pre className="bg-gray-900 text-gray-100 p-3 rounded-lg overflow-x-auto whitespace-pre-wrap">
             {`gsap.to(".box", {
   scrollTrigger: {

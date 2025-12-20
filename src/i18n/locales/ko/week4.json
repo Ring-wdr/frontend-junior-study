@@ -1,0 +1,412 @@
+{
+  "header": {
+    "title": "상태 관리",
+    "description": "Redux, Middleware, 최신 라이브러리(MobX/Recoil/Zustand) 등에 대한 심화 학습"
+  },
+  "tabs": {
+    "all": "전체",
+    "fluxRedux": "Flux & Redux",
+    "middleware": "Middleware",
+    "modern": "최신 라이브러리",
+    "advanced": "고급",
+    "context": "Context API"
+  },
+  "fluxRedux": {
+    "badge": "아키텍처 & 라이브러리",
+    "title": "Flux 아키텍처 & Redux",
+    "description": "단방향 데이터 흐름과 가장 인기 있는 상태 관리 라이브러리에 대한 이해",
+    "fluxArchitecture": {
+      "title": "Flux 아키텍처",
+      "description": "Flux는 Facebook에서 제안한 애플리케이션 데이터 흐름을 관리하기 위한 디자인 패턴입니다. 단방향 데이터 흐름을 강제합니다: Action → Dispatcher → Store → View. 이 사이클은 예측 가능한 상태 업데이트를 보장하고 변경 사항의 출처를 추적하기 쉽게 만듭니다.",
+      "keyPrinciples": {
+        "title": "핵심 원칙",
+        "singleDirection": "단방향: 데이터는 한 방향으로만 흐르며, 순환 종속성을 방지합니다.",
+        "centralizedStore": "중앙 집중식 Store: 모든 애플리케이션 상태는 단일 store에 존재합니다.",
+        "pureFunctions": "순수 함수: Reducer는 부수 효과가 없는 순수 함수여야 합니다."
+      }
+    },
+    "reduxCore": {
+      "title": "Redux 핵심 개념",
+      "description": "Redux는 Flux 패턴의 가장 인기 있는 구현입니다. 강력한 개발자 도구를 갖춘 예측 가능한 상태 관리 솔루션을 제공합니다.",
+      "store": {
+        "title": "Store",
+        "description": "애플리케이션 상태의 단일 진실 공급원입니다. 전체 상태 트리를 하나의 객체로 보유합니다."
+      },
+      "action": {
+        "title": "Action",
+        "description": "애플리케이션에서 \"무슨 일이 일어났는지\"를 설명하는 일반 객체입니다. Action은 상태 변경을 트리거하기 위해 dispatch됩니다."
+      },
+      "reducer": {
+        "title": "Reducer",
+        "description": "이전 상태와 action을 받아 다음 상태를 반환하는 순수 함수입니다. 결정론적이어야 합니다."
+      },
+      "dispatch": {
+        "title": "Dispatch",
+        "description": "상태를 업데이트하는 유일한 방법입니다. Dispatch는 action을 store로 보내고, store는 이를 reducer로 전달합니다."
+      }
+    },
+    "reduxToolkit": {
+      "title": "Redux Toolkit (RTK)",
+      "description": "Redux Toolkit은 Redux 로직을 작성하는 공식적이고 권장되는 방법입니다. 일반적인 Redux 패턴을 단순화하고 보일러플레이트를 크게 줄이는 유틸리티를 제공합니다.",
+      "keyBenefits": {
+        "title": "주요 이점",
+        "configureStore": "configureStore - 좋은 기본값으로 미리 구성된 store",
+        "createSlice": "createSlice - action과 reducer를 하나의 정의로 결합",
+        "createAsyncThunk": "createAsyncThunk - 비동기 작업을 우아하게 처리",
+        "immer": "Immer 통합 - 실제로는 불변인 \"변경\" 코드 작성"
+      }
+    }
+  },
+  "middleware": {
+    "badge": "비동기 상태",
+    "title": "Redux Middleware",
+    "description": "Redux 애플리케이션에서 부수 효과 및 비동기 로직 처리",
+    "understanding": {
+      "title": "Redux Middleware 이해하기",
+      "description": "Redux 자체는 동기적입니다. Middleware는 action을 dispatch하는 것과 reducer에 도달하는 순간 사이에 써드파티 확장 지점을 제공합니다. 이를 통해 API 호출, 로깅, 복잡한 비동기 워크플로우와 같은 부수 효과를 처리할 수 있습니다.",
+      "flow": {
+        "title": "Middleware 흐름",
+        "description": "action이 dispatch되면 reducer에 도달하기 전에 middleware 체인을 통과합니다. 각 middleware는 action을 가로채거나, 수정하거나, 지연시킬 수 있습니다."
+      }
+    },
+    "thunk": {
+      "title": "Redux Thunk",
+      "description": "Redux Thunk는 비동기 작업을 처리하기 위한 가장 간단하고 일반적으로 사용되는 middleware입니다. action creator가 action 객체 대신 함수를 반환할 수 있게 합니다. 이 함수는 dispatch와 getState를 인자로 받습니다.",
+      "howItWorks": {
+        "title": "작동 방식",
+        "normalActions": "일반 action: 일반 action 객체 반환",
+        "thunks": "Thunk: dispatch와 getState를 받는 함수 반환",
+        "inside": "thunk 내부에서 비동기 작업을 수행하고 수동으로 action을 dispatch"
+      },
+      "prosAndCons": {
+        "title": "장단점",
+        "pros": "장점: 간단하고, 최소한의 설정, 간단한 비동기 작업에 적합",
+        "cons": "단점: thunk 내부의 복잡한 로직으로 이어질 수 있고, 복잡한 비동기 흐름 테스트가 어려움"
+      }
+    },
+    "saga": {
+      "title": "Redux Saga",
+      "description": "Redux Saga는 Generator 함수를 사용하여 부수 효과를 보다 선언적인 방식으로 처리합니다. thunk보다 더 강력하고 테스트 가능하여 복잡한 비동기 워크플로우에 이상적입니다.",
+      "keyConcepts": {
+        "title": "핵심 개념",
+        "generators": "Generator: 일시 중지하고 재개할 수 있는 함수",
+        "effects": "Effect: 부수 효과를 설명하는 일반 객체 (call, put, select 등)",
+        "watcher": "Watcher Saga: action을 모니터링하고 worker saga를 트리거"
+      },
+      "prosAndCons": {
+        "title": "장단점",
+        "pros": "장점: 매우 테스트 가능하고, 경쟁 조건, 취소 및 복잡한 흐름을 우아하게 처리",
+        "cons": "단점: 가파른 학습 곡선, 더 많은 보일러플레이트"
+      }
+    },
+    "other": {
+      "title": "기타 Middleware",
+      "observable": {
+        "title": "Redux Observable",
+        "description": "RxJS를 기반으로 구축되어 action을 stream으로 처리하고 reactive operator를 사용하여 부수 효과를 처리합니다. 복잡한 이벤트 처리에 완벽합니다.",
+        "useCase": "강력한 stream 조작이 필요하고 reactive 프로그래밍에 익숙한 경우 사용하세요."
+      },
+      "promise": {
+        "title": "Redux Promise",
+        "description": "Promise 기반 action을 자동으로 해결하는 간단한 middleware입니다. Thunk의 경량 대안을 원할 때 유용합니다."
+      }
+    }
+  },
+  "modern": {
+    "badge": "최신 라이브러리",
+    "title": "최신 상태 관리",
+    "description": "Redux의 더 가볍고 반응적인 대안 탐색: MobX, Recoil, Zustand",
+    "evolution": {
+      "title": "Redux를 넘어서의 진화",
+      "description": "Redux는 강력하고 예측 가능하지만, 무거운 보일러플레이트와 엄격한 패턴으로 인해 개발자 경험, 적은 코드, 더 나은 React 통합에 초점을 맞춘 대안들이 등장했습니다. 이러한 라이브러리는 상태 관리에 대한 다른 철학과 접근 방식을 제공합니다.",
+      "commonGoals": {
+        "title": "공통 목표",
+        "reduceBoilerplate": "Redux에 비해 보일러플레이트 감소",
+        "betterIntegration": "더 나은 React 통합 및 hooks 지원",
+        "improvedDX": "향상된 개발자 경험",
+        "smallerBundle": "더 작은 번들 크기"
+      }
+    },
+    "mobx": {
+      "title": "MobX",
+      "description": "MobX는 Observable 상태와 decorator를 사용하여 자동으로 업데이트되는 반응형 컴포넌트를 생성합니다. 불변성보다는 변경 가능한 상태를 포용합니다.",
+      "philosophy": {
+        "title": "철학",
+        "quote": "애플리케이션 상태에서 파생될 수 있는 모든 것은 자동으로 파생되어야 합니다.",
+        "observableState": "Observable 상태: 반응형, 변경 가능한 데이터",
+        "computedValues": "Computed 값: 상태가 변경되면 자동으로 업데이트",
+        "reactions": "Reaction: 상태 변경에 응답하는 부수 효과"
+      },
+      "prosAndCons": {
+        "title": "장단점",
+        "pros": "장점: 매우 직관적이고, 자동 반응성, 최소한의 보일러플레이트",
+        "cons": "단점: 변경 가능한 상태는 Redux 개발자에게 혼란스러울 수 있고, decorator는 Babel 설정 필요"
+      }
+    },
+    "recoil": {
+      "title": "Recoil",
+      "description": "Facebook에서 만든 Recoil은 Atom과 Selector를 사용하여 상태 관리에 더 React-native한 접근 방식을 제공합니다. Concurrent Mode 호환성을 위해 설계되었습니다.",
+      "coreConcepts": {
+        "title": "핵심 개념",
+        "atoms": "Atom: 구독할 수 있는 재사용 가능한 상태 단위",
+        "selectors": "Selector: atom에서 상태를 파생하는 순수 함수",
+        "hooksFirst": "Hooks 우선: 모든 것에 React hook 사용"
+      },
+      "prosAndCons": {
+        "title": "장단점",
+        "pros": "장점: 매우 React 친화적이고, Concurrent Mode 준비, 깔끔한 API",
+        "cons": "단점: 아직 실험 단계이며, API가 변경될 수 있음"
+      }
+    },
+    "zustand": {
+      "title": "Zustand",
+      "description": "hook 기반 API를 사용하는 경량의 간단한 상태 관리 솔루션입니다. Provider가 필요 없어 설정 및 사용이 매우 간단합니다.",
+      "why": {
+        "title": "왜 Zustand인가?",
+        "minimal": "최소한의 보일러플레이트",
+        "noProvider": "Provider Hell 없음",
+        "hookBased": "Hook 기반 API (React 개발자에게 익숙함)",
+        "small": "작은 번들 크기 (~1KB)",
+        "typescript": "내장된 TypeScript 지원"
+      },
+      "prosAndCons": {
+        "title": "장단점",
+        "pros": "장점: 가장 간단한 API, Provider 불필요, 소규모에서 중규모 앱에 적합",
+        "cons": "단점: 매우 복잡한 상태를 위한 Redux/Recoil보다 기능이 적음"
+      }
+    },
+    "comparison": {
+      "title": "비교 가이드",
+      "table": {
+        "feature": "기능",
+        "redux": "Redux",
+        "mobx": "MobX",
+        "recoil": "Recoil",
+        "zustand": "Zustand",
+        "learningCurve": "학습 곡선",
+        "steep": "가파름",
+        "moderate": "보통",
+        "easy": "쉬움",
+        "boilerplate": "보일러플레이트",
+        "high": "높음",
+        "low": "낮음",
+        "minimal": "최소",
+        "bundleSize": "번들 크기",
+        "large": "큼",
+        "medium": "보통",
+        "small": "작음 (~1KB)",
+        "devtools": "DevTools",
+        "excellent": "훌륭함",
+        "good": "좋음",
+        "decent": "괜찮음",
+        "bestFor": "최적 용도",
+        "largeApps": "대규모 앱",
+        "reactiveApps": "반응형 앱",
+        "reactNative": "React-native",
+        "simpleApps": "간단한 앱"
+      },
+      "selectionGuide": {
+        "title": "선택 가이드",
+        "redux": "Redux: 훌륭한 devtools와 middleware가 필요한 대규모 앱",
+        "mobx": "MobX: 자동 반응성과 변경 가능한 패턴이 필요한 앱",
+        "recoil": "Recoil: 세분화된 상태를 가진 React-concurrent-mode 준비 앱",
+        "zustand": "Zustand: 단순성을 우선시하는 소규모에서 중규모 앱"
+      }
+    }
+  },
+  "advanced": {
+    "badge": "고급 개념",
+    "title": "고급 상태 패턴",
+    "description": "RxJS로 복잡한 비동기 stream 처리 및 State Machine(XState)으로 상태 모델링",
+    "rxjs": {
+      "title": "RxJS & Redux Observable",
+      "description": "RxJS는 상태와 이벤트를 강력한 함수형 operator를 사용하여 조작할 수 있는 stream으로 처리합니다. Redux Observable은 RxJS를 Redux와 통합하여 복잡한 비동기 워크플로우를 우아하게 처리합니다.",
+      "keyConcepts": {
+        "title": "핵심 개념",
+        "observables": "Observable: 시간에 따른 값의 stream",
+        "operators": "Operator: stream을 변환하는 순수 함수 (map, filter, debounce 등)",
+        "epics": "Epic: effect를 처리하기 위한 Redux Observable의 middleware 레이어"
+      },
+      "prosAndCons": {
+        "title": "장단점",
+        "pros": "장점: 복잡한 비동기 패턴에 매우 강력하고, composition 친화적",
+        "cons": "단점: 가파른 학습 곡선, RxJS 지식 필요, 디버깅이 복잡"
+      }
+    },
+    "xstate": {
+      "title": "XState를 사용한 State Machine",
+      "description": "XState는 Finite State Machine(FSM)과 Statechart를 사용하여 애플리케이션 로직을 모델링합니다. 유효한 상태 전환을 명시적으로 정의하여 불가능한 상태를 방지하는 데 도움이 됩니다.",
+      "coreConcepts": {
+        "title": "핵심 개념",
+        "states": "State: 개별 애플리케이션 상태 (idle, loading, success, error)",
+        "events": "Event: 상태 전환을 트리거하는 action",
+        "transitions": "Transition: 어떤 이벤트가 어떤 상태 변경을 일으키는지 정의하는 규칙",
+        "context": "Context: 상태와 관련된 확장 상태 데이터"
+      },
+      "benefits": {
+        "title": "이점",
+        "preventsInvalid": "잘못된 상태 방지: State machine이 유효한 전환을 명시적으로 정의",
+        "selfDocumenting": "자체 문서화: 상태 다이어그램이 문서 역할",
+        "testability": "테스트 가능성: 순수 로직으로 테스트가 간단",
+        "visualization": "시각화: XState는 상태 흐름을 볼 수 있는 시각적 도구 제공"
+      }
+    },
+    "when": {
+      "title": "고급 패턴을 사용해야 할 때",
+      "rxjs": {
+        "title": "RxJS Observable 사용 시기...",
+        "complex": "복잡하고 상호 연결된 비동기 작업 처리",
+        "debounce": "요청을 debounce, throttle 또는 batch 처리해야 할 때",
+        "streams": "실시간 데이터 stream 관리",
+        "team": "팀이 reactive 프로그래밍에 익숙할 때"
+      },
+      "xstate": {
+        "title": "XState 사용 시기...",
+        "complex": "많은 복잡한 전환이 있는 상태",
+        "preventing": "불가능한 상태 방지가 중요할 때",
+        "documentation": "상태 흐름의 명확한 문서화가 필요할 때",
+        "testing": "상태 로직 테스트가 우선순위일 때"
+      },
+      "warning": {
+        "title": "주의",
+        "description": "이것들은 상당한 학습 곡선을 가진 고급 패턴입니다. 더 간단한 솔루션(Redux Thunk, Zustand)이 불충분할 때만 사용하세요."
+      }
+    },
+    "comparisonTable": {
+      "title": "비교: 모든 비동기 접근 방식",
+      "approach": "접근 방식",
+      "complexity": "복잡도",
+      "bestFor": "최적 용도",
+      "learningCurve": "학습 곡선",
+      "thunk": {
+        "name": "Redux Thunk",
+        "complexity": "낮음",
+        "bestFor": "간단한 비동기 작업",
+        "learningCurve": "쉬움"
+      },
+      "saga": {
+        "name": "Redux Saga",
+        "complexity": "중간-높음",
+        "bestFor": "복잡한 비동기 흐름",
+        "learningCurve": "보통"
+      },
+      "observable": {
+        "name": "RxJS Observable",
+        "complexity": "높음",
+        "bestFor": "Stream 조작",
+        "learningCurve": "가파름"
+      },
+      "xstate": {
+        "name": "XState",
+        "complexity": "중간",
+        "bestFor": "복잡한 상태 로직",
+        "learningCurve": "보통"
+      }
+    }
+  },
+  "context": {
+    "badge": "내장",
+    "title": "Context API",
+    "description": "React의 prop drilling 방지 및 전역 상태 관리를 위한 내장 솔루션",
+    "what": {
+      "title": "Context API란?",
+      "description": "Context는 모든 레벨에서 수동으로 props를 전달하지 않고도 컴포넌트 트리를 통해 데이터를 전달하는 방법을 제공합니다. prop drilling 방지를 위한 React의 내장 메커니즘이며 낮은 빈도의 상태 업데이트에 완벽합니다.",
+      "keyComponents": {
+        "title": "주요 컴포넌트",
+        "createContext": "React.createContext(): context 객체 생성",
+        "provider": "Provider: context 값에 액세스해야 하는 컴포넌트를 감쌈",
+        "useContext": "useContext() hook: 함수형 컴포넌트에서 context 값을 사용"
+      }
+    },
+    "howToUse": {
+      "title": "Context 사용 방법",
+      "description": "Context 사용은 세 가지 주요 단계를 포함합니다: context 생성, 값 제공, 컴포넌트에서 소비."
+    },
+    "bestUseCases": {
+      "title": "최적 사용 사례",
+      "description": "Context API는 전역 상태가 간단하고, 자주 업데이트되지 않으며, 복잡한 동기화 로직이 필요하지 않을 때 탁월합니다.",
+      "good": {
+        "title": "좋은 사용 사례",
+        "theme": "테마 기본 설정 (라이트/다크 모드)",
+        "language": "언어/현지화 설정",
+        "auth": "인증 상태 및 사용자 정보",
+        "modal": "모달/다이얼로그 상태",
+        "featureFlags": "기능 플래그 (정적 구성)"
+      },
+      "poor": {
+        "title": "나쁜 사용 사례",
+        "frequently": "자주 변경되는 데이터 (폼 입력, 실시간 업데이트)",
+        "complex": "많은 reducer가 있는 복잡한 상태",
+        "async": "비동기 middleware가 필요한 상태",
+        "caching": "앱 전체 캐싱 요구"
+      }
+    },
+    "performance": {
+      "title": "성능 고려사항",
+      "description": "Context는 신중하게 처리하지 않으면 성능 문제로 이어질 수 있는 중요한 제한 사항이 있습니다.",
+      "mainProblem": {
+        "title": "주요 문제",
+        "description": "Context 값이 변경되면 값의 변경된 부분을 사용하는지 여부에 관계없이 모든 소비 컴포넌트가 다시 렌더링됩니다."
+      },
+      "optimization": {
+        "title": "최적화 전략",
+        "split": "context 분할: 다른 관심사에 대해 여러 context로 분리",
+        "memoize": "값 memoize: useMemo를 사용하여 불필요한 재렌더링 방지",
+        "customHooks": "사용자 정의 hook 사용: 필요한 값만 선택하는 특정 hook 생성",
+        "selectors": "selector 구현: 자식 컴포넌트에 React.memo 사용"
+      }
+    },
+    "vsGlobalState": {
+      "title": "Context vs 전역 상태 라이브러리",
+      "decisionFramework": {
+        "title": "결정 프레임워크",
+        "useContext": "Context API 사용 시기:",
+        "contextWhen": {
+          "simple": "상태가 간단하고 계층적일 때",
+          "infrequent": "업데이트가 드물 때",
+          "noAsync": "복잡한 비동기 로직이 필요하지 않을 때",
+          "small": "프로젝트가 소규모에서 중규모일 때"
+        },
+        "useLibrary": "Redux/Zustand/Recoil 사용 시기:",
+        "libraryWhen": {
+          "complex": "많은 관계가 있는 복잡한 상태",
+          "frequent": "업데이트가 빈번할 때",
+          "middleware": "비동기 작업을 위한 middleware 필요",
+          "devtools": "DevTools 및 time-travel 디버깅 필요"
+        }
+      },
+      "comparisonTable": {
+        "aspect": "측면",
+        "contextApi": "Context API",
+        "redux": "Redux",
+        "zustand": "Zustand",
+        "setup": "설정",
+        "simple": "간단함",
+        "complex": "복잡함",
+        "verySimple": "매우 간단함",
+        "performance": "성능",
+        "requiresCare": "주의 필요",
+        "excellent": "훌륭함",
+        "devtools": "DevTools",
+        "none": "없음",
+        "good": "좋음",
+        "for": "용도",
+        "simpleApps": "간단한 앱",
+        "complexApps": "복잡한 앱",
+        "mostApps": "대부분의 앱"
+      }
+    },
+    "patterns": {
+      "title": "일반적인 패턴 & 주의사항",
+      "providerHell": {
+        "title": "Provider Hell",
+        "description": "여러 context provider는 깊게 중첩된 JSX로 이어질 수 있습니다:",
+        "solution": "해결책: 모든 context를 구성하는 사용자 정의 root provider를 생성하세요."
+      },
+      "missingProvider": {
+        "title": "누락된 Provider 오류",
+        "description": "context를 소비할 때 항상 확인을 추가하여 유용한 오류를 제공하세요:"
+      }
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -6,6 +7,7 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const WebWorkerSection = () => {
+  const { t } = useTranslation('week13');
   const [mainThreadResult, setMainThreadResult] = useState<string>('');
   const [workerResult, setWorkerResult] = useState<string>('');
   const [isMainRunning, setIsMainRunning] = useState(false);
@@ -65,44 +67,39 @@ export const WebWorkerSection = () => {
 
   return (
     <SectionCard
-      badge={{ label: 'Parallel', color: 'blue' }}
-      title="Web Worker — Browser Multithreading"
-      description="Offload CPU-intensive work to background threads"
+      badge={{ label: t('webWorker.badge'), color: 'blue' }}
+      title={t('webWorker.title')}
+      description={t('webWorker.description')}
     >
       <div className="space-y-8">
-        <SubSection title="What is Web Worker?" icon iconColor="blue">
-          <InfoBox variant="blue" title="Background Processing">
+        <SubSection title={t('webWorker.whatIs.title')} icon iconColor="blue">
+          <InfoBox variant="blue" title={t('webWorker.whatIs.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              JavaScript runs on a single thread, but browsers provide Worker
-              threads to <strong>offload CPU-heavy tasks</strong> without
-              blocking the main UI thread.
+              {t('webWorker.whatIs.description')}
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm mt-3">
               <li>
-                <strong>Separate Thread:</strong> Workers run in isolated
-                contexts with no DOM access
+                <strong>{t('webWorker.whatIs.separateThread').split(':')[0]}:</strong> {t('webWorker.whatIs.separateThread').split(':')[1]}
               </li>
               <li>
-                <strong>Message Passing:</strong> Communication via postMessage
-                (serialization overhead)
+                <strong>{t('webWorker.whatIs.messagePassing').split(':')[0]}:</strong> {t('webWorker.whatIs.messagePassing').split(':')[1]}
               </li>
               <li>
-                <strong>Transferable Objects:</strong> Zero-copy transfer for
-                ArrayBuffer
+                <strong>{t('webWorker.whatIs.transferable').split(':')[0]}:</strong> {t('webWorker.whatIs.transferable').split(':')[1]}
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Use Cases" icon iconColor="purple">
+        <SubSection title={t('webWorker.useCases.title')} icon iconColor="purple">
           <div className="grid grid-cols-2 gap-3">
             {[
-              { title: 'Large JSON Parsing', desc: '5-50MB data processing' },
-              { title: 'Image Processing', desc: 'Filters, transformations' },
-              { title: 'Video/Audio', desc: 'FFmpeg WASM encoding' },
-              { title: 'Cryptography', desc: 'Encryption/decryption' },
-              { title: 'ML Inference', desc: 'TensorFlow.js models' },
-              { title: 'Data Compression', desc: 'Gzip, LZ compression' },
+              { title: t('webWorker.useCases.largeJson'), desc: t('webWorker.useCases.largeJsonDesc') },
+              { title: t('webWorker.useCases.imageProcessing'), desc: t('webWorker.useCases.imageProcessingDesc') },
+              { title: t('webWorker.useCases.videoAudio'), desc: t('webWorker.useCases.videoAudioDesc') },
+              { title: t('webWorker.useCases.cryptography'), desc: t('webWorker.useCases.cryptographyDesc') },
+              { title: t('webWorker.useCases.mlInference'), desc: t('webWorker.useCases.mlInferenceDesc') },
+              { title: t('webWorker.useCases.compression'), desc: t('webWorker.useCases.compressionDesc') },
             ].map((item) => (
               <div
                 key={item.title}
@@ -117,8 +114,8 @@ export const WebWorkerSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title="Main Thread vs Worker Demo" icon iconColor="green">
-          <DemoBox label="UI Blocking Comparison">
+        <SubSection title={t('webWorker.demo.title')} icon iconColor="green">
+          <DemoBox label={t('webWorker.demo.label')}>
             <div className="space-y-4">
               <div className="flex items-center gap-4 mb-4">
                 <div
@@ -127,16 +124,16 @@ export const WebWorkerSection = () => {
                   }`}
                 />
                 <div className="text-sm text-gray-600">
-                  <p className="font-medium">Animation Test</p>
+                  <p className="font-medium">{t('webWorker.demo.animationTest')}</p>
                   <p className="text-xs">
-                    Click toggle, then run calculations to see blocking
+                    {t('webWorker.demo.animationDesc')}
                   </p>
                   <button
                     type="button"
                     onClick={() => setAnimating(!animating)}
                     className="mt-2 px-3 py-1 text-xs bg-gray-200 rounded hover:bg-gray-300"
                   >
-                    {animating ? 'Stop' : 'Start'} Animation
+                    {animating ? t('webWorker.demo.stop') : t('webWorker.demo.start')} Animation
                   </button>
                 </div>
               </div>
@@ -144,10 +141,10 @@ export const WebWorkerSection = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white p-4 rounded-lg border border-gray-200">
                   <h4 className="font-semibold text-sm mb-2 text-red-600">
-                    Main Thread
+                    {t('webWorker.demo.mainThread')}
                   </h4>
                   <p className="text-xs text-gray-500 mb-3">
-                    Blocks UI during calculation
+                    {t('webWorker.demo.mainThreadDesc')}
                   </p>
                   <button
                     type="button"
@@ -155,7 +152,7 @@ export const WebWorkerSection = () => {
                     disabled={isMainRunning}
                     className="w-full px-3 py-2 text-sm bg-red-500 text-white rounded hover:bg-red-600 disabled:opacity-50"
                   >
-                    {isMainRunning ? 'Running...' : 'Run on Main'}
+                    {isMainRunning ? t('webWorker.demo.running') : t('webWorker.demo.runOnMain')}
                   </button>
                   <p className="text-xs mt-2 text-gray-600 min-h-[20px]">
                     {mainThreadResult}
@@ -164,10 +161,10 @@ export const WebWorkerSection = () => {
 
                 <div className="bg-white p-4 rounded-lg border border-gray-200">
                   <h4 className="font-semibold text-sm mb-2 text-green-600">
-                    Web Worker
+                    {t('webWorker.demo.webWorker')}
                   </h4>
                   <p className="text-xs text-gray-500 mb-3">
-                    UI stays responsive
+                    {t('webWorker.demo.webWorkerDesc')}
                   </p>
                   <button
                     type="button"
@@ -175,7 +172,7 @@ export const WebWorkerSection = () => {
                     disabled={isWorkerRunning}
                     className="w-full px-3 py-2 text-sm bg-green-500 text-white rounded hover:bg-green-600 disabled:opacity-50"
                   >
-                    {isWorkerRunning ? 'Running...' : 'Run on Worker'}
+                    {isWorkerRunning ? t('webWorker.demo.running') : t('webWorker.demo.runOnWorker')}
                   </button>
                   <p className="text-xs mt-2 text-gray-600 min-h-[20px]">
                     {workerResult}
@@ -186,7 +183,7 @@ export const WebWorkerSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Basic Usage" icon iconColor="orange">
+        <SubSection title={t('webWorker.basicUsage.title')} icon iconColor="orange">
           <CodeBlock
             code={`// main.js
 const worker = new Worker('./worker.js');
@@ -215,11 +212,10 @@ onmessage = (e) => {
           />
         </SubSection>
 
-        <SubSection title="Transferable Objects" icon iconColor="red">
-          <InfoBox variant="orange" title="Zero-Copy Transfer">
+        <SubSection title={t('webWorker.transferableObjects.title')} icon iconColor="red">
+          <InfoBox variant="orange" title={t('webWorker.transferableObjects.infoTitle')}>
             <p className="text-sm mb-3">
-              postMessage copies data by default. For large ArrayBuffers, use
-              Transferable Objects to transfer ownership without copying.
+              {t('webWorker.transferableObjects.description')}
             </p>
           </InfoBox>
 
@@ -243,11 +239,10 @@ onmessage = (e) => {
           />
         </SubSection>
 
-        <SubSection title="SharedArrayBuffer (Advanced)" icon iconColor="purple">
-          <InfoBox variant="purple" title="Shared Memory">
+        <SubSection title={t('webWorker.sharedArrayBuffer.title')} icon iconColor="purple">
+          <InfoBox variant="purple" title={t('webWorker.sharedArrayBuffer.infoTitle')}>
             <p className="text-sm">
-              SharedArrayBuffer allows true memory sharing between threads. Use
-              Atomics for synchronization. Requires COOP/COEP headers.
+              {t('webWorker.sharedArrayBuffer.description')}
             </p>
           </InfoBox>
 

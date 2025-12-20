@@ -201,19 +201,26 @@ const { t } = useTranslation('week1');
 4. **코드 블록 보존:** CodeBlock 내용은 절대 번역하지 않음
 
 ## 현재 작업 상황
-- [ ] week1
-- [ ] week2
-- [ ] week3
-- [ ] week4
-- [ ] week5
-- [ ] week6
-- [ ] week7
-- [ ] week8
-- [ ] week9
-- [ ] week10
-- [ ] week11
-- [ ] week12
-- [ ] week13
-- [ ] week14
-- [ ] week15
+- [✅] week1
+- [✅] week2
+- [✅] week3
+- [✅] week4
+- [✅] week5
+- [✅] week6
+- [✅] week7
+- [✅] week8
+- [✅] week9
+- [✅] week10
+- [✅] week11
+- [✅] week12
+- [✅] week13
+- [✅] week14
+- [✅] week15
+
+## 완료 사항
+- 모든 번역 파일 생성 완료 (ko/en × week1~15)
+- 모든 페이지 컴포넌트 i18n 적용 완료
+- 모든 섹션 컴포넌트 i18n 적용 완료
+- "Back to Dashboard" 하드코딩 제거 완료
+- 빌드 테스트 통과
 

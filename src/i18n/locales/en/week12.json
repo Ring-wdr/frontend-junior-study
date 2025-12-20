@@ -1,0 +1,440 @@
+{
+  "header": {
+    "title": "Authentication & Security",
+    "description": "Master OAuth 2.0, OpenID Connect, NextAuth.js, JWT authentication, and essential web security concepts like XSS and CSRF protection."
+  },
+  "tabs": {
+    "all": "All",
+    "oauth": "OAuth 2.0",
+    "oidc": "OIDC",
+    "nextauth": "NextAuth",
+    "jwt": "JWT vs Session",
+    "csrf": "CSRF",
+    "xss": "XSS & CSP",
+    "react2shell": "React2Shell (New)",
+    "privacy": "Privacy"
+  },
+  "oauth": {
+    "badge": "Protocol",
+    "title": "OAuth 2.0 Fundamentals",
+    "description": "Understanding authorization delegation for third-party access",
+    "whatIs": {
+      "title": "What is OAuth 2.0?",
+      "infoTitle": "Authorization Protocol",
+      "infoDescription": "OAuth 2.0 is a standard protocol for delegating access to third-party services. For example, when your app needs access to a user's Google Calendar, OAuth 2.0 provides a secure way to obtain an access token from Google.",
+      "listAuthNot": "Authorization, not Authentication: OAuth 2.0 handles permission delegation, not user identity verification",
+      "listAccessToken": "Access Tokens: Short-lived credentials for accessing protected resources",
+      "listRefreshToken": "Refresh Tokens: Long-lived tokens to obtain new access tokens without re-authentication"
+    },
+    "roles": {
+      "title": "Key Roles in OAuth 2.0",
+      "resourceOwner": "Resource Owner",
+      "resourceOwnerDesc": "The user who owns the data",
+      "client": "Client",
+      "clientDesc": "Your application requesting access",
+      "authServer": "Authorization Server",
+      "authServerDesc": "Issues tokens (e.g., Google OAuth)",
+      "resourceServer": "Resource Server",
+      "resourceServerDesc": "Hosts protected resources (API)"
+    },
+    "flow": {
+      "title": "Authorization Code Flow",
+      "demoLabel": "OAuth 2.0 Flow Interactive Map",
+      "step1": "User clicks \"Login with Google\"",
+      "step2": "Redirect to Authorization Server",
+      "step3": "User authenticates & consents",
+      "step4": "Auth code sent to redirect URI",
+      "step5": "Exchange code for tokens",
+      "step6": "Access Token received",
+      "step7": "Use token to access resources",
+      "actorClient": "Client App",
+      "actorBrowser": "Browser",
+      "actorAuth": "Auth Server",
+      "actorApi": "API",
+      "labelClient": "Client App",
+      "labelBrowser": "Browser",
+      "labelAuth": "Auth Server",
+      "labelApi": "API",
+      "prevButton": "← Previous Step",
+      "nextButton": "Next Step →"
+    },
+    "authUrl": {
+      "title": "Authorization URL Example"
+    },
+    "tokenExchange": {
+      "title": "Token Exchange",
+      "securityNote": "Security Note",
+      "securityDescription": "The client_secret must never be exposed to the frontend. Token exchange should always happen on a secure backend server."
+    }
+  },
+  "oidc": {
+    "badge": "Identity",
+    "title": "OpenID Connect (OIDC)",
+    "description": "Authentication layer built on top of OAuth 2.0",
+    "difference": {
+      "title": "OAuth 2.0 vs OIDC",
+      "infoTitle": "Key Difference",
+      "infoDescription": "OAuth 2.0 handles authorization (access delegation), while OpenID Connect adds authentication (user identity verification).",
+      "oauth": "OAuth 2.0",
+      "oauthExample": "\"Can this app access my calendar?\"",
+      "oidc": "OIDC",
+      "oidcExample": "\"Who is this user?\""
+    },
+    "idToken": {
+      "title": "ID Token",
+      "infoDescription": "OIDC introduces the ID Token, a signed JWT containing user identity claims like email, name, and user ID. This token proves who the user is.",
+      "claimsTitle": "Standard Claims in ID Token:",
+      "sub": "Subject (unique user ID)",
+      "email": "User email address",
+      "name": "Full name",
+      "iss": "Token issuer",
+      "aud": "Token audience (client ID)",
+      "exp": "Expiration time"
+    },
+    "decoder": {
+      "title": "ID Token Decoder",
+      "demoLabel": "Decode JWT ID Token",
+      "decodeButton": "Decode Token",
+      "header": "Header",
+      "payload": "Payload (Claims)"
+    },
+    "scopes": {
+      "title": "OIDC Scopes"
+    },
+    "flowSummary": {
+      "title": "OIDC Flow Summary",
+      "step1": "Request authorization with openid scope",
+      "step2": "User authenticates at identity provider",
+      "step3": "Receive authorization code",
+      "step4": "Exchange code for access_token AND id_token",
+      "step5": "Validate and decode ID token for user info",
+      "infoDescription": "Libraries like NextAuth.js handle all these steps automatically. You rarely need to implement OIDC manually."
+    }
+  },
+  "nextauth": {
+    "badge": "Library",
+    "title": "NextAuth.js (Auth.js)",
+    "description": "Complete authentication solution for Next.js applications",
+    "whatIs": {
+      "title": "What is NextAuth.js?",
+      "infoTitle": "Full-featured Auth Solution",
+      "infoDescription": "NextAuth.js (being rebranded to Auth.js) is a complete authentication solution for Next.js apps. It handles OAuth providers, credentials login, JWT/database sessions, and more.",
+      "listProviders": "Multiple Providers: Google, GitHub, Facebook, credentials, etc.",
+      "listSessions": "Session Modes: JWT or database sessions",
+      "listPages": "Built-in Pages: Sign in, sign out, error pages",
+      "listSSR": "SSR Support: Works with both client and server components"
+    },
+    "setup": {
+      "title": "Basic Setup"
+    },
+    "provider": {
+      "title": "Session Provider Setup"
+    },
+    "usage": {
+      "title": "Using Session in Components"
+    },
+    "demo": {
+      "title": "Session Demo",
+      "demoLabel": "Simulated Authentication",
+      "notSignedIn": "Not signed in",
+      "signInButton": "Sign in with Google",
+      "signOutButton": "Sign out"
+    },
+    "protecting": {
+      "title": "Protecting Routes"
+    }
+  },
+  "jwt": {
+    "badge": "Concepts",
+    "title": "JWT vs Session Authentication",
+    "description": "Understanding stateless vs stateful authentication approaches",
+    "structure": {
+      "title": "JWT Structure",
+      "infoTitle": "JSON Web Token",
+      "infoDescription": "JWT is a self-contained token format with three Base64-encoded parts: Header.Payload.Signature",
+      "header": "Header (Algorithm & Type)",
+      "payload": "Payload (Claims)",
+      "signature": "Signature (Verification)"
+    },
+    "comparison": {
+      "title": "Comparison",
+      "demoLabel": "JWT vs Session",
+      "jwtTitle": "JWT (Stateless)",
+      "sessionTitle": "Session (Stateful)",
+      "prosLabel": "Pros",
+      "consLabel": "Cons",
+      "jwtPros": [
+        "No server-side storage needed",
+        "Scales horizontally easily",
+        "Works well with microservices",
+        "Can contain user claims"
+      ],
+      "jwtCons": [
+        "Difficult to revoke (until expiry)",
+        "Token size can be large",
+        "Must handle token refresh",
+        "Vulnerable if stored in localStorage"
+      ],
+      "sessionPros": [
+        "Easy to revoke (delete from store)",
+        "Small cookie size (just session ID)",
+        "Better control over active sessions",
+        "Can store complex session data"
+      ],
+      "sessionCons": [
+        "Requires server-side storage",
+        "Scaling requires shared session store",
+        "Session lookup on every request",
+        "Sticky sessions or Redis needed"
+      ]
+    },
+    "storage": {
+      "title": "Token Storage Best Practices",
+      "localStorage": "localStorage",
+      "localStorageDesc": "Vulnerable to XSS attacks - avoid for sensitive tokens",
+      "httpOnly": "HttpOnly Cookie",
+      "httpOnlyDesc": "Not accessible via JavaScript - recommended for tokens",
+      "memory": "Memory (in-app state)",
+      "memoryDesc": "Safe but lost on refresh - use with refresh tokens"
+    },
+    "refresh": {
+      "title": "Refresh Token Pattern"
+    },
+    "hybrid": {
+      "title": "Modern Hybrid Approach",
+      "infoTitle": "Best Practice",
+      "infoDescription": "Modern apps often use a hybrid approach: JWT access tokens (short-lived, in memory) + HttpOnly refresh tokens (long-lived, in cookies). This combines JWT scalability with session-like revocation capabilities."
+    }
+  },
+  "csrf": {
+    "badge": "Security",
+    "title": "CSRF & SameSite Cookies",
+    "description": "Protecting against Cross-Site Request Forgery attacks",
+    "whatIs": {
+      "title": "What is CSRF?",
+      "infoTitle": "Cross-Site Request Forgery",
+      "infoDescription": "CSRF exploits the trust a website has in a user's browser. An attacker tricks users into making unwanted requests using their existing authentication cookies.",
+      "scenarioTitle": "Attack Scenario:",
+      "step1": "User logs into bank.com (session cookie stored)",
+      "step2": "User visits malicious site with hidden form",
+      "step3": "Form auto-submits POST to bank.com/transfer",
+      "step4": "Browser includes bank.com cookies automatically",
+      "step5": "Bank processes the unauthorized transfer"
+    },
+    "simulator": {
+      "title": "Interactive CSRF Simulator",
+      "demoLabel": "Attack Playground",
+      "bankTitle": "Bank.com",
+      "bankAuth": "Authenticated",
+      "bankBalance": "Your Balance",
+      "evilTitle": "Evil-Site.com",
+      "evilCongrats": "CONGRATULATIONS!",
+      "evilMessage": "You won a free iPhone! Click below to claim.",
+      "evilButton": "CLAIM PRIZE",
+      "evilHidden": "(Hidden: POST /transfer to Bank.com)",
+      "protectionLabel": "Current Protection:",
+      "blocked": "CSRF Attack Blocked.",
+      "vulnerable": "Vulnerable! Cookie sent.",
+      "strictDesc": "Cookie is only sent in first-party context. Never sent with cross-site requests.",
+      "laxDesc": "Cookie sent with top-level navigation (GET) but not with cross-site POST/AJAX.",
+      "noneDesc": "Cookie sent with all requests including cross-site. Requires Secure flag.",
+      "transactionUnauthorized": "Unauthorized Transfer: -$100",
+      "transactionBlocked": "Blocked by SameSite Policy 🛡️"
+    },
+    "cookies": {
+      "title": "Setting Secure Cookies"
+    },
+    "token": {
+      "title": "CSRF Token Protection",
+      "infoDescription": "For additional protection, especially with SameSite=None, use CSRF tokens. NextAuth.js handles this automatically for its forms."
+    },
+    "checklist": {
+      "title": "Cookie Security Checklist",
+      "httpOnly": "HttpOnly",
+      "httpOnlyDesc": "Prevents JavaScript access (XSS protection)",
+      "secure": "Secure",
+      "secureDesc": "Only transmitted over HTTPS",
+      "sameSite": "SameSite=Lax",
+      "sameSiteDesc": "CSRF protection with good UX balance",
+      "path": "Path=/",
+      "pathDesc": "Limit cookie scope as needed",
+      "domain": "Domain",
+      "domainDesc": "Specify domain for subdomains",
+      "maxAge": "Max-Age/Expires",
+      "maxAgeDesc": "Set appropriate expiration"
+    }
+  },
+  "xss": {
+    "badge": "Security",
+    "title": "XSS & Content Security Policy",
+    "description": "Defending against Cross-Site Scripting attacks",
+    "whatIs": {
+      "title": "What is XSS?",
+      "infoTitle": "Cross-Site Scripting",
+      "infoDescription": "XSS allows attackers to inject malicious scripts into web pages viewed by other users. These scripts can steal cookies, session tokens, or perform actions as the victim.",
+      "stored": "Stored XSS",
+      "storedDesc": "Malicious script saved in database, affects all users viewing the content",
+      "reflected": "Reflected XSS",
+      "reflectedDesc": "Script injected via URL parameters, executed immediately",
+      "dom": "DOM XSS",
+      "domDesc": "Client-side JavaScript manipulates DOM with untrusted data"
+    },
+    "sanitization": {
+      "title": "Input Sanitization Demo",
+      "demoLabel": "Reflected XSS Simulator",
+      "serverStatus": "Server Status",
+      "resetButton": "Reset & Clear",
+      "inputLabel": "1. Malicious Input",
+      "inputPlaceholder": "Enter HTML or script...",
+      "payload1Button": "Insert Payload 1",
+      "payload2Button": "Insert Payload 2",
+      "vulnerableOutput": "Vulnerable Output (Unescaped)",
+      "safeOutput": "Safe Output (Sanitized)",
+      "scriptExecuted": "Script Executed!",
+      "xssSuccessful": "XSS Attack Successful"
+    },
+    "react": {
+      "title": "React's Built-in Protection",
+      "infoTitle": "Automatic Escaping",
+      "infoDescription": "React automatically escapes values embedded in JSX, providing built-in XSS protection. However, dangerouslySetInnerHTML bypasses this protection."
+    },
+    "csp": {
+      "title": "Content Security Policy (CSP)",
+      "infoTitle": "Defense in Depth",
+      "infoDescription": "CSP is an HTTP header that tells browsers which sources of content are trusted. Even if XSS is injected, CSP can prevent it from executing."
+    },
+    "directives": {
+      "title": "CSP Directives Reference",
+      "defaultSrc": "Fallback for other directives",
+      "scriptSrc": "JavaScript sources",
+      "styleSrc": "CSS sources",
+      "imgSrc": "Image sources",
+      "connectSrc": "Fetch/XHR/WebSocket",
+      "fontSrc": "Font file sources",
+      "frameSrc": "iframe sources",
+      "frameAncestors": "Who can embed this page"
+    },
+    "checklist": {
+      "title": "XSS Prevention Checklist",
+      "item1": "Never use dangerouslySetInnerHTML with untrusted data",
+      "item2": "Use DOMPurify to sanitize any HTML that must be rendered",
+      "item3": "Validate and sanitize all user inputs server-side",
+      "item4": "Implement Content Security Policy headers",
+      "item5": "Use HttpOnly cookies for sensitive tokens",
+      "item6": "Avoid inline event handlers (onclick, onerror, etc.)",
+      "item7": "Keep dependencies updated to patch XSS vulnerabilities",
+      "item8": "Use React/frameworks that escape by default"
+    },
+    "otherHeaders": {
+      "title": "Other Security Headers"
+    }
+  },
+  "react2shell": {
+    "badge": "Critical Vulnerability",
+    "title": "React2Shell (CVE-2025-55182)",
+    "description": "The CVSS 10.0 RCE vulnerability in React Server Components",
+    "whatIs": {
+      "title": "What is React2Shell?",
+      "infoTitle": "Unauthenticated Remote Code Execution",
+      "infoDescription": "React2Shell is a critical vulnerability in the React Server Components (RSC) architecture. It exploits an insecure deserialization flaw in the \"Flight\" protocol used by React to communicate between server and client.",
+      "listCVSS": "CVSS Score: 10.0 (Critical)",
+      "listMechanism": "Mechanism: Malicious payload triggers prototype pollution or code execution during deserialization.",
+      "listImpact": "Impact: Full server takeover without authentication.",
+      "listAffected": "Affected: Next.js < 15.0.5, React < 19.0.1 (Experimental/Canary channels)."
+    },
+    "simulator": {
+      "title": "Exploit Simulator",
+      "demoLabel": "Server Action RCE Playground",
+      "versionLabel": "React Version",
+      "payloadLabel": "Payload Type",
+      "normalData": "Normal Data",
+      "exploitPayload": "Exploit Payload",
+      "sendButton": "Send Request",
+      "attackerTerminal": "Attacker Terminal",
+      "flightProtocol": "RSC Flight Protocol",
+      "targetServer": "Target Server",
+      "waitingRequests": "Waiting for requests...",
+      "patched": "Patched (v19.1.2)",
+      "vulnerable": "Vulnerable (v19.0.0)"
+    },
+    "vulnerable": {
+      "title": "Vulnerable Code Pattern"
+    },
+    "mitigation": {
+      "title": "Mitigation Checklist",
+      "item1": "Upgrade React to v19.0.1, 19.1.2, or latest",
+      "item2": "Upgrade Next.js to v15.0.5+ or v14.2.x patches",
+      "item3": "Use a WAF to filter malicious payloads (temporary)",
+      "item4": "Rotate potentially exposed secrets/keys",
+      "item5": "Monitor server logs for unusual deserialization errors"
+    }
+  },
+  "privacy": {
+    "badge": "Best Practices",
+    "title": "Privacy & Security UX",
+    "description": "Frontend considerations for user privacy and security",
+    "dataMinimization": {
+      "title": "Data Minimization",
+      "infoTitle": "Store Only What's Needed",
+      "infoDescription": "Follow the principle of data minimization: only collect, store, and process data that is absolutely necessary. This reduces risk and helps with GDPR/CCPA compliance.",
+      "list1": "Store tokens in HttpOnly cookies, not localStorage",
+      "list2": "Don't store sensitive data in client-side state",
+      "list3": "Clear sensitive data from memory after use",
+      "list4": "Mask or truncate sensitive displays (e.g., •••• 4242)"
+    },
+    "cookieConsent": {
+      "title": "Cookie Consent UX",
+      "demoLabel": "Consent Banner Simulator",
+      "bannerTitle": "We value your privacy",
+      "bannerDescription": "We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic.",
+      "essential": "Essential",
+      "analytics": "Analytics",
+      "marketing": "Marketing",
+      "acceptAll": "Accept All",
+      "rejectNonEssential": "Reject Non-Essential",
+      "proTip": "Pro Tip: Don't use \"Dark Patterns\". A \"Reject All\" button should be as visible and easy to click as \"Accept All\"."
+    },
+    "password": {
+      "title": "Password Field Best Practices",
+      "demoLabel": "Password Strength Indicator",
+      "inputLabel": "Enter Password:",
+      "inputPlaceholder": "Enter a password",
+      "strength": "Strength:",
+      "veryWeak": "Very Weak",
+      "weak": "Weak",
+      "fair": "Fair",
+      "good": "Good",
+      "strong": "Strong"
+    },
+    "logout": {
+      "title": "Secure Logout Implementation"
+    },
+    "sessionTimeout": {
+      "title": "Session Timeout UX",
+      "infoTitle": "User-Friendly Session Management",
+      "infoDescription": "Implement session timeout warnings to prevent data loss and improve user experience. Warn users before their session expires."
+    },
+    "twoFactor": {
+      "title": "Two-Factor Authentication UX",
+      "demoLabel": "2FA Code Input Pattern",
+      "autoFocusNote": "Auto-focus next input on entry for better UX"
+    },
+    "compliance": {
+      "title": "Privacy Compliance Checklist",
+      "item1": "Display cookie consent banner before setting non-essential cookies",
+      "item2": "Provide clear privacy policy link in footer",
+      "item3": "Allow users to download their data (data portability)",
+      "item4": "Implement account deletion functionality",
+      "item5": "Log security-relevant events (login, password change)",
+      "item6": "Mask sensitive data in logs and error messages",
+      "item7": "Use HTTPS everywhere",
+      "item8": "Implement rate limiting for auth endpoints",
+      "categoryGDPR": "GDPR/CCPA",
+      "categoryLegal": "Legal",
+      "categorySecurity": "Security"
+    }
+  },
+  "common": {
+    "backToDashboard": "← Back to Dashboard"
+  }
+}

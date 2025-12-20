@@ -1,0 +1,135 @@
+{
+  "header": {
+    "title": "Internal Mechanism",
+    "description": "JavaScript Runtime, Execution Context, Memory Model에 대한 심층 학습."
+  },
+  "tabs": {
+    "all": "All",
+    "runtime": "Runtime",
+    "core": "Core",
+    "async": "Async",
+    "advanced": "Advanced"
+  },
+  "eventLoop": {
+    "badge": "Runtime",
+    "title": "Event Loop Visualizer",
+    "description": "Event Loop을 단계별로 실행하여 JavaScript가 비동기 코드를 처리하는 방식을 이해합니다.",
+    "keyRule": {
+      "title": "핵심 규칙",
+      "content": "Microtasks (Promises, queueMicrotask)는 현재 스크립트 직후 그리고 새로운 Macrotask (setTimeout, I/O) 이전에 즉시 처리됩니다."
+    }
+  },
+  "thisBinding": {
+    "badge": "Core",
+    "title": "5 Rules of 'this'",
+    "description": "다양한 컨텍스트에서 'this' 바인딩이 작동하는 방식을 탐색합니다."
+  },
+  "scopeClosure": {
+    "badge": "Scope",
+    "title": "Closures",
+    "description": "여러 개의 카운터를 생성하여 클로저가 독립적인 상태를 유지하는 방법을 확인합니다."
+  },
+  "async": {
+    "badge": "Async",
+    "title": "Promise Visualizer",
+    "description": "다양한 Promise 조합자가 여러 비동기 작업을 처리하는 방식을 인터랙티브하게 탐색합니다.",
+    "promiseAll": {
+      "title": "Promise.all",
+      "description": "모든 Promise가 완료될 때까지 대기합니다. 하나라도 실패하면 즉시 거부됩니다."
+    },
+    "promiseAllSettled": {
+      "title": "Promise.allSettled",
+      "description": "상태에 관계없이 모든 Promise가 완료될 때까지 대기합니다. 절대 거부되지 않습니다."
+    },
+    "promiseRace": {
+      "title": "Promise.race",
+      "description": "첫 번째로 완료된 Promise (성공 또는 실패)가 결과를 결정합니다."
+    },
+    "promiseAny": {
+      "title": "Promise.any",
+      "description": "첫 번째로 성공한 Promise를 대기합니다. 모든 Promise가 실패해야만 거부됩니다."
+    },
+    "withResolvers": {
+      "title": "Promise.withResolvers (ES2024)",
+      "description": "새로운 Promise와 resolve/reject 함수를 포함하는 객체를 반환합니다. 외부에서 resolve되는 Promise를 생성할 때 유용합니다."
+    },
+    "promiseResolve": {
+      "title": "Promise.resolve",
+      "description": "즉시 완료된 Promise를 생성합니다."
+    },
+    "promiseReject": {
+      "title": "Promise.reject",
+      "description": "즉시 거부된 Promise를 생성합니다."
+    },
+    "abortController": {
+      "title": "AbortController (Cancel Async Tasks)",
+      "description": "Fetch 요청(및 기타 비동기 작업)은 AbortController를 사용하여 취소할 수 있습니다."
+    }
+  },
+  "advancedDataStructure": {
+    "badge": "Data Structures",
+    "title": "Advanced Data Structures",
+    "description": "Map, Set, WeakMap, WeakSet, WeakRef.",
+    "tabs": {
+      "map": "Map",
+      "set": "Set",
+      "weak": "WeakMap/Ref"
+    },
+    "map": {
+      "title": "Map vs Object",
+      "key1": "키는 모든 타입(객체, 함수, 원시값)이 될 수 있습니다.",
+      "key2": "삽입 순서를 유지합니다.",
+      "key3": "Size 속성이 내장되어 있습니다.",
+      "key4": "빈번한 추가/삭제 시 더 나은 성능을 제공합니다."
+    },
+    "set": {
+      "title": "Set (Unique Collection)",
+      "description": "모든 타입의 고유한 값을 저장합니다. 중복 제거에 유용합니다."
+    },
+    "weak": {
+      "title": "Weak References (GC Friendly)",
+      "description1": "WeakMap/WeakSet: 키는 객체여야 합니다. 객체에 대한 참조가 '약하게' 유지되므로, 다른 참조가 없으면 가비지 컬렉션될 수 있습니다. 반복 불가능합니다.",
+      "description2": "WeakRef (ES2021): 객체에 대한 약한 참조를 유지하는 고급 기능입니다.",
+      "gcTitle": "Garbage Collection Visualizer"
+    }
+  },
+  "optimization": {
+    "badge": "Advanced",
+    "title": "V8 Hidden Classes",
+    "description": "V8이 일관된 형태의 객체를 최적화하는 방법을 시각화합니다.",
+    "keyTakeaway": {
+      "title": "핵심 요점",
+      "content": "V8이 히든 클래스를 공유하고 속성 접근을 최적화(Monomorphism)할 수 있도록 항상 정확히 같은 순서로 속성을 초기화하세요."
+    }
+  },
+  "proxyMeta": {
+    "badge": "Meta Programming",
+    "title": "Proxy & Reflect",
+    "description": "기본 연산을 가로채고 재정의합니다.",
+    "buttons": {
+      "readMessage": "Read 'message'",
+      "readSecret": "Read 'secret'",
+      "setMessage": "Set 'message'"
+    },
+    "logs": {
+      "title": "Proxy Logs",
+      "clear": "Clear",
+      "placeholder": "상호작용이 여기에 표시됩니다..."
+    }
+  },
+  "dsl": {
+    "badge": "DSL",
+    "title": "Domain-Specific Language",
+    "description": "특정 문제 영역에 맞춤화된 미니 언어.",
+    "whatIsDsl": {
+      "title": "DSL이란?",
+      "description": "Java나 Python과 같은 범용 언어(GPL)와 달리, DSL은 특정 작업에 집중합니다.",
+      "internal": "Internal DSL: 호스트 언어 기능 사용 (예: jQuery, React JSX, builder 패턴).",
+      "external": "External DSL: 별도의 구문/파서 (예: SQL, CSS, Regex, Markdown)."
+    },
+    "examples": {
+      "reactJsx": "Example: React JSX (Internal DSL)",
+      "sql": "Example: SQL (External DSL)"
+    }
+  }
+}

@@ -1,15 +1,19 @@
+import { useTranslation } from 'react-i18next';
 import { ContentGrid, SectionCard, SectionDivider } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { AbortControllerDemo } from './abort-controller-demo';
 import { PromiseVisualizer } from './promise-visualizer';
 
-export const AsyncSection = () => (
-  <SectionCard
-    badge={{ label: 'Async', color: 'orange' }}
-    title="Promise Visualizer"
-    description="Interactively explore how different Promise combinators handle multiple asynchronous tasks."
-    testId="async-section"
-  >
+export const AsyncSection = () => {
+  const { t } = useTranslation('week1');
+
+  return (
+    <SectionCard
+      badge={{ label: t('async.badge'), color: 'orange' }}
+      title={t('async.title')}
+      description={t('async.description')}
+      testId="async-section"
+    >
     <PromiseVisualizer />
 
     <SectionDivider variant="line" className="my-6 border-t border-gray-100" />
@@ -18,34 +22,30 @@ export const AsyncSection = () => (
       columns={2}
       items={[
         {
-          title: 'Promise.all',
-          description:
-            'Wait for all to fulfill. Rejects immediately if any rejects.',
+          title: t('async.promiseAll.title'),
+          description: t('async.promiseAll.description'),
         },
         {
-          title: 'Promise.allSettled',
-          description:
-            'Wait for all to finish, regardless of status. Never rejects.',
+          title: t('async.promiseAllSettled.title'),
+          description: t('async.promiseAllSettled.description'),
         },
         {
-          title: 'Promise.race',
-          description:
-            'First settled promise (resolve OR reject) determines the result.',
+          title: t('async.promiseRace.title'),
+          description: t('async.promiseRace.description'),
         },
         {
-          title: 'Promise.any',
-          description: 'Wait for first fulfilled. Rejects only if ALL reject.',
+          title: t('async.promiseAny.title'),
+          description: t('async.promiseAny.description'),
         },
       ]}
     />
 
     <div className="mt-8">
       <h4 className="font-bold text-gray-900 mb-3">
-        Promise.withResolvers (ES2024)
+        {t('async.withResolvers.title')}
       </h4>
       <p className="text-sm text-gray-600 mb-3">
-        Returns an object with a new Promise and its resolve/reject functions.
-        Useful for creating promises that are resolved externally.
+        {t('async.withResolvers.description')}
       </p>
       <CodeBlock
         code={`const { promise, resolve, reject } = Promise.withResolvers();
@@ -60,10 +60,10 @@ promise.then(console.log); // 'Done!' after 1s`}
     <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
         <h4 className="font-bold text-gray-900 text-sm mb-2">
-          Promise.resolve
+          {t('async.promiseResolve.title')}
         </h4>
         <p className="text-xs text-gray-500 mb-2">
-          Creates an immediately fulfilled promise.
+          {t('async.promiseResolve.description')}
         </p>
         <CodeBlock
           code={`Promise.resolve(42)
@@ -72,9 +72,11 @@ promise.then(console.log); // 'Done!' after 1s`}
         />
       </div>
       <div>
-        <h4 className="font-bold text-gray-900 text-sm mb-2">Promise.reject</h4>
+        <h4 className="font-bold text-gray-900 text-sm mb-2">
+          {t('async.promiseReject.title')}
+        </h4>
         <p className="text-xs text-gray-500 mb-2">
-          Creates an immediately rejected promise.
+          {t('async.promiseReject.description')}
         </p>
         <CodeBlock
           code={`Promise.reject('Error!')
@@ -88,13 +90,13 @@ promise.then(console.log); // 'Done!' after 1s`}
 
     <div>
       <h4 className="font-bold text-gray-900 mb-3 text-red-600">
-        AbortController (Cancel Async Tasks)
+        {t('async.abortController.title')}
       </h4>
       <p className="text-sm text-gray-600 mb-6">
-        Fetch requests (and other async tasks) can be cancelled using{' '}
-        <code>AbortController</code>.
+        {t('async.abortController.description')}
       </p>
       <AbortControllerDemo />
     </div>
   </SectionCard>
-);
+  );
+};

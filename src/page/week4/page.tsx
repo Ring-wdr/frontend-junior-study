@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { cn } from '../../lib/utils';
 import { AdvancedStateSection } from './components/advanced-state-section';
 import { ContextSection } from './components/context-section';
@@ -26,10 +27,30 @@ const sections = [
 ];
 
 export default function Week4Page() {
+  const { t } = useTranslation('week4');
   const [activeTab, setActiveTab] = useState<Tab>('all');
 
   const filteredSections =
     activeTab === 'all' ? sections : sections.filter((s) => s.id === activeTab);
+
+  const getTabLabel = (tab: Tab) => {
+    switch (tab) {
+      case 'all':
+        return t('tabs.all');
+      case 'flux-redux':
+        return t('tabs.fluxRedux');
+      case 'middleware':
+        return t('tabs.middleware');
+      case 'modern':
+        return t('tabs.modern');
+      case 'advanced':
+        return t('tabs.advanced');
+      case 'context':
+        return t('tabs.context');
+      default:
+        return tab;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#F0F4F8] font-sans text-gray-900 flex flex-col items-center">
@@ -38,14 +59,13 @@ export default function Week4Page() {
           to="/"
           className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 mb-6 transition-colors"
         >
-          ← Back to Dashboard
+          ← {t('common:navigation.backToDashboard')}
         </Link>
         <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-gray-900">
-          State Management
+          {t('header.title')}
         </h1>
         <p className="text-lg text-gray-600 max-w-xl mx-auto">
-          Deep Dive into Redux, Middleware, Modern Libraries
-          (MobX/Recoil/Zustand), and more.
+          {t('header.description')}
         </p>
       </header>
       <div className="sticky top-4 z-10 bg-white/80 backdrop-blur-md p-1.5 rounded-full shadow-sm border border-gray-200 mb-8 flex gap-1 flex-wrap justify-center max-w-[95vw]">
@@ -61,17 +81,7 @@ export default function Week4Page() {
                 : 'text-gray-600 hover:bg-gray-100',
             )}
           >
-            {tab === 'all'
-              ? 'All'
-              : tab === 'flux-redux'
-                ? 'Flux & Redux'
-                : tab === 'middleware'
-                  ? 'Middleware'
-                  : tab === 'modern'
-                    ? 'Modern Libraries'
-                    : tab === 'advanced'
-                      ? 'Advanced'
-                      : 'Context API'}
+            {getTabLabel(tab)}
           </button>
         ))}
       </div>

@@ -1,0 +1,68 @@
+{
+  "header": {
+    "title": "Frontend Deep Dive",
+    "description": "From JavaScript Runtime to React Optimization"
+  },
+  "weeks": {
+    "week1": {
+      "title": "Week 1: JavaScript Runtime",
+      "description": "Event Loop, Call Stack, Task Queue Internals"
+    },
+    "week2": {
+      "title": "Week 2: Memory & Optimization",
+      "description": "Garbage Collection, Memory Leaks, V8 Optimization"
+    },
+    "week3": {
+      "title": "Week 3: Advanced Async",
+      "description": "Promise Internals, async/await Patterns"
+    },
+    "week4": {
+      "title": "Week 4: Browser Rendering",
+      "description": "Critical Rendering Path, Reflow/Repaint"
+    },
+    "week5": {
+      "title": "Week 5: React Rendering",
+      "description": "Virtual DOM, Reconciliation, Fiber"
+    },
+    "week6": {
+      "title": "Week 6: State Management",
+      "description": "Context, Redux, Zustand Comparison"
+    },
+    "week7": {
+      "title": "Week 7: Patterns & Architecture",
+      "description": "Component Patterns, Design Principles"
+    },
+    "week8": {
+      "title": "Week 8: TypeScript Deep Dive",
+      "description": "Advanced Types, Generics, Type Guards"
+    },
+    "week9": {
+      "title": "Week 9: Testing",
+      "description": "Unit Tests, Integration Tests, E2E"
+    },
+    "week10": {
+      "title": "Week 10: Build & Bundling",
+      "description": "Webpack, Vite, Optimization Strategies"
+    },
+    "week11": {
+      "title": "Week 11: Performance Optimization",
+      "description": "Core Web Vitals, Performance Measurement"
+    },
+    "week12": {
+      "title": "Week 12: Security",
+      "description": "XSS, CSRF, CSP, Security Best Practices"
+    },
+    "week13": {
+      "title": "Week 13: Web APIs",
+      "description": "Web Workers, Service Workers, IndexedDB"
+    },
+    "week14": {
+      "title": "Week 14: Accessibility & i18n",
+      "description": "WCAG, ARIA, Internationalization"
+    },
+    "week15": {
+      "title": "Week 15: DevTools & Debugging",
+      "description": "Chrome DevTools, Performance Profiling"
+    }
+  }
+}

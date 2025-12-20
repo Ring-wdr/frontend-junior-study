@@ -1,0 +1,473 @@
+{
+  "header": {
+    "backToDashboard": "← 대시보드로 돌아가기",
+    "title": "Web Performance Optimization",
+    "description": "Core Web Vitals, 렌더링 성능 분석, 이미지/폰트/번들 최적화까지 프론트엔드 성능 최적화의 핵심을 학습합니다."
+  },
+  "tabs": {
+    "all": "All",
+    "vitals": "Core Vitals",
+    "rendering": "Rendering",
+    "devtools": "DevTools",
+    "splitting": "Splitting",
+    "lazy": "Lazy Load",
+    "images": "Images",
+    "fonts": "Fonts",
+    "network": "Network",
+    "bundle": "Bundle"
+  },
+  "coreWebVitals": {
+    "title": "Core Web Vitals",
+    "description": "Google이 정의한 사용자 경험의 핵심 지표입니다. 검색 순위에도 영향을 미치며, 실제 사용자가 느끼는 성능을 측정합니다.",
+    "visualizerTitle": "Visualizer",
+    "lcp": {
+      "name": "LCP",
+      "fullName": "Largest Contentful Paint",
+      "description": "주요 콘텐츠가 화면에 표시되기까지 걸리는 시간. 사용자가 페이지가 \"로드되었다\"고 느끼는 순간을 측정합니다.",
+      "good": "2.5초 이하",
+      "needsImprovement": "2.5초 ~ 4초",
+      "poor": "4초 초과",
+      "causes": ["큰 히어로 이미지", "느린 서버 응답 (TTFB)", "렌더링 차단 리소스", "느린 폰트 로딩"],
+      "solutions": ["CDN 활용 및 서버 최적화", "이미지 최적화 (WebP, AVIF)", "preconnect / preload 사용", "Critical CSS 인라인화"],
+      "goodMode": "Good (0.8s)",
+      "badMode": "Bad (3.5s)",
+      "loadingText": "Loading Large Resource...",
+      "heroImage": "Hero Image",
+      "time": "Time:",
+      "needsImprovementLabel": "Needs Improvement",
+      "goodLabel": "Good",
+      "reloadPage": "Reload Page",
+      "loading": "Loading..."
+    },
+    "inp": {
+      "name": "INP",
+      "fullName": "Interaction to Next Paint",
+      "description": "사용자 인터랙션(클릭, 탭, 키보드)에 대한 반응 지연 시간. FID를 대체하는 새로운 지표입니다.",
+      "good": "200ms 이하",
+      "needsImprovement": "200ms ~ 500ms",
+      "poor": "500ms 초과",
+      "causes": ["Long Task (50ms+ 메인 스레드 점유)", "과도한 JavaScript 실행", "동기적 레이아웃 계산", "무거운 이벤트 핸들러"],
+      "solutions": ["Heavy 계산을 Web Worker로 분리", "useTransition으로 UI 블로킹 방지", "코드 스플리팅으로 JS 번들 축소", "이벤트 핸들러 최적화 (debounce/throttle)"],
+      "goodMode": "Good (50ms)",
+      "badMode": "Bad (600ms)",
+      "clickTest": "Click Response Test",
+      "testButton": "Test the button responsiveness",
+      "clickMe": "Click Me!",
+      "processing": "Processing...",
+      "slow": "Slow (Blocking)",
+      "fast": "Fast (Non-blocking)",
+      "simulateHeavy": "Simulates heavy Work by looping on main thread.",
+      "simulateLightweight": "Simulates lightweight event handler."
+    },
+    "cls": {
+      "name": "CLS",
+      "fullName": "Cumulative Layout Shift",
+      "description": "페이지 로드 중 예기치 않은 레이아웃 이동의 총합. 사용자가 의도치 않게 잘못된 요소를 클릭하게 만듭니다.",
+      "good": "0.1 이하",
+      "needsImprovement": "0.1 ~ 0.25",
+      "poor": "0.25 초과",
+      "causes": ["이미지 width/height 미지정", "광고/임베드 영역 미예약", "동적으로 삽입되는 콘텐츠", "FOUT (Flash of Unstyled Text)"],
+      "solutions": ["이미지에 width/height 또는 aspect-ratio 지정", "광고 컨테이너에 min-height 설정", "Skeleton UI로 공간 예약", "font-display: swap + preload"],
+      "goodMode": "Good (Fixed)",
+      "badMode": "Bad (Shift)",
+      "layoutView": "Layout View",
+      "targetContent": "Target Content",
+      "targetContentDesc": "This is the content the user is trying to read."
+    },
+    "metrics": {
+      "good": "Good",
+      "needsWork": "Needs Work",
+      "poor": "Poor",
+      "causes": "주요 원인",
+      "solutions": "개선 방법"
+    },
+    "measurementTools": "측정 도구: Lighthouse, PageSpeed Insights, Chrome DevTools Performance 탭, Web Vitals 라이브러리, Search Console"
+  },
+  "browserRendering": {
+    "title": "브라우저 렌더링 파이프라인",
+    "description": "브라우저가 화면을 그리는 과정을 이해하면, 어떤 코드가 성능을 해치는지 알 수 있습니다.",
+    "simulatorTitle": "Pixel Pipeline Simulator",
+    "simulatorDesc": "Click buttons to see triggered pipeline stages",
+    "changeWidthLayout": "Change Width (Layout)",
+    "changeColorPaint": "Change Color (Paint)",
+    "rotateComposite": "Rotate (Composite)",
+    "box": "Box",
+    "hoverMessage": "각 단계를 hover하거나 버튼을 클릭하여 파이프라인을 확인하세요",
+    "expensiveFull": "Expensive! Triggers Reflow & Repaint",
+    "moderatePaint": "Moderate. Triggers Repaint",
+    "cheapComposite": "Cheap! Composite Only (Best Performance)",
+    "steps": {
+      "javascript": {
+        "name": "JavaScript",
+        "description": "JS 실행 및 DOM 조작",
+        "details": "JavaScript가 실행되어 DOM을 변경합니다.",
+        "triggers": "Script execution"
+      },
+      "style": {
+        "name": "Style",
+        "description": "CSS 계산",
+        "details": "변경된 DOM에 어떤 CSS 규칙이 적용되는지 계산합니다.",
+        "triggers": "Script execution"
+      },
+      "layout": {
+        "name": "Layout",
+        "description": "위치/크기 계산",
+        "details": "요소들의 크기와 위치를 계산합니다. (Reflow)",
+        "triggers": "width, height, margin, padding, font-size"
+      },
+      "paint": {
+        "name": "Paint",
+        "description": "픽셀 그리기",
+        "details": "실제 픽셀을 채우는 작업입니다. (배경, 텍스트, 이미지)",
+        "triggers": "background-color, color, border-color, box-shadow"
+      },
+      "composite": {
+        "name": "Composite",
+        "description": "레이어 합성",
+        "details": "여러 레이어를 합쳐 최종 화면을 만듭니다. (GPU 활용)",
+        "triggers": "transform, opacity, filter"
+      }
+    },
+    "triggersLabel": "Triggers:",
+    "layoutThrashing": {
+      "title": "Layout Thrashing",
+      "description": "읽기/쓰기를 번갈아 하면 강제 동기 레이아웃 발생"
+    },
+    "batchUpdates": {
+      "title": "Batch Updates",
+      "description": "읽기 먼저, 쓰기는 나중에 일괄 처리"
+    },
+    "gpuAcceleration": {
+      "title": "GPU 가속 (Composite Only)",
+      "description": "아래 속성만 변경하면 Layout/Paint를 건너뛰고 GPU에서 직접 처리합니다."
+    }
+  },
+  "devTools": {
+    "title": "DevTools Performance 프로파일링",
+    "description": "\"추측으로 성능 개선하는 것\"은 금물입니다. 측정 → 문제 확인 → 개선 → 재측정 프로세스를 반드시 익혀야 합니다.",
+    "simulatorTitle": "Main Thread Simulator",
+    "simulatorDesc": "Simulating tasks on the main thread",
+    "fps": "FPS",
+    "frameRate": "Frame Rate",
+    "runShortTask": "Run Short Task (20ms)",
+    "runLongTask": "Run Long Task (1s)",
+    "timeMs": "Time (ms)",
+    "interactionTest": "Interaction Test",
+    "mainThreadBlocked": "Main Thread Blocked! UI Unresponsive",
+    "uiResponsive": "UI Responsive",
+    "clicked": "Clicked:",
+    "blockingWarning": "⚠️ MAIN THREAD BLOCKED",
+    "usageTitle": "Performance 탭 사용법",
+    "usageSteps": {
+      "step1": "Chrome DevTools 열기 (F12) → Performance 탭 선택",
+      "step2": "녹화 버튼 클릭 후 분석할 동작 수행 (스크롤, 클릭 등)",
+      "step3": "녹화 중지 후 Flame Chart에서 병목 지점 분석",
+      "step4": "Summary 탭에서 Scripting, Rendering, Painting 시간 확인"
+    },
+    "longTask": {
+      "title": "Long Task 탐색",
+      "description": "50ms 이상 메인 스레드를 점유하는 작업. 빨간색 삼각형 표시로 확인됩니다.",
+      "note": "Long Task는 사용자 인터랙션을 지연시켜 INP에 직접적인 영향을 줍니다."
+    },
+    "layoutShift": {
+      "title": "Layout Shift 감지",
+      "description": "Experience 섹션에서 Layout Shift 이벤트와 영향을 받은 요소를 확인합니다.",
+      "note": "어떤 요소가 이동했는지, 얼마나 큰 영향을 미쳤는지 분석 가능합니다."
+    },
+    "fpsMonitoring": {
+      "title": "FPS 모니터링",
+      "description": "상단 FPS 차트에서 프레임 드롭을 확인. 60FPS 이하로 떨어지면 끊김 발생.",
+      "note": "특히 스크롤이나 애니메이션 중 FPS 하락을 주시하세요."
+    },
+    "callTree": {
+      "title": "Call Tree 분석",
+      "description": "Bottom-Up / Call Tree 탭에서 가장 오래 걸린 함수를 찾습니다.",
+      "note": "Self Time이 높은 함수가 최적화 우선순위입니다."
+    },
+    "proTip": "Pro Tip: 녹화 전 \"CPU 4x slowdown\"을 활성화하면 저사양 기기에서의 성능을 시뮬레이션할 수 있습니다. 실제 사용자 환경을 고려한 테스트가 중요합니다.",
+    "lighthouse": {
+      "title": "Lighthouse 자동 분석",
+      "description": "DevTools → Lighthouse 탭에서 자동으로 Core Web Vitals 및 개선 제안을 받을 수 있습니다.",
+      "categories": ["Performance", "Accessibility", "Best Practices", "SEO", "PWA"]
+    }
+  },
+  "codeSplitting": {
+    "title": "코드 스플리팅 (Code Splitting)",
+    "description": "초기 JS 번들을 작게 유지하여 First Load 속도를 개선합니다. 사용자가 실제로 필요할 때 코드를 로드합니다.",
+    "simulatorTitle": "Bundle Loader Simulator",
+    "simulatorDesc": "Compare Initial Load performance",
+    "monolithicBundle": "Monolithic Bundle (Classic)",
+    "codeSplittingModern": "Code Splitting (Modern)",
+    "server": "Server",
+    "client": "Client",
+    "runningRequest": "Running Request...",
+    "downloading": "Downloading...",
+    "idle": "Idle",
+    "mainApp": "Main App",
+    "coreChunk": "Core chunk",
+    "loaded": "✓ Loaded",
+    "readyToInteract": "Ready to interact",
+    "loadApp": "Load App",
+    "dashboard": "Dashboard",
+    "lazyChunk": "Lazy chunk",
+    "userRequested": "User requested",
+    "bundledWithMain": "Bundled with Main",
+    "waitingForMain": "Waiting for Main...",
+    "loadFeature": "Load Feature",
+    "heavyChart": "Heavy Chart",
+    "containsEverything": "Contains Everything (Huge Size!!)",
+    "blockingTime": "Blocking Time:",
+    "totalBundleSize": "Total Bundle Size:",
+    "initialBundle": "Initial Bundle:",
+    "otherChunks": "Other chunks loaded on demand",
+    "whenToUse": {
+      "title": "언제 사용해야 할까?",
+      "items": [
+        "초기 렌더에 필요 없는 대형 페이지",
+        "Chart.js, Editor 같은 무거운 라이브러리",
+        "관리자 페이지 등 낮은 사용 빈도",
+        "모달, 다이얼로그 같은 조건부 UI"
+      ]
+    },
+    "benefits": {
+      "title": "효과",
+      "items": [
+        "초기 JS 번들 크기 감소",
+        "TTI (Time to Interactive) 개선",
+        "LCP 개선 (메인 스레드 여유)",
+        "캐시 효율성 향상"
+      ]
+    },
+    "routeBasedInfo": "Route-based Splitting: Next.js App Router나 React Router v7+에서는 페이지 단위로 자동 코드 스플리팅이 적용됩니다. 별도의 설정 없이도 각 라우트가 독립적인 청크로 분리됩니다."
+  },
+  "lazyLoading": {
+    "title": "Lazy Loading 전략",
+    "description": "사용자가 실제로 필요로 할 때 리소스를 로드합니다. 초기 로드 시간을 줄이고 불필요한 네트워크 요청을 방지합니다.",
+    "simulatorTitle": "IntersectionObserver Simulator",
+    "simulatorDesc": "Scroll down to see images load on demand",
+    "resetDemo": "Reset Demo",
+    "headingSection": "Heading Section",
+    "aboveTheFold": "Above the fold content (Always loaded)",
+    "image": "Image",
+    "waitingForScroll": "Waiting for Scroll...",
+    "endOfContent": "End of Content",
+    "viewport": "Viewport",
+    "imageLazyLoading": {
+      "title": "이미지 Lazy Loading"
+    },
+    "intersectionObserver": {
+      "title": "IntersectionObserver"
+    },
+    "types": {
+      "title": "Lazy Loading 유형",
+      "image": {
+        "title": "이미지",
+        "description": "loading=\"lazy\" 속성 또는 IntersectionObserver 사용"
+      },
+      "component": {
+        "title": "컴포넌트",
+        "description": "React.lazy() + Suspense로 조건부 로드"
+      },
+      "data": {
+        "title": "데이터",
+        "description": "무한 스크롤, 페이지네이션으로 필요한 만큼만 fetch"
+      }
+    },
+    "warning": "주의: Above the fold (첫 화면에 보이는 영역) 콘텐츠에는 lazy loading을 적용하지 마세요. LCP 요소가 늦게 로드되면 점수가 하락합니다."
+  },
+  "imageOptimization": {
+    "title": "이미지 최적화 (가장 효과 큰 영역!)",
+    "description": "이미지는 웹 페이지 용량의 대부분을 차지합니다. 최적화만 잘해도 LCP를 획기적으로 개선할 수 있습니다.",
+    "simulatorTitle": "Image Optimization Lab",
+    "simulatorDesc": "Simulate compression savings and quality",
+    "sizeReduction": "Size Reduction",
+    "format": "Format",
+    "quality": "Quality",
+    "original": "Original:",
+    "optimized": "Optimized:",
+    "originalJpeg": "Original (JPEG)",
+    "nextGenFormats": {
+      "title": "차세대 포맷",
+      "webp": {
+        "name": "WebP",
+        "saving": "-25~35%",
+        "description": "JPEG/PNG 대비 훨씬 작은 용량, 모든 브라우저 지원"
+      },
+      "avif": {
+        "name": "AVIF",
+        "saving": "-50%",
+        "description": "최신 포맷, 가장 작은 용량 (Chrome, Firefox 지원)"
+      }
+    },
+    "responsiveImages": {
+      "title": "Responsive Images"
+    },
+    "checklist": {
+      "title": "이미지 최적화 체크리스트",
+      "items": [
+        "WebP/AVIF 포맷 사용",
+        "적절한 크기로 리사이즈",
+        "width/height 또는 aspect-ratio 지정",
+        "LCP 이미지에 priority/preload",
+        "Below the fold에 lazy loading",
+        "CDN 활용"
+      ]
+    },
+    "hints": {
+      "preload": "LCP 이미지 미리 로드",
+      "preconnect": "CDN 연결 미리 수립",
+      "lazy": "viewport 밖 이미지 지연 로드",
+      "decoding": "async로 디코딩 분리"
+    }
+  },
+  "fontOptimization": {
+    "title": "폰트 최적화",
+    "description": "폰트는 CLS와 LCP에 직접적인 영향을 미칩니다. FOUT (Flash of Unstyled Text)를 방지하고 빠르게 로드하는 전략이 필요합니다.",
+    "simulatorTitle": "Font Loading Simulator",
+    "simulatorDesc": "Compare FOUT (Swap) vs FOIT (Block)",
+    "displaySwap": "display: swap (FOUT)",
+    "displayBlock": "display: block (FOIT)",
+    "status": "Status:",
+    "downloadingFont": "Downloading Font...",
+    "customFontApplied": "Custom Font Applied",
+    "fallbackFont": "Fallback Font",
+    "loadCustomFont": "Load Custom Font (2s delay)",
+    "resetToTryAgain": "Reset to Try Again",
+    "uxImpact": "UX Impact",
+    "clsImpact": "CLS Impact",
+    "textAlwaysVisible": "Text Always Visible",
+    "textInvisible": "Text Invisible (3s)",
+    "minorShift": "Minor Shift",
+    "noShift": "No Shift",
+    "foutFoit": {
+      "title": "FOUT / FOIT",
+      "fout": {
+        "name": "FOUT",
+        "fullName": "Flash of Unstyled Text",
+        "description": "폰트 로드 전 fallback 폰트 → 로드 후 교체 시 깜빡임"
+      },
+      "foit": {
+        "name": "FOIT",
+        "fullName": "Flash of Invisible Text",
+        "description": "폰트 로드 전까지 텍스트가 보이지 않음"
+      }
+    },
+    "fontDisplayStrategy": {
+      "title": "font-display 전략",
+      "swap": "fallback 즉시 표시 → 교체 (권장)",
+      "optional": "캐시된 경우만 사용 (CLS 최소화)",
+      "fallback": "짧은 block 후 swap (균형)"
+    },
+    "optimizationTechniques": {
+      "title": "폰트 최적화 기법",
+      "preload": {
+        "title": "Preload 폰트 파일"
+      },
+      "subset": {
+        "title": "서브셋 (Subset)",
+        "description": "사용하는 문자만 포함하여 용량 감소"
+      },
+      "woff2": {
+        "title": "WOFF2 포맷",
+        "description": "가장 압축률이 높은 웹 폰트 포맷. TTF/OTF 대비 30~50% 작음"
+      },
+      "variable": {
+        "title": "Variable Fonts",
+        "description": "다양한 weight/style을 하나의 파일로. 여러 폰트 파일 대체"
+      }
+    },
+    "koreanFontWarning": "한글 폰트 주의: 한글은 글리프가 많아 용량이 큽니다(2~5MB). 반드시 서브셋을 적용하거나 Google Fonts의 자동 서브셋 기능을 활용하세요."
+  },
+  "networkOptimization": {
+    "title": "네트워크 최적화",
+    "description": "네트워크 레이턴시를 줄이고 캐시를 효과적으로 활용하면 반복 방문 시 성능이 극적으로 향상됩니다.",
+    "simulatorTitle": "Network Waterfall",
+    "simulatorDesc": "HTTP/1.1 vs HTTP/2 Multiplexing",
+    "totalLoadTime": "Total Load Time",
+    "http1Queued": "HTTP/1.1 (Queued)",
+    "http2Multiplexed": "HTTP/2 (Multiplexed)",
+    "clickPlayToStart": "Click play to start simulation",
+    "resourceHints": {
+      "title": "Resource Hints",
+      "preconnect": {
+        "name": "preconnect",
+        "description": "DNS + TCP + TLS 핸드셰이크 미리 수행"
+      },
+      "dnsPrefetch": {
+        "name": "dns-prefetch",
+        "description": "DNS 조회만 미리 수행 (preconnect보다 가벼움)"
+      },
+      "preload": {
+        "name": "preload",
+        "description": "현재 페이지에서 확실히 사용할 리소스 우선 로드"
+      },
+      "prefetch": {
+        "name": "prefetch",
+        "description": "다음 페이지에서 사용할 리소스 미리 가져오기"
+      }
+    },
+    "cdnEdge": {
+      "title": "CDN & Edge",
+      "description": "Content Delivery Network를 활용하면 사용자와 가까운 서버에서 콘텐츠를 제공합니다.",
+      "benefits": [
+        "지리적으로 가까운 서버에서 응답",
+        "TTFB (Time to First Byte) 감소",
+        "정적 자원 자동 캐싱",
+        "DDoS 보호 및 로드 밸런싱"
+      ]
+    },
+    "http2http3": {
+      "title": "HTTP/2 & HTTP/3",
+      "http2": {
+        "title": "HTTP/2",
+        "features": [
+          "멀티플렉싱 (병렬 요청)",
+          "헤더 압축 (HPACK)",
+          "Server Push",
+          "스트림 우선순위"
+        ]
+      },
+      "http3": {
+        "title": "HTTP/3",
+        "features": [
+          "QUIC 프로토콜 기반 (UDP)",
+          "0-RTT 연결 재사용",
+          "Head-of-line blocking 해결",
+          "더 빠른 연결 수립"
+        ]
+      }
+    },
+    "staleWhileRevalidateInfo": "stale-while-revalidate: 캐시된 콘텐츠를 즉시 반환하면서 백그라운드에서 새 데이터를 가져옵니다. 사용자는 즉각적인 응답을 받고, 다음 요청부터 최신 데이터를 사용합니다."
+  },
+  "bundleSize": {
+    "title": "번들 사이즈 최적화",
+    "description": "JavaScript 번들 크기는 파싱, 컴파일, 실행 시간에 직접적인 영향을 미칩니다. 불필요한 코드를 제거하고 효율적으로 패키징해야 합니다.",
+    "simulatorTitle": "Tree Shaking Simulator",
+    "simulatorDesc": "Remove dead code to reduce bundle size",
+    "totalBundleSize": "Total Bundle Size",
+    "unused": "Unused",
+    "reset": "Reset",
+    "runTreeShaking": "Run Tree Shaking",
+    "avoidPatterns": {
+      "title": "피해야 할 패턴"
+    },
+    "recommendedPatterns": {
+      "title": "권장 패턴"
+    },
+    "bundleAnalyzer": {
+      "title": "Bundle Analyzer",
+      "description": "번들의 구성을 시각화하여 어떤 패키지가 용량을 차지하는지 분석합니다.",
+      "toolName": "webpack-bundle-analyzer",
+      "analysisPoints": {
+        "title": "분석 포인트",
+        "items": [
+          "가장 큰 청크 식별",
+          "중복 의존성 확인",
+          "사용하지 않는 코드 발견",
+          "node_modules 비중 확인"
+        ]
+      }
+    },
+    "sideEffectsInfo": "sideEffects: package.json에 \"sideEffects\": false를 선언하면 번들러가 사용하지 않는 export를 안전하게 제거할 수 있습니다. CSS import가 있다면 \"sideEffects\": [\"*.css\"]로 명시하세요."
+  }
+}

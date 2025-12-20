@@ -1,18 +1,19 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const CssInJsSection = () => {
+  const { t } = useTranslation('week6');
   return (
     <SectionCard
-      badge={{ label: 'Dynamic', color: 'pink' }}
-      title="CSS-in-JS (Emotion / Styled-components)"
-      description="Writing CSS styles directly within JavaScript files, enabling powerful dynamic styling."
+      badge={{ label: t('cssInJs.badge'), color: 'pink' }}
+      title={t('cssInJs.title')}
+      description={t('cssInJs.description')}
     >
       <div className="space-y-8">
-        <SubSection title="Emotion / Styled-components" icon iconColor="pink">
+        <SubSection title={t('cssInJs.emotionStyled.title')} icon iconColor="pink">
           <p className="text-sm text-gray-700 mb-4">
-            Leverage tagged template literals to write CSS. This allows using
-            JavaScript variables and logic directly in styles.
+            {t('cssInJs.emotionStyled.content')}
           </p>
           <CodeBlock
             code={`import styled from '@emotion/styled';
@@ -40,27 +41,26 @@ render(<Button primary>Primary Button</Button>);`}
           />
         </SubSection>
 
-        <SubSection title="Pros & Cons" icon iconColor="pink">
-          <InfoBox variant="red" title="Trade-offs">
+        <SubSection title={t('cssInJs.prosCons.title')} icon iconColor="pink">
+          <InfoBox variant="red" title={t('cssInJs.prosCons.infoTitle')}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700">
               <div>
-                <strong>Pros:</strong>
+                <strong>{t('cssInJs.prosCons.pros')}</strong>
                 <ul className="list-disc pl-5 mt-1 space-y-1">
-                  <li>Dynamic styling with JS props</li>
-                  <li>Critical CSS automatic extraction</li>
-                  <li>Component-level isolation</li>
-                  <li>Theming support (ThemeProvider)</li>
+                  <li>{t('cssInJs.prosCons.prosItems.dynamic')}</li>
+                  <li>{t('cssInJs.prosCons.prosItems.critical')}</li>
+                  <li>{t('cssInJs.prosCons.prosItems.isolation')}</li>
+                  <li>{t('cssInJs.prosCons.prosItems.theming')}</li>
                 </ul>
               </div>
               <div>
-                <strong>Cons:</strong>
+                <strong>{t('cssInJs.prosCons.cons')}</strong>
                 <ul className="list-disc pl-5 mt-1 space-y-1">
                   <li>
-                    <strong>Runtime Overhead:</strong> Library must parse styles
-                    at runtime.
+                    <strong>{t('cssInJs.prosCons.consItems.runtime')}</strong> {t('cssInJs.prosCons.consItems.runtimeDesc')}
                   </li>
-                  <li>Larger bundle size compared to utility classes.</li>
-                  <li>Setup needed for SSR (Next.js App Router limitation).</li>
+                  <li>{t('cssInJs.prosCons.consItems.bundle')}</li>
+                  <li>{t('cssInJs.prosCons.consItems.ssr')}</li>
                 </ul>
               </div>
             </div>

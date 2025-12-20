@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { cn } from '../../lib/utils';
 import { AsyncValidationSection } from './components/async-validation-section';
 import { FormEssenceSection } from './components/form-essence-section';
@@ -32,6 +33,7 @@ const sections = [
 ];
 
 export default function Week7Page() {
+  const { t } = useTranslation('week7');
   const [activeTab, setActiveTab] = useState<Tab>('all');
 
   const filteredSections =
@@ -44,14 +46,13 @@ export default function Week7Page() {
           to="/"
           className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 mb-6 transition-colors"
         >
-          ← Back to Dashboard
+          {t('common:navigation.backToDashboard', '← Back to Dashboard')}
         </Link>
         <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-gray-900">
-          Forms & Validation
+          {t('header.title')}
         </h1>
         <p className="text-lg text-gray-600 max-w-xl mx-auto">
-          Master professional form management: React Hook Form, Zod, async
-          validation, security, and UX best practices.
+          {t('header.description')}
         </p>
       </header>
       <div className="sticky top-4 z-10 bg-white/80 backdrop-blur-md p-1.5 rounded-full shadow-sm border border-gray-200 mb-8 flex gap-1 flex-wrap justify-center max-w-[95vw]">
@@ -67,21 +68,7 @@ export default function Week7Page() {
                 : 'text-gray-600 hover:bg-gray-100',
             )}
           >
-            {tab === 'all'
-              ? 'All'
-              : tab === 'essence'
-                ? 'Essence'
-                : tab === 'rhf'
-                  ? 'React Hook Form'
-                  : tab === 'validation'
-                    ? 'Validation'
-                    : tab === 'async'
-                      ? 'Async'
-                      : tab === 'input'
-                        ? 'Input Handling'
-                        : tab === 'security'
-                          ? 'Security'
-                          : 'UX Design'}
+            {t(`tabs.${tab}`)}
           </button>
         ))}
       </div>

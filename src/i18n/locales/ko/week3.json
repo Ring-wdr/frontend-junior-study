@@ -1,0 +1,103 @@
+{
+  "header": {
+    "title": "컴포넌트 아키텍처",
+    "description": "프론트엔드 디자인 패턴, Atomic Design, 그리고 성능 최적화를 탐구합니다."
+  },
+  "tabs": {
+    "all": "전체",
+    "atomic": "Atomic Design",
+    "container": "Container/Presentational",
+    "patterns": "컴포넌트 패턴",
+    "performance": "성능 최적화"
+  },
+  "atomic": {
+    "badge": "Front-end Architecture",
+    "title": "Atomic Design",
+    "description": "다섯 가지 단계로 디자인 시스템을 분해하여 구성하는 방법론입니다.",
+    "whatIs": {
+      "title": "Atomic Design이란?",
+      "content": "Atomic Design은 인터페이스 디자인 시스템을 더욱 신중하고 계층적인 방식으로 만들기 위해 5가지 단계로 구성된 방법론입니다."
+    },
+    "fiveLevels": {
+      "title": "5가지 단계",
+      "atoms": {
+        "label": "Atoms:",
+        "description": "물질의 기본 구성 요소 (예: 버튼, 입력 필드, 라벨)."
+      },
+      "molecules": {
+        "label": "Molecules:",
+        "description": "결합된 원자들의 그룹으로, 화합물의 가장 작은 기본 단위입니다 (예: 입력 필드와 버튼을 결합한 검색 폼)."
+      },
+      "organisms": {
+        "label": "Organisms:",
+        "description": "분자들이 결합되어 형성된 인터페이스의 비교적 복잡하고 독특한 섹션 (예: 헤더)."
+      },
+      "templates": {
+        "label": "Templates:",
+        "description": "컴포넌트를 레이아웃에 배치하고 디자인의 기본 콘텐츠 구조를 명시하는 페이지 수준의 객체."
+      },
+      "pages": {
+        "label": "Pages:",
+        "description": "실제 대표 콘텐츠가 포함된 UI의 모습을 보여주는 템플릿의 구체적인 인스턴스."
+      }
+    }
+  },
+  "container": {
+    "badge": "Design Pattern",
+    "title": "Container vs Presentational",
+    "description": "비즈니스 로직/데이터 페칭과 UI 렌더링을 분리하는 패턴입니다.",
+    "coreConcept": {
+      "title": "핵심 개념",
+      "presentational": {
+        "label": "Presentational Components:",
+        "item1": "어떻게 보이는지에 관심을 둡니다.",
+        "item2": "props를 통해 데이터와 콜백을 받습니다.",
+        "item3": "자체 상태를 거의 갖지 않습니다 (UI 상태 제외).",
+        "item4": "주로 함수형 컴포넌트로 작성됩니다."
+      },
+      "container": {
+        "label": "Container Components:",
+        "item1": "어떻게 동작하는지에 관심을 둡니다.",
+        "item2": "presentational 컴포넌트 또는 다른 container 컴포넌트에 데이터와 동작을 제공합니다.",
+        "item3": "상태를 가지며 데이터 소스 역할을 합니다."
+      }
+    },
+    "evolutionWithHooks": {
+      "title": "Hooks와의 발전",
+      "content": "현대 React에서 이 패턴은 Custom Hooks를 포함합니다. Container로 컴포넌트를 감싸는 대신, 비즈니스 로직을 훅(예: useDogImages)으로 추출하여 컴포넌트 내에서 직접 사용할 수 있습니다. 이는 중첩을 줄이면서 동일한 관심사의 분리를 달성합니다."
+    }
+  },
+  "patterns": {
+    "badge": "Advanced Patterns",
+    "title": "컴포넌트 아키텍처 패턴",
+    "description": "컴포넌트 구성과 재사용성을 위한 고급 패턴입니다.",
+    "compoundComponents": {
+      "title": "Compound Components",
+      "description": "함께 작동하여 완전한 UI를 형성하는 컴포넌트들로, 종종 암시적으로 (예: Context API를 통해) 상태를 공유합니다. 사용자는 하위 컴포넌트를 유연하게 배치할 수 있습니다."
+    },
+    "renderProps": {
+      "title": "Render Props",
+      "description": "값이 함수인 prop을 사용하여 React 컴포넌트 간에 코드를 공유하는 기술입니다."
+    },
+    "hoc": {
+      "title": "Higher-Order Components (HOC)",
+      "description": "컴포넌트를 받아서 새로운 컴포넌트를 반환하는 함수로, 일반적으로 props나 로직을 주입합니다. 과거에 인기가 있었지만 (예: Redux의 connect), \"Wrapper Hell\"을 피하기 위해 오늘날에는 Hooks로 대체되는 경우가 많습니다."
+    }
+  },
+  "performance": {
+    "badge": "Optimization",
+    "title": "성능 패턴",
+    "description": "렌더링 및 애플리케이션 성능을 최적화하는 기술입니다.",
+    "memoization": {
+      "title": "Memoization",
+      "description": "비용이 많이 드는 함수 호출의 결과를 캐싱하고 동일한 입력이 다시 발생할 때 캐시된 결과를 반환합니다.",
+      "reactMemo": "HOC로 props가 변경되지 않은 경우 컴포넌트의 재렌더링을 건너뜁니다.",
+      "useMemo": "계산된 값을 메모이제이션하는 Hook입니다.",
+      "useCallback": "콜백 함수 정의를 메모이제이션하는 Hook입니다."
+    },
+    "virtualization": {
+      "title": "Virtualization (Windowing)",
+      "description": "전체 목록 대신 현재 보이는 항목(플러스 작은 버퍼)만 렌더링합니다. 이는 대용량 데이터셋의 성능을 크게 향상시킵니다. react-window나 react-virtualized와 같은 라이브러리가 일반적으로 사용됩니다."
+    }
+  }
+}

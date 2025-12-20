@@ -1,20 +1,19 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const ResponsiveSection = () => {
+  const { t } = useTranslation('week6');
   return (
     <SectionCard
-      badge={{ label: 'Essential', color: 'orange' }}
-      title="Responsive Design Strategy"
-      description="Creating interfaces that adapt seamlessly to any screen size, from mobile phones to large desktops."
+      badge={{ label: t('responsive.badge'), color: 'orange' }}
+      title={t('responsive.title')}
+      description={t('responsive.description')}
     >
       <div className="space-y-8">
-        <SubSection title="Mobile-First Approach" icon iconColor="orange">
-          <p className="text-sm text-gray-700 mb-4">
-            Design for the smallest screen first, then add complexity for larger
-            screens. In Tailwind, this means unwrapped classes target mobile,
-            and <code>md:</code>, <code>lg:</code> target larger screens.
-          </p>
+        <SubSection title={t('responsive.mobileFirst.title')} icon iconColor="orange">
+          <p className="text-sm text-gray-700 mb-4" dangerouslySetInnerHTML={{ __html: t('responsive.mobileFirst.content') }} />
+
           <CodeBlock
             code={`<!-- 
   Default: block (mobile)
@@ -29,23 +28,18 @@ export const ResponsiveSection = () => {
           />
         </SubSection>
 
-        <SubSection title="Tools & Techniques" icon iconColor="orange">
+        <SubSection title={t('responsive.toolsTechniques.title')} icon iconColor="orange">
           <div className="grid grid-cols-1 gap-4">
-            <InfoBox variant="orange" title="Techniques">
+            <InfoBox variant="orange" title={t('responsive.toolsTechniques.infoTitle')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Breakpoints:</strong> Standardize widths (e.g., sm:
-                  640px, md: 768px, lg: 1024px).
+                  <strong>{t('responsive.toolsTechniques.breakpoints')}</strong> {t('responsive.toolsTechniques.breakpointsDesc')}
                 </li>
                 <li>
-                  <strong>Fluid Typography:</strong> Use <code>clamp()</code>{' '}
-                  for smooth font scaling. <br />
-                  <code>font-size: clamp(1rem, 2.5vw, 2rem);</code>
+                  <strong>{t('responsive.toolsTechniques.fluidTypography')}</strong> <span dangerouslySetInnerHTML={{ __html: t('responsive.toolsTechniques.fluidTypographyDesc') }} />
                 </li>
                 <li>
-                  <strong>Art Direction:</strong> Use{' '}
-                  <code>&lt;picture&gt;</code> to serve different images for
-                  different screens to save bandwidth.
+                  <strong>{t('responsive.toolsTechniques.artDirection')}</strong> <span dangerouslySetInnerHTML={{ __html: t('responsive.toolsTechniques.artDirectionDesc') }} />
                 </li>
               </ul>
             </InfoBox>

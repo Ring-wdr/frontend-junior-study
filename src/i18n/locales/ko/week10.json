@@ -1,0 +1,95 @@
+{
+  "header": {
+    "title": "Animation w/ GSAP",
+    "description": "GSAP와 ScrollTrigger를 활용한 고성능 웹 애니메이션 및 인터랙티브 스토리텔링"
+  },
+  "tabs": {
+    "all": "All",
+    "intro": "Why Animation",
+    "basics": "GSAP Basics",
+    "easing": "Easing",
+    "scroll": "ScrollTrigger",
+    "svg": "SVG Draw",
+    "performance": "Performance"
+  },
+  "intro": {
+    "title": "왜 JS 애니메이션인가?",
+    "description": "CSS만으로 충분하지 않은 상황이 있습니다. 복잡한 타이밍 제어, 순차적/병렬 움직임, SVG나 Canvas 영역 제어, 그리고 스크롤 기반 인터랙션이 필요할 때 JS 애니메이션 라이브러리인 <b>GSAP</b>은 강력한 도구가 됩니다.",
+    "features": {
+      "timing": {
+        "title": "정교한 타이밍 제어",
+        "description": "CSS로는 어려운 복잡한 시퀀스와 딜레이, 속도 제어가 가능합니다."
+      },
+      "complex": {
+        "title": "복합적인 움직임",
+        "description": "여러 요소가 서로 상호작용하며 순차적으로 움직이는 타임라인을 구성할 수 있습니다."
+      },
+      "beyond": {
+        "title": "DOM 외 영역 제어",
+        "description": "SVG, Canvas, Three.js 객체의 속성까지 애니메이션 할 수 있습니다."
+      },
+      "scroll": {
+        "title": "스크롤 인터랙션",
+        "description": "스크롤 진행도에 따라 UI가 변화하거나 고정(Pin)되는 효과를 쉽게 구현합니다."
+      }
+    }
+  },
+  "basics": {
+    "title": "GSAP 기본 문법",
+    "resetAll": "Reset All",
+    "to": {
+      "title": "gsap.to()",
+      "description": "현재 상태에서 지정한 값으로 애니메이션"
+    },
+    "from": {
+      "title": "gsap.from()",
+      "description": "지정한 상태에서 원래 상태로 애니메이션"
+    },
+    "timeline": {
+      "title": "gsap.timeline()",
+      "description": "여러 애니메이션을 순차적/병렬로 조합"
+    }
+  },
+  "easing": {
+    "title": "Easing (가속도)",
+    "description": "애니메이션의 느낌을 결정하는 가장 중요한 요소입니다. \"빠르게 시작해서 부드럽게 멈추는\" 것이 UI 모션의 기본 원칙입니다.",
+    "selectEasing": "Select Easing",
+    "runAnimation": "Run Animation",
+    "animating": "Animating...",
+    "start": "Start (0%)",
+    "end": "End (100%)"
+  },
+  "scrollTrigger": {
+    "title": "ScrollTrigger",
+    "description": "스크롤 위치에 따라 애니메이션을 제어합니다. 아래 박스 내부를 스크롤해보세요.",
+    "scrollDown": "Scroll Down",
+    "triggerAnimation": "Trigger Animation",
+    "scrubAnimation": "Scrub Animation",
+    "scrubDescription": "스크롤 속도에 맞춰 움직입니다.",
+    "pinnedSection": "Pinned Section",
+    "pinnedDescription": "이 섹션은 잠시 고정됩니다.",
+    "endOfContent": "End of Content",
+    "codeSnippet": "Code Snippet"
+  },
+  "svg": {
+    "title": "SVG Animation",
+    "replay": "Replay",
+    "description": "<code>stroke-dasharray</code>와 <code>stroke-dashoffset</code> 속성을 이용하면 손글씨나 라인 드로잉 효과를 구현할 수 있습니다."
+  },
+  "performance": {
+    "title": "성능 최적화 (Performance)",
+    "description": "화려한 애니메이션도 버벅인다면 사용자 경험을 해칩니다. 브라우저의 렌더링 파이프라인을 이해하고 최적화된 속성만 건드려야 합니다.",
+    "good": {
+      "title": "Good (Cheap Properties)",
+      "description": "GPU 가속을 활용하며 Layout(Reflow)을 유발하지 않습니다."
+    },
+    "bad": {
+      "title": "Bad (Expensive Properties)",
+      "description": "Layout 과정을 다시 계산하게 만들어 성능을 급격히 떨어뜨립니다."
+    },
+    "devtools": {
+      "title": "DevTools 활용하기:",
+      "description": "Performance 탭에서 녹화를 눌러 FPS가 60 밑으로 떨어지는지, 'Layout Shift'가 발생하는지 반드시 체크하세요."
+    }
+  }
+}

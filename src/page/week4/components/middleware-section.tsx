@@ -1,65 +1,51 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { MiddlewareVisualizer } from './middleware-visualizer';
 
 export const MiddlewareSection = () => {
+  const { t } = useTranslation('week4');
+
   return (
     <SectionCard
-      badge={{ label: 'Asynchronous State', color: 'purple' }}
-      title="Redux Middleware"
-      description="Handling side effects and asynchronous logic in Redux applications."
+      badge={{ label: t('middleware.badge'), color: 'purple' }}
+      title={t('middleware.title')}
+      description={t('middleware.description')}
     >
       <div className="space-y-8">
         <SubSection
-          title="Understanding Redux Middleware"
+          title={t('middleware.understanding.title')}
           icon
           iconColor="purple"
         >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Redux by itself is <strong>synchronous</strong>. Middleware
-              provides a third-party extension point between dispatching an
-              action and the moment it reaches the reducer. This enables
-              handling of side effects like API calls, logging, and complex
-              async workflows.
+              {t('middleware.understanding.description')}
             </p>
 
             <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
               <MiddlewareVisualizer />
             </div>
 
-            <InfoBox variant="purple" title="Middleware Flow">
+            <InfoBox variant="purple" title={t('middleware.understanding.flow.title')}>
               <p className="text-sm text-gray-700">
-                When an action is dispatched, it flows through the middleware
-                chain before reaching the reducer. Each middleware can
-                intercept, modify, or delay actions.
+                {t('middleware.understanding.flow.description')}
               </p>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title="Redux Thunk" icon iconColor="blue">
+        <SubSection title={t('middleware.thunk.title')} icon iconColor="blue">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Redux Thunk is the simplest and most commonly used middleware for
-              handling async operations. It allows action creators to return a
-              function instead of an action object. This function receives{' '}
-              <code>dispatch</code> and <code>getState</code> as arguments.
+              {t('middleware.thunk.description')}
             </p>
 
-            <InfoBox variant="blue" title="How It Works">
+            <InfoBox variant="blue" title={t('middleware.thunk.howItWorks.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
-                <li>
-                  <strong>Normal actions:</strong> Return a plain action object
-                </li>
-                <li>
-                  <strong>Thunks:</strong> Return a function that gets{' '}
-                  <code>dispatch</code> and <code>getState</code>
-                </li>
-                <li>
-                  Inside the thunk, perform async tasks and manually dispatch
-                  actions
-                </li>
+                <li>{t('middleware.thunk.howItWorks.normalActions')}</li>
+                <li>{t('middleware.thunk.howItWorks.thunks')}</li>
+                <li>{t('middleware.thunk.howItWorks.inside')}</li>
               </ul>
             </InfoBox>
 
@@ -89,44 +75,26 @@ store.dispatch(fetchUser(123));`}
               className="text-xs"
             />
 
-            <InfoBox variant="gray" title="Pros & Cons">
+            <InfoBox variant="gray" title={t('middleware.thunk.prosAndCons.title')}>
               <div className="space-y-2 text-sm text-gray-700">
-                <p>
-                  <strong>✓ Pros:</strong> Simple, minimal setup, good for
-                  straightforward async tasks
-                </p>
-                <p>
-                  <strong>✗ Cons:</strong> Can lead to complex logic inside
-                  thunks, harder to test complex async flows
-                </p>
+                <p>{t('middleware.thunk.prosAndCons.pros')}</p>
+                <p>{t('middleware.thunk.prosAndCons.cons')}</p>
               </div>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title="Redux Saga" icon iconColor="purple">
+        <SubSection title={t('middleware.saga.title')} icon iconColor="purple">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Redux Saga uses Generator functions to handle side effects in a
-              more declarative way. It's more powerful and testable than thunk,
-              making it ideal for complex async workflows.
+              {t('middleware.saga.description')}
             </p>
 
-            <InfoBox variant="purple" title="Key Concepts">
+            <InfoBox variant="purple" title={t('middleware.saga.keyConcepts.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
-                <li>
-                  <strong>Generators:</strong> Functions that can pause and
-                  resume
-                </li>
-                <li>
-                  <strong>Effects:</strong> Plain objects describing side
-                  effects (<code>call</code>, <code>put</code>,{' '}
-                  <code>select</code>, etc.)
-                </li>
-                <li>
-                  <strong>Watcher Saga:</strong> Monitors actions and triggers
-                  worker sagas
-                </li>
+                <li>{t('middleware.saga.keyConcepts.generators')}</li>
+                <li>{t('middleware.saga.keyConcepts.effects')}</li>
+                <li>{t('middleware.saga.keyConcepts.watcher')}</li>
               </ul>
             </InfoBox>
 
@@ -155,41 +123,30 @@ function* rootSaga() {
               className="text-xs"
             />
 
-            <InfoBox variant="gray" title="Pros & Cons">
+            <InfoBox variant="gray" title={t('middleware.saga.prosAndCons.title')}>
               <div className="space-y-2 text-sm text-gray-700">
-                <p>
-                  <strong>✓ Pros:</strong> Highly testable, handles race
-                  conditions, cancellation, and complex flows elegantly
-                </p>
-                <p>
-                  <strong>✗ Cons:</strong> Steeper learning curve, more
-                  boilerplate
-                </p>
+                <p>{t('middleware.saga.prosAndCons.pros')}</p>
+                <p>{t('middleware.saga.prosAndCons.cons')}</p>
               </div>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title="Other Middleware" icon iconColor="orange">
+        <SubSection title={t('middleware.other.title')} icon iconColor="orange">
           <div className="space-y-4">
             <div className="grid grid-cols-1 gap-4">
-              <InfoBox variant="gray" title="Redux Observable">
+              <InfoBox variant="gray" title={t('middleware.other.observable.title')}>
                 <p className="text-sm text-gray-700 mb-2">
-                  Built on RxJS, it treats actions as streams and handles side
-                  effects using reactive operators. Perfect for complex event
-                  handling.
+                  {t('middleware.other.observable.description')}
                 </p>
                 <p className="text-xs text-gray-600 italic">
-                  Use when you need powerful stream manipulation and are
-                  comfortable with reactive programming.
+                  {t('middleware.other.observable.useCase')}
                 </p>
               </InfoBox>
 
-              <InfoBox variant="gray" title="Redux Promise">
+              <InfoBox variant="gray" title={t('middleware.other.promise.title')}>
                 <p className="text-sm text-gray-700 mb-2">
-                  Simple middleware that resolves Promise-based actions
-                  automatically. Useful when you want a lightweight alternative
-                  to Thunk.
+                  {t('middleware.other.promise.description')}
                 </p>
               </InfoBox>
             </div>

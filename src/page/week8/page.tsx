@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { cn } from '../../lib/utils';
 import { E2ETestingSection } from './components/e2e-testing-section';
 import { IntegrationTestingSection } from './components/integration-testing-section';
@@ -29,10 +30,32 @@ const sections = [
 ];
 
 export default function Week8Page() {
+  const { t } = useTranslation('week8');
   const [activeTab, setActiveTab] = useState<Tab>('all');
 
   const filteredSections =
     activeTab === 'all' ? sections : sections.filter((s) => s.id === activeTab);
+
+  const getTabLabel = (tab: Tab): string => {
+    switch (tab) {
+      case 'all':
+        return t('tabs.all');
+      case 'fundamentals':
+        return t('tabs.fundamentals');
+      case 'unit':
+        return t('tabs.unit');
+      case 'integration':
+        return t('tabs.integration');
+      case 'vitest':
+        return t('tabs.vitest');
+      case 'e2e':
+        return t('tabs.e2e');
+      case 'best-practices':
+        return t('tabs.bestPractices');
+      default:
+        return tab;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#F0F4F8] font-sans text-gray-900 flex flex-col items-center">
@@ -41,14 +64,13 @@ export default function Week8Page() {
           to="/"
           className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 mb-6 transition-colors"
         >
-          ← Back to Dashboard
+          ← {t('common:navigation.backToDashboard')}
         </Link>
         <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-gray-900">
-          Frontend Testing
+          {t('header.title')}
         </h1>
         <p className="text-lg text-gray-600 max-w-xl mx-auto">
-          Unit, Integration, and E2E Testing: Building a comprehensive testing
-          strategy from scratch.
+          {t('header.description')}
         </p>
       </header>
       <div className="sticky top-4 z-10 bg-white/80 backdrop-blur-md p-1.5 rounded-full shadow-sm border border-gray-200 mb-8 flex gap-1 flex-wrap justify-center max-w-[95vw]">
@@ -64,19 +86,7 @@ export default function Week8Page() {
                 : 'text-gray-600 hover:bg-gray-100',
             )}
           >
-            {tab === 'all'
-              ? 'All'
-              : tab === 'fundamentals'
-                ? 'Fundamentals'
-                : tab === 'unit'
-                  ? 'Unit Testing'
-                  : tab === 'integration'
-                    ? 'Integration'
-                    : tab === 'vitest'
-                      ? 'Vitest'
-                      : tab === 'e2e'
-                        ? 'E2E'
-                        : 'Best Practices'}
+            {getTabLabel(tab)}
           </button>
         ))}
       </div>

@@ -1,31 +1,28 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
-export const DslSection = () => (
-  <SectionCard
-    badge={{ label: 'DSL', color: 'teal' }}
-    title="Domain-Specific Language"
-    description="Mini-languages tailored for specific problem domains."
-    testId="dsl-section"
-  >
+export const DslSection = () => {
+  const { t } = useTranslation('week1');
+
+  return (
+    <SectionCard
+      badge={{ label: t('dsl.badge'), color: 'teal' }}
+      title={t('dsl.title')}
+      description={t('dsl.description')}
+      testId="dsl-section"
+    >
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
       <div>
         <InfoBox variant="blue" className="bg-teal-50 border-teal-100 h-full">
           <div>
-            <h4 className="font-bold text-teal-900 mb-2">What is a DSL?</h4>
+            <h4 className="font-bold text-teal-900 mb-2">{t('dsl.whatIsDsl.title')}</h4>
             <p className="text-sm text-teal-800 mb-4">
-              Unlike General Purpose Languages (GPL) like Java or Python, DSLs
-              are focused on specific tasks.
+              {t('dsl.whatIsDsl.description')}
             </p>
             <ul className="list-disc list-inside text-sm text-teal-800 space-y-2">
-              <li>
-                <strong>Internal DSL:</strong> Using host language features
-                (e.g., jQuery, React JSX, builder patterns).
-              </li>
-              <li>
-                <strong>External DSL:</strong> Separate syntax/parser (e.g.,
-                SQL, CSS, Regex, Markdown).
-              </li>
+              <li dangerouslySetInnerHTML={{ __html: t('dsl.whatIsDsl.internal') }} />
+              <li dangerouslySetInnerHTML={{ __html: t('dsl.whatIsDsl.external') }} />
             </ul>
           </div>
         </InfoBox>
@@ -34,7 +31,7 @@ export const DslSection = () => (
       <div className="space-y-4">
         <div>
           <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
-            Example: React JSX (Internal DSL)
+            {t('dsl.examples.reactJsx')}
           </span>
           <CodeBlock
             language="jsx"
@@ -45,7 +42,7 @@ export const DslSection = () => (
         </div>
         <div>
           <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
-            Example: SQL (External DSL)
+            {t('dsl.examples.sql')}
           </span>
           <CodeBlock
             language="sql"
@@ -56,4 +53,5 @@ WHERE active = true;`}
       </div>
     </div>
   </SectionCard>
-);
+  );
+};

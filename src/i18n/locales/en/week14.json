@@ -1,0 +1,578 @@
+{
+  "header": {
+    "title": "Accessibility & i18n",
+    "description": "Build inclusive web applications with proper accessibility (A11y) and internationalization (i18n) support for global audiences."
+  },
+  "tabs": {
+    "all": "All",
+    "wcag": "WCAG Basics",
+    "semantic": "Semantic HTML",
+    "aria": "ARIA",
+    "focus": "Focus Management",
+    "i18n": "i18n Basics",
+    "intl": "Intl API",
+    "rtl": "RTL Support"
+  },
+  "wcag": {
+    "badge": "A11y",
+    "title": "WCAG Web Accessibility Basics",
+    "description": "Understanding the 4 core WCAG 2.1 principles and the essential value of accessibility",
+    "whatIsA11y": {
+      "title": "What is Accessibility?",
+      "infoTitle": "Web Accessibility (A11y)",
+      "infoText": "Accessibility is not just for disabilities. It ensures that all users can equally utilize product features in various situations (low light, noise, touch restrictions, mobile environments, etc.).",
+      "scenarios": {
+        "lowLight": "Low light environment",
+        "noise": "Noisy environment",
+        "temporaryDisability": "Temporary disability",
+        "mobile": "Mobile usage"
+      }
+    },
+    "principles": {
+      "title": "WCAG 2.1 Core 4 Principles",
+      "label": "POUR Principles",
+      "perceivable": {
+        "description": "Content must be perceivable by all users",
+        "items": [
+          "Provide alternative text (images, videos, etc.)",
+          "Maintain contrast ratio of 4.5:1 or higher",
+          "Text must be selectable and zoomable",
+          "Provide captions and audio descriptions"
+        ]
+      },
+      "operable": {
+        "description": "UI components and navigation must be operable",
+        "items": [
+          "All features accessible via keyboard",
+          "Focus visible with natural flow",
+          "Provide sufficient time (adjustable time limits)",
+          "No seizure-inducing content (flashing)"
+        ]
+      },
+      "understandable": {
+        "description": "Information and UI operation must be understandable",
+        "items": [
+          "Provide clear form labels",
+          "Error messages must be specific",
+          "Consistent navigation structure",
+          "Predictable behavior"
+        ]
+      },
+      "robust": {
+        "description": "Must be interpretable by various user agents",
+        "items": [
+          "Recognizable by assistive technologies (Screen Readers)",
+          "Semantic tags required",
+          "Use ARIA only when necessary",
+          "Standards-compliant markup"
+        ]
+      }
+    },
+    "contrastChecker": {
+      "title": "Contrast Checker",
+      "label": "Contrast Ratio Demo",
+      "pass": "✓ 4.54:1 (WCAG AA)",
+      "fail": "✗ 2.85:1 (Fail)",
+      "guideline": "WCAG AA standard: Regular text 4.5:1, Large text (18px+) 3:1 or higher"
+    },
+    "testingTools": {
+      "title": "Accessibility Testing Tools",
+      "tools": [
+        {
+          "name": "axe DevTools",
+          "desc": "Most powerful automation tool",
+          "badge": "Essential"
+        },
+        {
+          "name": "Lighthouse",
+          "desc": "Chrome built-in performance/accessibility audit",
+          "badge": "Built-in"
+        },
+        {
+          "name": "WAVE",
+          "desc": "Visual accessibility evaluation",
+          "badge": "Visual"
+        },
+        {
+          "name": "VoiceOver/NVDA",
+          "desc": "Real screen reader testing",
+          "badge": "Manual"
+        }
+      ]
+    }
+  },
+  "semantic": {
+    "badge": "HTML",
+    "title": "Semantic HTML - The Ultimate Accessibility Tool",
+    "description": "80% of accessibility is solved simply by using HTML correctly",
+    "importance": {
+      "title": "Importance of Semantic Tags",
+      "infoTitle": "Why Semantic HTML?",
+      "infoText": "Semantic HTML is the foundation for screen readers and search engines to understand page structure. Using only <div> and <span> prevents assistive technologies from understanding content meaning."
+    },
+    "goodVsBad": {
+      "title": "Interactive: Good vs Bad",
+      "label": "Toggle to Compare",
+      "goodButton": "✓ Good (Semantic)",
+      "badButton": "✗ Bad (Div Soup)",
+      "badWarning": "⚠️ Screen readers cannot recognize structure, keyboard navigation impossible",
+      "goodMessage": "✓ Screen readers recognize as landmarks, keyboard navigation enabled"
+    },
+    "coreElements": {
+      "title": "Core Semantic Elements",
+      "elements": [
+        {
+          "tag": "<button>",
+          "wrong": "<div onclick>",
+          "desc": "Clickable action"
+        },
+        {
+          "tag": "<a href>",
+          "wrong": "<span onclick>",
+          "desc": "Page navigation link"
+        },
+        {
+          "tag": "<label for>",
+          "wrong": "<span>",
+          "desc": "Form field label"
+        },
+        {
+          "tag": "<nav>",
+          "wrong": "<div class=\"nav\">",
+          "desc": "Navigation area"
+        },
+        {
+          "tag": "<main>",
+          "wrong": "<div class=\"main\">",
+          "desc": "Main content area"
+        },
+        {
+          "tag": "<header>/<footer>",
+          "wrong": "<div>",
+          "desc": "Page/section header/footer"
+        }
+      ]
+    },
+    "formAccessibility": {
+      "title": "Form Accessibility",
+      "tips": [
+        "Connect labels with for and id",
+        "Group with fieldset and legend",
+        "Connect hints/errors with aria-describedby"
+      ]
+    },
+    "headingHierarchy": {
+      "title": "Heading Hierarchy",
+      "label": "Document Outline",
+      "warning": "⚠️ Don't skip levels like h1 → h3. Screen reader users navigate pages using heading lists."
+    }
+  },
+  "aria": {
+    "badge": "WAI-ARIA",
+    "title": "Proper Use of ARIA",
+    "description": "Use HTML first, ARIA supplements missing functionality",
+    "firstRule": {
+      "title": "First Rule of ARIA",
+      "infoTitle": "First Rule of ARIA",
+      "quote": "\"If you don't need to use ARIA, don't use it.\"",
+      "explanation": "Native HTML elements already provide accessibility. Use ARIA only for features that cannot be expressed in HTML (e.g., custom components). Misusing ARIA worsens accessibility."
+    },
+    "commonAttributes": {
+      "title": "Common ARIA Attributes",
+      "attributes": [
+        {
+          "attr": "role",
+          "desc": "Define element's role",
+          "example": "role=\"dialog\", role=\"alert\", role=\"tablist\""
+        },
+        {
+          "attr": "aria-label",
+          "desc": "Provide accessible name",
+          "example": "aria-label=\"Close menu\""
+        },
+        {
+          "attr": "aria-labelledby",
+          "desc": "Reference name by another element's ID",
+          "example": "aria-labelledby=\"modal-title\""
+        },
+        {
+          "attr": "aria-describedby",
+          "desc": "Connect additional description",
+          "example": "aria-describedby=\"password-hint\""
+        },
+        {
+          "attr": "aria-expanded",
+          "desc": "Expanded/collapsed state",
+          "example": "aria-expanded=\"true\""
+        },
+        {
+          "attr": "aria-live",
+          "desc": "Dynamic content announcement",
+          "example": "aria-live=\"polite\""
+        }
+      ]
+    },
+    "ariaExpanded": {
+      "title": "Interactive: aria-expanded",
+      "label": "Accordion Pattern",
+      "buttonText": "What is aria-expanded?",
+      "explanation": "aria-expanded tells screen readers whether the current element is expanded or collapsed. Essential for toggle buttons, accordions, dropdown menus, etc."
+    },
+    "ariaLive": {
+      "title": "Interactive: aria-live",
+      "label": "Live Region Demo",
+      "instructions": "Click a button and the screen reader will announce:",
+      "addToCart": "Add to Cart",
+      "submitForm": "Submit Form",
+      "clear": "Clear",
+      "notification1": "Item added to cart!",
+      "notification2": "Form submitted successfully",
+      "placeholder": "Notifications will appear here..."
+    },
+    "modalPattern": {
+      "title": "Modal Dialog Pattern"
+    },
+    "antiPatterns": {
+      "title": "ARIA Anti-patterns",
+      "patterns": [
+        {
+          "bad": "<div role=\"button\">Click</div>",
+          "good": "<button>Click</button>",
+          "reason": "Native element already has semantics"
+        },
+        {
+          "bad": "aria-hidden=\"true\" on focusable element",
+          "good": "Remove element from tab order first",
+          "reason": "Creates invisible but focusable element"
+        },
+        {
+          "bad": "aria-label on <div> without role",
+          "good": "Add appropriate role or use native element",
+          "reason": "aria-label only works with certain roles"
+        }
+      ]
+    }
+  },
+  "focus": {
+    "badge": "Focus",
+    "title": "Focus Management",
+    "description": "The most commonly broken accessibility point in React SPAs",
+    "whenToManage": {
+      "title": "When to Manage Focus",
+      "infoTitle": "When to Manage Focus",
+      "cases": [
+        {
+          "title": "On route navigation:",
+          "desc": "Move focus to new page's first heading"
+        },
+        {
+          "title": "When modal opens:",
+          "items": [
+            "Move focus to first element inside modal",
+            "Trap tab navigation from escaping modal",
+            "Return focus to previous position when closed"
+          ]
+        },
+        {
+          "title": "Dynamic content:",
+          "desc": "Move focus to newly added content"
+        }
+      ]
+    },
+    "trapDemo": {
+      "title": "Interactive: Focus Trap Modal",
+      "label": "Click to Open Modal",
+      "openButton": "Open Modal",
+      "instructions": "When modal opens, try navigating with Tab key. Focus is trapped inside the modal.",
+      "modalTitle": "Focus Trap Demo",
+      "modalDesc": "Press Tab key. Focus cycles only within this modal. Press ESC to close.",
+      "input1": "Input field 1",
+      "input2": "Input field 2",
+      "cancel": "Cancel",
+      "confirm": "Confirm"
+    },
+    "indicatorTracker": {
+      "title": "Focus Indicator Tracker",
+      "label": "Tab Through These Buttons",
+      "historyLabel": "Focus History:",
+      "placeholder": "Tab through buttons...",
+      "buttons": ["Button A", "Button B", "Button C", "Button D"]
+    },
+    "implementation": {
+      "title": "Focus Trap Implementation"
+    },
+    "libraries": {
+      "title": "Recommended Libraries",
+      "libs": [
+        {
+          "name": "focus-trap-react",
+          "desc": "Lightweight Focus Trap library",
+          "use": "Modal, Dropdown"
+        },
+        {
+          "name": "React Aria",
+          "desc": "Adobe's accessible components",
+          "use": "Full A11y Suite"
+        },
+        {
+          "name": "Radix UI",
+          "desc": "Components with built-in accessibility",
+          "use": "Headless UI"
+        },
+        {
+          "name": "@reach/ui",
+          "desc": "Accessibility-first components",
+          "use": "Modal, Tabs, etc."
+        }
+      ]
+    }
+  },
+  "i18nBasics": {
+    "badge": "i18n",
+    "title": "Internationalization (i18n) Basics",
+    "description": "Multi-language support architecture for global services",
+    "coreElements": {
+      "title": "Core Elements of Internationalization",
+      "elements": [
+        {
+          "title": "Language (Translation)",
+          "desc": "Text translation"
+        },
+        {
+          "title": "Date/Time",
+          "desc": "Regional formats (MM/DD vs DD/MM)"
+        },
+        {
+          "title": "Numbers/Currency",
+          "desc": "1,000 vs 1.000, $100 vs 100₩"
+        },
+        {
+          "title": "RTL Support",
+          "desc": "Arabic, Hebrew, etc."
+        },
+        {
+          "title": "Pluralization",
+          "desc": "1 item vs 2 items"
+        },
+        {
+          "title": "Timezone",
+          "desc": "UTC, KST, PST, etc."
+        }
+      ]
+    },
+    "liveDemo": {
+      "title": "Interactive: Language Switching",
+      "label": "Live Translation Demo",
+      "locales": {
+        "ko": "한국어",
+        "en": "English",
+        "ja": "日本語"
+      },
+      "currentLocale": "Current locale:"
+    },
+    "icuFormat": {
+      "title": "ICU Message Format",
+      "infoTitle": "Industry Standard",
+      "infoText": "ICU Message Format is the industry standard for handling pluralization and selection messages."
+    },
+    "nextjsStructure": {
+      "title": "Next.js i18n Structure"
+    },
+    "fileManagement": {
+      "title": "Translation File Management Strategy",
+      "namespaceTitle": "Namespace-based Separation (Recommended)",
+      "missingKeysTitle": "Missing Translation Key Check",
+      "missingKeysText": "Use Jest + JSON Schema to automatically verify missing translation keys in CI."
+    },
+    "libraryComparison": {
+      "title": "i18n Library Comparison",
+      "headers": {
+        "library": "Library",
+        "features": "Features",
+        "useCase": "Use Case"
+      },
+      "libraries": [
+        {
+          "name": "react-intl",
+          "features": "Full ICU support, FormatJS",
+          "useCase": "Large-scale enterprise"
+        },
+        {
+          "name": "i18next",
+          "features": "Flexible plugin system",
+          "useCase": "General purpose"
+        },
+        {
+          "name": "next-intl",
+          "features": "Next.js optimized",
+          "useCase": "Next.js projects"
+        }
+      ]
+    }
+  },
+  "intl": {
+    "badge": "Intl",
+    "title": "JavaScript Intl API",
+    "description": "Browser built-in internationalization API for date, number, currency formatting",
+    "overview": {
+      "title": "Intl API Overview",
+      "infoTitle": "Built-in Internationalization",
+      "infoText": "JavaScript's Intl object is a powerful built-in internationalization API. You can format dates, numbers, currency, plurals, etc. according to locale without any libraries."
+    },
+    "liveDemo": {
+      "title": "Interactive: Formatting by Locale",
+      "label": "Select Locale to See Differences",
+      "locales": {
+        "ko": "한국어",
+        "en": "English (US)",
+        "de": "Deutsch",
+        "ja": "日本語",
+        "ar": "العربية"
+      },
+      "numberFormat": "NumberFormat",
+      "dateTimeFormat": "DateTimeFormat",
+      "relativeTimeFormat": "RelativeTimeFormat",
+      "labels": {
+        "number": "Number:",
+        "short": "Short:",
+        "medium": "Medium:",
+        "long": "Long:",
+        "time": "Time:"
+      }
+    },
+    "numberFormat": {
+      "title": "Intl.NumberFormat"
+    },
+    "dateTimeFormat": {
+      "title": "Intl.DateTimeFormat"
+    },
+    "otherApis": {
+      "title": "Other Useful Intl APIs",
+      "apis": [
+        {
+          "api": "Intl.ListFormat",
+          "example": "new Intl.ListFormat(\"en\").format([\"a\", \"b\", \"c\"])",
+          "result": "\"a, b, and c\""
+        },
+        {
+          "api": "Intl.PluralRules",
+          "example": "new Intl.PluralRules(\"en\").select(1)",
+          "result": "\"one\""
+        },
+        {
+          "api": "Intl.Collator",
+          "example": "[\"ä\", \"a\", \"z\"].sort(new Intl.Collator(\"de\").compare)",
+          "result": "[\"a\", \"ä\", \"z\"]"
+        },
+        {
+          "api": "Intl.Segmenter",
+          "example": "Segment text into words/sentences",
+          "result": "Text analysis"
+        }
+      ]
+    }
+  },
+  "rtl": {
+    "badge": "RTL",
+    "title": "RTL (Right-to-Left) Support",
+    "description": "Essential features for RTL languages like Arabic and Hebrew",
+    "languages": {
+      "title": "Languages Requiring RTL",
+      "infoTitle": "RTL Languages",
+      "infoText": "Over 400 million users use RTL languages. Must be considered for global services.",
+      "list": [
+        {
+          "lang": "Arabic (العربية)",
+          "speakers": "310M+"
+        },
+        {
+          "lang": "Hebrew (עברית)",
+          "speakers": "9M+"
+        },
+        {
+          "lang": "Persian (فارسی)",
+          "speakers": "110M+"
+        },
+        {
+          "lang": "Urdu (اردو)",
+          "speakers": "70M+"
+        }
+      ]
+    },
+    "liveDemo": {
+      "title": "Interactive: LTR vs RTL",
+      "label": "Toggle Direction",
+      "ltr": "LTR (English)",
+      "rtl": "RTL (العربية)",
+      "name": {
+        "ltr": "John Doe",
+        "rtl": "محمد أحمد"
+      },
+      "role": {
+        "ltr": "Frontend Developer",
+        "rtl": "مطور واجهة أمامية"
+      },
+      "text": {
+        "ltr": "This is an example of text that reads from left to right.",
+        "rtl": "هذا مثال على النص العربي الذي يُقرأ من اليمين إلى اليسار."
+      },
+      "submit": {
+        "ltr": "Submit",
+        "rtl": "إرسال"
+      },
+      "cancel": {
+        "ltr": "Cancel",
+        "rtl": "إلغاء"
+      },
+      "note": "Text direction, margin, padding, alignment all changed"
+    },
+    "logicalProperties": {
+      "title": "CSS Logical Properties",
+      "infoTitle": "Direction-Agnostic CSS",
+      "infoText": "CSS Logical Properties automatically handle LTR/RTL. Use start/end instead of left/right.",
+      "physical": "✗ Physical (Avoid)",
+      "logical": "✓ Logical (Use)"
+    },
+    "mapping": {
+      "title": "Logical Properties Mapping",
+      "headers": {
+        "physical": "Physical",
+        "logical": "Logical",
+        "ltr": "LTR",
+        "rtl": "RTL"
+      }
+    },
+    "tailwind": {
+      "title": "Tailwind CSS RTL Support"
+    },
+    "checklist": {
+      "title": "RTL Implementation Checklist",
+      "items": [
+        {
+          "item": "Set <html dir=\"rtl\" lang=\"ar\">",
+          "done": true
+        },
+        {
+          "item": "Use CSS Logical Properties",
+          "done": true
+        },
+        {
+          "item": "Mirror icon directions (←→ arrows, etc.)",
+          "done": true
+        },
+        {
+          "item": "Handle bidirectional text (Bidi)",
+          "done": false
+        },
+        {
+          "item": "Keep numbers/phone numbers LTR",
+          "done": true
+        },
+        {
+          "item": "Reverse animation directions",
+          "done": false
+        }
+      ]
+    }
+  }
+}

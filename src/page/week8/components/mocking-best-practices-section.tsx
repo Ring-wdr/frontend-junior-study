@@ -1,19 +1,21 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const MockingBestPracticesSection = () => {
+  const { t } = useTranslation('week8');
+
   return (
     <SectionCard
-      badge={{ label: 'Mocking & Best Practices', color: 'purple' }}
-      title="Mocking Strategies & Testing Antipatterns"
-      description="How to mock effectively and avoid common testing pitfalls."
+      badge={{ label: t('bestPractices.badge'), color: 'purple' }}
+      title={t('bestPractices.title')}
+      description={t('bestPractices.description')}
     >
       <div className="space-y-8">
-        <SubSection title="Types of Mocks" icon iconColor="purple">
+        <SubSection title={t('bestPractices.mockTypes.title')} icon iconColor="purple">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Mocking is essential for testing, but too much mocking can make
-              tests unrealistic. Use mocks strategically.
+              {t('bestPractices.mockTypes.description')}
             </p>
 
             <CodeBlock
@@ -46,62 +48,59 @@ spy.mockRestore();`}
               className="text-xs"
             />
 
-            <InfoBox variant="purple" title="Mock Types Summary">
+            <InfoBox variant="purple" title={t('bestPractices.mockTypes.summary.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>vi.fn():</strong> Create mock functions to track calls
+                  <strong>vi.fn():</strong> {t('bestPractices.mockTypes.summary.fn')}
                 </li>
                 <li>
-                  <strong>vi.mock():</strong> Replace entire modules with mocks
+                  <strong>vi.mock():</strong> {t('bestPractices.mockTypes.summary.mock')}
                 </li>
                 <li>
-                  <strong>vi.spyOn():</strong> Spy on real functions without
-                  replacing them
+                  <strong>vi.spyOn():</strong> {t('bestPractices.mockTypes.summary.spy')}
                 </li>
                 <li>
-                  <strong>MSW:</strong> Mock HTTP requests at the network level
+                  <strong>MSW:</strong> {t('bestPractices.mockTypes.summary.msw')}
                 </li>
               </ul>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title="When to Mock" icon iconColor="blue">
+        <SubSection title={t('bestPractices.whenToMock.title')} icon iconColor="blue">
           <div className="space-y-4">
             <div className="bg-green-50 p-4 rounded-lg border border-green-200 mb-4">
               <p className="text-sm font-semibold text-gray-800 mb-2">
-                ✅ DO mock these:
+                ✅ {t('bestPractices.whenToMock.doMock')}
               </p>
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
-                <li>External APIs and network requests (use MSW)</li>
-                <li>
-                  Slow operations (database, file system, crypto functions)
-                </li>
-                <li>Browser APIs (localStorage, geolocation)</li>
-                <li>External dependencies you don't control</li>
-                <li>Side effects you want to verify (analytics, logging)</li>
+                <li>{t('bestPractices.whenToMock.doMockList.apis')}</li>
+                <li>{t('bestPractices.whenToMock.doMockList.slowOps')}</li>
+                <li>{t('bestPractices.whenToMock.doMockList.browserApis')}</li>
+                <li>{t('bestPractices.whenToMock.doMockList.externalDeps')}</li>
+                <li>{t('bestPractices.whenToMock.doMockList.sideEffects')}</li>
               </ul>
             </div>
 
             <div className="bg-red-50 p-4 rounded-lg border border-red-200">
               <p className="text-sm font-semibold text-gray-800 mb-2">
-                ❌ DON'T mock these:
+                ❌ {t('bestPractices.whenToMock.dontMock')}
               </p>
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
-                <li>Your own application code</li>
-                <li>Core business logic</li>
-                <li>React components you're testing</li>
-                <li>Simple utilities like date formatting</li>
-                <li>Things that would make your test unrealistic</li>
+                <li>{t('bestPractices.whenToMock.dontMockList.ownCode')}</li>
+                <li>{t('bestPractices.whenToMock.dontMockList.businessLogic')}</li>
+                <li>{t('bestPractices.whenToMock.dontMockList.reactComponents')}</li>
+                <li>{t('bestPractices.whenToMock.dontMockList.simpleUtils')}</li>
+                <li>{t('bestPractices.whenToMock.dontMockList.unrealistic')}</li>
               </ul>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title="Testing Antipatterns to Avoid" icon iconColor="red">
+        <SubSection title={t('bestPractices.antipatterns.title')} icon iconColor="red">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Common mistakes that make tests brittle and unreliable.
+              {t('bestPractices.antipatterns.description')}
             </p>
 
             <CodeBlock
@@ -203,29 +202,24 @@ test('updates after action', async () => {
           </div>
         </SubSection>
 
-        <SubSection title="Mocking Best Practices" icon iconColor="green">
+        <SubSection title={t('bestPractices.mockingBestPractices.title')} icon iconColor="green">
           <div className="space-y-4">
-            <InfoBox variant="green" title="Golden Rules of Mocking">
+            <InfoBox variant="green" title={t('bestPractices.mockingBestPractices.goldenRules.title')}>
               <ol className="list-decimal pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Mock at the boundary:</strong> Mock network calls,
-                  file I/O, not business logic
+                  <strong>Mock at the boundary:</strong> {t('bestPractices.mockingBestPractices.goldenRules.boundary')}
                 </li>
                 <li>
-                  <strong>Keep mocks simple:</strong> Complex mocks indicate
-                  complex dependencies
+                  <strong>Keep mocks simple:</strong> {t('bestPractices.mockingBestPractices.goldenRules.keepSimple')}
                 </li>
                 <li>
-                  <strong>Use MSW for HTTP:</strong> It's the most realistic way
-                  to mock APIs
+                  <strong>Use MSW for HTTP:</strong> {t('bestPractices.mockingBestPractices.goldenRules.useMSW')}
                 </li>
                 <li>
-                  <strong>Test behavior, not implementation:</strong> Change
-                  implementation without changing tests
+                  <strong>Test behavior, not implementation:</strong> {t('bestPractices.mockingBestPractices.goldenRules.testBehavior')}
                 </li>
                 <li>
-                  <strong>Reset mocks between tests:</strong> Prevent test
-                  pollution
+                  <strong>Reset mocks between tests:</strong> {t('bestPractices.mockingBestPractices.goldenRules.resetMocks')}
                 </li>
               </ol>
             </InfoBox>
@@ -266,10 +260,10 @@ describe('UserProfile', () => {
           </div>
         </SubSection>
 
-        <SubSection title="Testing Common Scenarios" icon iconColor="blue">
+        <SubSection title={t('bestPractices.commonScenarios.title')} icon iconColor="blue">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Practical examples for common testing situations.
+              {t('bestPractices.commonScenarios.description')}
             </p>
 
             <CodeBlock
@@ -320,31 +314,27 @@ test('shows notification after delay', async () => {
         </SubSection>
 
         <SubSection
-          title="Test Organization & Maintenance"
+          title={t('bestPractices.testOrganization.title')}
           icon
           iconColor="purple"
         >
           <div className="space-y-4">
-            <InfoBox variant="purple" title="Keeping Tests Maintainable">
+            <InfoBox variant="purple" title={t('bestPractices.testOrganization.keepMaintainable.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>One concept per test:</strong> Test should have a
-                  single assertion idea
+                  <strong>One concept per test:</strong> {t('bestPractices.testOrganization.keepMaintainable.oneConcept')}
                 </li>
                 <li>
-                  <strong>Clear test names:</strong> Describe what's being
-                  tested
+                  <strong>Clear test names:</strong> {t('bestPractices.testOrganization.keepMaintainable.clearNames')}
                 </li>
                 <li>
-                  <strong>Arrange-Act-Assert pattern:</strong> Organize tests
-                  clearly
+                  <strong>Arrange-Act-Assert pattern:</strong> {t('bestPractices.testOrganization.keepMaintainable.arrangeActAssert')}
                 </li>
                 <li>
-                  <strong>Reusable test utilities:</strong> Extract common test
-                  setup
+                  <strong>Reusable test utilities:</strong> {t('bestPractices.testOrganization.keepMaintainable.reusableUtils')}
                 </li>
                 <li>
-                  <strong>Run tests frequently:</strong> Catch issues early
+                  <strong>Run tests frequently:</strong> {t('bestPractices.testOrganization.keepMaintainable.runFrequently')}
                 </li>
               </ul>
             </InfoBox>
@@ -372,32 +362,27 @@ describe('TodoForm', () => {
           </div>
         </SubSection>
 
-        <SubSection title="Testing Strategy Summary" icon iconColor="orange">
+        <SubSection title={t('bestPractices.strategy.title')} icon iconColor="orange">
           <div className="space-y-4">
             <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg border border-purple-200">
               <p className="text-sm font-semibold text-gray-800 mb-3">
-                Your Testing Strategy:
+                {t('bestPractices.strategy.yourStrategy')}
               </p>
               <ul className="space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>60-70% Unit Tests:</strong> Test pure functions and
-                  components in isolation
+                  <strong>60-70% Unit Tests:</strong> {t('bestPractices.strategy.unitTests')}
                 </li>
                 <li>
-                  <strong>20-30% Integration Tests:</strong> Use RTL + MSW to
-                  test component interactions
+                  <strong>20-30% Integration Tests:</strong> {t('bestPractices.strategy.integrationTests')}
                 </li>
                 <li>
-                  <strong>5-10% E2E Tests:</strong> Use Playwright for critical
-                  user journeys
+                  <strong>5-10% E2E Tests:</strong> {t('bestPractices.strategy.e2eTests')}
                 </li>
                 <li>
-                  <strong>Mock strategically:</strong> External APIs and slow
-                  operations only
+                  <strong>Mock strategically:</strong> {t('bestPractices.strategy.mockStrategically')}
                 </li>
                 <li>
-                  <strong>Test behavior:</strong> Not implementation details or
-                  internals
+                  <strong>Test behavior:</strong> {t('bestPractices.strategy.testBehavior')}
                 </li>
               </ul>
             </div>

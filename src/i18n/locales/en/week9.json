@@ -1,0 +1,377 @@
+{
+  "header": {
+    "title": "Framer Motion & UI Animation",
+    "description": "Master React animations with Framer Motion: gestures, drag, layout animations, page transitions, and performance optimization."
+  },
+  "tabs": {
+    "all": "All",
+    "basics": "Basics",
+    "variants": "Variants",
+    "gesture": "Gesture",
+    "drag": "Drag",
+    "layout": "Layout",
+    "presence": "Presence",
+    "transition": "Transition",
+    "performance": "Performance"
+  },
+  "motionBasics": {
+    "badge": "Fundamentals",
+    "title": "Motion Component Basics",
+    "description": "Understanding the core building blocks of Framer Motion",
+    "whatIsMotionDiv": {
+      "title": "What is motion.div?",
+      "infoTitle": "Motion Component",
+      "content": "Framer Motion's basic unit is the <code>motion</code> component. It wraps any HTML element to enable declarative animations that integrate seamlessly with React state.",
+      "declarative": "Declarative:",
+      "declarativeDesc": "Define what, not how",
+      "stateDriven": "State-driven:",
+      "stateDrivenDesc": "Animations react to React state changes",
+      "composable": "Composable:",
+      "composableDesc": "Works with Variants for complex animations"
+    },
+    "basicProperties": {
+      "title": "Basic Animation Properties"
+    },
+    "demo": {
+      "title": "Interactive Demo",
+      "label": "Fade & Slide Animation",
+      "hide": "Hide",
+      "show": "Show",
+      "element": "Element",
+      "hello": "Hello!",
+      "note": "Note:",
+      "noteDesc": "This simple toggle doesn't animate exit. For exit animations, you need <code>AnimatePresence</code> (covered later)."
+    },
+    "animatableProps": {
+      "title": "Animatable Properties",
+      "transform": "Transform",
+      "transformDesc": "x, y, scale, rotate, skew",
+      "visual": "Visual",
+      "visualDesc": "opacity, color, backgroundColor",
+      "layout": "Layout",
+      "layoutDesc": "width, height, borderRadius",
+      "filter": "Filter",
+      "filterDesc": "blur, brightness, contrast",
+      "performanceTip": "Performance Tip",
+      "performanceTipDesc": "<strong>Transform properties</strong> (x, y, scale, rotate) are GPU-accelerated and don't trigger layout recalculation. Prefer these over width/height for better performance."
+    }
+  },
+  "variants": {
+    "badge": "Advanced",
+    "title": "Variants",
+    "description": "State-based animation patterns for complex orchestration",
+    "whatAreVariants": {
+      "title": "What are Variants?",
+      "infoTitle": "Variants Concept",
+      "content": "Variants are named animation states that can be referenced by string. They enable:",
+      "reusability": "Reusability:",
+      "reusabilityDesc": "Define once, use everywhere",
+      "propagation": "Propagation:",
+      "propagationDesc": "Child components inherit parent states",
+      "orchestration": "Orchestration:",
+      "orchestrationDesc": "Stagger, delay, and sequence animations"
+    },
+    "basicPattern": {
+      "title": "Basic Variants Pattern"
+    },
+    "staggerChildren": {
+      "title": "Stagger Children",
+      "demoLabel": "Stagger Animation Demo",
+      "reset": "Reset",
+      "animateList": "Animate List"
+    },
+    "variantPropagation": {
+      "title": "Variant Propagation",
+      "infoTitle": "How Propagation Works",
+      "content": "When a parent component changes to a new variant, all children with the same variant names automatically animate to match. This creates coordinated animations without explicit wiring."
+    },
+    "orchestrationOptions": {
+      "title": "Orchestration Options",
+      "staggerChildren": "staggerChildren",
+      "staggerChildrenDesc": "Delay between each child animation start",
+      "staggerDirection": "staggerDirection",
+      "staggerDirectionDesc": "1 = first to last, -1 = last to first",
+      "delayChildren": "delayChildren",
+      "delayChildrenDesc": "Wait before starting children animations",
+      "when": "when",
+      "whenDesc": "\"beforeChildren\" | \"afterChildren\""
+    }
+  },
+  "gesture": {
+    "badge": "Interaction",
+    "title": "Gesture-Based Interactions",
+    "description": "Create responsive UI with hover, tap, focus, and scroll animations",
+    "gestureProps": {
+      "title": "Gesture Props Overview",
+      "infoTitle": "Available Gesture Props",
+      "whileHover": "whileHover:",
+      "whileHoverDesc": "Animation on mouse hover",
+      "whileTap": "whileTap:",
+      "whileTapDesc": "Animation while pressing/clicking",
+      "whileFocus": "whileFocus:",
+      "whileFocusDesc": "Animation when element is focused",
+      "whileInView": "whileInView:",
+      "whileInViewDesc": "Animation when element enters viewport",
+      "whileDrag": "whileDrag:",
+      "whileDragDesc": "Animation while dragging"
+    },
+    "hoverTap": {
+      "title": "Hover & Tap",
+      "demoLabel": "Interactive Buttons",
+      "hoverMe": "Hover Me",
+      "colorChange": "Color Change",
+      "liftEffect": "Lift Effect"
+    },
+    "whileInView": {
+      "title": "whileInView (Scroll Animation)",
+      "demoLabel": "Scroll-triggered Elements",
+      "firstItem": "First Item",
+      "secondItem": "Second Item",
+      "thirdItem": "Third Item"
+    },
+    "focusStates": {
+      "title": "Focus States",
+      "demoLabel": "Focus Animation",
+      "placeholder": "Click to focus..."
+    },
+    "eventHandlers": {
+      "title": "Gesture Event Handlers",
+      "infoTitle": "Event Callbacks",
+      "content": "Framer Motion provides callbacks for gesture events:"
+    }
+  },
+  "drag": {
+    "badge": "Advanced",
+    "title": "Drag & Drop",
+    "description": "Build draggable UI components with physics-based interactions",
+    "basicDrag": {
+      "title": "Basic Drag",
+      "demoLabel": "Free Drag",
+      "dragText": "Drag!"
+    },
+    "dragConstraints": {
+      "title": "Drag Constraints",
+      "demoLabel": "Constrained Drag",
+      "boundText": "Bound"
+    },
+    "dragOptions": {
+      "title": "Drag Options",
+      "dragElastic": "dragElastic",
+      "dragElasticDesc": "0 = hard constraint, 1 = full elasticity (default: 0.5)",
+      "dragMomentum": "dragMomentum",
+      "dragMomentumDesc": "Continue moving after release based on velocity (default: true)",
+      "dragTransition": "dragTransition",
+      "dragTransitionDesc": "Configure the momentum animation: bounceStiffness, bounceDamping",
+      "dragDirectionLock": "dragDirectionLock",
+      "dragDirectionLockDesc": "Lock to detected direction after threshold"
+    },
+    "dragWithMomentum": {
+      "title": "Drag with Momentum",
+      "demoLabel": "Momentum & Snap Back",
+      "swipeMe": "Swipe Me",
+      "note": "Swipe horizontally and release to see momentum"
+    },
+    "useCases": {
+      "title": "Use Cases",
+      "infoTitle": "Common Applications",
+      "kanban": "Kanban boards:",
+      "kanbanDesc": "Drag cards between columns (Trello)",
+      "carousels": "Carousels:",
+      "carouselsDesc": "Swipe-based image galleries",
+      "sliders": "Sliders:",
+      "slidersDesc": "Custom range inputs",
+      "reorderable": "Reorderable lists:",
+      "reorderableDesc": "Drag to reorder items",
+      "dismissible": "Dismissible items:",
+      "dismissibleDesc": "Swipe to delete notifications"
+    }
+  },
+  "layout": {
+    "badge": "Magic",
+    "title": "Layout Animation",
+    "description": "Automatic smooth transitions when layout changes",
+    "magic": {
+      "title": "The Magic of layout Prop",
+      "infoTitle": "What Layout Animation Does",
+      "content": "When you add the <code>layout</code> prop, Framer Motion automatically animates between layout changes (position, size) using performant transforms. This is nearly impossible to achieve with CSS alone."
+    },
+    "accordion": {
+      "title": "Accordion Example",
+      "demoLabel": "Click to Expand/Collapse",
+      "clickMe": "Click Me!",
+      "content": "This content smoothly expands and collapses. The parent container automatically animates its size change, and the title stays in position using layout=\"position\"."
+    },
+    "listReordering": {
+      "title": "List Reordering",
+      "demoLabel": "Click Items to Remove",
+      "allRemoved": "All items removed!",
+      "reset": "Reset Items"
+    },
+    "gridListToggle": {
+      "title": "Grid ↔ List Toggle",
+      "demoLabel": "Toggle Layout Mode",
+      "switchTo": "Switch to",
+      "list": "List",
+      "grid": "Grid",
+      "item": "Item"
+    },
+    "layoutPropOptions": {
+      "title": "Layout Prop Options",
+      "layout": "layout",
+      "layoutDesc": "Animate both position and size changes",
+      "layoutPosition": "layout=\"position\"",
+      "layoutPositionDesc": "Only animate position, not size (prevents text distortion)",
+      "layoutSize": "layout=\"size\"",
+      "layoutSizeDesc": "Only animate size changes, not position",
+      "layoutId": "layoutId=\"shared-id\"",
+      "layoutIdDesc": "Shared layout animations across different components"
+    }
+  },
+  "presence": {
+    "badge": "Essential",
+    "title": "AnimatePresence",
+    "description": "Animate components when they mount and unmount",
+    "problem": {
+      "title": "The Problem",
+      "infoTitle": "Why AnimatePresence?",
+      "content": "React immediately removes elements from the DOM when they unmount. This means exit animations are impossible without <code>AnimatePresence</code>, which keeps elements in the DOM during their exit animation."
+    },
+    "basicUsage": {
+      "title": "Basic Usage"
+    },
+    "modal": {
+      "title": "Modal Example",
+      "demoLabel": "Modal with Exit Animation",
+      "openModal": "Open Modal",
+      "modalTitle": "Animated Modal",
+      "modalContent": "This modal has smooth enter and exit animations!",
+      "close": "Close"
+    },
+    "toast": {
+      "title": "Toast Notifications",
+      "demoLabel": "Dismissible Notifications",
+      "addNotification": "Add Notification",
+      "welcome": "Welcome!",
+      "newMessage": "New message received",
+      "updateAvailable": "Update available",
+      "notification": "Notification"
+    },
+    "modes": {
+      "title": "AnimatePresence Modes",
+      "sync": "mode=\"sync\" (default)",
+      "syncDesc": "Enter and exit animations happen simultaneously",
+      "wait": "mode=\"wait\"",
+      "waitDesc": "Wait for exit to complete before entering (good for page transitions)",
+      "popLayout": "mode=\"popLayout\"",
+      "popLayoutDesc": "Exiting elements are removed from layout flow immediately"
+    },
+    "useCases": {
+      "title": "Use Cases",
+      "infoTitle": "Common Applications",
+      "modals": "Modals & Dialogs:",
+      "modalsDesc": "Fade/scale in and out",
+      "toast": "Toast notifications:",
+      "toastDesc": "Slide in and dismiss",
+      "dropdowns": "Dropdowns:",
+      "dropdownsDesc": "Expand and collapse menus",
+      "pageTransitions": "Page transitions:",
+      "pageTransitionsDesc": "Crossfade between routes",
+      "accordions": "Accordions:",
+      "accordionsDesc": "Smooth content reveal"
+    }
+  },
+  "transition": {
+    "badge": "Physics",
+    "title": "Transitions & Springs",
+    "description": "Fine-tune animation timing with springs, tweens, and keyframes",
+    "springPhysics": {
+      "title": "Spring Physics (Default)",
+      "infoTitle": "Why Springs?",
+      "content": "Framer Motion uses spring physics by default because they create more natural, responsive animations. Unlike duration-based tweens, springs respond to interruption smoothly."
+    },
+    "tween": {
+      "title": "Tween (Duration-based)"
+    },
+    "compare": {
+      "title": "Compare Animation Types",
+      "demoLabel": "Click to Animate",
+      "spring": "Spring",
+      "tween": "Tween",
+      "keyframes": "Keyframes",
+      "springNote": "Notice the natural bounce and overshoot",
+      "tweenNote": "Smooth, predictable timing",
+      "keyframesNote": "Multi-step animation sequence"
+    },
+    "keyframes": {
+      "title": "Keyframes Animation",
+      "demoLabel": "Keyframe Animation"
+    },
+    "transitionOptions": {
+      "title": "Transition Options",
+      "delay": "delay",
+      "delayDesc": "Wait before starting (in seconds)",
+      "repeat": "repeat",
+      "repeatDesc": "Number of repetitions (Infinity for loop)",
+      "repeatType": "repeatType",
+      "repeatTypeDesc": "\"loop\" | \"reverse\" | \"mirror\"",
+      "repeatDelay": "repeatDelay",
+      "repeatDelayDesc": "Pause between repetitions"
+    },
+    "perProperty": {
+      "title": "Per-Property Transitions"
+    }
+  },
+  "performance": {
+    "badge": "Best Practices",
+    "title": "Performance & Accessibility",
+    "description": "Optimize animations for performance and inclusive design",
+    "performanceTips": {
+      "title": "Performance Tips",
+      "useTransform": "Use Transform Properties",
+      "useTransformDesc": "x, y, scale, rotate are GPU-accelerated. Avoid animating width, height, top, left.",
+      "limitSimultaneous": "Limit Simultaneous Animations",
+      "limitSimultaneousDesc": "Too many animating elements at once can cause jank. Be selective.",
+      "willChange": "Use will-change Sparingly",
+      "willChangeDesc": "Framer Motion handles this automatically. Don't add it manually.",
+      "layoutExpensive": "Layout Animations Are Expensive",
+      "layoutExpensiveDesc": "Use layout prop judiciously. Consider layout=\"position\" when possible."
+    },
+    "measuring": {
+      "title": "Measuring Performance"
+    },
+    "reducedMotion": {
+      "title": "Accessibility: Reduced Motion",
+      "infoTitle": "Respecting User Preferences",
+      "content": "Some users experience motion sickness or have vestibular disorders. Always respect the <code>prefers-reduced-motion</code> system preference."
+    },
+    "antiPatterns": {
+      "title": "Animation Anti-patterns",
+      "animatingLayout": "Animating Layout Properties",
+      "animatingLayoutDesc": "width/height cause reflow. Use scale transform instead.",
+      "tooManyLayout": "Too Many layout Props",
+      "tooManyLayoutDesc": "Each layout animation requires measuring. Use sparingly.",
+      "animatingEverything": "Animating Everything",
+      "animatingEverythingDesc": "Purposeless animation is distracting. Each animation should serve UX.",
+      "longDurations": "Long Durations",
+      "longDurationsDesc": "Keep animations under 300ms for UI. Users perceive long animations as slow."
+    },
+    "goodPrinciples": {
+      "title": "Good Animation Principles",
+      "infoTitle": "UX Guidelines",
+      "purpose": "Purpose:",
+      "purposeDesc": "Every animation should communicate something",
+      "speed": "Speed:",
+      "speedDesc": "200-300ms for most UI interactions",
+      "consistency": "Consistency:",
+      "consistencyDesc": "Same elements should animate the same way",
+      "subtlety": "Subtlety:",
+      "subtletyDesc": "Animations should enhance, not distract",
+      "interruptibility": "Interruptibility:",
+      "interruptibilityDesc": "Animations should be cancellable"
+    },
+    "resources": {
+      "title": "Resources",
+      "infoTitle": "Learn More"
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -7,6 +8,7 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const TransitionSection = () => {
+  const { t } = useTranslation('week9');
   const [animationType, setAnimationType] = useState<
     'spring' | 'tween' | 'keyframes'
   >('spring');
@@ -14,17 +16,15 @@ export const TransitionSection = () => {
 
   return (
     <SectionCard
-      badge={{ label: 'Physics', color: 'blue' }}
-      title="Transitions & Springs"
-      description="Fine-tune animation timing with springs, tweens, and keyframes"
+      badge={{ label: t('transition.badge'), color: 'blue' }}
+      title={t('transition.title')}
+      description={t('transition.description')}
     >
       <div className="space-y-8">
-        <SubSection title="Spring Physics (Default)" icon iconColor="blue">
-          <InfoBox variant="blue" title="Why Springs?">
+        <SubSection title={t('transition.springPhysics.title')} icon iconColor="blue">
+          <InfoBox variant="blue" title={t('transition.springPhysics.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              Framer Motion uses spring physics by default because they create
-              more natural, responsive animations. Unlike duration-based tweens,
-              springs respond to interruption smoothly.
+              {t('transition.springPhysics.content')}
             </p>
           </InfoBox>
 
@@ -44,7 +44,7 @@ transition={{ type: "spring", bounce: 0.25 }}`}
           />
         </SubSection>
 
-        <SubSection title="Tween (Duration-based)" icon iconColor="purple">
+        <SubSection title={t('transition.tween.title')} icon iconColor="purple">
           <CodeBlock
             code={`transition={{
   type: "tween",
@@ -62,8 +62,8 @@ transition={{ type: "spring", bounce: 0.25 }}`}
           />
         </SubSection>
 
-        <SubSection title="Compare Animation Types" icon iconColor="green">
-          <DemoBox label="Click to Animate">
+        <SubSection title={t('transition.compare.title')} icon iconColor="green">
+          <DemoBox label={t('transition.compare.demoLabel')}>
             <div className="space-y-4">
               <div className="flex gap-2 justify-center flex-wrap">
                 <button
@@ -78,7 +78,7 @@ transition={{ type: "spring", bounce: 0.25 }}`}
                       : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                   }`}
                 >
-                  Spring
+                  {t('transition.compare.spring')}
                 </button>
                 <button
                   type="button"
@@ -92,7 +92,7 @@ transition={{ type: "spring", bounce: 0.25 }}`}
                       : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                   }`}
                 >
-                  Tween
+                  {t('transition.compare.tween')}
                 </button>
                 <button
                   type="button"
@@ -106,7 +106,7 @@ transition={{ type: "spring", bounce: 0.25 }}`}
                       : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                   }`}
                 >
-                  Keyframes
+                  {t('transition.compare.keyframes')}
                 </button>
               </div>
 
@@ -139,17 +139,15 @@ transition={{ type: "spring", bounce: 0.25 }}`}
               </div>
 
               <p className="text-xs text-gray-500 text-center">
-                {animationType === 'spring' &&
-                  'Notice the natural bounce and overshoot'}
-                {animationType === 'tween' && 'Smooth, predictable timing'}
-                {animationType === 'keyframes' &&
-                  'Multi-step animation sequence'}
+                {animationType === 'spring' && t('transition.compare.springNote')}
+                {animationType === 'tween' && t('transition.compare.tweenNote')}
+                {animationType === 'keyframes' && t('transition.compare.keyframesNote')}
               </p>
             </div>
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Keyframes Animation" icon iconColor="pink">
+        <SubSection title={t('transition.keyframes.title')} icon iconColor="pink">
           <CodeBlock
             code={`// Animate through multiple values
 <motion.div
@@ -167,7 +165,7 @@ transition={{ type: "spring", bounce: 0.25 }}`}
             className="text-xs"
           />
 
-          <DemoBox label="Keyframe Animation">
+          <DemoBox label={t('transition.keyframes.demoLabel')}>
             <div className="flex justify-center">
               <motion.div
                 animate={{
@@ -187,40 +185,40 @@ transition={{ type: "spring", bounce: 0.25 }}`}
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Transition Options" icon iconColor="orange">
+        <SubSection title={t('transition.transitionOptions.title')} icon iconColor="orange">
           <div className="grid grid-cols-1 gap-3">
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
-              <p className="text-sm font-semibold text-orange-900">delay</p>
+              <p className="text-sm font-semibold text-orange-900">{t('transition.transitionOptions.delay')}</p>
               <p className="text-xs text-orange-700 mt-1">
-                Wait before starting (in seconds)
+                {t('transition.transitionOptions.delayDesc')}
               </p>
             </div>
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
-              <p className="text-sm font-semibold text-orange-900">repeat</p>
+              <p className="text-sm font-semibold text-orange-900">{t('transition.transitionOptions.repeat')}</p>
               <p className="text-xs text-orange-700 mt-1">
-                Number of repetitions (Infinity for loop)
-              </p>
-            </div>
-            <div className="bg-orange-50 p-3 rounded border border-orange-200">
-              <p className="text-sm font-semibold text-orange-900">
-                repeatType
-              </p>
-              <p className="text-xs text-orange-700 mt-1">
-                "loop" | "reverse" | "mirror"
+                {t('transition.transitionOptions.repeatDesc')}
               </p>
             </div>
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
               <p className="text-sm font-semibold text-orange-900">
-                repeatDelay
+                {t('transition.transitionOptions.repeatType')}
               </p>
               <p className="text-xs text-orange-700 mt-1">
-                Pause between repetitions
+                {t('transition.transitionOptions.repeatTypeDesc')}
+              </p>
+            </div>
+            <div className="bg-orange-50 p-3 rounded border border-orange-200">
+              <p className="text-sm font-semibold text-orange-900">
+                {t('transition.transitionOptions.repeatDelay')}
+              </p>
+              <p className="text-xs text-orange-700 mt-1">
+                {t('transition.transitionOptions.repeatDelayDesc')}
               </p>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title="Per-Property Transitions" icon iconColor="blue">
+        <SubSection title={t('transition.perProperty.title')} icon iconColor="blue">
           <CodeBlock
             code={`// Different transitions for different properties
 <motion.div

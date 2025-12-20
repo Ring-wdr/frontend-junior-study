@@ -1,0 +1,150 @@
+{
+  "header": {
+    "title": "Modern Styling Strategies",
+    "description": "디자인 시스템, Utility-First CSS, CSS-in-JS, 그리고 반응형 디자인 마스터하기."
+  },
+  "tabs": {
+    "all": "전체",
+    "foundation": "Foundation",
+    "cssModules": "CSS Modules",
+    "cssInJs": "CSS-in-JS",
+    "tailwind": "Tailwind",
+    "responsive": "Responsive",
+    "advanced": "Advanced"
+  },
+  "designSystem": {
+    "badge": "Foundation",
+    "title": "Design Systems & Design Tokens",
+    "description": "UI 값들(색상, 간격, 타이포그래피)의 표준화는 확장 가능한 스타일링의 첫 단계입니다.",
+    "whatAreTokens": {
+      "title": "Design Tokens란 무엇인가?",
+      "content": "Design Tokens는 디자인 시스템의 원자적 요소입니다: 색상, 간격, 타이포그래피, 테두리 반경 등. 하드코딩된 값을 의미 있는 이름으로 대체하여 제품 전반에 걸쳐 일관성을 보장합니다."
+    },
+    "whyUse": {
+      "title": "왜 사용하는가?",
+      "infoTitle": "협업과 유지보수",
+      "consistency": "일관성:",
+      "consistencyDesc": "동일한 '파란색'이 어디서나 사용되도록 보장합니다.",
+      "maintainability": "유지보수성:",
+      "maintainabilityDesc": "하나의 토큰 값을 변경하여 전체 앱을 업데이트할 수 있습니다 (예: 리브랜딩).",
+      "communication": "커뮤니케이션:",
+      "communicationDesc": "디자이너와 개발자 간의 공통 언어를 제공합니다."
+    }
+  },
+  "cssModules": {
+    "badge": "Maintainability",
+    "title": "CSS Modules",
+    "description": "모든 클래스 이름이 기본적으로 로컬 범위로 지정되는 CSS 파일입니다.",
+    "scopedStyles": {
+      "title": "범위가 지정된 스타일",
+      "content": "CSS Modules는 각 파일에 대해 고유한 클래스 이름을 생성하여 전역 네임스페이스 충돌을 방지합니다. 파일은 일반적으로 <code>.module.css</code>로 끝납니다."
+    },
+    "benefits": {
+      "title": "이점",
+      "infoTitle": "왜 CSS Modules를 사용하는가?",
+      "localScope": "로컬 범위:",
+      "localScopeDesc": "클래스를 변경할 때 다른 페이지를 깨뜨릴 걱정이 없습니다 (예: <code>.container</code>).",
+      "reuse": "재사용:",
+      "reuseDesc": "다른 파일의 스타일을 조합할 수 있습니다.",
+      "learning": "학습 곡선 없음:",
+      "learningDesc": "표준 CSS 구문일 뿐입니다."
+    }
+  },
+  "cssInJs": {
+    "badge": "Dynamic",
+    "title": "CSS-in-JS (Emotion / Styled-components)",
+    "description": "JavaScript 파일 내에서 직접 CSS 스타일을 작성하여 강력한 동적 스타일링을 가능하게 합니다.",
+    "emotionStyled": {
+      "title": "Emotion / Styled-components",
+      "content": "태그된 템플릿 리터럴을 활용하여 CSS를 작성합니다. 이를 통해 스타일에서 JavaScript 변수와 로직을 직접 사용할 수 있습니다."
+    },
+    "prosCons": {
+      "title": "장단점",
+      "infoTitle": "트레이드오프",
+      "pros": "장점:",
+      "prosItems": {
+        "dynamic": "JS props를 통한 동적 스타일링",
+        "critical": "Critical CSS 자동 추출",
+        "isolation": "컴포넌트 레벨 격리",
+        "theming": "테마 지원 (ThemeProvider)"
+      },
+      "cons": "단점:",
+      "consItems": {
+        "runtime": "런타임 오버헤드:",
+        "runtimeDesc": "라이브러리가 런타임에 스타일을 파싱해야 합니다.",
+        "bundle": "유틸리티 클래스에 비해 더 큰 번들 크기.",
+        "ssr": "SSR을 위한 설정 필요 (Next.js App Router 제한사항)."
+      }
+    }
+  },
+  "tailwind": {
+    "badge": "Industry Standard",
+    "title": "Tailwind CSS",
+    "description": "맞춤형 사용자 인터페이스를 빠르게 구축하기 위한 유틸리티 우선 CSS 프레임워크입니다.",
+    "utilityFirst": {
+      "title": "유틸리티 우선",
+      "content": "커스텀 CSS를 작성하는 대신, HTML에서 직접 미리 존재하는 클래스를 사용합니다. 이는 매우 빠른 개발 주기와 일관된 UI로 이어집니다."
+    },
+    "keyFeatures": {
+      "title": "주요 기능",
+      "infoTitle": "왜 차별화되는가?",
+      "jit": "JIT 엔진:",
+      "jitDesc": "필요에 따라 스타일을 생성하여 번들 크기를 작게 유지합니다.",
+      "standardization": "표준화:",
+      "standardizationDesc": "간격, 색상, 크기가 미리 정의되어 있습니다 (또는 설정에서 커스터마이징 가능).",
+      "responsiveness": "반응성:",
+      "responsivenessDesc": "<code>md:flex</code>, <code>lg:grid</code> 접두사로 반응형 디자인이 간단해집니다.",
+      "darkMode": "다크 모드:",
+      "darkModeDesc": "<code>dark:bg-black</code> 접두사로 테마 전환을 처리합니다."
+    }
+  },
+  "responsive": {
+    "badge": "Essential",
+    "title": "반응형 디자인 전략",
+    "description": "모바일 폰부터 대형 데스크톱까지 모든 화면 크기에 원활하게 적응하는 인터페이스를 만듭니다.",
+    "mobileFirst": {
+      "title": "모바일 우선 접근법",
+      "content": "가장 작은 화면을 먼저 디자인한 다음, 더 큰 화면을 위한 복잡성을 추가합니다. Tailwind에서는 래핑되지 않은 클래스가 모바일을 대상으로 하고, <code>md:</code>, <code>lg:</code>가 더 큰 화면을 대상으로 합니다."
+    },
+    "toolsTechniques": {
+      "title": "도구 및 기법",
+      "infoTitle": "기법",
+      "breakpoints": "중단점:",
+      "breakpointsDesc": "너비 표준화 (예: sm: 640px, md: 768px, lg: 1024px).",
+      "fluidTypography": "유동적 타이포그래피:",
+      "fluidTypographyDesc": "부드러운 글꼴 스케일링을 위해 <code>clamp()</code>를 사용합니다. <br /><code>font-size: clamp(1rem, 2.5vw, 2rem);</code>",
+      "artDirection": "아트 디렉션:",
+      "artDirectionDesc": "대역폭을 절약하기 위해 <code>&lt;picture&gt;</code>를 사용하여 다른 화면에 다른 이미지를 제공합니다."
+    }
+  },
+  "theme": {
+    "badge": "UX",
+    "title": "테마 시스템",
+    "description": "다크/라이트 모드 및 커스텀 테마를 효과적으로 구현합니다.",
+    "cssVariables": {
+      "title": "CSS 변수 전략",
+      "content": "CSS 변수에 매핑된 의미 있는 색상 이름을 정의합니다. <code>&lt;html&gt;</code>의 클래스를 변경하면 변수 값이 바뀝니다."
+    },
+    "tailwindDarkMode": {
+      "title": "Tailwind 다크 모드",
+      "content": "Tailwind는 <code>dark:</code> 접두사로 기본적으로 다크 모드를 지원합니다. 시스템 환경설정(`media`) 또는 클래스 선택자(`class`)를 사용할 수 있습니다."
+    }
+  },
+  "accessibility": {
+    "badge": "A11y",
+    "title": "접근성 (A11y) & 스타일링",
+    "description": "스타일이 사용자를 배제하지 않도록 보장합니다. 유효한 HTML과 신중한 CSS가 핵심입니다.",
+    "checklist": {
+      "title": "체크리스트",
+      "infoTitle": "중요 규칙",
+      "focusRings": "포커스 링:",
+      "focusRingsDesc": "대체하지 않고는 포커스 가능한 요소에 <code>outline: none</code>을 설정하지 마세요. 사용자가 키보드로 탐색할 때 자신이 어디에 있는지 볼 수 있어야 합니다.",
+      "contrast": "대비 비율:",
+      "contrastDesc": "텍스트가 배경과 충분한 대비를 가지도록 보장합니다 (WCAG AA/AAA).",
+      "reducedMotion": "동작 감소:",
+      "reducedMotionDesc": "표준 동작에 대한 사용자 환경설정을 존중합니다.",
+      "colorAlone": "색상만 의존하지 말기:",
+      "colorAloneDesc": "상태(오류, 성공)를 전달할 때 색상과 함께 아이콘이나 텍스트 레이블을 사용하세요."
+    }
+  }
+}

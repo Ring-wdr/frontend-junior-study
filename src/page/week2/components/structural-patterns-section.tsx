@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import {
   DemoBox,
   SectionCard,
@@ -12,33 +13,28 @@ import { FacadeVisualizer } from './facade-visualizer';
 import { ProxyVisualizer } from './proxy-visualizer';
 
 export const StructuralPatternsSection = () => {
+  const { t } = useTranslation('week2');
   return (
     <SectionCard
-      badge={{ label: 'Design Patterns', color: 'indigo' }}
-      title="Structural Patterns"
-      description="Patterns concerned with how classes and objects are composed to form larger structures."
+      badge={{ label: t('structural.badge'), color: 'indigo' }}
+      title={t('structural.title')}
+      description={t('structural.description')}
     >
       <div className="space-y-8">
-        <SubSection title="Decorator Pattern" icon iconColor="purple">
+        <SubSection title={t('structural.decorator.title')} icon iconColor="purple">
           <div className="grid grid-cols-1 gap-6">
             <div>
               <p className="text-sm text-gray-700 mb-4">
-                Attaches additional responsibilities to an object dynamically.
-                Flexible alternative to subclassing.
+                {t('structural.decorator.description')}
               </p>
               <DemoBox>
                 <DecoratorVisualizer />
               </DemoBox>
             </div>
             <div className="space-y-4">
-              <h5 className="text-sm font-medium text-gray-900">Concept</h5>
-              <div className="bg-indigo-50 p-3 rounded text-sm text-indigo-900">
-                Modern TypeScript & ES: <strong>@Decorators</strong>.
-                <br />
-                <br />
-                We annotate classes or methods with `@DecoratorName`. Under the
-                hood, this "wraps" the original class/method with new logic
-                (logging, validation, etc.).
+              <h5 className="text-sm font-medium text-gray-900">{t('structural.decorator.concept.title')}</h5>
+              <div className="bg-indigo-50 p-3 rounded text-sm text-indigo-900" style={{ whiteSpace: 'pre-line' }}>
+                {t('structural.decorator.concept.description')}
               </div>
               <CodeBlock
                 code={`@Component
@@ -63,40 +59,40 @@ class UserProfile {
           <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
             <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-              Adapter Pattern
+              {t('structural.adapter.title')}
             </h4>
             <p className="text-xs text-gray-600 mb-4">
-              Collaborate with incompatible interfaces (Plug Adapter).
+              {t('structural.adapter.description')}
             </p>
             <AdapterVisualizer />
           </div>
           <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
             <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-              Proxy Pattern
+              {t('structural.proxy.title')}
             </h4>
             <p className="text-xs text-gray-600 mb-4">
-              A placeholder to control access (security, lazy loading).
+              {t('structural.proxy.description')}
             </p>
             <ProxyVisualizer />
           </div>
           <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
             <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-              Facade Pattern
+              {t('structural.facade.title')}
             </h4>
             <p className="text-xs text-gray-600 mb-4">
-              Simplified interface for complex subsystems (Smart Home).
+              {t('structural.facade.description')}
             </p>
             <FacadeVisualizer />
           </div>
           <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
             <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-              Bridge Pattern
+              {t('structural.bridge.title')}
             </h4>
             <p className="text-xs text-gray-600 mb-4">
-              Connecting Abstractions (Remote) to Implementations (Device).
+              {t('structural.bridge.description')}
             </p>
             <BridgeVisualizer />
           </div>

@@ -1,47 +1,44 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const VitestSetupSection = () => {
+  const { t } = useTranslation('week8');
+
   return (
     <SectionCard
-      badge={{ label: 'Jest vs Vitest', color: 'purple' }}
-      title="Jest vs Vitest: Choosing Your Test Runner"
-      description="Understanding the differences and when to use each."
+      badge={{ label: t('vitest.badge'), color: 'purple' }}
+      title={t('vitest.title')}
+      description={t('vitest.description')}
     >
       <div className="space-y-8">
-        <SubSection title="Jest: The Industry Standard" icon iconColor="blue">
+        <SubSection title={t('vitest.jest.title')} icon iconColor="blue">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Jest is the most widely used testing framework for JavaScript. It
-              provides everything out-of-the-box: test runner, assertion
-              library, mocking utilities, and coverage reporting.
+              {t('vitest.jest.description')}
             </p>
 
-            <InfoBox variant="blue" title="Jest Strengths">
+            <InfoBox variant="blue" title={t('vitest.jest.strengths.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Mature ecosystem:</strong> Well-documented, tons of
-                  Stack Overflow answers
+                  <strong>Mature ecosystem:</strong> {t('vitest.jest.strengths.mature')}
                 </li>
                 <li>
-                  <strong>Built-in tools:</strong> No need for external
-                  libraries
+                  <strong>Built-in tools:</strong> {t('vitest.jest.strengths.builtin')}
                 </li>
                 <li>
-                  <strong>Familiar syntax:</strong> Many developers know it
+                  <strong>Familiar syntax:</strong> {t('vitest.jest.strengths.familiar')}
                 </li>
               </ul>
             </InfoBox>
 
-            <InfoBox variant="red" title="Jest Weaknesses">
+            <InfoBox variant="red" title={t('vitest.jest.weaknesses.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Slower:</strong> Transform overhead makes tests
-                  sometimes slow
+                  <strong>Slower:</strong> {t('vitest.jest.weaknesses.slow')}
                 </li>
                 <li>
-                  <strong>Complex configuration:</strong> Can require setup for
-                  modern tooling
+                  <strong>Complex configuration:</strong> {t('vitest.jest.weaknesses.complex')}
                 </li>
               </ul>
             </InfoBox>
@@ -49,100 +46,97 @@ export const VitestSetupSection = () => {
         </SubSection>
 
         <SubSection
-          title="Vitest: The Modern Alternative"
+          title={t('vitest.vitest.title')}
           icon
           iconColor="green"
         >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Vitest is a modern testing framework built on Vite. It offers
-              Jest-compatible APIs but with significantly better performance.
+              {t('vitest.vitest.description')}
             </p>
 
-            <InfoBox variant="green" title="Vitest Strengths">
+            <InfoBox variant="green" title={t('vitest.vitest.strengths.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>⚡ Super fast:</strong> Leverages Vite's ES modules
-                  and instant HMR
+                  <strong>⚡ Super fast:</strong> {t('vitest.vitest.strengths.fast')}
                 </li>
                 <li>
-                  <strong>Jest compatible:</strong> Same syntax, easy migration
+                  <strong>Jest compatible:</strong> {t('vitest.vitest.strengths.compatible')}
                 </li>
                 <li>
-                  <strong>Modern tooling:</strong> Works seamlessly with modern
-                  build tools
+                  <strong>Modern tooling:</strong> {t('vitest.vitest.strengths.modern')}
                 </li>
                 <li>
-                  <strong>Watch mode:</strong> Intelligent, fast feedback
+                  <strong>Watch mode:</strong> {t('vitest.vitest.strengths.watch')}
                 </li>
               </ul>
             </InfoBox>
 
-            <InfoBox variant="orange" title="Vitest Considerations">
+            <InfoBox variant="orange" title={t('vitest.vitest.considerations.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Newer:</strong> Smaller community, but growing fast
+                  <strong>Newer:</strong> {t('vitest.vitest.considerations.newer')}
                 </li>
                 <li>
-                  <strong>Vite dependent:</strong> Requires Vite-based project
+                  <strong>Vite dependent:</strong> {t('vitest.vitest.considerations.viteDependent')}
                 </li>
               </ul>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title="Head-to-Head Comparison" icon iconColor="blue">
+        <SubSection title={t('vitest.comparison.title')} icon iconColor="blue">
           <div className="space-y-4">
             <div className="overflow-x-auto">
               <table className="w-full text-sm border-collapse">
                 <thead>
                   <tr className="border-b border-gray-300">
                     <th className="px-4 py-2 text-left font-semibold text-gray-800">
-                      Feature
+                      {t('vitest.comparison.feature')}
                     </th>
                     <th className="px-4 py-2 text-left font-semibold text-gray-800">
-                      Jest
+                      {t('vitest.comparison.jest')}
                     </th>
                     <th className="px-4 py-2 text-left font-semibold text-gray-800">
-                      Vitest
+                      {t('vitest.comparison.vitest')}
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b border-gray-200 hover:bg-gray-50">
                     <td className="px-4 py-2 font-medium text-gray-700">
-                      Performance
+                      {t('vitest.comparison.performance')}
                     </td>
-                    <td className="px-4 py-2 text-gray-600">🟡 Moderate</td>
-                    <td className="px-4 py-2 text-gray-600">⚡ Very Fast</td>
+                    <td className="px-4 py-2 text-gray-600">🟡 {t('vitest.comparison.moderate')}</td>
+                    <td className="px-4 py-2 text-gray-600">⚡ {t('vitest.comparison.veryFast')}</td>
                   </tr>
                   <tr className="border-b border-gray-200 hover:bg-gray-50">
                     <td className="px-4 py-2 font-medium text-gray-700">
-                      API Compatibility
+                      {t('vitest.comparison.apiCompatibility')}
                     </td>
-                    <td className="px-4 py-2 text-gray-600">✅ Full</td>
-                    <td className="px-4 py-2 text-gray-600">✅ Jest-like</td>
+                    <td className="px-4 py-2 text-gray-600">✅ {t('vitest.comparison.full')}</td>
+                    <td className="px-4 py-2 text-gray-600">✅ {t('vitest.comparison.jestLike')}</td>
                   </tr>
                   <tr className="border-b border-gray-200 hover:bg-gray-50">
                     <td className="px-4 py-2 font-medium text-gray-700">
-                      Setup Complexity
+                      {t('vitest.comparison.setupComplexity')}
                     </td>
-                    <td className="px-4 py-2 text-gray-600">🟡 Moderate</td>
-                    <td className="px-4 py-2 text-gray-600">✅ Simple</td>
+                    <td className="px-4 py-2 text-gray-600">🟡 {t('vitest.comparison.moderate')}</td>
+                    <td className="px-4 py-2 text-gray-600">✅ {t('vitest.comparison.simple')}</td>
                   </tr>
                   <tr className="border-b border-gray-200 hover:bg-gray-50">
                     <td className="px-4 py-2 font-medium text-gray-700">
-                      Community Size
+                      {t('vitest.comparison.communitySize')}
                     </td>
                     <td className="px-4 py-2 text-gray-600">⭐⭐⭐⭐⭐</td>
                     <td className="px-4 py-2 text-gray-600">⭐⭐⭐⭐</td>
                   </tr>
                   <tr className="border-b border-gray-200 hover:bg-gray-50">
                     <td className="px-4 py-2 font-medium text-gray-700">
-                      HMR Support
+                      {t('vitest.comparison.hmrSupport')}
                     </td>
-                    <td className="px-4 py-2 text-gray-600">❌ No</td>
-                    <td className="px-4 py-2 text-gray-600">✅ Yes</td>
+                    <td className="px-4 py-2 text-gray-600">❌ {t('vitest.comparison.no')}</td>
+                    <td className="px-4 py-2 text-gray-600">✅ {t('vitest.comparison.yes')}</td>
                   </tr>
                 </tbody>
               </table>
@@ -150,11 +144,10 @@ export const VitestSetupSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title="Setting Up Vitest" icon iconColor="green">
+        <SubSection title={t('vitest.setup.title')} icon iconColor="green">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              If you're starting a new project with Vite, Vitest is the
-              recommended choice.
+              {t('vitest.setup.description')}
             </p>
 
             <CodeBlock
@@ -201,34 +194,31 @@ afterEach(() => {
           </div>
         </SubSection>
 
-        <SubSection title="Migrating from Jest to Vitest" icon iconColor="blue">
+        <SubSection title={t('vitest.migration.title')} icon iconColor="blue">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Migration is usually straightforward since Vitest is
-              Jest-compatible.
+              {t('vitest.migration.description')}
             </p>
 
-            <InfoBox variant="blue" title="Migration Checklist">
+            <InfoBox variant="blue" title={t('vitest.migration.checklist.title')}>
               <ol className="list-decimal pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Install Vitest:</strong>{' '}
+                  <strong>{t('vitest.migration.checklist.install')}</strong>{' '}
                   <code className="bg-gray-200 px-2 py-1 rounded">
                     npm install -D vitest @vitest/ui
                   </code>
                 </li>
                 <li>
-                  <strong>Create vitest.config.ts:</strong> Use config above
+                  <strong>Create vitest.config.ts:</strong> {t('vitest.migration.checklist.createConfig')}
                 </li>
                 <li>
-                  <strong>Update package.json:</strong> Change test script to
-                  use vitest
+                  <strong>Update package.json:</strong> {t('vitest.migration.checklist.updatePackage')}
                 </li>
                 <li>
-                  <strong>Replace jest.fn() with vi.fn():</strong> Usually just
-                  import change
+                  <strong>Replace jest.fn() with vi.fn():</strong> {t('vitest.migration.checklist.replaceJest')}
                 </li>
                 <li>
-                  <strong>Run tests:</strong> Most should pass without changes
+                  <strong>Run tests:</strong> {t('vitest.migration.checklist.runTests')}
                 </li>
               </ol>
             </InfoBox>
@@ -246,18 +236,14 @@ const mockFn = vi.fn();`}
           </div>
         </SubSection>
 
-        <SubSection title="Recommendation" icon iconColor="purple">
+        <SubSection title={t('vitest.recommendation.title')} icon iconColor="purple">
           <div className="space-y-4">
             <div className="bg-gradient-to-r from-purple-50 to-blue-50 p-6 rounded-lg border border-purple-200">
               <p className="text-sm text-gray-700 mb-4">
-                <strong>For new projects:</strong> Use Vitest if you're already
-                using Vite. You'll get better performance and faster feedback
-                loops.
+                <strong>For new projects:</strong> {t('vitest.recommendation.newProjects')}
               </p>
               <p className="text-sm text-gray-700">
-                <strong>For existing Jest projects:</strong> Keep Jest unless
-                you're planning to migrate to Vite anyway. The effort isn't
-                worth it for small projects.
+                <strong>For existing Jest projects:</strong> {t('vitest.recommendation.existingProjects')}
               </p>
             </div>
           </div>

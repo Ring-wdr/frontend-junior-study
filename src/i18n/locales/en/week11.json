@@ -1,0 +1,473 @@
+{
+  "header": {
+    "backToDashboard": "← Back to Dashboard",
+    "title": "Web Performance Optimization",
+    "description": "Learn the essentials of frontend performance optimization, from Core Web Vitals and rendering performance analysis to image/font/bundle optimization."
+  },
+  "tabs": {
+    "all": "All",
+    "vitals": "Core Vitals",
+    "rendering": "Rendering",
+    "devtools": "DevTools",
+    "splitting": "Splitting",
+    "lazy": "Lazy Load",
+    "images": "Images",
+    "fonts": "Fonts",
+    "network": "Network",
+    "bundle": "Bundle"
+  },
+  "coreWebVitals": {
+    "title": "Core Web Vitals",
+    "description": "Core metrics for user experience defined by Google. They affect search rankings and measure real user-perceived performance.",
+    "visualizerTitle": "Visualizer",
+    "lcp": {
+      "name": "LCP",
+      "fullName": "Largest Contentful Paint",
+      "description": "Time taken for main content to appear on screen. Measures when users perceive the page as \"loaded\".",
+      "good": "≤ 2.5s",
+      "needsImprovement": "2.5s ~ 4s",
+      "poor": "> 4s",
+      "causes": ["Large hero images", "Slow server response (TTFB)", "Render-blocking resources", "Slow font loading"],
+      "solutions": ["Leverage CDN and optimize server", "Optimize images (WebP, AVIF)", "Use preconnect / preload", "Inline critical CSS"],
+      "goodMode": "Good (0.8s)",
+      "badMode": "Bad (3.5s)",
+      "loadingText": "Loading Large Resource...",
+      "heroImage": "Hero Image",
+      "time": "Time:",
+      "needsImprovementLabel": "Needs Improvement",
+      "goodLabel": "Good",
+      "reloadPage": "Reload Page",
+      "loading": "Loading..."
+    },
+    "inp": {
+      "name": "INP",
+      "fullName": "Interaction to Next Paint",
+      "description": "Delay time for user interactions (click, tap, keyboard). New metric replacing FID.",
+      "good": "≤ 200ms",
+      "needsImprovement": "200ms ~ 500ms",
+      "poor": "> 500ms",
+      "causes": ["Long Tasks (50ms+ main thread blocking)", "Excessive JavaScript execution", "Synchronous layout calculations", "Heavy event handlers"],
+      "solutions": ["Move heavy calculations to Web Workers", "Prevent UI blocking with useTransition", "Reduce JS bundle with code splitting", "Optimize event handlers (debounce/throttle)"],
+      "goodMode": "Good (50ms)",
+      "badMode": "Bad (600ms)",
+      "clickTest": "Click Response Test",
+      "testButton": "Test the button responsiveness",
+      "clickMe": "Click Me!",
+      "processing": "Processing...",
+      "slow": "Slow (Blocking)",
+      "fast": "Fast (Non-blocking)",
+      "simulateHeavy": "Simulates heavy Work by looping on main thread.",
+      "simulateLightweight": "Simulates lightweight event handler."
+    },
+    "cls": {
+      "name": "CLS",
+      "fullName": "Cumulative Layout Shift",
+      "description": "Sum of unexpected layout shifts during page load. Causes users to accidentally click wrong elements.",
+      "good": "≤ 0.1",
+      "needsImprovement": "0.1 ~ 0.25",
+      "poor": "> 0.25",
+      "causes": ["Missing image width/height", "Unreserved ad/embed space", "Dynamically inserted content", "FOUT (Flash of Unstyled Text)"],
+      "solutions": ["Specify width/height or aspect-ratio for images", "Set min-height for ad containers", "Reserve space with Skeleton UI", "Use font-display: swap + preload"],
+      "goodMode": "Good (Fixed)",
+      "badMode": "Bad (Shift)",
+      "layoutView": "Layout View",
+      "targetContent": "Target Content",
+      "targetContentDesc": "This is the content the user is trying to read."
+    },
+    "metrics": {
+      "good": "Good",
+      "needsWork": "Needs Work",
+      "poor": "Poor",
+      "causes": "Key Causes",
+      "solutions": "Solutions"
+    },
+    "measurementTools": "Measurement Tools: Lighthouse, PageSpeed Insights, Chrome DevTools Performance tab, Web Vitals library, Search Console"
+  },
+  "browserRendering": {
+    "title": "Browser Rendering Pipeline",
+    "description": "Understanding how browsers render helps identify performance-damaging code.",
+    "simulatorTitle": "Pixel Pipeline Simulator",
+    "simulatorDesc": "Click buttons to see triggered pipeline stages",
+    "changeWidthLayout": "Change Width (Layout)",
+    "changeColorPaint": "Change Color (Paint)",
+    "rotateComposite": "Rotate (Composite)",
+    "box": "Box",
+    "hoverMessage": "Hover each stage or click buttons to explore the pipeline",
+    "expensiveFull": "Expensive! Triggers Reflow & Repaint",
+    "moderatePaint": "Moderate. Triggers Repaint",
+    "cheapComposite": "Cheap! Composite Only (Best Performance)",
+    "steps": {
+      "javascript": {
+        "name": "JavaScript",
+        "description": "JS execution and DOM manipulation",
+        "details": "JavaScript executes and modifies the DOM.",
+        "triggers": "Script execution"
+      },
+      "style": {
+        "name": "Style",
+        "description": "CSS calculation",
+        "details": "Calculates which CSS rules apply to the modified DOM.",
+        "triggers": "Script execution"
+      },
+      "layout": {
+        "name": "Layout",
+        "description": "Position/size calculation",
+        "details": "Calculates element sizes and positions. (Reflow)",
+        "triggers": "width, height, margin, padding, font-size"
+      },
+      "paint": {
+        "name": "Paint",
+        "description": "Pixel rendering",
+        "details": "Fills actual pixels. (background, text, images)",
+        "triggers": "background-color, color, border-color, box-shadow"
+      },
+      "composite": {
+        "name": "Composite",
+        "description": "Layer composition",
+        "details": "Combines multiple layers into the final screen. (GPU accelerated)",
+        "triggers": "transform, opacity, filter"
+      }
+    },
+    "triggersLabel": "Triggers:",
+    "layoutThrashing": {
+      "title": "Layout Thrashing",
+      "description": "Alternating reads/writes cause forced synchronous layout"
+    },
+    "batchUpdates": {
+      "title": "Batch Updates",
+      "description": "Read first, write later in batch"
+    },
+    "gpuAcceleration": {
+      "title": "GPU Acceleration (Composite Only)",
+      "description": "Changing only these properties skips Layout/Paint and is processed directly by the GPU."
+    }
+  },
+  "devTools": {
+    "title": "DevTools Performance Profiling",
+    "description": "Never optimize by guessing. Always follow: Measure → Identify issues → Optimize → Re-measure.",
+    "simulatorTitle": "Main Thread Simulator",
+    "simulatorDesc": "Simulating tasks on the main thread",
+    "fps": "FPS",
+    "frameRate": "Frame Rate",
+    "runShortTask": "Run Short Task (20ms)",
+    "runLongTask": "Run Long Task (1s)",
+    "timeMs": "Time (ms)",
+    "interactionTest": "Interaction Test",
+    "mainThreadBlocked": "Main Thread Blocked! UI Unresponsive",
+    "uiResponsive": "UI Responsive",
+    "clicked": "Clicked:",
+    "blockingWarning": "⚠️ MAIN THREAD BLOCKED",
+    "usageTitle": "How to Use Performance Tab",
+    "usageSteps": {
+      "step1": "Open Chrome DevTools (F12) → Select Performance tab",
+      "step2": "Click record button and perform actions to analyze (scroll, click, etc.)",
+      "step3": "Stop recording and analyze bottlenecks in Flame Chart",
+      "step4": "Check Scripting, Rendering, Painting times in Summary tab"
+    },
+    "longTask": {
+      "title": "Detecting Long Tasks",
+      "description": "Tasks occupying the main thread for 50ms+. Identified by red triangle markers.",
+      "note": "Long Tasks delay user interactions and directly impact INP."
+    },
+    "layoutShift": {
+      "title": "Detecting Layout Shifts",
+      "description": "Check Layout Shift events and affected elements in the Experience section.",
+      "note": "Analyze which elements moved and how much impact they had."
+    },
+    "fpsMonitoring": {
+      "title": "FPS Monitoring",
+      "description": "Check frame drops in the top FPS chart. Stuttering occurs when dropping below 60 FPS.",
+      "note": "Watch for FPS drops during scrolling or animations."
+    },
+    "callTree": {
+      "title": "Call Tree Analysis",
+      "description": "Find the longest-running functions in Bottom-Up / Call Tree tab.",
+      "note": "Functions with high Self Time are optimization priorities."
+    },
+    "proTip": "Pro Tip: Enable \"CPU 4x slowdown\" before recording to simulate low-end device performance. Testing in realistic user environments is crucial.",
+    "lighthouse": {
+      "title": "Lighthouse Auto-Analysis",
+      "description": "Get automatic Core Web Vitals and improvement suggestions from DevTools → Lighthouse tab.",
+      "categories": ["Performance", "Accessibility", "Best Practices", "SEO", "PWA"]
+    }
+  },
+  "codeSplitting": {
+    "title": "Code Splitting",
+    "description": "Keep initial JS bundles small to improve First Load speed. Load code when users actually need it.",
+    "simulatorTitle": "Bundle Loader Simulator",
+    "simulatorDesc": "Compare Initial Load performance",
+    "monolithicBundle": "Monolithic Bundle (Classic)",
+    "codeSplittingModern": "Code Splitting (Modern)",
+    "server": "Server",
+    "client": "Client",
+    "runningRequest": "Running Request...",
+    "downloading": "Downloading...",
+    "idle": "Idle",
+    "mainApp": "Main App",
+    "coreChunk": "Core chunk",
+    "loaded": "✓ Loaded",
+    "readyToInteract": "Ready to interact",
+    "loadApp": "Load App",
+    "dashboard": "Dashboard",
+    "lazyChunk": "Lazy chunk",
+    "userRequested": "User requested",
+    "bundledWithMain": "Bundled with Main",
+    "waitingForMain": "Waiting for Main...",
+    "loadFeature": "Load Feature",
+    "heavyChart": "Heavy Chart",
+    "containsEverything": "Contains Everything (Huge Size!!)",
+    "blockingTime": "Blocking Time:",
+    "totalBundleSize": "Total Bundle Size:",
+    "initialBundle": "Initial Bundle:",
+    "otherChunks": "Other chunks loaded on demand",
+    "whenToUse": {
+      "title": "When to Use?",
+      "items": [
+        "Large pages not needed in initial render",
+        "Heavy libraries like Chart.js, Editor",
+        "Low-frequency pages like admin panels",
+        "Conditional UI like modals, dialogs"
+      ]
+    },
+    "benefits": {
+      "title": "Benefits",
+      "items": [
+        "Reduced initial JS bundle size",
+        "Improved TTI (Time to Interactive)",
+        "Better LCP (less main thread blocking)",
+        "Enhanced cache efficiency"
+      ]
+    },
+    "routeBasedInfo": "Route-based Splitting: Next.js App Router and React Router v7+ automatically apply code splitting per page. Each route is split into independent chunks without additional configuration."
+  },
+  "lazyLoading": {
+    "title": "Lazy Loading Strategies",
+    "description": "Load resources only when users actually need them. Reduces initial load time and prevents unnecessary network requests.",
+    "simulatorTitle": "IntersectionObserver Simulator",
+    "simulatorDesc": "Scroll down to see images load on demand",
+    "resetDemo": "Reset Demo",
+    "headingSection": "Heading Section",
+    "aboveTheFold": "Above the fold content (Always loaded)",
+    "image": "Image",
+    "waitingForScroll": "Waiting for Scroll...",
+    "endOfContent": "End of Content",
+    "viewport": "Viewport",
+    "imageLazyLoading": {
+      "title": "Image Lazy Loading"
+    },
+    "intersectionObserver": {
+      "title": "IntersectionObserver"
+    },
+    "types": {
+      "title": "Lazy Loading Types",
+      "image": {
+        "title": "Images",
+        "description": "Use loading=\"lazy\" attribute or IntersectionObserver"
+      },
+      "component": {
+        "title": "Components",
+        "description": "Conditional loading with React.lazy() + Suspense"
+      },
+      "data": {
+        "title": "Data",
+        "description": "Fetch only what's needed via infinite scroll or pagination"
+      }
+    },
+    "warning": "Warning: Don't apply lazy loading to Above the Fold content. Loading LCP elements late degrades scores."
+  },
+  "imageOptimization": {
+    "title": "Image Optimization (Biggest Impact!)",
+    "description": "Images constitute most webpage weight. Proper optimization dramatically improves LCP.",
+    "simulatorTitle": "Image Optimization Lab",
+    "simulatorDesc": "Simulate compression savings and quality",
+    "sizeReduction": "Size Reduction",
+    "format": "Format",
+    "quality": "Quality",
+    "original": "Original:",
+    "optimized": "Optimized:",
+    "originalJpeg": "Original (JPEG)",
+    "nextGenFormats": {
+      "title": "Next-Gen Formats",
+      "webp": {
+        "name": "WebP",
+        "saving": "-25~35%",
+        "description": "Much smaller than JPEG/PNG, supported by all browsers"
+      },
+      "avif": {
+        "name": "AVIF",
+        "saving": "-50%",
+        "description": "Latest format, smallest size (Chrome, Firefox support)"
+      }
+    },
+    "responsiveImages": {
+      "title": "Responsive Images"
+    },
+    "checklist": {
+      "title": "Image Optimization Checklist",
+      "items": [
+        "Use WebP/AVIF formats",
+        "Resize to appropriate dimensions",
+        "Specify width/height or aspect-ratio",
+        "Use priority/preload for LCP images",
+        "Apply lazy loading below the fold",
+        "Leverage CDN"
+      ]
+    },
+    "hints": {
+      "preload": "Preload LCP images",
+      "preconnect": "Pre-establish CDN connections",
+      "lazy": "Defer loading images outside viewport",
+      "decoding": "Separate decoding with async"
+    }
+  },
+  "fontOptimization": {
+    "title": "Font Optimization",
+    "description": "Fonts directly impact CLS and LCP. Strategies are needed to prevent FOUT (Flash of Unstyled Text) and ensure fast loading.",
+    "simulatorTitle": "Font Loading Simulator",
+    "simulatorDesc": "Compare FOUT (Swap) vs FOIT (Block)",
+    "displaySwap": "display: swap (FOUT)",
+    "displayBlock": "display: block (FOIT)",
+    "status": "Status:",
+    "downloadingFont": "Downloading Font...",
+    "customFontApplied": "Custom Font Applied",
+    "fallbackFont": "Fallback Font",
+    "loadCustomFont": "Load Custom Font (2s delay)",
+    "resetToTryAgain": "Reset to Try Again",
+    "uxImpact": "UX Impact",
+    "clsImpact": "CLS Impact",
+    "textAlwaysVisible": "Text Always Visible",
+    "textInvisible": "Text Invisible (3s)",
+    "minorShift": "Minor Shift",
+    "noShift": "No Shift",
+    "foutFoit": {
+      "title": "FOUT / FOIT",
+      "fout": {
+        "name": "FOUT",
+        "fullName": "Flash of Unstyled Text",
+        "description": "Flashing when switching from fallback font to loaded font"
+      },
+      "foit": {
+        "name": "FOIT",
+        "fullName": "Flash of Invisible Text",
+        "description": "Text remains invisible until font loads"
+      }
+    },
+    "fontDisplayStrategy": {
+      "title": "font-display Strategy",
+      "swap": "Show fallback immediately → swap (recommended)",
+      "optional": "Use only if cached (minimizes CLS)",
+      "fallback": "Short block then swap (balanced)"
+    },
+    "optimizationTechniques": {
+      "title": "Font Optimization Techniques",
+      "preload": {
+        "title": "Preload Font Files"
+      },
+      "subset": {
+        "title": "Subset",
+        "description": "Include only used characters to reduce size"
+      },
+      "woff2": {
+        "title": "WOFF2 Format",
+        "description": "Highest compression web font format. 30~50% smaller than TTF/OTF"
+      },
+      "variable": {
+        "title": "Variable Fonts",
+        "description": "Multiple weights/styles in one file. Replaces multiple font files"
+      }
+    },
+    "koreanFontWarning": "Korean Font Warning: Korean fonts are large (2~5MB) due to many glyphs. Always apply subsetting or use Google Fonts' automatic subsetting."
+  },
+  "networkOptimization": {
+    "title": "Network Optimization",
+    "description": "Reducing network latency and effective cache usage dramatically improves performance on repeat visits.",
+    "simulatorTitle": "Network Waterfall",
+    "simulatorDesc": "HTTP/1.1 vs HTTP/2 Multiplexing",
+    "totalLoadTime": "Total Load Time",
+    "http1Queued": "HTTP/1.1 (Queued)",
+    "http2Multiplexed": "HTTP/2 (Multiplexed)",
+    "clickPlayToStart": "Click play to start simulation",
+    "resourceHints": {
+      "title": "Resource Hints",
+      "preconnect": {
+        "name": "preconnect",
+        "description": "Pre-perform DNS + TCP + TLS handshake"
+      },
+      "dnsPrefetch": {
+        "name": "dns-prefetch",
+        "description": "Pre-perform only DNS lookup (lighter than preconnect)"
+      },
+      "preload": {
+        "name": "preload",
+        "description": "Prioritize loading resources definitely used on current page"
+      },
+      "prefetch": {
+        "name": "prefetch",
+        "description": "Prefetch resources for next page"
+      }
+    },
+    "cdnEdge": {
+      "title": "CDN & Edge",
+      "description": "Content Delivery Networks serve content from servers closest to users.",
+      "benefits": [
+        "Respond from geographically closer servers",
+        "Reduced TTFB (Time to First Byte)",
+        "Automatic static resource caching",
+        "DDoS protection and load balancing"
+      ]
+    },
+    "http2http3": {
+      "title": "HTTP/2 & HTTP/3",
+      "http2": {
+        "title": "HTTP/2",
+        "features": [
+          "Multiplexing (parallel requests)",
+          "Header compression (HPACK)",
+          "Server Push",
+          "Stream prioritization"
+        ]
+      },
+      "http3": {
+        "title": "HTTP/3",
+        "features": [
+          "Based on QUIC protocol (UDP)",
+          "0-RTT connection reuse",
+          "Solves head-of-line blocking",
+          "Faster connection establishment"
+        ]
+      }
+    },
+    "staleWhileRevalidateInfo": "stale-while-revalidate: Returns cached content immediately while fetching fresh data in the background. Users get instant responses and use latest data from next request."
+  },
+  "bundleSize": {
+    "title": "Bundle Size Optimization",
+    "description": "JavaScript bundle size directly impacts parsing, compilation, and execution time. Remove unnecessary code and package efficiently.",
+    "simulatorTitle": "Tree Shaking Simulator",
+    "simulatorDesc": "Remove dead code to reduce bundle size",
+    "totalBundleSize": "Total Bundle Size",
+    "unused": "Unused",
+    "reset": "Reset",
+    "runTreeShaking": "Run Tree Shaking",
+    "avoidPatterns": {
+      "title": "Patterns to Avoid"
+    },
+    "recommendedPatterns": {
+      "title": "Recommended Patterns"
+    },
+    "bundleAnalyzer": {
+      "title": "Bundle Analyzer",
+      "description": "Visualize bundle composition to analyze which packages consume space.",
+      "toolName": "webpack-bundle-analyzer",
+      "analysisPoints": {
+        "title": "Analysis Points",
+        "items": [
+          "Identify largest chunks",
+          "Check duplicate dependencies",
+          "Discover unused code",
+          "Check node_modules proportion"
+        ]
+      }
+    },
+    "sideEffectsInfo": "sideEffects: Declaring \"sideEffects\": false in package.json allows bundlers to safely remove unused exports. If CSS imports exist, specify \"sideEffects\": [\"*.css\"]."
+  }
+}

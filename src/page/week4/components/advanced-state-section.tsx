@@ -1,36 +1,28 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const AdvancedStateSection = () => {
+  const { t } = useTranslation('week4');
+
   return (
     <SectionCard
-      badge={{ label: 'Advanced Concepts', color: 'purple' }}
-      title="Advanced State Patterns"
-      description="Handling complex async streams with RxJS and modeling state with State Machines (XState)."
+      badge={{ label: t('advanced.badge'), color: 'purple' }}
+      title={t('advanced.title')}
+      description={t('advanced.description')}
     >
       <div className="space-y-8">
-        <SubSection title="RxJS & Redux Observable" icon iconColor="blue">
+        <SubSection title={t('advanced.rxjs.title')} icon iconColor="blue">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              RxJS treats state and events as <strong>streams</strong> that can
-              be manipulated using powerful functional operators.{' '}
-              <strong>Redux Observable</strong> integrates RxJS with Redux to
-              handle complex async workflows elegantly.
+              {t('advanced.rxjs.description')}
             </p>
 
-            <InfoBox variant="blue" title="Key Concepts">
+            <InfoBox variant="blue" title={t('advanced.rxjs.keyConcepts.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
-                <li>
-                  <strong>Observables:</strong> Streams of values over time
-                </li>
-                <li>
-                  <strong>Operators:</strong> Pure functions to transform
-                  streams (map, filter, debounce, etc.)
-                </li>
-                <li>
-                  <strong>Epics:</strong> Redux Observable's middleware layer
-                  for handling effects
-                </li>
+                <li>{t('advanced.rxjs.keyConcepts.observables')}</li>
+                <li>{t('advanced.rxjs.keyConcepts.operators')}</li>
+                <li>{t('advanced.rxjs.keyConcepts.epics')}</li>
               </ul>
             </InfoBox>
 
@@ -59,48 +51,27 @@ const fetchUserEpic = (action$) =>
               className="text-xs"
             />
 
-            <InfoBox variant="gray" title="Pros & Cons">
+            <InfoBox variant="gray" title={t('advanced.rxjs.prosAndCons.title')}>
               <div className="space-y-2 text-sm text-gray-700">
-                <p>
-                  <strong>✓ Pros:</strong> Extremely powerful for complex async
-                  patterns, composition-friendly
-                </p>
-                <p>
-                  <strong>✗ Cons:</strong> Steep learning curve, RxJS knowledge
-                  required, complex to debug
-                </p>
+                <p>{t('advanced.rxjs.prosAndCons.pros')}</p>
+                <p>{t('advanced.rxjs.prosAndCons.cons')}</p>
               </div>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title="State Machines with XState" icon iconColor="purple">
+        <SubSection title={t('advanced.xstate.title')} icon iconColor="purple">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              XState uses <strong>Finite State Machines (FSM)</strong> and
-              Statecharts to model application logic. It helps prevent
-              <strong> impossible states</strong> by explicitly defining which
-              state transitions are valid.
+              {t('advanced.xstate.description')}
             </p>
 
-            <InfoBox variant="purple" title="Core Concepts">
+            <InfoBox variant="purple" title={t('advanced.xstate.coreConcepts.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
-                <li>
-                  <strong>States:</strong> Discrete application states (idle,
-                  loading, success, error)
-                </li>
-                <li>
-                  <strong>Events:</strong> Actions that trigger state
-                  transitions
-                </li>
-                <li>
-                  <strong>Transitions:</strong> Rules defining which events
-                  cause which state changes
-                </li>
-                <li>
-                  <strong>Context:</strong> Extended state data associated with
-                  the state
-                </li>
+                <li>{t('advanced.xstate.coreConcepts.states')}</li>
+                <li>{t('advanced.xstate.coreConcepts.events')}</li>
+                <li>{t('advanced.xstate.coreConcepts.transitions')}</li>
+                <li>{t('advanced.xstate.coreConcepts.context')}</li>
               </ul>
             </InfoBox>
 
@@ -160,58 +131,45 @@ function UserFetcher() {
               className="text-xs"
             />
 
-            <InfoBox variant="gray" title="Benefits">
+            <InfoBox variant="gray" title={t('advanced.xstate.benefits.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
-                <li>
-                  <strong>Prevents Invalid States:</strong> State machine
-                  explicitly defines valid transitions
-                </li>
-                <li>
-                  <strong>Self-Documenting:</strong> State diagram serves as
-                  documentation
-                </li>
-                <li>
-                  <strong>Testability:</strong> Pure logic makes testing simple
-                </li>
-                <li>
-                  <strong>Visualization:</strong> XState provides visual tools
-                  to see state flows
-                </li>
+                <li>{t('advanced.xstate.benefits.preventsInvalid')}</li>
+                <li>{t('advanced.xstate.benefits.selfDocumenting')}</li>
+                <li>{t('advanced.xstate.benefits.testability')}</li>
+                <li>{t('advanced.xstate.benefits.visualization')}</li>
               </ul>
             </InfoBox>
           </div>
         </SubSection>
 
         <SubSection
-          title="When to Use Advanced Patterns"
+          title={t('advanced.when.title')}
           icon
           iconColor="orange"
         >
           <div className="space-y-4">
             <div className="grid grid-cols-1 gap-4">
-              <InfoBox variant="orange" title="Use RxJS Observable when...">
+              <InfoBox variant="orange" title={t('advanced.when.rxjs.title')}>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
-                  <li>Handling complex, interconnected async operations</li>
-                  <li>Needing to debounce, throttle, or batch requests</li>
-                  <li>Managing streams of real-time data</li>
-                  <li>Your team is comfortable with reactive programming</li>
+                  <li>{t('advanced.when.rxjs.complex')}</li>
+                  <li>{t('advanced.when.rxjs.debounce')}</li>
+                  <li>{t('advanced.when.rxjs.streams')}</li>
+                  <li>{t('advanced.when.rxjs.team')}</li>
                 </ul>
               </InfoBox>
 
-              <InfoBox variant="purple" title="Use XState when...">
+              <InfoBox variant="purple" title={t('advanced.when.xstate.title')}>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
-                  <li>State has many complex transitions</li>
-                  <li>Preventing impossible states is critical</li>
-                  <li>You need clear documentation of state flows</li>
-                  <li>Testing state logic is a priority</li>
+                  <li>{t('advanced.when.xstate.complex')}</li>
+                  <li>{t('advanced.when.xstate.preventing')}</li>
+                  <li>{t('advanced.when.xstate.documentation')}</li>
+                  <li>{t('advanced.when.xstate.testing')}</li>
                 </ul>
               </InfoBox>
 
-              <InfoBox variant="red" title="Warning">
+              <InfoBox variant="red" title={t('advanced.when.warning.title')}>
                 <p className="text-sm text-gray-700">
-                  These are <strong>advanced patterns</strong> with significant
-                  learning curves. Use them only when simpler solutions (Redux
-                  Thunk, Zustand) prove insufficient.
+                  {t('advanced.when.warning.description')}
                 </p>
               </InfoBox>
             </div>
@@ -219,7 +177,7 @@ function UserFetcher() {
         </SubSection>
 
         <SubSection
-          title="Comparison: All Async Approaches"
+          title={t('advanced.comparisonTable.title')}
           icon
           iconColor="blue"
         >
@@ -228,38 +186,36 @@ function UserFetcher() {
               <table className="w-full text-xs border-collapse">
                 <thead>
                   <tr className="border-b border-gray-300 bg-gray-50">
-                    <th className="text-left p-2 font-semibold">Approach</th>
-                    <th className="text-left p-2 font-semibold">Complexity</th>
-                    <th className="text-left p-2 font-semibold">Best For</th>
-                    <th className="text-left p-2 font-semibold">
-                      Learning Curve
-                    </th>
+                    <th className="text-left p-2 font-semibold">{t('advanced.comparisonTable.approach')}</th>
+                    <th className="text-left p-2 font-semibold">{t('advanced.comparisonTable.complexity')}</th>
+                    <th className="text-left p-2 font-semibold">{t('advanced.comparisonTable.bestFor')}</th>
+                    <th className="text-left p-2 font-semibold">{t('advanced.comparisonTable.learningCurve')}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b border-gray-200">
-                    <td className="p-2 font-medium">Redux Thunk</td>
-                    <td className="p-2">Low</td>
-                    <td className="p-2">Simple async tasks</td>
-                    <td className="p-2">Easy</td>
+                    <td className="p-2 font-medium">{t('advanced.comparisonTable.thunk.name')}</td>
+                    <td className="p-2">{t('advanced.comparisonTable.thunk.complexity')}</td>
+                    <td className="p-2">{t('advanced.comparisonTable.thunk.bestFor')}</td>
+                    <td className="p-2">{t('advanced.comparisonTable.thunk.learningCurve')}</td>
                   </tr>
                   <tr className="border-b border-gray-200">
-                    <td className="p-2 font-medium">Redux Saga</td>
-                    <td className="p-2">Medium-High</td>
-                    <td className="p-2">Complex async flows</td>
-                    <td className="p-2">Moderate</td>
+                    <td className="p-2 font-medium">{t('advanced.comparisonTable.saga.name')}</td>
+                    <td className="p-2">{t('advanced.comparisonTable.saga.complexity')}</td>
+                    <td className="p-2">{t('advanced.comparisonTable.saga.bestFor')}</td>
+                    <td className="p-2">{t('advanced.comparisonTable.saga.learningCurve')}</td>
                   </tr>
                   <tr className="border-b border-gray-200">
-                    <td className="p-2 font-medium">RxJS Observable</td>
-                    <td className="p-2">High</td>
-                    <td className="p-2">Stream manipulation</td>
-                    <td className="p-2">Steep</td>
+                    <td className="p-2 font-medium">{t('advanced.comparisonTable.observable.name')}</td>
+                    <td className="p-2">{t('advanced.comparisonTable.observable.complexity')}</td>
+                    <td className="p-2">{t('advanced.comparisonTable.observable.bestFor')}</td>
+                    <td className="p-2">{t('advanced.comparisonTable.observable.learningCurve')}</td>
                   </tr>
                   <tr>
-                    <td className="p-2 font-medium">XState</td>
-                    <td className="p-2">Medium</td>
-                    <td className="p-2">Complex state logic</td>
-                    <td className="p-2">Moderate</td>
+                    <td className="p-2 font-medium">{t('advanced.comparisonTable.xstate.name')}</td>
+                    <td className="p-2">{t('advanced.comparisonTable.xstate.complexity')}</td>
+                    <td className="p-2">{t('advanced.comparisonTable.xstate.bestFor')}</td>
+                    <td className="p-2">{t('advanced.comparisonTable.xstate.learningCurve')}</td>
                   </tr>
                 </tbody>
               </table>

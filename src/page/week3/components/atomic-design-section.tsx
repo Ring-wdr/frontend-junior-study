@@ -1,48 +1,46 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard } from '../../../components';
 import { AtomicDesignVisualizer } from './atomic-design-visualizer';
 
 export const AtomicDesignSection = () => {
+  const { t } = useTranslation('week3');
+
   return (
     <SectionCard
-      badge={{ label: 'Front-end Architecture', color: 'purple' }}
-      title="Atomic Design"
-      description="A methodology for creating design systems by breaking them down into five distinct levels."
+      badge={{ label: t('atomic.badge'), color: 'purple' }}
+      title={t('atomic.title')}
+      description={t('atomic.description')}
     >
       <div className="space-y-6">
         <AtomicDesignVisualizer />
 
-        <InfoBox variant="blue" title="What is Atomic Design?">
+        <InfoBox variant="blue" title={t('atomic.whatIs.title')}>
           <p className="text-sm text-gray-700">
-            Atomic Design is a methodology composed of five distinct stages
-            working together to create interface design systems in a more
-            deliberate and hierarchical manner.
+            {t('atomic.whatIs.content')}
           </p>
         </InfoBox>
 
-        <InfoBox variant="gray" title="The Five Levels">
+        <InfoBox variant="gray" title={t('atomic.fiveLevels.title')}>
           <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
             <li>
-              <strong>Atoms:</strong> The basic building blocks of matter (e.g.,
-              Buttons, Inputs, Labels).
+              <strong>{t('atomic.fiveLevels.atoms.label')}</strong>{' '}
+              {t('atomic.fiveLevels.atoms.description')}
             </li>
             <li>
-              <strong>Molecules:</strong> Groups of atoms bonded together to be
-              the smallest fundamental units of the compound (e.g., Search Form
-              combining Input and Button).
+              <strong>{t('atomic.fiveLevels.molecules.label')}</strong>{' '}
+              {t('atomic.fiveLevels.molecules.description')}
             </li>
             <li>
-              <strong>Organisms:</strong> Groups of molecules joined together to
-              form a relatively complex, distinct section of an interface (e.g.,
-              Header).
+              <strong>{t('atomic.fiveLevels.organisms.label')}</strong>{' '}
+              {t('atomic.fiveLevels.organisms.description')}
             </li>
             <li>
-              <strong>Templates:</strong> Page-level objects that place
-              components into a layout and articulate the design's underlying
-              content structure.
+              <strong>{t('atomic.fiveLevels.templates.label')}</strong>{' '}
+              {t('atomic.fiveLevels.templates.description')}
             </li>
             <li>
-              <strong>Pages:</strong> Specific instances of templates that show
-              what a UI looks like with real representative content in place.
+              <strong>{t('atomic.fiveLevels.pages.label')}</strong>{' '}
+              {t('atomic.fiveLevels.pages.description')}
             </li>
           </ul>
         </InfoBox>

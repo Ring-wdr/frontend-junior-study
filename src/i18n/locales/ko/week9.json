@@ -1,0 +1,377 @@
+{
+  "header": {
+    "title": "Framer Motion & UI Animation",
+    "description": "Framer Motion으로 React 애니메이션 마스터하기: 제스처, 드래그, 레이아웃 애니메이션, 페이지 전환, 그리고 성능 최적화."
+  },
+  "tabs": {
+    "all": "전체",
+    "basics": "기초",
+    "variants": "Variants",
+    "gesture": "제스처",
+    "drag": "드래그",
+    "layout": "레이아웃",
+    "presence": "Presence",
+    "transition": "전환",
+    "performance": "성능"
+  },
+  "motionBasics": {
+    "badge": "기초",
+    "title": "Motion 컴포넌트 기초",
+    "description": "Framer Motion의 핵심 구성 요소 이해하기",
+    "whatIsMotionDiv": {
+      "title": "motion.div란 무엇인가?",
+      "infoTitle": "Motion 컴포넌트",
+      "content": "Framer Motion의 기본 단위는 <code>motion</code> 컴포넌트입니다. 이는 모든 HTML 엘리먼트를 감싸서 React state와 매끄럽게 통합되는 선언적 애니메이션을 가능하게 합니다.",
+      "declarative": "선언적:",
+      "declarativeDesc": "무엇을 정의하지, 어떻게가 아닙니다",
+      "stateDriven": "State 기반:",
+      "stateDrivenDesc": "애니메이션이 React state 변경에 반응합니다",
+      "composable": "조합 가능:",
+      "composableDesc": "복잡한 애니메이션을 위해 Variants와 함께 작동합니다"
+    },
+    "basicProperties": {
+      "title": "기본 애니메이션 속성"
+    },
+    "demo": {
+      "title": "인터랙티브 데모",
+      "label": "Fade & Slide 애니메이션",
+      "hide": "숨기기",
+      "show": "보이기",
+      "element": "엘리먼트",
+      "hello": "안녕!",
+      "note": "참고:",
+      "noteDesc": "이 간단한 토글은 exit 애니메이션을 하지 않습니다. exit 애니메이션을 위해서는 <code>AnimatePresence</code>가 필요합니다 (나중에 다룹니다)."
+    },
+    "animatableProps": {
+      "title": "애니메이션 가능한 속성",
+      "transform": "Transform",
+      "transformDesc": "x, y, scale, rotate, skew",
+      "visual": "Visual",
+      "visualDesc": "opacity, color, backgroundColor",
+      "layout": "Layout",
+      "layoutDesc": "width, height, borderRadius",
+      "filter": "Filter",
+      "filterDesc": "blur, brightness, contrast",
+      "performanceTip": "성능 팁",
+      "performanceTipDesc": "<strong>Transform 속성</strong> (x, y, scale, rotate)은 GPU 가속되며 레이아웃 재계산을 유발하지 않습니다. 더 나은 성능을 위해 width/height보다 이를 선호하세요."
+    }
+  },
+  "variants": {
+    "badge": "고급",
+    "title": "Variants",
+    "description": "복잡한 오케스트레이션을 위한 state 기반 애니메이션 패턴",
+    "whatAreVariants": {
+      "title": "Variants란 무엇인가?",
+      "infoTitle": "Variants 개념",
+      "content": "Variants는 문자열로 참조할 수 있는 이름이 지정된 애니메이션 state입니다. 이는 다음을 가능하게 합니다:",
+      "reusability": "재사용성:",
+      "reusabilityDesc": "한 번 정의하고, 어디서나 사용",
+      "propagation": "전파:",
+      "propagationDesc": "자식 컴포넌트가 부모 state를 상속",
+      "orchestration": "오케스트레이션:",
+      "orchestrationDesc": "애니메이션을 시차, 지연, 순서화"
+    },
+    "basicPattern": {
+      "title": "기본 Variants 패턴"
+    },
+    "staggerChildren": {
+      "title": "Stagger Children",
+      "demoLabel": "Stagger 애니메이션 데모",
+      "reset": "재설정",
+      "animateList": "리스트 애니메이션"
+    },
+    "variantPropagation": {
+      "title": "Variant 전파",
+      "infoTitle": "전파 작동 방식",
+      "content": "부모 컴포넌트가 새로운 variant로 변경되면, 동일한 variant 이름을 가진 모든 자식이 자동으로 일치하도록 애니메이션됩니다. 이는 명시적인 연결 없이 조정된 애니메이션을 생성합니다."
+    },
+    "orchestrationOptions": {
+      "title": "오케스트레이션 옵션",
+      "staggerChildren": "staggerChildren",
+      "staggerChildrenDesc": "각 자식 애니메이션 시작 사이의 지연",
+      "staggerDirection": "staggerDirection",
+      "staggerDirectionDesc": "1 = 처음부터 끝까지, -1 = 끝에서 처음까지",
+      "delayChildren": "delayChildren",
+      "delayChildrenDesc": "자식 애니메이션 시작 전 대기",
+      "when": "when",
+      "whenDesc": "\"beforeChildren\" | \"afterChildren\""
+    }
+  },
+  "gesture": {
+    "badge": "상호작용",
+    "title": "제스처 기반 상호작용",
+    "description": "hover, tap, focus, scroll 애니메이션으로 반응형 UI 만들기",
+    "gestureProps": {
+      "title": "제스처 Props 개요",
+      "infoTitle": "사용 가능한 제스처 Props",
+      "whileHover": "whileHover:",
+      "whileHoverDesc": "마우스 hover 시 애니메이션",
+      "whileTap": "whileTap:",
+      "whileTapDesc": "누르거나 클릭하는 동안 애니메이션",
+      "whileFocus": "whileFocus:",
+      "whileFocusDesc": "엘리먼트에 포커스가 있을 때 애니메이션",
+      "whileInView": "whileInView:",
+      "whileInViewDesc": "엘리먼트가 뷰포트에 진입할 때 애니메이션",
+      "whileDrag": "whileDrag:",
+      "whileDragDesc": "드래그하는 동안 애니메이션"
+    },
+    "hoverTap": {
+      "title": "Hover & Tap",
+      "demoLabel": "인터랙티브 버튼",
+      "hoverMe": "Hover하세요",
+      "colorChange": "색상 변경",
+      "liftEffect": "들어올리기 효과"
+    },
+    "whileInView": {
+      "title": "whileInView (스크롤 애니메이션)",
+      "demoLabel": "스크롤 트리거 엘리먼트",
+      "firstItem": "첫 번째 아이템",
+      "secondItem": "두 번째 아이템",
+      "thirdItem": "세 번째 아이템"
+    },
+    "focusStates": {
+      "title": "포커스 State",
+      "demoLabel": "포커스 애니메이션",
+      "placeholder": "포커스하려면 클릭하세요..."
+    },
+    "eventHandlers": {
+      "title": "제스처 이벤트 핸들러",
+      "infoTitle": "이벤트 콜백",
+      "content": "Framer Motion은 제스처 이벤트에 대한 콜백을 제공합니다:"
+    }
+  },
+  "drag": {
+    "badge": "고급",
+    "title": "Drag & Drop",
+    "description": "물리 기반 상호작용으로 드래그 가능한 UI 컴포넌트 구축",
+    "basicDrag": {
+      "title": "기본 드래그",
+      "demoLabel": "자유 드래그",
+      "dragText": "드래그!"
+    },
+    "dragConstraints": {
+      "title": "드래그 제약",
+      "demoLabel": "제약된 드래그",
+      "boundText": "경계"
+    },
+    "dragOptions": {
+      "title": "드래그 옵션",
+      "dragElastic": "dragElastic",
+      "dragElasticDesc": "0 = 강한 제약, 1 = 완전한 탄성 (기본값: 0.5)",
+      "dragMomentum": "dragMomentum",
+      "dragMomentumDesc": "속도에 따라 릴리스 후 계속 이동 (기본값: true)",
+      "dragTransition": "dragTransition",
+      "dragTransitionDesc": "모멘텀 애니메이션 구성: bounceStiffness, bounceDamping",
+      "dragDirectionLock": "dragDirectionLock",
+      "dragDirectionLockDesc": "임계값 후 감지된 방향으로 잠금"
+    },
+    "dragWithMomentum": {
+      "title": "모멘텀이 있는 드래그",
+      "demoLabel": "모멘텀 & 스냅백",
+      "swipeMe": "스와이프하세요",
+      "note": "수평으로 스와이프하고 릴리스하여 모멘텀 확인"
+    },
+    "useCases": {
+      "title": "사용 사례",
+      "infoTitle": "일반적인 응용",
+      "kanban": "Kanban 보드:",
+      "kanbanDesc": "열 사이에서 카드 드래그 (Trello)",
+      "carousels": "캐러셀:",
+      "carouselsDesc": "스와이프 기반 이미지 갤러리",
+      "sliders": "슬라이더:",
+      "slidersDesc": "커스텀 범위 입력",
+      "reorderable": "재정렬 가능한 리스트:",
+      "reorderableDesc": "아이템을 드래그하여 재정렬",
+      "dismissible": "닫을 수 있는 아이템:",
+      "dismissibleDesc": "스와이프하여 알림 삭제"
+    }
+  },
+  "layout": {
+    "badge": "마법",
+    "title": "레이아웃 애니메이션",
+    "description": "레이아웃 변경 시 자동 부드러운 전환",
+    "magic": {
+      "title": "layout Prop의 마법",
+      "infoTitle": "레이아웃 애니메이션이 하는 일",
+      "content": "<code>layout</code> prop을 추가하면, Framer Motion은 성능이 좋은 transforms를 사용하여 레이아웃 변경(위치, 크기) 사이를 자동으로 애니메이션합니다. 이것은 CSS만으로는 거의 불가능한 일입니다."
+    },
+    "accordion": {
+      "title": "아코디언 예제",
+      "demoLabel": "클릭하여 확장/축소",
+      "clickMe": "클릭하세요!",
+      "content": "이 콘텐츠는 부드럽게 확장되고 축소됩니다. 부모 컨테이너는 자동으로 크기 변경을 애니메이션하고, 제목은 layout=\"position\"을 사용하여 제자리에 유지됩니다."
+    },
+    "listReordering": {
+      "title": "리스트 재정렬",
+      "demoLabel": "아이템을 클릭하여 제거",
+      "allRemoved": "모든 아이템 제거됨!",
+      "reset": "아이템 재설정"
+    },
+    "gridListToggle": {
+      "title": "그리드 ↔ 리스트 토글",
+      "demoLabel": "레이아웃 모드 전환",
+      "switchTo": "전환:",
+      "list": "리스트",
+      "grid": "그리드",
+      "item": "아이템"
+    },
+    "layoutPropOptions": {
+      "title": "레이아웃 Prop 옵션",
+      "layout": "layout",
+      "layoutDesc": "위치와 크기 변경 모두 애니메이션",
+      "layoutPosition": "layout=\"position\"",
+      "layoutPositionDesc": "크기가 아닌 위치만 애니메이션 (텍스트 왜곡 방지)",
+      "layoutSize": "layout=\"size\"",
+      "layoutSizeDesc": "위치가 아닌 크기 변경만 애니메이션",
+      "layoutId": "layoutId=\"shared-id\"",
+      "layoutIdDesc": "다른 컴포넌트 간 공유 레이아웃 애니메이션"
+    }
+  },
+  "presence": {
+    "badge": "필수",
+    "title": "AnimatePresence",
+    "description": "컴포넌트가 마운트 및 언마운트될 때 애니메이션",
+    "problem": {
+      "title": "문제점",
+      "infoTitle": "왜 AnimatePresence인가?",
+      "content": "React는 언마운트될 때 DOM에서 엘리먼트를 즉시 제거합니다. 이는 <code>AnimatePresence</code> 없이는 exit 애니메이션이 불가능함을 의미하며, 이는 exit 애니메이션 동안 엘리먼트를 DOM에 유지합니다."
+    },
+    "basicUsage": {
+      "title": "기본 사용법"
+    },
+    "modal": {
+      "title": "모달 예제",
+      "demoLabel": "Exit 애니메이션이 있는 모달",
+      "openModal": "모달 열기",
+      "modalTitle": "애니메이션 모달",
+      "modalContent": "이 모달은 부드러운 enter 및 exit 애니메이션을 가지고 있습니다!",
+      "close": "닫기"
+    },
+    "toast": {
+      "title": "Toast 알림",
+      "demoLabel": "닫을 수 있는 알림",
+      "addNotification": "알림 추가",
+      "welcome": "환영합니다!",
+      "newMessage": "새 메시지 수신",
+      "updateAvailable": "업데이트 가능",
+      "notification": "알림"
+    },
+    "modes": {
+      "title": "AnimatePresence 모드",
+      "sync": "mode=\"sync\" (기본값)",
+      "syncDesc": "Enter와 exit 애니메이션이 동시에 발생",
+      "wait": "mode=\"wait\"",
+      "waitDesc": "enter하기 전에 exit가 완료될 때까지 대기 (페이지 전환에 좋음)",
+      "popLayout": "mode=\"popLayout\"",
+      "popLayoutDesc": "Exit하는 엘리먼트가 즉시 레이아웃 플로우에서 제거됨"
+    },
+    "useCases": {
+      "title": "사용 사례",
+      "infoTitle": "일반적인 응용",
+      "modals": "모달 & 다이얼로그:",
+      "modalsDesc": "Fade/scale in 및 out",
+      "toast": "Toast 알림:",
+      "toastDesc": "Slide in 및 dismiss",
+      "dropdowns": "드롭다운:",
+      "dropdownsDesc": "메뉴 확장 및 축소",
+      "pageTransitions": "페이지 전환:",
+      "pageTransitionsDesc": "라우트 간 크로스페이드",
+      "accordions": "아코디언:",
+      "accordionsDesc": "부드러운 콘텐츠 reveal"
+    }
+  },
+  "transition": {
+    "badge": "물리",
+    "title": "전환 & Springs",
+    "description": "springs, tweens, keyframes로 애니메이션 타이밍 미세 조정",
+    "springPhysics": {
+      "title": "Spring 물리 (기본값)",
+      "infoTitle": "왜 Springs인가?",
+      "content": "Framer Motion은 더 자연스럽고 반응적인 애니메이션을 생성하기 때문에 기본적으로 spring 물리를 사용합니다. 지속 시간 기반 tweens와 달리, springs는 중단에 부드럽게 반응합니다."
+    },
+    "tween": {
+      "title": "Tween (지속 시간 기반)"
+    },
+    "compare": {
+      "title": "애니메이션 타입 비교",
+      "demoLabel": "클릭하여 애니메이션",
+      "spring": "Spring",
+      "tween": "Tween",
+      "keyframes": "Keyframes",
+      "springNote": "자연스러운 바운스와 오버슈트 주목",
+      "tweenNote": "부드럽고 예측 가능한 타이밍",
+      "keyframesNote": "다단계 애니메이션 시퀀스"
+    },
+    "keyframes": {
+      "title": "Keyframes 애니메이션",
+      "demoLabel": "Keyframe 애니메이션"
+    },
+    "transitionOptions": {
+      "title": "전환 옵션",
+      "delay": "delay",
+      "delayDesc": "시작 전 대기 (초 단위)",
+      "repeat": "repeat",
+      "repeatDesc": "반복 횟수 (루프의 경우 Infinity)",
+      "repeatType": "repeatType",
+      "repeatTypeDesc": "\"loop\" | \"reverse\" | \"mirror\"",
+      "repeatDelay": "repeatDelay",
+      "repeatDelayDesc": "반복 사이 일시 정지"
+    },
+    "perProperty": {
+      "title": "속성별 전환"
+    }
+  },
+  "performance": {
+    "badge": "모범 사례",
+    "title": "성능 & 접근성",
+    "description": "성능과 포용적 디자인을 위한 애니메이션 최적화",
+    "performanceTips": {
+      "title": "성능 팁",
+      "useTransform": "Transform 속성 사용",
+      "useTransformDesc": "x, y, scale, rotate는 GPU 가속됩니다. width, height, top, left 애니메이션을 피하세요.",
+      "limitSimultaneous": "동시 애니메이션 제한",
+      "limitSimultaneousDesc": "한 번에 너무 많은 애니메이션 엘리먼트는 jank를 유발할 수 있습니다. 선택적으로 사용하세요.",
+      "willChange": "will-change를 아껴 사용",
+      "willChangeDesc": "Framer Motion이 자동으로 처리합니다. 수동으로 추가하지 마세요.",
+      "layoutExpensive": "레이아웃 애니메이션은 비용이 많이 듭니다",
+      "layoutExpensiveDesc": "layout prop을 신중하게 사용하세요. 가능하면 layout=\"position\"을 고려하세요."
+    },
+    "measuring": {
+      "title": "성능 측정"
+    },
+    "reducedMotion": {
+      "title": "접근성: Reduced Motion",
+      "infoTitle": "사용자 선호도 존중",
+      "content": "일부 사용자는 멀미를 경험하거나 전정 장애를 가지고 있습니다. 항상 <code>prefers-reduced-motion</code> 시스템 선호도를 존중하세요."
+    },
+    "antiPatterns": {
+      "title": "애니메이션 안티 패턴",
+      "animatingLayout": "레이아웃 속성 애니메이션",
+      "animatingLayoutDesc": "width/height는 리플로우를 유발합니다. 대신 scale transform을 사용하세요.",
+      "tooManyLayout": "너무 많은 layout Props",
+      "tooManyLayoutDesc": "각 layout 애니메이션은 측정이 필요합니다. 아껴 사용하세요.",
+      "animatingEverything": "모든 것을 애니메이션",
+      "animatingEverythingDesc": "목적 없는 애니메이션은 산만합니다. 각 애니메이션은 UX를 제공해야 합니다.",
+      "longDurations": "긴 지속 시간",
+      "longDurationsDesc": "UI 애니메이션을 300ms 이하로 유지하세요. 사용자는 긴 애니메이션을 느리다고 인식합니다."
+    },
+    "goodPrinciples": {
+      "title": "좋은 애니메이션 원칙",
+      "infoTitle": "UX 가이드라인",
+      "purpose": "목적:",
+      "purposeDesc": "모든 애니메이션은 무언가를 전달해야 합니다",
+      "speed": "속도:",
+      "speedDesc": "대부분의 UI 상호작용은 200-300ms",
+      "consistency": "일관성:",
+      "consistencyDesc": "동일한 엘리먼트는 동일한 방식으로 애니메이션되어야 합니다",
+      "subtlety": "미묘함:",
+      "subtletyDesc": "애니메이션은 향상시켜야 하며, 산만하게 하면 안 됩니다",
+      "interruptibility": "중단 가능성:",
+      "interruptibilityDesc": "애니메이션은 취소 가능해야 합니다"
+    },
+    "resources": {
+      "title": "리소스",
+      "infoTitle": "더 알아보기"
+    }
+  }
+}
