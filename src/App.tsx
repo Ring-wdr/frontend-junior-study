@@ -4,6 +4,7 @@ import {
   RouterProvider,
   useNavigation,
 } from 'react-router-dom';
+import { FloatingLanguageSwitcher } from './components/ui/floating-language-switcher';
 import MainPage from './page/main-page';
 import './App.css';
 
@@ -25,6 +26,7 @@ const RootLayout = () => {
 
   return (
     <>
+      <FloatingLanguageSwitcher />
       {isLoading && <LoadingSpinner />}
       <Outlet />
     </>
