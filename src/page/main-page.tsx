@@ -1,274 +1,103 @@
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 export default function MainPage() {
+  const { t } = useTranslation('main');
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-8 font-sans text-gray-900">
       <div className="max-w-2xl w-full text-center space-y-8">
         <h1 className="text-4xl font-bold tracking-tight">
-          Frontend Study Dashboard
+          {t('header.title')}
         </h1>
-        <p className="text-lg text-gray-500">
-          Select a week to view the curriculum and interactive examples.
-        </p>
+        <p className="text-lg text-gray-500">{t('header.description')}</p>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-8">
-          <Link
-            to="/week-1"
-            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
-          >
-            <div className="flex flex-col items-start text-left space-y-2">
-              <span className="text-sm font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-md group-hover:bg-blue-100 transition-colors">
-                Week 1
-              </span>
-              <h2 className="text-xl font-semibold group-hover:text-blue-600 transition-colors">
-                JS Deep Dive
-              </h2>
-              <p className="text-sm text-gray-500 line-clamp-2">
-                Event Loop, `this`, Closures, and Async patterns.
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            to="/week-2"
-            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
-          >
-            <div className="flex flex-col items-start text-left space-y-2">
-              <span className="text-sm font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-md group-hover:bg-blue-100 transition-colors">
-                Week 2
-              </span>
-              <h2 className="text-xl font-semibold group-hover:text-blue-600 transition-colors">
-                OOP & SOLID
-              </h2>
-              <p className="text-sm text-gray-500 line-clamp-2">
-                Object-Oriented Programming and SOLID principles.
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            to="/week-3"
-            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
-          >
-            <div className="flex flex-col items-start text-left space-y-2">
-              <span className="text-sm font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-md group-hover:bg-blue-100 transition-colors">
-                Week 3
-              </span>
-              <h2 className="text-xl font-semibold group-hover:text-blue-600 transition-colors">
-                Component Patterns
-              </h2>
-              <p className="text-sm text-gray-500 line-clamp-2">
-                Container vs Presentational, and more.
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            to="/week-4"
-            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
-          >
-            <div className="flex flex-col items-start text-left space-y-2">
-              <span className="text-sm font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-md group-hover:bg-blue-100 transition-colors">
-                Week 4
-              </span>
-              <h2 className="text-xl font-semibold group-hover:text-blue-600 transition-colors">
-                State Management
-              </h2>
-              <p className="text-sm text-gray-500 line-clamp-2">
-                Deep Dive into Redux, Middleware, Modern Libraries
-                (MobX/Recoil/Zustand), and more.
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            to="/week-5"
-            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
-          >
-            <div className="flex flex-col items-start text-left space-y-2">
-              <span className="text-sm font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-md group-hover:bg-blue-100 transition-colors">
-                Week 5
-              </span>
-              <h2 className="text-xl font-semibold group-hover:text-blue-600 transition-colors">
-                React & Next.js Advanced
-              </h2>
-              <p className="text-sm text-gray-500 line-clamp-2">
-                Concurrency, React 19, App Router, and Data Strategies.
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            to="/week-6"
-            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
-          >
-            <div className="flex flex-col items-start text-left space-y-2">
-              <span className="text-sm font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-md group-hover:bg-blue-100 transition-colors">
-                Week 6
-              </span>
-              <h2 className="text-xl font-semibold group-hover:text-blue-600 transition-colors">
-                React & Next.js Advanced
-              </h2>
-              <p className="text-sm text-gray-500 line-clamp-2">
-                Concurrency, React 19, App Router, and Data Strategies.
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            to="/week-7"
-            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
-          >
-            <div className="flex flex-col items-start text-left space-y-2">
-              <span className="text-sm font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-md group-hover:bg-blue-100 transition-colors">
-                Week 7
-              </span>
-              <h2 className="text-xl font-semibold group-hover:text-blue-600 transition-colors">
-                Forms & Validation
-              </h2>
-              <p className="text-sm text-gray-500 line-clamp-2">
-                React Hook Form, Zod, async validation, security, and UX.
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            to="/week-8"
-            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
-          >
-            <div className="flex flex-col items-start text-left space-y-2">
-              <span className="text-sm font-semibold text-red-600 bg-red-50 px-2 py-1 rounded-md group-hover:bg-red-100 transition-colors">
-                Week 8
-              </span>
-              <h2 className="text-xl font-semibold group-hover:text-red-600 transition-colors">
-                Frontend Testing
-              </h2>
-              <p className="text-sm text-gray-500 line-clamp-2">
-                Unit, Integration, and E2E testing with Jest, Vitest, RTL, MSW.
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            to="/week-9"
-            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
-          >
-            <div className="flex flex-col items-start text-left space-y-2">
-              <span className="text-sm font-semibold text-purple-600 bg-purple-50 px-2 py-1 rounded-md group-hover:bg-purple-100 transition-colors">
-                Week 9
-              </span>
-              <h2 className="text-xl font-semibold group-hover:text-purple-600 transition-colors">
-                Framer Motion
-              </h2>
-              <p className="text-sm text-gray-500 line-clamp-2">
-                Gestures, drag, layout animations, transitions, and performance.
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            to="/week-10"
-            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
-          >
-            <div className="flex flex-col items-start text-left space-y-2">
-              <span className="text-sm font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-md group-hover:bg-green-100 transition-colors">
-                Week 10
-              </span>
-              <h2 className="text-xl font-semibold group-hover:text-green-600 transition-colors">
-                GSAP Animation
-              </h2>
-              <p className="text-sm text-gray-500 line-clamp-2">
-                GSAP basics, ScrollTrigger, SVG animations, and performance.
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            to="/week-11"
-            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
-          >
-            <div className="flex flex-col items-start text-left space-y-2">
-              <span className="text-sm font-semibold text-orange-600 bg-orange-50 px-2 py-1 rounded-md group-hover:bg-orange-100 transition-colors">
-                Week 11
-              </span>
-              <h2 className="text-xl font-semibold group-hover:text-orange-600 transition-colors">
-                Web Performance
-              </h2>
-              <p className="text-sm text-gray-500 line-clamp-2">
-                Core Web Vitals, LCP, INP, CLS, and optimization strategies.
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            to="/week-12"
-            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
-          >
-            <div className="flex flex-col items-start text-left space-y-2">
-              <span className="text-sm font-semibold text-rose-600 bg-rose-50 px-2 py-1 rounded-md group-hover:bg-rose-100 transition-colors">
-                Week 12
-              </span>
-              <h2 className="text-xl font-semibold group-hover:text-rose-600 transition-colors">
-                Auth & Security
-              </h2>
-              <p className="text-sm text-gray-500 line-clamp-2">
-                OAuth 2.0, OIDC, NextAuth.js, JWT, XSS, CSRF protection.
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            to="/week-13"
-            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
-          >
-            <div className="flex flex-col items-start text-left space-y-2">
-              <span className="text-sm font-semibold text-cyan-600 bg-cyan-50 px-2 py-1 rounded-md group-hover:bg-cyan-100 transition-colors">
-                Week 13
-              </span>
-              <h2 className="text-xl font-semibold group-hover:text-cyan-600 transition-colors">
-                Workers & PWA
-              </h2>
-              <p className="text-sm text-gray-500 line-clamp-2">
-                Web Workers, Service Workers, PWA, IndexedDB, offline-first.
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            to="/week-14"
-            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
-          >
-            <div className="flex flex-col items-start text-left space-y-2">
-              <span className="text-sm font-semibold text-teal-600 bg-teal-50 px-2 py-1 rounded-md group-hover:bg-teal-100 transition-colors">
-                Week 14
-              </span>
-              <h2 className="text-xl font-semibold group-hover:text-teal-600 transition-colors">
-                Accessibility & i18n
-              </h2>
-              <p className="text-sm text-gray-500 line-clamp-2">
-                WCAG, Semantic HTML, ARIA, Focus Management, i18n, RTL support.
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            to="/week-15"
-            className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
-          >
-            <div className="flex flex-col items-start text-left space-y-2">
-              <span className="text-sm font-semibold text-indigo-600 bg-indigo-50 px-2 py-1 rounded-md group-hover:bg-indigo-100 transition-colors">
-                Week 15
-              </span>
-              <h2 className="text-xl font-semibold group-hover:text-indigo-600 transition-colors">
-                DevTools & Bundling
-              </h2>
-              <p className="text-sm text-gray-500 line-clamp-2">
-                Chrome DevTools, Webpack/Vite, Bundle Optimization, Sentry, Web Vitals.
-              </p>
-            </div>
-          </Link>
+          {Array.from({ length: 15 }, (_, i) => i + 1).map((week) => {
+            const colors = getWeekColors(week);
+            return (
+              <Link
+                key={week}
+                to={`/week-${week}`}
+                className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200"
+              >
+                <div className="flex flex-col items-start text-left space-y-2">
+                  <span
+                    className={`text-sm font-semibold px-2 py-1 rounded-md transition-colors ${colors.badge}`}
+                  >
+                    {t('week_badge', { count: week })}
+                  </span>
+                  <h2
+                    className={`text-xl font-semibold transition-colors ${colors.title}`}
+                  >
+                    {t(`weeks.week${week}.title`)}
+                  </h2>
+                  <p className="text-sm text-gray-500 line-clamp-2">
+                    {t(`weeks.week${week}.description`)}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>
   );
 }
+
+const getWeekColors = (week: number) => {
+  if (week <= 7) {
+    return {
+      badge: 'text-blue-600 bg-blue-50 group-hover:bg-blue-100',
+      title: 'group-hover:text-blue-600',
+    };
+  }
+
+  switch (week) {
+    case 8:
+      return {
+        badge: 'text-red-600 bg-red-50 group-hover:bg-red-100',
+        title: 'group-hover:text-red-600',
+      };
+    case 9:
+      return {
+        badge: 'text-purple-600 bg-purple-50 group-hover:bg-purple-100',
+        title: 'group-hover:text-purple-600',
+      };
+    case 10:
+      return {
+        badge: 'text-green-600 bg-green-50 group-hover:bg-green-100',
+        title: 'group-hover:text-green-600',
+      };
+    case 11:
+      return {
+        badge: 'text-orange-600 bg-orange-50 group-hover:bg-orange-100',
+        title: 'group-hover:text-orange-600',
+      };
+    case 12:
+      return {
+        badge: 'text-rose-600 bg-rose-50 group-hover:bg-rose-100',
+        title: 'group-hover:text-rose-600',
+      };
+    case 13:
+      return {
+        badge: 'text-cyan-600 bg-cyan-50 group-hover:bg-cyan-100',
+        title: 'group-hover:text-cyan-600',
+      };
+    case 14:
+      return {
+        badge: 'text-teal-600 bg-teal-50 group-hover:bg-teal-100',
+        title: 'group-hover:text-teal-600',
+      };
+    case 15:
+      return {
+        badge: 'text-indigo-600 bg-indigo-50 group-hover:bg-indigo-100',
+        title: 'group-hover:text-indigo-600',
+      };
+    default:
+      return {
+        badge: 'text-blue-600 bg-blue-50 group-hover:bg-blue-100',
+        title: 'group-hover:text-blue-600',
+      };
+  }
+};

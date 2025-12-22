@@ -1,68 +1,69 @@
 {
+  "week_badge": "{{count}}주차",
   "header": {
-    "title": "Frontend 심화 학습",
-    "description": "JavaScript 런타임부터 React 최적화까지"
+    "title": "프론트엔드 스터디 대시보드",
+    "description": "커리큘럼과 인터랙티브 예제를 확인하려면 주차를 선택하세요."
   },
   "weeks": {
     "week1": {
-      "title": "Week 1: JavaScript 런타임",
-      "description": "Event Loop, Call Stack, Task Queue의 동작 원리"
+      "title": "JS 딥 다이브",
+      "description": "이벤트 루프, `this`, 클로저, 비동기 패턴."
     },
     "week2": {
-      "title": "Week 2: 메모리 & 최적화",
-      "description": "가비지 컬렉션, 메모리 누수, V8 최적화"
+      "title": "OOP & SOLID",
+      "description": "객체 지향 프로그래밍과 SOLID 원칙."
     },
     "week3": {
-      "title": "Week 3: 비동기 심화",
-      "description": "Promise 내부 구현, async/await 패턴"
+      "title": "컴포넌트 패턴",
+      "description": "Container vs Presentational 등 다양한 패턴."
     },
     "week4": {
-      "title": "Week 4: 브라우저 렌더링",
-      "description": "Critical Rendering Path, Reflow/Repaint"
+      "title": "상태 관리",
+      "description": "Redux 심화, 미들웨어, 모던 라이브러리(MobX/Recoil/Zustand) 등."
     },
     "week5": {
-      "title": "Week 5: React 렌더링",
-      "description": "Virtual DOM, Reconciliation, Fiber"
+      "title": "React & Next.js 고급",
+      "description": "동시성, React 19, 앱 라우터, 데이터 전략."
     },
     "week6": {
-      "title": "Week 6: 상태 관리",
-      "description": "Context, Redux, Zustand 비교 분석"
+      "title": "최신 스타일링 전략",
+      "description": "CSS-in-JS, Tailwind 등."
     },
     "week7": {
-      "title": "Week 7: 패턴 & 아키텍처",
-      "description": "컴포넌트 패턴, 설계 원칙"
+      "title": "폼 & 유효성 검사",
+      "description": "React Hook Form, Zod, 비동기 검증, 보안, UX."
     },
     "week8": {
-      "title": "Week 8: TypeScript 심화",
-      "description": "고급 타입, 제네릭, 타입 가드"
+      "title": "프론트엔드 테스팅",
+      "description": "Jest, Vitest, RTL, MSW를 활용한 단위, 통합, E2E 테스트."
     },
     "week9": {
-      "title": "Week 9: 테스팅",
-      "description": "단위 테스트, 통합 테스트, E2E"
+      "title": "Framer Motion",
+      "description": "제스처, 드래그, 레이아웃 애니메이션, 트랜지션, 성능."
     },
     "week10": {
-      "title": "Week 10: 빌드 & 번들링",
-      "description": "Webpack, Vite, 최적화 전략"
+      "title": "GSAP 애니메이션",
+      "description": "GSAP 기초, ScrollTrigger, SVG 애니메이션, 성능."
     },
     "week11": {
-      "title": "Week 11: 성능 최적화",
-      "description": "Core Web Vitals, 성능 측정, 최적화"
+      "title": "웹 성능",
+      "description": "Core Web Vitals, LCP, INP, CLS, 최적화 전략."
     },
     "week12": {
-      "title": "Week 12: 보안",
-      "description": "XSS, CSRF, CSP, 보안 모범 사례"
+      "title": "인증 & 보안",
+      "description": "OAuth 2.0, OIDC, NextAuth.js, JWT, XSS, CSRF 보호."
     },
     "week13": {
-      "title": "Week 13: 웹 API",
-      "description": "Web Workers, Service Workers, IndexedDB"
+      "title": "워커 & PWA",
+      "description": "Web Workers, Service Workers, PWA, IndexedDB, 오프라인 우선."
     },
     "week14": {
-      "title": "Week 14: 접근성 & i18n",
-      "description": "WCAG, ARIA, 다국어 지원"
+      "title": "접근성 & i18n",
+      "description": "WCAG, 시맨틱 HTML, ARIA, 포커스 관리, i18n, RTL 지원."
     },
     "week15": {
-      "title": "Week 15: DevTools & 디버깅",
-      "description": "Chrome DevTools, 성능 프로파일링"
+      "title": "DevTools & 번들링",
+      "description": "Chrome DevTools, Webpack/Vite, 번들 최적화, Sentry, Web Vitals."
     }
   }
 }

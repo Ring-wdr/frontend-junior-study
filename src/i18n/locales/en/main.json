@@ -1,68 +1,69 @@
 {
+  "week_badge": "Week {{count}}",
   "header": {
-    "title": "Frontend Deep Dive",
-    "description": "From JavaScript Runtime to React Optimization"
+    "title": "Frontend Study Dashboard",
+    "description": "Select a week to view the curriculum and interactive examples."
   },
   "weeks": {
     "week1": {
-      "title": "Week 1: JavaScript Runtime",
-      "description": "Event Loop, Call Stack, Task Queue Internals"
+      "title": "JS Deep Dive",
+      "description": "Event Loop, `this`, Closures, and Async patterns."
     },
     "week2": {
-      "title": "Week 2: Memory & Optimization",
-      "description": "Garbage Collection, Memory Leaks, V8 Optimization"
+      "title": "OOP & SOLID",
+      "description": "Object-Oriented Programming and SOLID principles."
     },
     "week3": {
-      "title": "Week 3: Advanced Async",
-      "description": "Promise Internals, async/await Patterns"
+      "title": "Component Patterns",
+      "description": "Container vs Presentational, and more."
     },
     "week4": {
-      "title": "Week 4: Browser Rendering",
-      "description": "Critical Rendering Path, Reflow/Repaint"
+      "title": "State Management",
+      "description": "Deep Dive into Redux, Middleware, Modern Libraries (MobX/Recoil/Zustand), and more."
     },
     "week5": {
-      "title": "Week 5: React Rendering",
-      "description": "Virtual DOM, Reconciliation, Fiber"
+      "title": "React & Next.js Advanced",
+      "description": "Concurrency, React 19, App Router, and Data Strategies."
     },
     "week6": {
-      "title": "Week 6: State Management",
-      "description": "Context, Redux, Zustand Comparison"
+      "title": "Modern Styling Strategies",
+      "description": "CSS-in-JS, Tailwind, and more."
     },
     "week7": {
-      "title": "Week 7: Patterns & Architecture",
-      "description": "Component Patterns, Design Principles"
+      "title": "Forms & Validation",
+      "description": "React Hook Form, Zod, async validation, security, and UX."
     },
     "week8": {
-      "title": "Week 8: TypeScript Deep Dive",
-      "description": "Advanced Types, Generics, Type Guards"
+      "title": "Frontend Testing",
+      "description": "Unit, Integration, and E2E testing with Jest, Vitest, RTL, MSW."
     },
     "week9": {
-      "title": "Week 9: Testing",
-      "description": "Unit Tests, Integration Tests, E2E"
+      "title": "Framer Motion",
+      "description": "Gestures, drag, layout animations, transitions, and performance."
     },
     "week10": {
-      "title": "Week 10: Build & Bundling",
-      "description": "Webpack, Vite, Optimization Strategies"
+      "title": "GSAP Animation",
+      "description": "GSAP basics, ScrollTrigger, SVG animations, and performance."
     },
     "week11": {
-      "title": "Week 11: Performance Optimization",
-      "description": "Core Web Vitals, Performance Measurement"
+      "title": "Web Performance",
+      "description": "Core Web Vitals, LCP, INP, CLS, and optimization strategies."
     },
     "week12": {
-      "title": "Week 12: Security",
-      "description": "XSS, CSRF, CSP, Security Best Practices"
+      "title": "Auth & Security",
+      "description": "OAuth 2.0, OIDC, NextAuth.js, JWT, XSS, CSRF protection."
     },
     "week13": {
-      "title": "Week 13: Web APIs",
-      "description": "Web Workers, Service Workers, IndexedDB"
+      "title": "Workers & PWA",
+      "description": "Web Workers, Service Workers, PWA, IndexedDB, offline-first."
     },
     "week14": {
-      "title": "Week 14: Accessibility & i18n",
-      "description": "WCAG, ARIA, Internationalization"
+      "title": "Accessibility & i18n",
+      "description": "WCAG, Semantic HTML, ARIA, Focus Management, i18n, RTL support."
     },
     "week15": {
-      "title": "Week 15: DevTools & Debugging",
-      "description": "Chrome DevTools, Performance Profiling"
+      "title": "DevTools & Bundling",
+      "description": "Chrome DevTools, Webpack/Vite, Bundle Optimization, Sentry, Web Vitals."
     }
   }
 }
