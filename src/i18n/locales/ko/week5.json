@@ -299,6 +299,43 @@
         "complex": "복잡함"
       }
     },
+    "suspensive": {
+      "title": "Suspensive 라이브러리",
+      "description": "<strong>Suspensive</strong>는 토스에서 만든 React Suspense를 더 쉽게 사용할 수 있게 해주는 라이브러리입니다. TanStack Query와 완벽하게 통합되어 선언적인 데이터 페칭을 가능하게 합니다.",
+      "packages": {
+        "title": "주요 패키지",
+        "react": "<strong>@suspensive/react:</strong> Suspense, ErrorBoundary, Delay, ClientOnly 컴포넌트 제공",
+        "reactQuery": "<strong>@suspensive/react-query:</strong> SuspenseQuery, queryOptions 등 제공"
+      },
+      "benefits": {
+        "title": "Suspensive의 장점",
+        "declarative": "<strong>선언적 데이터 페칭:</strong> isLoading, isError 체크 없이 깔끔한 코드",
+        "predictable": "<strong>예측 가능:</strong> 컴포넌트 레벨에서 Suspense 발생 여부를 명확하게 파악",
+        "composable": "<strong>조합 가능:</strong> Suspense와 ErrorBoundary로 로딩/에러 상태를 분리",
+        "integration": "<strong>TanStack Query 통합:</strong> 기존 React Query 코드와 자연스럽게 호환"
+      },
+      "suspenseQuery": {
+        "title": "SuspenseQuery 컴포넌트",
+        "description": "<code>SuspenseQuery</code>는 render props 패턴으로 데이터 페칭을 처리합니다. 컴포넌트 레벨에서 Suspense 발생 여부를 명확하게 파악할 수 있어, 훅을 사용하는 것보다 더 예측 가능합니다."
+      },
+      "queryOptions": {
+        "title": "queryOptions 유틸리티",
+        "description": "<code>queryOptions</code>는 queryKey와 queryFn을 하나로 묶어 재사용 가능한 쿼리 설정을 만듭니다. SuspenseQuery, useQuery, queryClient 메서드에서 직접 사용할 수 있습니다."
+      },
+      "errorBoundary": {
+        "title": "ErrorBoundary",
+        "description": "<code>ErrorBoundary</code>는 자식 컴포넌트에서 발생한 에러를 포착하고 fallback UI를 렌더링합니다. <code>shouldCatch</code>로 특정 에러만 처리할 수도 있습니다."
+      },
+      "comparison": {
+        "title": "비교: 훅 사용 vs SuspenseQuery",
+        "withHook": "훅 사용 (Suspense 발생 예측 어려움)",
+        "withSuspenseQuery": "SuspenseQuery (명시적이고 예측 가능)"
+      },
+      "deprecation": {
+        "title": "마이그레이션 안내",
+        "description": "<code>useSuspenseQuery</code> 훅은 TanStack Query v5에서 공식 지원되므로, <code>@suspensive/react-query</code>의 훅들은 deprecated 되었습니다. 대신 <code>SuspenseQuery</code> 컴포넌트 사용을 권장합니다."
+      }
+    },
     "choosingStrategy": {
       "title": "올바른 전략 선택하기",
       "useServer": {

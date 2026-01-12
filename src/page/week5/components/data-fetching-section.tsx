@@ -315,6 +315,235 @@ function Profile() {
         </SubSection>
 
         <SubSection
+          title={t('dataFetching.suspensive.title')}
+          icon
+          iconColor="pink"
+        >
+          <div className="space-y-4">
+            <p className="text-sm text-gray-700">
+              <Trans
+                t={t}
+                i18nKey="dataFetching.suspensive.description"
+                components={{ strong: <strong />, code: <code /> }}
+              />
+            </p>
+
+            <InfoBox
+              variant="purple"
+              title={t('dataFetching.suspensive.packages.title')}
+            >
+              <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
+                <li>
+                  <Trans
+                    t={t}
+                    i18nKey="dataFetching.suspensive.packages.react"
+                  />
+                </li>
+                <li>
+                  <Trans
+                    t={t}
+                    i18nKey="dataFetching.suspensive.packages.reactQuery"
+                  />
+                </li>
+              </ul>
+            </InfoBox>
+
+            <InfoBox
+              variant="green"
+              title={t('dataFetching.suspensive.benefits.title')}
+            >
+              <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
+                <li>
+                  <Trans
+                    t={t}
+                    i18nKey="dataFetching.suspensive.benefits.declarative"
+                  />
+                </li>
+                <li>
+                  <Trans
+                    t={t}
+                    i18nKey="dataFetching.suspensive.benefits.predictable"
+                  />
+                </li>
+                <li>
+                  <Trans
+                    t={t}
+                    i18nKey="dataFetching.suspensive.benefits.composable"
+                  />
+                </li>
+                <li>
+                  <Trans
+                    t={t}
+                    i18nKey="dataFetching.suspensive.benefits.integration"
+                  />
+                </li>
+              </ul>
+            </InfoBox>
+
+            <div className="space-y-3">
+              <h4 className="text-sm font-semibold text-gray-800">
+                {t('dataFetching.suspensive.queryOptions.title')}
+              </h4>
+              <p className="text-sm text-gray-700">
+                <Trans
+                  t={t}
+                  i18nKey="dataFetching.suspensive.queryOptions.description"
+                  components={{ code: <code /> }}
+                />
+              </p>
+              <CodeBlock
+                code={`import { queryOptions } from '@suspensive/react-query'
+
+// queryKey와 queryFn을 하나로 묶어 재사용
+const userQueryOptions = (userId: number) =>
+  queryOptions({
+    queryKey: ['users', userId],
+    queryFn: () => fetchUser(userId),
+  })
+
+// SuspenseQuery, useQuery, queryClient에서 직접 사용
+queryClient.prefetchQuery(userQueryOptions(1))
+queryClient.invalidateQueries(userQueryOptions(1))`}
+                className="text-xs"
+              />
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="text-sm font-semibold text-gray-800">
+                {t('dataFetching.suspensive.suspenseQuery.title')}
+              </h4>
+              <p className="text-sm text-gray-700">
+                <Trans
+                  t={t}
+                  i18nKey="dataFetching.suspensive.suspenseQuery.description"
+                  components={{ code: <code /> }}
+                />
+              </p>
+              <CodeBlock
+                code={`import { SuspenseQuery } from '@suspensive/react-query'
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+
+const PostsPage = ({ userId }) => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback="loading...">
+      {/* Suspense 발생 여부가 명확하게 보임 */}
+      <SuspenseQuery {...userQueryOptions(userId)}>
+        {({ data: user }) => <UserProfile {...user} />}
+      </SuspenseQuery>
+      <SuspenseQuery
+        {...postsQueryOptions(userId)}
+        select={(posts) => posts.filter(p => p.isPublic)}
+      >
+        {({ data: posts }) =>
+          posts.map(post => <PostItem key={post.id} {...post} />)
+        }
+      </SuspenseQuery>
+    </Suspense>
+  </ErrorBoundary>
+)`}
+                className="text-xs"
+              />
+            </div>
+
+            <InfoBox
+              variant="red"
+              title={t('dataFetching.suspensive.errorBoundary.title')}
+            >
+              <p className="text-sm text-gray-700 mb-2">
+                <Trans
+                  t={t}
+                  i18nKey="dataFetching.suspensive.errorBoundary.description"
+                  components={{ code: <code /> }}
+                />
+              </p>
+              <CodeBlock
+                code={`import { ErrorBoundary } from '@suspensive/react'
+import { useQueryErrorResetBoundary } from '@tanstack/react-query'
+
+// React Query 에러 리셋과 통합
+const App = () => {
+  const { reset } = useQueryErrorResetBoundary()
+  return (
+    <ErrorBoundary
+      onReset={reset}
+      fallback={({ error, reset }) => (
+        <button onClick={reset}>Try again: {error.message}</button>
+      )}
+    >
+      <MyComponent />
+    </ErrorBoundary>
+  )
+}`}
+                className="text-xs mt-2"
+              />
+            </InfoBox>
+
+            <InfoBox
+              variant="gray"
+              title={t('dataFetching.suspensive.comparison.title')}
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                <div>
+                  <p className="text-xs font-medium text-gray-600 mb-2">
+                    {t('dataFetching.suspensive.comparison.withHook')}
+                  </p>
+                  <CodeBlock
+                    code={`// 이 컴포넌트가 Suspense를 발생시킬지
+// 이름만 봐서는 알 수 없음
+const PostsPage = ({ userId }) => (
+  <Suspense fallback="loading...">
+    <UserInfo userId={userId} />
+    <PostList userId={userId} />
+  </Suspense>
+)
+
+// 내부에서 useSuspenseQuery 사용
+const UserInfo = ({ userId }) => {
+  const { data } = useSuspenseQuery(...)
+  return <Profile {...data} />
+}`}
+                    className="text-xs"
+                  />
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-gray-600 mb-2">
+                    {t('dataFetching.suspensive.comparison.withSuspenseQuery')}
+                  </p>
+                  <CodeBlock
+                    code={`// SuspenseQuery가 명시적으로 보임
+// 어디서 Suspense가 발생하는지 명확
+const PostsPage = ({ userId }) => (
+  <Suspense fallback="loading...">
+    <SuspenseQuery {...userQueryOptions(userId)}>
+      {({ data }) => <Profile {...data} />}
+    </SuspenseQuery>
+    <SuspenseQuery {...postsQueryOptions(userId)}>
+      {({ data }) => <PostList posts={data} />}
+    </SuspenseQuery>
+  </Suspense>
+)`}
+                    className="text-xs"
+                  />
+                </div>
+              </div>
+            </InfoBox>
+
+            <InfoBox
+              variant="orange"
+              title={t('dataFetching.suspensive.deprecation.title')}
+            >
+              <p className="text-sm text-gray-700">
+                <Trans
+                  t={t}
+                  i18nKey="dataFetching.suspensive.deprecation.description"
+                  components={{ code: <code /> }}
+                />
+              </p>
+            </InfoBox>
+          </div>
+        </SubSection>
+
+        <SubSection
           title={t('dataFetching.choosingStrategy.title')}
           icon
           iconColor="purple"

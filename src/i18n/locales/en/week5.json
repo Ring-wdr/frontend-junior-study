@@ -299,6 +299,43 @@
         "complex": "Complex"
       }
     },
+    "suspensive": {
+      "title": "Suspensive Library",
+      "description": "<strong>Suspensive</strong> is a library created by Toss that makes React Suspense easier to use. It integrates seamlessly with TanStack Query, enabling declarative data fetching.",
+      "packages": {
+        "title": "Main Packages",
+        "react": "<strong>@suspensive/react:</strong> Provides Suspense, ErrorBoundary, Delay, ClientOnly components",
+        "reactQuery": "<strong>@suspensive/react-query:</strong> Provides SuspenseQuery, queryOptions, etc."
+      },
+      "benefits": {
+        "title": "Benefits of Suspensive",
+        "declarative": "<strong>Declarative Data Fetching:</strong> Clean code without isLoading, isError checks",
+        "predictable": "<strong>Predictable:</strong> Clear visibility of Suspense occurrence at component level",
+        "composable": "<strong>Composable:</strong> Separate loading/error states with Suspense and ErrorBoundary",
+        "integration": "<strong>TanStack Query Integration:</strong> Works naturally with existing React Query code"
+      },
+      "suspenseQuery": {
+        "title": "SuspenseQuery Component",
+        "description": "<code>SuspenseQuery</code> handles data fetching with the render props pattern. It makes it clear at the component level whether Suspense will occur, making it more predictable than using hooks."
+      },
+      "queryOptions": {
+        "title": "queryOptions Utility",
+        "description": "<code>queryOptions</code> bundles queryKey and queryFn into reusable query configurations. It can be used directly with SuspenseQuery, useQuery, and queryClient methods."
+      },
+      "errorBoundary": {
+        "title": "ErrorBoundary",
+        "description": "<code>ErrorBoundary</code> catches errors thrown by child components and renders a fallback UI. You can use <code>shouldCatch</code> to handle only specific errors."
+      },
+      "comparison": {
+        "title": "Comparison: Hooks vs SuspenseQuery",
+        "withHook": "Using Hooks (Hard to predict Suspense)",
+        "withSuspenseQuery": "SuspenseQuery (Explicit and Predictable)"
+      },
+      "deprecation": {
+        "title": "Migration Guide",
+        "description": "The <code>useSuspenseQuery</code> hook is now officially supported in TanStack Query v5, so hooks from <code>@suspensive/react-query</code> are deprecated. Use <code>SuspenseQuery</code> component instead."
+      }
+    },
     "choosingStrategy": {
       "title": "Choosing the Right Strategy",
       "useServer": {
