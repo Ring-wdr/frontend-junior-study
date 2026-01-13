@@ -8,6 +8,7 @@
     "foundation": "Foundation",
     "cssModules": "CSS Modules",
     "cssInJs": "CSS-in-JS",
+    "zeroRuntime": "Zero-Runtime",
     "tailwind": "Tailwind",
     "responsive": "Responsive",
     "advanced": "Advanced"
@@ -145,6 +146,106 @@
       "reducedMotionDesc": "Respect user preference for standard motion.",
       "colorAlone": "Don't rely on color alone:",
       "colorAloneDesc": "Use icons or text labels along with color to convey state (error, success)."
+    }
+  },
+  "vanillaExtract": {
+    "badge": "Zero-Runtime",
+    "title": "Vanilla Extract",
+    "description": "A Zero-Runtime CSS-in-TypeScript library that generates static CSS files at build time.",
+    "overview": {
+      "title": "Overview",
+      "content": "Vanilla Extract transforms styles written in TypeScript into static CSS at build time. It provides type-safe styling without runtime overhead, supporting locally scoped class names and CSS variables."
+    },
+    "features": {
+      "title": "Key Features",
+      "infoTitle": "Why Vanilla Extract?",
+      "zeroRuntime": "Zero Runtime:",
+      "zeroRuntimeDesc": "All styles are generated at build time, with no impact on runtime performance.",
+      "typeSafety": "Type Safety:",
+      "typeSafetyDesc": "TypeScript support provides autocomplete and type checking when defining styles.",
+      "theming": "Theming System:",
+      "themingDesc": "Implement type-safe themes with <code>createTheme</code> and <code>createThemeContract</code>.",
+      "sprinkles": "Sprinkles:",
+      "sprinklesDesc": "Build a Tailwind-like utility class system with full type safety."
+    },
+    "basicUsage": {
+      "title": "Basic Usage",
+      "content": "Define styles in <code>.css.ts</code> files and import them into your components."
+    },
+    "theming": {
+      "title": "Theming System",
+      "content": "Create and switch type-safe themes based on CSS variables."
+    },
+    "recipes": {
+      "title": "Recipes API",
+      "content": "Recipes is an API for variant-based style definitions, declaratively managing various states and variations of components."
+    },
+    "sprinkles": {
+      "title": "Sprinkles",
+      "content": "Sprinkles is a utility class system for responsive and conditional styling, providing a Tailwind-like development experience without runtime cost."
+    }
+  },
+  "stylex": {
+    "badge": "Meta",
+    "title": "StyleX",
+    "description": "A scalable and performant styling system developed by Meta.",
+    "overview": {
+      "title": "Overview",
+      "content": "StyleX is a styling system developed by Facebook/Meta for large-scale applications. It generates atomic CSS and ensures predictable results through deterministic style merging."
+    },
+    "features": {
+      "title": "Key Features",
+      "infoTitle": "Why StyleX?",
+      "atomic": "Atomic CSS:",
+      "atomicDesc": "Each style property generates a unique class, minimizing CSS duplication.",
+      "deterministic": "Deterministic Merging:",
+      "deterministicDesc": "Styles merge in application order, always providing predictable results.",
+      "typeSafe": "Type Safety:",
+      "typeSafeDesc": "Full TypeScript and Flow support with the ability to constrain style properties.",
+      "colocation": "Co-location:",
+      "colocationDesc": "Styles and components live in the same file for easier maintenance."
+    },
+    "basicUsage": {
+      "title": "Basic Usage",
+      "content": "Define styles with <code>stylex.create</code> and apply them with <code>stylex.props</code>."
+    },
+    "conditionalStyles": {
+      "title": "Conditional Styles",
+      "content": "Declaratively define media queries and pseudo-classes using object syntax."
+    },
+    "theming": {
+      "title": "Theming System",
+      "content": "Define CSS variables with <code>defineVars</code> and create themes with <code>createTheme</code>."
+    },
+    "variants": {
+      "title": "Variants Pattern",
+      "content": "In StyleX, implement variant styles using object keys and select them dynamically."
+    },
+    "comparison": {
+      "title": "Vanilla Extract vs StyleX",
+      "infoTitle": "Comparison Analysis",
+      "headers": {
+        "feature": "Feature",
+        "vanillaExtract": "Vanilla Extract",
+        "stylex": "StyleX"
+      },
+      "rows": {
+        "cssOutput": "CSS Output",
+        "cssOutputVE": "Regular CSS classes",
+        "cssOutputSX": "Atomic CSS",
+        "fileExtension": "File Extension",
+        "fileExtensionVE": ".css.ts",
+        "fileExtensionSX": "Regular .ts/.tsx, .stylex.ts(Tokens)",
+        "styleMerging": "Style Merging",
+        "styleMergingVE": "Class composition",
+        "styleMergingSX": "Deterministic merging",
+        "bundleSize": "Bundle Size",
+        "bundleSizeVE": "Medium",
+        "bundleSizeSX": "Very small (atomic)",
+        "ecosystem": "Ecosystem",
+        "ecosystemVE": "Sprinkles, Recipes",
+        "ecosystemSX": "Meta internal tooling"
+      }
     }
   }
 }

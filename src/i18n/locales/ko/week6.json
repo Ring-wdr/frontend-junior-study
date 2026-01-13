@@ -8,6 +8,7 @@
     "foundation": "Foundation",
     "cssModules": "CSS Modules",
     "cssInJs": "CSS-in-JS",
+    "zeroRuntime": "Zero-Runtime",
     "tailwind": "Tailwind",
     "responsive": "Responsive",
     "advanced": "Advanced"
@@ -145,6 +146,106 @@
       "reducedMotionDesc": "표준 동작에 대한 사용자 환경설정을 존중합니다.",
       "colorAlone": "색상만 의존하지 말기:",
       "colorAloneDesc": "상태(오류, 성공)를 전달할 때 색상과 함께 아이콘이나 텍스트 레이블을 사용하세요."
+    }
+  },
+  "vanillaExtract": {
+    "badge": "Zero-Runtime",
+    "title": "Vanilla Extract",
+    "description": "빌드 타임에 정적 CSS 파일을 생성하는 Zero-Runtime CSS-in-TypeScript 라이브러리입니다.",
+    "overview": {
+      "title": "개요",
+      "content": "Vanilla Extract는 TypeScript로 작성된 스타일을 빌드 타임에 정적 CSS로 변환합니다. 런타임 오버헤드 없이 타입 안전한 스타일링을 제공하며, 로컬 스코프 클래스 이름과 CSS 변수를 지원합니다."
+    },
+    "features": {
+      "title": "핵심 기능",
+      "infoTitle": "왜 Vanilla Extract인가?",
+      "zeroRuntime": "Zero Runtime:",
+      "zeroRuntimeDesc": "모든 스타일이 빌드 타임에 생성되어 런타임 성능에 영향을 주지 않습니다.",
+      "typeSafety": "타입 안전성:",
+      "typeSafetyDesc": "TypeScript 지원으로 스타일 정의 시 자동완성과 타입 체크를 제공합니다.",
+      "theming": "테마 시스템:",
+      "themingDesc": "<code>createTheme</code>과 <code>createThemeContract</code>로 타입 안전한 테마를 구현합니다.",
+      "sprinkles": "Sprinkles:",
+      "sprinklesDesc": "Tailwind와 유사한 유틸리티 클래스 시스템을 타입 안전하게 구축할 수 있습니다."
+    },
+    "basicUsage": {
+      "title": "기본 사용법",
+      "content": "<code>.css.ts</code> 파일에서 스타일을 정의하고 컴포넌트에서 가져와 사용합니다."
+    },
+    "theming": {
+      "title": "테마 시스템",
+      "content": "CSS 변수를 기반으로 타입 안전한 테마를 생성하고 전환할 수 있습니다."
+    },
+    "recipes": {
+      "title": "Recipes API",
+      "content": "Recipes는 variant 기반의 스타일 정의를 위한 API로, 컴포넌트의 다양한 상태와 변형을 선언적으로 관리합니다."
+    },
+    "sprinkles": {
+      "title": "Sprinkles",
+      "content": "Sprinkles는 반응형 및 조건부 스타일링을 위한 유틸리티 클래스 시스템으로, 런타임 비용 없이 Tailwind와 유사한 개발 경험을 제공합니다."
+    }
+  },
+  "stylex": {
+    "badge": "Meta",
+    "title": "StyleX",
+    "description": "Meta에서 개발한 확장 가능하고 성능이 뛰어난 스타일링 시스템입니다.",
+    "overview": {
+      "title": "개요",
+      "content": "StyleX는 Facebook/Meta에서 대규모 애플리케이션을 위해 개발한 스타일링 시스템입니다. 원자적 CSS를 생성하고 스타일 병합을 통해 예측 가능한 결과를 보장합니다."
+    },
+    "features": {
+      "title": "핵심 기능",
+      "infoTitle": "왜 StyleX인가?",
+      "atomic": "원자적 CSS:",
+      "atomicDesc": "각 스타일 속성이 고유한 클래스로 생성되어 CSS 중복을 최소화합니다.",
+      "deterministic": "결정론적 병합:",
+      "deterministicDesc": "스타일이 적용된 순서대로 병합되어 항상 예측 가능한 결과를 제공합니다.",
+      "typeSafe": "타입 안전성:",
+      "typeSafeDesc": "TypeScript와 Flow를 완벽하게 지원하며 스타일 속성을 제한할 수 있습니다.",
+      "colocation": "Co-location:",
+      "colocationDesc": "스타일과 컴포넌트가 같은 파일에 위치하여 유지보수가 용이합니다."
+    },
+    "basicUsage": {
+      "title": "기본 사용법",
+      "content": "<code>stylex.create</code>로 스타일을 정의하고 <code>stylex.props</code>로 적용합니다."
+    },
+    "conditionalStyles": {
+      "title": "조건부 스타일",
+      "content": "미디어 쿼리와 의사 클래스를 객체 문법으로 선언적으로 정의합니다."
+    },
+    "theming": {
+      "title": "테마 시스템",
+      "content": "<code>defineVars</code>로 CSS 변수를 정의하고 <code>createTheme</code>으로 테마를 생성합니다."
+    },
+    "variants": {
+      "title": "Variants 패턴",
+      "content": "StyleX에서는 객체 키를 사용하여 variant 스타일을 구현하고 동적으로 선택합니다."
+    },
+    "comparison": {
+      "title": "Vanilla Extract vs StyleX",
+      "infoTitle": "비교 분석",
+      "headers": {
+        "feature": "기능",
+        "vanillaExtract": "Vanilla Extract",
+        "stylex": "StyleX"
+      },
+      "rows": {
+        "cssOutput": "CSS 출력",
+        "cssOutputVE": "일반 CSS 클래스",
+        "cssOutputSX": "원자적 CSS",
+        "fileExtension": "파일 확장자",
+        "fileExtensionVE": ".css.ts",
+        "fileExtensionSX": "일반 .ts/.tsx, .stylex.ts(토큰)",
+        "styleMerging": "스타일 병합",
+        "styleMergingVE": "클래스 조합",
+        "styleMergingSX": "결정론적 병합",
+        "bundleSize": "번들 크기",
+        "bundleSizeVE": "중간",
+        "bundleSizeSX": "매우 작음 (원자적)",
+        "ecosystem": "생태계",
+        "ecosystemVE": "Sprinkles, Recipes",
+        "ecosystemSX": "Meta 내부 도구 통합"
+      }
     }
   }
 }

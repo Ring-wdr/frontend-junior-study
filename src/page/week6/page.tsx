@@ -7,14 +7,17 @@ import { CssInJsSection } from './components/css-in-js-section';
 import { CssModulesSection } from './components/css-modules-section';
 import { DesignSystemSection } from './components/design-system-section';
 import { ResponsiveSection } from './components/responsive-section';
+import { StylexSection } from './components/stylex-section';
 import { TailwindSection } from './components/tailwind-section';
 import { ThemeSection } from './components/theme-section';
+import { VanillaExtractSection } from './components/vanilla-extract-section';
 
 const tabs = [
   'all',
   'foundation',
   'css-modules',
   'css-in-js',
+  'zero-runtime',
   'tailwind',
   'responsive',
   'advanced',
@@ -25,6 +28,15 @@ const sections = [
   { id: 'foundation', component: <DesignSystemSection /> },
   { id: 'css-modules', component: <CssModulesSection /> },
   { id: 'css-in-js', component: <CssInJsSection /> },
+  {
+    id: 'zero-runtime',
+    component: (
+      <div className="space-y-6">
+        <VanillaExtractSection />
+        <StylexSection />
+      </div>
+    ),
+  },
   { id: 'tailwind', component: <TailwindSection /> },
   { id: 'responsive', component: <ResponsiveSection /> },
   {
@@ -82,11 +94,13 @@ export default function Week6Page() {
                   ? t('tabs.cssModules')
                   : tab === 'css-in-js'
                     ? t('tabs.cssInJs')
-                    : tab === 'tailwind'
-                      ? t('tabs.tailwind')
-                      : tab === 'responsive'
-                        ? t('tabs.responsive')
-                        : t('tabs.advanced')}
+                    : tab === 'zero-runtime'
+                      ? t('tabs.zeroRuntime')
+                      : tab === 'tailwind'
+                        ? t('tabs.tailwind')
+                        : tab === 'responsive'
+                          ? t('tabs.responsive')
+                          : t('tabs.advanced')}
           </button>
         ))}
       </div>
