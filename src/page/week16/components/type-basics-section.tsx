@@ -8,8 +8,12 @@ import { TypeAnnotationPlayground } from './type-annotation-playground';
 
 export const TypeBasicsSection = () => {
   const { t } = useTranslation('week16');
-  const primitiveTypes = t('typeBasics.primitiveTypes', { returnObjects: true }) as any[];
-  const comparison = t('typeBasics.comparison', { returnObjects: true }) as any[];
+  const primitiveTypes = t('typeBasics.primitiveTypes', {
+    returnObjects: true,
+  }) as Record<string, string>[];
+  const comparison = t('typeBasics.comparison', {
+    returnObjects: true,
+  }) as Record<string, string>[];
 
   return (
     <SectionCard
@@ -18,16 +22,24 @@ export const TypeBasicsSection = () => {
       description={t('typeBasics.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('typeBasics.primitiveTitle')} icon iconColor="blue">
-          <p className="text-sm text-gray-600 mb-4">{t('typeBasics.primitiveDesc')}</p>
+        <SubSection
+          title={t('typeBasics.primitiveTitle')}
+          icon
+          iconColor="blue"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('typeBasics.primitiveDesc')}
+          </p>
           <div className="grid grid-cols-2 gap-2">
-            {primitiveTypes.map((item: any) => (
+            {primitiveTypes.map((item) => (
               <div
                 key={item.type}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200 flex items-center justify-between"
               >
                 <div>
-                  <code className="text-sm font-bold text-blue-600">{item.type}</code>
+                  <code className="text-sm font-bold text-blue-600">
+                    {item.type}
+                  </code>
                   <p className="text-xs text-gray-500">{item.desc}</p>
                 </div>
                 <code className="text-xs bg-white px-2 py-1 rounded text-gray-600">
@@ -50,7 +62,9 @@ const notDefined: undefined = undefined;`}
         </SubSection>
 
         <SubSection title={t('typeBasics.arrayTitle')} icon iconColor="purple">
-          <p className="text-sm text-gray-600 mb-4">{t('typeBasics.arrayDesc')}</p>
+          <p className="text-sm text-gray-600 mb-4">
+            {t('typeBasics.arrayDesc')}
+          </p>
           <CodeBlock
             code={`// 배열 타입 - 두 가지 표기법
 const numbers: number[] = [1, 2, 3];
@@ -68,7 +82,9 @@ const readonlyArr: readonly number[] = [1, 2, 3];`}
         </SubSection>
 
         <SubSection title={t('typeBasics.objectTitle')} icon iconColor="blue">
-          <p className="text-sm text-gray-600 mb-4">{t('typeBasics.objectDesc')}</p>
+          <p className="text-sm text-gray-600 mb-4">
+            {t('typeBasics.objectDesc')}
+          </p>
           <CodeBlock
             code={`// interface - 확장 가능한 객체 타입 정의
 interface User {
@@ -93,7 +109,11 @@ const user: { name: string; age: number } = {
             className="text-xs"
           />
 
-          <InfoBox variant="blue" title={t('typeBasics.interfaceVsTypeInfoTitle')} className="mt-4">
+          <InfoBox
+            variant="blue"
+            title={t('typeBasics.interfaceVsTypeInfoTitle')}
+            className="mt-4"
+          >
             <p className="text-sm leading-relaxed">
               {t('typeBasics.interfaceVsTypeInfoDesc')}
             </p>
@@ -103,13 +123,19 @@ const user: { name: string; age: number } = {
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-gray-100">
-                  <th className="text-left p-2 font-medium text-gray-700">Feature</th>
-                  <th className="text-left p-2 font-medium text-indigo-600">interface</th>
-                  <th className="text-left p-2 font-medium text-purple-600">type</th>
+                  <th className="text-left p-2 font-medium text-gray-700">
+                    Feature
+                  </th>
+                  <th className="text-left p-2 font-medium text-indigo-600">
+                    interface
+                  </th>
+                  <th className="text-left p-2 font-medium text-purple-600">
+                    type
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                {comparison.map((row: any) => (
+                {comparison.map((row) => (
                   <tr key={row.feature} className="border-b border-gray-100">
                     <td className="p-2 text-gray-600">{row.feature}</td>
                     <td className="p-2 text-indigo-600">{row.interface}</td>
@@ -121,8 +147,14 @@ const user: { name: string; age: number } = {
           </div>
         </SubSection>
 
-        <SubSection title={t('typeBasics.functionTitle')} icon iconColor="green">
-          <p className="text-sm text-gray-600 mb-4">{t('typeBasics.functionDesc')}</p>
+        <SubSection
+          title={t('typeBasics.functionTitle')}
+          icon
+          iconColor="green"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('typeBasics.functionDesc')}
+          </p>
           <CodeBlock
             code={`// 함수 선언
 function add(a: number, b: number): number {
@@ -150,7 +182,11 @@ function sum(...numbers: number[]): number {
           />
         </SubSection>
 
-        <SubSection title={t('typeBasics.visualizer.title')} icon iconColor="blue">
+        <SubSection
+          title={t('typeBasics.visualizer.title')}
+          icon
+          iconColor="blue"
+        >
           <DemoBox label={t('typeBasics.visualizer.title')}>
             <TypeAnnotationPlayground />
           </DemoBox>
