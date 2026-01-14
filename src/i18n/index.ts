@@ -53,6 +53,9 @@ import enWeek14 from './locales/en/week14.json';
 import koWeek15 from './locales/ko/week15.json';
 import enWeek15 from './locales/en/week15.json';
 
+import koWeek16 from './locales/ko/week16.json';
+import enWeek16 from './locales/en/week16.json';
+
 const resources = {
   ko: {
     common: koCommon,
@@ -72,6 +75,7 @@ const resources = {
     week13: koWeek13,
     week14: koWeek14,
     week15: koWeek15,
+    week16: koWeek16,
   },
   en: {
     common: enCommon,
@@ -91,6 +95,7 @@ const resources = {
     week13: enWeek13,
     week14: enWeek14,
     week15: enWeek15,
+    week16: enWeek16,
   },
 };
 

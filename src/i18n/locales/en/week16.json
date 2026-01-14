@@ -1,0 +1,259 @@
+{
+  "header": {
+    "title": "TypeScript",
+    "description": "Master the transition from JavaScript to TypeScript, from basic types to advanced patterns, and write type-safe code."
+  },
+  "tabs": {
+    "all": "All",
+    "why-ts": "Why TypeScript",
+    "basics": "Type Basics",
+    "advanced-types": "Advanced Types",
+    "generics": "Generics",
+    "utility": "Utility Types",
+    "conditional": "Conditional Types",
+    "patterns": "Patterns"
+  },
+  "whyTypescript": {
+    "badge": "Core",
+    "title": "Why TypeScript?",
+    "description": "Why migrate from JavaScript to TypeScript and its key benefits",
+    "comparisonTitle": "JavaScript vs TypeScript",
+    "comparisonLabel": "Error Discovery Timing Comparison",
+    "jsTitle": "JavaScript",
+    "jsSubtitle": "Runtime Error",
+    "tsTitle": "TypeScript",
+    "tsSubtitle": "Compile-time Error",
+    "benefitsTitle": "Key Benefits of TypeScript",
+    "benefitsInfoTitle": "Why is it essential for large projects?",
+    "benefitsInfoDesc": "TypeScript catches bugs during development, provides IDE autocompletion, and the code itself serves as documentation. It's an essential tool for team collaboration and long-term maintenance.",
+    "benefits": [
+      {
+        "title": "Static Type Checking",
+        "desc": "Catch type errors at compile time, not runtime",
+        "icon": "shield"
+      },
+      {
+        "title": "Enhanced IDE Support",
+        "desc": "Autocompletion, refactoring, real-time error display",
+        "icon": "code"
+      },
+      {
+        "title": "Code Documentation",
+        "desc": "Types serve as documentation explaining code intent",
+        "icon": "file-text"
+      },
+      {
+        "title": "Safe Refactoring",
+        "desc": "Type system tracks the impact of changes",
+        "icon": "refresh-cw"
+      }
+    ],
+    "whenTitle": "When to adopt TypeScript?",
+    "whenItems": [
+      "When project scale grows",
+      "When team size increases",
+      "When long-term maintenance is needed",
+      "When API contracts become complex"
+    ],
+    "visualizer": {
+      "title": "Type Error Discovery Simulator",
+      "runJs": "Run JavaScript",
+      "runTs": "Compile TypeScript",
+      "reset": "Reset",
+      "jsCode": "JavaScript Code",
+      "tsCode": "TypeScript Code",
+      "output": "Output",
+      "noError": "No Error",
+      "runtimeError": "Runtime Error!",
+      "compileError": "Compile Error!",
+      "compileSuccess": "Compile Success!"
+    }
+  },
+  "typeBasics": {
+    "badge": "Basic",
+    "title": "Basic Type System",
+    "description": "Master TypeScript's primitive, array, object, and function types",
+    "primitiveTitle": "Primitive Types",
+    "primitiveDesc": "The most fundamental types in TypeScript.",
+    "arrayTitle": "Array Types",
+    "arrayDesc": "How to express arrays and tuples as types",
+    "objectTitle": "Object Types",
+    "objectDesc": "Define object structure with interface and type alias",
+    "functionTitle": "Function Types",
+    "functionDesc": "Define function parameter and return types",
+    "interfaceVsTypeTitle": "interface vs type selection criteria",
+    "interfaceVsTypeInfoTitle": "When to use which?",
+    "interfaceVsTypeInfoDesc": "interface is suitable for object structure definition and extension, while type is suitable for complex type combinations like unions and tuples. Generally, interface for objects, type for everything else is recommended.",
+    "visualizer": {
+      "title": "Type Inference Playground",
+      "inputLabel": "Enter Value",
+      "inferredType": "Inferred Type",
+      "examples": "Examples",
+      "tryIt": "Try it yourself"
+    },
+    "primitiveTypes": [
+      { "type": "string", "example": "\"hello\"", "desc": "Text string" },
+      { "type": "number", "example": "42", "desc": "Number (integer and float)" },
+      { "type": "boolean", "example": "true", "desc": "True/False" },
+      { "type": "null", "example": "null", "desc": "Intentional empty value" },
+      { "type": "undefined", "example": "undefined", "desc": "Not defined" },
+      { "type": "symbol", "example": "Symbol(\"id\")", "desc": "Unique identifier" },
+      { "type": "bigint", "example": "9007199254740991n", "desc": "Large integer" }
+    ],
+    "comparison": [
+      { "feature": "Extension", "interface": "extends keyword", "type": "& (intersection)" },
+      { "feature": "Declaration merging", "interface": "Possible", "type": "Not possible" },
+      { "feature": "Union/Tuple", "interface": "Not possible", "type": "Possible" },
+      { "feature": "Recommended for", "interface": "Object structure, API contract", "type": "Union, complex types" }
+    ]
+  },
+  "advancedTypes": {
+    "badge": "Advanced",
+    "title": "Advanced Types",
+    "description": "Union, Intersection, Literal types and Type Narrowing",
+    "unionTitle": "Union Types (|)",
+    "unionDesc": "Types that can be one of several types",
+    "intersectionTitle": "Intersection Types (&)",
+    "intersectionDesc": "Types that must satisfy all types",
+    "literalTitle": "Literal Types",
+    "literalDesc": "Types that allow only specific values",
+    "narrowingTitle": "Type Narrowing",
+    "narrowingDesc": "Technique to narrow types more specifically through conditionals",
+    "narrowingInfoTitle": "Why is type narrowing important?",
+    "narrowingInfoDesc": "When using Union types, you need to narrow the type to use methods specific to each type. Use typeof, instanceof, in operator, etc.",
+    "assertionTitle": "Type Assertion",
+    "assertionDesc": "Way to tell the compiler about the type",
+    "assertionWarning": "Warning: Overusing type assertions breaks type safety. Use type guards when possible.",
+    "visualizer": {
+      "title": "Type Set Visualization",
+      "union": "Union (A | B)",
+      "intersection": "Intersection (A & B)",
+      "typeA": "Type A",
+      "typeB": "Type B",
+      "result": "Result Type",
+      "selectTypes": "Select types",
+      "unionDesc": "Either A or B",
+      "intersectionDesc": "Both A and B"
+    }
+  },
+  "generics": {
+    "badge": "Generic",
+    "title": "Generics",
+    "description": "Create reusable type-safe components",
+    "whyTitle": "Why do we need Generics?",
+    "whyDesc": "Using any loses type information. Generics provide reusability while preserving type information.",
+    "basicTitle": "Generic Basic Syntax",
+    "basicDesc": "Define type parameters with <T>",
+    "constraintTitle": "Generic Constraints",
+    "constraintDesc": "Restrict generic types with extends keyword",
+    "constraintInfoTitle": "Why are constraints needed?",
+    "constraintInfoDesc": "Unconstrained generics can accept any type, so you can't use specific properties or methods. Adding constraints with extends guarantees access to those properties/methods.",
+    "keyofTitle": "Using with keyof",
+    "keyofDesc": "Create safe accessors that only allow object keys",
+    "interfaceTitle": "Generic Interfaces and Types",
+    "interfaceDesc": "Define reusable types using generics",
+    "visualizer": {
+      "title": "Generic Type Flow Visualization",
+      "inputType": "Input Type",
+      "genericFunction": "Generic Function",
+      "outputType": "Output Type",
+      "selectInput": "Select Input Type",
+      "seeOutput": "See Output Type",
+      "flowDescription": "See how types flow through generic functions"
+    }
+  },
+  "utilityTypes": {
+    "badge": "Utility",
+    "title": "Utility Types",
+    "description": "Master type transformation with TypeScript built-in utility types",
+    "objectTitle": "Object Property Transformation",
+    "objectDesc": "Transform object properties with Partial, Required, Readonly",
+    "pickOmitTitle": "Property Selection/Exclusion",
+    "pickOmitDesc": "Select or exclude properties with Pick and Omit",
+    "recordTitle": "Record Type",
+    "recordDesc": "Create key-value mapping types",
+    "extractExcludeTitle": "Set Operations: Extract and Exclude",
+    "extractExcludeDesc": "Extract or exclude types from union types",
+    "functionTitle": "Function Type Utilities",
+    "functionDesc": "Analyze function types with ReturnType and Parameters",
+    "functionInfoTitle": "Practical Usage Tips",
+    "functionInfoDesc": "ReturnType and Parameters are useful for extracting library types or creating function wrappers. Combined with typeof, you can easily reuse types from existing functions.",
+    "visualizer": {
+      "title": "Utility Type Transformer",
+      "original": "Original Type",
+      "utility": "Utility Type",
+      "result": "Result Type",
+      "selectUtility": "Select Utility Type",
+      "transform": "Transform",
+      "beforeAfter": "Before / After"
+    },
+    "utilities": [
+      { "name": "Partial<T>", "desc": "Make all properties optional", "category": "object" },
+      { "name": "Required<T>", "desc": "Make all properties required", "category": "object" },
+      { "name": "Readonly<T>", "desc": "Make all properties readonly", "category": "object" },
+      { "name": "Pick<T, K>", "desc": "Select specific properties", "category": "pick" },
+      { "name": "Omit<T, K>", "desc": "Exclude specific properties", "category": "pick" },
+      { "name": "Record<K, V>", "desc": "Create key-value mapping", "category": "record" },
+      { "name": "Extract<T, U>", "desc": "Extract types assignable to U from T", "category": "set" },
+      { "name": "Exclude<T, U>", "desc": "Exclude types assignable to U from T", "category": "set" },
+      { "name": "ReturnType<T>", "desc": "Extract function return type", "category": "function" },
+      { "name": "Parameters<T>", "desc": "Extract function parameter types", "category": "function" }
+    ]
+  },
+  "conditionalTypes": {
+    "badge": "Conditional",
+    "title": "Conditional Types and infer",
+    "description": "Core tools for type-level programming",
+    "basicTitle": "Conditional Type Basic Syntax",
+    "basicDesc": "T extends U ? X : Y - Ternary operator at type level",
+    "distributiveTitle": "Distributive Conditional Types",
+    "distributiveDesc": "How conditional types distribute over union types",
+    "distributiveInfoTitle": "Understanding Distributive Behavior",
+    "distributiveInfoDesc": "When applying conditional types to union types, they apply to each member individually. To prevent this, wrap with tuple [T].",
+    "inferTitle": "infer Keyword",
+    "inferDesc": "Infer and use types within conditional types",
+    "inferInfoTitle": "The Power of infer",
+    "inferInfoDesc": "infer extracts parts of types like pattern matching. You can extract array element types, Promise inner types, function return types, and more.",
+    "customTitle": "Creating Custom Utility Types",
+    "customDesc": "Create advanced types using conditional types and infer",
+    "visualizer": {
+      "title": "Conditional Type Flowchart",
+      "condition": "Condition",
+      "true": "True",
+      "false": "False",
+      "inputType": "Input Type",
+      "checkCondition": "Check Condition",
+      "result": "Result",
+      "selectScenario": "Select Scenario"
+    }
+  },
+  "practicalPatterns": {
+    "badge": "Pattern",
+    "title": "Practical Patterns",
+    "description": "Learn commonly used TypeScript patterns in practice",
+    "typeGuardTitle": "Type Guards",
+    "typeGuardDesc": "Technique to narrow types through runtime checks",
+    "typeGuardInfoTitle": "User-Defined Type Guards",
+    "typeGuardInfoDesc": "Type guard functions using the is keyword tell TypeScript that a value is of a specific type when the condition is true. Essential for complex type narrowing.",
+    "discriminatedTitle": "Discriminated Unions",
+    "discriminatedDesc": "Distinguish union types with common literal properties",
+    "exhaustiveTitle": "Exhaustive Check",
+    "exhaustiveDesc": "Guarantee handling of all cases with never type",
+    "exhaustiveInfoTitle": "Why is Exhaustive Check important?",
+    "exhaustiveInfoDesc": "When new union members are added, compile errors occur in switch statements, ensuring no unhandled cases are missed.",
+    "brandingTitle": "Type Branding",
+    "brandingDesc": "Distinguish structurally identical types nominally",
+    "brandingInfoTitle": "When to use branding?",
+    "brandingInfoDesc": "If UserId and PostId are both strings, accidentally swapping them won't cause errors. Branding prevents such mistakes at compile time.",
+    "visualizer": {
+      "title": "Discriminated Union Visualization",
+      "discriminant": "Discriminant Property",
+      "type": "Type",
+      "narrowedTo": "Narrowed To",
+      "switch": "switch statement",
+      "case": "case",
+      "selectShape": "Select Shape",
+      "seeNarrowing": "See Type Narrowing"
+    }
+  }
+}

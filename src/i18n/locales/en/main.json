@@ -64,6 +64,10 @@
     "week15": {
       "title": "DevTools & Bundling",
       "description": "Chrome DevTools, Webpack/Vite, Bundle Optimization, Sentry, Web Vitals."
+    },
+    "week16": {
+      "title": "TypeScript",
+      "description": "Master basics to generics, utility types, and conditional types."
     }
   }
 }

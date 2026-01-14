@@ -64,6 +64,10 @@
     "week15": {
       "title": "DevTools & 번들링",
       "description": "Chrome DevTools, Webpack/Vite, 번들 최적화, Sentry, Web Vitals."
+    },
+    "week16": {
+      "title": "TypeScript",
+      "description": "기본 타입부터 제네릭, 유틸리티 타입, 조건부 타입까지 마스터하기."
     }
   }
 }

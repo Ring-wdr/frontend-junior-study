@@ -1,0 +1,259 @@
+{
+  "header": {
+    "title": "TypeScript",
+    "description": "JavaScript에서 TypeScript로의 전환, 기본 타입부터 고급 패턴까지 체계적으로 학습하여 타입 안전한 코드를 작성하세요."
+  },
+  "tabs": {
+    "all": "All",
+    "why-ts": "왜 TypeScript",
+    "basics": "기본 타입",
+    "advanced-types": "고급 타입",
+    "generics": "제네릭",
+    "utility": "유틸리티 타입",
+    "conditional": "조건부 타입",
+    "patterns": "실전 패턴"
+  },
+  "whyTypescript": {
+    "badge": "Core",
+    "title": "왜 TypeScript인가?",
+    "description": "JavaScript에서 TypeScript로 전환해야 하는 이유와 핵심 장점",
+    "comparisonTitle": "JavaScript vs TypeScript",
+    "comparisonLabel": "에러 발견 시점 비교",
+    "jsTitle": "JavaScript",
+    "jsSubtitle": "런타임 에러",
+    "tsTitle": "TypeScript",
+    "tsSubtitle": "컴파일타임 에러",
+    "benefitsTitle": "TypeScript의 핵심 장점",
+    "benefitsInfoTitle": "왜 대규모 프로젝트에서 필수인가",
+    "benefitsInfoDesc": "TypeScript는 개발 중 버그를 미리 잡아주고, IDE 자동완성을 제공하며, 코드 자체가 문서 역할을 합니다. 팀 협업과 장기 유지보수에 필수적인 도구입니다.",
+    "benefits": [
+      {
+        "title": "정적 타입 검사",
+        "desc": "런타임이 아닌 컴파일 타임에 타입 오류 발견",
+        "icon": "shield"
+      },
+      {
+        "title": "IDE 지원 강화",
+        "desc": "자동완성, 리팩토링, 실시간 오류 표시",
+        "icon": "code"
+      },
+      {
+        "title": "코드 문서화",
+        "desc": "타입 자체가 코드의 의도를 설명하는 문서 역할",
+        "icon": "file-text"
+      },
+      {
+        "title": "안전한 리팩토링",
+        "desc": "타입 시스템이 변경의 영향 범위를 추적",
+        "icon": "refresh-cw"
+      }
+    ],
+    "whenTitle": "언제 TypeScript를 도입해야 할까?",
+    "whenItems": [
+      "프로젝트 규모가 커질 때",
+      "팀원이 늘어날 때",
+      "장기간 유지보수가 필요할 때",
+      "API 계약이 복잡해질 때"
+    ],
+    "visualizer": {
+      "title": "타입 에러 발견 시뮬레이터",
+      "runJs": "JavaScript 실행",
+      "runTs": "TypeScript 컴파일",
+      "reset": "초기화",
+      "jsCode": "JavaScript 코드",
+      "tsCode": "TypeScript 코드",
+      "output": "결과",
+      "noError": "에러 없음",
+      "runtimeError": "런타임 에러!",
+      "compileError": "컴파일 에러!",
+      "compileSuccess": "컴파일 성공!"
+    }
+  },
+  "typeBasics": {
+    "badge": "Basic",
+    "title": "기본 타입 시스템",
+    "description": "TypeScript의 원시 타입, 배열, 객체, 함수 타입 마스터하기",
+    "primitiveTitle": "원시 타입 (Primitive Types)",
+    "primitiveDesc": "TypeScript의 가장 기본적인 타입들입니다.",
+    "arrayTitle": "배열 타입 (Array Types)",
+    "arrayDesc": "배열과 튜플을 타입으로 표현하는 방법",
+    "objectTitle": "객체 타입 (Object Types)",
+    "objectDesc": "interface와 type alias로 객체 구조 정의하기",
+    "functionTitle": "함수 타입 (Function Types)",
+    "functionDesc": "함수의 매개변수와 반환 타입 정의하기",
+    "interfaceVsTypeTitle": "interface vs type 선택 기준",
+    "interfaceVsTypeInfoTitle": "언제 무엇을 사용할까?",
+    "interfaceVsTypeInfoDesc": "interface는 객체 구조 정의와 확장에 적합하고, type은 유니온, 튜플 등 복잡한 타입 조합에 적합합니다. 일반적으로 객체는 interface, 나머지는 type을 권장합니다.",
+    "visualizer": {
+      "title": "타입 추론 플레이그라운드",
+      "inputLabel": "값 입력",
+      "inferredType": "추론된 타입",
+      "examples": "예제",
+      "tryIt": "직접 입력해보세요"
+    },
+    "primitiveTypes": [
+      { "type": "string", "example": "\"hello\"", "desc": "문자열" },
+      { "type": "number", "example": "42", "desc": "숫자 (정수, 실수 모두)" },
+      { "type": "boolean", "example": "true", "desc": "참/거짓" },
+      { "type": "null", "example": "null", "desc": "의도적 빈 값" },
+      { "type": "undefined", "example": "undefined", "desc": "정의되지 않음" },
+      { "type": "symbol", "example": "Symbol(\"id\")", "desc": "고유 식별자" },
+      { "type": "bigint", "example": "9007199254740991n", "desc": "큰 정수" }
+    ],
+    "comparison": [
+      { "feature": "확장(상속)", "interface": "extends 키워드", "type": "& (intersection)" },
+      { "feature": "선언 병합", "interface": "가능", "type": "불가능" },
+      { "feature": "유니온/튜플", "interface": "불가능", "type": "가능" },
+      { "feature": "권장 용도", "interface": "객체 구조, API 계약", "type": "유니온, 복잡한 타입" }
+    ]
+  },
+  "advancedTypes": {
+    "badge": "Advanced",
+    "title": "고급 타입",
+    "description": "Union, Intersection, Literal 타입과 타입 좁히기",
+    "unionTitle": "Union 타입 (|)",
+    "unionDesc": "여러 타입 중 하나를 가질 수 있는 타입",
+    "intersectionTitle": "Intersection 타입 (&)",
+    "intersectionDesc": "여러 타입을 모두 만족해야 하는 타입",
+    "literalTitle": "Literal 타입",
+    "literalDesc": "특정 값만 허용하는 타입",
+    "narrowingTitle": "타입 좁히기 (Type Narrowing)",
+    "narrowingDesc": "조건문을 통해 타입을 더 구체적으로 좁히는 기법",
+    "narrowingInfoTitle": "왜 타입 좁히기가 중요한가",
+    "narrowingInfoDesc": "Union 타입을 사용할 때, 각 타입에 맞는 메서드를 사용하려면 타입을 좁혀야 합니다. typeof, instanceof, in 연산자 등을 활용합니다.",
+    "assertionTitle": "Type Assertion",
+    "assertionDesc": "컴파일러에게 타입을 알려주는 방법",
+    "assertionWarning": "주의: 타입 단언은 남용하면 타입 안전성이 깨집니다. 가능하면 타입 가드를 사용하세요.",
+    "visualizer": {
+      "title": "타입 집합 시각화",
+      "union": "Union (A | B)",
+      "intersection": "Intersection (A & B)",
+      "typeA": "타입 A",
+      "typeB": "타입 B",
+      "result": "결과 타입",
+      "selectTypes": "타입을 선택하세요",
+      "unionDesc": "A 또는 B 중 하나",
+      "intersectionDesc": "A와 B 모두 만족"
+    }
+  },
+  "generics": {
+    "badge": "Generic",
+    "title": "제네릭 (Generics)",
+    "description": "재사용 가능한 타입 안전 컴포넌트 만들기",
+    "whyTitle": "왜 제네릭이 필요한가?",
+    "whyDesc": "any를 사용하면 타입 정보가 손실됩니다. 제네릭은 타입 정보를 보존하면서 재사용성을 제공합니다.",
+    "basicTitle": "제네릭 기본 문법",
+    "basicDesc": "<T>를 사용한 타입 매개변수 정의",
+    "constraintTitle": "제네릭 제약 (Constraints)",
+    "constraintDesc": "extends 키워드로 제네릭 타입 제한하기",
+    "constraintInfoTitle": "왜 제약이 필요한가",
+    "constraintInfoDesc": "제약 없는 제네릭은 어떤 타입이든 받을 수 있어, 특정 속성이나 메서드를 사용할 수 없습니다. extends로 제약을 추가하면 해당 속성/메서드 사용이 보장됩니다.",
+    "keyofTitle": "keyof와 함께 사용하기",
+    "keyofDesc": "객체의 키만 허용하는 안전한 접근자 만들기",
+    "interfaceTitle": "제네릭 인터페이스와 타입",
+    "interfaceDesc": "제네릭을 활용한 재사용 가능한 타입 정의",
+    "visualizer": {
+      "title": "제네릭 타입 흐름 시각화",
+      "inputType": "입력 타입",
+      "genericFunction": "제네릭 함수",
+      "outputType": "출력 타입",
+      "selectInput": "입력 타입 선택",
+      "seeOutput": "출력 타입 확인",
+      "flowDescription": "타입이 제네릭 함수를 통해 어떻게 전달되는지 확인하세요"
+    }
+  },
+  "utilityTypes": {
+    "badge": "Utility",
+    "title": "유틸리티 타입",
+    "description": "TypeScript 내장 유틸리티 타입으로 타입 변환 마스터하기",
+    "objectTitle": "객체 속성 변환",
+    "objectDesc": "Partial, Required, Readonly로 객체 속성 변환하기",
+    "pickOmitTitle": "속성 선택/제외",
+    "pickOmitDesc": "Pick과 Omit으로 필요한 속성만 선택하거나 제외하기",
+    "recordTitle": "Record 타입",
+    "recordDesc": "키-값 매핑 타입 생성하기",
+    "extractExcludeTitle": "집합 연산: Extract와 Exclude",
+    "extractExcludeDesc": "유니온 타입에서 타입 추출/제외하기",
+    "functionTitle": "함수 타입 유틸리티",
+    "functionDesc": "ReturnType과 Parameters로 함수 타입 분석하기",
+    "functionInfoTitle": "실전 활용 팁",
+    "functionInfoDesc": "ReturnType과 Parameters는 라이브러리 타입을 추출하거나, 함수 래퍼를 만들 때 유용합니다. typeof와 함께 사용하면 기존 함수의 타입을 쉽게 재사용할 수 있습니다.",
+    "visualizer": {
+      "title": "유틸리티 타입 변환기",
+      "original": "원본 타입",
+      "utility": "유틸리티 타입",
+      "result": "결과 타입",
+      "selectUtility": "유틸리티 타입 선택",
+      "transform": "변환",
+      "beforeAfter": "Before / After"
+    },
+    "utilities": [
+      { "name": "Partial<T>", "desc": "모든 속성을 선택적으로", "category": "object" },
+      { "name": "Required<T>", "desc": "모든 속성을 필수로", "category": "object" },
+      { "name": "Readonly<T>", "desc": "모든 속성을 읽기 전용으로", "category": "object" },
+      { "name": "Pick<T, K>", "desc": "특정 속성만 선택", "category": "pick" },
+      { "name": "Omit<T, K>", "desc": "특정 속성 제외", "category": "pick" },
+      { "name": "Record<K, V>", "desc": "키-값 매핑 생성", "category": "record" },
+      { "name": "Extract<T, U>", "desc": "T에서 U에 할당 가능한 타입 추출", "category": "set" },
+      { "name": "Exclude<T, U>", "desc": "T에서 U에 할당 가능한 타입 제외", "category": "set" },
+      { "name": "ReturnType<T>", "desc": "함수 반환 타입 추출", "category": "function" },
+      { "name": "Parameters<T>", "desc": "함수 매개변수 타입 추출", "category": "function" }
+    ]
+  },
+  "conditionalTypes": {
+    "badge": "Conditional",
+    "title": "조건부 타입과 infer",
+    "description": "타입 레벨 프로그래밍의 핵심 도구",
+    "basicTitle": "조건부 타입 기본 문법",
+    "basicDesc": "T extends U ? X : Y - 타입 레벨의 삼항 연산자",
+    "distributiveTitle": "분배 조건부 타입",
+    "distributiveDesc": "유니온 타입에 조건부 타입이 분배되는 원리",
+    "distributiveInfoTitle": "분배 동작 이해하기",
+    "distributiveInfoDesc": "유니온 타입에 조건부 타입을 적용하면 각 멤버에 개별적으로 적용됩니다. 이를 막으려면 튜플 [T]로 감싸세요.",
+    "inferTitle": "infer 키워드",
+    "inferDesc": "조건부 타입 내에서 타입을 추론하여 사용하기",
+    "inferInfoTitle": "infer의 강력함",
+    "inferInfoDesc": "infer는 패턴 매칭처럼 타입의 일부를 추출합니다. 배열 요소 타입, Promise 내부 타입, 함수 반환 타입 등을 추출할 수 있습니다.",
+    "customTitle": "커스텀 유틸리티 타입 만들기",
+    "customDesc": "조건부 타입과 infer를 활용한 고급 타입 만들기",
+    "visualizer": {
+      "title": "조건부 타입 플로우차트",
+      "condition": "조건",
+      "true": "참 (True)",
+      "false": "거짓 (False)",
+      "inputType": "입력 타입",
+      "checkCondition": "조건 검사",
+      "result": "결과",
+      "selectScenario": "시나리오 선택"
+    }
+  },
+  "practicalPatterns": {
+    "badge": "Pattern",
+    "title": "실전 패턴",
+    "description": "실무에서 자주 사용되는 TypeScript 패턴 익히기",
+    "typeGuardTitle": "Type Guard (타입 가드)",
+    "typeGuardDesc": "런타임 검사를 통해 타입을 좁히는 기법",
+    "typeGuardInfoTitle": "사용자 정의 타입 가드",
+    "typeGuardInfoDesc": "is 키워드를 사용한 타입 가드 함수는 조건이 참일 때 특정 타입임을 TypeScript에 알립니다. 복잡한 타입 좁히기에 필수입니다.",
+    "discriminatedTitle": "Discriminated Union (판별 유니온)",
+    "discriminatedDesc": "공통 리터럴 속성으로 유니온 타입 구별하기",
+    "exhaustiveTitle": "철저한 검사 (Exhaustive Check)",
+    "exhaustiveDesc": "never 타입으로 모든 케이스 처리 보장하기",
+    "exhaustiveInfoTitle": "왜 Exhaustive Check가 중요한가",
+    "exhaustiveInfoDesc": "새로운 유니온 멤버가 추가되면 switch문에서 컴파일 에러가 발생하여, 처리되지 않은 케이스를 놓치지 않습니다.",
+    "brandingTitle": "Type Branding (타입 브랜딩)",
+    "brandingDesc": "구조적으로 같은 타입을 명목적으로 구별하기",
+    "brandingInfoTitle": "언제 브랜딩을 사용하는가",
+    "brandingInfoDesc": "UserId와 PostId가 모두 string이면 실수로 바꿔 사용해도 에러가 나지 않습니다. 브랜딩으로 이런 실수를 컴파일 타임에 방지합니다.",
+    "visualizer": {
+      "title": "판별 유니온 시각화",
+      "discriminant": "판별 속성",
+      "type": "타입",
+      "narrowedTo": "좁혀진 타입",
+      "switch": "switch 문",
+      "case": "case",
+      "selectShape": "도형 선택",
+      "seeNarrowing": "타입 좁히기 확인"
+    }
+  }
+}
