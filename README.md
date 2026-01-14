@@ -34,6 +34,20 @@
 
 - [ ] [Week 15: 개발 도구 (DevTools 활용 및 번들링 최적화)](src/page/week15/README.md)
 
+- [ ] [Week 16: TypeScript - 타입 시스템 마스터하기](src/page/week16/README.md)
+
+- [ ] [Week 17: AI 기반 개발 도구와 협업](src/page/week17/README.md)
+
+- [ ] [Week 18: WebAssembly와 고성능 웹 애플리케이션](src/page/week18/README.md)
+
+- [ ] [Week 19: React Three Fiber와 3D 웹 개발](src/page/week19/README.md)
+
+- [ ] [Week 20: 마이크로 프론트엔드와 모노레포](src/page/week20/README.md)
+
+- [ ] [Week 21: CI/CD와 DevOps 기초](src/page/week21/README.md)
+
+- [ ] [Week 22: 에러 트래킹과 프로덕션 모니터링](src/page/week22/README.md)
+
 
 ## Setup
 
