@@ -68,6 +68,10 @@
     "week16": {
       "title": "TypeScript",
       "description": "기본 타입부터 제네릭, 유틸리티 타입, 조건부 타입까지 마스터하기."
+    },
+    "week17": {
+      "title": "AI 기반 개발 도구",
+      "description": "AI 코드 에이전트, MCP, Skills, Hooks를 활용한 워크플로우 자동화."
     }
   }
 }

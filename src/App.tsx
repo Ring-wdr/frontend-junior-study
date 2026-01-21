@@ -155,6 +155,13 @@ const router = createHashRouter([
           return { Component: Week16Page };
         },
       },
+      {
+        path: 'week-17',
+        lazy: async () => {
+          const { default: Week17Page } = await import('./page/week17/page');
+          return { Component: Week17Page };
+        },
+      },
     ],
   },
 ]);

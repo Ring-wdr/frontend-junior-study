@@ -68,6 +68,10 @@
     "week16": {
       "title": "TypeScript",
       "description": "Master basics to generics, utility types, and conditional types."
+    },
+    "week17": {
+      "title": "AI-Powered Dev Tools",
+      "description": "AI code agents, MCP, Skills, Hooks for workflow automation."
     }
   }
 }

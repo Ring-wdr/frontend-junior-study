@@ -1,0 +1,221 @@
+{
+  "header": {
+    "title": "AI-Powered Development Tools",
+    "description": "Master modern development workflows with AI code agents, MCP, Skills, and Hooks"
+  },
+  "tabs": {
+    "all": "All",
+    "ai-agents": "AI Agents",
+    "mcp": "MCP",
+    "skills-hooks": "Skills & Hooks",
+    "agent-mode": "Agent Mode",
+    "prompt-engineering": "Prompt Engineering",
+    "workflows": "Workflows",
+    "verification": "Verification & Safety"
+  },
+  "aiAgents": {
+    "badge": "Core",
+    "title": "Understanding AI Code Agents",
+    "description": "Evolution from AI tools to autonomous agents and comparison of major tools",
+    "evolutionTitle": "From AI Tools to AI Agents",
+    "toolsEra": "AI Tools (2023-2024)",
+    "agentsEra": "AI Agents (2025-2026)",
+    "toolsFeatures": {
+      "autocomplete": "Code autocomplete",
+      "singleFile": "Single file suggestions",
+      "manualPrompt": "Manual prompting required",
+      "limitedContext": "Limited context"
+    },
+    "agentsFeatures": {
+      "autonomous": "Autonomous task execution",
+      "multiFile": "Multi-file editing",
+      "toolIntegration": "External tool integration (MCP)",
+      "selfCorrection": "Iterative self-improvement"
+    },
+    "toolsComparisonTitle": "Major AI Development Tools",
+    "tools": [
+      { "name": "Claude Code", "desc": "CLI-based fully autonomous agent", "icon": "bot" },
+      { "name": "Cursor", "desc": "AI-native IDE with Composer", "icon": "zap" },
+      { "name": "GitHub Copilot", "desc": "VS Code integrated agent", "icon": "git-branch" },
+      { "name": "Windsurf", "desc": "Cascade agent IDE", "icon": "brain" },
+      { "name": "Cline", "desc": "VS Code autonomous agent", "icon": "wrench" },
+      { "name": "Aider", "desc": "Git-integrated CLI tool", "icon": "git-branch" }
+    ],
+    "capabilitiesTitle": "AI Agent Capabilities and Limits",
+    "aiGoodAt": "What AI Agents Excel At",
+    "humanRequired": "What Humans Must Do",
+    "strengths": [
+      "Complex refactoring",
+      "Migration tasks",
+      "Boilerplate generation",
+      "Debugging and error tracing",
+      "Documentation"
+    ],
+    "humanTasks": [
+      "Architecture decisions",
+      "Business logic validation",
+      "Security final review",
+      "User experience judgment",
+      "Final approval"
+    ],
+    "importantNote": "Important: AI is a Tool",
+    "importantNoteDesc": "AI agents don't replace developers—they augment them, allowing focus on higher-level problems. Final responsibility always lies with humans."
+  },
+  "mcp": {
+    "badge": "Protocol",
+    "title": "MCP (Model Context Protocol)",
+    "description": "Standard protocol for AI agents to access external tools and data",
+    "whatIsTitle": "What is MCP?",
+    "conceptTitle": "Core Concept",
+    "conceptDesc": "MCP is a standard protocol that allows AI agents to safely access databases, browsers, external APIs, and more. MCP servers provide specific capabilities that AI agents can invoke.",
+    "architectureLabel": "MCP Architecture",
+    "visualizer": {
+      "description": "AI agents access various external services (databases, browsers, GitHub, etc.) through MCP servers."
+    },
+    "serversTitle": "Popular MCP Servers",
+    "servers": [
+      { "name": "PostgreSQL", "desc": "Execute database queries", "icon": "database", "example": "@modelcontextprotocol/server-postgres" },
+      { "name": "Playwright", "desc": "Browser automation and testing", "icon": "globe", "example": "@anthropic/mcp-playwright" },
+      { "name": "GitHub", "desc": "Issues, PRs, comments management", "icon": "git-branch", "example": "@modelcontextprotocol/server-github" },
+      { "name": "Context7", "desc": "Latest documentation search", "icon": "file-search", "example": "@context7/mcp-server" }
+    ],
+    "configTitle": "MCP Configuration",
+    "usageTitle": "MCP Usage Examples",
+    "tipsTitle": "Usage Tips",
+    "tips": {
+      "tip1": "Only enable MCP servers needed for your project",
+      "tip2": "Set read-only mode for servers accessing sensitive data",
+      "tip3": "Add team-specific features with custom MCP servers"
+    }
+  },
+  "skillsHooks": {
+    "badge": "Automation",
+    "title": "Skills and Hooks",
+    "description": "Reusable workflows and event-driven automation",
+    "skillsTitle": "Skills: Reusable Workflows",
+    "skillsInfoTitle": "What are Skills?",
+    "skillsInfoDesc": "Skills let you define complex, frequently-used tasks and invoke them with slash commands. /commit and /review-pr are typical examples.",
+    "skillExamples": [
+      { "name": "/commit", "desc": "Analyze changes and create conventional commit" },
+      { "name": "/review-pr", "desc": "PR code review with suggestions" },
+      { "name": "/component", "desc": "Generate component + test + story" },
+      { "name": "/docs", "desc": "Auto-generate docs from code" }
+    ],
+    "hooksTitle": "Hooks: Event-Driven Automation",
+    "hooksInfoTitle": "What are Hooks?",
+    "hooksInfoDesc": "Hooks are scripts that run automatically on specific events (file save, command execution, etc.). Used for auto-formatting, linting, blocking dangerous commands, and more.",
+    "table": {
+      "timing": "Trigger Time",
+      "usage": "Use Case"
+    },
+    "hookTypes": [
+      { "name": "PreToolUse", "timing": "Before tool execution", "usage": "Block dangerous commands, logging" },
+      { "name": "PostToolUse", "timing": "After tool execution", "usage": "Auto-formatting, linting, testing" },
+      { "name": "Notification", "timing": "Waiting for response", "usage": "Slack/Discord notifications" },
+      { "name": "Stop", "timing": "Agent termination", "usage": "Cleanup, reporting" }
+    ],
+    "claudeMdTitle": "CLAUDE.md: Project Context",
+    "claudeMdInfoTitle": "What is CLAUDE.md?",
+    "claudeMdInfoDesc": "CLAUDE.md informs AI agents about your project's tech stack, coding conventions, and important rules. It lives at the project root."
+  },
+  "agentMode": {
+    "badge": "Advanced",
+    "title": "Agent Mode in Practice",
+    "description": "Master agent modes in Claude Code and Cursor",
+    "basicUsageTitle": "Basic Usage",
+    "planModeTitle": "Using Plan Mode",
+    "planModeInfoTitle": "When to Use Plan Mode?",
+    "planModeInfoDesc": "For large-scale refactoring or new features with wide impact, Plan mode lets AI create a plan first and execute only after user approval.",
+    "subAgentsTitle": "Using Sub-Agents",
+    "subAgents": [
+      { "name": "Explore", "desc": "Codebase exploration and analysis" },
+      { "name": "Bash", "desc": "Command execution, builds, tests" },
+      { "name": "Plan", "desc": "Implementation planning" },
+      { "name": "Code", "desc": "Code writing and modification" }
+    ],
+    "cursorTitle": "Cursor Agent Mode",
+    "cursorInfoTitle": "Cursor Rules Configuration",
+    "cursorInfoDesc": "Define AI coding style, automatic tasks, and prohibitions in Cursor's .cursor/rules file."
+  },
+  "promptEngineering": {
+    "badge": "Skill",
+    "title": "Advanced Prompt Engineering",
+    "description": "Effective communication with AI agents",
+    "goalOrientedTitle": "Goal-Oriented Prompts",
+    "badExample": "Bad Example (Step-by-step)",
+    "goodExample": "Good Example (Goal-oriented)",
+    "contextTitle": "Context References",
+    "contextInfoTitle": "Effective Context Delivery",
+    "contextInfoDesc": "Using file paths, pattern references (@), and doc references helps AI generate more accurate results.",
+    "constraintsTitle": "Specifying Constraints",
+    "iterativeTitle": "Iterative Improvement Pattern",
+    "iterativeInfoTitle": "Gradual Refinement",
+    "iterativeInfoDesc": "For complex tasks, don't request perfection at once. Progress from big picture → detailed implementation → edge cases."
+  },
+  "workflows": {
+    "badge": "Workflow",
+    "title": "Practical Workflows",
+    "description": "Automated workflows for feature development, bug fixes, and code review",
+    "featureDevTitle": "Feature Development Workflow",
+    "featureDevInfoTitle": "Complete Flow",
+    "featureDevInfoDesc": "Execute the full cycle with AI: requirements analysis → design (Plan) → implementation → testing → review → commit.",
+    "bugFixTitle": "Bug Fix Workflow",
+    "codeReviewTitle": "Code Review Workflow",
+    "automationTips": "Automation Tips",
+    "tips": {
+      "tip1": "Automate PR creation and review with GitHub MCP",
+      "tip2": "Auto-generate conventional commits with /commit skill",
+      "tip3": "Integrate with CI/CD for deployment automation"
+    }
+  },
+  "verification": {
+    "badge": "Safety",
+    "title": "Verification and Safe Usage",
+    "description": "AI code verification, permission management, and team guidelines",
+    "autoVerifyTitle": "Automatic Verification Setup",
+    "autoVerifyInfoTitle": "Hook-Based Auto Verification",
+    "autoVerifyInfoDesc": "Use PostToolUse hooks to automatically run type checking, linting, and related tests after file saves.",
+    "manualCheckTitle": "Manual Verification Checklist",
+    "checklistTitle": "AI-Generated Code Review Checklist",
+    "checklist": [
+      "Does business logic match requirements?",
+      "Is it consistent with existing code patterns?",
+      "Are there security vulnerabilities? (input validation, auth)",
+      "Are there performance issues? (N+1, memory leaks)",
+      "Is error handling appropriate?",
+      "Is test coverage sufficient?"
+    ],
+    "permissionsTitle": "Permission Management",
+    "teamGuidelinesTitle": "Team Guidelines",
+    "teamGuidelines": {
+      "allowed": {
+        "title": "Allowed Usage",
+        "items": [
+          "Boilerplate code generation",
+          "Test code assistance",
+          "Documentation work",
+          "Code review assistance",
+          "Debugging support"
+        ]
+      },
+      "required": {
+        "title": "Required Verification",
+        "items": [
+          "Manual review required for all AI-generated code",
+          "Senior developer approval for security-related code",
+          "All tests must pass before production deployment"
+        ]
+      },
+      "prohibited": {
+        "title": "Prohibited",
+        "items": [
+          "Including sensitive information in prompts",
+          "Committing AI code without review",
+          "Direct MCP connection to production DB"
+        ]
+      }
+    },
+    "importantNote": "Final Responsibility",
+    "importantNoteDesc": "No matter how powerful AI agents are, final responsibility always lies with developers. Always review AI-generated code before committing."
+  }
+}
