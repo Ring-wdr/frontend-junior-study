@@ -72,6 +72,10 @@
     "week17": {
       "title": "AI-Powered Dev Tools",
       "description": "AI code agents, MCP, Skills, Hooks for workflow automation."
+    },
+    "week18": {
+      "title": "WebAssembly",
+      "description": "Near-native performance, Rust development, SIMD, image/video processing."
     }
   }
 }

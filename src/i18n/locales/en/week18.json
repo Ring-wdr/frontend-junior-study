@@ -1,0 +1,205 @@
+{
+  "header": {
+    "title": "WebAssembly & High-Performance Web",
+    "description": "Master WebAssembly technology that runs in the browser with near-native performance"
+  },
+  "tabs": {
+    "all": "All",
+    "wasm-intro": "Wasm Intro",
+    "wasm-mechanics": "Mechanics",
+    "dev-environment": "Dev Setup",
+    "rust-wasm": "Rust Dev",
+    "advanced-features": "Advanced",
+    "use-cases": "Use Cases",
+    "optimization": "Optimization",
+    "debugging-security": "Debug & Security"
+  },
+  "wasmIntro": {
+    "badge": "Core",
+    "title": "What is WebAssembly?",
+    "description": "A binary format that provides near-native performance in the browser",
+    "conceptsTitle": "Core Concepts",
+    "concepts": [
+      { "title": "Binary Instruction Format", "desc": "Low-level binary format that executes at near-native speed", "icon": "cpu" },
+      { "title": "Language Agnostic", "desc": "Can be compiled from C, C++, Rust, Go, and more", "icon": "globe" },
+      { "title": "JavaScript Complement", "desc": "Not a replacement but offloads performance bottlenecks", "icon": "zap" },
+      { "title": "Security Sandbox", "desc": "Runs safely within the browser's security model", "icon": "shield" }
+    ],
+    "historyTitle": "History of WebAssembly",
+    "timeline": [
+      { "year": "2015", "event": "WebAssembly project announced (Mozilla, Google, MS, Apple)" },
+      { "year": "2017", "event": "Major browsers start MVP support" },
+      { "year": "2019", "event": "Adopted as official W3C web standard" },
+      { "year": "2020+", "event": "SIMD, Threads, GC extensions added" }
+    ],
+    "comparisonTitle": "JavaScript vs WebAssembly Performance",
+    "performanceNote": "For CPU-intensive operations, WebAssembly is approximately 10x faster than JavaScript.",
+    "whenToUseTitle": "When to Use WebAssembly?",
+    "suitableTitle": "Suitable Cases",
+    "unsuitableTitle": "Unsuitable Cases",
+    "useCases": {
+      "suitable": [
+        "CPU-intensive computation (image/video processing)",
+        "3D rendering, game engines",
+        "Encryption, hashing operations",
+        "Scientific/mathematical simulations",
+        "Porting existing C/C++/Rust libraries"
+      ],
+      "unsuitable": [
+        "Simple DOM manipulation",
+        "General CRUD applications",
+        "Network I/O heavy tasks",
+        "Already fast enough logic",
+        "Cases where JavaScript is sufficient"
+      ]
+    },
+    "keyPoint": "Key Point",
+    "keyPointDesc": "WebAssembly is not a replacement for JavaScript but a complement. Using the right tool for the right job is key."
+  },
+  "wasmMechanics": {
+    "badge": "Mechanics",
+    "title": "How WebAssembly Works",
+    "description": "Understanding compilation pipeline, module structure, and JavaScript interop",
+    "pipelineTitle": "Compilation Pipeline",
+    "pipeline": {
+      "source": "Source Code",
+      "compiler": "Compiler",
+      "wasmFile": "Wasm File",
+      "browser": "Browser Execution"
+    },
+    "moduleTitle": "Wasm Module Structure",
+    "moduleStructure": [
+      { "name": "Types", "desc": "Function signature definitions" },
+      { "name": "Imports", "desc": "Functions/memory from JS" },
+      { "name": "Functions", "desc": "Actual function implementations (bytecode)" },
+      { "name": "Exports", "desc": "Functions/memory exported to JS" },
+      { "name": "Memory", "desc": "Linear memory (ArrayBuffer)" },
+      { "name": "Globals", "desc": "Global variables" }
+    ],
+    "interopTitle": "JavaScript Interoperability",
+    "memoryTitle": "Memory Model",
+    "memoryWarning": "Warning",
+    "memoryWarningDesc": "After calling memory.grow(), existing TypedArray views become invalid. You must create new views after growing memory."
+  },
+  "devEnvironment": {
+    "badge": "Setup",
+    "title": "Development Environment Setup",
+    "description": "Setting up Emscripten, Rust, and AssemblyScript development environments",
+    "toolchainsTitle": "Main Toolchains",
+    "table": {
+      "language": "Language",
+      "toolchain": "Toolchain",
+      "features": "Features"
+    },
+    "toolchains": [
+      { "language": "C/C++", "toolchain": "Emscripten", "features": "Most mature, POSIX API emulation" },
+      { "language": "Rust", "toolchain": "wasm-pack + wasm-bindgen", "features": "Memory safe, modern DX" },
+      { "language": "AssemblyScript", "toolchain": "asc compiler", "features": "TypeScript-like syntax" },
+      { "language": "Go", "toolchain": "TinyGo", "features": "Small binary size" }
+    ],
+    "emscriptenTitle": "Emscripten (C/C++)",
+    "installSteps": "Installation & Compilation",
+    "rustTitle": "Rust + wasm-pack",
+    "rustSetup": "Installation & Project Setup",
+    "assemblyScriptTitle": "AssemblyScript",
+    "assemblyScriptSetup": "Install via npm",
+    "assemblyScriptNote": "AssemblyScript Features",
+    "assemblyScriptNoteDesc": "AssemblyScript uses TypeScript-like syntax, lowering the barrier for JavaScript developers. However, it may not achieve the same level of performance optimization as Rust or C++."
+  },
+  "rustWasm": {
+    "badge": "Rust",
+    "title": "Developing WebAssembly with Rust",
+    "description": "Rust-JavaScript bindings using wasm-bindgen",
+    "basicTitle": "Basic Example: Number Calculation",
+    "stringTitle": "String Handling",
+    "structTitle": "Structs and Methods",
+    "jsUsage": "Usage in JavaScript",
+    "externTitle": "Calling JavaScript Functions",
+    "callingJs": "JS Function Bindings"
+  },
+  "advancedFeatures": {
+    "badge": "Advanced",
+    "title": "Advanced Features: SIMD, Threads, GC",
+    "description": "Vector operations, multithreading, and garbage collection integration",
+    "simdTitle": "SIMD (Single Instruction, Multiple Data)",
+    "simdDesc": "Vector Operation Acceleration",
+    "simdExplain": "SIMD processes multiple data with a single instruction, significantly improving performance in image processing, scientific computing, etc.",
+    "threadsTitle": "Web Workers and SharedArrayBuffer",
+    "threadsDesc": "Multithreading",
+    "coopCoep": "COOP/COEP Headers Required",
+    "gcTitle": "WasmGC (Garbage Collection)",
+    "gcDesc": "Browser GC Integration",
+    "gcExplain": "WasmGC integrates with the browser's garbage collector, improving Wasm support for managed languages (Java, Kotlin, Dart, etc.).",
+    "beforeGc": "Traditional Approach",
+    "afterGc": "With WasmGC",
+    "selfGcNeeded": "Self GC implementation needed",
+    "overhead": "Large overhead",
+    "browserGc": "Uses browser GC",
+    "efficient": "Efficient"
+  },
+  "useCases": {
+    "badge": "Practical",
+    "title": "Real-World Use Cases",
+    "description": "Image processing, video codecs, encryption, data visualization",
+    "imageTitle": "Image Processing",
+    "grayscale": "Grayscale Conversion",
+    "videoTitle": "Video Codec",
+    "cryptoTitle": "Cryptography",
+    "dataVizTitle": "Data Visualization",
+    "realWorldTitle": "Services Using WebAssembly",
+    "cases": [
+      { "name": "Figma", "desc": "Real-time design collaboration tool", "icon": "image" },
+      { "name": "Squoosh", "desc": "Google image optimization app", "icon": "image" },
+      { "name": "FFmpeg.wasm", "desc": "Browser video editing", "icon": "video" },
+      { "name": "AutoCAD Web", "desc": "Browser CAD tool", "icon": "gamepad" },
+      { "name": "1Password", "desc": "Password management (encryption)", "icon": "lock" },
+      { "name": "Google Earth", "desc": "3D globe rendering", "icon": "chart" }
+    ]
+  },
+  "optimization": {
+    "badge": "Performance",
+    "title": "Performance Optimization",
+    "description": "Binary size, runtime performance, and memory management optimization",
+    "binarySizeTitle": "Binary Size Optimization",
+    "checklistTitle": "Size Optimization Checklist",
+    "checklist": [
+      "Use release build (--release)",
+      "Apply wasm-opt",
+      "Remove unnecessary dependencies",
+      "Gzip/Brotli compression",
+      "Code splitting (load only needed modules)"
+    ],
+    "runtimeTitle": "Runtime Performance Optimization",
+    "memoryTitle": "Memory Management Optimization",
+    "memoryPooling": "Minimize allocations with memory pooling",
+    "jsIntegrationTitle": "JavaScript Integration Patterns",
+    "typedArrayTitle": "Memory Sharing via TypedArray",
+    "typedArrayDesc": "Share Wasm memory directly to reduce data copying overhead.",
+    "profilingTitle": "Profiling"
+  },
+  "debuggingSecurity": {
+    "badge": "Safety",
+    "title": "Debugging and Security",
+    "description": "Source map debugging, testing, and understanding the security sandbox",
+    "sourcemapTitle": "Debugging with Source Maps",
+    "debugBuild": "Debug Build",
+    "consoleTitle": "Console Logging",
+    "testingTitle": "Testing",
+    "unitTest": "Unit Tests",
+    "sandboxTitle": "Wasm Security Sandbox",
+    "wasmSandbox": "WebAssembly Security Model",
+    "securityPoints": [
+      "Memory isolation: Each Wasm instance accesses only its own linear memory",
+      "No system calls: No direct file system or network access",
+      "JavaScript gateway: All external interactions go through JS"
+    ],
+    "securityTipsTitle": "Security Considerations",
+    "dangerous": "Dangerous Code",
+    "safe": "Safe Code",
+    "cspTitle": "CSP Header Configuration",
+    "rustSafetyTitle": "Rust Memory Safety",
+    "rustSafetyDesc": "Rust's memory safety guarantees are preserved when compiled to WebAssembly.",
+    "finalNote": "Security Recommendation",
+    "finalNoteDesc": "WebAssembly runs in the same security sandbox as JavaScript. However, complex Wasm modules may contain logical vulnerabilities, so only use modules from trusted sources."
+  }
+}

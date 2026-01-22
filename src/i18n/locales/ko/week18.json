@@ -1,0 +1,205 @@
+{
+  "header": {
+    "title": "WebAssembly와 고성능 웹",
+    "description": "네이티브에 가까운 성능으로 브라우저에서 실행되는 WebAssembly 기술 마스터하기"
+  },
+  "tabs": {
+    "all": "All",
+    "wasm-intro": "Wasm 소개",
+    "wasm-mechanics": "동작 원리",
+    "dev-environment": "개발 환경",
+    "rust-wasm": "Rust 개발",
+    "advanced-features": "고급 기능",
+    "use-cases": "실전 사례",
+    "optimization": "최적화",
+    "debugging-security": "디버깅 & 보안"
+  },
+  "wasmIntro": {
+    "badge": "Core",
+    "title": "WebAssembly란 무엇인가?",
+    "description": "브라우저에서 네이티브에 가까운 성능을 제공하는 바이너리 포맷",
+    "conceptsTitle": "핵심 개념",
+    "concepts": [
+      { "title": "이진 명령어 포맷", "desc": "네이티브에 가까운 속도로 실행되는 저수준 바이너리 포맷", "icon": "cpu" },
+      { "title": "언어 독립적", "desc": "C, C++, Rust, Go 등 다양한 언어에서 컴파일 가능", "icon": "globe" },
+      { "title": "JavaScript 보완", "desc": "JavaScript를 대체하는 것이 아닌 성능 병목 구간을 오프로드", "icon": "zap" },
+      { "title": "보안 샌드박스", "desc": "브라우저의 보안 모델 내에서 안전하게 실행", "icon": "shield" }
+    ],
+    "historyTitle": "WebAssembly의 역사",
+    "timeline": [
+      { "year": "2015", "event": "WebAssembly 프로젝트 발표 (Mozilla, Google, MS, Apple)" },
+      { "year": "2017", "event": "주요 브라우저 MVP 지원 시작" },
+      { "year": "2019", "event": "W3C 공식 웹 표준으로 채택" },
+      { "year": "2020+", "event": "SIMD, Threads, GC 등 확장 기능 추가" }
+    ],
+    "comparisonTitle": "JavaScript vs WebAssembly 성능",
+    "performanceNote": "CPU 집약적 연산에서 WebAssembly는 JavaScript 대비 약 10배 빠른 성능을 보입니다.",
+    "whenToUseTitle": "언제 WebAssembly를 사용할까?",
+    "suitableTitle": "적합한 경우",
+    "unsuitableTitle": "부적합한 경우",
+    "useCases": {
+      "suitable": [
+        "CPU 집약적 계산 (이미지/비디오 처리)",
+        "3D 렌더링, 게임 엔진",
+        "암호화, 해싱 연산",
+        "과학/수학적 시뮬레이션",
+        "기존 C/C++/Rust 라이브러리 포팅"
+      ],
+      "unsuitable": [
+        "간단한 DOM 조작",
+        "일반적인 CRUD 애플리케이션",
+        "네트워크 I/O 위주 작업",
+        "이미 충분히 빠른 로직",
+        "JavaScript로 충분한 경우"
+      ]
+    },
+    "keyPoint": "핵심 포인트",
+    "keyPointDesc": "WebAssembly는 JavaScript를 대체하는 기술이 아니라 보완하는 기술입니다. 적절한 곳에 적절한 도구를 사용하는 것이 핵심입니다."
+  },
+  "wasmMechanics": {
+    "badge": "Mechanics",
+    "title": "WebAssembly 동작 원리",
+    "description": "컴파일 파이프라인, 모듈 구조, JavaScript 상호작용 이해하기",
+    "pipelineTitle": "컴파일 파이프라인",
+    "pipeline": {
+      "source": "소스 코드",
+      "compiler": "컴파일러",
+      "wasmFile": "Wasm 파일",
+      "browser": "브라우저 실행"
+    },
+    "moduleTitle": "Wasm 모듈 구조",
+    "moduleStructure": [
+      { "name": "Types", "desc": "함수 시그니처 정의" },
+      { "name": "Imports", "desc": "JS에서 가져올 함수/메모리" },
+      { "name": "Functions", "desc": "실제 함수 구현 (바이트코드)" },
+      { "name": "Exports", "desc": "JS로 내보낼 함수/메모리" },
+      { "name": "Memory", "desc": "선형 메모리 (ArrayBuffer)" },
+      { "name": "Globals", "desc": "전역 변수" }
+    ],
+    "interopTitle": "JavaScript와 상호작용",
+    "memoryTitle": "메모리 모델",
+    "memoryWarning": "주의",
+    "memoryWarningDesc": "memory.grow() 호출 후 기존 TypedArray view는 무효화됩니다. grow 후에는 반드시 새로운 view를 생성해야 합니다."
+  },
+  "devEnvironment": {
+    "badge": "Setup",
+    "title": "개발 환경 설정",
+    "description": "Emscripten, Rust, AssemblyScript 개발 환경 구축하기",
+    "toolchainsTitle": "주요 도구 체인",
+    "table": {
+      "language": "언어",
+      "toolchain": "도구 체인",
+      "features": "특징"
+    },
+    "toolchains": [
+      { "language": "C/C++", "toolchain": "Emscripten", "features": "가장 성숙, POSIX API 에뮬레이션" },
+      { "language": "Rust", "toolchain": "wasm-pack + wasm-bindgen", "features": "메모리 안전, 모던 DX" },
+      { "language": "AssemblyScript", "toolchain": "asc compiler", "features": "TypeScript 유사 문법" },
+      { "language": "Go", "toolchain": "TinyGo", "features": "작은 바이너리 크기" }
+    ],
+    "emscriptenTitle": "Emscripten (C/C++)",
+    "installSteps": "설치 및 컴파일",
+    "rustTitle": "Rust + wasm-pack",
+    "rustSetup": "설치 및 프로젝트 생성",
+    "assemblyScriptTitle": "AssemblyScript",
+    "assemblyScriptSetup": "npm으로 설치",
+    "assemblyScriptNote": "AssemblyScript 특징",
+    "assemblyScriptNoteDesc": "AssemblyScript는 TypeScript와 유사한 문법을 사용하므로 JavaScript 개발자에게 진입 장벽이 낮습니다. 다만 Rust나 C++만큼의 성능 최적화는 어려울 수 있습니다."
+  },
+  "rustWasm": {
+    "badge": "Rust",
+    "title": "Rust로 WebAssembly 개발하기",
+    "description": "wasm-bindgen을 활용한 Rust-JavaScript 바인딩",
+    "basicTitle": "기본 예제: 숫자 계산",
+    "stringTitle": "문자열 처리",
+    "structTitle": "구조체와 메서드",
+    "jsUsage": "JavaScript에서 사용",
+    "externTitle": "JavaScript 함수 호출하기",
+    "callingJs": "JS 함수 바인딩"
+  },
+  "advancedFeatures": {
+    "badge": "Advanced",
+    "title": "고급 기능: SIMD, Threads, GC",
+    "description": "벡터 연산, 멀티스레딩, 가비지 컬렉션 통합",
+    "simdTitle": "SIMD (Single Instruction, Multiple Data)",
+    "simdDesc": "벡터 연산 가속화",
+    "simdExplain": "SIMD는 하나의 명령으로 여러 데이터를 동시에 처리하여 이미지 처리, 과학 계산 등에서 성능을 크게 향상시킵니다.",
+    "threadsTitle": "Web Workers와 SharedArrayBuffer",
+    "threadsDesc": "멀티스레딩",
+    "coopCoep": "COOP/COEP 헤더 설정 필요",
+    "gcTitle": "WasmGC (가비지 컬렉션)",
+    "gcDesc": "브라우저 GC 통합",
+    "gcExplain": "WasmGC는 브라우저의 가비지 컬렉터와 통합되어 관리형 언어(Java, Kotlin, Dart 등)의 Wasm 지원을 개선합니다.",
+    "beforeGc": "기존 방식",
+    "afterGc": "WasmGC",
+    "selfGcNeeded": "자체 GC 구현 필요",
+    "overhead": "오버헤드 큼",
+    "browserGc": "브라우저 GC 사용",
+    "efficient": "효율적"
+  },
+  "useCases": {
+    "badge": "Practical",
+    "title": "실전 사용 사례",
+    "description": "이미지 처리, 비디오 코덱, 암호화, 데이터 시각화",
+    "imageTitle": "이미지 처리",
+    "grayscale": "흑백 변환",
+    "videoTitle": "비디오 코덱",
+    "cryptoTitle": "암호화",
+    "dataVizTitle": "데이터 시각화",
+    "realWorldTitle": "실제 사용 중인 서비스",
+    "cases": [
+      { "name": "Figma", "desc": "실시간 디자인 협업 도구", "icon": "image" },
+      { "name": "Squoosh", "desc": "Google 이미지 최적화 앱", "icon": "image" },
+      { "name": "FFmpeg.wasm", "desc": "브라우저 비디오 편집", "icon": "video" },
+      { "name": "AutoCAD Web", "desc": "브라우저 CAD 도구", "icon": "gamepad" },
+      { "name": "1Password", "desc": "암호 관리 (암호화)", "icon": "lock" },
+      { "name": "Google Earth", "desc": "3D 지구본 렌더링", "icon": "chart" }
+    ]
+  },
+  "optimization": {
+    "badge": "Performance",
+    "title": "성능 최적화",
+    "description": "바이너리 크기, 런타임 성능, 메모리 관리 최적화",
+    "binarySizeTitle": "바이너리 크기 최적화",
+    "checklistTitle": "크기 최적화 체크리스트",
+    "checklist": [
+      "릴리스 빌드 사용 (--release)",
+      "wasm-opt 적용",
+      "불필요한 의존성 제거",
+      "Gzip/Brotli 압축",
+      "코드 스플리팅 (필요한 모듈만 로드)"
+    ],
+    "runtimeTitle": "런타임 성능 최적화",
+    "memoryTitle": "메모리 관리 최적화",
+    "memoryPooling": "메모리 풀링으로 할당 최소화",
+    "jsIntegrationTitle": "JavaScript 통합 패턴",
+    "typedArrayTitle": "TypedArray를 통한 메모리 공유",
+    "typedArrayDesc": "데이터 복사 오버헤드를 줄이기 위해 Wasm 메모리를 직접 공유합니다.",
+    "profilingTitle": "프로파일링"
+  },
+  "debuggingSecurity": {
+    "badge": "Safety",
+    "title": "디버깅과 보안",
+    "description": "소스맵 디버깅, 테스팅, 보안 샌드박스 이해하기",
+    "sourcemapTitle": "소스맵을 통한 디버깅",
+    "debugBuild": "디버그 빌드",
+    "consoleTitle": "Console 로깅",
+    "testingTitle": "테스팅",
+    "unitTest": "단위 테스트",
+    "sandboxTitle": "Wasm 보안 샌드박스",
+    "wasmSandbox": "WebAssembly 보안 모델",
+    "securityPoints": [
+      "메모리 격리: 각 Wasm 인스턴스는 자체 선형 메모리만 접근",
+      "시스템 콜 불가: 직접적인 파일 시스템, 네트워크 접근 불가",
+      "JavaScript 게이트웨이: 모든 외부 상호작용은 JS를 통해 수행"
+    ],
+    "securityTipsTitle": "보안 주의사항",
+    "dangerous": "위험한 코드",
+    "safe": "안전한 코드",
+    "cspTitle": "CSP 헤더 설정",
+    "rustSafetyTitle": "Rust의 메모리 안전성",
+    "rustSafetyDesc": "Rust의 메모리 안전성 보장은 WebAssembly로 컴파일되어도 유지됩니다.",
+    "finalNote": "보안 권고",
+    "finalNoteDesc": "WebAssembly는 JavaScript와 동일한 보안 샌드박스에서 실행됩니다. 그러나 복잡한 Wasm 모듈은 논리적 취약점을 포함할 수 있으므로, 신뢰할 수 있는 소스의 모듈만 사용하세요."
+  }
+}

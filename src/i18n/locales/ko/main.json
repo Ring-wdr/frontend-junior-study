@@ -72,6 +72,10 @@
     "week17": {
       "title": "AI 기반 개발 도구",
       "description": "AI 코드 에이전트, MCP, Skills, Hooks를 활용한 워크플로우 자동화."
+    },
+    "week18": {
+      "title": "WebAssembly",
+      "description": "네이티브에 가까운 성능, Rust 개발, SIMD, 이미지/비디오 처리."
     }
   }
 }

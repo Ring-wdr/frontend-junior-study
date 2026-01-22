@@ -1,5 +1,5 @@
+import { Bot, Brain, GitBranch, User, Wrench, Zap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Bot, Zap, Brain, GitBranch, Wrench, User } from 'lucide-react';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
@@ -17,8 +17,12 @@ const toolIconMap = {
 export const AiAgentsSection = () => {
   const { t } = useTranslation('week17');
   const tools = t('aiAgents.tools', { returnObjects: true }) as any[];
-  const strengths = t('aiAgents.strengths', { returnObjects: true }) as string[];
-  const humanTasks = t('aiAgents.humanTasks', { returnObjects: true }) as string[];
+  const strengths = t('aiAgents.strengths', {
+    returnObjects: true,
+  }) as string[];
+  const humanTasks = t('aiAgents.humanTasks', {
+    returnObjects: true,
+  }) as string[];
 
   return (
     <SectionCard
@@ -27,7 +31,11 @@ export const AiAgentsSection = () => {
       description={t('aiAgents.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('aiAgents.evolutionTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('aiAgents.evolutionTitle')}
+          icon
+          iconColor="purple"
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-gray-100 p-4 rounded-lg border border-gray-200">
               <h4 className="font-bold text-sm text-gray-700 mb-2">
@@ -54,10 +62,15 @@ export const AiAgentsSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('aiAgents.toolsComparisonTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('aiAgents.toolsComparisonTitle')}
+          icon
+          iconColor="blue"
+        >
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {tools.map((tool: any) => {
-              const IconComponent = toolIconMap[tool.icon as keyof typeof toolIconMap] || Bot;
+              const IconComponent =
+                toolIconMap[tool.icon as keyof typeof toolIconMap] || Bot;
               return (
                 <div
                   key={tool.name}
@@ -65,7 +78,9 @@ export const AiAgentsSection = () => {
                 >
                   <div className="flex items-center gap-2 mb-1">
                     <IconComponent className="w-4 h-4 text-blue-600" />
-                    <h5 className="font-bold text-xs text-blue-800">{tool.name}</h5>
+                    <h5 className="font-bold text-xs text-blue-800">
+                      {tool.name}
+                    </h5>
                   </div>
                   <p className="text-xs text-gray-600">{tool.desc}</p>
                 </div>
@@ -74,7 +89,11 @@ export const AiAgentsSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('aiAgents.capabilitiesTitle')} icon iconColor="green">
+        <SubSection
+          title={t('aiAgents.capabilitiesTitle')}
+          icon
+          iconColor="green"
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-green-50 p-4 rounded-lg border border-green-200">
               <h4 className="font-bold text-sm text-green-700 mb-2 flex items-center gap-2">
@@ -83,7 +102,10 @@ export const AiAgentsSection = () => {
               </h4>
               <ul className="space-y-1">
                 {strengths.map((item: string) => (
-                  <li key={item} className="flex items-center gap-2 text-xs text-green-700">
+                  <li
+                    key={item}
+                    className="flex items-center gap-2 text-xs text-green-700"
+                  >
                     <span className="w-1.5 h-1.5 bg-green-500 rounded-full" />
                     {item}
                   </li>
@@ -97,7 +119,10 @@ export const AiAgentsSection = () => {
               </h4>
               <ul className="space-y-1">
                 {humanTasks.map((item: string) => (
-                  <li key={item} className="flex items-center gap-2 text-xs text-orange-700">
+                  <li
+                    key={item}
+                    className="flex items-center gap-2 text-xs text-orange-700"
+                  >
                     <span className="w-1.5 h-1.5 bg-orange-500 rounded-full" />
                     {item}
                   </li>
