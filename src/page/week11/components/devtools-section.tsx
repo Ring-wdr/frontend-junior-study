@@ -109,12 +109,12 @@ export function DevToolsSection() {
             <BarChart3 size={24} />
           </div>
           <h2 className="text-2xl font-bold text-gray-900">
-            {t('week11.devTools.title')}
+            {t('devTools.title')}
           </h2>
         </div>
 
         <p className="text-gray-600 leading-relaxed text-lg">
-          {t('week11.devTools.description')}
+          {t('devTools.description')}
         </p>
 
         {/* Visualizer */}
@@ -122,20 +122,20 @@ export function DevToolsSection() {
           <div className="flex justify-between items-start mb-6 text-white">
             <div>
               <h3 className="font-bold flex items-center gap-2 text-yellow-400">
-                <Activity size={18} /> {t('week11.devTools.simulatorTitle')}
+                <Activity size={18} /> {t('devTools.simulatorTitle')}
               </h3>
               <p className="text-xs text-gray-400 mt-1">
-                {t('week11.devTools.simulatorDesc')}
+                {t('devTools.simulatorDesc')}
               </p>
             </div>
             <div className="flex flex-col items-end gap-1">
               <div
                 className={`text-2xl font-mono font-bold ${fps < 30 ? 'text-red-500' : 'text-green-400'}`}
               >
-                {fps} {t('week11.devTools.fps')}
+                {fps} {t('devTools.fps')}
               </div>
               <div className="text-xs text-gray-500">
-                {t('week11.devTools.frameRate')}
+                {t('devTools.frameRate')}
               </div>
             </div>
           </div>
@@ -147,7 +147,7 @@ export function DevToolsSection() {
               disabled={isBlocking}
               className="flex-1 py-2 bg-green-600 hover:bg-green-700 text-white rounded font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
             >
-              {t('week11.devTools.runShortTask')}
+              {t('devTools.runShortTask')}
             </button>
             <button
               type="button"
@@ -155,7 +155,7 @@ export function DevToolsSection() {
               disabled={isBlocking}
               className="flex-1 py-2 bg-red-600 hover:bg-red-700 text-white rounded font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
             >
-              {t('week11.devTools.runLongTask')}
+              {t('devTools.runLongTask')}
             </button>
           </div>
 
@@ -192,7 +192,7 @@ export function DevToolsSection() {
               <div className="h-full w-[1px] bg-yellow-500 absolute right-10 top-0 z-10 opacity-50"></div>
             </div>
             <div className="absolute bottom-2 left-4 text-xs text-gray-500 font-mono">
-              {t('week11.devTools.timeMs')}
+              {t('devTools.timeMs')}
             </div>
           </div>
 
@@ -209,14 +209,14 @@ export function DevToolsSection() {
               />
               <div>
                 <div className="text-white font-medium">
-                  {t('week11.devTools.interactionTest')}
+                  {t('devTools.interactionTest')}
                 </div>
                 <div
                   className={`text-xs ${isBlocking ? 'text-red-400' : 'text-gray-400'}`}
                 >
                   {isBlocking
-                    ? t('week11.devTools.mainThreadBlocked')
-                    : t('week11.devTools.uiResponsive')}
+                    ? t('devTools.mainThreadBlocked')
+                    : t('devTools.uiResponsive')}
                 </div>
               </div>
             </div>
@@ -230,14 +230,14 @@ export function DevToolsSection() {
                   : 'bg-blue-500 text-white hover:bg-blue-600',
               )}
             >
-              {t('week11.devTools.clicked')} {clicks}
+              {t('devTools.clicked')} {clicks}
             </button>
           </div>
 
           {isBlocking && (
             <div className="absolute inset-0 bg-black/10 backdrop-blur-[1px] pointer-events-none flex items-center justify-center z-20">
               <div className="bg-red-600 text-white px-4 py-2 rounded-full font-bold shadow-lg animate-pulse">
-                {t('week11.devTools.blockingWarning')}
+                {t('devTools.blockingWarning')}
               </div>
             </div>
           )}
@@ -245,32 +245,32 @@ export function DevToolsSection() {
 
         <div className="bg-linear-to-br from-gray-900 to-gray-800 rounded-xl p-6 text-white">
           <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-            <Play size={18} /> {t('week11.devTools.usageTitle')}
+            <Play size={18} /> {t('devTools.usageTitle')}
           </h3>
           <ol className="space-y-3 text-gray-300">
             <li className="flex items-start gap-3">
               <span className="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold shrink-0">
                 1
               </span>
-              <span>{t('week11.devTools.usageSteps.step1')}</span>
+              <span>{t('devTools.usageSteps.step1')}</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold shrink-0">
                 2
               </span>
-              <span>{t('week11.devTools.usageSteps.step2')}</span>
+              <span>{t('devTools.usageSteps.step2')}</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold shrink-0">
                 3
               </span>
-              <span>{t('week11.devTools.usageSteps.step3')}</span>
+              <span>{t('devTools.usageSteps.step3')}</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold shrink-0">
                 4
               </span>
-              <span>{t('week11.devTools.usageSteps.step4')}</span>
+              <span>{t('devTools.usageSteps.step4')}</span>
             </li>
           </ol>
         </div>
@@ -280,14 +280,14 @@ export function DevToolsSection() {
             <div className="flex items-center gap-2">
               <Clock className="text-red-500" size={20} />
               <h4 className="font-bold text-gray-900">
-                {t('week11.devTools.longTask.title')}
+                {t('devTools.longTask.title')}
               </h4>
             </div>
             <p className="text-sm text-gray-600">
-              {t('week11.devTools.longTask.description')}
+              {t('devTools.longTask.description')}
             </p>
             <div className="bg-gray-50 rounded-lg p-3 text-xs text-gray-500">
-              {t('week11.devTools.longTask.note')}
+              {t('devTools.longTask.note')}
             </div>
           </div>
 
@@ -295,14 +295,14 @@ export function DevToolsSection() {
             <div className="flex items-center gap-2">
               <Activity className="text-orange-500" size={20} />
               <h4 className="font-bold text-gray-900">
-                {t('week11.devTools.layoutShift.title')}
+                {t('devTools.layoutShift.title')}
               </h4>
             </div>
             <p className="text-sm text-gray-600">
-              {t('week11.devTools.layoutShift.description')}
+              {t('devTools.layoutShift.description')}
             </p>
             <div className="bg-gray-50 rounded-lg p-3 text-xs text-gray-500">
-              {t('week11.devTools.layoutShift.note')}
+              {t('devTools.layoutShift.note')}
             </div>
           </div>
 
@@ -310,14 +310,14 @@ export function DevToolsSection() {
             <div className="flex items-center gap-2">
               <Eye className="text-blue-500" size={20} />
               <h4 className="font-bold text-gray-900">
-                {t('week11.devTools.fpsMonitoring.title')}
+                {t('devTools.fpsMonitoring.title')}
               </h4>
             </div>
             <p className="text-sm text-gray-600">
-              {t('week11.devTools.fpsMonitoring.description')}
+              {t('devTools.fpsMonitoring.description')}
             </p>
             <div className="bg-gray-50 rounded-lg p-3 text-xs text-gray-500">
-              {t('week11.devTools.fpsMonitoring.note')}
+              {t('devTools.fpsMonitoring.note')}
             </div>
           </div>
 
@@ -325,14 +325,14 @@ export function DevToolsSection() {
             <div className="flex items-center gap-2">
               <Search className="text-green-500" size={20} />
               <h4 className="font-bold text-gray-900">
-                {t('week11.devTools.callTree.title')}
+                {t('devTools.callTree.title')}
               </h4>
             </div>
             <p className="text-sm text-gray-600">
-              {t('week11.devTools.callTree.description')}
+              {t('devTools.callTree.description')}
             </p>
             <div className="bg-gray-50 rounded-lg p-3 text-xs text-gray-500">
-              {t('week11.devTools.callTree.note')}
+              {t('devTools.callTree.note')}
             </div>
           </div>
         </div>
@@ -340,7 +340,7 @@ export function DevToolsSection() {
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex gap-3">
           <AlertTriangle className="text-amber-600 shrink-0" size={20} />
           <div className="text-sm text-amber-800">
-            {t('week11.devTools.proTip')}
+            {t('devTools.proTip')}
           </div>
         </div>
 
@@ -348,14 +348,14 @@ export function DevToolsSection() {
           <div className="flex items-center gap-2 mb-3">
             <Zap className="text-purple-600" size={20} />
             <h4 className="font-bold text-gray-900">
-              {t('week11.devTools.lighthouse.title')}
+              {t('devTools.lighthouse.title')}
             </h4>
           </div>
           <p className="text-sm text-gray-600 mb-3">
-            {t('week11.devTools.lighthouse.description')}
+            {t('devTools.lighthouse.description')}
           </p>
           <div className="flex flex-wrap gap-2">
-            {t('week11.devTools.lighthouse.categories', {
+            {t('devTools.lighthouse.categories', {
               returnObjects: true,
             }).map((category: string) => (
               <span

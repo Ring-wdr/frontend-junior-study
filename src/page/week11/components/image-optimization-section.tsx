@@ -64,12 +64,12 @@ export function ImageOptimizationSection() {
             <ImageIcon size={24} />
           </div>
           <h2 className="text-2xl font-bold text-gray-900">
-            {t('week11.imageOptimization.title')}
+            {t('imageOptimization.title')}
           </h2>
         </div>
 
         <p className="text-gray-600 leading-relaxed text-lg">
-          {t('week11.imageOptimization.description')}
+          {t('imageOptimization.description')}
         </p>
 
         {/* Visualizer */}

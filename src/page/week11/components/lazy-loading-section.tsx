@@ -71,12 +71,12 @@ export function LazyLoadingSection() {
             <Eye size={24} />
           </div>
           <h2 className="text-2xl font-bold text-gray-900">
-            {t('week11.lazyLoading.title')}
+            {t('lazyLoading.title')}
           </h2>
         </div>
 
         <p className="text-gray-600 leading-relaxed text-lg">
-          {t('week11.lazyLoading.description')}
+          {t('lazyLoading.description')}
         </p>
 
         {/* Visualizer */}

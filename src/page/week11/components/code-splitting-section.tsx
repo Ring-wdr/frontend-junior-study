@@ -5,7 +5,6 @@ import {
   Laptop,
   Layers,
   Package,
-  RefreshCw,
   Server,
   Zap,
 } from 'lucide-react';
@@ -83,12 +82,12 @@ export function CodeSplittingSection() {
             <Package size={24} />
           </div>
           <h2 className="text-2xl font-bold text-gray-900">
-            {t('week11.codeSplitting.title')}
+            {t('codeSplitting.title')}
           </h2>
         </div>
 
         <p className="text-gray-600 leading-relaxed text-lg">
-          {t('week11.codeSplitting.description')}
+          {t('codeSplitting.description')}
         </p>
 
         {/* Visualizer */}
@@ -97,10 +96,10 @@ export function CodeSplittingSection() {
             <div>
               <h3 className="font-bold text-white flex items-center gap-2">
                 <Download size={18} className="text-indigo-400" />{' '}
-                {t('week11.codeSplitting.simulatorTitle')}
+                {t('codeSplitting.simulatorTitle')}
               </h3>
               <p className="text-xs text-slate-400 mt-1">
-                {t('week11.codeSplitting.simulatorDesc')}
+                {t('codeSplitting.simulatorDesc')}
               </p>
             </div>
             <div className="flex bg-slate-800 p-1 rounded-lg">
@@ -117,7 +116,7 @@ export function CodeSplittingSection() {
                     : 'text-slate-400 hover:text-white',
                 )}
               >
-                {t('week11.codeSplitting.monolithicBundle')}
+                {t('codeSplitting.monolithicBundle')}
               </button>
               <button
                 type="button"
@@ -132,7 +131,7 @@ export function CodeSplittingSection() {
                     : 'text-slate-400 hover:text-white',
                 )}
               >
-                {t('week11.codeSplitting.codeSplittingModern')}
+                {t('codeSplitting.codeSplittingModern')}
               </button>
             </div>
           </div>
@@ -142,7 +141,7 @@ export function CodeSplittingSection() {
             <div className="flex flex-col items-center gap-2 w-24 shrink-0">
               <Server size={32} className="text-slate-500" />
               <span className="text-xs text-slate-500 font-mono">
-                {t('week11.codeSplitting.server')}
+                {t('codeSplitting.server')}
               </span>
             </div>
 
@@ -158,11 +157,11 @@ export function CodeSplittingSection() {
 
               {/* Split Tracks (Only visible in Split mode conceptually, but we simulate requests) */}
               <div className="flex justify-between text-xs text-slate-400 font-mono">
-                <span>{t('week11.codeSplitting.runningRequest')}</span>
+                <span>{t('codeSplitting.runningRequest')}</span>
                 <span>
                   {isSimulating
-                    ? t('week11.codeSplitting.downloading')
-                    : t('week11.codeSplitting.idle')}
+                    ? t('codeSplitting.downloading')
+                    : t('codeSplitting.idle')}
                 </span>
               </div>
             </div>
@@ -171,7 +170,7 @@ export function CodeSplittingSection() {
             <div className="flex flex-col items-center gap-2 w-24 shrink-0">
               <Laptop size={32} className="text-slate-500" />
               <span className="text-xs text-slate-500 font-mono">
-                {t('week11.codeSplitting.client')}
+                {t('codeSplitting.client')}
               </span>
             </div>
           </div>
@@ -188,19 +187,19 @@ export function CodeSplittingSection() {
             >
               <div className="flex justify-between items-center mb-2">
                 <span className="font-bold text-white">
-                  {t('week11.codeSplitting.mainApp')}
+                  {t('codeSplitting.mainApp')}
                 </span>
                 {mode === 'split' && (
                   <span className="text-xs bg-indigo-900 text-indigo-300 px-1.5 py-0.5 rounded">
-                    {t('week11.codeSplitting.coreChunk')}
+                    {t('codeSplitting.coreChunk')}
                   </span>
                 )}
               </div>
               {isLoaded.main ? (
                 <div className="text-xs text-indigo-300">
-                  {t('week11.codeSplitting.loaded')}
+                  {t('codeSplitting.loaded')}
                   <br />
-                  {t('week11.codeSplitting.readyToInteract')}
+                  {t('codeSplitting.readyToInteract')}
                 </div>
               ) : (
                 <button
@@ -210,15 +209,15 @@ export function CodeSplittingSection() {
                   className="w-full py-1.5 bg-indigo-600 text-white text-xs rounded hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSimulating && loadingState.main > 0
-                    ? t('week11.codeSplitting.loading')
-                    : t('week11.codeSplitting.loadApp')}
+                    ? t('codeSplitting.loading')
+                    : t('codeSplitting.loadApp')}
                 </button>
               )}
 
               {mode === 'monolith' && (
                 <div className="absolute inset-0 bg-slate-900/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                   <div className="text-xs text-center p-2 text-white">
-                    {t('week11.codeSplitting.containsEverything')}
+                    {t('codeSplitting.containsEverything')}
                   </div>
                 </div>
               )}
@@ -234,25 +233,25 @@ export function CodeSplittingSection() {
             >
               <div className="flex justify-between items-center mb-2">
                 <span className="font-bold text-white">
-                  {t('week11.codeSplitting.dashboard')}
+                  {t('codeSplitting.dashboard')}
                 </span>
                 {mode === 'split' && (
                   <span className="text-xs bg-green-900 text-green-300 px-1.5 py-0.5 rounded">
-                    {t('week11.codeSplitting.lazyChunk')}
+                    {t('codeSplitting.lazyChunk')}
                   </span>
                 )}
               </div>
               {isLoaded.dashboard ? (
                 <div className="text-xs text-green-400">
-                  {t('week11.codeSplitting.loaded')}
+                  {t('codeSplitting.loaded')}
                   <br />
-                  {t('week11.codeSplitting.userRequested')}
+                  {t('codeSplitting.userRequested')}
                 </div>
               ) : mode === 'monolith' ? (
                 <div className="text-xs text-slate-500">
                   {isLoaded.main
-                    ? t('week11.codeSplitting.bundledWithMain')
-                    : t('week11.codeSplitting.waitingForMain')}
+                    ? t('codeSplitting.bundledWithMain')
+                    : t('codeSplitting.waitingForMain')}
                 </div>
               ) : (
                 <button
@@ -261,7 +260,7 @@ export function CodeSplittingSection() {
                   disabled={!isLoaded.main || (isSimulating as boolean)}
                   className="w-full py-1.5 bg-slate-700 text-slate-300 text-xs rounded hover:bg-green-600 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
                 >
-                  {t('week11.codeSplitting.loadFeature')}
+                  {t('codeSplitting.loadFeature')}
                 </button>
               )}
             </div>
@@ -275,25 +274,25 @@ export function CodeSplittingSection() {
             >
               <div className="flex justify-between items-center mb-2">
                 <span className="font-bold text-white">
-                  {t('week11.codeSplitting.heavyChart')}
+                  {t('codeSplitting.heavyChart')}
                 </span>
                 {mode === 'split' && (
                   <span className="text-xs bg-pink-900 text-pink-300 px-1.5 py-0.5 rounded">
-                    {t('week11.codeSplitting.lazyChunk')}
+                    {t('codeSplitting.lazyChunk')}
                   </span>
                 )}
               </div>
               {isLoaded.chart ? (
                 <div className="text-xs text-pink-400">
-                  {t('week11.codeSplitting.loaded')}
+                  {t('codeSplitting.loaded')}
                   <br />
-                  {t('week11.codeSplitting.userRequested')}
+                  {t('codeSplitting.userRequested')}
                 </div>
               ) : mode === 'monolith' ? (
                 <div className="text-xs text-slate-500">
                   {isLoaded.main
-                    ? t('week11.codeSplitting.bundledWithMain')
-                    : t('week11.codeSplitting.waitingForMain')}
+                    ? t('codeSplitting.bundledWithMain')
+                    : t('codeSplitting.waitingForMain')}
                 </div>
               ) : (
                 <button
@@ -302,7 +301,7 @@ export function CodeSplittingSection() {
                   disabled={!isLoaded.main || (isSimulating as boolean)}
                   className="w-full py-1.5 bg-slate-700 text-slate-300 text-xs rounded hover:bg-pink-600 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
                 >
-                  {t('week11.codeSplitting.loadFeature')}
+                  {t('codeSplitting.loadFeature')}
                 </button>
               )}
             </div>
@@ -312,18 +311,17 @@ export function CodeSplittingSection() {
             {mode === 'monolith' ? (
               <span>
                 <span className="text-red-400">
-                  {t('week11.codeSplitting.blockingTime')} 3000ms
+                  {t('codeSplitting.blockingTime')} 3000ms
                 </span>{' '}
-                | {t('week11.codeSplitting.totalBundleSize')} 5MB (Loaded
-                upfront)
+                | {t('codeSplitting.totalBundleSize')} 5MB (Loaded upfront)
               </span>
             ) : (
               <span>
                 <span className="text-green-400">
-                  {t('week11.codeSplitting.blockingTime')} 800ms
+                  {t('codeSplitting.blockingTime')} 800ms
                 </span>{' '}
-                | {t('week11.codeSplitting.initialBundle')} 1.2MB |{' '}
-                {t('week11.codeSplitting.otherChunks')}
+                | {t('codeSplitting.initialBundle')} 1.2MB |{' '}
+                {t('codeSplitting.otherChunks')}
               </span>
             )}
           </div>
@@ -418,14 +416,16 @@ const HeavyEditor = dynamic(
             <div className="flex items-center gap-2 mb-3">
               <Box className="text-indigo-600" size={20} />
               <h4 className="font-bold text-gray-900">
-                {t('week11.codeSplitting.whenToUse.title')}
+                {t('codeSplitting.whenToUse.title')}
               </h4>
             </div>
             <ul className="space-y-2 text-sm text-gray-600">
-              {t('week11.codeSplitting.whenToUse.items', {
-                returnObjects: true,
-              }).map((item: string, idx: number) => (
-                <li key={idx} className="flex items-start gap-2">
+              {(
+                t('codeSplitting.whenToUse.items', {
+                  returnObjects: true,
+                }) as string[]
+              ).map((item: string) => (
+                <li key={item} className="flex items-start gap-2">
                   <span className="text-indigo-500">•</span>
                   <span>{item}</span>
                 </li>
@@ -437,14 +437,16 @@ const HeavyEditor = dynamic(
             <div className="flex items-center gap-2 mb-3">
               <Layers className="text-green-600" size={20} />
               <h4 className="font-bold text-gray-900">
-                {t('week11.codeSplitting.benefits.title')}
+                {t('codeSplitting.benefits.title')}
               </h4>
             </div>
             <ul className="space-y-2 text-sm text-gray-600">
-              {t('week11.codeSplitting.benefits.items', {
-                returnObjects: true,
-              }).map((item: string, idx: number) => (
-                <li key={idx} className="flex items-start gap-2">
+              {(
+                t('codeSplitting.benefits.items', {
+                  returnObjects: true,
+                }) as string[]
+              ).map((item: string) => (
+                <li key={item} className="flex items-start gap-2">
                   <span className="text-green-500">✓</span>
                   <span>{item}</span>
                 </li>
@@ -456,7 +458,7 @@ const HeavyEditor = dynamic(
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex gap-3">
           <Zap className="text-blue-600 shrink-0" size={20} />
           <div className="text-sm text-blue-800">
-            {t('week11.codeSplitting.routeBasedInfo')}
+            {t('codeSplitting.routeBasedInfo')}
           </div>
         </div>
       </div>

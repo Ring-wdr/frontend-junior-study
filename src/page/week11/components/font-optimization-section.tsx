@@ -38,12 +38,12 @@ export function FontOptimizationSection() {
             <Type size={24} />
           </div>
           <h2 className="text-2xl font-bold text-gray-900">
-            {t('week11.fontOptimization.title')}
+            {t('fontOptimization.title')}
           </h2>
         </div>
 
         <p className="text-gray-600 leading-relaxed text-lg">
-          {t('week11.fontOptimization.description')}
+          {t('fontOptimization.description')}
         </p>
 
         {/* Visualizer */}
@@ -52,10 +52,10 @@ export function FontOptimizationSection() {
             <div>
               <h3 className="font-bold text-amber-900 flex items-center gap-2">
                 <Type size={18} className="text-amber-600" />{' '}
-                {t('week11.fontOptimization.simulatorTitle')}
+                {t('fontOptimization.simulatorTitle')}
               </h3>
               <p className="text-xs text-amber-700 mt-1">
-                {t('week11.fontOptimization.simulatorDesc')}
+                {t('fontOptimization.simulatorDesc')}
               </p>
             </div>
             <div className="flex bg-white p-1 rounded-lg border border-amber-100 shadow-sm">
@@ -67,7 +67,7 @@ export function FontOptimizationSection() {
                 }}
                 className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${strategy === 'swap' ? 'bg-amber-100 text-amber-800' : 'text-gray-500 hover:text-gray-800'}`}
               >
-                {t('week11.fontOptimization.displaySwap')}
+                {t('fontOptimization.displaySwap')}
               </button>
               <button
                 type="button"
@@ -77,19 +77,19 @@ export function FontOptimizationSection() {
                 }}
                 className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${strategy === 'block' ? 'bg-amber-100 text-amber-800' : 'text-gray-500 hover:text-gray-800'}`}
               >
-                {t('week11.fontOptimization.displayBlock')}
+                {t('fontOptimization.displayBlock')}
               </button>
             </div>
           </div>
 
           <div className="bg-white rounded-lg border border-amber-200 p-8 min-h-[200px] flex flex-col justify-between relative overflow-hidden">
             <div className="absolute top-4 right-4 text-xs font-mono text-gray-400">
-              {t('week11.fontOptimization.status')}{' '}
+              {t('fontOptimization.status')}{' '}
               {fontStatus === 'loading'
-                ? t('week11.fontOptimization.downloadingFont')
+                ? t('fontOptimization.downloadingFont')
                 : fontStatus === 'custom'
-                  ? t('week11.fontOptimization.customFontApplied')
-                  : t('week11.fontOptimization.fallbackFont')}
+                  ? t('fontOptimization.customFontApplied')
+                  : t('fontOptimization.fallbackFont')}
             </div>
 
             <div className={`transition-all duration-300`}>
@@ -139,15 +139,15 @@ export function FontOptimizationSection() {
                   className={fontStatus === 'loading' ? 'animate-spin' : ''}
                 />
                 {fontStatus === 'custom'
-                  ? t('week11.fontOptimization.resetToTryAgain')
-                  : t('week11.fontOptimization.loadCustomFont')}
+                  ? t('fontOptimization.resetToTryAgain')
+                  : t('fontOptimization.loadCustomFont')}
               </button>
 
               {fontStatus === 'custom' && (
                 <div className="flex gap-4">
                   <div className="text-right">
                     <div className="text-xs text-gray-500">
-                      {t('week11.fontOptimization.uxImpact')}
+                      {t('fontOptimization.uxImpact')}
                     </div>
                     <div
                       className={`text-sm font-bold flex items-center gap-1 justify-end ${strategy === 'swap' ? 'text-amber-600' : 'text-red-600'}`}
@@ -155,19 +155,19 @@ export function FontOptimizationSection() {
                       {strategy === 'swap' ? (
                         <>
                           <Eye size={14} />{' '}
-                          {t('week11.fontOptimization.textAlwaysVisible')}
+                          {t('fontOptimization.textAlwaysVisible')}
                         </>
                       ) : (
                         <>
                           <EyeOff size={14} />{' '}
-                          {t('week11.fontOptimization.textInvisible')}
+                          {t('fontOptimization.textInvisible')}
                         </>
                       )}
                     </div>
                   </div>
                   <div className="text-right">
                     <div className="text-xs text-gray-500">
-                      {t('week11.fontOptimization.clsImpact')}
+                      {t('fontOptimization.clsImpact')}
                     </div>
                     <div
                       className={`text-sm font-bold flex items-center gap-1 justify-end ${strategy === 'swap' ? 'text-amber-600' : 'text-green-600'}`}
@@ -175,12 +175,12 @@ export function FontOptimizationSection() {
                       {strategy === 'swap' ? (
                         <>
                           <AlertTriangle size={14} />{' '}
-                          {t('week11.fontOptimization.minorShift')}
+                          {t('fontOptimization.minorShift')}
                         </>
                       ) : (
                         <>
                           <Zap size={14} />{' '}
-                          {t('week11.fontOptimization.noShift')}
+                          {t('fontOptimization.noShift')}
                         </>
                       )}
                     </div>
@@ -203,21 +203,21 @@ export function FontOptimizationSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="border border-red-200 bg-red-50 rounded-xl p-5">
             <h3 className="font-bold text-red-900 mb-3">
-              {t('week11.fontOptimization.foutFoit.title')}
+              {t('fontOptimization.foutFoit.title')}
             </h3>
             <div className="space-y-3 text-sm text-red-800">
               <div className="bg-white/70 rounded-lg p-3">
-                <strong>{t('week11.fontOptimization.foutFoit.fout.name')}</strong>{' '}
-                ({t('week11.fontOptimization.foutFoit.fout.fullName')})
+                <strong>{t('fontOptimization.foutFoit.fout.name')}</strong>{' '}
+                ({t('fontOptimization.foutFoit.fout.fullName')})
                 <p className="text-xs mt-1">
-                  {t('week11.fontOptimization.foutFoit.fout.description')}
+                  {t('fontOptimization.foutFoit.fout.description')}
                 </p>
               </div>
               <div className="bg-white/70 rounded-lg p-3">
-                <strong>{t('week11.fontOptimization.foutFoit.foit.name')}</strong>{' '}
-                ({t('week11.fontOptimization.foutFoit.foit.fullName')})
+                <strong>{t('fontOptimization.foutFoit.foit.name')}</strong>{' '}
+                ({t('fontOptimization.foutFoit.foit.fullName')})
                 <p className="text-xs mt-1">
-                  {t('week11.fontOptimization.foutFoit.foit.description')}
+                  {t('fontOptimization.foutFoit.foit.description')}
                 </p>
               </div>
             </div>
@@ -225,7 +225,7 @@ export function FontOptimizationSection() {
 
           <div className="border border-green-200 bg-green-50 rounded-xl p-5">
             <h3 className="font-bold text-green-900 mb-3">
-              {t('week11.fontOptimization.fontDisplayStrategy.title')}
+              {t('fontOptimization.fontDisplayStrategy.title')}
             </h3>
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2">
@@ -233,7 +233,7 @@ export function FontOptimizationSection() {
                   swap
                 </code>
                 <span className="text-green-800">
-                  {t('week11.fontOptimization.fontDisplayStrategy.swap')}
+                  {t('fontOptimization.fontDisplayStrategy.swap')}
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -241,7 +241,7 @@ export function FontOptimizationSection() {
                   optional
                 </code>
                 <span className="text-green-800">
-                  {t('week11.fontOptimization.fontDisplayStrategy.optional')}
+                  {t('fontOptimization.fontDisplayStrategy.optional')}
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -249,7 +249,7 @@ export function FontOptimizationSection() {
                   fallback
                 </code>
                 <span className="text-green-800">
-                  {t('week11.fontOptimization.fontDisplayStrategy.fallback')}
+                  {t('fontOptimization.fontDisplayStrategy.fallback')}
                 </span>
               </div>
             </div>
@@ -294,12 +294,12 @@ export default function RootLayout({ children }) {
         <div className="bg-gray-50 rounded-xl p-5">
           <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
             <Zap className="text-amber-600" size={20} />
-            {t('week11.fontOptimization.optimizationTechniques.title')}
+            {t('fontOptimization.optimizationTechniques.title')}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white rounded-lg p-4 border border-gray-200">
               <h4 className="font-semibold text-gray-900 mb-2">
-                {t('week11.fontOptimization.optimizationTechniques.preload.title')}
+                {t('fontOptimization.optimizationTechniques.preload.title')}
               </h4>
               <div className="bg-gray-900 rounded p-2 overflow-x-auto">
                 <div className="overflow-hidden rounded-lg">
@@ -319,10 +319,10 @@ export default function RootLayout({ children }) {
 
             <div className="bg-white rounded-lg p-4 border border-gray-200">
               <h4 className="font-semibold text-gray-900 mb-2">
-                {t('week11.fontOptimization.optimizationTechniques.subset.title')}
+                {t('fontOptimization.optimizationTechniques.subset.title')}
               </h4>
               <p className="text-sm text-gray-600 mb-2">
-                {t('week11.fontOptimization.optimizationTechniques.subset.description')}
+                {t('fontOptimization.optimizationTechniques.subset.description')}
               </p>
               <div className="flex flex-wrap gap-2">
                 {['latin', 'latin-ext', 'korean', 'digits'].map((subset) => (
@@ -338,19 +338,19 @@ export default function RootLayout({ children }) {
 
             <div className="bg-white rounded-lg p-4 border border-gray-200">
               <h4 className="font-semibold text-gray-900 mb-2">
-                {t('week11.fontOptimization.optimizationTechniques.woff2.title')}
+                {t('fontOptimization.optimizationTechniques.woff2.title')}
               </h4>
               <p className="text-sm text-gray-600">
-                {t('week11.fontOptimization.optimizationTechniques.woff2.description')}
+                {t('fontOptimization.optimizationTechniques.woff2.description')}
               </p>
             </div>
 
             <div className="bg-white rounded-lg p-4 border border-gray-200">
               <h4 className="font-semibold text-gray-900 mb-2">
-                {t('week11.fontOptimization.optimizationTechniques.variable.title')}
+                {t('fontOptimization.optimizationTechniques.variable.title')}
               </h4>
               <p className="text-sm text-gray-600">
-                {t('week11.fontOptimization.optimizationTechniques.variable.description')}
+                {t('fontOptimization.optimizationTechniques.variable.description')}
               </p>
             </div>
           </div>
@@ -359,7 +359,7 @@ export default function RootLayout({ children }) {
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex gap-3">
           <AlertTriangle className="text-amber-600 shrink-0" size={20} />
           <div className="text-sm text-amber-800">
-            {t('week11.fontOptimization.koreanFontWarning')}
+            {t('fontOptimization.koreanFontWarning')}
           </div>
         </div>
       </div>

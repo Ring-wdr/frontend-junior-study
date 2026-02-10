@@ -104,12 +104,12 @@ export function NetworkOptimizationSection() {
             <Globe size={24} />
           </div>
           <h2 className="text-2xl font-bold text-gray-900">
-            {t('week11.networkOptimization.title')}
+            {t('networkOptimization.title')}
           </h2>
         </div>
 
         <p className="text-gray-600 leading-relaxed text-lg">
-          {t('week11.networkOptimization.description')}
+          {t('networkOptimization.description')}
         </p>
 
         {/* Visualizer */}

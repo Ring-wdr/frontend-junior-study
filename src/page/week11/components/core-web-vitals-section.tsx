@@ -18,44 +18,44 @@ export function CoreWebVitalsSection() {
 
   const metrics = {
     lcp: {
-      name: t('week11.coreWebVitals.lcp.name'),
-      fullName: t('week11.coreWebVitals.lcp.fullName'),
+      name: t('coreWebVitals.lcp.name'),
+      fullName: t('coreWebVitals.lcp.fullName'),
       icon: <Clock className="text-blue-600" size={24} />,
       color: 'blue',
-      description: t('week11.coreWebVitals.lcp.description'),
-      good: t('week11.coreWebVitals.lcp.good'),
-      needsImprovement: t('week11.coreWebVitals.lcp.needsImprovement'),
-      poor: t('week11.coreWebVitals.lcp.poor'),
-      causes: t('week11.coreWebVitals.lcp.causes', { returnObjects: true }),
-      solutions: t('week11.coreWebVitals.lcp.solutions', {
+      description: t('coreWebVitals.lcp.description'),
+      good: t('coreWebVitals.lcp.good'),
+      needsImprovement: t('coreWebVitals.lcp.needsImprovement'),
+      poor: t('coreWebVitals.lcp.poor'),
+      causes: t('coreWebVitals.lcp.causes', { returnObjects: true }),
+      solutions: t('coreWebVitals.lcp.solutions', {
         returnObjects: true,
       }),
     },
     inp: {
-      name: t('week11.coreWebVitals.inp.name'),
-      fullName: t('week11.coreWebVitals.inp.fullName'),
+      name: t('coreWebVitals.inp.name'),
+      fullName: t('coreWebVitals.inp.fullName'),
       icon: <MousePointer className="text-purple-600" size={24} />,
       color: 'purple',
-      description: t('week11.coreWebVitals.inp.description'),
-      good: t('week11.coreWebVitals.inp.good'),
-      needsImprovement: t('week11.coreWebVitals.inp.needsImprovement'),
-      poor: t('week11.coreWebVitals.inp.poor'),
-      causes: t('week11.coreWebVitals.inp.causes', { returnObjects: true }),
-      solutions: t('week11.coreWebVitals.inp.solutions', {
+      description: t('coreWebVitals.inp.description'),
+      good: t('coreWebVitals.inp.good'),
+      needsImprovement: t('coreWebVitals.inp.needsImprovement'),
+      poor: t('coreWebVitals.inp.poor'),
+      causes: t('coreWebVitals.inp.causes', { returnObjects: true }),
+      solutions: t('coreWebVitals.inp.solutions', {
         returnObjects: true,
       }),
     },
     cls: {
-      name: t('week11.coreWebVitals.cls.name'),
-      fullName: t('week11.coreWebVitals.cls.fullName'),
+      name: t('coreWebVitals.cls.name'),
+      fullName: t('coreWebVitals.cls.fullName'),
       icon: <Move className="text-orange-600" size={24} />,
       color: 'orange',
-      description: t('week11.coreWebVitals.cls.description'),
-      good: t('week11.coreWebVitals.cls.good'),
-      needsImprovement: t('week11.coreWebVitals.cls.needsImprovement'),
-      poor: t('week11.coreWebVitals.cls.poor'),
-      causes: t('week11.coreWebVitals.cls.causes', { returnObjects: true }),
-      solutions: t('week11.coreWebVitals.cls.solutions', {
+      description: t('coreWebVitals.cls.description'),
+      good: t('coreWebVitals.cls.good'),
+      needsImprovement: t('coreWebVitals.cls.needsImprovement'),
+      poor: t('coreWebVitals.cls.poor'),
+      causes: t('coreWebVitals.cls.causes', { returnObjects: true }),
+      solutions: t('coreWebVitals.cls.solutions', {
         returnObjects: true,
       }),
     },
@@ -164,12 +164,12 @@ export function CoreWebVitalsSection() {
             {current.icon}
           </div>
           <h2 className="text-2xl font-bold text-gray-900">
-            {t('week11.coreWebVitals.title')}
+            {t('coreWebVitals.title')}
           </h2>
         </div>
 
         <p className="text-gray-600 leading-relaxed text-lg">
-          <Trans t={t} i18nKey="week11.coreWebVitals.description" />
+          <Trans t={t} i18nKey="coreWebVitals.description" />
         </p>
 
         <div className="flex gap-2 p-1 bg-gray-100 rounded-lg">
@@ -194,7 +194,7 @@ export function CoreWebVitalsSection() {
           <div className="bg-gray-50 p-4 border-b border-gray-200 flex justify-between items-center">
             <h3 className="font-semibold text-gray-700 flex items-center gap-2">
               <Zap size={16} className="text-yellow-500" />
-              {current.name} {t('week11.coreWebVitals.visualizerTitle')}
+              {current.name} {t('coreWebVitals.visualizerTitle')}
             </h3>
             <div className="flex items-center gap-4 text-sm">
               {selectedMetric === 'lcp' && (
@@ -204,14 +204,14 @@ export function CoreWebVitalsSection() {
                     onClick={() => setLcpMode('good')}
                     className={`px-3 py-1 rounded ${lcpMode === 'good' ? 'bg-green-100 text-green-700 font-medium' : 'text-gray-500 hover:bg-gray-50'}`}
                   >
-                    {t('week11.coreWebVitals.lcp.goodMode')}
+                    {t('coreWebVitals.lcp.goodMode')}
                   </button>
                   <button
                     type="button"
                     onClick={() => setLcpMode('bad')}
                     className={`px-3 py-1 rounded ${lcpMode === 'bad' ? 'bg-red-100 text-red-700 font-medium' : 'text-gray-500 hover:bg-gray-50'}`}
                   >
-                    {t('week11.coreWebVitals.lcp.badMode')}
+                    {t('coreWebVitals.lcp.badMode')}
                   </button>
                 </div>
               )}
@@ -222,14 +222,14 @@ export function CoreWebVitalsSection() {
                     onClick={() => setInpMode('good')}
                     className={`px-3 py-1 rounded ${inpMode === 'good' ? 'bg-green-100 text-green-700 font-medium' : 'text-gray-500 hover:bg-gray-50'}`}
                   >
-                    {t('week11.coreWebVitals.inp.goodMode')}
+                    {t('coreWebVitals.inp.goodMode')}
                   </button>
                   <button
                     type="button"
                     onClick={() => setInpMode('bad')}
                     className={`px-3 py-1 rounded ${inpMode === 'bad' ? 'bg-red-100 text-red-700 font-medium' : 'text-gray-500 hover:bg-gray-50'}`}
                   >
-                    {t('week11.coreWebVitals.inp.badMode')}
+                    {t('coreWebVitals.inp.badMode')}
                   </button>
                 </div>
               )}
@@ -244,7 +244,7 @@ export function CoreWebVitalsSection() {
                     }}
                     className={`px-3 py-1 rounded ${clsMode === 'good' ? 'bg-green-100 text-green-700 font-medium' : 'text-gray-500 hover:bg-gray-50'}`}
                   >
-                    {t('week11.coreWebVitals.cls.goodMode')}
+                    {t('coreWebVitals.cls.goodMode')}
                   </button>
                   <button
                     type="button"
@@ -255,7 +255,7 @@ export function CoreWebVitalsSection() {
                     }}
                     className={`px-3 py-1 rounded ${clsMode === 'bad' ? 'bg-red-100 text-red-700 font-medium' : 'text-gray-500 hover:bg-gray-50'}`}
                   >
-                    {t('week11.coreWebVitals.cls.badMode')}
+                    {t('coreWebVitals.cls.badMode')}
                   </button>
                 </div>
               )}
@@ -275,8 +275,8 @@ export function CoreWebVitalsSection() {
                   >
                     <RotateCcw size={12} />{' '}
                     {lcpState === 'loading'
-                      ? t('week11.coreWebVitals.lcp.loading')
-                      : t('week11.coreWebVitals.lcp.reloadPage')}
+                      ? t('coreWebVitals.lcp.loading')
+                      : t('coreWebVitals.lcp.reloadPage')}
                   </button>
                 </div>
                 <div className="space-y-3">
@@ -288,18 +288,18 @@ export function CoreWebVitalsSection() {
                   <div className="relative aspect-video bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden border border-gray-200">
                     {lcpState === 'loaded' ? (
                       <div className="w-full h-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl animate-in zoom-in-95 duration-500">
-                        {t('week11.coreWebVitals.lcp.heroImage')}
+                        {t('coreWebVitals.lcp.heroImage')}
                       </div>
                     ) : (
                       <div className="text-gray-400 text-sm">
-                        {t('week11.coreWebVitals.lcp.loadingText')}
+                        {t('coreWebVitals.lcp.loadingText')}
                       </div>
                     )}
                   </div>
 
                   <div className="flex justify-between items-center pt-2">
                     <span className="text-sm text-gray-500">
-                      {t('week11.coreWebVitals.lcp.time')}{' '}
+                      {t('coreWebVitals.lcp.time')}{' '}
                       <span className="font-mono text-gray-900">
                         {lcpTime}ms
                       </span>
@@ -312,8 +312,8 @@ export function CoreWebVitalsSection() {
                       }`}
                     >
                       {lcpTime > 2500
-                        ? t('week11.coreWebVitals.lcp.needsImprovementLabel')
-                        : t('week11.coreWebVitals.lcp.goodLabel')}
+                        ? t('coreWebVitals.lcp.needsImprovementLabel')
+                        : t('coreWebVitals.lcp.goodLabel')}
                     </span>
                   </div>
                 </div>
@@ -324,10 +324,10 @@ export function CoreWebVitalsSection() {
               <div className="w-full max-w-md bg-white rounded-lg shadow-sm border border-gray-200 p-6 flex flex-col items-center gap-6">
                 <div className="text-center space-y-2">
                   <h4 className="font-medium text-gray-900">
-                    {t('week11.coreWebVitals.inp.clickTest')}
+                    {t('coreWebVitals.inp.clickTest')}
                   </h4>
                   <p className="text-xs text-gray-500">
-                    {t('week11.coreWebVitals.inp.testButton')}
+                    {t('coreWebVitals.inp.testButton')}
                   </p>
                 </div>
 
@@ -343,8 +343,8 @@ export function CoreWebVitalsSection() {
                   }`}
                 >
                   {inpState === 'processing'
-                    ? t('week11.coreWebVitals.inp.processing')
-                    : t('week11.coreWebVitals.inp.clickMe')}
+                    ? t('coreWebVitals.inp.processing')
+                    : t('coreWebVitals.inp.clickMe')}
                 </button>
 
                 {inpState === 'responded' && (
@@ -358,16 +358,16 @@ export function CoreWebVitalsSection() {
                       className={`text-xs font-medium ${inpTime > 200 ? 'text-red-500' : 'text-green-500'}`}
                     >
                       {inpTime > 200
-                        ? t('week11.coreWebVitals.inp.slow')
-                        : t('week11.coreWebVitals.inp.fast')}
+                        ? t('coreWebVitals.inp.slow')
+                        : t('coreWebVitals.inp.fast')}
                     </div>
                   </div>
                 )}
 
                 <div className="text-xs text-center text-gray-400 max-w-[200px]">
                   {inpMode === 'bad'
-                    ? t('week11.coreWebVitals.inp.simulateHeavy')
-                    : t('week11.coreWebVitals.inp.simulateLightweight')}
+                    ? t('coreWebVitals.inp.simulateHeavy')
+                    : t('coreWebVitals.inp.simulateLightweight')}
                 </div>
               </div>
             )}
@@ -376,7 +376,7 @@ export function CoreWebVitalsSection() {
               <div className="w-full max-w-sm bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden flex flex-col h-[320px]">
                 <div className="bg-gray-50 px-4 py-2 border-b border-gray-100 flex justify-between items-center">
                   <span className="text-xs font-medium text-gray-500">
-                    {t('week11.coreWebVitals.cls.layoutView')}
+                    {t('coreWebVitals.cls.layoutView')}
                   </span>
                   <span
                     className={`text-xs font-mono font-bold ${clsScore > 0.1 ? 'text-red-600' : 'text-green-600'}`}
@@ -423,10 +423,10 @@ export function CoreWebVitalsSection() {
                     ))}
                     <div className="p-4 bg-blue-50 border border-blue-100 rounded-lg">
                       <h4 className="font-semibold text-blue-900 mb-1">
-                        {t('week11.coreWebVitals.cls.targetContent')}
+                        {t('coreWebVitals.cls.targetContent')}
                       </h4>
                       <p className="text-xs text-blue-700">
-                        {t('week11.coreWebVitals.cls.targetContentDesc')}
+                        {t('coreWebVitals.cls.targetContentDesc')}
                       </p>
                     </div>
                   </div>
@@ -451,7 +451,7 @@ export function CoreWebVitalsSection() {
             <div className="text-center p-3 bg-green-100 rounded-lg">
               <CheckCircle2 className="mx-auto text-green-600 mb-1" size={20} />
               <p className="text-xs text-gray-500">
-                {t('week11.coreWebVitals.metrics.good')}
+                {t('coreWebVitals.metrics.good')}
               </p>
               <p className="font-bold text-green-700">{current.good}</p>
             </div>
@@ -461,7 +461,7 @@ export function CoreWebVitalsSection() {
                 size={20}
               />
               <p className="text-xs text-gray-500">
-                {t('week11.coreWebVitals.metrics.needsWork')}
+                {t('coreWebVitals.metrics.needsWork')}
               </p>
               <p className="font-bold text-yellow-700">
                 {current.needsImprovement}
@@ -470,7 +470,7 @@ export function CoreWebVitalsSection() {
             <div className="text-center p-3 bg-red-100 rounded-lg">
               <Zap className="mx-auto text-red-600 mb-1" size={20} />
               <p className="text-xs text-gray-500">
-                {t('week11.coreWebVitals.metrics.poor')}
+                {t('coreWebVitals.metrics.poor')}
               </p>
               <p className="font-bold text-red-700">{current.poor}</p>
             </div>
@@ -480,7 +480,7 @@ export function CoreWebVitalsSection() {
             <div className="bg-white/50 rounded-lg p-4">
               <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
                 <span className="text-red-500">!</span>{' '}
-                {t('week11.coreWebVitals.metrics.causes')}
+                {t('coreWebVitals.metrics.causes')}
               </h4>
               <ul className="space-y-1.5 text-sm text-gray-600">
                 {(current.causes as string[]).map((cause) => (
@@ -491,7 +491,7 @@ export function CoreWebVitalsSection() {
             <div className="bg-white/50 rounded-lg p-4">
               <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
                 <CheckCircle2 size={16} className="text-green-500" />{' '}
-                {t('week11.coreWebVitals.metrics.solutions')}
+                {t('coreWebVitals.metrics.solutions')}
               </h4>
               <ul className="space-y-1.5 text-sm text-gray-600">
                 {(current.solutions as string[]).map((solution) => (
@@ -503,7 +503,7 @@ export function CoreWebVitalsSection() {
         </div>
 
         <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm text-gray-600">
-          {t('week11.coreWebVitals.measurementTools')}
+          {t('coreWebVitals.measurementTools')}
         </div>
       </div>
     </div>
