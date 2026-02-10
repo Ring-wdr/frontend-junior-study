@@ -1,0 +1,204 @@
+{
+  "header": {
+    "title": "React Three Fiber와 3D 웹 개발",
+    "description": "React 생태계에서 선언적으로 3D 그래픽을 개발하는 방법 마스터하기"
+  },
+  "tabs": {
+    "all": "All",
+    "r3f-intro": "R3F 소개",
+    "dev-setup": "개발 환경",
+    "core-concepts": "핵심 개념",
+    "hooks-animation": "Hooks & 애니메이션",
+    "drei-utilities": "Drei 유틸리티",
+    "interaction": "인터랙션",
+    "performance": "성능 최적화",
+    "advanced-techniques": "고급 기법"
+  },
+  "r3fIntro": {
+    "badge": "Core",
+    "title": "React Three Fiber란?",
+    "description": "Three.js를 React 방식으로 사용할 수 있게 해주는 선언적 3D 개발 라이브러리",
+    "featuresTitle": "핵심 특징",
+    "features": [
+      { "title": "선언적 3D 개발", "desc": "JSX 문법으로 3D 씬을 구성하여 직관적인 개발이 가능합니다", "icon": "box" },
+      { "title": "React 생태계 통합", "desc": "hooks, context, suspense 등 React 패턴을 그대로 활용합니다", "icon": "layers" },
+      { "title": "자동 리소스 관리", "desc": "컴포넌트 언마운트 시 GPU 메모리가 자동으로 정리됩니다", "icon": "refresh" },
+      { "title": "성능 최적화 내장", "desc": "React의 재조정 알고리즘으로 효율적인 렌더링을 제공합니다", "icon": "palette" }
+    ],
+    "comparisonTitle": "Three.js vs React Three Fiber",
+    "imperative": "명령형",
+    "declarative": "선언적",
+    "advantagesTitle": "R3F의 장점 비교",
+    "advantages": [
+      { "feature": "코드 스타일", "threejs": "명령형", "r3f": "선언적" },
+      { "feature": "리소스 관리", "threejs": "수동 dispose", "r3f": "자동 정리" },
+      { "feature": "상태 관리", "threejs": "직접 구현", "r3f": "React 상태/Context" },
+      { "feature": "컴포넌트 재사용", "threejs": "어려움", "r3f": "자연스러움" },
+      { "feature": "학습 곡선", "threejs": "Three.js 전체 학습", "r3f": "React 지식 활용" }
+    ],
+    "table": {
+      "feature": "특징"
+    },
+    "keyPoint": "핵심 포인트",
+    "keyPointDesc": "React Three Fiber는 Three.js의 모든 기능을 React 컴포넌트로 래핑하여, 기존 React 지식을 활용하면서도 강력한 3D 그래픽을 구현할 수 있게 해줍니다. 선언적 방식으로 코드 가독성이 높아지고, 자동 리소스 관리로 메모리 누수 걱정이 없습니다."
+  },
+  "devSetup": {
+    "badge": "Setup",
+    "title": "개발 환경 설정",
+    "description": "Vite + React + TypeScript 기반의 R3F 프로젝트 구축하기",
+    "installTitle": "프로젝트 생성 및 설치",
+    "installSteps": "필수 패키지 설치",
+    "structureTitle": "프로젝트 구조",
+    "recommendedStructure": "권장 폴더 구조",
+    "firstSceneTitle": "첫 번째 3D 씬",
+    "basicExample": "기본 예제",
+    "tipTitle": "개발 팁",
+    "tips": [
+      "@react-three/drei는 R3F 개발에 필수적인 유틸리티 컴포넌트를 제공합니다",
+      "TypeScript 타입(@types/three)을 설치하면 자동완성과 타입 안전성을 확보할 수 있습니다",
+      "OrbitControls를 추가하면 마우스로 카메라를 조작할 수 있어 개발이 편리합니다"
+    ]
+  },
+  "coreConcepts": {
+    "badge": "Concepts",
+    "title": "핵심 개념",
+    "description": "Canvas, Geometry, Material, Lighting, Shadow의 기본 이해",
+    "canvasTitle": "Canvas 컴포넌트",
+    "canvasDesc": "Canvas는 R3F의 최상위 컴포넌트로, WebGL 렌더러, 카메라, 씬을 자동으로 설정합니다.",
+    "geometryTitle": "Geometry와 Material",
+    "geometryDesc": "Geometry는 3D 오브젝트의 형태를, Material은 표면의 색상과 질감을 정의합니다.",
+    "lightingTitle": "조명 시스템",
+    "lightTypes": [
+      { "name": "ambientLight", "desc": "환경광", "icon": "ambient" },
+      { "name": "directionalLight", "desc": "방향광", "icon": "sun" },
+      { "name": "pointLight", "desc": "점광원", "icon": "lightbulb" },
+      { "name": "spotLight", "desc": "스포트라이트", "icon": "spotlight" }
+    ],
+    "shadowTitle": "그림자 설정",
+    "shadowNote": "그림자 설정 포인트",
+    "shadowTip1": "Canvas 속성으로 그림자 시스템 활성화",
+    "shadowTip2": "광원과 오브젝트에 그림자를 드리우도록 설정",
+    "shadowTip3": "바닥이나 벽에 그림자를 받도록 설정"
+  },
+  "hooksAnimation": {
+    "badge": "Hooks",
+    "title": "Hooks와 애니메이션",
+    "description": "useFrame, useThree, useLoader를 활용한 애니메이션 구현",
+    "hooks": [
+      { "name": "useFrame", "desc": "렌더 루프 내에서 매 프레임 실행되는 콜백" },
+      { "name": "useThree", "desc": "R3F 내부 상태(camera, gl, scene 등) 접근" },
+      { "name": "useLoader", "desc": "텍스처, 모델 등 에셋 비동기 로딩" }
+    ],
+    "useFrameDesc": "useFrame은 매 프레임마다 실행되어 애니메이션을 구현합니다. delta 값으로 프레임 독립적인 애니메이션을 만들 수 있습니다.",
+    "useThreeDesc": "useThree는 R3F의 내부 상태에 접근하여 카메라, 렌더러, 씬 등을 조작할 수 있게 해줍니다.",
+    "useLoaderDesc": "useLoader는 Three.js의 로더를 React Suspense와 통합하여 텍스처나 3D 모델을 로딩합니다.",
+    "customHookTitle": "커스텀 애니메이션 훅",
+    "customHookDesc": "lerp(선형 보간)를 활용한 부드러운 값 변화",
+    "tipTitle": "애니메이션 팁",
+    "tips": [
+      "delta 값을 사용하면 프레임 레이트에 상관없이 일정한 속도의 애니메이션을 구현할 수 있습니다",
+      "useThree에서 특정 값만 구독하면 불필요한 리렌더링을 방지할 수 있습니다",
+      "무거운 계산은 useMemo로 캐싱하여 성능을 최적화하세요"
+    ]
+  },
+  "dreiUtilities": {
+    "badge": "Drei",
+    "title": "@react-three/drei 유틸리티",
+    "description": "카메라 컨트롤, 환경, 텍스트, 모델 로딩 등 필수 유틸리티",
+    "categories": [
+      { "name": "Controls", "desc": "카메라 컨트롤" },
+      { "name": "Environment", "desc": "환경 설정" },
+      { "name": "Helpers", "desc": "디버깅 도구" },
+      { "name": "Text", "desc": "텍스트 렌더링" },
+      { "name": "Loaders", "desc": "모델 로딩" }
+    ],
+    "cameraTitle": "카메라 컨트롤",
+    "environmentTitle": "환경과 조명",
+    "presetNote": "Environment 프리셋",
+    "presetList": "city, sunset, dawn, night, warehouse, forest, apartment, studio, park, lobby 등의 프리셋을 사용하거나 커스텀 HDRI를 적용할 수 있습니다.",
+    "helpersTitle": "헬퍼와 디버깅",
+    "textTitle": "텍스트와 HTML",
+    "modelTitle": "모델 로딩",
+    "tipTitle": "Drei 활용 팁",
+    "tipDesc": "Drei의 useGLTF.preload를 사용하면 모델을 미리 로드하여 첫 렌더링 시 지연을 줄일 수 있습니다. Clone 컴포넌트로 같은 모델을 여러 번 효율적으로 렌더링하세요."
+  },
+  "interaction": {
+    "badge": "Interaction",
+    "title": "인터랙션",
+    "description": "포인터 이벤트, 드래그 앤 드롭, 레이캐스팅",
+    "pointerTitle": "포인터 이벤트",
+    "events": [
+      { "name": "onClick", "desc": "클릭 이벤트" },
+      { "name": "onPointerOver", "desc": "호버 진입" },
+      { "name": "onPointerOut", "desc": "호버 이탈" },
+      { "name": "onPointerDown", "desc": "포인터 누름" },
+      { "name": "onPointerUp", "desc": "포인터 뗌" },
+      { "name": "onDoubleClick", "desc": "더블 클릭" }
+    ],
+    "dragTitle": "드래그 & 드롭",
+    "dragDesc": "use-gesture와 react-spring을 조합하여 부드러운 드래그 상호작용을 구현합니다.",
+    "libraryNote": "라이브러리 조합",
+    "libraryNoteDesc": "@use-gesture/react로 제스처를 감지하고, @react-spring/three로 부드러운 애니메이션을 적용합니다.",
+    "raycastTitle": "Raycasting (광선 투사)",
+    "raycastDesc": "3D 공간에서 마우스 위치에 따른 오브젝트 감지를 위해 레이캐스팅을 사용합니다.",
+    "tipTitle": "인터랙션 팁",
+    "tips": [
+      "를 사용하여 이벤트 버블링을 방지하세요",
+      "document.body.style.cursor를 변경하여 커서를 직접 제어하세요",
+      "e.point로 3D 공간에서의 정확한 클릭 위치를 얻을 수 있습니다"
+    ]
+  },
+  "performance": {
+    "badge": "Performance",
+    "title": "성능 최적화",
+    "description": "인스턴싱, 프레임 제어, 메모리 관리, 모니터링",
+    "techniques": [
+      { "name": "Instancing", "desc": "대량 오브젝트" },
+      { "name": "Frameloop", "desc": "프레임 제어" },
+      { "name": "Memory", "desc": "메모리 관리" },
+      { "name": "Monitoring", "desc": "성능 모니터링" }
+    ],
+    "instanceTitle": "인스턴싱 (InstancedMesh)",
+    "instanceDesc": "동일한 geometry와 material을 가진 수천 개의 오브젝트를 단일 드로우 콜로 렌더링하여 성능을 크게 향상시킵니다.",
+    "frameTitle": "프레임 루프 제어",
+    "frameDesc": "Canvas의 frameloop 속성으로 렌더링 빈도를 제어하여 불필요한 리렌더링을 방지합니다.",
+    "frameAlways": "항상 렌더링",
+    "frameDemand": "요청 시 렌더링",
+    "frameNever": "수동 제어",
+    "memoryTitle": "메모리 관리",
+    "memoryDesc": "R3F는 컴포넌트 언마운트 시 자동으로 리소스를 정리하지만, 커스텀 정리가 필요한 경우도 있습니다.",
+    "monitorTitle": "성능 모니터링",
+    "checklistTitle": "성능 최적화 체크리스트",
+    "checklist": [
+      "동일 오브젝트 대량 렌더링 시 InstancedMesh 사용",
+      "정적인 씬에서는 frameloop=\"demand\" 설정",
+      "useThree에서 필요한 상태만 구독하여 리렌더링 최소화",
+      "무거운 계산은 useMemo로 캐싱",
+      "텍스처 해상도 최적화 및 압축 포맷 사용",
+      "복잡한 모델은 LOD(Level of Detail) 적용"
+    ]
+  },
+  "advancedTechniques": {
+    "badge": "Advanced",
+    "title": "고급 기법",
+    "description": "포스트 프로세싱, 셰이더, 물리 엔진, VR/AR",
+    "techniques": [
+      { "name": "Post Processing", "desc": "후처리 효과" },
+      { "name": "Shaders", "desc": "커스텀 셰이더" },
+      { "name": "Physics", "desc": "물리 엔진" },
+      { "name": "XR", "desc": "VR/AR 지원" }
+    ],
+    "postTitle": "포스트 프로세싱",
+    "postDesc": "@react-three/postprocessing으로 블룸, 색수차, 비네트 등 다양한 후처리 효과를 적용할 수 있습니다.",
+    "effects": ["Bloom", "Vignette", "DepthOfField", "ChromaticAberration", "SMAA"],
+    "shaderTitle": "커스텀 셰이더 (GLSL)",
+    "shaderDesc": "shaderMaterial을 사용하여 커스텀 버텍스/프래그먼트 셰이더를 작성할 수 있습니다.",
+    "shaderNote": "셰이더 학습 자료",
+    "shaderNoteDesc": "GLSL 셰이더를 처음 접한다면 The Book of Shaders(thebookofshaders.com)를 추천합니다.",
+    "physicsTitle": "물리 엔진 (Rapier)",
+    "physicsDesc": "@react-three/rapier를 사용하면 중력, 충돌, 탄성 등 현실적인 물리 시뮬레이션을 적용할 수 있습니다.",
+    "xrTitle": "XR (VR/AR)",
+    "xrDesc": "@react-three/xr로 WebXR 기반의 VR/AR 경험을 React 컴포넌트로 구현할 수 있습니다.",
+    "resourceTitle": "학습 자료"
+  }
+}

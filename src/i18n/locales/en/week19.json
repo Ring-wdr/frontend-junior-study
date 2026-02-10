@@ -1,0 +1,204 @@
+{
+  "header": {
+    "title": "React Three Fiber & 3D Web Development",
+    "description": "Master declarative 3D graphics development in the React ecosystem"
+  },
+  "tabs": {
+    "all": "All",
+    "r3f-intro": "R3F Intro",
+    "dev-setup": "Dev Setup",
+    "core-concepts": "Core Concepts",
+    "hooks-animation": "Hooks & Animation",
+    "drei-utilities": "Drei Utilities",
+    "interaction": "Interaction",
+    "performance": "Performance",
+    "advanced-techniques": "Advanced"
+  },
+  "r3fIntro": {
+    "badge": "Core",
+    "title": "What is React Three Fiber?",
+    "description": "A declarative 3D development library that enables using Three.js the React way",
+    "featuresTitle": "Key Features",
+    "features": [
+      { "title": "Declarative 3D Development", "desc": "Build 3D scenes with JSX syntax for intuitive development", "icon": "box" },
+      { "title": "React Ecosystem Integration", "desc": "Use React patterns like hooks, context, and suspense directly", "icon": "layers" },
+      { "title": "Automatic Resource Management", "desc": "GPU memory is automatically cleaned up on component unmount", "icon": "refresh" },
+      { "title": "Built-in Performance Optimization", "desc": "Efficient rendering through React's reconciliation algorithm", "icon": "palette" }
+    ],
+    "comparisonTitle": "Three.js vs React Three Fiber",
+    "imperative": "Imperative",
+    "declarative": "Declarative",
+    "advantagesTitle": "Comparing R3F Advantages",
+    "advantages": [
+      { "feature": "Code Style", "threejs": "Imperative", "r3f": "Declarative" },
+      { "feature": "Resource Management", "threejs": "Manual dispose", "r3f": "Auto cleanup" },
+      { "feature": "State Management", "threejs": "Custom implementation", "r3f": "React State/Context" },
+      { "feature": "Component Reuse", "threejs": "Difficult", "r3f": "Natural" },
+      { "feature": "Learning Curve", "threejs": "Learn entire Three.js", "r3f": "Leverage React knowledge" }
+    ],
+    "table": {
+      "feature": "Feature"
+    },
+    "keyPoint": "Key Point",
+    "keyPointDesc": "React Three Fiber wraps all Three.js functionality as React components, allowing you to build powerful 3D graphics while leveraging your existing React knowledge. The declarative approach improves code readability, and automatic resource management eliminates memory leak concerns."
+  },
+  "devSetup": {
+    "badge": "Setup",
+    "title": "Development Environment Setup",
+    "description": "Building an R3F project with Vite + React + TypeScript",
+    "installTitle": "Project Creation and Installation",
+    "installSteps": "Required Package Installation",
+    "structureTitle": "Project Structure",
+    "recommendedStructure": "Recommended Folder Structure",
+    "firstSceneTitle": "First 3D Scene",
+    "basicExample": "Basic Example",
+    "tipTitle": "Development Tips",
+    "tips": [
+      "@react-three/drei provides essential utility components for R3F development",
+      "Installing TypeScript types (@types/three) provides autocomplete and type safety",
+      "Adding OrbitControls enables mouse camera manipulation for easier development"
+    ]
+  },
+  "coreConcepts": {
+    "badge": "Concepts",
+    "title": "Core Concepts",
+    "description": "Understanding Canvas, Geometry, Material, Lighting, and Shadows",
+    "canvasTitle": "Canvas Component",
+    "canvasDesc": "Canvas is R3F's top-level component that automatically sets up the WebGL renderer, camera, and scene.",
+    "geometryTitle": "Geometry and Material",
+    "geometryDesc": "Geometry defines the shape of 3D objects, while Material defines surface color and texture.",
+    "lightingTitle": "Lighting System",
+    "lightTypes": [
+      { "name": "ambientLight", "desc": "Ambient light", "icon": "ambient" },
+      { "name": "directionalLight", "desc": "Directional light", "icon": "sun" },
+      { "name": "pointLight", "desc": "Point light", "icon": "lightbulb" },
+      { "name": "spotLight", "desc": "Spotlight", "icon": "spotlight" }
+    ],
+    "shadowTitle": "Shadow Settings",
+    "shadowNote": "Shadow Setup Key Points",
+    "shadowTip1": "- Enable shadow system on Canvas",
+    "shadowTip2": "- Set on lights and objects to cast shadows",
+    "shadowTip3": "- Set on floors/walls to receive shadows"
+  },
+  "hooksAnimation": {
+    "badge": "Hooks",
+    "title": "Hooks and Animation",
+    "description": "Implementing animations with useFrame, useThree, and useLoader",
+    "hooks": [
+      { "name": "useFrame", "desc": "Callback executed every frame in render loop" },
+      { "name": "useThree", "desc": "Access R3F internal state (camera, gl, scene, etc.)" },
+      { "name": "useLoader", "desc": "Async loading of assets like textures and models" }
+    ],
+    "useFrameDesc": "useFrame runs every frame to implement animations. Use the delta value to create frame-independent animations.",
+    "useThreeDesc": "useThree provides access to R3F's internal state, allowing you to manipulate camera, renderer, scene, and more.",
+    "useLoaderDesc": "useLoader integrates Three.js loaders with React Suspense to load textures and 3D models.",
+    "customHookTitle": "Custom Animation Hooks",
+    "customHookDesc": "Smooth value transitions using lerp (linear interpolation)",
+    "tipTitle": "Animation Tips",
+    "tips": [
+      "Using delta value ensures consistent animation speed regardless of frame rate",
+      "Subscribing only to needed values in useThree prevents unnecessary re-renders",
+      "Cache heavy computations with useMemo for performance optimization"
+    ]
+  },
+  "dreiUtilities": {
+    "badge": "Drei",
+    "title": "@react-three/drei Utilities",
+    "description": "Essential utilities for camera controls, environments, text, model loading, and more",
+    "categories": [
+      { "name": "Controls", "desc": "Camera controls" },
+      { "name": "Environment", "desc": "Environment setup" },
+      { "name": "Helpers", "desc": "Debug tools" },
+      { "name": "Text", "desc": "Text rendering" },
+      { "name": "Loaders", "desc": "Model loading" }
+    ],
+    "cameraTitle": "Camera Controls",
+    "environmentTitle": "Environment and Lighting",
+    "presetNote": "Environment Presets",
+    "presetList": "Use presets like city, sunset, dawn, night, warehouse, forest, apartment, studio, park, lobby, or apply custom HDRI.",
+    "helpersTitle": "Helpers and Debugging",
+    "textTitle": "Text and HTML",
+    "modelTitle": "Model Loading",
+    "tipTitle": "Drei Usage Tips",
+    "tipDesc": "Use Drei's useGLTF.preload to preload models and reduce delay on first render. Use Clone component to efficiently render the same model multiple times."
+  },
+  "interaction": {
+    "badge": "Interaction",
+    "title": "Interaction",
+    "description": "Pointer events, drag and drop, and raycasting",
+    "pointerTitle": "Pointer Events",
+    "events": [
+      { "name": "onClick", "desc": "Click event" },
+      { "name": "onPointerOver", "desc": "Hover enter" },
+      { "name": "onPointerOut", "desc": "Hover exit" },
+      { "name": "onPointerDown", "desc": "Pointer down" },
+      { "name": "onPointerUp", "desc": "Pointer up" },
+      { "name": "onDoubleClick", "desc": "Double click" }
+    ],
+    "dragTitle": "Drag & Drop",
+    "dragDesc": "Combine use-gesture and react-spring to implement smooth drag interactions.",
+    "libraryNote": "Library Combination",
+    "libraryNoteDesc": "Use @use-gesture/react for gesture detection and @react-spring/three for smooth animations.",
+    "raycastTitle": "Raycasting",
+    "raycastDesc": "Use raycasting to detect objects based on mouse position in 3D space.",
+    "tipTitle": "Interaction Tips",
+    "tips": [
+      "Use to prevent event bubbling",
+      "Control cursor directly by changing document.body.style.cursor",
+      "Use e.point to get the exact click position in 3D space"
+    ]
+  },
+  "performance": {
+    "badge": "Performance",
+    "title": "Performance Optimization",
+    "description": "Instancing, frame control, memory management, and monitoring",
+    "techniques": [
+      { "name": "Instancing", "desc": "Bulk objects" },
+      { "name": "Frameloop", "desc": "Frame control" },
+      { "name": "Memory", "desc": "Memory management" },
+      { "name": "Monitoring", "desc": "Performance monitoring" }
+    ],
+    "instanceTitle": "Instancing (InstancedMesh)",
+    "instanceDesc": "Render thousands of objects with the same geometry and material in a single draw call for significant performance improvement.",
+    "frameTitle": "Frame Loop Control",
+    "frameDesc": "Control rendering frequency with Canvas's frameloop property to prevent unnecessary re-renders.",
+    "frameAlways": "Always render",
+    "frameDemand": "Render on demand",
+    "frameNever": "Manual control",
+    "memoryTitle": "Memory Management",
+    "memoryDesc": "R3F automatically cleans up resources on component unmount, but custom cleanup may be needed in some cases.",
+    "monitorTitle": "Performance Monitoring",
+    "checklistTitle": "Performance Optimization Checklist",
+    "checklist": [
+      "Use InstancedMesh when rendering many identical objects",
+      "Set frameloop=\"demand\" for static scenes",
+      "Subscribe only to needed state in useThree to minimize re-renders",
+      "Cache heavy computations with useMemo",
+      "Optimize texture resolution and use compressed formats",
+      "Apply LOD (Level of Detail) for complex models"
+    ]
+  },
+  "advancedTechniques": {
+    "badge": "Advanced",
+    "title": "Advanced Techniques",
+    "description": "Post-processing, shaders, physics engine, and VR/AR",
+    "techniques": [
+      { "name": "Post Processing", "desc": "Post effects" },
+      { "name": "Shaders", "desc": "Custom shaders" },
+      { "name": "Physics", "desc": "Physics engine" },
+      { "name": "XR", "desc": "VR/AR support" }
+    ],
+    "postTitle": "Post Processing",
+    "postDesc": "Apply various post-processing effects like bloom, chromatic aberration, and vignette with @react-three/postprocessing.",
+    "effects": ["Bloom", "Vignette", "DepthOfField", "ChromaticAberration", "SMAA"],
+    "shaderTitle": "Custom Shaders (GLSL)",
+    "shaderDesc": "Write custom vertex/fragment shaders using shaderMaterial.",
+    "shaderNote": "Shader Learning Resources",
+    "shaderNoteDesc": "If you're new to GLSL shaders, we recommend The Book of Shaders (thebookofshaders.com).",
+    "physicsTitle": "Physics Engine (Rapier)",
+    "physicsDesc": "Apply realistic physics simulations like gravity, collision, and elasticity with @react-three/rapier.",
+    "xrTitle": "XR (VR/AR)",
+    "xrDesc": "Build WebXR-based VR/AR experiences as React components with @react-three/xr.",
+    "resourceTitle": "Learning Resources"
+  }
+}
