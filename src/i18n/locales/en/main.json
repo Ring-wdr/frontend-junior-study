@@ -76,6 +76,14 @@
     "week18": {
       "title": "WebAssembly",
       "description": "Near-native performance, Rust development, SIMD, image/video processing."
+    },
+    "week19": {
+      "title": "React Three Fiber",
+      "description": "3D scenes, rendering pipeline, interaction, and performance optimization."
+    },
+    "week20": {
+      "title": "MFE & Monorepo",
+      "description": "Micro frontend architecture and monorepo tooling strategy."
     }
   }
 }

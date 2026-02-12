@@ -1,69 +1,50 @@
 import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-
-import koCommon from './locales/ko/common.json';
+import { initReactI18next } from 'react-i18next';
 import enCommon from './locales/en/common.json';
-
-import koMain from './locales/ko/main.json';
 import enMain from './locales/en/main.json';
-
-import koWeek1 from './locales/ko/week1.json';
 import enWeek1 from './locales/en/week1.json';
-
-import koWeek2 from './locales/ko/week2.json';
 import enWeek2 from './locales/en/week2.json';
-
-import koWeek3 from './locales/ko/week3.json';
 import enWeek3 from './locales/en/week3.json';
-
-import koWeek4 from './locales/ko/week4.json';
 import enWeek4 from './locales/en/week4.json';
-
-import koWeek5 from './locales/ko/week5.json';
 import enWeek5 from './locales/en/week5.json';
-
-import koWeek6 from './locales/ko/week6.json';
 import enWeek6 from './locales/en/week6.json';
-
-import koWeek7 from './locales/ko/week7.json';
 import enWeek7 from './locales/en/week7.json';
-
-import koWeek8 from './locales/ko/week8.json';
 import enWeek8 from './locales/en/week8.json';
-
-import koWeek9 from './locales/ko/week9.json';
 import enWeek9 from './locales/en/week9.json';
-
-import koWeek10 from './locales/ko/week10.json';
 import enWeek10 from './locales/en/week10.json';
-
-import koWeek11 from './locales/ko/week11.json';
 import enWeek11 from './locales/en/week11.json';
-
-import koWeek12 from './locales/ko/week12.json';
 import enWeek12 from './locales/en/week12.json';
-
-import koWeek13 from './locales/ko/week13.json';
 import enWeek13 from './locales/en/week13.json';
-
-import koWeek14 from './locales/ko/week14.json';
 import enWeek14 from './locales/en/week14.json';
-
-import koWeek15 from './locales/ko/week15.json';
 import enWeek15 from './locales/en/week15.json';
-
-import koWeek16 from './locales/ko/week16.json';
 import enWeek16 from './locales/en/week16.json';
-
-import koWeek17 from './locales/ko/week17.json';
 import enWeek17 from './locales/en/week17.json';
-
-import koWeek18 from './locales/ko/week18.json';
 import enWeek18 from './locales/en/week18.json';
-
-import koWeek19 from './locales/ko/week19.json';
 import enWeek19 from './locales/en/week19.json';
+import enWeek20 from './locales/en/week20.json';
+import koCommon from './locales/ko/common.json';
+import koMain from './locales/ko/main.json';
+import koWeek1 from './locales/ko/week1.json';
+import koWeek2 from './locales/ko/week2.json';
+import koWeek3 from './locales/ko/week3.json';
+import koWeek4 from './locales/ko/week4.json';
+import koWeek5 from './locales/ko/week5.json';
+import koWeek6 from './locales/ko/week6.json';
+import koWeek7 from './locales/ko/week7.json';
+import koWeek8 from './locales/ko/week8.json';
+import koWeek9 from './locales/ko/week9.json';
+import koWeek10 from './locales/ko/week10.json';
+import koWeek11 from './locales/ko/week11.json';
+import koWeek12 from './locales/ko/week12.json';
+import koWeek13 from './locales/ko/week13.json';
+import koWeek14 from './locales/ko/week14.json';
+import koWeek15 from './locales/ko/week15.json';
+import koWeek16 from './locales/ko/week16.json';
+import koWeek17 from './locales/ko/week17.json';
+import koWeek18 from './locales/ko/week18.json';
+import koWeek19 from './locales/ko/week19.json';
+import koWeek20 from './locales/ko/week20.json';
 
 const resources = {
   ko: {
@@ -88,6 +69,7 @@ const resources = {
     week17: koWeek17,
     week18: koWeek18,
     week19: koWeek19,
+    week20: koWeek20,
   },
   en: {
     common: enCommon,
@@ -111,6 +93,7 @@ const resources = {
     week17: enWeek17,
     week18: enWeek18,
     week19: enWeek19,
+    week20: enWeek20,
   },
 };
 

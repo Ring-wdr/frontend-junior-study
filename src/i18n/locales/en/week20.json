@@ -1,0 +1,207 @@
+{
+  "header": {
+    "title": "Micro Frontends and Monorepo",
+    "description": "Designing independently deployable frontend architecture with scalable repository strategy"
+  },
+  "tabs": {
+    "all": "All",
+    "mfe-intro": "MFE Intro",
+    "integration-patterns": "Integration",
+    "communication": "Communication",
+    "monorepo-basics": "Monorepo Basics",
+    "monorepo-tooling": "Tooling",
+    "architecture-playbook": "Playbook"
+  },
+  "mfeIntro": {
+    "badge": "MFE Core",
+    "title": "Micro Frontend Fundamentals",
+    "description": "Design architecture around domain boundaries and team autonomy.",
+    "principlesTitle": "Core Principles",
+    "principles": [
+      {
+        "title": "Independent Deployment",
+        "desc": "Each team can release on its own cadence with fewer bottlenecks."
+      },
+      {
+        "title": "Domain-driven Split",
+        "desc": "Split by business capability rather than UI fragments for long-term maintainability."
+      },
+      {
+        "title": "Failure Isolation",
+        "desc": "A failure in one MFE should not take down the whole product."
+      }
+    ],
+    "whenToUseTitle": "Adoption Criteria",
+    "recommendedTitle": "Recommended",
+    "notRecommendedTitle": "Not Recommended",
+    "adoption": {
+      "yes": [
+        "10+ developers with multiple teams working in parallel",
+        "Need for independent release cycles by domain",
+        "Incremental migration from a legacy frontend"
+      ],
+      "no": [
+        "Small single-team MVP",
+        "Environment where synchronized full-app deploys are acceptable",
+        "Organization without mature operations/observability practices"
+      ]
+    },
+    "keyPointTitle": "Key Point",
+    "keyPoint": "Micro frontends solve organizational scaling problems more than technical ones. Team topology, deployment pipeline, and observability must be designed together."
+  },
+  "integration": {
+    "badge": "Integration",
+    "title": "MFE Integration Patterns",
+    "description": "Compare tradeoffs between build-time and runtime integration.",
+    "matrixTitle": "Pattern Matrix",
+    "patterns": [
+      {
+        "name": "Build-time Integration (packages)",
+        "pros": "Simple setup and strong type safety.",
+        "cons": "Hard to deploy independently; host rebuild needed."
+      },
+      {
+        "name": "Runtime Integration (Module Federation)",
+        "pros": "Independent deploys and gradual expansion.",
+        "cons": "Requires version conflict strategy and remote failure handling."
+      },
+      {
+        "name": "Orchestrator (single-spa)",
+        "pros": "Flexible in mixed-framework environments.",
+        "cons": "Lifecycle management and UX policy become complex."
+      }
+    ],
+    "moduleFederationTitle": "Module Federation Example",
+    "viteTitle": "Vite Federation Example",
+    "recommendationTitle": "Practical Recommendation",
+    "recommendation": "For mid-to-large organizations, Module Federation plus shared contracts (types/events) is usually the most practical path."
+  },
+  "communication": {
+    "badge": "Communication",
+    "title": "Cross-MFE Communication",
+    "description": "Choose between event bus, props, and shared state based on ownership boundaries.",
+    "strategyTitle": "Communication Strategies",
+    "strategies": [
+      {
+        "name": "Custom Event",
+        "desc": "Loose coupling keeps cross-domain dependencies low."
+      },
+      {
+        "name": "Props",
+        "desc": "Host app can maintain explicit data flow control."
+      },
+      {
+        "name": "Shared Store",
+        "desc": "Useful for global state like user identity and auth context."
+      }
+    ],
+    "eventTitle": "Event Bus Pattern",
+    "sharedStoreTitle": "Shared Store Pattern",
+    "ruleTitle": "Operating Rule",
+    "rule": "Keep event names and payload types in a single contracts package, and control breaking changes with explicit version policy."
+  },
+  "monorepoBasics": {
+    "badge": "Monorepo",
+    "title": "Monorepo Fundamentals",
+    "description": "Manage multiple apps/packages in one repository to improve code sharing and consistency.",
+    "benefitsTitle": "Benefits",
+    "benefits": [
+      {
+        "title": "Atomic Change",
+        "desc": "Update apps and shared packages safely in one PR."
+      },
+      {
+        "title": "Faster Reuse",
+        "desc": "Reuse UI, utils, and contracts immediately across apps."
+      },
+      {
+        "title": "Standardization",
+        "desc": "Apply lint/test/build policies consistently from the root."
+      }
+    ],
+    "compareTitle": "Polyrepo vs Monorepo",
+    "table": {
+      "item": "Item",
+      "polyrepo": "Polyrepo",
+      "monorepo": "Monorepo"
+    },
+    "comparison": [
+      {
+        "item": "Change Tracking",
+        "polyrepo": "Cross-repo traceability needed",
+        "monorepo": "Single commit traceability"
+      },
+      {
+        "item": "Shared Code Distribution",
+        "polyrepo": "Publish package, then consume",
+        "monorepo": "Instant via workspace links"
+      },
+      {
+        "item": "CI Optimization",
+        "polyrepo": "More duplicated pipelines",
+        "monorepo": "Affected-scope execution possible"
+      }
+    ],
+    "warningTitle": "Watch-out",
+    "warning": "As the repository grows, caching strategy and ownership policy become critical. Define code ownership before introducing tooling complexity."
+  },
+  "monorepoTooling": {
+    "badge": "Tooling",
+    "title": "Choosing Monorepo Tooling",
+    "description": "Select pnpm workspaces, Turborepo, or Nx based on team scale and governance needs.",
+    "compareTitle": "Tool Comparison",
+    "tools": [
+      {
+        "name": "pnpm workspaces",
+        "strength": "Minimal setup with fast installs and linking.",
+        "complexity": "Complexity: Low",
+        "fit": "Great for small teams or early monorepo adoption."
+      },
+      {
+        "name": "Turborepo",
+        "strength": "Remote caching and parallel execution cut CI/build time significantly.",
+        "complexity": "Complexity: Medium",
+        "fit": "Good for mid/large teams optimizing CI cost and lead time."
+      },
+      {
+        "name": "Nx",
+        "strength": "Strong dependency graph controls and rich plugin ecosystem.",
+        "complexity": "Complexity: High",
+        "fit": "Best for enterprise cases requiring strict architecture boundaries."
+      }
+    ],
+    "workspaceTitle": "Workspace Config",
+    "turboTitle": "Turbo Pipeline Config",
+    "tipTitle": "Practical Tip",
+    "tip": "Define package boundaries (contracts/ui/domain) and cache strategy first. Tool migration becomes much easier when architecture contracts are explicit."
+  },
+  "playbook": {
+    "badge": "Playbook",
+    "title": "Adoption Playbook",
+    "description": "Introduce architecture safely through contracts, gradual migration, and operational metrics.",
+    "contractTitle": "Shared Contract Package",
+    "checklistTitle": "Architecture Checklist",
+    "checklist": [
+      {
+        "title": "Pin Shared Dependencies",
+        "desc": "Manage React/react-dom, design tokens, and core libs with singleton and version policy."
+      },
+      {
+        "title": "Standardize Observability",
+        "desc": "Apply the same error tracking, logging fields, and trace keys across all MFEs."
+      },
+      {
+        "title": "Prepare Deploy Guardrails",
+        "desc": "Define fallback UI and rollback paths for remote module load failures."
+      }
+    ],
+    "rolloutTitle": "Incremental Rollout",
+    "rollout": [
+      "Consolidate shared UI/types/contracts packages into monorepo first",
+      "Split high-independence domains first with Module Federation",
+      "Expand based on metrics such as error rate, deploy time, and lead time"
+    ],
+    "finalNoteTitle": "Final Summary",
+    "finalNote": "Micro frontends and monorepo are most effective together: MFE defines deployment boundaries, and monorepo standardizes how those boundaries are operated."
+  }
+}

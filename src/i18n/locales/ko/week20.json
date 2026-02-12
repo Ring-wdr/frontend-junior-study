@@ -1,0 +1,207 @@
+{
+  "header": {
+    "title": "마이크로 프론트엔드와 모노레포",
+    "description": "독립 배포 가능한 프론트엔드 아키텍처와 확장 가능한 저장소 전략 설계"
+  },
+  "tabs": {
+    "all": "All",
+    "mfe-intro": "MFE 개요",
+    "integration-patterns": "통합 방식",
+    "communication": "MFE 통신",
+    "monorepo-basics": "모노레포 기초",
+    "monorepo-tooling": "도구 비교",
+    "architecture-playbook": "도입 플레이북"
+  },
+  "mfeIntro": {
+    "badge": "MFE Core",
+    "title": "마이크로 프론트엔드 핵심",
+    "description": "기능 단위 분리와 팀 자율성을 중심으로 프론트엔드 아키텍처를 설계합니다.",
+    "principlesTitle": "핵심 원칙",
+    "principles": [
+      {
+        "title": "독립 배포",
+        "desc": "팀별로 릴리즈 주기를 분리해 병목을 줄입니다."
+      },
+      {
+        "title": "도메인 중심 분리",
+        "desc": "UI보다 비즈니스 경계를 우선으로 분리해야 유지보수가 쉽습니다."
+      },
+      {
+        "title": "장애 격리",
+        "desc": "한 MFE 장애가 전체 앱 장애로 번지지 않도록 경계를 둡니다."
+      }
+    ],
+    "whenToUseTitle": "도입 판단 기준",
+    "recommendedTitle": "도입 권장",
+    "notRecommendedTitle": "도입 비권장",
+    "adoption": {
+      "yes": [
+        "10명 이상 개발 조직에서 여러 팀이 병렬 개발하는 경우",
+        "도메인별 독립 배포가 필요한 경우",
+        "레거시를 단계적으로 교체해야 하는 경우"
+      ],
+      "no": [
+        "소규모 단일 팀 MVP",
+        "모든 기능을 한 번에 동기 배포할 수 있는 환경",
+        "조직의 운영/모니터링 체계가 아직 성숙하지 않은 경우"
+      ]
+    },
+    "keyPointTitle": "핵심 포인트",
+    "keyPoint": "마이크로 프론트엔드는 기술 문제가 아니라 조직 문제를 해결하기 위한 아키텍처입니다. 팀 구조, 배포 파이프라인, 관측성까지 함께 설계해야 효과가 납니다."
+  },
+  "integration": {
+    "badge": "Integration",
+    "title": "마이크로 프론트엔드 통합 방식",
+    "description": "빌드 타임 통합과 런타임 통합의 트레이드오프를 비교합니다.",
+    "matrixTitle": "패턴 비교",
+    "patterns": [
+      {
+        "name": "빌드 타임 통합 (패키지)",
+        "pros": "설정이 단순하고 타입 안정성을 확보하기 쉽습니다.",
+        "cons": "독립 배포가 어렵고 호스트 재배포가 필요합니다."
+      },
+      {
+        "name": "런타임 통합 (Module Federation)",
+        "pros": "독립 배포와 점진적 확장이 가능합니다.",
+        "cons": "버전 충돌과 원격 모듈 장애 처리 전략이 필요합니다."
+      },
+      {
+        "name": "오케스트레이터 (single-spa)",
+        "pros": "프레임워크 혼합 환경에서도 유연하게 운영할 수 있습니다.",
+        "cons": "앱 생명주기 관리와 공통 UX 정책이 복잡해집니다."
+      }
+    ],
+    "moduleFederationTitle": "Module Federation 기본 예시",
+    "viteTitle": "Vite Federation 예시",
+    "recommendationTitle": "실무 권장",
+    "recommendation": "중대형 조직에서는 Module Federation + 공통 계약(타입/이벤트) 조합이 가장 현실적입니다."
+  },
+  "communication": {
+    "badge": "Communication",
+    "title": "MFE 간 통신 전략",
+    "description": "이벤트 기반, Props 전달, 공유 상태를 상황에 맞게 선택합니다.",
+    "strategyTitle": "통신 방식",
+    "strategies": [
+      {
+        "name": "Custom Event",
+        "desc": "느슨한 결합이 가능해 도메인 간 의존도를 낮출 수 있습니다."
+      },
+      {
+        "name": "Props",
+        "desc": "호스트가 데이터 흐름을 명확하게 제어할 수 있습니다."
+      },
+      {
+        "name": "Shared Store",
+        "desc": "인증/사용자 정보처럼 공통 상태를 일관성 있게 공유합니다."
+      }
+    ],
+    "eventTitle": "이벤트 버스 패턴",
+    "sharedStoreTitle": "공유 상태 패턴",
+    "ruleTitle": "운영 규칙",
+    "rule": "이벤트 이름과 payload 타입은 contracts 패키지에서 단일 소스로 관리하고, 브레이킹 체인지를 버전 정책으로 통제하세요."
+  },
+  "monorepoBasics": {
+    "badge": "Monorepo",
+    "title": "모노레포 기본 개념",
+    "description": "다중 앱/패키지를 단일 저장소에서 관리하며 코드 공유 효율을 높입니다.",
+    "benefitsTitle": "모노레포 장점",
+    "benefits": [
+      {
+        "title": "원자적 변경",
+        "desc": "앱과 공유 패키지 변경을 하나의 PR로 안전하게 처리합니다."
+      },
+      {
+        "title": "재사용 가속",
+        "desc": "UI/유틸/타입 패키지를 여러 앱에서 즉시 재사용합니다."
+      },
+      {
+        "title": "표준화",
+        "desc": "린트/테스트/빌드 정책을 루트에서 일관되게 적용합니다."
+      }
+    ],
+    "compareTitle": "폴리레포 vs 모노레포",
+    "table": {
+      "item": "항목",
+      "polyrepo": "폴리레포",
+      "monorepo": "모노레포"
+    },
+    "comparison": [
+      {
+        "item": "변경 추적",
+        "polyrepo": "저장소 간 추적 필요",
+        "monorepo": "단일 커밋으로 추적"
+      },
+      {
+        "item": "공유 코드 배포",
+        "polyrepo": "패키지 배포 후 반영",
+        "monorepo": "workspace 링크로 즉시 반영"
+      },
+      {
+        "item": "CI 최적화",
+        "polyrepo": "중복 파이프라인 증가",
+        "monorepo": "영향 범위 기반 실행 가능"
+      }
+    ],
+    "warningTitle": "주의 사항",
+    "warning": "저장소가 커질수록 캐싱 전략과 권한 정책이 중요해집니다. 도구 도입 전에 코드 소유권 모델을 먼저 정의하세요."
+  },
+  "monorepoTooling": {
+    "badge": "Tooling",
+    "title": "모노레포 도구 선택",
+    "description": "pnpm workspaces, Turborepo, Nx를 팀 규모와 요구사항에 맞게 선택합니다.",
+    "compareTitle": "도구 비교",
+    "tools": [
+      {
+        "name": "pnpm workspaces",
+        "strength": "설정이 단순하고 설치/링크 속도가 빠릅니다.",
+        "complexity": "복잡도: 낮음",
+        "fit": "소규모 팀이나 초기 모노레포 전환에 적합합니다."
+      },
+      {
+        "name": "Turborepo",
+        "strength": "원격 캐시와 병렬 실행으로 빌드 시간을 크게 줄입니다.",
+        "complexity": "복잡도: 중간",
+        "fit": "중대형 팀에서 CI 비용을 줄일 때 적합합니다."
+      },
+      {
+        "name": "Nx",
+        "strength": "의존성 그래프와 강력한 플러그인 생태계를 제공합니다.",
+        "complexity": "복잡도: 높음",
+        "fit": "정교한 아키텍처 제약이 필요한 엔터프라이즈에 적합합니다."
+      }
+    ],
+    "workspaceTitle": "Workspace 설정",
+    "turboTitle": "Turbo 파이프라인 설정",
+    "tipTitle": "실무 팁",
+    "tip": "도구를 먼저 고르기보다, 캐시 전략과 패키지 경계(contracts/ui/domain)를 먼저 정의하면 이후 마이그레이션 비용이 크게 줄어듭니다."
+  },
+  "playbook": {
+    "badge": "Playbook",
+    "title": "도입 플레이북",
+    "description": "아키텍처 계약, 점진적 이전, 운영 지표를 기반으로 안전하게 도입합니다.",
+    "contractTitle": "공통 계약 패키지",
+    "checklistTitle": "아키텍처 체크리스트",
+    "checklist": [
+      {
+        "title": "공유 의존성 고정",
+        "desc": "React/react-dom, 디자인 토큰, 핵심 라이브러리는 singleton + 버전 정책으로 관리"
+      },
+      {
+        "title": "관측성 표준화",
+        "desc": "에러 추적, 로그 필드, 트레이싱 키를 모든 MFE에 동일하게 적용"
+      },
+      {
+        "title": "배포 안전장치",
+        "desc": "remote 모듈 로드 실패 시 fallback UI와 롤백 경로를 준비"
+      }
+    ],
+    "rolloutTitle": "점진적 도입 순서",
+    "rollout": [
+      "공통 UI/타입/contracts 패키지를 모노레포로 먼저 통합",
+      "독립성이 높은 도메인부터 Module Federation으로 분리",
+      "에러율/배포시간/리드타임 지표를 기준으로 확장 여부 결정"
+    ],
+    "finalNoteTitle": "최종 정리",
+    "finalNote": "마이크로 프론트엔드와 모노레포는 함께 사용할 때 효과가 큽니다. MFE는 배포 경계를 만들고, 모노레포는 그 경계를 운영 가능한 형태로 표준화합니다."
+  }
+}

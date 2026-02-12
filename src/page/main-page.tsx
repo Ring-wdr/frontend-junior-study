@@ -13,7 +13,7 @@ export default function MainPage() {
         <p className="text-lg text-gray-500">{t('header.description')}</p>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-8">
-          {Array.from({ length: 18 }, (_, i) => i + 1).map((week) => {
+          {Array.from({ length: 20 }, (_, i) => i + 1).map((week) => {
             const colors = getWeekColors(week);
             return (
               <Link
@@ -108,6 +108,16 @@ const getWeekColors = (week: number) => {
       return {
         badge: 'text-amber-600 bg-amber-50 group-hover:bg-amber-100',
         title: 'group-hover:text-amber-600',
+      };
+    case 19:
+      return {
+        badge: 'text-emerald-600 bg-emerald-50 group-hover:bg-emerald-100',
+        title: 'group-hover:text-emerald-600',
+      };
+    case 20:
+      return {
+        badge: 'text-violet-600 bg-violet-50 group-hover:bg-violet-100',
+        title: 'group-hover:text-violet-600',
       };
     default:
       return {
