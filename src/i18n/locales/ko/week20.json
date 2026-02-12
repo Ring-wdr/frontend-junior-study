@@ -201,6 +201,18 @@
       "독립성이 높은 도메인부터 Module Federation으로 분리",
       "에러율/배포시간/리드타임 지표를 기준으로 확장 여부 결정"
     ],
+    "generatorTitle": "생성형 아키텍처 시뮬레이터",
+    "generatorLabel": "Interactive Generator",
+    "generator": {
+      "teamCount": "팀 수",
+      "domainPrefix": "도메인 Prefix",
+      "deployMode": "통합 모드",
+      "sharedStore": "공유 스토어 사용",
+      "on": "ON",
+      "off": "OFF",
+      "outputTitle": "생성 결과",
+      "outputSummary": "{{teamCount}}개 팀 구성, 호스트 방식: {{host}}"
+    },
     "finalNoteTitle": "최종 정리",
     "finalNote": "마이크로 프론트엔드와 모노레포는 함께 사용할 때 효과가 큽니다. MFE는 배포 경계를 만들고, 모노레포는 그 경계를 운영 가능한 형태로 표준화합니다."
   }

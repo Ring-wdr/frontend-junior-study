@@ -201,6 +201,18 @@
       "Split high-independence domains first with Module Federation",
       "Expand based on metrics such as error rate, deploy time, and lead time"
     ],
+    "generatorTitle": "Generative Architecture Simulator",
+    "generatorLabel": "Interactive Generator",
+    "generator": {
+      "teamCount": "Team Count",
+      "domainPrefix": "Domain Prefix",
+      "deployMode": "Integration Mode",
+      "sharedStore": "Use Shared Store",
+      "on": "ON",
+      "off": "OFF",
+      "outputTitle": "Generated Output",
+      "outputSummary": "{{teamCount}} teams configured, host mode: {{host}}"
+    },
     "finalNoteTitle": "Final Summary",
     "finalNote": "Micro frontends and monorepo are most effective together: MFE defines deployment boundaries, and monorepo standardizes how those boundaries are operated."
   }

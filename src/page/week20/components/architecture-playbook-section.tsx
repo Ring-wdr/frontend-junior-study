@@ -1,8 +1,10 @@
 import { useTranslation } from 'react-i18next';
+import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { ArchitectureGenerator } from './architecture-generator';
 
 type ChecklistItem = {
   title: string;
@@ -66,6 +68,12 @@ export interface PublishOptions<T extends EventName> {
               <li key={step}>{step}</li>
             ))}
           </ol>
+        </SubSection>
+
+        <SubSection title={t('playbook.generatorTitle')} icon iconColor="blue">
+          <DemoBox label={t('playbook.generatorLabel')}>
+            <ArchitectureGenerator />
+          </DemoBox>
         </SubSection>
 
         <InfoBox variant="purple" title={t('playbook.finalNoteTitle')}>
