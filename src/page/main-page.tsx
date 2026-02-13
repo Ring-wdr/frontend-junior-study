@@ -13,7 +13,7 @@ export default function MainPage() {
         <p className="text-lg text-gray-500">{t('header.description')}</p>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-8">
-          {Array.from({ length: 20 }, (_, i) => i + 1).map((week) => {
+          {Array.from({ length: 21 }, (_, i) => i + 1).map((week) => {
             const colors = getWeekColors(week);
             return (
               <Link

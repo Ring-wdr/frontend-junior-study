@@ -84,6 +84,10 @@
     "week20": {
       "title": "MFE & 모노레포",
       "description": "마이크로 프론트엔드 아키텍처와 모노레포 도구 전략."
+    },
+    "week21": {
+      "title": "CI/CD & DevOps",
+      "description": "배포 파이프라인을 만들고 릴리스를 자동화하며 운영 방어장치를 설정합니다."
     }
   }
 }

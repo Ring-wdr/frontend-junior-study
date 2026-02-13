@@ -84,6 +84,10 @@
     "week20": {
       "title": "MFE & Monorepo",
       "description": "Micro frontend architecture and monorepo tooling strategy."
+    },
+    "week21": {
+      "title": "CI/CD & DevOps",
+      "description": "Build delivery pipelines, automate releases, and set operational guardrails."
     }
   }
 }

@@ -1,0 +1,266 @@
+{
+  "header": {
+    "title": "CI/CD & DevOps",
+    "description": "Build reliable delivery pipelines, automate release workflows, and define deployment governance."
+  },
+  "tabs": {
+    "all": "All",
+    "foundations": "Foundations",
+    "github-actions": "GitHub Actions",
+    "ci-pipeline": "CI Pipeline",
+    "cd-pipeline": "CD Pipeline",
+    "docker": "Docker",
+    "governance": "Governance",
+    "capstone": "Capstone"
+  },
+  "foundations": {
+    "badge": "CI/CD",
+    "title": "CI/CD Foundations",
+    "description": "Automation is only useful when it improves feedback loops and lowers risk of production incidents.",
+    "pillarsTitle": "Core Pillars",
+    "pillars": [
+      {
+        "title": "Repeatability",
+        "desc": "Every commit should generate the same result when run with the same inputs."
+      },
+      {
+        "title": "Visibility",
+        "desc": "Every stage should output clear logs, artifacts, and status signals."
+      },
+      {
+        "title": "Guardrails",
+        "desc": "Failures should fail fast with rollback paths and explicit quality gates."
+      },
+      {
+        "title": "Consistency",
+        "desc": "Local, CI, and production environments should behave similarly."
+      }
+    ],
+    "processTitle": "Standard Flow",
+    "process": [
+      "Developer pushes commit to a tracked branch.",
+      "CI runs formatting, lint, tests, and build.",
+      "Quality checks block merging when any step fails.",
+      "Approved artifacts are promoted to release environments."
+    ],
+    "metricsTitle": "Signal Targets",
+    "metrics": [
+      {
+        "title": "Deploy frequency",
+        "value": "Up"
+      },
+      {
+        "title": "Lead time",
+        "value": "Short"
+      },
+      {
+        "title": "Mean time to recover",
+        "value": "Under control"
+      }
+    ],
+    "demoTitle": "Starter Thought",
+    "demoText": "Think in stages, not tools. Measure where bugs escape and place checks before that boundary.",
+    "finalNoteTitle": "Main Takeaway",
+    "finalNote": "CI and CD are delivery systems. Keep humans in control where automation decisions can impact production."
+  },
+  "githubActions": {
+    "badge": "Automation",
+    "title": "GitHub Actions Workflow",
+    "description": "A practical foundation for orchestrating lint, test, build, and security checks.",
+    "triggersTitle": "Typical Triggers",
+    "triggers": [
+      {
+        "label": "Main branch push",
+        "detail": "Run full checks on push to main and release branches."
+      },
+      {
+        "label": "Pull request",
+        "detail": "Validate before merge by running required job list."
+      },
+      {
+        "label": "Schedule",
+        "detail": "Nightly dependency and security checks for drift detection."
+      },
+      {
+        "label": "Manual dispatch",
+        "detail": "Emergency run with explicit environment selection."
+      }
+    ],
+    "syntaxTitle": "Example Workflow",
+    "workflowLabel": "Interactive YAML",
+    "workflowYaml": "name: CI\non:\n  push:\n    branches: [main, develop]\n  pull_request:\n    branches: [main]\n  workflow_dispatch:\n    inputs:\n      environment:\n        description: 'deploy environment'\n        required: true\n        type: choice\n        default: staging\n        options:\n          - staging\n          - production\n\njobs:\n  lint:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 20\n      - run: npm ci\n      - run: npm run lint",
+    "securityTitle": "Security and performance practices",
+    "security": [
+      "Use cache keyed by lockfile to reduce pipeline time.",
+      "Use OIDC and secret scanning for deploy credentials.",
+      "Upload code coverage and store artifacts for post-mortem analysis."
+    ],
+    "noteTitle": "Review Habit",
+    "note": "Keep reusable workflows in one file and expose only necessary inputs through strict interfaces."
+  },
+  "ciPipeline": {
+    "badge": "Pipeline",
+    "title": "CI Pipeline Design",
+    "description": "Split checks into independent jobs with explicit dependencies and parallel opportunities.",
+    "stagesTitle": "Build Stages",
+    "stages": [
+      {
+        "name": "Validation",
+        "detail": "Lint, formatting, type checks, and unit tests."
+      },
+      {
+        "name": "Quality",
+        "detail": "Integration tests, E2E smoke checks, and coverage."
+      },
+      {
+        "name": "Packaging",
+        "detail": "Build artifacts, cache them, and attach version metadata."
+      }
+    ],
+    "strategyTitle": "Strategy Choices",
+    "strategies": [
+      {
+        "title": "Monolithic jobs",
+        "detail": "Simple but can waste time when a single failure blocks everything."
+      },
+      {
+        "title": "Matrix jobs",
+        "detail": "Good for Node/OS versions and environment combinations."
+      },
+      {
+        "title": "Reusable jobs",
+        "detail": "Consistent behavior across multiple repositories or projects."
+      }
+    ],
+    "matrixTitle": "Parallel Matrix Example",
+    "matrixLabel": "Example matrix",
+    "matrixYaml": "strategy:\n  fail-fast: false\n  matrix:\n    node-version: [18, 20, 22]\n    os: [ubuntu-latest, windows-latest]\n\nsteps:\n  - uses: actions/setup-node@v4\n    with:\n      node-version: MATRIX_NODE_VERSION\n  - run: npm test",
+    "warningTitle": "Pipeline risk",
+    "warning": "Avoid duplicating expensive jobs across branches; extract cache and lockfile validation into shared templates."
+  },
+  "cdPipeline": {
+    "badge": "Release",
+    "title": "CD: Release Strategy",
+    "description": "Move from staging confidence to controlled production rollout.",
+    "deployModeTitle": "Deployment Modes",
+    "modes": [
+      {
+        "title": "Continuous Delivery",
+        "detail": "Human approval step before production release."
+      },
+      {
+        "title": "Continuous Deployment",
+        "detail": "Auto release after predefined checks pass."
+      },
+      {
+        "title": "Blue-Green / Canary",
+        "detail": "Gradual exposure with rollback-ready environments."
+      }
+    ],
+    "targetTitle": "Target Environments",
+    "targets": [
+      "Feature branch: isolated deploy previews",
+      "develop: integration verification",
+      "staging: release candidate validation",
+      "production: user-impacting traffic"
+    ],
+    "rolloutTitle": "Rollout Checklist",
+    "rollout": [
+      "Run smoke tests against staging after every release.",
+      "Track deployment status and auto-alert on health checks.",
+      "Freeze releases if error budgets are violated."
+    ],
+    "workflowLabel": "Progressive rollout flow",
+    "workflowText": "Build → staging smoke → manual or auto approval → production canary → full production.",
+    "noteTitle": "Release control",
+    "note": "Treat environment promotion as an approval surface; never ship to production by accident."
+  },
+  "docker": {
+    "badge": "Containers",
+    "title": "Docker Deployment",
+    "description": "Use multi-stage builds and immutable artifacts for predictable runtime images.",
+    "buildTitle": "Build Steps",
+    "steps": [
+      "Create deterministic dependencies with lockfile install.",
+      "Build production assets in an isolated build stage.",
+      "Use a small runtime image and minimal runtime permissions.",
+      "Copy built artifacts and cache static assets in nginx layer."
+    ],
+    "artifactTitle": "Dockerfile",
+    "artifactLabel": "Production multistage Dockerfile",
+    "dockerfile": "FROM node:20-alpine AS builder\nWORKDIR /app\nCOPY package.json pnpm-lock.yaml ./\nRUN corepack enable && corepack prepare pnpm@latest --activate\nRUN pnpm install --frozen-lockfile\nCOPY . .\nRUN pnpm build\n\nFROM nginx:alpine AS runner\nCOPY nginx.conf /etc/nginx/nginx.conf\nCOPY --from=builder /app/dist /usr/share/nginx/html\nEXPOSE 80\nCMD [\"nginx\", \"-g\", \"daemon off;\"]",
+    "composeTitle": "Compose",
+    "composeLabel": "Compose orchestration",
+    "compose": "version: \"3.8\"\n\nservices:\n  web:\n    build:\n      context: .\n      dockerfile: Dockerfile\n    ports:\n      - \"3000:80\"\n    restart: unless-stopped",
+    "noteTitle": "Container risk",
+    "note": "Pin image tags, scan every image for vulnerabilities, and keep secrets out of Dockerfiles."
+  },
+  "governance": {
+    "badge": "Ops",
+    "title": "DevOps Governance",
+    "description": "Governance prevents pipelines from becoming brittle and insecure.",
+    "checklistTitle": "Governance Checklist",
+    "checklist": [
+      "Versioned pipeline definitions in code.",
+      "Branch and environment approval policy documented.",
+      "Clear rollback process with owner ownership."
+    ],
+    "securityTitle": "Security and Secrets",
+    "security": [
+      "Store credentials in GitHub Actions secrets, never inline.",
+      "Use `permissions` and least privilege for tokens.",
+      "Use dependency audit and Snyk/OSS scans on schedule."
+    ],
+    "noteTitle": "Operational note",
+    "note": "Rotate secrets before they enter the deployment flow and make every environment auditable."
+  },
+  "capstone": {
+    "badge": "Challenge",
+    "title": "Mini Capstone",
+    "description": "Wire all topics together into one production-like workflow.",
+    "outcomeTitle": "7-Day Delivery Path",
+    "outcomes": [
+      {
+        "day": "Day 1",
+        "title": "Define your pipeline",
+        "detail": "Create CI triggers, status checks, and artifact naming."
+      },
+      {
+        "day": "Day 2",
+        "title": "Write robust jobs",
+        "detail": "Add lint/test/typecheck/build jobs with clear dependencies."
+      },
+      {
+        "day": "Day 3",
+        "title": "Add security checks",
+        "detail": "Attach audit, secret-scan, and coverage jobs."
+      },
+      {
+        "day": "Day 4",
+        "title": "Create CD path",
+        "detail": "Deploy to staging with manual/stable gate and smoke checks."
+      },
+      {
+        "day": "Day 5",
+        "title": "Containerize",
+        "detail": "Add Dockerfile + compose and run image scan."
+      },
+      {
+        "day": "Day 6",
+        "title": "Automate repeatability",
+        "detail": "Store pipeline templates and add reusable workflows."
+      },
+      {
+        "day": "Day 7",
+        "title": "Post-release review",
+        "detail": "Collect metrics and document incidents, rollback, and fixes."
+      }
+    ],
+    "rolloutTitle": "Release Validation",
+    "planTitle": "Sample Plan",
+    "planYaml": "name: Release\non:\n  push:\n    branches: [main]\n\njobs:\n  build:\n    uses: ./.github/workflows/build.yml\n  deploy:\n    needs: build\n    uses: ./.github/workflows/deploy.yml\n    with:\n      environment: production",
+    "checkTitle": "Before you push",
+    "finalTip": "Verify monitoring, rollback paths, and incident ownership before merging the final release commit."
+  }
+}
+
