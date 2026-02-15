@@ -11,7 +11,8 @@
     "agent-mode": "에이전트 모드",
     "prompt-engineering": "프롬프트 엔지니어링",
     "workflows": "워크플로우",
-    "verification": "검증 & 안전"
+    "verification": "검증 & 안전",
+    "token-optimization": "토큰 최적화"
   },
   "aiAgents": {
     "badge": "Core",
@@ -135,7 +136,101 @@
     ],
     "cursorTitle": "Cursor Agent Mode",
     "cursorInfoTitle": "Cursor Rules 설정",
-    "cursorInfoDesc": "Cursor의 .cursor/rules 파일로 AI의 코드 스타일, 자동 작업, 금지 사항 등을 정의할 수 있습니다."
+    "cursorInfoDesc": "Cursor의 .cursor/rules 파일로 AI의 코드 스타일, 자동 작업, 금지 사항 등을 정의할 수 있습니다.",
+    "interviewModeTitle": "Interview Mode",
+    "interviewModeInfoTitle": "Interview Mode 소개",
+    "interviewModeInfoDesc": "인터뷰 모드는 한 번에 큰 결정을 내리기보다, 질문-확인-수정 루프를 통해 점진적으로 컨텍스트를 정교화하는 방식입니다.",
+    "interviewModeTipTitle": "권장 사용 패턴",
+    "interviewModeTipDesc": "중요한 변경은 먼저 의도/범위를 명확히 합의하고, 작은 증거 기반으로 수정 포인트를 쪼개 검토하는 방식이 토큰 오염을 줄입니다.",
+    "teamsVsSubAgentsTitle": "Teams 사용 시점 판단",
+    "teamsVsSubAgentsCompareTitle": "Sub-Agent 병렬 vs Teams 의사결정 병행",
+    "teamsVsSubAgentsSimulationTitle": "Teams와 Sub-Agent 흐름을 단계별로 비교해보세요",
+    "teamsVsSubAgentsStepLabel": "단계",
+    "teamsVsSubAgentsReadyHint": "시작: 다음 단계를 눌러 각 전략이 어떤 상태로 전개되는지 확인하세요.",
+    "teamsVsSubAgentsNextStep": "다음 단계",
+    "teamsVsSubAgentsReset": "초기화",
+    "teamsVsSubAgentsIntro": "동일한 과업이라도 처리 방식에 따라 결과 품질과 협업 비용이 달라집니다.",
+    "teamsVsSubAgentsPrompt": "동일 과업: 로그인 회복 시나리오를 설계하고 3개의 개선안을 비교",
+    "teamsVsSubAgentsParallelTitle": "Sub-Agent 병렬 실행이 유리한 경우",
+    "teamsVsSubAgentsParallelItems": [
+      "코드베이스 탐색, 테스트 실행, 성능 측정처럼 독립적인 작업을 동시에 처리할 때",
+      "결과를 빠르게 병렬 수집해 최종 합치는 구조가 필요한 경우",
+      "실행 트랙이 명확하고 의사결정 포인트가 적은 자동화 작업",
+      "예측 가능한 텍스트/패치 결과를 선호하는 팀"
+    ],
+    "teamsVsSubAgentsTeamsTitle": "Teams의 다중 의사결정이 유리한 경우",
+    "teamsVsSubAgentsTeamsItems": [
+      "요구사항 변경점이 많고 의사결정이 여러 번 오가는 설계형 작업",
+      "기능 우선순위, UX 방향, 위험도 판단을 팀 단위에서 합의해야 할 때",
+      "시나리오·리뷰·코드 변경점이 한 번에 이어지는 연속적 의사결정이 필요한 경우",
+      "결정 근거를 기록하면서 빠르게 합의가 필요한 중간 규모 작업"
+    ],
+    "teamsVsSubAgentsParallelToken": "예측 가능한 결과 경로로 토큰 사용량이 안정적",
+    "teamsVsSubAgentsTeamsToken": "의사결정 메타 데이터가 추가되어 더 많은 컨텍스트가 필요할 수 있음",
+    "teamsTitle": "Claude Code Teams",
+    "teamsCompareTitle": "Teams 사용 유무로 보기",
+    "teamsDescription": "동일 작업에서 Teams 기능을 켰을 때와 끄고 작업했을 때 결과 형태가 다릅니다.",
+    "teamsWithGenerativeTitle": "Teams 사용",
+    "teamsWithoutGenerativeTitle": "Teams 미사용",
+    "teamsWithGenerativeBadge": "ON",
+    "teamsWithoutGenerativeBadge": "OFF",
+    "teamsSharedPrompt": "동일 요청(팀 공유 질문)",
+    "teamsSharedPromptText": "로그인 플로우에서 실패 케이스를 재현하고 개선안을 시각적으로 정리해줘.",
+    "teamsVisualOutputTitle": "공통 시각 흐름",
+    "teamsTextOutputTitle": "텍스트 흐름",
+    "teamsTokenFlowTitle": "예상 컨텍스트 사용량",
+    "teamsWithGenerative": [
+      "요구사항이 UI 중심일 때 빠르게 시각적으로 제안 가능",
+      "의사결정이 필요한 맥락은 함께 합치기 쉬움",
+      "동일 주제의 산출물을 팀원이 빠르게 공유 가능",
+      "초기 설계 속도는 빠르나, 출력량이 늘어날 수 있음"
+    ],
+    "teamsWithoutGenerative": [
+      "코드·로그 중심 과제에서는 예측 가능한 출력이 높음",
+      "스크립트 자동화/리팩토링 같은 반복 작업에서 제어가 단순함",
+      "결과를 텍스트로 정리하면 diff 검토가 단순함",
+      "중요 판단 포인트만 선별해 확인하기 쉬움"
+    ],
+    "teamsWithGenerativeToken": "상대적으로 큼: 산출물 수가 많고 협업 맥락이 더 많이 기록됨",
+    "teamsWithoutGenerativeToken": "상대적으로 작음: 텍스트 중심 전달로 출력량 통제"
+  },
+  "tokenOptimization": {
+    "badge": "Economy",
+    "title": "토큰 절약과 컨텍스트 최적화",
+    "description": "Playwright MCP 의존도를 줄이고, MCP/CDP 차이를 이해해 토큰 낭비를 관리하는 실전 패턴",
+    "playwrightMigrationTitle": "Playwright MCP에서 Playwright CLI로 전환",
+    "playwrightMigrationInfoTitle": "왜 바꾸나?",
+    "playwrightMigrationInfoDesc": "브라우저 테스트는 MCP 레이어를 거치면 토큰 사용이 늘어나는 구간이 생깁니다. CLI와 테스트 코드 중심으로 옮기면 불필요한 설명 로그를 줄이고 재현성을 높일 수 있습니다.",
+    "playwrightBefore": "# 1) 기존: .claude/settings.json Playwright MCP 예시\n{\n  \"mcpServers\": {\n    \"playwright\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@anthropic/mcp-playwright\"]\n    }\n  }\n}",
+    "playwrightAfter": "# 2) 전환: Playwright CLI + 재현 가능한 테스트 코드\n# 패키지\nbun add -D @playwright/test\n\n# 설치 후 브라우저 바이너리\nbunx playwright install\n\n# 테스트 실행(필요 최소 토큰)\nbunx playwright test e2e/login.spec.ts --reporter=dot",
+    "playwrightTip1": "UI 기반 장시간 대화보다 스크립트 중심의 재현 시나리오를 유지하세요.",
+    "playwrightTip2": "요청당 Playwright MCP 호출 횟수를 줄이고, 검증은 Playwright CLI로 실행하세요.",
+    "playwrightTip3": "screenshot/trace 생성은 실패 시점에서만 남기고 기본 동작에서는 제한하세요.",
+    "playwrightTip4": "로그를 1줄 요약 후 상세 로그는 파일로 남겨 후처리하세요.",
+    "playwrightTip5": "테스트 실패는 에러 메시지+stack만 전달하고, 전체 DOM dump는 필요 시에만 요청하세요.",
+    "playwrightTipTitle": "CLI 전환 체크리스트",
+    "mcpVsCdpTitle": "MCP vs CDP 비교로 비용/효율 조절",
+    "mcpVsCdpIntroTitle": "언제 어떤 방식이 적합한가",
+    "mcpVsCdpIntro": "MCP는 빠른 오케스트레이션에 유리하고, CDP는 브라우저 내부 제어가 중요할 때 정밀도가 높습니다.",
+    "dimension": "비교 지표",
+    "whenToUse": "권장 상황",
+    "mcpVsCdpRows": [
+      { "dimension": "추상화 수준", "mcp": "도구 중심 고수준 API", "cdp": "브라우저 이벤트/프로토콜 직접 제어", "note": "빠른 초기 자동화는 MCP, 정밀 디버깅은 CDP" },
+      { "dimension": "컨텍스트 비용", "mcp": "요청당 지시/설명 텍스트가 큼", "cdp": "스크립트+스크린샷 기반으로 최소화 가능", "note": "반복 검사/크롤/성능 체크는 CLI/CDP 혼합" },
+      { "dimension": "안정성", "mcp": "업데이트에 따라 동작이 변동 가능", "cdp": "브라우저 버전에 따라 제어 범위가 다름", "note": "중간 계층 없이도 동작 신뢰성은 명시적 버전 락 필요" },
+      { "dimension": "팀 협업", "mcp": "요청-응답 공유가 쉬움", "cdp": "코드 재사용성이 높음", "note": "역할분담형 팀일수록 혼합 전략이 유효" }
+    ],
+    "contextOptimizationTitle": "컨텍스트 최적화 루틴",
+    "contextOptimizationInfoTitle": "비용을 줄이는 기본 규칙",
+    "contextOptimizationInfoDesc": "요청당 목표를 한 문장으로 고정하고, 장문 로그/출력은 후속 단계에서만 요청하세요.",
+    "contextOptimizationCode": "# 1. 요청은 목적-범위-검증만 전달\nclaude \"로그인 E2E 실패 케이스만 재현해줘.\n- 대상: /login\n- 실패 조건: 유효하지 않은 토큰\n- 출력: 실패 원인 3개, 수정 위치 2곳\"\n\n# 2. 상세 증거는 필요할 때만\nclaude \"위 수정안 중 1안만 테스트 로그와 함께 상세 증거 붙여줘\"",
+    "contextOptimizationChecklist": [
+      "한 번에 처리할 변경 수를 제한하고 1~2개 우선순위만 실행",
+      "실패 로그는 요약 후 에러 분류만 전달",
+      "중복 질문은 하나의 스레드로 묶어 질문 수를 낮춤",
+      "스크린샷/트레이스는 실패 케이스에서만 추가",
+      "토큰이 큰 응답은 요약 토글 뒤에 상세 요청"
+    ]
   },
   "promptEngineering": {
     "badge": "Skill",

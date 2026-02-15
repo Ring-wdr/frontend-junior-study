@@ -9,6 +9,7 @@ import { AgentModeSection } from './components/agent-mode-section';
 import { PromptEngineeringSection } from './components/prompt-engineering-section';
 import { WorkflowsSection } from './components/workflows-section';
 import { VerificationSection } from './components/verification-section';
+import { TokenOptimizationSection } from './components/token-optimization-section';
 
 const tabs = [
   'all',
@@ -19,6 +20,7 @@ const tabs = [
   'prompt-engineering',
   'workflows',
   'verification',
+  'token-optimization',
 ] as const;
 type Tab = (typeof tabs)[number];
 
@@ -30,6 +32,7 @@ const sections = [
   { id: 'prompt-engineering', component: <PromptEngineeringSection /> },
   { id: 'workflows', component: <WorkflowsSection /> },
   { id: 'verification', component: <VerificationSection /> },
+  { id: 'token-optimization', component: <TokenOptimizationSection /> },
 ];
 
 export default function Week17Page() {

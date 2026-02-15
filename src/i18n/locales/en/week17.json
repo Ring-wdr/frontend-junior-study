@@ -11,7 +11,8 @@
     "agent-mode": "Agent Mode",
     "prompt-engineering": "Prompt Engineering",
     "workflows": "Workflows",
-    "verification": "Verification & Safety"
+    "verification": "Verification & Safety",
+    "token-optimization": "Token Optimization"
   },
   "aiAgents": {
     "badge": "Core",
@@ -135,7 +136,101 @@
     ],
     "cursorTitle": "Cursor Agent Mode",
     "cursorInfoTitle": "Cursor Rules Configuration",
-    "cursorInfoDesc": "Define AI coding style, automatic tasks, and prohibitions in Cursor's .cursor/rules file."
+    "cursorInfoDesc": "Define AI coding style, automatic tasks, and prohibitions in Cursor's .cursor/rules file.",
+    "interviewModeTitle": "Interview Mode",
+    "interviewModeInfoTitle": "About Interview Mode",
+    "interviewModeInfoDesc": "Interview mode helps refine context by iterating through a question-confirm-revision loop instead of forcing one-shot large decisions.",
+    "interviewModeTipTitle": "Recommended Pattern",
+    "interviewModeTipDesc": "Start with clear goal + scope, then convert large tasks into validated chunks to reduce context drift and unnecessary output.",
+    "teamsVsSubAgentsTitle": "Sub-Agent vs Teams decision guide",
+    "teamsVsSubAgentsCompareTitle": "Choosing between parallel Sub-Agents and decision-based Teams",
+    "teamsVsSubAgentsSimulationTitle": "Compare Sub-Agent and Teams flows step by step",
+    "teamsVsSubAgentsStepLabel": "Step",
+    "teamsVsSubAgentsReadyHint": "Start by pressing Next step to see each strategy progress.",
+    "teamsVsSubAgentsNextStep": "Next step",
+    "teamsVsSubAgentsReset": "Reset",
+    "teamsVsSubAgentsIntro": "The same task can differ significantly in speed, quality, and context cost depending on the execution strategy.",
+    "teamsVsSubAgentsPrompt": "Same task: design fallback login recovery and compare three improvement options.",
+    "teamsVsSubAgentsParallelTitle": "Sub-Agents are best for simple parallel execution",
+    "teamsVsSubAgentsParallelItems": [
+      "Independent tasks like scanning, testing, and benchmarks can be handled at the same time.",
+      "Fast consolidation of outputs is the primary goal.",
+      "Expected outputs are deterministic and review-friendly.",
+      "Frequent short iteration loops are required."
+    ],
+    "teamsVsSubAgentsTeamsTitle": "Teams is best for multi-step decision work",
+    "teamsVsSubAgentsTeamsItems": [
+      "Requirements change frequently and design trade-offs need discussion.",
+      "Priority, UX, and risk need to be aligned across the team.",
+      "Work requires step-by-step scenario-to-implementation judgment.",
+      "Decision rationale should be shared as part of the result."
+    ],
+    "teamsVsSubAgentsParallelToken": "Token use stays stable because outputs are usually deterministic.",
+    "teamsVsSubAgentsTeamsToken": "More shared context and rationale can increase token usage.",
+    "teamsTitle": "Claude Code Teams",
+    "teamsCompareTitle": "Split by Teams enabled or not",
+    "teamsDescription": "The same request produces different outputs depending on whether Teams feature is enabled.",
+    "teamsWithGenerativeTitle": "Teams enabled",
+    "teamsWithoutGenerativeTitle": "Teams disabled",
+    "teamsWithGenerativeBadge": "ON",
+    "teamsWithoutGenerativeBadge": "OFF",
+    "teamsSharedPrompt": "Shared request (team workflow)",
+    "teamsSharedPromptText": "Reproduce login flow failure cases and propose improvements.",
+    "teamsVisualOutputTitle": "Shared visual flow",
+    "teamsTextOutputTitle": "Text workflow output",
+    "teamsTokenFlowTitle": "Estimated context usage pattern",
+    "teamsWithGenerative": [
+      "Faster ideation when tasks are design-oriented",
+      "Easy to share a single collaborative workflow with teammates",
+      "Good for planning interaction flow and direction",
+      "Output can be richer and therefore slightly heavier"
+    ],
+    "teamsWithoutGenerative": [
+      "More predictable for code/refactor automation tasks",
+      "Lower token usage in many text-based workflows",
+      "Clear diff-oriented review and deterministic output",
+      "Better for environments that require concise summaries"
+    ],
+    "teamsWithGenerativeToken": "Higher: includes richer artifacts such as visual outputs and context notes.",
+    "teamsWithoutGenerativeToken": "Lower: mostly text-based responses reduce verbosity."
+  },
+  "tokenOptimization": {
+    "badge": "Economy",
+    "title": "Token Savings and Context Optimization",
+    "description": "Practical patterns to reduce token usage by shifting Playwright usage and choosing MCP vs CDP appropriately",
+    "playwrightMigrationTitle": "Migrate from Playwright MCP to Playwright CLI",
+    "playwrightMigrationInfoTitle": "Why migrate?",
+    "playwrightMigrationInfoDesc": "Using MCP wrappers for browser tests adds an extra abstraction layer and can increase prompt context. Using CLI + test scripts improves reproducibility and typically reduces noise in requests.",
+    "playwrightBefore": "# 1) Before: Playwright MCP in Claude settings\n{\n  \"mcpServers\": {\n    \"playwright\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@anthropic/mcp-playwright\"]\n    }\n  }\n}",
+    "playwrightAfter": "# 2) After: Playwright CLI with focused test script\n# Install packages\nbun add -D @playwright/test\n\n# Install browsers\nbunx playwright install\n\n# Run targeted test (minimal output)\nbunx playwright test e2e/login.spec.ts --reporter=dot",
+    "playwrightTip1": "Prioritize script-driven scenarios over long UI-driven chat interactions.",
+    "playwrightTip2": "Reduce frequent MCP calls and execute verification through CLI.",
+    "playwrightTip3": "Capture screenshots/trace only when failures occur.",
+    "playwrightTip4": "Keep logs concise in prompts and save details to files.",
+    "playwrightTip5": "For failures, send only error summary and stack; request full DOM only if needed.",
+    "playwrightTipTitle": "CLI migration checklist",
+    "mcpVsCdpTitle": "Compare MCP and CDP to control cost and precision",
+    "mcpVsCdpIntroTitle": "When to choose which",
+    "mcpVsCdpIntro": "MCP is fast for orchestration and high-level control; CDP is better when low-level browser detail and determinism are required.",
+    "dimension": "Dimension",
+    "whenToUse": "Best Use",
+    "mcpVsCdpRows": [
+      { "dimension": "Abstraction", "mcp": "High-level tool orchestration", "cdp": "Direct browser protocol control", "note": "Use MCP for speed, CDP for precision." },
+      { "dimension": "Context cost", "mcp": "More request context in tool-driven commands", "cdp": "Lower if scripts are reused", "note": "Pair repeatable checks with reusable CLI scripts." },
+      { "dimension": "Stability", "mcp": "Can change across tool updates", "cdp": "Depends on browser version support", "note": "Pin versions to reduce drift." },
+      { "dimension": "Team collaboration", "mcp": "Clearer conversational handoff", "cdp": "Better reproducibility in code reviews", "note": "Use a hybrid approach for mixed teams." }
+    ],
+    "contextOptimizationTitle": "Context Optimization Playbook",
+    "contextOptimizationInfoTitle": "Baseline rules for saving tokens",
+    "contextOptimizationInfoDesc": "Keep each request constrained to objective + scope + acceptance criteria, and load full logs only on request.",
+    "contextOptimizationCode": "# 1. Keep request strict\nclaude \"Reproduce only login failure in e2e.\n- target: /login\n- failure condition: invalid token\n- output: top 3 causes + 2 patch locations\"\n\n# 2. Ask details only when needed\nclaude \"For the selected fix, provide only failing stack and minimal evidence\"",
+    "contextOptimizationChecklist": [
+      "Limit each run to 1-2 focused changes",
+      "Return concise failure summaries and classification before details",
+      "Merge related questions into one thread to reduce back-and-forth",
+      "Capture screenshot/trace only for failed scenarios",
+      "Defer deep dumps until after an initial pass"
+    ]
   },
   "promptEngineering": {
     "badge": "Skill",
