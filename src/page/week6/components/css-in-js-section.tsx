@@ -11,7 +11,11 @@ export const CssInJsSection = () => {
       description={t('cssInJs.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('cssInJs.emotionStyled.title')} icon iconColor="pink">
+        <SubSection
+          title={t('cssInJs.emotionStyled.title')}
+          icon
+          iconColor="pink"
+        >
           <p className="text-sm text-gray-700 mb-4">
             {t('cssInJs.emotionStyled.content')}
           </p>
@@ -57,7 +61,8 @@ render(<Button primary>Primary Button</Button>);`}
                 <strong>{t('cssInJs.prosCons.cons')}</strong>
                 <ul className="list-disc pl-5 mt-1 space-y-1">
                   <li>
-                    <strong>{t('cssInJs.prosCons.consItems.runtime')}</strong> {t('cssInJs.prosCons.consItems.runtimeDesc')}
+                    <strong>{t('cssInJs.prosCons.consItems.runtime')}</strong>{' '}
+                    {t('cssInJs.prosCons.consItems.runtimeDesc')}
                   </li>
                   <li>{t('cssInJs.prosCons.consItems.bundle')}</li>
                   <li>{t('cssInJs.prosCons.consItems.ssr')}</li>

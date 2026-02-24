@@ -1,7 +1,7 @@
+import { ArrowDown, Check, X } from 'lucide-react';
+import { motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'motion/react';
-import { ArrowDown, Check, X } from 'lucide-react';
 
 type Scenario = 'isString' | 'isArray' | 'extractPromise';
 
@@ -11,12 +11,15 @@ const scenarios: { id: Scenario; label: string }[] = [
   { id: 'extractPromise', label: 'Awaited<T>' },
 ];
 
-const scenarioData: Record<Scenario, {
-  condition: string;
-  trueCase: { input: string; result: string };
-  falseCase: { input: string; result: string };
-  code: string;
-}> = {
+const scenarioData: Record<
+  Scenario,
+  {
+    condition: string;
+    trueCase: { input: string; result: string };
+    falseCase: { input: string; result: string };
+    code: string;
+  }
+> = {
   isString: {
     condition: 'T extends string ?',
     trueCase: { input: 'string', result: '"yes"' },

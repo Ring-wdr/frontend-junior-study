@@ -1,11 +1,26 @@
+import { ArrowRight } from 'lucide-react';
+import { motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
 
-type UtilityType = 'Partial' | 'Required' | 'Readonly' | 'Pick' | 'Omit' | 'Extract' | 'Exclude';
+type UtilityType =
+  | 'Partial'
+  | 'Required'
+  | 'Readonly'
+  | 'Pick'
+  | 'Omit'
+  | 'Extract'
+  | 'Exclude';
 
-const utilityTypes: UtilityType[] = ['Partial', 'Required', 'Readonly', 'Pick', 'Omit', 'Extract', 'Exclude'];
+const utilityTypes: UtilityType[] = [
+  'Partial',
+  'Required',
+  'Readonly',
+  'Pick',
+  'Omit',
+  'Extract',
+  'Exclude',
+];
 
 const originalType = `interface User {
   id: number;
@@ -13,54 +28,55 @@ const originalType = `interface User {
   email: string;
 }`;
 
-const transformedTypes: Record<UtilityType, { result: string; code: string }> = {
-  Partial: {
-    result: `{
+const transformedTypes: Record<UtilityType, { result: string; code: string }> =
+  {
+    Partial: {
+      result: `{
   id?: number;
   name?: string;
   email?: string;
 }`,
-    code: 'Partial<User>',
-  },
-  Required: {
-    result: `{
+      code: 'Partial<User>',
+    },
+    Required: {
+      result: `{
   id: number;
   name: string;
   email: string;
 }`,
-    code: 'Required<User>',
-  },
-  Readonly: {
-    result: `{
+      code: 'Required<User>',
+    },
+    Readonly: {
+      result: `{
   readonly id: number;
   readonly name: string;
   readonly email: string;
 }`,
-    code: 'Readonly<User>',
-  },
-  Pick: {
-    result: `{
+      code: 'Readonly<User>',
+    },
+    Pick: {
+      result: `{
   id: number;
   name: string;
 }`,
-    code: 'Pick<User, "id" | "name">',
-  },
-  Omit: {
-    result: `{
+      code: 'Pick<User, "id" | "name">',
+    },
+    Omit: {
+      result: `{
   name: string;
   email: string;
 }`,
-    code: 'Omit<User, "id">',
-  },
-  Extract: {
-    result: `string | number`,
-    code: 'Extract<string | number | boolean, string | number>',
-  },
-  Exclude: {
-    result: `boolean`,
-    code: 'Exclude<string | number | boolean, string | number>',
-  },
-};
+      code: 'Omit<User, "id">',
+    },
+    Extract: {
+      result: `string | number`,
+      code: 'Extract<string | number | boolean, string | number>',
+    },
+    Exclude: {
+      result: `boolean`,
+      code: 'Exclude<string | number | boolean, string | number>',
+    },
+  };
 
 export const UtilityTypeTransformer = () => {
   const { t } = useTranslation('week16');
@@ -117,7 +133,9 @@ export const UtilityTypeTransformer = () => {
             animate={{ opacity: 1, x: 0 }}
             className="bg-gradient-to-br from-green-900 to-emerald-900 rounded-lg p-3 text-xs"
           >
-            <pre className="text-green-300">{transformedTypes[selected].result}</pre>
+            <pre className="text-green-300">
+              {transformedTypes[selected].result}
+            </pre>
           </motion.div>
         </div>
       </div>
@@ -132,7 +150,9 @@ export const UtilityTypeTransformer = () => {
           <span className="text-purple-600">type</span>{' '}
           <span className="text-gray-800">Result</span>{' '}
           <span className="text-gray-600">=</span>{' '}
-          <span className="text-green-600">{transformedTypes[selected].code}</span>
+          <span className="text-green-600">
+            {transformedTypes[selected].code}
+          </span>
         </code>
       </motion.div>
     </div>

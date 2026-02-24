@@ -1,7 +1,7 @@
+import { ArrowRight } from 'lucide-react';
+import { motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
 
 type InputType = 'string' | 'number' | 'boolean' | 'User';
 
@@ -55,7 +55,9 @@ export const GenericTypeFlowVisualizer = () => {
           animate={{ scale: 1, opacity: 1 }}
           className={`px-6 py-4 rounded-xl border-2 ${typeColors[selectedType]}`}
         >
-          <div className="text-xs text-gray-500 mb-1">{t('generics.visualizer.inputType')}</div>
+          <div className="text-xs text-gray-500 mb-1">
+            {t('generics.visualizer.inputType')}
+          </div>
           <code className="text-lg font-bold">{selectedType}</code>
         </motion.div>
 
@@ -68,8 +70,12 @@ export const GenericTypeFlowVisualizer = () => {
         </motion.div>
 
         <div className="px-6 py-4 bg-gray-100 rounded-xl border-2 border-gray-300">
-          <div className="text-xs text-gray-500 mb-1">{t('generics.visualizer.genericFunction')}</div>
-          <code className="text-lg font-bold text-gray-700">identity&lt;T&gt;</code>
+          <div className="text-xs text-gray-500 mb-1">
+            {t('generics.visualizer.genericFunction')}
+          </div>
+          <code className="text-lg font-bold text-gray-700">
+            identity&lt;T&gt;
+          </code>
         </div>
 
         <motion.div
@@ -87,7 +93,9 @@ export const GenericTypeFlowVisualizer = () => {
           transition={{ delay: 0.2 }}
           className={`px-6 py-4 rounded-xl border-2 ${typeColors[selectedType]}`}
         >
-          <div className="text-xs text-gray-500 mb-1">{t('generics.visualizer.outputType')}</div>
+          <div className="text-xs text-gray-500 mb-1">
+            {t('generics.visualizer.outputType')}
+          </div>
           <code className="text-lg font-bold">{selectedType}</code>
         </motion.div>
       </div>
@@ -118,7 +126,15 @@ export const GenericTypeFlowVisualizer = () => {
           <span className="text-gray-400">=</span>{' '}
           <span className="text-yellow-300">identity</span>
           <span className="text-gray-400">(</span>
-          <span className={selectedType === 'string' ? 'text-green-400' : selectedType === 'number' ? 'text-blue-400' : 'text-purple-400'}>
+          <span
+            className={
+              selectedType === 'string'
+                ? 'text-green-400'
+                : selectedType === 'number'
+                  ? 'text-blue-400'
+                  : 'text-purple-400'
+            }
+          >
             {selectedType === 'string' && '"hello"'}
             {selectedType === 'number' && '42'}
             {selectedType === 'boolean' && 'true'}

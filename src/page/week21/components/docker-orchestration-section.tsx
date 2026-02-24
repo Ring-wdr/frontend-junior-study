@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { CodeBlock } from '../../../components/ui/code-block';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
+import { CodeBlock } from '../../../components/ui/code-block';
 
 export const DockerSection = () => {
   const { t } = useTranslation('week21');
@@ -11,7 +11,7 @@ export const DockerSection = () => {
 
   return (
     <SectionCard
-      badge={{ label: t('docker.badge'), color: 'red' }}
+      badge={{ label: t('docker.badge'), color: 'pink' }}
       title={t('docker.title')}
       description={t('docker.description')}
     >

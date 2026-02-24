@@ -1,5 +1,5 @@
+import { Box, Lightbulb, Moon, Sun } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Box, Sun, Lightbulb, Moon } from 'lucide-react';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
@@ -122,7 +122,9 @@ function Geometries() {
   );
 }`;
 
-  const lightTypes = t('coreConcepts.lightTypes', { returnObjects: true }) as any[];
+  const lightTypes = t('coreConcepts.lightTypes', {
+    returnObjects: true,
+  }) as any[];
 
   return (
     <SectionCard
@@ -131,18 +133,22 @@ function Geometries() {
       description={t('coreConcepts.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('coreConcepts.canvasTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('coreConcepts.canvasTitle')}
+          icon
+          iconColor="purple"
+        >
           <p className="text-sm text-gray-700 mb-3">
             {t('coreConcepts.canvasDesc')}
           </p>
-          <CodeBlock
-            code={canvasCode}
-            language="tsx"
-            className="text-xs"
-          />
+          <CodeBlock code={canvasCode} language="tsx" className="text-xs" />
         </SubSection>
 
-        <SubSection title={t('coreConcepts.geometryTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('coreConcepts.geometryTitle')}
+          icon
+          iconColor="blue"
+        >
           <p className="text-sm text-gray-700 mb-3">
             {t('coreConcepts.geometryDesc')}
           </p>
@@ -164,46 +170,64 @@ function Geometries() {
               <span className="text-xs font-medium">torusGeometry</span>
             </div>
           </div>
-          <CodeBlock
-            code={geometryCode}
-            language="tsx"
-            className="text-xs"
-          />
+          <CodeBlock code={geometryCode} language="tsx" className="text-xs" />
         </SubSection>
 
-        <SubSection title={t('coreConcepts.lightingTitle')} icon iconColor="orange">
+        <SubSection
+          title={t('coreConcepts.lightingTitle')}
+          icon
+          iconColor="orange"
+        >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
             {lightTypes.map((light: any, idx: number) => (
-              <div key={idx} className="bg-orange-50 p-3 rounded-lg text-center border border-orange-200">
-                {light.icon === 'sun' && <Sun className="w-6 h-6 mx-auto text-orange-500 mb-1" />}
-                {light.icon === 'lightbulb' && <Lightbulb className="w-6 h-6 mx-auto text-yellow-500 mb-1" />}
-                {light.icon === 'spotlight' && <Moon className="w-6 h-6 mx-auto text-orange-400 mb-1" />}
-                {light.icon === 'ambient' && <div className="w-6 h-6 mx-auto bg-gradient-to-r from-gray-300 to-gray-400 rounded-full mb-1" />}
+              <div
+                key={idx}
+                className="bg-orange-50 p-3 rounded-lg text-center border border-orange-200"
+              >
+                {light.icon === 'sun' && (
+                  <Sun className="w-6 h-6 mx-auto text-orange-500 mb-1" />
+                )}
+                {light.icon === 'lightbulb' && (
+                  <Lightbulb className="w-6 h-6 mx-auto text-yellow-500 mb-1" />
+                )}
+                {light.icon === 'spotlight' && (
+                  <Moon className="w-6 h-6 mx-auto text-orange-400 mb-1" />
+                )}
+                {light.icon === 'ambient' && (
+                  <div className="w-6 h-6 mx-auto bg-gradient-to-r from-gray-300 to-gray-400 rounded-full mb-1" />
+                )}
                 <span className="text-xs font-bold block">{light.name}</span>
                 <span className="text-xs text-gray-600">{light.desc}</span>
               </div>
             ))}
           </div>
-          <CodeBlock
-            code={lightingCode}
-            language="tsx"
-            className="text-xs"
-          />
+          <CodeBlock code={lightingCode} language="tsx" className="text-xs" />
         </SubSection>
 
-        <SubSection title={t('coreConcepts.shadowTitle')} icon iconColor="green">
+        <SubSection
+          title={t('coreConcepts.shadowTitle')}
+          icon
+          iconColor="green"
+        >
           <InfoBox variant="orange" title={t('coreConcepts.shadowNote')}>
             <ul className="list-disc pl-5 space-y-1 text-sm">
-              <li><code className="bg-orange-100 px-1 rounded">shadows</code> {t('coreConcepts.shadowTip1')}</li>
-              <li><code className="bg-orange-100 px-1 rounded">castShadow</code> {t('coreConcepts.shadowTip2')}</li>
-              <li><code className="bg-orange-100 px-1 rounded">receiveShadow</code> {t('coreConcepts.shadowTip3')}</li>
+              <li>
+                <code className="bg-orange-100 px-1 rounded">shadows</code>{' '}
+                {t('coreConcepts.shadowTip1')}
+              </li>
+              <li>
+                <code className="bg-orange-100 px-1 rounded">castShadow</code>{' '}
+                {t('coreConcepts.shadowTip2')}
+              </li>
+              <li>
+                <code className="bg-orange-100 px-1 rounded">
+                  receiveShadow
+                </code>{' '}
+                {t('coreConcepts.shadowTip3')}
+              </li>
             </ul>
           </InfoBox>
-          <CodeBlock
-            code={shadowCode}
-            language="tsx"
-            className="text-xs"
-          />
+          <CodeBlock code={shadowCode} language="tsx" className="text-xs" />
         </SubSection>
       </div>
     </SectionCard>

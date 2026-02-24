@@ -18,7 +18,10 @@ export const AdvancedStateSection = () => {
               {t('advanced.rxjs.description')}
             </p>
 
-            <InfoBox variant="blue" title={t('advanced.rxjs.keyConcepts.title')}>
+            <InfoBox
+              variant="blue"
+              title={t('advanced.rxjs.keyConcepts.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>{t('advanced.rxjs.keyConcepts.observables')}</li>
                 <li>{t('advanced.rxjs.keyConcepts.operators')}</li>
@@ -51,7 +54,10 @@ const fetchUserEpic = (action$) =>
               className="text-xs"
             />
 
-            <InfoBox variant="gray" title={t('advanced.rxjs.prosAndCons.title')}>
+            <InfoBox
+              variant="gray"
+              title={t('advanced.rxjs.prosAndCons.title')}
+            >
               <div className="space-y-2 text-sm text-gray-700">
                 <p>{t('advanced.rxjs.prosAndCons.pros')}</p>
                 <p>{t('advanced.rxjs.prosAndCons.cons')}</p>
@@ -66,7 +72,10 @@ const fetchUserEpic = (action$) =>
               {t('advanced.xstate.description')}
             </p>
 
-            <InfoBox variant="purple" title={t('advanced.xstate.coreConcepts.title')}>
+            <InfoBox
+              variant="purple"
+              title={t('advanced.xstate.coreConcepts.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>{t('advanced.xstate.coreConcepts.states')}</li>
                 <li>{t('advanced.xstate.coreConcepts.events')}</li>
@@ -142,11 +151,7 @@ function UserFetcher() {
           </div>
         </SubSection>
 
-        <SubSection
-          title={t('advanced.when.title')}
-          icon
-          iconColor="orange"
-        >
+        <SubSection title={t('advanced.when.title')} icon iconColor="orange">
           <div className="space-y-4">
             <div className="grid grid-cols-1 gap-4">
               <InfoBox variant="orange" title={t('advanced.when.rxjs.title')}>
@@ -186,36 +191,76 @@ function UserFetcher() {
               <table className="w-full text-xs border-collapse">
                 <thead>
                   <tr className="border-b border-gray-300 bg-gray-50">
-                    <th className="text-left p-2 font-semibold">{t('advanced.comparisonTable.approach')}</th>
-                    <th className="text-left p-2 font-semibold">{t('advanced.comparisonTable.complexity')}</th>
-                    <th className="text-left p-2 font-semibold">{t('advanced.comparisonTable.bestFor')}</th>
-                    <th className="text-left p-2 font-semibold">{t('advanced.comparisonTable.learningCurve')}</th>
+                    <th className="text-left p-2 font-semibold">
+                      {t('advanced.comparisonTable.approach')}
+                    </th>
+                    <th className="text-left p-2 font-semibold">
+                      {t('advanced.comparisonTable.complexity')}
+                    </th>
+                    <th className="text-left p-2 font-semibold">
+                      {t('advanced.comparisonTable.bestFor')}
+                    </th>
+                    <th className="text-left p-2 font-semibold">
+                      {t('advanced.comparisonTable.learningCurve')}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b border-gray-200">
-                    <td className="p-2 font-medium">{t('advanced.comparisonTable.thunk.name')}</td>
-                    <td className="p-2">{t('advanced.comparisonTable.thunk.complexity')}</td>
-                    <td className="p-2">{t('advanced.comparisonTable.thunk.bestFor')}</td>
-                    <td className="p-2">{t('advanced.comparisonTable.thunk.learningCurve')}</td>
+                    <td className="p-2 font-medium">
+                      {t('advanced.comparisonTable.thunk.name')}
+                    </td>
+                    <td className="p-2">
+                      {t('advanced.comparisonTable.thunk.complexity')}
+                    </td>
+                    <td className="p-2">
+                      {t('advanced.comparisonTable.thunk.bestFor')}
+                    </td>
+                    <td className="p-2">
+                      {t('advanced.comparisonTable.thunk.learningCurve')}
+                    </td>
                   </tr>
                   <tr className="border-b border-gray-200">
-                    <td className="p-2 font-medium">{t('advanced.comparisonTable.saga.name')}</td>
-                    <td className="p-2">{t('advanced.comparisonTable.saga.complexity')}</td>
-                    <td className="p-2">{t('advanced.comparisonTable.saga.bestFor')}</td>
-                    <td className="p-2">{t('advanced.comparisonTable.saga.learningCurve')}</td>
+                    <td className="p-2 font-medium">
+                      {t('advanced.comparisonTable.saga.name')}
+                    </td>
+                    <td className="p-2">
+                      {t('advanced.comparisonTable.saga.complexity')}
+                    </td>
+                    <td className="p-2">
+                      {t('advanced.comparisonTable.saga.bestFor')}
+                    </td>
+                    <td className="p-2">
+                      {t('advanced.comparisonTable.saga.learningCurve')}
+                    </td>
                   </tr>
                   <tr className="border-b border-gray-200">
-                    <td className="p-2 font-medium">{t('advanced.comparisonTable.observable.name')}</td>
-                    <td className="p-2">{t('advanced.comparisonTable.observable.complexity')}</td>
-                    <td className="p-2">{t('advanced.comparisonTable.observable.bestFor')}</td>
-                    <td className="p-2">{t('advanced.comparisonTable.observable.learningCurve')}</td>
+                    <td className="p-2 font-medium">
+                      {t('advanced.comparisonTable.observable.name')}
+                    </td>
+                    <td className="p-2">
+                      {t('advanced.comparisonTable.observable.complexity')}
+                    </td>
+                    <td className="p-2">
+                      {t('advanced.comparisonTable.observable.bestFor')}
+                    </td>
+                    <td className="p-2">
+                      {t('advanced.comparisonTable.observable.learningCurve')}
+                    </td>
                   </tr>
                   <tr>
-                    <td className="p-2 font-medium">{t('advanced.comparisonTable.xstate.name')}</td>
-                    <td className="p-2">{t('advanced.comparisonTable.xstate.complexity')}</td>
-                    <td className="p-2">{t('advanced.comparisonTable.xstate.bestFor')}</td>
-                    <td className="p-2">{t('advanced.comparisonTable.xstate.learningCurve')}</td>
+                    <td className="p-2 font-medium">
+                      {t('advanced.comparisonTable.xstate.name')}
+                    </td>
+                    <td className="p-2">
+                      {t('advanced.comparisonTable.xstate.complexity')}
+                    </td>
+                    <td className="p-2">
+                      {t('advanced.comparisonTable.xstate.bestFor')}
+                    </td>
+                    <td className="p-2">
+                      {t('advanced.comparisonTable.xstate.learningCurve')}
+                    </td>
                   </tr>
                 </tbody>
               </table>

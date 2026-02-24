@@ -47,32 +47,32 @@ export const DataFetchingVisualizer = () => {
         if (cachedTime) {
           setClientData({
             time: cachedTime,
-            source: t('dataFetching.visualizer.hit') + ' (Cache)',
+            source: `${t('dataFetching.visualizer.hit')} (Cache)`,
           });
         } else {
           setCachedTime(now);
           setClientData({
             time: now,
-            source: t('dataFetching.visualizer.miss') + ' (Network)',
+            source: `${t('dataFetching.visualizer.miss')} (Network)`,
           });
         }
       } else if (action === 'no-store') {
         setClientData({
           time: now,
-          source: t('dataFetching.visualizer.miss') + ' (Network)',
+          source: `${t('dataFetching.visualizer.miss')} (Network)`,
         });
       } else if (action === 'revalidate') {
         if (revalidateTime && now - revalidateTime < 5000) {
           setClientData({
             time: cachedTime || now,
-            source: t('dataFetching.visualizer.hit') + ' (ISR)',
+            source: `${t('dataFetching.visualizer.hit')} (ISR)`,
           });
         } else {
           setRevalidateTime(now);
           setCachedTime(now);
           setClientData({
             time: now,
-            source: t('dataFetching.visualizer.miss') + ' (Regenerated)',
+            source: `${t('dataFetching.visualizer.miss')} (Regenerated)`,
           });
         }
       }
@@ -91,14 +91,14 @@ export const DataFetchingVisualizer = () => {
           // Immediate stale return
           setClientData({
             time: cachedTime,
-            source: t('dataFetching.visualizer.stale') + ' (Cache)',
+            source: `${t('dataFetching.visualizer.stale')} (Cache)`,
           });
           // Then fetch
           setTimeout(() => {
             setCachedTime(now);
             setClientData({
               time: now,
-              source: t('dataFetching.visualizer.hit') + ' (Refetched)',
+              source: `${t('dataFetching.visualizer.hit')} (Refetched)`,
             });
             setLastFetchTime(Date.now());
           }, 500);
@@ -107,7 +107,7 @@ export const DataFetchingVisualizer = () => {
           setCachedTime(now);
           setClientData({
             time: now,
-            source: t('dataFetching.visualizer.miss') + ' (First Load)',
+            source: `${t('dataFetching.visualizer.miss')} (First Load)`,
           });
         }
       }

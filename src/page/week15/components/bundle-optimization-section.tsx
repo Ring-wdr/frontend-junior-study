@@ -17,8 +17,15 @@ export const BundleOptimizationSection = () => {
       description={t('bundleOptimization.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('bundleOptimization.analyzerTitle')} icon iconColor="green">
-          <InfoBox variant="green" title={t('bundleOptimization.analyzerInfoTitle')}>
+        <SubSection
+          title={t('bundleOptimization.analyzerTitle')}
+          icon
+          iconColor="green"
+        >
+          <InfoBox
+            variant="green"
+            title={t('bundleOptimization.analyzerInfoTitle')}
+          >
             <p className="text-sm leading-relaxed">
               {t('bundleOptimization.analyzerInfoDesc')}
             </p>
@@ -31,7 +38,9 @@ export const BundleOptimizationSection = () => {
                 onClick={() => setShowAnalyzer(!showAnalyzer)}
                 className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors"
               >
-                {showAnalyzer ? t('bundleOptimization.analyzerButtonHide') : t('bundleOptimization.analyzerButtonShow')}
+                {showAnalyzer
+                  ? t('bundleOptimization.analyzerButtonHide')
+                  : t('bundleOptimization.analyzerButtonShow')}
               </button>
 
               {showAnalyzer && (
@@ -40,13 +49,25 @@ export const BundleOptimizationSection = () => {
                     {t('bundleOptimization.analyzerResultTitle')}
                   </h5>
                   <div className="space-y-2">
-                    {(t('bundleOptimization.bundleItems', { returnObjects: true }) as any[]).map((item: any) => (
+                    {(
+                      t('bundleOptimization.bundleItems', {
+                        returnObjects: true,
+                      }) as any[]
+                    ).map((item: any) => (
                       <div key={item.name} className="space-y-1">
                         <div className="flex justify-between text-xs">
-                          <span className={item.issue ? 'text-red-600 font-bold' : 'text-gray-600'}>
+                          <span
+                            className={
+                              item.issue
+                                ? 'text-red-600 font-bold'
+                                : 'text-gray-600'
+                            }
+                          >
                             {item.name} {item.issue && '⚠️'}
                           </span>
-                          <span className="text-gray-500">{item.size} ({item.percent}%)</span>
+                          <span className="text-gray-500">
+                            {item.size} ({item.percent}%)
+                          </span>
                         </div>
                         <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
                           <div
@@ -91,21 +112,37 @@ export default defineConfig({
           />
         </SubSection>
 
-        <SubSection title={t('bundleOptimization.libraryTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('bundleOptimization.libraryTitle')}
+          icon
+          iconColor="blue"
+        >
           <div className="space-y-3">
-            {(t('bundleOptimization.libraryOptimizations', { returnObjects: true }) as any[]).map((item: any) => (
+            {(
+              t('bundleOptimization.libraryOptimizations', {
+                returnObjects: true,
+              }) as any[]
+            ).map((item: any) => (
               <div
                 key={item.before}
                 className="bg-white p-3 rounded-lg border border-gray-200"
               >
                 <div className="grid grid-cols-2 gap-2 mb-2">
                   <div className="bg-red-50 p-2 rounded">
-                    <span className="text-[10px] text-red-500 font-bold">{t('bundleOptimization.beforeLabel')}</span>
-                    <code className="text-xs block mt-1 text-red-700">{item.before}</code>
+                    <span className="text-[10px] text-red-500 font-bold">
+                      {t('bundleOptimization.beforeLabel')}
+                    </span>
+                    <code className="text-xs block mt-1 text-red-700">
+                      {item.before}
+                    </code>
                   </div>
                   <div className="bg-green-50 p-2 rounded">
-                    <span className="text-[10px] text-green-500 font-bold">{t('bundleOptimization.afterLabel')}</span>
-                    <code className="text-xs block mt-1 text-green-700">{item.after}</code>
+                    <span className="text-[10px] text-green-500 font-bold">
+                      {t('bundleOptimization.afterLabel')}
+                    </span>
+                    <code className="text-xs block mt-1 text-green-700">
+                      {item.after}
+                    </code>
                   </div>
                 </div>
                 <div className="flex justify-between text-xs">
@@ -117,7 +154,11 @@ export default defineConfig({
           </div>
         </SubSection>
 
-        <SubSection title={t('bundleOptimization.dynamicImportTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('bundleOptimization.dynamicImportTitle')}
+          icon
+          iconColor="purple"
+        >
           <CodeBlock
             code={`// Route-based Code Splitting
 const Dashboard = lazy(() => import('./pages/Dashboard'));
@@ -162,8 +203,15 @@ function Analytics() {
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('bundleOptimization.treeShakingTitle')} icon iconColor="orange">
-          <InfoBox variant="orange" title={t('bundleOptimization.treeShakingInfoTitle')}>
+        <SubSection
+          title={t('bundleOptimization.treeShakingTitle')}
+          icon
+          iconColor="orange"
+        >
+          <InfoBox
+            variant="orange"
+            title={t('bundleOptimization.treeShakingInfoTitle')}
+          >
             <p className="text-sm">
               {t('bundleOptimization.treeShakingInfoDesc')}
             </p>
@@ -194,10 +242,18 @@ import { map } from 'lodash-es';  // ✅ ES Module`}
           />
         </SubSection>
 
-        <SubSection title={t('bundleOptimization.checklistTitle')} icon iconColor="red">
+        <SubSection
+          title={t('bundleOptimization.checklistTitle')}
+          icon
+          iconColor="red"
+        >
           <div className="bg-gradient-to-r from-red-50 to-orange-50 p-4 rounded-lg border border-red-200">
             <div className="space-y-2">
-              {(t('bundleOptimization.checklistItems', { returnObjects: true }) as string[]).map((item: string) => (
+              {(
+                t('bundleOptimization.checklistItems', {
+                  returnObjects: true,
+                }) as string[]
+              ).map((item: string) => (
                 <label key={item} className="flex items-center gap-2 text-sm">
                   <input type="checkbox" className="rounded" />
                   <span className="text-gray-700">{item}</span>

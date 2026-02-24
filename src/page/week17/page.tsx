@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { cn } from '../../lib/utils';
+import { AgentModeSection } from './components/agent-mode-section';
 import { AiAgentsSection } from './components/ai-agents-section';
 import { McpSection } from './components/mcp-section';
-import { SkillsHooksSection } from './components/skills-hooks-section';
-import { AgentModeSection } from './components/agent-mode-section';
 import { PromptEngineeringSection } from './components/prompt-engineering-section';
-import { WorkflowsSection } from './components/workflows-section';
-import { VerificationSection } from './components/verification-section';
+import { SkillsHooksSection } from './components/skills-hooks-section';
 import { TokenOptimizationSection } from './components/token-optimization-section';
+import { VerificationSection } from './components/verification-section';
+import { WorkflowsSection } from './components/workflows-section';
 
 const tabs = [
   'all',

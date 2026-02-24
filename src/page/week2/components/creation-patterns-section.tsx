@@ -19,7 +19,11 @@ export const CreationPatternsSection = () => {
       description={t('creation.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('creation.singleton.title')} icon iconColor="purple">
+        <SubSection
+          title={t('creation.singleton.title')}
+          icon
+          iconColor="purple"
+        >
           <div className="grid grid-cols-1 gap-6">
             <div className="space-y-2">
               <p className="text-sm text-gray-700">

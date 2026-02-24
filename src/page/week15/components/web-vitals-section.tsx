@@ -73,20 +73,33 @@ export const WebVitalsSection = () => {
 
                 <div className="grid grid-cols-2 gap-2 mb-3">
                   <div className="bg-green-50 p-2 rounded text-center">
-                    <span className="text-xs text-green-600 font-bold">{t('webVitals.goodLabel')}</span>
-                    <p className="text-sm text-green-800">{vitals[selectedVital].good}</p>
+                    <span className="text-xs text-green-600 font-bold">
+                      {t('webVitals.goodLabel')}
+                    </span>
+                    <p className="text-sm text-green-800">
+                      {vitals[selectedVital].good}
+                    </p>
                   </div>
                   <div className="bg-red-50 p-2 rounded text-center">
-                    <span className="text-xs text-red-600 font-bold">{t('webVitals.poorLabel')}</span>
-                    <p className="text-sm text-red-800">{vitals[selectedVital].poor}</p>
+                    <span className="text-xs text-red-600 font-bold">
+                      {t('webVitals.poorLabel')}
+                    </span>
+                    <p className="text-sm text-red-800">
+                      {vitals[selectedVital].poor}
+                    </p>
                   </div>
                 </div>
 
                 <div className="bg-gray-50 p-3 rounded">
-                  <h5 className="text-xs font-bold text-gray-700 mb-2">{t('webVitals.improvementLabel')}</h5>
+                  <h5 className="text-xs font-bold text-gray-700 mb-2">
+                    {t('webVitals.improvementLabel')}
+                  </h5>
                   <ul className="space-y-1">
                     {vitals[selectedVital].improve.map((item: string) => (
-                      <li key={item} className="text-xs text-gray-600 flex items-start gap-1">
+                      <li
+                        key={item}
+                        className="text-xs text-gray-600 flex items-start gap-1"
+                      >
                         <span className="text-blue-500">→</span> {item}
                       </li>
                     ))}
@@ -97,7 +110,11 @@ export const WebVitalsSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('webVitals.collectionTitle')} icon iconColor="green">
+        <SubSection
+          title={t('webVitals.collectionTitle')}
+          icon
+          iconColor="green"
+        >
           <CodeBlock
             code={`// 1. web-vitals 라이브러리 설치
 npm install web-vitals
@@ -146,26 +163,40 @@ onCLS(sendToSentry);`}
           />
         </SubSection>
 
-        <SubSection title={t('webVitals.environmentTitle')} icon iconColor="orange">
+        <SubSection
+          title={t('webVitals.environmentTitle')}
+          icon
+          iconColor="orange"
+        >
           <InfoBox variant="orange" title={t('webVitals.environmentInfoTitle')}>
-            <p className="text-sm">
-              {t('webVitals.environmentInfoDesc')}
-            </p>
+            <p className="text-sm">{t('webVitals.environmentInfoDesc')}</p>
           </InfoBox>
 
           <div className="mt-4 grid grid-cols-2 gap-3">
             <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
-              <h5 className="font-bold text-sm text-blue-800 mb-2">{t('webVitals.labDataTitle')}</h5>
+              <h5 className="font-bold text-sm text-blue-800 mb-2">
+                {t('webVitals.labDataTitle')}
+              </h5>
               <ul className="text-xs text-blue-700 space-y-1">
-                {(t('webVitals.labDataItems', { returnObjects: true }) as string[]).map((item: string, idx: number) => (
+                {(
+                  t('webVitals.labDataItems', {
+                    returnObjects: true,
+                  }) as string[]
+                ).map((item: string, idx: number) => (
                   <li key={idx}>• {item}</li>
                 ))}
               </ul>
             </div>
             <div className="bg-green-50 p-3 rounded-lg border border-green-200">
-              <h5 className="font-bold text-sm text-green-800 mb-2">{t('webVitals.fieldDataTitle')}</h5>
+              <h5 className="font-bold text-sm text-green-800 mb-2">
+                {t('webVitals.fieldDataTitle')}
+              </h5>
               <ul className="text-xs text-green-700 space-y-1">
-                {(t('webVitals.fieldDataItems', { returnObjects: true }) as string[]).map((item: string, idx: number) => (
+                {(
+                  t('webVitals.fieldDataItems', {
+                    returnObjects: true,
+                  }) as string[]
+                ).map((item: string, idx: number) => (
                   <li key={idx}>• {item}</li>
                 ))}
               </ul>
@@ -175,25 +206,35 @@ onCLS(sendToSentry);`}
 
         <SubSection title={t('webVitals.dashboardTitle')} icon iconColor="red">
           <div className="space-y-3">
-            {(t('webVitals.dashboards', { returnObjects: true }) as any[]).map((item: any) => (
-              <div
-                key={item.tool}
-                className="bg-white p-3 rounded-lg border border-gray-200 flex items-center justify-between"
-              >
-                <div>
-                  <h5 className="font-bold text-sm text-gray-900">{item.tool}</h5>
-                  <p className="text-xs text-gray-500">{item.desc}</p>
+            {(t('webVitals.dashboards', { returnObjects: true }) as any[]).map(
+              (item: any) => (
+                <div
+                  key={item.tool}
+                  className="bg-white p-3 rounded-lg border border-gray-200 flex items-center justify-between"
+                >
+                  <div>
+                    <h5 className="font-bold text-sm text-gray-900">
+                      {item.tool}
+                    </h5>
+                    <p className="text-xs text-gray-500">{item.desc}</p>
+                  </div>
+                  <span className="text-xs text-blue-500">{item.link}</span>
                 </div>
-                <span className="text-xs text-blue-500">{item.link}</span>
-              </div>
-            ))}
+              ),
+            )}
           </div>
         </SubSection>
 
-        <SubSection title={t('webVitals.priorityTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('webVitals.priorityTitle')}
+          icon
+          iconColor="purple"
+        >
           <DemoBox label={t('webVitals.priorityLabel')}>
             <div className="space-y-2">
-              {(t('webVitals.priorities', { returnObjects: true }) as any[]).map((item: any) => (
+              {(
+                t('webVitals.priorities', { returnObjects: true }) as any[]
+              ).map((item: any) => (
                 <div
                   key={item.priority}
                   className="flex items-center gap-3 bg-gray-50 p-2 rounded"
@@ -201,7 +242,9 @@ onCLS(sendToSentry);`}
                   <span className="w-6 h-6 bg-purple-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
                     {item.priority}
                   </span>
-                  <span className="text-sm text-gray-700 flex-1">{item.action}</span>
+                  <span className="text-sm text-gray-700 flex-1">
+                    {item.action}
+                  </span>
                   <span
                     className={`text-xs px-2 py-0.5 rounded ${
                       item.impact === 'High'

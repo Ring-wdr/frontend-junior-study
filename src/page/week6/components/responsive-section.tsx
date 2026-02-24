@@ -11,8 +11,18 @@ export const ResponsiveSection = () => {
       description={t('responsive.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('responsive.mobileFirst.title')} icon iconColor="orange">
-          <p className="text-sm text-gray-700 mb-4"><Trans t={t} i18nKey="responsive.mobileFirst.content" components={{ code: <code /> }} /></p>
+        <SubSection
+          title={t('responsive.mobileFirst.title')}
+          icon
+          iconColor="orange"
+        >
+          <p className="text-sm text-gray-700 mb-4">
+            <Trans
+              t={t}
+              i18nKey="responsive.mobileFirst.content"
+              components={{ code: <code /> }}
+            />
+          </p>
 
           <CodeBlock
             code={`<!-- 
@@ -28,18 +38,40 @@ export const ResponsiveSection = () => {
           />
         </SubSection>
 
-        <SubSection title={t('responsive.toolsTechniques.title')} icon iconColor="orange">
+        <SubSection
+          title={t('responsive.toolsTechniques.title')}
+          icon
+          iconColor="orange"
+        >
           <div className="grid grid-cols-1 gap-4">
-            <InfoBox variant="orange" title={t('responsive.toolsTechniques.infoTitle')}>
+            <InfoBox
+              variant="orange"
+              title={t('responsive.toolsTechniques.infoTitle')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>{t('responsive.toolsTechniques.breakpoints')}</strong> {t('responsive.toolsTechniques.breakpointsDesc')}
+                  <strong>{t('responsive.toolsTechniques.breakpoints')}</strong>{' '}
+                  {t('responsive.toolsTechniques.breakpointsDesc')}
                 </li>
                 <li>
-                  <strong>{t('responsive.toolsTechniques.fluidTypography')}</strong> <Trans t={t} i18nKey="responsive.toolsTechniques.fluidTypographyDesc" components={{ code: <code /> }} />
+                  <strong>
+                    {t('responsive.toolsTechniques.fluidTypography')}
+                  </strong>{' '}
+                  <Trans
+                    t={t}
+                    i18nKey="responsive.toolsTechniques.fluidTypographyDesc"
+                    components={{ code: <code /> }}
+                  />
                 </li>
                 <li>
-                  <strong>{t('responsive.toolsTechniques.artDirection')}</strong> <Trans t={t} i18nKey="responsive.toolsTechniques.artDirectionDesc" components={{ code: <code /> }} />
+                  <strong>
+                    {t('responsive.toolsTechniques.artDirection')}
+                  </strong>{' '}
+                  <Trans
+                    t={t}
+                    i18nKey="responsive.toolsTechniques.artDirectionDesc"
+                    components={{ code: <code /> }}
+                  />
                 </li>
               </ul>
             </InfoBox>

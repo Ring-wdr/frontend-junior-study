@@ -1,14 +1,34 @@
+import { Circle, Square, Triangle } from 'lucide-react';
+import { motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'motion/react';
-import { Circle, Square, Triangle } from 'lucide-react';
 
 type ShapeType = 'circle' | 'rectangle' | 'triangle';
 
-const shapes: { type: ShapeType; icon: typeof Circle; color: string; properties: string[] }[] = [
-  { type: 'circle', icon: Circle, color: 'blue', properties: ['radius: number'] },
-  { type: 'rectangle', icon: Square, color: 'green', properties: ['width: number', 'height: number'] },
-  { type: 'triangle', icon: Triangle, color: 'purple', properties: ['base: number', 'height: number'] },
+const shapes: {
+  type: ShapeType;
+  icon: typeof Circle;
+  color: string;
+  properties: string[];
+}[] = [
+  {
+    type: 'circle',
+    icon: Circle,
+    color: 'blue',
+    properties: ['radius: number'],
+  },
+  {
+    type: 'rectangle',
+    icon: Square,
+    color: 'green',
+    properties: ['width: number', 'height: number'],
+  },
+  {
+    type: 'triangle',
+    icon: Triangle,
+    color: 'purple',
+    properties: ['base: number', 'height: number'],
+  },
 ];
 
 export const DiscriminatedUnionVisualizer = () => {
@@ -45,7 +65,10 @@ export const DiscriminatedUnionVisualizer = () => {
                   : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'
               }`}
               style={{
-                backgroundColor: selected === shape.type ? `var(--${shape.color}-500, #6366f1)` : undefined,
+                backgroundColor:
+                  selected === shape.type
+                    ? `var(--${shape.color}-500, #6366f1)`
+                    : undefined,
               }}
             >
               <ShapeIcon className="w-4 h-4" />
@@ -88,7 +111,9 @@ export const DiscriminatedUnionVisualizer = () => {
         </div>
 
         <div className="text-center">
-          <div className="text-xs font-medium text-gray-500 mb-2">Properties</div>
+          <div className="text-xs font-medium text-gray-500 mb-2">
+            Properties
+          </div>
           <motion.div
             key={selected}
             initial={{ scale: 0.9, opacity: 0 }}
@@ -124,7 +149,8 @@ export const DiscriminatedUnionVisualizer = () => {
             <span className="text-green-400">"{shape.type}"</span>:
             {selected === shape.type && (
               <span className="text-gray-400 ml-2">
-                // shape: {shape.type.charAt(0).toUpperCase() + shape.type.slice(1)}
+                // shape:{' '}
+                {shape.type.charAt(0).toUpperCase() + shape.type.slice(1)}
               </span>
             )}
           </div>

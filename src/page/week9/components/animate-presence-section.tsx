@@ -38,12 +38,20 @@ export const AnimatePresenceSection = () => {
         <SubSection title={t('presence.problem.title')} icon iconColor="red">
           <InfoBox variant="red" title={t('presence.problem.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              <Trans t={t} i18nKey="presence.problem.content" components={{ code: <code /> }} />
+              <Trans
+                t={t}
+                i18nKey="presence.problem.content"
+                components={{ code: <code /> }}
+              />
             </p>
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('presence.basicUsage.title')} icon iconColor="blue">
+        <SubSection
+          title={t('presence.basicUsage.title')}
+          icon
+          iconColor="blue"
+        >
           <CodeBlock
             code={`import { AnimatePresence, motion } from "framer-motion";
 
@@ -211,19 +219,24 @@ export const AnimatePresenceSection = () => {
           <InfoBox variant="purple" title={t('presence.useCases.infoTitle')}>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>{t('presence.useCases.modals')}</strong> {t('presence.useCases.modalsDesc')}
+                <strong>{t('presence.useCases.modals')}</strong>{' '}
+                {t('presence.useCases.modalsDesc')}
               </li>
               <li>
-                <strong>{t('presence.useCases.toast')}</strong> {t('presence.useCases.toastDesc')}
+                <strong>{t('presence.useCases.toast')}</strong>{' '}
+                {t('presence.useCases.toastDesc')}
               </li>
               <li>
-                <strong>{t('presence.useCases.dropdowns')}</strong> {t('presence.useCases.dropdownsDesc')}
+                <strong>{t('presence.useCases.dropdowns')}</strong>{' '}
+                {t('presence.useCases.dropdownsDesc')}
               </li>
               <li>
-                <strong>{t('presence.useCases.pageTransitions')}</strong> {t('presence.useCases.pageTransitionsDesc')}
+                <strong>{t('presence.useCases.pageTransitions')}</strong>{' '}
+                {t('presence.useCases.pageTransitionsDesc')}
               </li>
               <li>
-                <strong>{t('presence.useCases.accordions')}</strong> {t('presence.useCases.accordionsDesc')}
+                <strong>{t('presence.useCases.accordions')}</strong>{' '}
+                {t('presence.useCases.accordionsDesc')}
               </li>
             </ul>
           </InfoBox>

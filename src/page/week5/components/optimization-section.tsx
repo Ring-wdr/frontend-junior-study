@@ -15,16 +15,28 @@ export const OptimizationSection = () => {
         <SubSection title={t('optimization.seo.title')} icon iconColor="green">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              <Trans t={t} i18nKey="optimization.seo.intro" components={{ code: <code /> }} />
+              <Trans
+                t={t}
+                i18nKey="optimization.seo.intro"
+                components={{ code: <code /> }}
+              />
             </p>
 
             <InfoBox variant="green" title={t('optimization.seo.api.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <Trans t={t} i18nKey="optimization.seo.api.static" components={{ code: <code /> }} />
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.seo.api.static"
+                    components={{ code: <code /> }}
+                  />
                 </li>
                 <li>
-                  <Trans t={t} i18nKey="optimization.seo.api.dynamic" components={{ code: <code /> }} />
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.seo.api.dynamic"
+                    components={{ code: <code /> }}
+                  />
                 </li>
                 <li>
                   <Trans t={t} i18nKey="optimization.seo.api.openGraph" />
@@ -112,7 +124,11 @@ export async function generateMetadata({ params }) {
         >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              <Trans t={t} i18nKey="optimization.imageOptimization.intro" components={{ code: <code /> }} />
+              <Trans
+                t={t}
+                i18nKey="optimization.imageOptimization.intro"
+                components={{ code: <code /> }}
+              />
             </p>
 
             <InfoBox
@@ -213,12 +229,19 @@ export default function Home() {
                   />
                 </li>
                 <li>
-                  <Trans t={t} i18nKey="optimization.imageOptimization.tips.sizes" components={{ code: <code /> }} />
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.imageOptimization.tips.sizes"
+                    components={{ code: <code /> }}
+                  />
                 </li>
                 <li>{t('optimization.imageOptimization.tips.quality')}</li>
                 <li>{t('optimization.imageOptimization.tips.crop')}</li>
                 <li>
-                  <Trans t={t} i18nKey="optimization.imageOptimization.tips.svg" />
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.imageOptimization.tips.svg"
+                  />
                 </li>
               </ul>
             </InfoBox>
@@ -234,7 +257,11 @@ export default function Home() {
         >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              <Trans t={t} i18nKey="optimization.fontOptimization.intro" components={{ code: <code /> }} />
+              <Trans
+                t={t}
+                i18nKey="optimization.fontOptimization.intro"
+                components={{ code: <code /> }}
+              />
             </p>
 
             <InfoBox
@@ -351,7 +378,9 @@ export default function RootLayout({ children }) {
                     i18nKey="optimization.fontOptimization.selectionGuide.block"
                   />
                 </li>
-                <li>{t('optimization.fontOptimization.selectionGuide.limit')}</li>
+                <li>
+                  {t('optimization.fontOptimization.selectionGuide.limit')}
+                </li>
                 <li>
                   {t('optimization.fontOptimization.selectionGuide.variable')}
                 </li>
@@ -461,9 +490,15 @@ export const config = {
             </p>
 
             <div className="grid grid-cols-1 gap-4">
-              <InfoBox variant="blue" title={t('optimization.performance.lcp.title')}>
+              <InfoBox
+                variant="blue"
+                title={t('optimization.performance.lcp.title')}
+              >
                 <p className="text-sm text-gray-700 mb-2">
-                  <Trans t={t} i18nKey="optimization.performance.lcp.description" />
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.performance.lcp.description"
+                  />
                 </p>
                 <ul className="list-disc pl-5 space-y-1 text-xs text-gray-700">
                   <li>
@@ -479,7 +514,10 @@ export const config = {
                 title={t('optimization.performance.cls.title')}
               >
                 <p className="text-sm text-gray-700 mb-2">
-                  <Trans t={t} i18nKey="optimization.performance.cls.description" />
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.performance.cls.description"
+                  />
                 </p>
                 <ul className="list-disc pl-5 space-y-1 text-xs text-gray-700">
                   <li>{t('optimization.performance.cls.tip1')}</li>
@@ -496,7 +534,10 @@ export const config = {
                 title={t('optimization.performance.fid.title')}
               >
                 <p className="text-sm text-gray-700 mb-2">
-                  <Trans t={t} i18nKey="optimization.performance.fid.description" />
+                  <Trans
+                    t={t}
+                    i18nKey="optimization.performance.fid.description"
+                  />
                 </p>
                 <ul className="list-disc pl-5 space-y-1 text-xs text-gray-700">
                   <li>{t('optimization.performance.fid.tip1')}</li>
@@ -536,7 +577,9 @@ export function RootLayout({ children }) {
               title={t('optimization.performance.checklist.title')}
             >
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
-                <li>{t('optimization.performance.checklist.dynamicImports')}</li>
+                <li>
+                  {t('optimization.performance.checklist.dynamicImports')}
+                </li>
                 <li>{t('optimization.performance.checklist.minifyJS')}</li>
                 <li>{t('optimization.performance.checklist.compression')}</li>
                 <li>{t('optimization.performance.checklist.cdn')}</li>

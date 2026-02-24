@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next';
 import { ArrowRight, Box, Database, FileCode, Layers } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
@@ -7,7 +7,9 @@ import { CodeBlock } from '../../../components/ui/code-block';
 
 export const WasmMechanicsSection = () => {
   const { t } = useTranslation('week18');
-  const moduleStructure = t('wasmMechanics.moduleStructure', { returnObjects: true }) as any[];
+  const moduleStructure = t('wasmMechanics.moduleStructure', {
+    returnObjects: true,
+  }) as any[];
 
   return (
     <SectionCard
@@ -16,42 +18,65 @@ export const WasmMechanicsSection = () => {
       description={t('wasmMechanics.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('wasmMechanics.pipelineTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('wasmMechanics.pipelineTitle')}
+          icon
+          iconColor="blue"
+        >
           <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200">
             <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
               <div className="flex flex-col items-center text-center p-3 bg-white rounded-lg shadow-sm">
                 <FileCode className="w-6 h-6 text-blue-500 mb-1" />
-                <span className="text-xs font-bold text-gray-700">{t('wasmMechanics.pipeline.source')}</span>
+                <span className="text-xs font-bold text-gray-700">
+                  {t('wasmMechanics.pipeline.source')}
+                </span>
                 <span className="text-xs text-gray-500">C/C++/Rust</span>
               </div>
               <ArrowRight className="w-5 h-5 text-gray-400 rotate-90 md:rotate-0" />
               <div className="flex flex-col items-center text-center p-3 bg-white rounded-lg shadow-sm">
                 <Layers className="w-6 h-6 text-purple-500 mb-1" />
-                <span className="text-xs font-bold text-gray-700">{t('wasmMechanics.pipeline.compiler')}</span>
-                <span className="text-xs text-gray-500">Emscripten/wasm-pack</span>
+                <span className="text-xs font-bold text-gray-700">
+                  {t('wasmMechanics.pipeline.compiler')}
+                </span>
+                <span className="text-xs text-gray-500">
+                  Emscripten/wasm-pack
+                </span>
               </div>
               <ArrowRight className="w-5 h-5 text-gray-400 rotate-90 md:rotate-0" />
               <div className="flex flex-col items-center text-center p-3 bg-white rounded-lg shadow-sm">
                 <Box className="w-6 h-6 text-orange-500 mb-1" />
-                <span className="text-xs font-bold text-gray-700">{t('wasmMechanics.pipeline.wasmFile')}</span>
+                <span className="text-xs font-bold text-gray-700">
+                  {t('wasmMechanics.pipeline.wasmFile')}
+                </span>
                 <span className="text-xs text-gray-500">.wasm</span>
               </div>
               <ArrowRight className="w-5 h-5 text-gray-400 rotate-90 md:rotate-0" />
               <div className="flex flex-col items-center text-center p-3 bg-white rounded-lg shadow-sm">
                 <Database className="w-6 h-6 text-green-500 mb-1" />
-                <span className="text-xs font-bold text-gray-700">{t('wasmMechanics.pipeline.browser')}</span>
+                <span className="text-xs font-bold text-gray-700">
+                  {t('wasmMechanics.pipeline.browser')}
+                </span>
                 <span className="text-xs text-gray-500">V8/SpiderMonkey</span>
               </div>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title={t('wasmMechanics.moduleTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('wasmMechanics.moduleTitle')}
+          icon
+          iconColor="purple"
+        >
           <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
             <div className="space-y-2">
               {moduleStructure.map((item: any) => (
-                <div key={item.name} className="flex items-center gap-3 bg-white p-2 rounded border border-purple-100">
-                  <span className="text-xs font-mono font-bold text-purple-700 min-w-[80px]">{item.name}</span>
+                <div
+                  key={item.name}
+                  className="flex items-center gap-3 bg-white p-2 rounded border border-purple-100"
+                >
+                  <span className="text-xs font-mono font-bold text-purple-700 min-w-[80px]">
+                    {item.name}
+                  </span>
                   <span className="text-xs text-gray-600">{item.desc}</span>
                 </div>
               ))}
@@ -59,7 +84,11 @@ export const WasmMechanicsSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('wasmMechanics.interopTitle')} icon iconColor="green">
+        <SubSection
+          title={t('wasmMechanics.interopTitle')}
+          icon
+          iconColor="green"
+        >
           <CodeBlock
             code={`// 1. Wasm 모듈 로드 (권장: instantiateStreaming)
 const response = await fetch("module.wasm");
@@ -85,7 +114,11 @@ console.log(memory[0]); // Wasm 메모리 읽기`}
           />
         </SubSection>
 
-        <SubSection title={t('wasmMechanics.memoryTitle')} icon iconColor="orange">
+        <SubSection
+          title={t('wasmMechanics.memoryTitle')}
+          icon
+          iconColor="orange"
+        >
           <CodeBlock
             code={`// WebAssembly.Memory - 선형 메모리
 const memory = new WebAssembly.Memory({
@@ -105,9 +138,7 @@ memory.grow(1); // 1 페이지 추가
           />
 
           <InfoBox variant="orange" title={t('wasmMechanics.memoryWarning')}>
-            <p className="text-sm">
-              {t('wasmMechanics.memoryWarningDesc')}
-            </p>
+            <p className="text-sm">{t('wasmMechanics.memoryWarningDesc')}</p>
           </InfoBox>
         </SubSection>
       </div>

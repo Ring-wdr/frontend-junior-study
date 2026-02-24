@@ -12,7 +12,11 @@ export const TestingFundamentalsSection = () => {
       description={t('fundamentals.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('fundamentals.pyramid.title')} icon iconColor="blue">
+        <SubSection
+          title={t('fundamentals.pyramid.title')}
+          icon
+          iconColor="blue"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('fundamentals.pyramid.description')}
@@ -23,7 +27,9 @@ export const TestingFundamentalsSection = () => {
                 {/* E2E Test (Top) */}
                 <div className="text-center mb-1">
                   <div className="bg-red-100 border border-red-300 p-3 rounded mx-auto w-20">
-                    <p className="text-xs font-bold text-red-800">{t('fundamentals.pyramid.e2e')}</p>
+                    <p className="text-xs font-bold text-red-800">
+                      {t('fundamentals.pyramid.e2e')}
+                    </p>
                   </div>
                 </div>
 
@@ -47,23 +53,33 @@ export const TestingFundamentalsSection = () => {
               </div>
             </div>
 
-            <InfoBox variant="blue" title={t('fundamentals.pyramid.whyPyramid.title')}>
+            <InfoBox
+              variant="blue"
+              title={t('fundamentals.pyramid.whyPyramid.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Unit Tests:</strong> {t('fundamentals.pyramid.whyPyramid.unitTests')}
+                  <strong>Unit Tests:</strong>{' '}
+                  {t('fundamentals.pyramid.whyPyramid.unitTests')}
                 </li>
                 <li>
-                  <strong>Integration Tests:</strong> {t('fundamentals.pyramid.whyPyramid.integrationTests')}
+                  <strong>Integration Tests:</strong>{' '}
+                  {t('fundamentals.pyramid.whyPyramid.integrationTests')}
                 </li>
                 <li>
-                  <strong>E2E Tests:</strong> {t('fundamentals.pyramid.whyPyramid.e2eTests')}
+                  <strong>E2E Tests:</strong>{' '}
+                  {t('fundamentals.pyramid.whyPyramid.e2eTests')}
                 </li>
               </ul>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title={t('fundamentals.unitTesting.title')} icon iconColor="green">
+        <SubSection
+          title={t('fundamentals.unitTesting.title')}
+          icon
+          iconColor="green"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('fundamentals.unitTesting.description')}
@@ -89,7 +105,9 @@ describe('sum', () => {
                 <strong>{t('fundamentals.unitTesting.bestTargets')}</strong>
               </p>
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700 mt-2">
-                <li>{t('fundamentals.unitTesting.targetList.pureFunctions')}</li>
+                <li>
+                  {t('fundamentals.unitTesting.targetList.pureFunctions')}
+                </li>
                 <li>{t('fundamentals.unitTesting.targetList.components')}</li>
                 <li>{t('fundamentals.unitTesting.targetList.hooks')}</li>
               </ul>
@@ -97,7 +115,11 @@ describe('sum', () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('fundamentals.integrationTesting.title')} icon iconColor="orange">
+        <SubSection
+          title={t('fundamentals.integrationTesting.title')}
+          icon
+          iconColor="orange"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('fundamentals.integrationTesting.description')}
@@ -118,15 +140,24 @@ describe('TodoList Integration', () => {
               className="text-xs"
             />
 
-            <InfoBox variant="orange" title={t('fundamentals.integrationTesting.commonScenario.title')}>
+            <InfoBox
+              variant="orange"
+              title={t('fundamentals.integrationTesting.commonScenario.title')}
+            >
               <p className="text-sm text-gray-700">
-                {t('fundamentals.integrationTesting.commonScenario.description')}
+                {t(
+                  'fundamentals.integrationTesting.commonScenario.description',
+                )}
               </p>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title={t('fundamentals.e2eTesting.title')} icon iconColor="red">
+        <SubSection
+          title={t('fundamentals.e2eTesting.title')}
+          icon
+          iconColor="red"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('fundamentals.e2eTesting.description')}
@@ -149,13 +180,18 @@ test('user can login and view dashboard', async ({ page }) => {
 
             <div className="bg-red-50 p-4 rounded-lg border border-red-200">
               <p className="text-sm text-gray-700">
-                <strong>When to use E2E tests:</strong> {t('fundamentals.e2eTesting.whenToUse')}
+                <strong>When to use E2E tests:</strong>{' '}
+                {t('fundamentals.e2eTesting.whenToUse')}
               </p>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title={t('fundamentals.testRatio.title')} icon iconColor="purple">
+        <SubSection
+          title={t('fundamentals.testRatio.title')}
+          icon
+          iconColor="purple"
+        >
           <div className="space-y-4">
             <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
               <p className="text-sm font-semibold text-gray-800 mb-3">
@@ -163,13 +199,16 @@ test('user can login and view dashboard', async ({ page }) => {
               </p>
               <ul className="space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Unit Tests: 60-70%</strong> - {t('fundamentals.testRatio.unitTests')}
+                  <strong>Unit Tests: 60-70%</strong> -{' '}
+                  {t('fundamentals.testRatio.unitTests')}
                 </li>
                 <li>
-                  <strong>Integration Tests: 20-30%</strong> - {t('fundamentals.testRatio.integrationTests')}
+                  <strong>Integration Tests: 20-30%</strong> -{' '}
+                  {t('fundamentals.testRatio.integrationTests')}
                 </li>
                 <li>
-                  <strong>E2E Tests: 5-10%</strong> - {t('fundamentals.testRatio.e2eTests')}
+                  <strong>E2E Tests: 5-10%</strong> -{' '}
+                  {t('fundamentals.testRatio.e2eTests')}
                 </li>
               </ul>
             </div>

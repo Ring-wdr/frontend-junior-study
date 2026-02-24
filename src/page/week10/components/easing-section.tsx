@@ -43,7 +43,9 @@ export function EasingSection() {
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-6">
-        <h2 className="text-2xl font-bold text-gray-900">{t('easing.title')}</h2>
+        <h2 className="text-2xl font-bold text-gray-900">
+          {t('easing.title')}
+        </h2>
         <p className="text-gray-600">{t('easing.description')}</p>
 
         <div className="flex flex-col md:flex-row gap-8 items-start">

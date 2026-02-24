@@ -1,6 +1,13 @@
+import {
+  ArrowRight,
+  Bot,
+  Database,
+  GitBranch,
+  Globe,
+  Server,
+} from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Bot, Server, Database, Globe, GitBranch, ArrowRight } from 'lucide-react';
 
 export const McpArchitectureVisualizer = () => {
   const { t } = useTranslation('week17');
@@ -20,7 +27,9 @@ export const McpArchitectureVisualizer = () => {
           <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
             <Bot className="w-10 h-10 text-white" />
           </div>
-          <span className="mt-2 text-sm font-medium text-gray-700">AI Agent</span>
+          <span className="mt-2 text-sm font-medium text-gray-700">
+            AI Agent
+          </span>
         </div>
 
         {/* Arrow */}
@@ -33,13 +42,17 @@ export const McpArchitectureVisualizer = () => {
         <div className="flex flex-col items-center">
           <div
             className={`w-20 h-20 rounded-xl flex items-center justify-center shadow-lg transition-all cursor-pointer ${
-              activeServer ? 'bg-gradient-to-br from-blue-500 to-cyan-600' : 'bg-gradient-to-br from-gray-400 to-gray-500'
+              activeServer
+                ? 'bg-gradient-to-br from-blue-500 to-cyan-600'
+                : 'bg-gradient-to-br from-gray-400 to-gray-500'
             }`}
             onClick={() => setActiveServer(activeServer ? null : 'database')}
           >
             <Server className="w-10 h-10 text-white" />
           </div>
-          <span className="mt-2 text-sm font-medium text-gray-700">MCP Server</span>
+          <span className="mt-2 text-sm font-medium text-gray-700">
+            MCP Server
+          </span>
         </div>
 
         {/* Arrow */}
@@ -62,8 +75,12 @@ export const McpArchitectureVisualizer = () => {
                     : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? `text-${server.color}-600` : 'text-gray-500'}`} />
-                <span className={`text-xs font-medium ${isActive ? `text-${server.color}-700` : 'text-gray-600'}`}>
+                <Icon
+                  className={`w-4 h-4 ${isActive ? `text-${server.color}-600` : 'text-gray-500'}`}
+                />
+                <span
+                  className={`text-xs font-medium ${isActive ? `text-${server.color}-700` : 'text-gray-600'}`}
+                >
                   {server.label}
                 </span>
               </button>

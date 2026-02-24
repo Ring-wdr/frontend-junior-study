@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { cn } from '../../lib/utils';
-import { WhyTypescriptSection } from './components/why-typescript-section';
-import { TypeBasicsSection } from './components/type-basics-section';
 import { AdvancedTypesSection } from './components/advanced-types-section';
-import { GenericsSection } from './components/generics-section';
-import { UtilityTypesSection } from './components/utility-types-section';
 import { ConditionalTypesSection } from './components/conditional-types-section';
+import { GenericsSection } from './components/generics-section';
 import { PracticalPatternsSection } from './components/practical-patterns-section';
+import { TypeBasicsSection } from './components/type-basics-section';
+import { UtilityTypesSection } from './components/utility-types-section';
+import { WhyTypescriptSection } from './components/why-typescript-section';
 
 const tabs = [
   'all',

@@ -9,7 +9,9 @@ export const DevToolsSourcesNetworkSection = () => {
   const { t } = useTranslation('week15');
   const [selectedBreakpoint, setSelectedBreakpoint] = useState(0);
 
-  const bpTypes = t('devtoolsSources.breakpointTypes', { returnObjects: true }) as any[];
+  const bpTypes = t('devtoolsSources.breakpointTypes', {
+    returnObjects: true,
+  }) as any[];
   const breakpointTypes = [
     { ...bpTypes[0], icon: '🔴' },
     { ...bpTypes[1], icon: '🟡' },
@@ -25,8 +27,15 @@ export const DevToolsSourcesNetworkSection = () => {
       description={t('devtoolsSources.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('devtoolsSources.breakpointsTitle')} icon iconColor="green">
-          <InfoBox variant="green" title={t('devtoolsSources.breakpointsInfoTitle')}>
+        <SubSection
+          title={t('devtoolsSources.breakpointsTitle')}
+          icon
+          iconColor="green"
+        >
+          <InfoBox
+            variant="green"
+            title={t('devtoolsSources.breakpointsInfoTitle')}
+          >
             <p className="text-sm leading-relaxed">
               {t('devtoolsSources.breakpointsInfoDesc')}
             </p>
@@ -84,14 +93,24 @@ export const DevToolsSourcesNetworkSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('devtoolsSources.debugControlTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('devtoolsSources.debugControlTitle')}
+          icon
+          iconColor="blue"
+        >
           <div className="grid grid-cols-3 gap-3">
-            {(t('devtoolsSources.debugControls', { returnObjects: true }) as any[]).map((control: any, idx: number) => (
+            {(
+              t('devtoolsSources.debugControls', {
+                returnObjects: true,
+              }) as any[]
+            ).map((control: any, idx: number) => (
               <div
                 key={control.name}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200 text-center"
               >
-                <span className="text-2xl">{['▶️', '⏭️', '⬇️', '⬆️', '⏸️', '🔄'][idx]}</span>
+                <span className="text-2xl">
+                  {['▶️', '⏭️', '⬇️', '⬆️', '⏸️', '🔄'][idx]}
+                </span>
                 <p className="font-medium text-sm mt-1">{control.name}</p>
                 <kbd className="text-[10px] bg-white px-1.5 py-0.5 rounded border mt-1 inline-block">
                   {control.shortcut}
@@ -102,7 +121,11 @@ export const DevToolsSourcesNetworkSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('devtoolsSources.scopeWatchTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('devtoolsSources.scopeWatchTitle')}
+          icon
+          iconColor="purple"
+        >
           <DemoBox label={t('devtoolsSources.scopeWatchLabel')}>
             <div className="space-y-3">
               <div className="bg-white p-3 rounded-lg border border-gray-200">
@@ -110,8 +133,14 @@ export const DevToolsSourcesNetworkSection = () => {
                   {t('devtoolsSources.scopePanelTitle')}
                 </h5>
                 <ul className="text-sm text-gray-600 space-y-1">
-                  {(t('devtoolsSources.scopeItems', { returnObjects: true }) as any[]).map((item: any) => (
-                    <li key={item.label}>• <strong>{item.label}</strong> {item.desc}</li>
+                  {(
+                    t('devtoolsSources.scopeItems', {
+                      returnObjects: true,
+                    }) as any[]
+                  ).map((item: any) => (
+                    <li key={item.label}>
+                      • <strong>{item.label}</strong> {item.desc}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -120,7 +149,11 @@ export const DevToolsSourcesNetworkSection = () => {
                   {t('devtoolsSources.watchPanelTitle')}
                 </h5>
                 <ul className="text-sm text-gray-600 space-y-1">
-                  {(t('devtoolsSources.watchItems', { returnObjects: true }) as string[]).map((item: string, idx: number) => (
+                  {(
+                    t('devtoolsSources.watchItems', {
+                      returnObjects: true,
+                    }) as string[]
+                  ).map((item: string, idx: number) => (
                     <li key={idx}>• {item}</li>
                   ))}
                 </ul>
@@ -129,15 +162,24 @@ export const DevToolsSourcesNetworkSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('devtoolsSources.networkTitle')} icon iconColor="orange">
-          <InfoBox variant="orange" title={t('devtoolsSources.networkInfoTitle')}>
-            <p className="text-sm">
-              {t('devtoolsSources.networkInfoDesc')}
-            </p>
+        <SubSection
+          title={t('devtoolsSources.networkTitle')}
+          icon
+          iconColor="orange"
+        >
+          <InfoBox
+            variant="orange"
+            title={t('devtoolsSources.networkInfoTitle')}
+          >
+            <p className="text-sm">{t('devtoolsSources.networkInfoDesc')}</p>
           </InfoBox>
 
           <div className="mt-4 grid grid-cols-2 gap-3">
-            {(t('devtoolsSources.networkFeatures', { returnObjects: true }) as any[]).map((item: any) => (
+            {(
+              t('devtoolsSources.networkFeatures', {
+                returnObjects: true,
+              }) as any[]
+            ).map((item: any) => (
               <div
                 key={item.label}
                 className="bg-white p-3 rounded-lg border border-gray-200"
@@ -161,11 +203,13 @@ export const DevToolsSourcesNetworkSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('devtoolsSources.asyncTitle')} icon iconColor="red">
+        <SubSection
+          title={t('devtoolsSources.asyncTitle')}
+          icon
+          iconColor="red"
+        >
           <InfoBox variant="blue">
-            <p className="text-sm">
-              {t('devtoolsSources.asyncDesc')}
-            </p>
+            <p className="text-sm">{t('devtoolsSources.asyncDesc')}</p>
           </InfoBox>
         </SubSection>
       </div>

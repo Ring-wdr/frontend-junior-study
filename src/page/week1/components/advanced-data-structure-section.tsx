@@ -48,10 +48,13 @@ export const AdvancedDataStructureSection = () => {
           >
             <InfoBox variant="blue" className="bg-pink-50 border-pink-100">
               <h4 className="font-bold text-pink-900 mb-2 flex items-center gap-2">
-                <Search className="w-4 h-4" /> {t('advancedDataStructure.map.title')}
+                <Search className="w-4 h-4" />{' '}
+                {t('advancedDataStructure.map.title')}
               </h4>
               <ul className="list-disc list-inside text-sm text-pink-800 space-y-1">
-                <li><Trans t={t} i18nKey="advancedDataStructure.map.key1" /></li>
+                <li>
+                  <Trans t={t} i18nKey="advancedDataStructure.map.key1" />
+                </li>
                 <li>{t('advancedDataStructure.map.key2')}</li>
                 <li>{t('advancedDataStructure.map.key3')}</li>
                 <li>{t('advancedDataStructure.map.key4')}</li>
@@ -76,7 +79,8 @@ export const AdvancedDataStructureSection = () => {
               className="bg-purple-50 border-purple-100"
             >
               <h4 className="font-bold text-purple-900 mb-2 flex items-center gap-2">
-                <Plus className="w-4 h-4" /> {t('advancedDataStructure.set.title')}
+                <Plus className="w-4 h-4" />{' '}
+                {t('advancedDataStructure.set.title')}
               </h4>
               <p className="text-sm text-purple-800 mb-2">
                 {t('advancedDataStructure.set.description')}
@@ -108,10 +112,21 @@ set.delete(1);`}
               className="bg-orange-50 border-orange-100"
             >
               <h4 className="font-bold text-orange-900 mb-2 flex items-center gap-2">
-                <Trash2 className="w-4 h-4" /> {t('advancedDataStructure.weak.title')}
+                <Trash2 className="w-4 h-4" />{' '}
+                {t('advancedDataStructure.weak.title')}
               </h4>
-              <p className="text-sm text-orange-800 mb-2"><Trans t={t} i18nKey="advancedDataStructure.weak.description1" /></p>
-              <p className="text-sm text-orange-800 mt-2 border-t border-orange-200 pt-2"><Trans t={t} i18nKey="advancedDataStructure.weak.description2" /></p>
+              <p className="text-sm text-orange-800 mb-2">
+                <Trans
+                  t={t}
+                  i18nKey="advancedDataStructure.weak.description1"
+                />
+              </p>
+              <p className="text-sm text-orange-800 mt-2 border-t border-orange-200 pt-2">
+                <Trans
+                  t={t}
+                  i18nKey="advancedDataStructure.weak.description2"
+                />
+              </p>
             </InfoBox>
 
             <div className="mt-8">

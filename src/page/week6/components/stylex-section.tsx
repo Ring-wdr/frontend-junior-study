@@ -210,17 +210,27 @@ function Button({ color = 'primary', size = 'medium', children }: ButtonProps) {
             <Trans
               i18nKey="stylex.basicUsage.content"
               t={t}
-              components={{ code: <code className="bg-gray-100 px-1 rounded" /> }}
+              components={{
+                code: <code className="bg-gray-100 px-1 rounded" />,
+              }}
             />
           </p>
           <CodeBlock code={basicUsageCode} language="tsx" className="text-xs" />
         </SubSection>
 
-        <SubSection title={t('stylex.conditionalStyles.title')} icon iconColor="blue">
+        <SubSection
+          title={t('stylex.conditionalStyles.title')}
+          icon
+          iconColor="blue"
+        >
           <p className="text-sm text-gray-700 mb-4">
             {t('stylex.conditionalStyles.content')}
           </p>
-          <CodeBlock code={conditionalStylesCode} language="tsx" className="text-xs" />
+          <CodeBlock
+            code={conditionalStylesCode}
+            language="tsx"
+            className="text-xs"
+          />
         </SubSection>
 
         <SubSection title={t('stylex.theming.title')} icon iconColor="blue">
@@ -228,7 +238,9 @@ function Button({ color = 'primary', size = 'medium', children }: ButtonProps) {
             <Trans
               i18nKey="stylex.theming.content"
               t={t}
-              components={{ code: <code className="bg-gray-100 px-1 rounded" /> }}
+              components={{
+                code: <code className="bg-gray-100 px-1 rounded" />,
+              }}
             />
           </p>
           <CodeBlock code={themingCode} language="tsx" className="text-xs" />
@@ -247,36 +259,76 @@ function Button({ color = 'primary', size = 'medium', children }: ButtonProps) {
               <table className="w-full text-sm text-left">
                 <thead>
                   <tr className="border-b border-gray-300">
-                    <th className="py-2 px-3 font-semibold">{t('stylex.comparison.headers.feature')}</th>
-                    <th className="py-2 px-3 font-semibold">{t('stylex.comparison.headers.vanillaExtract')}</th>
-                    <th className="py-2 px-3 font-semibold">{t('stylex.comparison.headers.stylex')}</th>
+                    <th className="py-2 px-3 font-semibold">
+                      {t('stylex.comparison.headers.feature')}
+                    </th>
+                    <th className="py-2 px-3 font-semibold">
+                      {t('stylex.comparison.headers.vanillaExtract')}
+                    </th>
+                    <th className="py-2 px-3 font-semibold">
+                      {t('stylex.comparison.headers.stylex')}
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="text-gray-700">
                   <tr className="border-b border-gray-200">
-                    <td className="py-2 px-3 font-medium">{t('stylex.comparison.rows.cssOutput')}</td>
-                    <td className="py-2 px-3">{t('stylex.comparison.rows.cssOutputVE')}</td>
-                    <td className="py-2 px-3">{t('stylex.comparison.rows.cssOutputSX')}</td>
+                    <td className="py-2 px-3 font-medium">
+                      {t('stylex.comparison.rows.cssOutput')}
+                    </td>
+                    <td className="py-2 px-3">
+                      {t('stylex.comparison.rows.cssOutputVE')}
+                    </td>
+                    <td className="py-2 px-3">
+                      {t('stylex.comparison.rows.cssOutputSX')}
+                    </td>
                   </tr>
                   <tr className="border-b border-gray-200">
-                    <td className="py-2 px-3 font-medium">{t('stylex.comparison.rows.fileExtension')}</td>
-                    <td className="py-2 px-3"><code className="bg-gray-100 px-1 rounded">{t('stylex.comparison.rows.fileExtensionVE')}</code></td>
-                    <td className="py-2 px-3"><code className="bg-gray-100 px-1 rounded">{t('stylex.comparison.rows.fileExtensionSX')}</code></td>
+                    <td className="py-2 px-3 font-medium">
+                      {t('stylex.comparison.rows.fileExtension')}
+                    </td>
+                    <td className="py-2 px-3">
+                      <code className="bg-gray-100 px-1 rounded">
+                        {t('stylex.comparison.rows.fileExtensionVE')}
+                      </code>
+                    </td>
+                    <td className="py-2 px-3">
+                      <code className="bg-gray-100 px-1 rounded">
+                        {t('stylex.comparison.rows.fileExtensionSX')}
+                      </code>
+                    </td>
                   </tr>
                   <tr className="border-b border-gray-200">
-                    <td className="py-2 px-3 font-medium">{t('stylex.comparison.rows.styleMerging')}</td>
-                    <td className="py-2 px-3">{t('stylex.comparison.rows.styleMergingVE')}</td>
-                    <td className="py-2 px-3">{t('stylex.comparison.rows.styleMergingSX')}</td>
+                    <td className="py-2 px-3 font-medium">
+                      {t('stylex.comparison.rows.styleMerging')}
+                    </td>
+                    <td className="py-2 px-3">
+                      {t('stylex.comparison.rows.styleMergingVE')}
+                    </td>
+                    <td className="py-2 px-3">
+                      {t('stylex.comparison.rows.styleMergingSX')}
+                    </td>
                   </tr>
                   <tr className="border-b border-gray-200">
-                    <td className="py-2 px-3 font-medium">{t('stylex.comparison.rows.bundleSize')}</td>
-                    <td className="py-2 px-3">{t('stylex.comparison.rows.bundleSizeVE')}</td>
-                    <td className="py-2 px-3">{t('stylex.comparison.rows.bundleSizeSX')}</td>
+                    <td className="py-2 px-3 font-medium">
+                      {t('stylex.comparison.rows.bundleSize')}
+                    </td>
+                    <td className="py-2 px-3">
+                      {t('stylex.comparison.rows.bundleSizeVE')}
+                    </td>
+                    <td className="py-2 px-3">
+                      {t('stylex.comparison.rows.bundleSizeSX')}
+                    </td>
                   </tr>
                   <tr>
-                    <td className="py-2 px-3 font-medium">{t('stylex.comparison.rows.ecosystem')}</td>
-                    <td className="py-2 px-3">{t('stylex.comparison.rows.ecosystemVE')}</td>
-                    <td className="py-2 px-3">{t('stylex.comparison.rows.ecosystemSX')}</td>
+                    <td className="py-2 px-3 font-medium">
+                      {t('stylex.comparison.rows.ecosystem')}
+                    </td>
+                    <td className="py-2 px-3">
+                      {t('stylex.comparison.rows.ecosystemVE')}
+                    </td>
+                    <td className="py-2 px-3">
+                      {t('stylex.comparison.rows.ecosystemSX')}
+                    </td>
                   </tr>
                 </tbody>
               </table>

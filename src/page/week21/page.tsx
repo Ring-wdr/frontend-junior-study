@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import { PageLayout } from '../../components';
 import { CiCdCapstoneSection } from './components/capstone-section';
-import { CiCdGovernanceSection } from './components/governance-section';
-import { CiPipelineSection } from './components/ci-pipeline-section';
-import { CiCdFoundationSection } from './components/foundations-section';
-import { DockerSection } from './components/docker-orchestration-section';
 import { CdDeploymentSection } from './components/cd-pipeline-section';
+import { CiPipelineSection } from './components/ci-pipeline-section';
+import { DockerSection } from './components/docker-orchestration-section';
+import { CiCdFoundationSection } from './components/foundations-section';
 import { GitHubActionsSection } from './components/github-actions-section';
+import { CiCdGovernanceSection } from './components/governance-section';
 
 const tabs = [
   'all',

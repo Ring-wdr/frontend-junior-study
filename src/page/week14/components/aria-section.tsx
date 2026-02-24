@@ -29,9 +29,17 @@ export const AriaSection = () => {
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('aria.commonAttributes.title')} icon iconColor="purple">
+        <SubSection
+          title={t('aria.commonAttributes.title')}
+          icon
+          iconColor="purple"
+        >
           <div className="space-y-3">
-            {(t('aria.commonAttributes.attributes', { returnObjects: true }) as Array<{ attr: string; desc: string; example: string }>).map((item) => (
+            {(
+              t('aria.commonAttributes.attributes', {
+                returnObjects: true,
+              }) as Array<{ attr: string; desc: string; example: string }>
+            ).map((item) => (
               <div
                 key={item.attr}
                 className="bg-purple-50 p-3 rounded-lg border border-purple-100"
@@ -58,7 +66,9 @@ export const AriaSection = () => {
                 aria-controls="accordion-content"
                 className="w-full flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200 hover:bg-gray-50 transition"
               >
-                <span className="font-medium">{t('aria.ariaExpanded.buttonText')}</span>
+                <span className="font-medium">
+                  {t('aria.ariaExpanded.buttonText')}
+                </span>
                 <span
                   className={`transition-transform ${expanded ? 'rotate-180' : ''}`}
                 >
@@ -92,14 +102,18 @@ export const AriaSection = () => {
               <div className="flex gap-2">
                 <button
                   type="button"
-                  onClick={() => setNotification(t('aria.ariaLive.notification1'))}
+                  onClick={() =>
+                    setNotification(t('aria.ariaLive.notification1'))
+                  }
                   className="px-3 py-1.5 bg-green-600 text-white rounded text-sm hover:bg-green-700 transition"
                 >
                   {t('aria.ariaLive.addToCart')}
                 </button>
                 <button
                   type="button"
-                  onClick={() => setNotification(t('aria.ariaLive.notification2'))}
+                  onClick={() =>
+                    setNotification(t('aria.ariaLive.notification2'))
+                  }
                   className="px-3 py-1.5 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition"
                 >
                   {t('aria.ariaLive.submitForm')}
@@ -137,7 +151,11 @@ export const AriaSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('aria.modalPattern.title')} icon iconColor="orange">
+        <SubSection
+          title={t('aria.modalPattern.title')}
+          icon
+          iconColor="orange"
+        >
           <CodeBlock
             code={`// Accessible Modal Pattern
 <div
@@ -165,7 +183,11 @@ export const AriaSection = () => {
 
         <SubSection title={t('aria.antiPatterns.title')} icon iconColor="red">
           <div className="space-y-2">
-            {(t('aria.antiPatterns.patterns', { returnObjects: true }) as Array<{ bad: string; good: string; reason: string }>).map((item) => (
+            {(
+              t('aria.antiPatterns.patterns', {
+                returnObjects: true,
+              }) as Array<{ bad: string; good: string; reason: string }>
+            ).map((item) => (
               <div
                 key={item.bad}
                 className="p-3 bg-red-50 rounded-lg border border-red-100"

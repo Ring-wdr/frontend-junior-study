@@ -27,8 +27,18 @@
       "good": "≤ 2.5s",
       "needsImprovement": "2.5s ~ 4s",
       "poor": "> 4s",
-      "causes": ["Large hero images", "Slow server response (TTFB)", "Render-blocking resources", "Slow font loading"],
-      "solutions": ["Leverage CDN and optimize server", "Optimize images (WebP, AVIF)", "Use preconnect / preload", "Inline critical CSS"],
+      "causes": [
+        "Large hero images",
+        "Slow server response (TTFB)",
+        "Render-blocking resources",
+        "Slow font loading"
+      ],
+      "solutions": [
+        "Leverage CDN and optimize server",
+        "Optimize images (WebP, AVIF)",
+        "Use preconnect / preload",
+        "Inline critical CSS"
+      ],
       "goodMode": "Good (0.8s)",
       "badMode": "Bad (3.5s)",
       "loadingText": "Loading Large Resource...",
@@ -46,8 +56,18 @@
       "good": "≤ 200ms",
       "needsImprovement": "200ms ~ 500ms",
       "poor": "> 500ms",
-      "causes": ["Long Tasks (50ms+ main thread blocking)", "Excessive JavaScript execution", "Synchronous layout calculations", "Heavy event handlers"],
-      "solutions": ["Move heavy calculations to Web Workers", "Prevent UI blocking with useTransition", "Reduce JS bundle with code splitting", "Optimize event handlers (debounce/throttle)"],
+      "causes": [
+        "Long Tasks (50ms+ main thread blocking)",
+        "Excessive JavaScript execution",
+        "Synchronous layout calculations",
+        "Heavy event handlers"
+      ],
+      "solutions": [
+        "Move heavy calculations to Web Workers",
+        "Prevent UI blocking with useTransition",
+        "Reduce JS bundle with code splitting",
+        "Optimize event handlers (debounce/throttle)"
+      ],
       "goodMode": "Good (50ms)",
       "badMode": "Bad (600ms)",
       "clickTest": "Click Response Test",
@@ -66,8 +86,18 @@
       "good": "≤ 0.1",
       "needsImprovement": "0.1 ~ 0.25",
       "poor": "> 0.25",
-      "causes": ["Missing image width/height", "Unreserved ad/embed space", "Dynamically inserted content", "FOUT (Flash of Unstyled Text)"],
-      "solutions": ["Specify width/height or aspect-ratio for images", "Set min-height for ad containers", "Reserve space with Skeleton UI", "Use font-display: swap + preload"],
+      "causes": [
+        "Missing image width/height",
+        "Unreserved ad/embed space",
+        "Dynamically inserted content",
+        "FOUT (Flash of Unstyled Text)"
+      ],
+      "solutions": [
+        "Specify width/height or aspect-ratio for images",
+        "Set min-height for ad containers",
+        "Reserve space with Skeleton UI",
+        "Use font-display: swap + preload"
+      ],
       "goodMode": "Good (Fixed)",
       "badMode": "Bad (Shift)",
       "layoutView": "Layout View",
@@ -188,7 +218,13 @@
     "lighthouse": {
       "title": "Lighthouse Auto-Analysis",
       "description": "Get automatic Core Web Vitals and improvement suggestions from DevTools → Lighthouse tab.",
-      "categories": ["Performance", "Accessibility", "Best Practices", "SEO", "PWA"]
+      "categories": [
+        "Performance",
+        "Accessibility",
+        "Best Practices",
+        "SEO",
+        "PWA"
+      ]
     }
   },
   "codeSplitting": {

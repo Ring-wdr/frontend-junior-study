@@ -33,26 +33,40 @@ export const VariantsSection = () => {
       description={t('variants.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('variants.whatAreVariants.title')} icon iconColor="purple">
-          <InfoBox variant="purple" title={t('variants.whatAreVariants.infoTitle')}>
+        <SubSection
+          title={t('variants.whatAreVariants.title')}
+          icon
+          iconColor="purple"
+        >
+          <InfoBox
+            variant="purple"
+            title={t('variants.whatAreVariants.infoTitle')}
+          >
             <p className="text-sm leading-relaxed">
               {t('variants.whatAreVariants.content')}
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm mt-3">
               <li>
-                <strong>{t('variants.whatAreVariants.reusability')}</strong> {t('variants.whatAreVariants.reusabilityDesc')}
+                <strong>{t('variants.whatAreVariants.reusability')}</strong>{' '}
+                {t('variants.whatAreVariants.reusabilityDesc')}
               </li>
               <li>
-                <strong>{t('variants.whatAreVariants.propagation')}</strong> {t('variants.whatAreVariants.propagationDesc')}
+                <strong>{t('variants.whatAreVariants.propagation')}</strong>{' '}
+                {t('variants.whatAreVariants.propagationDesc')}
               </li>
               <li>
-                <strong>{t('variants.whatAreVariants.orchestration')}</strong> {t('variants.whatAreVariants.orchestrationDesc')}
+                <strong>{t('variants.whatAreVariants.orchestration')}</strong>{' '}
+                {t('variants.whatAreVariants.orchestrationDesc')}
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('variants.basicPattern.title')} icon iconColor="blue">
+        <SubSection
+          title={t('variants.basicPattern.title')}
+          icon
+          iconColor="blue"
+        >
           <CodeBlock
             code={`const boxVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -71,7 +85,11 @@ export const VariantsSection = () => {
           />
         </SubSection>
 
-        <SubSection title={t('variants.staggerChildren.title')} icon iconColor="green">
+        <SubSection
+          title={t('variants.staggerChildren.title')}
+          icon
+          iconColor="green"
+        >
           <CodeBlock
             code={`const container = {
   hidden: { opacity: 0 },
@@ -105,7 +123,9 @@ const item = {
                 onClick={() => setIsVisible(!isVisible)}
                 className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
               >
-                {isVisible ? t('variants.staggerChildren.reset') : t('variants.staggerChildren.animateList')}
+                {isVisible
+                  ? t('variants.staggerChildren.reset')
+                  : t('variants.staggerChildren.animateList')}
               </button>
 
               <motion.div
@@ -129,8 +149,15 @@ const item = {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('variants.variantPropagation.title')} icon iconColor="orange">
-          <InfoBox variant="orange" title={t('variants.variantPropagation.infoTitle')}>
+        <SubSection
+          title={t('variants.variantPropagation.title')}
+          icon
+          iconColor="orange"
+        >
+          <InfoBox
+            variant="orange"
+            title={t('variants.variantPropagation.infoTitle')}
+          >
             <p className="text-sm">
               {t('variants.variantPropagation.content')}
             </p>
@@ -157,7 +184,11 @@ const item = {
           />
         </SubSection>
 
-        <SubSection title={t('variants.orchestrationOptions.title')} icon iconColor="pink">
+        <SubSection
+          title={t('variants.orchestrationOptions.title')}
+          icon
+          iconColor="pink"
+        >
           <div className="grid grid-cols-1 gap-3">
             <div className="bg-pink-50 p-3 rounded border border-pink-200">
               <p className="text-sm font-semibold text-pink-900">
@@ -184,7 +215,9 @@ const item = {
               </p>
             </div>
             <div className="bg-pink-50 p-3 rounded border border-pink-200">
-              <p className="text-sm font-semibold text-pink-900">{t('variants.orchestrationOptions.when')}</p>
+              <p className="text-sm font-semibold text-pink-900">
+                {t('variants.orchestrationOptions.when')}
+              </p>
               <p className="text-xs text-pink-700 mt-1">
                 {t('variants.orchestrationOptions.whenDesc')}
               </p>

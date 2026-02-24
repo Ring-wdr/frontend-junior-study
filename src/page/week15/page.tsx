@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { cn } from '../../lib/utils';
-import { DevToolsElementsConsoleSection } from './components/devtools-elements-console-section';
-import { DevToolsSourcesNetworkSection } from './components/devtools-sources-network-section';
-import { DevToolsPerformanceMemorySection } from './components/devtools-performance-memory-section';
-import { BundlingSection } from './components/bundling-section';
 import { BundleOptimizationSection } from './components/bundle-optimization-section';
+import { BundlingSection } from './components/bundling-section';
+import { DevToolsElementsConsoleSection } from './components/devtools-elements-console-section';
+import { DevToolsPerformanceMemorySection } from './components/devtools-performance-memory-section';
+import { DevToolsSourcesNetworkSection } from './components/devtools-sources-network-section';
 import { ObservabilitySection } from './components/observability-section';
 import { WebVitalsSection } from './components/web-vitals-section';
 

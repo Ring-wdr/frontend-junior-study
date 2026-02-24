@@ -19,11 +19,14 @@ export const RtlSection = () => {
       <div className="space-y-8">
         <SubSection title={t('rtl.languages.title')} icon iconColor="red">
           <InfoBox variant="red" title={t('rtl.languages.infoTitle')}>
-            <p className="text-sm mb-3">
-              {t('rtl.languages.infoText')}
-            </p>
+            <p className="text-sm mb-3">{t('rtl.languages.infoText')}</p>
             <div className="flex flex-wrap gap-2">
-              {(t('rtl.languages.list', { returnObjects: true }) as Array<{ lang: string; speakers: string }>).map((item) => (
+              {(
+                t('rtl.languages.list', { returnObjects: true }) as Array<{
+                  lang: string;
+                  speakers: string;
+                }>
+              ).map((item) => (
                 <div
                   key={item.lang}
                   className="px-2 py-1 bg-red-100 text-red-700 rounded text-xs"
@@ -74,16 +77,22 @@ export const RtlSection = () => {
                   </div>
                   <div>
                     <h4 className="font-bold">
-                      {isRtl ? t('rtl.liveDemo.name.rtl') : t('rtl.liveDemo.name.ltr')}
+                      {isRtl
+                        ? t('rtl.liveDemo.name.rtl')
+                        : t('rtl.liveDemo.name.ltr')}
                     </h4>
                     <p className="text-sm text-gray-500">
-                      {isRtl ? t('rtl.liveDemo.role.rtl') : t('rtl.liveDemo.role.ltr')}
+                      {isRtl
+                        ? t('rtl.liveDemo.role.rtl')
+                        : t('rtl.liveDemo.role.ltr')}
                     </p>
                   </div>
                 </div>
 
                 <p className="text-sm text-gray-600 mb-3">
-                  {isRtl ? t('rtl.liveDemo.text.rtl') : t('rtl.liveDemo.text.ltr')}
+                  {isRtl
+                    ? t('rtl.liveDemo.text.rtl')
+                    : t('rtl.liveDemo.text.ltr')}
                 </p>
 
                 <div className="flex gap-2">
@@ -91,25 +100,35 @@ export const RtlSection = () => {
                     type="button"
                     className="px-3 py-1.5 bg-blue-600 text-white rounded text-sm"
                   >
-                    {isRtl ? t('rtl.liveDemo.submit.rtl') : t('rtl.liveDemo.submit.ltr')} →
+                    {isRtl
+                      ? t('rtl.liveDemo.submit.rtl')
+                      : t('rtl.liveDemo.submit.ltr')}{' '}
+                    →
                   </button>
                   <button
                     type="button"
                     className="px-3 py-1.5 bg-gray-200 text-gray-700 rounded text-sm"
                   >
-                    {isRtl ? t('rtl.liveDemo.cancel.rtl') : t('rtl.liveDemo.cancel.ltr')}
+                    {isRtl
+                      ? t('rtl.liveDemo.cancel.rtl')
+                      : t('rtl.liveDemo.cancel.ltr')}
                   </button>
                 </div>
               </div>
 
               <div className="text-xs text-gray-500">
-                <code>dir="{isRtl ? 'rtl' : 'ltr'}"</code> - {t('rtl.liveDemo.note')}
+                <code>dir="{isRtl ? 'rtl' : 'ltr'}"</code> -{' '}
+                {t('rtl.liveDemo.note')}
               </div>
             </div>
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('rtl.logicalProperties.title')} icon iconColor="green">
+        <SubSection
+          title={t('rtl.logicalProperties.title')}
+          icon
+          iconColor="green"
+        >
           <InfoBox variant="green" title={t('rtl.logicalProperties.infoTitle')}>
             <p className="text-sm mb-2">
               {t('rtl.logicalProperties.infoText')}
@@ -147,10 +166,18 @@ export const RtlSection = () => {
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-gray-100">
-                  <th className="p-2 text-left">{t('rtl.mapping.headers.physical')}</th>
-                  <th className="p-2 text-left">{t('rtl.mapping.headers.logical')}</th>
-                  <th className="p-2 text-left">{t('rtl.mapping.headers.ltr')}</th>
-                  <th className="p-2 text-left">{t('rtl.mapping.headers.rtl')}</th>
+                  <th className="p-2 text-left">
+                    {t('rtl.mapping.headers.physical')}
+                  </th>
+                  <th className="p-2 text-left">
+                    {t('rtl.mapping.headers.logical')}
+                  </th>
+                  <th className="p-2 text-left">
+                    {t('rtl.mapping.headers.ltr')}
+                  </th>
+                  <th className="p-2 text-left">
+                    {t('rtl.mapping.headers.rtl')}
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -237,14 +264,21 @@ module.exports = {
 
         <SubSection title={t('rtl.checklist.title')} icon iconColor="blue">
           <div className="space-y-2">
-            {(t('rtl.checklist.items', { returnObjects: true }) as Array<{ item: string; done: boolean }>).map((check) => (
+            {(
+              t('rtl.checklist.items', { returnObjects: true }) as Array<{
+                item: string;
+                done: boolean;
+              }>
+            ).map((check) => (
               <div
                 key={check.item}
                 className={`flex items-center gap-2 p-2 rounded ${
                   check.done ? 'bg-green-50' : 'bg-gray-50'
                 }`}
               >
-                <span className={check.done ? 'text-green-500' : 'text-gray-400'}>
+                <span
+                  className={check.done ? 'text-green-500' : 'text-gray-400'}
+                >
                   {check.done ? '✓' : '○'}
                 </span>
                 <span

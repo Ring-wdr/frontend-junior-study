@@ -169,14 +169,25 @@ export const sprinkles = createSprinkles(responsiveProperties);
       description={t('vanillaExtract.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('vanillaExtract.overview.title')} icon iconColor="purple">
+        <SubSection
+          title={t('vanillaExtract.overview.title')}
+          icon
+          iconColor="purple"
+        >
           <p className="text-sm text-gray-700 mb-4">
             {t('vanillaExtract.overview.content')}
           </p>
         </SubSection>
 
-        <SubSection title={t('vanillaExtract.features.title')} icon iconColor="purple">
-          <InfoBox variant="purple" title={t('vanillaExtract.features.infoTitle')}>
+        <SubSection
+          title={t('vanillaExtract.features.title')}
+          icon
+          iconColor="purple"
+        >
+          <InfoBox
+            variant="purple"
+            title={t('vanillaExtract.features.infoTitle')}
+          >
             <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
               <li>
                 <strong>{t('vanillaExtract.features.zeroRuntime')}</strong>{' '}
@@ -190,7 +201,9 @@ export const sprinkles = createSprinkles(responsiveProperties);
                 <Trans
                   i18nKey="vanillaExtract.features.themingDesc"
                   t={t}
-                  components={{ code: <code className="bg-gray-100 px-1 rounded" /> }}
+                  components={{
+                    code: <code className="bg-gray-100 px-1 rounded" />,
+                  }}
                 >
                   <strong>{t('vanillaExtract.features.theming')}</strong>{' '}
                 </Trans>
@@ -203,35 +216,65 @@ export const sprinkles = createSprinkles(responsiveProperties);
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('vanillaExtract.basicUsage.title')} icon iconColor="purple">
+        <SubSection
+          title={t('vanillaExtract.basicUsage.title')}
+          icon
+          iconColor="purple"
+        >
           <p className="text-sm text-gray-700 mb-4">
             <Trans
               i18nKey="vanillaExtract.basicUsage.content"
               t={t}
-              components={{ code: <code className="bg-gray-100 px-1 rounded" /> }}
+              components={{
+                code: <code className="bg-gray-100 px-1 rounded" />,
+              }}
             />
           </p>
           <div className="space-y-4">
-            <CodeBlock code={basicStyleCode} language="tsx" className="text-xs" />
-            <CodeBlock code={componentUsageCode} language="tsx" className="text-xs" />
+            <CodeBlock
+              code={basicStyleCode}
+              language="tsx"
+              className="text-xs"
+            />
+            <CodeBlock
+              code={componentUsageCode}
+              language="tsx"
+              className="text-xs"
+            />
           </div>
         </SubSection>
 
-        <SubSection title={t('vanillaExtract.theming.title')} icon iconColor="purple">
+        <SubSection
+          title={t('vanillaExtract.theming.title')}
+          icon
+          iconColor="purple"
+        >
           <p className="text-sm text-gray-700 mb-4">
             {t('vanillaExtract.theming.content')}
           </p>
-          <CodeBlock code={themeContractCode} language="tsx" className="text-xs" />
+          <CodeBlock
+            code={themeContractCode}
+            language="tsx"
+            className="text-xs"
+          />
         </SubSection>
 
-        <SubSection title={t('vanillaExtract.recipes.title')} icon iconColor="purple">
+        <SubSection
+          title={t('vanillaExtract.recipes.title')}
+          icon
+          iconColor="purple"
+        >
           <p className="text-sm text-gray-700 mb-4">
             {t('vanillaExtract.recipes.content')}
           </p>
           <CodeBlock code={recipesCode} language="tsx" className="text-xs" />
         </SubSection>
 
-        <SubSection title={t('vanillaExtract.sprinkles.title')} icon iconColor="purple">
+        <SubSection
+          title={t('vanillaExtract.sprinkles.title')}
+          icon
+          iconColor="purple"
+        >
           <p className="text-sm text-gray-700 mb-4">
             {t('vanillaExtract.sprinkles.content')}
           </p>

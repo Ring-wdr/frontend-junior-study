@@ -16,14 +16,24 @@ export const UtilityTypesSection = () => {
       description={t('utilityTypes.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('utilityTypes.visualizer.title')} icon iconColor="green">
+        <SubSection
+          title={t('utilityTypes.visualizer.title')}
+          icon
+          iconColor="green"
+        >
           <DemoBox label={t('utilityTypes.visualizer.title')}>
             <UtilityTypeTransformer />
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('utilityTypes.objectTitle')} icon iconColor="green">
-          <p className="text-sm text-gray-600 mb-4">{t('utilityTypes.objectDesc')}</p>
+        <SubSection
+          title={t('utilityTypes.objectTitle')}
+          icon
+          iconColor="green"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('utilityTypes.objectDesc')}
+          </p>
           <CodeBlock
             code={`interface User {
   id: number;
@@ -51,8 +61,14 @@ type ReadonlyUser = Readonly<User>;
           />
         </SubSection>
 
-        <SubSection title={t('utilityTypes.pickOmitTitle')} icon iconColor="blue">
-          <p className="text-sm text-gray-600 mb-4">{t('utilityTypes.pickOmitDesc')}</p>
+        <SubSection
+          title={t('utilityTypes.pickOmitTitle')}
+          icon
+          iconColor="blue"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('utilityTypes.pickOmitDesc')}
+          </p>
           <CodeBlock
             code={`interface User {
   id: number;
@@ -73,8 +89,14 @@ type UserWithoutPassword = Omit<User, "password">;
           />
         </SubSection>
 
-        <SubSection title={t('utilityTypes.recordTitle')} icon iconColor="purple">
-          <p className="text-sm text-gray-600 mb-4">{t('utilityTypes.recordDesc')}</p>
+        <SubSection
+          title={t('utilityTypes.recordTitle')}
+          icon
+          iconColor="purple"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('utilityTypes.recordDesc')}
+          </p>
           <CodeBlock
             code={`// Record<K, V> - 키-값 매핑
 type Role = "admin" | "user" | "guest";
@@ -90,8 +112,14 @@ const permissions: Permissions = {
           />
         </SubSection>
 
-        <SubSection title={t('utilityTypes.extractExcludeTitle')} icon iconColor="orange">
-          <p className="text-sm text-gray-600 mb-4">{t('utilityTypes.extractExcludeDesc')}</p>
+        <SubSection
+          title={t('utilityTypes.extractExcludeTitle')}
+          icon
+          iconColor="orange"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('utilityTypes.extractExcludeDesc')}
+          </p>
           <CodeBlock
             code={`type AllTypes = string | number | boolean | null;
 
@@ -107,8 +135,14 @@ type NonNullTypes = Exclude<AllTypes, null>;
           />
         </SubSection>
 
-        <SubSection title={t('utilityTypes.functionTitle')} icon iconColor="blue">
-          <p className="text-sm text-gray-600 mb-4">{t('utilityTypes.functionDesc')}</p>
+        <SubSection
+          title={t('utilityTypes.functionTitle')}
+          icon
+          iconColor="blue"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('utilityTypes.functionDesc')}
+          </p>
 
           <InfoBox variant="blue" title={t('utilityTypes.functionInfoTitle')}>
             <p className="text-sm leading-relaxed">

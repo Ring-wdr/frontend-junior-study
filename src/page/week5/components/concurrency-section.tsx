@@ -73,7 +73,11 @@ export const ConcurrencySection = () => {
         >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              <Trans t={t} i18nKey="concurrency.useTransition.intro" components={{ code: <code /> }} />
+              <Trans
+                t={t}
+                i18nKey="concurrency.useTransition.intro"
+                components={{ code: <code /> }}
+              />
             </p>
 
             <InfoBox
@@ -82,7 +86,10 @@ export const ConcurrencySection = () => {
             >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <Trans t={t} i18nKey="concurrency.useTransition.api.isPending" />
+                  <Trans
+                    t={t}
+                    i18nKey="concurrency.useTransition.api.isPending"
+                  />
                 </li>
                 <li>
                   <Trans
@@ -157,7 +164,11 @@ export function SearchUsers() {
         >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              <Trans t={t} i18nKey="concurrency.useDeferredValue.intro" components={{ code: <code /> }} />
+              <Trans
+                t={t}
+                i18nKey="concurrency.useDeferredValue.intro"
+                components={{ code: <code /> }}
+              />
             </p>
 
             <InfoBox
@@ -167,7 +178,7 @@ export function SearchUsers() {
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
                 <li>
                   {t(
-                    'concurrency.useDeferredValue.whenToUse.expensiveComponent'
+                    'concurrency.useDeferredValue.whenToUse.expensiveComponent',
                   )}
                 </li>
                 <li>
@@ -175,7 +186,7 @@ export function SearchUsers() {
                 </li>
                 <li>
                   {t(
-                    'concurrency.useDeferredValue.whenToUse.cantWrapTransition'
+                    'concurrency.useDeferredValue.whenToUse.cantWrapTransition',
                   )}
                 </li>
               </ul>
@@ -267,19 +278,25 @@ setTimeout(() => {
 
             <InfoBox
               variant="green"
-              title={t('concurrency.automaticBatching.performanceBenefits.title')}
+              title={t(
+                'concurrency.automaticBatching.performanceBenefits.title',
+              )}
             >
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
                 <li>
                   {t(
-                    'concurrency.automaticBatching.performanceBenefits.fewerRerenders'
+                    'concurrency.automaticBatching.performanceBenefits.fewerRerenders',
                   )}
                 </li>
                 <li>
-                  {t('concurrency.automaticBatching.performanceBenefits.automatic')}
+                  {t(
+                    'concurrency.automaticBatching.performanceBenefits.automatic',
+                  )}
                 </li>
                 <li>
-                  {t('concurrency.automaticBatching.performanceBenefits.appliesTo')}
+                  {t(
+                    'concurrency.automaticBatching.performanceBenefits.appliesTo',
+                  )}
                 </li>
                 <li>
                   <Trans

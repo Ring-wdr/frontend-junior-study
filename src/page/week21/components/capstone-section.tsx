@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
-import { CodeBlock } from '../../../components/ui/code-block';
 import { DemoBox } from '../../../components/demo-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
+import { CodeBlock } from '../../../components/ui/code-block';
 
 type Outcome = {
   day: string;

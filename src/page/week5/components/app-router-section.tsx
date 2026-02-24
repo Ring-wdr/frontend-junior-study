@@ -226,7 +226,11 @@ export default function DashboardLayout({ children, main, sidebar, analytics }) 
                   <Trans
                     t={t}
                     i18nKey="appRouter.interceptingRoutes.modalPattern.softNav"
-                    components={{ strong: <strong />, code: <code />, em: <em /> }}
+                    components={{
+                      strong: <strong />,
+                      code: <code />,
+                      em: <em />,
+                    }}
                   />
                 </li>
                 <li>

@@ -1,8 +1,8 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
-import { useTranslation } from 'react-i18next';
 
 export const SecuritySection = () => {
   const { t } = useTranslation('week7');
@@ -27,24 +27,44 @@ export const SecuritySection = () => {
               {t('security.frontendResponsibility.criticalPoint.intro')}
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm">
-              <li>{t('security.frontendResponsibility.criticalPoint.bypassFrontend')}</li>
-              <li>{t('security.frontendResponsibility.criticalPoint.directRequests')}</li>
+              <li>
+                {t(
+                  'security.frontendResponsibility.criticalPoint.bypassFrontend',
+                )}
+              </li>
+              <li>
+                {t(
+                  'security.frontendResponsibility.criticalPoint.directRequests',
+                )}
+              </li>
               <li>{t('security.frontendResponsibility.criticalPoint.gaps')}</li>
               <li>
-                {t('security.frontendResponsibility.criticalPoint.serverFinalDefense')}
+                {t(
+                  'security.frontendResponsibility.criticalPoint.serverFinalDefense',
+                )}
               </li>
             </ul>
           </InfoBox>
 
           <div className="mt-4 bg-yellow-50 p-4 rounded border border-yellow-200">
             <p className="text-sm text-yellow-900">
-              <strong>{t('security.frontendResponsibility.securityLayers.title')}</strong>
+              <strong>
+                {t('security.frontendResponsibility.securityLayers.title')}
+              </strong>
             </p>
             <div className="mt-2 text-sm space-y-1">
-              <p>{t('security.frontendResponsibility.securityLayers.layer1')}</p>
-              <p>{t('security.frontendResponsibility.securityLayers.layer2')}</p>
-              <p>{t('security.frontendResponsibility.securityLayers.layer3')}</p>
-              <p>{t('security.frontendResponsibility.securityLayers.layer4')}</p>
+              <p>
+                {t('security.frontendResponsibility.securityLayers.layer1')}
+              </p>
+              <p>
+                {t('security.frontendResponsibility.securityLayers.layer2')}
+              </p>
+              <p>
+                {t('security.frontendResponsibility.securityLayers.layer3')}
+              </p>
+              <p>
+                {t('security.frontendResponsibility.securityLayers.layer4')}
+              </p>
               <p>
                 {t('security.frontendResponsibility.securityLayers.layer5')}
               </p>
@@ -52,8 +72,15 @@ export const SecuritySection = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('security.xssPrevention.title')} icon iconColor="orange">
-          <InfoBox variant="orange" title={t('security.xssPrevention.whatIsXSS.title')}>
+        <SubSection
+          title={t('security.xssPrevention.title')}
+          icon
+          iconColor="orange"
+        >
+          <InfoBox
+            variant="orange"
+            title={t('security.xssPrevention.whatIsXSS.title')}
+          >
             <p className="text-sm">
               {t('security.xssPrevention.whatIsXSS.description')}
             </p>
@@ -93,20 +120,17 @@ const RichCommentDisplay = ({ comment }) => {
             />
           </div>
 
-          <InfoBox variant="green" title={t('security.xssPrevention.preventionRules.title')}>
+          <InfoBox
+            variant="green"
+            title={t('security.xssPrevention.preventionRules.title')}
+          >
             <ul className="list-disc pl-5 space-y-1 text-sm">
-              <li>
-                {t('security.xssPrevention.preventionRules.default')}
-              </li>
+              <li>{t('security.xssPrevention.preventionRules.default')}</li>
               <li>
                 {t('security.xssPrevention.preventionRules.reactEscapes')}
               </li>
-              <li>
-                {t('security.xssPrevention.preventionRules.richContent')}
-              </li>
-              <li>
-                {t('security.xssPrevention.preventionRules.urls')}
-              </li>
+              <li>{t('security.xssPrevention.preventionRules.richContent')}</li>
+              <li>{t('security.xssPrevention.preventionRules.urls')}</li>
               <li>
                 {t('security.xssPrevention.preventionRules.eventHandlers')}
               </li>
@@ -114,7 +138,11 @@ const RichCommentDisplay = ({ comment }) => {
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('security.domPurifyIntegration.title')} icon iconColor="blue">
+        <SubSection
+          title={t('security.domPurifyIntegration.title')}
+          icon
+          iconColor="blue"
+        >
           <CodeBlock
             code={`import DOMPurify from 'dompurify';
 
@@ -169,8 +197,15 @@ const RichTextForm = () => {
           />
         </SubSection>
 
-        <SubSection title={t('security.sqlInjectionPrevention.title')} icon iconColor="purple">
-          <InfoBox variant="purple" title={t('security.sqlInjectionPrevention.frontendRole.title')}>
+        <SubSection
+          title={t('security.sqlInjectionPrevention.title')}
+          icon
+          iconColor="purple"
+        >
+          <InfoBox
+            variant="purple"
+            title={t('security.sqlInjectionPrevention.frontendRole.title')}
+          >
             <p className="text-sm mb-3">
               {t('security.sqlInjectionPrevention.frontendRole.critical')}
             </p>
@@ -236,7 +271,11 @@ app.post('/api/user', async (req, res) => {
           </div>
         </SubSection>
 
-        <SubSection title={t('security.csrfProtection.title')} icon iconColor="green">
+        <SubSection
+          title={t('security.csrfProtection.title')}
+          icon
+          iconColor="green"
+        >
           <InfoBox
             variant="green"
             title={t('security.csrfProtection.whatIsCSRF.title')}
@@ -305,7 +344,11 @@ app.post('/api/submit', (req, res) => {
           </div>
         </SubSection>
 
-        <SubSection title={t('security.securityChecklist.title')} icon iconColor="red">
+        <SubSection
+          title={t('security.securityChecklist.title')}
+          icon
+          iconColor="red"
+        >
           <div className="space-y-2">
             <div className="flex items-start gap-3 p-3 bg-red-50 rounded border border-red-200">
               <span className="text-lg">☐</span>
@@ -339,7 +382,9 @@ app.post('/api/submit', (req, res) => {
             </div>
             <div className="flex items-start gap-3 p-3 bg-red-50 rounded border border-red-200">
               <span className="text-lg">☐</span>
-              <p className="text-sm">{t('security.securityChecklist.useHTTPS')}</p>
+              <p className="text-sm">
+                {t('security.securityChecklist.useHTTPS')}
+              </p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-red-50 rounded border border-red-200">
               <span className="text-lg">☐</span>

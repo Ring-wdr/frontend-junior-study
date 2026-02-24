@@ -14,35 +14,53 @@ export const ReactHookFormSection = () => {
       description={t('reactHookForm.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('reactHookForm.whyRHF.title')} icon iconColor="purple">
-          <InfoBox variant="purple" title={t('reactHookForm.whyRHF.keyAdvantages.title')}>
+        <SubSection
+          title={t('reactHookForm.whyRHF.title')}
+          icon
+          iconColor="purple"
+        >
+          <InfoBox
+            variant="purple"
+            title={t('reactHookForm.whyRHF.keyAdvantages.title')}
+          >
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>Uncontrolled-based:</strong> {t('reactHookForm.whyRHF.keyAdvantages.uncontrolled')}
+                <strong>Uncontrolled-based:</strong>{' '}
+                {t('reactHookForm.whyRHF.keyAdvantages.uncontrolled')}
               </li>
               <li>
-                <strong>Small bundle:</strong> {t('reactHookForm.whyRHF.keyAdvantages.smallBundle')}
+                <strong>Small bundle:</strong>{' '}
+                {t('reactHookForm.whyRHF.keyAdvantages.smallBundle')}
               </li>
               <li>
-                <strong>Type-safe:</strong> {t('reactHookForm.whyRHF.keyAdvantages.typeSafe')}
+                <strong>Type-safe:</strong>{' '}
+                {t('reactHookForm.whyRHF.keyAdvantages.typeSafe')}
               </li>
               <li>
-                <strong>Register API:</strong> {t('reactHookForm.whyRHF.keyAdvantages.registerAPI')}
+                <strong>Register API:</strong>{' '}
+                {t('reactHookForm.whyRHF.keyAdvantages.registerAPI')}
               </li>
               <li>
-                <strong>formState object:</strong> {t('reactHookForm.whyRHF.keyAdvantages.formState')}
+                <strong>formState object:</strong>{' '}
+                {t('reactHookForm.whyRHF.keyAdvantages.formState')}
               </li>
               <li>
-                <strong>Watch, setValue:</strong> {t('reactHookForm.whyRHF.keyAdvantages.watchSetValue')}
+                <strong>Watch, setValue:</strong>{' '}
+                {t('reactHookForm.whyRHF.keyAdvantages.watchSetValue')}
               </li>
               <li>
-                <strong>Controller:</strong> {t('reactHookForm.whyRHF.keyAdvantages.controller')}
+                <strong>Controller:</strong>{' '}
+                {t('reactHookForm.whyRHF.keyAdvantages.controller')}
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('reactHookForm.basicSetup.title')} icon iconColor="blue">
+        <SubSection
+          title={t('reactHookForm.basicSetup.title')}
+          icon
+          iconColor="blue"
+        >
           <CodeBlock
             code={`import { useForm } from 'react-hook-form';
 
@@ -91,7 +109,11 @@ const MyForm = () => {
           />
         </SubSection>
 
-        <SubSection title={t('reactHookForm.coreMethods.title')} icon iconColor="green">
+        <SubSection
+          title={t('reactHookForm.coreMethods.title')}
+          icon
+          iconColor="green"
+        >
           <div className="space-y-3">
             <div className="bg-green-50 p-4 rounded border border-green-200">
               <p className="font-semibold text-sm mb-2">
@@ -112,7 +134,9 @@ const MyForm = () => {
             </div>
 
             <div className="bg-green-50 p-4 rounded border border-green-200">
-              <p className="font-semibold text-sm mb-2">{t('reactHookForm.coreMethods.watch.title')}</p>
+              <p className="font-semibold text-sm mb-2">
+                {t('reactHookForm.coreMethods.watch.title')}
+              </p>
               <p className="text-sm text-gray-700">
                 {t('reactHookForm.coreMethods.watch.description')}
               </p>
@@ -137,7 +161,9 @@ const MyForm = () => {
             </div>
 
             <div className="bg-green-50 p-4 rounded border border-green-200">
-              <p className="font-semibold text-sm mb-2">{t('reactHookForm.coreMethods.controller.title')}</p>
+              <p className="font-semibold text-sm mb-2">
+                {t('reactHookForm.coreMethods.controller.title')}
+              </p>
               <p className="text-sm text-gray-700">
                 {t('reactHookForm.coreMethods.controller.description')}
               </p>
@@ -145,7 +171,11 @@ const MyForm = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('reactHookForm.controllerForCustom.title')} icon iconColor="pink">
+        <SubSection
+          title={t('reactHookForm.controllerForCustom.title')}
+          icon
+          iconColor="pink"
+        >
           <CodeBlock
             code={`import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers';
@@ -182,38 +212,59 @@ const MyForm = () => {
           />
         </SubSection>
 
-        <SubSection title={t('reactHookForm.formStateObject.title')} icon iconColor="orange">
-          <InfoBox variant="orange" title={t('reactHookForm.formStateObject.importantProps.title')}>
+        <SubSection
+          title={t('reactHookForm.formStateObject.title')}
+          icon
+          iconColor="orange"
+        >
+          <InfoBox
+            variant="orange"
+            title={t('reactHookForm.formStateObject.importantProps.title')}
+          >
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>isDirty:</strong> {t('reactHookForm.formStateObject.importantProps.isDirty')}
+                <strong>isDirty:</strong>{' '}
+                {t('reactHookForm.formStateObject.importantProps.isDirty')}
               </li>
               <li>
-                <strong>isTouched:</strong> {t('reactHookForm.formStateObject.importantProps.isTouched')}
+                <strong>isTouched:</strong>{' '}
+                {t('reactHookForm.formStateObject.importantProps.isTouched')}
               </li>
               <li>
-                <strong>errors:</strong> {t('reactHookForm.formStateObject.importantProps.errors')}
+                <strong>errors:</strong>{' '}
+                {t('reactHookForm.formStateObject.importantProps.errors')}
               </li>
               <li>
-                <strong>isSubmitting:</strong> {t('reactHookForm.formStateObject.importantProps.isSubmitting')}
+                <strong>isSubmitting:</strong>{' '}
+                {t('reactHookForm.formStateObject.importantProps.isSubmitting')}
               </li>
               <li>
-                <strong>isValidating:</strong> {t('reactHookForm.formStateObject.importantProps.isValidating')}
+                <strong>isValidating:</strong>{' '}
+                {t('reactHookForm.formStateObject.importantProps.isValidating')}
               </li>
               <li>
-                <strong>isValid:</strong> {t('reactHookForm.formStateObject.importantProps.isValid')}
+                <strong>isValid:</strong>{' '}
+                {t('reactHookForm.formStateObject.importantProps.isValid')}
               </li>
               <li>
-                <strong>dirtyFields:</strong> {t('reactHookForm.formStateObject.importantProps.dirtyFields')}
+                <strong>dirtyFields:</strong>{' '}
+                {t('reactHookForm.formStateObject.importantProps.dirtyFields')}
               </li>
               <li>
-                <strong>touchedFields:</strong> {t('reactHookForm.formStateObject.importantProps.touchedFields')}
+                <strong>touchedFields:</strong>{' '}
+                {t(
+                  'reactHookForm.formStateObject.importantProps.touchedFields',
+                )}
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('reactHookForm.formStateTracking.title')} icon iconColor="blue">
+        <SubSection
+          title={t('reactHookForm.formStateTracking.title')}
+          icon
+          iconColor="blue"
+        >
           <CodeBlock
             code={`const MyForm = () => {
   const {

@@ -46,8 +46,15 @@ export const OfflineFirstSection = () => {
       description={t('offlineFirst.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('offlineFirst.philosophy.title')} icon iconColor="blue">
-          <InfoBox variant="orange" title={t('offlineFirst.philosophy.infoTitle')}>
+        <SubSection
+          title={t('offlineFirst.philosophy.title')}
+          icon
+          iconColor="blue"
+        >
+          <InfoBox
+            variant="orange"
+            title={t('offlineFirst.philosophy.infoTitle')}
+          >
             <p className="text-sm leading-relaxed">
               <Trans t={t} i18nKey="offlineFirst.philosophy.description" />
             </p>
@@ -56,19 +63,32 @@ export const OfflineFirstSection = () => {
                 <Trans t={t} i18nKey="offlineFirst.philosophy.localFirst" />
               </li>
               <li>
-                <Trans t={t} i18nKey="offlineFirst.philosophy.syncWhenPossible" />
+                <Trans
+                  t={t}
+                  i18nKey="offlineFirst.philosophy.syncWhenPossible"
+                />
               </li>
               <li>
-                <Trans t={t} i18nKey="offlineFirst.philosophy.gracefulDegradation" />
+                <Trans
+                  t={t}
+                  i18nKey="offlineFirst.philosophy.gracefulDegradation"
+                />
               </li>
               <li>
-                <Trans t={t} i18nKey="offlineFirst.philosophy.conflictResolution" />
+                <Trans
+                  t={t}
+                  i18nKey="offlineFirst.philosophy.conflictResolution"
+                />
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('offlineFirst.networkStatus.title')} icon iconColor="green">
+        <SubSection
+          title={t('offlineFirst.networkStatus.title')}
+          icon
+          iconColor="green"
+        >
           <DemoBox label={t('offlineFirst.networkStatus.label')}>
             <div className="space-y-4">
               <div className="flex items-center justify-center gap-4">
@@ -83,7 +103,9 @@ export const OfflineFirstSection = () => {
                 </div>
                 <div>
                   <p className="text-lg font-bold text-gray-900">
-                    {isOnline ? t('offlineFirst.networkStatus.online') : t('offlineFirst.networkStatus.offline')}
+                    {isOnline
+                      ? t('offlineFirst.networkStatus.online')
+                      : t('offlineFirst.networkStatus.offline')}
                   </p>
                   <p className="text-sm text-gray-500">
                     {isOnline
@@ -131,7 +153,11 @@ export const OfflineFirstSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('offlineFirst.events.title')} icon iconColor="purple">
+        <SubSection
+          title={t('offlineFirst.events.title')}
+          icon
+          iconColor="purple"
+        >
           <CodeBlock
             code={`// Basic online/offline detection
 window.addEventListener('online', () => {
@@ -175,8 +201,15 @@ function useOnlineStatus() {
           />
         </SubSection>
 
-        <SubSection title={t('offlineFirst.backgroundSync.title')} icon iconColor="orange">
-          <InfoBox variant="blue" title={t('offlineFirst.backgroundSync.infoTitle')}>
+        <SubSection
+          title={t('offlineFirst.backgroundSync.title')}
+          icon
+          iconColor="orange"
+        >
+          <InfoBox
+            variant="blue"
+            title={t('offlineFirst.backgroundSync.infoTitle')}
+          >
             <p className="text-sm">
               {t('offlineFirst.backgroundSync.description')}
             </p>
@@ -224,7 +257,11 @@ async function syncOutbox() {
           />
         </SubSection>
 
-        <SubSection title={t('offlineFirst.uxPrinciples.title')} icon iconColor="red">
+        <SubSection
+          title={t('offlineFirst.uxPrinciples.title')}
+          icon
+          iconColor="red"
+        >
           <div className="grid grid-cols-1 gap-3">
             {[
               {
@@ -269,7 +306,11 @@ async function syncOutbox() {
           </div>
         </SubSection>
 
-        <SubSection title={t('offlineFirst.architecture.title')} icon iconColor="green">
+        <SubSection
+          title={t('offlineFirst.architecture.title')}
+          icon
+          iconColor="green"
+        >
           <DemoBox label={t('offlineFirst.architecture.label')}>
             <div className="flex flex-col items-center gap-2 py-4">
               <div className="flex items-center gap-4">
@@ -300,7 +341,11 @@ async function syncOutbox() {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('offlineFirst.implementation.title')} icon iconColor="blue">
+        <SubSection
+          title={t('offlineFirst.implementation.title')}
+          icon
+          iconColor="blue"
+        >
           <CodeBlock
             code={`// Offline-first data layer
 class OfflineFirstStore {

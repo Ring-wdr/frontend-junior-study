@@ -179,8 +179,7 @@ export function FontOptimizationSection() {
                         </>
                       ) : (
                         <>
-                          <Zap size={14} />{' '}
-                          {t('fontOptimization.noShift')}
+                          <Zap size={14} /> {t('fontOptimization.noShift')}
                         </>
                       )}
                     </div>
@@ -207,15 +206,15 @@ export function FontOptimizationSection() {
             </h3>
             <div className="space-y-3 text-sm text-red-800">
               <div className="bg-white/70 rounded-lg p-3">
-                <strong>{t('fontOptimization.foutFoit.fout.name')}</strong>{' '}
-                ({t('fontOptimization.foutFoit.fout.fullName')})
+                <strong>{t('fontOptimization.foutFoit.fout.name')}</strong> (
+                {t('fontOptimization.foutFoit.fout.fullName')})
                 <p className="text-xs mt-1">
                   {t('fontOptimization.foutFoit.fout.description')}
                 </p>
               </div>
               <div className="bg-white/70 rounded-lg p-3">
-                <strong>{t('fontOptimization.foutFoit.foit.name')}</strong>{' '}
-                ({t('fontOptimization.foutFoit.foit.fullName')})
+                <strong>{t('fontOptimization.foutFoit.foit.name')}</strong> (
+                {t('fontOptimization.foutFoit.foit.fullName')})
                 <p className="text-xs mt-1">
                   {t('fontOptimization.foutFoit.foit.description')}
                 </p>
@@ -322,7 +321,9 @@ export default function RootLayout({ children }) {
                 {t('fontOptimization.optimizationTechniques.subset.title')}
               </h4>
               <p className="text-sm text-gray-600 mb-2">
-                {t('fontOptimization.optimizationTechniques.subset.description')}
+                {t(
+                  'fontOptimization.optimizationTechniques.subset.description',
+                )}
               </p>
               <div className="flex flex-wrap gap-2">
                 {['latin', 'latin-ext', 'korean', 'digits'].map((subset) => (
@@ -350,7 +351,9 @@ export default function RootLayout({ children }) {
                 {t('fontOptimization.optimizationTechniques.variable.title')}
               </h4>
               <p className="text-sm text-gray-600">
-                {t('fontOptimization.optimizationTechniques.variable.description')}
+                {t(
+                  'fontOptimization.optimizationTechniques.variable.description',
+                )}
               </p>
             </div>
           </div>

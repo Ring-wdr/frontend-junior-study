@@ -25,7 +25,10 @@ export const TokenOptimizationSection = () => {
           icon
           iconColor="blue"
         >
-          <InfoBox variant="blue" title={t('tokenOptimization.playwrightMigrationInfoTitle')}>
+          <InfoBox
+            variant="blue"
+            title={t('tokenOptimization.playwrightMigrationInfoTitle')}
+          >
             <p className="text-sm leading-relaxed">
               {t('tokenOptimization.playwrightMigrationInfoDesc')}
             </p>
@@ -45,16 +48,27 @@ export const TokenOptimizationSection = () => {
 
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
-              <h4 className="font-bold text-sm text-blue-700 mb-2">MCP + AI 액션</h4>
-              <p className="text-xs text-blue-700">{t('tokenOptimization.playwrightTip1')}</p>
+              <h4 className="font-bold text-sm text-blue-700 mb-2">
+                MCP + AI 액션
+              </h4>
+              <p className="text-xs text-blue-700">
+                {t('tokenOptimization.playwrightTip1')}
+              </p>
             </div>
             <div className="bg-green-50 p-4 rounded-lg border border-green-100">
-              <h4 className="font-bold text-sm text-green-700 mb-2">Playwright CLI</h4>
-              <p className="text-xs text-green-700">{t('tokenOptimization.playwrightTip2')}</p>
+              <h4 className="font-bold text-sm text-green-700 mb-2">
+                Playwright CLI
+              </h4>
+              <p className="text-xs text-green-700">
+                {t('tokenOptimization.playwrightTip2')}
+              </p>
             </div>
           </div>
 
-          <InfoBox variant="orange" title={t('tokenOptimization.playwrightTipTitle')}>
+          <InfoBox
+            variant="orange"
+            title={t('tokenOptimization.playwrightTipTitle')}
+          >
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>{t('tokenOptimization.playwrightTip3')}</li>
               <li>{t('tokenOptimization.playwrightTip4')}</li>
@@ -68,27 +82,51 @@ export const TokenOptimizationSection = () => {
           icon
           iconColor="purple"
         >
-          <InfoBox variant="purple" title={t('tokenOptimization.mcpVsCdpIntroTitle')}>
-            <p className="text-sm leading-relaxed">{t('tokenOptimization.mcpVsCdpIntro')}</p>
+          <InfoBox
+            variant="purple"
+            title={t('tokenOptimization.mcpVsCdpIntroTitle')}
+          >
+            <p className="text-sm leading-relaxed">
+              {t('tokenOptimization.mcpVsCdpIntro')}
+            </p>
           </InfoBox>
 
           <div className="mt-4 overflow-x-auto">
             <table className="w-full text-xs">
               <thead>
                 <tr className="bg-purple-50">
-                  <th className="px-3 py-2 text-left font-semibold text-purple-800 border-b border-purple-200">{t('tokenOptimization.dimension')}</th>
-                  <th className="px-3 py-2 text-left font-semibold text-purple-800 border-b border-purple-200">MCP</th>
-                  <th className="px-3 py-2 text-left font-semibold text-purple-800 border-b border-purple-200">CDP(Chrome DevTools)</th>
-                  <th className="px-3 py-2 text-left font-semibold text-purple-800 border-b border-purple-200">{t('tokenOptimization.whenToUse')}</th>
+                  <th className="px-3 py-2 text-left font-semibold text-purple-800 border-b border-purple-200">
+                    {t('tokenOptimization.dimension')}
+                  </th>
+                  <th className="px-3 py-2 text-left font-semibold text-purple-800 border-b border-purple-200">
+                    MCP
+                  </th>
+                  <th className="px-3 py-2 text-left font-semibold text-purple-800 border-b border-purple-200">
+                    CDP(Chrome DevTools)
+                  </th>
+                  <th className="px-3 py-2 text-left font-semibold text-purple-800 border-b border-purple-200">
+                    {t('tokenOptimization.whenToUse')}
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {mcpVsCdpRows.map((row, idx) => (
-                  <tr key={row.dimension} className={idx % 2 === 0 ? 'bg-white' : 'bg-purple-50/40'}>
-                    <td className="px-3 py-2 font-medium text-purple-700 border-b border-purple-100">{row.dimension}</td>
-                    <td className="px-3 py-2 text-gray-700 border-b border-purple-100">{row.mcp}</td>
-                    <td className="px-3 py-2 text-gray-700 border-b border-purple-100">{row.cdp}</td>
-                    <td className="px-3 py-2 text-gray-700 border-b border-purple-100">{row.note}</td>
+                  <tr
+                    key={row.dimension}
+                    className={idx % 2 === 0 ? 'bg-white' : 'bg-purple-50/40'}
+                  >
+                    <td className="px-3 py-2 font-medium text-purple-700 border-b border-purple-100">
+                      {row.dimension}
+                    </td>
+                    <td className="px-3 py-2 text-gray-700 border-b border-purple-100">
+                      {row.mcp}
+                    </td>
+                    <td className="px-3 py-2 text-gray-700 border-b border-purple-100">
+                      {row.cdp}
+                    </td>
+                    <td className="px-3 py-2 text-gray-700 border-b border-purple-100">
+                      {row.note}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -101,7 +139,10 @@ export const TokenOptimizationSection = () => {
           icon
           iconColor="green"
         >
-          <InfoBox variant="green" title={t('tokenOptimization.contextOptimizationInfoTitle')}>
+          <InfoBox
+            variant="green"
+            title={t('tokenOptimization.contextOptimizationInfoTitle')}
+          >
             <p className="text-sm leading-relaxed">
               {t('tokenOptimization.contextOptimizationInfoDesc')}
             </p>

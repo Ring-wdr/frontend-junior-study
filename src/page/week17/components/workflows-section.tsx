@@ -14,7 +14,11 @@ export const WorkflowsSection = () => {
       description={t('workflows.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('workflows.featureDevTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('workflows.featureDevTitle')}
+          icon
+          iconColor="blue"
+        >
           <InfoBox variant="blue" title={t('workflows.featureDevInfoTitle')}>
             <p className="text-sm leading-relaxed">
               {t('workflows.featureDevInfoDesc')}
@@ -65,7 +69,11 @@ claude "이 에러를 수정해줘:
           />
         </SubSection>
 
-        <SubSection title={t('workflows.codeReviewTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('workflows.codeReviewTitle')}
+          icon
+          iconColor="purple"
+        >
           <CodeBlock
             code={`# PR 리뷰 요청
 claude "현재 브랜치의 변경사항을 main과 비교해서 리뷰해줘.

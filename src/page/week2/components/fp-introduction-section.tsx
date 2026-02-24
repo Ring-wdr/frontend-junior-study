@@ -30,19 +30,34 @@ export const FpIntroductionSection = () => {
               </DemoBox>
             </div>
             <div className="space-y-4">
-              <InfoBox variant="orange" title={t('fp.immutability.coreConcepts.title')}>
+              <InfoBox
+                variant="orange"
+                title={t('fp.immutability.coreConcepts.title')}
+              >
                 <ul className="list-disc pl-5 space-y-1 text-sm text-orange-800">
                   <li>
-                    <strong>{t('fp.immutability.coreConcepts.pureFunctions.label')}</strong>{' '}
-                    {t('fp.immutability.coreConcepts.pureFunctions.description')}
+                    <strong>
+                      {t('fp.immutability.coreConcepts.pureFunctions.label')}
+                    </strong>{' '}
+                    {t(
+                      'fp.immutability.coreConcepts.pureFunctions.description',
+                    )}
                   </li>
                   <li>
-                    <strong>{t('fp.immutability.coreConcepts.immutability.label')}</strong>{' '}
+                    <strong>
+                      {t('fp.immutability.coreConcepts.immutability.label')}
+                    </strong>{' '}
                     {t('fp.immutability.coreConcepts.immutability.description')}
                   </li>
                   <li>
-                    <strong>{t('fp.immutability.coreConcepts.higherOrderFunctions.label')}</strong>{' '}
-                    {t('fp.immutability.coreConcepts.higherOrderFunctions.description')}
+                    <strong>
+                      {t(
+                        'fp.immutability.coreConcepts.higherOrderFunctions.label',
+                      )}
+                    </strong>{' '}
+                    {t(
+                      'fp.immutability.coreConcepts.higherOrderFunctions.description',
+                    )}
                   </li>
                 </ul>
               </InfoBox>

@@ -1,5 +1,5 @@
+import { Activity, Check, Layers, MemoryStick, Zap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Zap, Layers, MemoryStick, Activity, Check } from 'lucide-react';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
@@ -112,8 +112,12 @@ function PerformanceMonitor() {
   );
 }`;
 
-  const checklist = t('performance.checklist', { returnObjects: true }) as string[];
-  const techniques = t('performance.techniques', { returnObjects: true }) as any[];
+  const checklist = t('performance.checklist', {
+    returnObjects: true,
+  }) as string[];
+  const techniques = t('performance.techniques', {
+    returnObjects: true,
+  }) as any[];
 
   return (
     <SectionCard
@@ -127,16 +131,25 @@ function PerformanceMonitor() {
             const icons = [Layers, Zap, MemoryStick, Activity];
             const IconComponent = icons[idx] || Zap;
             return (
-              <div key={tech.name} className="bg-teal-50 p-3 rounded-lg text-center border border-teal-200">
+              <div
+                key={tech.name}
+                className="bg-teal-50 p-3 rounded-lg text-center border border-teal-200"
+              >
                 <IconComponent className="w-5 h-5 mx-auto text-teal-600 mb-1" />
-                <span className="text-xs font-bold block text-teal-800">{tech.name}</span>
+                <span className="text-xs font-bold block text-teal-800">
+                  {tech.name}
+                </span>
                 <span className="text-xs text-gray-600">{tech.desc}</span>
               </div>
             );
           })}
         </div>
 
-        <SubSection title={t('performance.instanceTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('performance.instanceTitle')}
+          icon
+          iconColor="blue"
+        >
           <p className="text-sm text-gray-700 mb-3">
             {t('performance.instanceDesc')}
           </p>
@@ -159,36 +172,42 @@ function PerformanceMonitor() {
           <div className="mt-3 grid grid-cols-3 gap-2 text-center">
             <div className="bg-gray-100 p-2 rounded">
               <span className="text-xs font-bold block">always</span>
-              <span className="text-xs text-gray-600">{t('performance.frameAlways')}</span>
+              <span className="text-xs text-gray-600">
+                {t('performance.frameAlways')}
+              </span>
             </div>
             <div className="bg-green-100 p-2 rounded">
               <span className="text-xs font-bold block">demand</span>
-              <span className="text-xs text-gray-600">{t('performance.frameDemand')}</span>
+              <span className="text-xs text-gray-600">
+                {t('performance.frameDemand')}
+              </span>
             </div>
             <div className="bg-orange-100 p-2 rounded">
               <span className="text-xs font-bold block">never</span>
-              <span className="text-xs text-gray-600">{t('performance.frameNever')}</span>
+              <span className="text-xs text-gray-600">
+                {t('performance.frameNever')}
+              </span>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title={t('performance.memoryTitle')} icon iconColor="orange">
+        <SubSection
+          title={t('performance.memoryTitle')}
+          icon
+          iconColor="orange"
+        >
           <p className="text-sm text-gray-700 mb-3">
             {t('performance.memoryDesc')}
           </p>
-          <CodeBlock
-            code={memoryCode}
-            language="tsx"
-            className="text-xs"
-          />
+          <CodeBlock code={memoryCode} language="tsx" className="text-xs" />
         </SubSection>
 
-        <SubSection title={t('performance.monitorTitle')} icon iconColor="purple">
-          <CodeBlock
-            code={monitoringCode}
-            language="tsx"
-            className="text-xs"
-          />
+        <SubSection
+          title={t('performance.monitorTitle')}
+          icon
+          iconColor="purple"
+        >
+          <CodeBlock code={monitoringCode} language="tsx" className="text-xs" />
         </SubSection>
 
         <InfoBox variant="green" title={t('performance.checklistTitle')}>

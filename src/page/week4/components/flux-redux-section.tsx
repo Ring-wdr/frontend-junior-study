@@ -13,7 +13,11 @@ export const FluxReduxSection = () => {
       description={t('fluxRedux.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('fluxRedux.fluxArchitecture.title')} icon iconColor="blue">
+        <SubSection
+          title={t('fluxRedux.fluxArchitecture.title')}
+          icon
+          iconColor="blue"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('fluxRedux.fluxArchitecture.description')}
@@ -23,24 +27,44 @@ export const FluxReduxSection = () => {
               <FluxFlowVisualizer />
             </div>
 
-            <InfoBox variant="blue" title={t('fluxRedux.fluxArchitecture.keyPrinciples.title')}>
+            <InfoBox
+              variant="blue"
+              title={t('fluxRedux.fluxArchitecture.keyPrinciples.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
-                <li>{t('fluxRedux.fluxArchitecture.keyPrinciples.singleDirection')}</li>
-                <li>{t('fluxRedux.fluxArchitecture.keyPrinciples.centralizedStore')}</li>
-                <li>{t('fluxRedux.fluxArchitecture.keyPrinciples.pureFunctions')}</li>
+                <li>
+                  {t(
+                    'fluxRedux.fluxArchitecture.keyPrinciples.singleDirection',
+                  )}
+                </li>
+                <li>
+                  {t(
+                    'fluxRedux.fluxArchitecture.keyPrinciples.centralizedStore',
+                  )}
+                </li>
+                <li>
+                  {t('fluxRedux.fluxArchitecture.keyPrinciples.pureFunctions')}
+                </li>
               </ul>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title={t('fluxRedux.reduxCore.title')} icon iconColor="blue">
+        <SubSection
+          title={t('fluxRedux.reduxCore.title')}
+          icon
+          iconColor="blue"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('fluxRedux.reduxCore.description')}
             </p>
 
             <div className="grid grid-cols-1 gap-4">
-              <InfoBox variant="gray" title={t('fluxRedux.reduxCore.store.title')}>
+              <InfoBox
+                variant="gray"
+                title={t('fluxRedux.reduxCore.store.title')}
+              >
                 <p className="text-sm text-gray-700">
                   {t('fluxRedux.reduxCore.store.description')}
                 </p>
@@ -51,7 +75,10 @@ const state = store.getState(); // Get current state`}
                 />
               </InfoBox>
 
-              <InfoBox variant="gray" title={t('fluxRedux.reduxCore.action.title')}>
+              <InfoBox
+                variant="gray"
+                title={t('fluxRedux.reduxCore.action.title')}
+              >
                 <p className="text-sm text-gray-700">
                   {t('fluxRedux.reduxCore.action.description')}
                 </p>
@@ -64,7 +91,10 @@ const state = store.getState(); // Get current state`}
                 />
               </InfoBox>
 
-              <InfoBox variant="gray" title={t('fluxRedux.reduxCore.reducer.title')}>
+              <InfoBox
+                variant="gray"
+                title={t('fluxRedux.reduxCore.reducer.title')}
+              >
                 <p className="text-sm text-gray-700">
                   {t('fluxRedux.reduxCore.reducer.description')}
                 </p>
@@ -79,7 +109,10 @@ const state = store.getState(); // Get current state`}
                 />
               </InfoBox>
 
-              <InfoBox variant="gray" title={t('fluxRedux.reduxCore.dispatch.title')}>
+              <InfoBox
+                variant="gray"
+                title={t('fluxRedux.reduxCore.dispatch.title')}
+              >
                 <p className="text-sm text-gray-700">
                   {t('fluxRedux.reduxCore.dispatch.description')}
                 </p>
@@ -92,17 +125,28 @@ const state = store.getState(); // Get current state`}
           </div>
         </SubSection>
 
-        <SubSection title={t('fluxRedux.reduxToolkit.title')} icon iconColor="green">
+        <SubSection
+          title={t('fluxRedux.reduxToolkit.title')}
+          icon
+          iconColor="green"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('fluxRedux.reduxToolkit.description')}
             </p>
 
-            <InfoBox variant="green" title={t('fluxRedux.reduxToolkit.keyBenefits.title')}>
+            <InfoBox
+              variant="green"
+              title={t('fluxRedux.reduxToolkit.keyBenefits.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
-                <li>{t('fluxRedux.reduxToolkit.keyBenefits.configureStore')}</li>
+                <li>
+                  {t('fluxRedux.reduxToolkit.keyBenefits.configureStore')}
+                </li>
                 <li>{t('fluxRedux.reduxToolkit.keyBenefits.createSlice')}</li>
-                <li>{t('fluxRedux.reduxToolkit.keyBenefits.createAsyncThunk')}</li>
+                <li>
+                  {t('fluxRedux.reduxToolkit.keyBenefits.createAsyncThunk')}
+                </li>
                 <li>{t('fluxRedux.reduxToolkit.keyBenefits.immer')}</li>
               </ul>
             </InfoBox>

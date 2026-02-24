@@ -10,7 +10,9 @@ export const ObservabilitySection = () => {
   const { t } = useTranslation('week15');
   const [activeFeature, setActiveFeature] = useState(0);
 
-  const features = t('observability.sentryFeatures', { returnObjects: true }) as any[];
+  const features = t('observability.sentryFeatures', {
+    returnObjects: true,
+  }) as any[];
   const sentryFeatures = [
     { ...features[0], icon: '🐛' },
     { ...features[1], icon: '🍞' },
@@ -33,7 +35,11 @@ export const ObservabilitySection = () => {
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('observability.featuresTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('observability.featuresTitle')}
+          icon
+          iconColor="purple"
+        >
           <DemoBox label={t('observability.featuresLabel')}>
             <div className="space-y-4">
               <div className="flex gap-2 flex-wrap">
@@ -68,22 +74,28 @@ export const ObservabilitySection = () => {
                   </div>
                 </div>
                 <ul className="space-y-2">
-                  {sentryFeatures[activeFeature].details.map((detail: string) => (
-                    <li
-                      key={detail}
-                      className="flex items-start gap-2 text-sm text-gray-700"
-                    >
-                      <span className="text-red-500 mt-0.5">→</span>
-                      {detail}
-                    </li>
-                  ))}
+                  {sentryFeatures[activeFeature].details.map(
+                    (detail: string) => (
+                      <li
+                        key={detail}
+                        className="flex items-start gap-2 text-sm text-gray-700"
+                      >
+                        <span className="text-red-500 mt-0.5">→</span>
+                        {detail}
+                      </li>
+                    ),
+                  )}
                 </ul>
               </div>
             </div>
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('observability.integrationTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('observability.integrationTitle')}
+          icon
+          iconColor="blue"
+        >
           <CodeBlock
             code={`// 1. 설치
 npm install @sentry/react
@@ -124,11 +136,16 @@ try {
           />
         </SubSection>
 
-        <SubSection title={t('observability.sourcemapTitle')} icon iconColor="green">
-          <InfoBox variant="green" title={t('observability.sourcemapInfoTitle')}>
-            <p className="text-sm">
-              {t('observability.sourcemapInfoDesc')}
-            </p>
+        <SubSection
+          title={t('observability.sourcemapTitle')}
+          icon
+          iconColor="green"
+        >
+          <InfoBox
+            variant="green"
+            title={t('observability.sourcemapInfoTitle')}
+          >
+            <p className="text-sm">{t('observability.sourcemapInfoDesc')}</p>
           </InfoBox>
 
           <CodeBlock
@@ -165,7 +182,11 @@ module.exports = {
           />
         </SubSection>
 
-        <SubSection title={t('observability.loggingTitle')} icon iconColor="orange">
+        <SubSection
+          title={t('observability.loggingTitle')}
+          icon
+          iconColor="orange"
+        >
           <CodeBlock
             code={`// Axios Interceptor로 체계적 로깅
 import axios from 'axios';
@@ -207,16 +228,26 @@ api.interceptors.response.use(
           />
         </SubSection>
 
-        <SubSection title={t('observability.bestPracticesTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('observability.bestPracticesTitle')}
+          icon
+          iconColor="purple"
+        >
           <div className="grid grid-cols-2 gap-3">
-            {(t('observability.bestPractices', { returnObjects: true }) as any[]).map((item: any, idx: number) => (
+            {(
+              t('observability.bestPractices', { returnObjects: true }) as any[]
+            ).map((item: any, idx: number) => (
               <div
                 key={item.title}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200"
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-lg">{['🏷️', '🌍', '🔔', '📉', '👥', '🔒'][idx]}</span>
-                  <h5 className="font-bold text-sm text-gray-900">{item.title}</h5>
+                  <span className="text-lg">
+                    {['🏷️', '🌍', '🔔', '📉', '👥', '🔒'][idx]}
+                  </span>
+                  <h5 className="font-bold text-sm text-gray-900">
+                    {item.title}
+                  </h5>
                 </div>
                 <p className="text-xs text-gray-500">{item.desc}</p>
               </div>

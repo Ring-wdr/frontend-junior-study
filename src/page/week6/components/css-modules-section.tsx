@@ -11,8 +11,18 @@ export const CssModulesSection = () => {
       description={t('cssModules.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('cssModules.scopedStyles.title')} icon iconColor="green">
-          <p className="text-sm text-gray-700 mb-4"><Trans t={t} i18nKey="cssModules.scopedStyles.content" components={{ code: <code /> }} /></p>
+        <SubSection
+          title={t('cssModules.scopedStyles.title')}
+          icon
+          iconColor="green"
+        >
+          <p className="text-sm text-gray-700 mb-4">
+            <Trans
+              t={t}
+              i18nKey="cssModules.scopedStyles.content"
+              components={{ code: <code /> }}
+            />
+          </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -51,17 +61,28 @@ export function Button() {
           </div>
         </SubSection>
 
-        <SubSection title={t('cssModules.benefits.title')} icon iconColor="green">
+        <SubSection
+          title={t('cssModules.benefits.title')}
+          icon
+          iconColor="green"
+        >
           <InfoBox variant="green" title={t('cssModules.benefits.infoTitle')}>
             <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
               <li>
-                <strong>{t('cssModules.benefits.localScope')}</strong> <Trans t={t} i18nKey="cssModules.benefits.localScopeDesc" components={{ code: <code /> }} />
+                <strong>{t('cssModules.benefits.localScope')}</strong>{' '}
+                <Trans
+                  t={t}
+                  i18nKey="cssModules.benefits.localScopeDesc"
+                  components={{ code: <code /> }}
+                />
               </li>
               <li>
-                <strong>{t('cssModules.benefits.reuse')}</strong> {t('cssModules.benefits.reuseDesc')}
+                <strong>{t('cssModules.benefits.reuse')}</strong>{' '}
+                {t('cssModules.benefits.reuseDesc')}
               </li>
               <li>
-                <strong>{t('cssModules.benefits.learning')}</strong> {t('cssModules.benefits.learningDesc')}
+                <strong>{t('cssModules.benefits.learning')}</strong>{' '}
+                {t('cssModules.benefits.learningDesc')}
               </li>
             </ul>
           </InfoBox>

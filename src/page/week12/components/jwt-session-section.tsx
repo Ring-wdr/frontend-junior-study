@@ -21,8 +21,12 @@ export const JwtSessionSection = () => {
     },
     session: {
       title: t('jwt.comparison.sessionTitle'),
-      pros: t('jwt.comparison.sessionPros', { returnObjects: true }) as string[],
-      cons: t('jwt.comparison.sessionCons', { returnObjects: true }) as string[],
+      pros: t('jwt.comparison.sessionPros', {
+        returnObjects: true,
+      }) as string[],
+      cons: t('jwt.comparison.sessionCons', {
+        returnObjects: true,
+      }) as string[],
       color: 'green',
     },
   };

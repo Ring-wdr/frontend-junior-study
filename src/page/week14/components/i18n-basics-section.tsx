@@ -54,7 +54,11 @@ export const I18nBasicsSection = () => {
       description={t('i18nBasics.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('i18nBasics.coreElements.title')} icon iconColor="blue">
+        <SubSection
+          title={t('i18nBasics.coreElements.title')}
+          icon
+          iconColor="blue"
+        >
           <div className="grid grid-cols-2 gap-3">
             {[
               { icon: '🌐' },
@@ -64,7 +68,9 @@ export const I18nBasicsSection = () => {
               { icon: '📝' },
               { icon: '🕐' },
             ].map((item, idx) => {
-              const element = t(`i18nBasics.coreElements.elements.${idx}`, { returnObjects: true }) as { title: string; desc: string };
+              const element = t(`i18nBasics.coreElements.elements.${idx}`, {
+                returnObjects: true,
+              }) as { title: string; desc: string };
               return (
                 <div
                   key={element.title}
@@ -83,7 +89,11 @@ export const I18nBasicsSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('i18nBasics.liveDemo.title')} icon iconColor="purple">
+        <SubSection
+          title={t('i18nBasics.liveDemo.title')}
+          icon
+          iconColor="purple"
+        >
           <DemoBox label={t('i18nBasics.liveDemo.label')}>
             <div className="space-y-4">
               {/* Locale Selector */}
@@ -144,11 +154,13 @@ export const I18nBasicsSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('i18nBasics.icuFormat.title')} icon iconColor="green">
+        <SubSection
+          title={t('i18nBasics.icuFormat.title')}
+          icon
+          iconColor="green"
+        >
           <InfoBox variant="green" title={t('i18nBasics.icuFormat.infoTitle')}>
-            <p className="text-sm mb-2">
-              {t('i18nBasics.icuFormat.infoText')}
-            </p>
+            <p className="text-sm mb-2">{t('i18nBasics.icuFormat.infoText')}</p>
           </InfoBox>
 
           <CodeBlock
@@ -178,7 +190,11 @@ export const I18nBasicsSection = () => {
           />
         </SubSection>
 
-        <SubSection title={t('i18nBasics.nextjsStructure.title')} icon iconColor="orange">
+        <SubSection
+          title={t('i18nBasics.nextjsStructure.title')}
+          icon
+          iconColor="orange"
+        >
           <CodeBlock
             code={`// App Router: [locale]/layout.tsx
 import { getDictionary } from './dictionaries';
@@ -215,7 +231,11 @@ export const getDictionary = async (locale: string) =>
           />
         </SubSection>
 
-        <SubSection title={t('i18nBasics.fileManagement.title')} icon iconColor="red">
+        <SubSection
+          title={t('i18nBasics.fileManagement.title')}
+          icon
+          iconColor="red"
+        >
           <div className="space-y-3">
             <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
               <h4 className="font-medium text-sm mb-2">
@@ -234,7 +254,10 @@ export const getDictionary = async (locale: string) =>
               </div>
             </div>
 
-            <InfoBox variant="red" title={t('i18nBasics.fileManagement.missingKeysTitle')}>
+            <InfoBox
+              variant="red"
+              title={t('i18nBasics.fileManagement.missingKeysTitle')}
+            >
               <p className="text-xs">
                 {t('i18nBasics.fileManagement.missingKeysText')}
               </p>
@@ -242,20 +265,43 @@ export const getDictionary = async (locale: string) =>
           </div>
         </SubSection>
 
-        <SubSection title={t('i18nBasics.libraryComparison.title')} icon iconColor="purple">
+        <SubSection
+          title={t('i18nBasics.libraryComparison.title')}
+          icon
+          iconColor="purple"
+        >
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-gray-100">
-                  <th className="p-2 text-left">{t('i18nBasics.libraryComparison.headers.library')}</th>
-                  <th className="p-2 text-left">{t('i18nBasics.libraryComparison.headers.features')}</th>
-                  <th className="p-2 text-left">{t('i18nBasics.libraryComparison.headers.useCase')}</th>
+                  <th className="p-2 text-left">
+                    {t('i18nBasics.libraryComparison.headers.library')}
+                  </th>
+                  <th className="p-2 text-left">
+                    {t('i18nBasics.libraryComparison.headers.features')}
+                  </th>
+                  <th className="p-2 text-left">
+                    {t('i18nBasics.libraryComparison.headers.useCase')}
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                {(t('i18nBasics.libraryComparison.libraries', { returnObjects: true }) as Array<{ name: string; features: string; useCase: string }>).map((lib, idx) => (
-                  <tr key={lib.name} className={`border-t ${idx === 1 ? 'bg-gray-50' : ''}`}>
-                    <td className="p-2 font-mono text-purple-600">{lib.name}</td>
+                {(
+                  t('i18nBasics.libraryComparison.libraries', {
+                    returnObjects: true,
+                  }) as Array<{
+                    name: string;
+                    features: string;
+                    useCase: string;
+                  }>
+                ).map((lib, idx) => (
+                  <tr
+                    key={lib.name}
+                    className={`border-t ${idx === 1 ? 'bg-gray-50' : ''}`}
+                  >
+                    <td className="p-2 font-mono text-purple-600">
+                      {lib.name}
+                    </td>
                     <td className="p-2 text-xs">{lib.features}</td>
                     <td className="p-2 text-xs">{lib.useCase}</td>
                   </tr>

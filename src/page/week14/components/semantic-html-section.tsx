@@ -17,7 +17,11 @@ export const SemanticHtmlSection = () => {
       description={t('semantic.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('semantic.importance.title')} icon iconColor="green">
+        <SubSection
+          title={t('semantic.importance.title')}
+          icon
+          iconColor="green"
+        >
           <InfoBox variant="green" title={t('semantic.importance.infoTitle')}>
             <p className="text-sm leading-relaxed">
               <Trans t={t} i18nKey="semantic.importance.infoText" />
@@ -109,9 +113,17 @@ export const SemanticHtmlSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('semantic.coreElements.title')} icon iconColor="purple">
+        <SubSection
+          title={t('semantic.coreElements.title')}
+          icon
+          iconColor="purple"
+        >
           <div className="grid grid-cols-2 gap-3">
-            {(t('semantic.coreElements.elements', { returnObjects: true }) as Array<{tag: string, wrong: string, desc: string}>).map((item) => (
+            {(
+              t('semantic.coreElements.elements', {
+                returnObjects: true,
+              }) as Array<{ tag: string; wrong: string; desc: string }>
+            ).map((item) => (
               <div
                 key={item.tag}
                 className="bg-white p-3 rounded-lg border border-gray-200"
@@ -131,7 +143,11 @@ export const SemanticHtmlSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('semantic.formAccessibility.title')} icon iconColor="orange">
+        <SubSection
+          title={t('semantic.formAccessibility.title')}
+          icon
+          iconColor="orange"
+        >
           <CodeBlock
             code={`<!-- Accessible Form Pattern -->
 <form>
@@ -171,14 +187,22 @@ export const SemanticHtmlSection = () => {
           />
           <InfoBox variant="orange" className="mt-3">
             <ul className="text-xs space-y-1">
-              {(t('semantic.formAccessibility.tips', { returnObjects: true }) as string[]).map((tip, idx) => (
+              {(
+                t('semantic.formAccessibility.tips', {
+                  returnObjects: true,
+                }) as string[]
+              ).map((tip, idx) => (
                 <li key={idx}>• {tip}</li>
               ))}
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('semantic.headingHierarchy.title')} icon iconColor="red">
+        <SubSection
+          title={t('semantic.headingHierarchy.title')}
+          icon
+          iconColor="red"
+        >
           <DemoBox label={t('semantic.headingHierarchy.label')}>
             <div className="bg-white p-4 rounded-lg border border-gray-200">
               <div className="space-y-1 font-mono text-sm">

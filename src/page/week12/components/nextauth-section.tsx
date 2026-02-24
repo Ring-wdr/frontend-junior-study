@@ -80,7 +80,11 @@ export { handler as GET, handler as POST };`}
           />
         </SubSection>
 
-        <SubSection title={t('nextauth.provider.title')} icon iconColor="purple">
+        <SubSection
+          title={t('nextauth.provider.title')}
+          icon
+          iconColor="purple"
+        >
           <CodeBlock
             code={`// app/providers.tsx
 "use client";
@@ -167,7 +171,9 @@ export async function ServerComponent() {
                 </div>
               ) : (
                 <div className="text-center space-y-3">
-                  <p className="text-gray-500">{t('nextauth.demo.notSignedIn')}</p>
+                  <p className="text-gray-500">
+                    {t('nextauth.demo.notSignedIn')}
+                  </p>
                   <button
                     type="button"
                     onClick={simulateLogin}
@@ -199,7 +205,11 @@ export async function ServerComponent() {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('nextauth.protecting.title')} icon iconColor="green">
+        <SubSection
+          title={t('nextauth.protecting.title')}
+          icon
+          iconColor="green"
+        >
           <CodeBlock
             code={`// Middleware-based protection (middleware.ts)
 import { withAuth } from "next-auth/middleware";

@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { CodeBlock } from '../../../components/ui/code-block';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
+import { CodeBlock } from '../../../components/ui/code-block';
 
 type Trigger = {
   label: string;
@@ -15,7 +15,9 @@ export const GitHubActionsSection = () => {
   const triggers = t('githubActions.triggers', {
     returnObjects: true,
   }) as unknown as Trigger[];
-  const options = t('githubActions.security', { returnObjects: true }) as string[];
+  const options = t('githubActions.security', {
+    returnObjects: true,
+  }) as string[];
 
   return (
     <SectionCard
@@ -24,7 +26,11 @@ export const GitHubActionsSection = () => {
       description={t('githubActions.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('githubActions.triggersTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('githubActions.triggersTitle')}
+          icon
+          iconColor="blue"
+        >
           <div className="space-y-2">
             {triggers.map((trigger) => (
               <div
@@ -38,7 +44,11 @@ export const GitHubActionsSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('githubActions.syntaxTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('githubActions.syntaxTitle')}
+          icon
+          iconColor="purple"
+        >
           <DemoBox label={t('githubActions.workflowLabel')}>
             <CodeBlock
               language="yaml"
@@ -48,7 +58,11 @@ export const GitHubActionsSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('githubActions.securityTitle')} icon iconColor="orange">
+        <SubSection
+          title={t('githubActions.securityTitle')}
+          icon
+          iconColor="orange"
+        >
           <ul className="space-y-1 text-sm text-gray-700 list-disc pl-5">
             {options.map((option) => (
               <li key={option}>{option}</li>

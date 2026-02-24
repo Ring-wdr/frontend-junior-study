@@ -15,28 +15,36 @@ export const AccessibilityBasicsSection = () => {
       icon: '👁️',
       color: 'blue',
       description: t('wcag.principles.perceivable.description'),
-      items: t('wcag.principles.perceivable.items', { returnObjects: true }) as string[],
+      items: t('wcag.principles.perceivable.items', {
+        returnObjects: true,
+      }) as string[],
     },
     {
       title: 'Operable',
       icon: '⌨️',
       color: 'green',
       description: t('wcag.principles.operable.description'),
-      items: t('wcag.principles.operable.items', { returnObjects: true }) as string[],
+      items: t('wcag.principles.operable.items', {
+        returnObjects: true,
+      }) as string[],
     },
     {
       title: 'Understandable',
       icon: '💡',
       color: 'orange',
       description: t('wcag.principles.understandable.description'),
-      items: t('wcag.principles.understandable.items', { returnObjects: true }) as string[],
+      items: t('wcag.principles.understandable.items', {
+        returnObjects: true,
+      }) as string[],
     },
     {
       title: 'Robust',
       icon: '🛡️',
       color: 'purple',
       description: t('wcag.principles.robust.description'),
-      items: t('wcag.principles.robust.items', { returnObjects: true }) as string[],
+      items: t('wcag.principles.robust.items', {
+        returnObjects: true,
+      }) as string[],
     },
   ];
 
@@ -125,7 +133,11 @@ export const AccessibilityBasicsSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('wcag.contrastChecker.title')} icon iconColor="green">
+        <SubSection
+          title={t('wcag.contrastChecker.title')}
+          icon
+          iconColor="green"
+        >
           <DemoBox label={t('wcag.contrastChecker.label')}>
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
@@ -159,17 +171,25 @@ export const AccessibilityBasicsSection = () => {
                 </div>
               </div>
               <InfoBox variant="gray">
-                <p className="text-xs">
-                  {t('wcag.contrastChecker.guideline')}
-                </p>
+                <p className="text-xs">{t('wcag.contrastChecker.guideline')}</p>
               </InfoBox>
             </div>
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('wcag.testingTools.title')} icon iconColor="orange">
+        <SubSection
+          title={t('wcag.testingTools.title')}
+          icon
+          iconColor="orange"
+        >
           <div className="grid grid-cols-2 gap-3">
-            {(t('wcag.testingTools.tools', { returnObjects: true }) as Array<{name: string, desc: string, badge: string}>).map((tool) => (
+            {(
+              t('wcag.testingTools.tools', { returnObjects: true }) as Array<{
+                name: string;
+                desc: string;
+                badge: string;
+              }>
+            ).map((tool) => (
               <div
                 key={tool.name}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200"

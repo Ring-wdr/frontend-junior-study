@@ -20,14 +20,33 @@
     "description": "브라우저에서 네이티브에 가까운 성능을 제공하는 바이너리 포맷",
     "conceptsTitle": "핵심 개념",
     "concepts": [
-      { "title": "이진 명령어 포맷", "desc": "네이티브에 가까운 속도로 실행되는 저수준 바이너리 포맷", "icon": "cpu" },
-      { "title": "언어 독립적", "desc": "C, C++, Rust, Go 등 다양한 언어에서 컴파일 가능", "icon": "globe" },
-      { "title": "JavaScript 보완", "desc": "JavaScript를 대체하는 것이 아닌 성능 병목 구간을 오프로드", "icon": "zap" },
-      { "title": "보안 샌드박스", "desc": "브라우저의 보안 모델 내에서 안전하게 실행", "icon": "shield" }
+      {
+        "title": "이진 명령어 포맷",
+        "desc": "네이티브에 가까운 속도로 실행되는 저수준 바이너리 포맷",
+        "icon": "cpu"
+      },
+      {
+        "title": "언어 독립적",
+        "desc": "C, C++, Rust, Go 등 다양한 언어에서 컴파일 가능",
+        "icon": "globe"
+      },
+      {
+        "title": "JavaScript 보완",
+        "desc": "JavaScript를 대체하는 것이 아닌 성능 병목 구간을 오프로드",
+        "icon": "zap"
+      },
+      {
+        "title": "보안 샌드박스",
+        "desc": "브라우저의 보안 모델 내에서 안전하게 실행",
+        "icon": "shield"
+      }
     ],
     "historyTitle": "WebAssembly의 역사",
     "timeline": [
-      { "year": "2015", "event": "WebAssembly 프로젝트 발표 (Mozilla, Google, MS, Apple)" },
+      {
+        "year": "2015",
+        "event": "WebAssembly 프로젝트 발표 (Mozilla, Google, MS, Apple)"
+      },
       { "year": "2017", "event": "주요 브라우저 MVP 지원 시작" },
       { "year": "2019", "event": "W3C 공식 웹 표준으로 채택" },
       { "year": "2020+", "event": "SIMD, Threads, GC 등 확장 기능 추가" }
@@ -92,10 +111,26 @@
       "features": "특징"
     },
     "toolchains": [
-      { "language": "C/C++", "toolchain": "Emscripten", "features": "가장 성숙, POSIX API 에뮬레이션" },
-      { "language": "Rust", "toolchain": "wasm-pack + wasm-bindgen", "features": "메모리 안전, 모던 DX" },
-      { "language": "AssemblyScript", "toolchain": "asc compiler", "features": "TypeScript 유사 문법" },
-      { "language": "Go", "toolchain": "TinyGo", "features": "작은 바이너리 크기" }
+      {
+        "language": "C/C++",
+        "toolchain": "Emscripten",
+        "features": "가장 성숙, POSIX API 에뮬레이션"
+      },
+      {
+        "language": "Rust",
+        "toolchain": "wasm-pack + wasm-bindgen",
+        "features": "메모리 안전, 모던 DX"
+      },
+      {
+        "language": "AssemblyScript",
+        "toolchain": "asc compiler",
+        "features": "TypeScript 유사 문법"
+      },
+      {
+        "language": "Go",
+        "toolchain": "TinyGo",
+        "features": "작은 바이너리 크기"
+      }
     ],
     "emscriptenTitle": "Emscripten (C/C++)",
     "installSteps": "설치 및 컴파일",
@@ -150,7 +185,11 @@
     "cases": [
       { "name": "Figma", "desc": "실시간 디자인 협업 도구", "icon": "image" },
       { "name": "Squoosh", "desc": "Google 이미지 최적화 앱", "icon": "image" },
-      { "name": "FFmpeg.wasm", "desc": "브라우저 비디오 편집", "icon": "video" },
+      {
+        "name": "FFmpeg.wasm",
+        "desc": "브라우저 비디오 편집",
+        "icon": "video"
+      },
       { "name": "AutoCAD Web", "desc": "브라우저 CAD 도구", "icon": "gamepad" },
       { "name": "1Password", "desc": "암호 관리 (암호화)", "icon": "lock" },
       { "name": "Google Earth", "desc": "3D 지구본 렌더링", "icon": "chart" }

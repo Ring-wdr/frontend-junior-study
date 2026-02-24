@@ -160,11 +160,23 @@
     ],
     "debugControls": [
       { "name": "Resume", "shortcut": "F8", "desc": "Run to next breakpoint" },
-      { "name": "Step Over", "shortcut": "F10", "desc": "Execute current line, don't enter functions" },
+      {
+        "name": "Step Over",
+        "shortcut": "F10",
+        "desc": "Execute current line, don't enter functions"
+      },
       { "name": "Step Into", "shortcut": "F11", "desc": "Enter into function" },
-      { "name": "Step Out", "shortcut": "Shift+F11", "desc": "Exit current function" },
+      {
+        "name": "Step Out",
+        "shortcut": "Shift+F11",
+        "desc": "Exit current function"
+      },
       { "name": "Pause", "shortcut": "F8", "desc": "Pause running script" },
-      { "name": "Restart", "shortcut": "Ctrl+Shift+F8", "desc": "Restart current function" }
+      {
+        "name": "Restart",
+        "shortcut": "Ctrl+Shift+F8",
+        "desc": "Restart current function"
+      }
     ],
     "scopeItems": [
       { "label": "Local:", "desc": "Local variables in current function" },
@@ -240,11 +252,31 @@
       }
     ],
     "recordingSteps": [
-      { "step": 1, "title": "Start Recording", "desc": "Press Ctrl+E or click Record button" },
-      { "step": 2, "title": "Execute User Scenario", "desc": "Perform actions to test: scroll, click, input, etc." },
-      { "step": 3, "title": "Stop Recording", "desc": "Click Stop button (recommended within 5 seconds)" },
-      { "step": 4, "title": "Analyze Frame Chart", "desc": "Check Long Tasks in Main thread" },
-      { "step": 5, "title": "Zoom into Bottlenecks", "desc": "Click red/yellow areas for details" }
+      {
+        "step": 1,
+        "title": "Start Recording",
+        "desc": "Press Ctrl+E or click Record button"
+      },
+      {
+        "step": 2,
+        "title": "Execute User Scenario",
+        "desc": "Perform actions to test: scroll, click, input, etc."
+      },
+      {
+        "step": 3,
+        "title": "Stop Recording",
+        "desc": "Click Stop button (recommended within 5 seconds)"
+      },
+      {
+        "step": 4,
+        "title": "Analyze Frame Chart",
+        "desc": "Check Long Tasks in Main thread"
+      },
+      {
+        "step": 5,
+        "title": "Zoom into Bottlenecks",
+        "desc": "Click red/yellow areas for details"
+      }
     ],
     "memoryTools": [
       {
@@ -315,7 +347,11 @@
       {
         "name": "Webpack",
         "status": "Legacy Standard",
-        "pros": ["Rich ecosystem", "Fine-grained configuration", "Proven stability"],
+        "pros": [
+          "Rich ecosystem",
+          "Fine-grained configuration",
+          "Proven stability"
+        ],
         "cons": ["Slow build", "Complex configuration", "Learning curve"]
       },
       {
@@ -408,8 +444,18 @@
     "beforeLabel": "BEFORE",
     "afterLabel": "AFTER",
     "bundleItems": [
-      { "name": "react + react-dom", "size": "128KB", "percent": 10.7, "issue": false },
-      { "name": "lodash (full)", "size": "531KB", "percent": 44.3, "issue": true },
+      {
+        "name": "react + react-dom",
+        "size": "128KB",
+        "percent": 10.7,
+        "issue": false
+      },
+      {
+        "name": "lodash (full)",
+        "size": "531KB",
+        "percent": 44.3,
+        "issue": true
+      },
       { "name": "moment.js", "size": "288KB", "percent": 24, "issue": true },
       { "name": "axios", "size": "14KB", "percent": 1.2, "issue": false },
       { "name": "app code", "size": "239KB", "percent": 19.8, "issue": false }
@@ -559,7 +605,11 @@
         "desc": "Time for largest content to render",
         "good": "Under 2.5s",
         "poor": "Over 4.0s",
-        "improve": ["Optimize images (WebP, lazy load)", "Improve server response time", "Inline Critical CSS"]
+        "improve": [
+          "Optimize images (WebP, lazy load)",
+          "Improve server response time",
+          "Inline Critical CSS"
+        ]
       },
       {
         "name": "INP",
@@ -567,7 +617,11 @@
         "desc": "Time from user interaction to next paint",
         "good": "Under 200ms",
         "poor": "Over 500ms",
-        "improve": ["Split Long Tasks", "Minimize main thread blocking", "Use Web Workers"]
+        "improve": [
+          "Split Long Tasks",
+          "Minimize main thread blocking",
+          "Use Web Workers"
+        ]
       },
       {
         "name": "CLS",
@@ -575,7 +629,11 @@
         "desc": "Amount of unexpected layout shifts",
         "good": "Under 0.1",
         "poor": "Over 0.25",
-        "improve": ["Set size attributes on images/videos", "Optimize font loading (font-display)", "Reserve space for dynamic content"]
+        "improve": [
+          "Set size attributes on images/videos",
+          "Optimize font loading (font-display)",
+          "Reserve space for dynamic content"
+        ]
       },
       {
         "name": "FCP",
@@ -583,7 +641,11 @@
         "desc": "Time for first content to render",
         "good": "Under 1.8s",
         "poor": "Over 3.0s",
-        "improve": ["Remove render-blocking resources", "Optimize CSS/JS", "Use CDN"]
+        "improve": [
+          "Remove render-blocking resources",
+          "Optimize CSS/JS",
+          "Use CDN"
+        ]
       },
       {
         "name": "TTFB",
@@ -591,7 +653,11 @@
         "desc": "Time to first server response",
         "good": "Under 0.8s",
         "poor": "Over 1.8s",
-        "improve": ["Optimize server", "CDN edge caching", "Optimize database queries"]
+        "improve": [
+          "Optimize server",
+          "CDN edge caching",
+          "Optimize database queries"
+        ]
       }
     ],
     "labDataItems": [
@@ -629,11 +695,31 @@
       }
     ],
     "priorities": [
-      { "priority": 1, "action": "Improve LCP: Optimize hero image", "impact": "High" },
-      { "priority": 2, "action": "Improve CLS: Set image/font sizes", "impact": "High" },
-      { "priority": 3, "action": "Improve INP: Split Long Tasks", "impact": "Medium" },
-      { "priority": 4, "action": "Improve FCP: Inline Critical CSS", "impact": "Medium" },
-      { "priority": 5, "action": "Improve TTFB: CDN/caching optimization", "impact": "Low" }
+      {
+        "priority": 1,
+        "action": "Improve LCP: Optimize hero image",
+        "impact": "High"
+      },
+      {
+        "priority": 2,
+        "action": "Improve CLS: Set image/font sizes",
+        "impact": "High"
+      },
+      {
+        "priority": 3,
+        "action": "Improve INP: Split Long Tasks",
+        "impact": "Medium"
+      },
+      {
+        "priority": 4,
+        "action": "Improve FCP: Inline Critical CSS",
+        "impact": "Medium"
+      },
+      {
+        "priority": 5,
+        "action": "Improve TTFB: CDN/caching optimization",
+        "impact": "Low"
+      }
     ]
   }
 }

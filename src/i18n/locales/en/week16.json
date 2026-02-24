@@ -93,18 +93,46 @@
     },
     "primitiveTypes": [
       { "type": "string", "example": "\"hello\"", "desc": "Text string" },
-      { "type": "number", "example": "42", "desc": "Number (integer and float)" },
+      {
+        "type": "number",
+        "example": "42",
+        "desc": "Number (integer and float)"
+      },
       { "type": "boolean", "example": "true", "desc": "True/False" },
       { "type": "null", "example": "null", "desc": "Intentional empty value" },
       { "type": "undefined", "example": "undefined", "desc": "Not defined" },
-      { "type": "symbol", "example": "Symbol(\"id\")", "desc": "Unique identifier" },
-      { "type": "bigint", "example": "9007199254740991n", "desc": "Large integer" }
+      {
+        "type": "symbol",
+        "example": "Symbol(\"id\")",
+        "desc": "Unique identifier"
+      },
+      {
+        "type": "bigint",
+        "example": "9007199254740991n",
+        "desc": "Large integer"
+      }
     ],
     "comparison": [
-      { "feature": "Extension", "interface": "extends keyword", "type": "& (intersection)" },
-      { "feature": "Declaration merging", "interface": "Possible", "type": "Not possible" },
-      { "feature": "Union/Tuple", "interface": "Not possible", "type": "Possible" },
-      { "feature": "Recommended for", "interface": "Object structure, API contract", "type": "Union, complex types" }
+      {
+        "feature": "Extension",
+        "interface": "extends keyword",
+        "type": "& (intersection)"
+      },
+      {
+        "feature": "Declaration merging",
+        "interface": "Possible",
+        "type": "Not possible"
+      },
+      {
+        "feature": "Union/Tuple",
+        "interface": "Not possible",
+        "type": "Possible"
+      },
+      {
+        "feature": "Recommended for",
+        "interface": "Object structure, API contract",
+        "type": "Union, complex types"
+      }
     ]
   },
   "advancedTypes": {
@@ -188,16 +216,56 @@
       "beforeAfter": "Before / After"
     },
     "utilities": [
-      { "name": "Partial<T>", "desc": "Make all properties optional", "category": "object" },
-      { "name": "Required<T>", "desc": "Make all properties required", "category": "object" },
-      { "name": "Readonly<T>", "desc": "Make all properties readonly", "category": "object" },
-      { "name": "Pick<T, K>", "desc": "Select specific properties", "category": "pick" },
-      { "name": "Omit<T, K>", "desc": "Exclude specific properties", "category": "pick" },
-      { "name": "Record<K, V>", "desc": "Create key-value mapping", "category": "record" },
-      { "name": "Extract<T, U>", "desc": "Extract types assignable to U from T", "category": "set" },
-      { "name": "Exclude<T, U>", "desc": "Exclude types assignable to U from T", "category": "set" },
-      { "name": "ReturnType<T>", "desc": "Extract function return type", "category": "function" },
-      { "name": "Parameters<T>", "desc": "Extract function parameter types", "category": "function" }
+      {
+        "name": "Partial<T>",
+        "desc": "Make all properties optional",
+        "category": "object"
+      },
+      {
+        "name": "Required<T>",
+        "desc": "Make all properties required",
+        "category": "object"
+      },
+      {
+        "name": "Readonly<T>",
+        "desc": "Make all properties readonly",
+        "category": "object"
+      },
+      {
+        "name": "Pick<T, K>",
+        "desc": "Select specific properties",
+        "category": "pick"
+      },
+      {
+        "name": "Omit<T, K>",
+        "desc": "Exclude specific properties",
+        "category": "pick"
+      },
+      {
+        "name": "Record<K, V>",
+        "desc": "Create key-value mapping",
+        "category": "record"
+      },
+      {
+        "name": "Extract<T, U>",
+        "desc": "Extract types assignable to U from T",
+        "category": "set"
+      },
+      {
+        "name": "Exclude<T, U>",
+        "desc": "Exclude types assignable to U from T",
+        "category": "set"
+      },
+      {
+        "name": "ReturnType<T>",
+        "desc": "Extract function return type",
+        "category": "function"
+      },
+      {
+        "name": "Parameters<T>",
+        "desc": "Extract function parameter types",
+        "category": "function"
+      }
     ]
   },
   "conditionalTypes": {

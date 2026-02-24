@@ -27,7 +27,10 @@ export const MiddlewareSection = () => {
               <MiddlewareVisualizer />
             </div>
 
-            <InfoBox variant="purple" title={t('middleware.understanding.flow.title')}>
+            <InfoBox
+              variant="purple"
+              title={t('middleware.understanding.flow.title')}
+            >
               <p className="text-sm text-gray-700">
                 {t('middleware.understanding.flow.description')}
               </p>
@@ -41,7 +44,10 @@ export const MiddlewareSection = () => {
               {t('middleware.thunk.description')}
             </p>
 
-            <InfoBox variant="blue" title={t('middleware.thunk.howItWorks.title')}>
+            <InfoBox
+              variant="blue"
+              title={t('middleware.thunk.howItWorks.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>{t('middleware.thunk.howItWorks.normalActions')}</li>
                 <li>{t('middleware.thunk.howItWorks.thunks')}</li>
@@ -75,7 +81,10 @@ store.dispatch(fetchUser(123));`}
               className="text-xs"
             />
 
-            <InfoBox variant="gray" title={t('middleware.thunk.prosAndCons.title')}>
+            <InfoBox
+              variant="gray"
+              title={t('middleware.thunk.prosAndCons.title')}
+            >
               <div className="space-y-2 text-sm text-gray-700">
                 <p>{t('middleware.thunk.prosAndCons.pros')}</p>
                 <p>{t('middleware.thunk.prosAndCons.cons')}</p>
@@ -90,7 +99,10 @@ store.dispatch(fetchUser(123));`}
               {t('middleware.saga.description')}
             </p>
 
-            <InfoBox variant="purple" title={t('middleware.saga.keyConcepts.title')}>
+            <InfoBox
+              variant="purple"
+              title={t('middleware.saga.keyConcepts.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>{t('middleware.saga.keyConcepts.generators')}</li>
                 <li>{t('middleware.saga.keyConcepts.effects')}</li>
@@ -123,7 +135,10 @@ function* rootSaga() {
               className="text-xs"
             />
 
-            <InfoBox variant="gray" title={t('middleware.saga.prosAndCons.title')}>
+            <InfoBox
+              variant="gray"
+              title={t('middleware.saga.prosAndCons.title')}
+            >
               <div className="space-y-2 text-sm text-gray-700">
                 <p>{t('middleware.saga.prosAndCons.pros')}</p>
                 <p>{t('middleware.saga.prosAndCons.cons')}</p>
@@ -135,7 +150,10 @@ function* rootSaga() {
         <SubSection title={t('middleware.other.title')} icon iconColor="orange">
           <div className="space-y-4">
             <div className="grid grid-cols-1 gap-4">
-              <InfoBox variant="gray" title={t('middleware.other.observable.title')}>
+              <InfoBox
+                variant="gray"
+                title={t('middleware.other.observable.title')}
+              >
                 <p className="text-sm text-gray-700 mb-2">
                   {t('middleware.other.observable.description')}
                 </p>
@@ -144,7 +162,10 @@ function* rootSaga() {
                 </p>
               </InfoBox>
 
-              <InfoBox variant="gray" title={t('middleware.other.promise.title')}>
+              <InfoBox
+                variant="gray"
+                title={t('middleware.other.promise.title')}
+              >
                 <p className="text-sm text-gray-700 mb-2">
                   {t('middleware.other.promise.description')}
                 </p>

@@ -12,25 +12,36 @@ export const IntegrationTestingSection = () => {
       description={t('integrationTesting.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('integrationTesting.whatIsMSW.title')} icon iconColor="orange">
+        <SubSection
+          title={t('integrationTesting.whatIsMSW.title')}
+          icon
+          iconColor="orange"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('integrationTesting.whatIsMSW.description')}
             </p>
 
-            <InfoBox variant="orange" title={t('integrationTesting.whatIsMSW.whyMSW.title')}>
+            <InfoBox
+              variant="orange"
+              title={t('integrationTesting.whatIsMSW.whyMSW.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>No backend dependency:</strong> {t('integrationTesting.whatIsMSW.whyMSW.noBackend')}
+                  <strong>No backend dependency:</strong>{' '}
+                  {t('integrationTesting.whatIsMSW.whyMSW.noBackend')}
                 </li>
                 <li>
-                  <strong>Realistic scenarios:</strong> {t('integrationTesting.whatIsMSW.whyMSW.realistic')}
+                  <strong>Realistic scenarios:</strong>{' '}
+                  {t('integrationTesting.whatIsMSW.whyMSW.realistic')}
                 </li>
                 <li>
-                  <strong>Deterministic tests:</strong> {t('integrationTesting.whatIsMSW.whyMSW.deterministic')}
+                  <strong>Deterministic tests:</strong>{' '}
+                  {t('integrationTesting.whatIsMSW.whyMSW.deterministic')}
                 </li>
                 <li>
-                  <strong>Fast execution:</strong> {t('integrationTesting.whatIsMSW.whyMSW.fast')}
+                  <strong>Fast execution:</strong>{' '}
+                  {t('integrationTesting.whatIsMSW.whyMSW.fast')}
                 </li>
               </ul>
             </InfoBox>
@@ -43,7 +54,11 @@ export const IntegrationTestingSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('integrationTesting.setup.title')} icon iconColor="blue">
+        <SubSection
+          title={t('integrationTesting.setup.title')}
+          icon
+          iconColor="blue"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('integrationTesting.setup.description')}
@@ -133,7 +148,11 @@ test('displays loading state then todos', async () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('integrationTesting.errorScenarios.title')} icon iconColor="red">
+        <SubSection
+          title={t('integrationTesting.errorScenarios.title')}
+          icon
+          iconColor="red"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('integrationTesting.errorScenarios.description')}
@@ -200,7 +219,11 @@ test('displays error message when API fails', async () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('integrationTesting.delays.title')} icon iconColor="purple">
+        <SubSection
+          title={t('integrationTesting.delays.title')}
+          icon
+          iconColor="purple"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('integrationTesting.delays.description')}
@@ -242,22 +265,32 @@ test('shows loading spinner during slow requests', async () => {
           iconColor="blue"
         >
           <div className="space-y-4">
-            <InfoBox variant="blue" title={t('integrationTesting.bestPractices.guidelines.title')}>
+            <InfoBox
+              variant="blue"
+              title={t('integrationTesting.bestPractices.guidelines.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Test the happy path:</strong> {t('integrationTesting.bestPractices.guidelines.happyPath')}
+                  <strong>Test the happy path:</strong>{' '}
+                  {t('integrationTesting.bestPractices.guidelines.happyPath')}
                 </li>
                 <li>
-                  <strong>Test error cases:</strong> {t('integrationTesting.bestPractices.guidelines.errorCases')}
+                  <strong>Test error cases:</strong>{' '}
+                  {t('integrationTesting.bestPractices.guidelines.errorCases')}
                 </li>
                 <li>
-                  <strong>Test edge cases:</strong> {t('integrationTesting.bestPractices.guidelines.edgeCases')}
+                  <strong>Test edge cases:</strong>{' '}
+                  {t('integrationTesting.bestPractices.guidelines.edgeCases')}
                 </li>
                 <li>
-                  <strong>Use MSW:</strong> {t('integrationTesting.bestPractices.guidelines.useMSW')}
+                  <strong>Use MSW:</strong>{' '}
+                  {t('integrationTesting.bestPractices.guidelines.useMSW')}
                 </li>
                 <li>
-                  <strong>Don't mock components:</strong> {t('integrationTesting.bestPractices.guidelines.dontMockComponents')}
+                  <strong>Don't mock components:</strong>{' '}
+                  {t(
+                    'integrationTesting.bestPractices.guidelines.dontMockComponents',
+                  )}
                 </li>
               </ul>
             </InfoBox>

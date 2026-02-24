@@ -28,16 +28,24 @@ export const UnitTestingSection = () => {
             >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Don't test state:</strong> {t('unitTesting.philosophy.corePhilosophy.dontTestState')}
+                  <strong>Don't test state:</strong>{' '}
+                  {t('unitTesting.philosophy.corePhilosophy.dontTestState')}
                 </li>
                 <li>
-                  <strong>Don't test implementation:</strong> {t('unitTesting.philosophy.corePhilosophy.dontTestImplementation')}
+                  <strong>Don't test implementation:</strong>{' '}
+                  {t(
+                    'unitTesting.philosophy.corePhilosophy.dontTestImplementation',
+                  )}
                 </li>
                 <li>
-                  <strong>Test what users see:</strong> {t('unitTesting.philosophy.corePhilosophy.testWhatUsersSee')}
+                  <strong>Test what users see:</strong>{' '}
+                  {t('unitTesting.philosophy.corePhilosophy.testWhatUsersSee')}
                 </li>
                 <li>
-                  <strong>Simulate user interactions:</strong> {t('unitTesting.philosophy.corePhilosophy.simulateUserInteractions')}
+                  <strong>Simulate user interactions:</strong>{' '}
+                  {t(
+                    'unitTesting.philosophy.corePhilosophy.simulateUserInteractions',
+                  )}
                 </li>
               </ul>
             </InfoBox>
@@ -69,7 +77,11 @@ await userEvent.click(button);`}
           </div>
         </SubSection>
 
-        <SubSection title={t('unitTesting.queries.title')} icon iconColor="blue">
+        <SubSection
+          title={t('unitTesting.queries.title')}
+          icon
+          iconColor="blue"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('unitTesting.queries.description')}
@@ -129,7 +141,11 @@ test('renders button with correct text', () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('unitTesting.userInteractions.title')} icon iconColor="blue">
+        <SubSection
+          title={t('unitTesting.userInteractions.title')}
+          icon
+          iconColor="blue"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('unitTesting.userInteractions.description')}
@@ -155,20 +171,29 @@ test('increments counter on button click', async () => {
               className="text-xs"
             />
 
-            <InfoBox variant="blue" title={t('unitTesting.userInteractions.comparison.title')}>
+            <InfoBox
+              variant="blue"
+              title={t('unitTesting.userInteractions.comparison.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>userEvent:</strong> {t('unitTesting.userInteractions.comparison.userEvent')}
+                  <strong>userEvent:</strong>{' '}
+                  {t('unitTesting.userInteractions.comparison.userEvent')}
                 </li>
                 <li>
-                  <strong>fireEvent:</strong> {t('unitTesting.userInteractions.comparison.fireEvent')}
+                  <strong>fireEvent:</strong>{' '}
+                  {t('unitTesting.userInteractions.comparison.fireEvent')}
                 </li>
               </ul>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title={t('unitTesting.asyncTesting.title')} icon iconColor="purple">
+        <SubSection
+          title={t('unitTesting.asyncTesting.title')}
+          icon
+          iconColor="purple"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('unitTesting.asyncTesting.description')}
@@ -200,20 +225,27 @@ test('shows error message on failed request', async () => {
               </p>
               <ol className="list-decimal pl-5 space-y-1 text-sm text-gray-700">
                 <li>
-                  <strong>getBy*:</strong> {t('unitTesting.asyncTesting.queryPriority.getBy')}
+                  <strong>getBy*:</strong>{' '}
+                  {t('unitTesting.asyncTesting.queryPriority.getBy')}
                 </li>
                 <li>
-                  <strong>findBy*:</strong> {t('unitTesting.asyncTesting.queryPriority.findBy')}
+                  <strong>findBy*:</strong>{' '}
+                  {t('unitTesting.asyncTesting.queryPriority.findBy')}
                 </li>
                 <li>
-                  <strong>queryBy*:</strong> {t('unitTesting.asyncTesting.queryPriority.queryBy')}
+                  <strong>queryBy*:</strong>{' '}
+                  {t('unitTesting.asyncTesting.queryPriority.queryBy')}
                 </li>
               </ol>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title={t('unitTesting.formExample.title')} icon iconColor="blue">
+        <SubSection
+          title={t('unitTesting.formExample.title')}
+          icon
+          iconColor="blue"
+        >
           <div className="space-y-4">
             <CodeBlock
               code={`import { render, screen, waitFor } from '@testing-library/react';

@@ -21,16 +21,20 @@ export const E2ETestingSection = () => {
             <InfoBox variant="red" title={t('e2e.whatIsE2E.useCases.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Critical user journeys:</strong> {t('e2e.whatIsE2E.useCases.criticalJourneys')}
+                  <strong>Critical user journeys:</strong>{' '}
+                  {t('e2e.whatIsE2E.useCases.criticalJourneys')}
                 </li>
                 <li>
-                  <strong>Cross-browser compatibility:</strong> {t('e2e.whatIsE2E.useCases.crossBrowser')}
+                  <strong>Cross-browser compatibility:</strong>{' '}
+                  {t('e2e.whatIsE2E.useCases.crossBrowser')}
                 </li>
                 <li>
-                  <strong>Visual regression:</strong> {t('e2e.whatIsE2E.useCases.visualRegression')}
+                  <strong>Visual regression:</strong>{' '}
+                  {t('e2e.whatIsE2E.useCases.visualRegression')}
                 </li>
                 <li>
-                  <strong>Real-world scenarios:</strong> {t('e2e.whatIsE2E.useCases.realWorld')}
+                  <strong>Real-world scenarios:</strong>{' '}
+                  {t('e2e.whatIsE2E.useCases.realWorld')}
                 </li>
               </ul>
             </InfoBox>
@@ -46,11 +50,7 @@ export const E2ETestingSection = () => {
           </div>
         </SubSection>
 
-        <SubSection
-          title={t('e2e.playwright.title')}
-          icon
-          iconColor="blue"
-        >
+        <SubSection title={t('e2e.playwright.title')} icon iconColor="blue">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('e2e.playwright.description')}
@@ -62,13 +62,16 @@ export const E2ETestingSection = () => {
                   <strong>⚡ Fast:</strong> {t('e2e.playwright.strengths.fast')}
                 </li>
                 <li>
-                  <strong>🌐 Cross-browser:</strong> {t('e2e.playwright.strengths.crossBrowser')}
+                  <strong>🌐 Cross-browser:</strong>{' '}
+                  {t('e2e.playwright.strengths.crossBrowser')}
                 </li>
                 <li>
-                  <strong>CI-friendly:</strong> {t('e2e.playwright.strengths.ciFriendly')}
+                  <strong>CI-friendly:</strong>{' '}
+                  {t('e2e.playwright.strengths.ciFriendly')}
                 </li>
                 <li>
-                  <strong>Developer experience:</strong> {t('e2e.playwright.strengths.dx')}
+                  <strong>Developer experience:</strong>{' '}
+                  {t('e2e.playwright.strengths.dx')}
                 </li>
               </ul>
             </InfoBox>
@@ -103,11 +106,7 @@ test('user can login and see dashboard', async ({ page }) => {
           </div>
         </SubSection>
 
-        <SubSection
-          title={t('e2e.cypress.title')}
-          icon
-          iconColor="green"
-        >
+        <SubSection title={t('e2e.cypress.title')} icon iconColor="green">
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('e2e.cypress.description')}
@@ -116,16 +115,20 @@ test('user can login and see dashboard', async ({ page }) => {
             <InfoBox variant="green" title={t('e2e.cypress.strengths.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>🎨 Best DX:</strong> {t('e2e.cypress.strengths.bestDX')}
+                  <strong>🎨 Best DX:</strong>{' '}
+                  {t('e2e.cypress.strengths.bestDX')}
                 </li>
                 <li>
-                  <strong>📹 Recording:</strong> {t('e2e.cypress.strengths.recording')}
+                  <strong>📹 Recording:</strong>{' '}
+                  {t('e2e.cypress.strengths.recording')}
                 </li>
                 <li>
-                  <strong>⏱️ Debugging:</strong> {t('e2e.cypress.strengths.debugging')}
+                  <strong>⏱️ Debugging:</strong>{' '}
+                  {t('e2e.cypress.strengths.debugging')}
                 </li>
                 <li>
-                  <strong>📊 Dashboard:</strong> {t('e2e.cypress.strengths.dashboard')}
+                  <strong>📊 Dashboard:</strong>{' '}
+                  {t('e2e.cypress.strengths.dashboard')}
                 </li>
               </ul>
             </InfoBox>
@@ -133,10 +136,12 @@ test('user can login and see dashboard', async ({ page }) => {
             <InfoBox variant="red" title={t('e2e.cypress.limitations.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Single browser:</strong> {t('e2e.cypress.limitations.singleBrowser')}
+                  <strong>Single browser:</strong>{' '}
+                  {t('e2e.cypress.limitations.singleBrowser')}
                 </li>
                 <li>
-                  <strong>JavaScript only:</strong> {t('e2e.cypress.limitations.jsOnly')}
+                  <strong>JavaScript only:</strong>{' '}
+                  {t('e2e.cypress.limitations.jsOnly')}
                 </li>
               </ul>
             </InfoBox>
@@ -184,8 +189,12 @@ describe('Login Flow', () => {
                     <td className="px-4 py-2 font-medium text-gray-700">
                       {t('e2e.comparison.speed')}
                     </td>
-                    <td className="px-4 py-2 text-gray-600">⚡ {t('e2e.comparison.veryFast')}</td>
-                    <td className="px-4 py-2 text-gray-600">🟡 {t('e2e.comparison.moderate')}</td>
+                    <td className="px-4 py-2 text-gray-600">
+                      ⚡ {t('e2e.comparison.veryFast')}
+                    </td>
+                    <td className="px-4 py-2 text-gray-600">
+                      🟡 {t('e2e.comparison.moderate')}
+                    </td>
                   </tr>
                   <tr className="border-b border-gray-200 hover:bg-gray-50">
                     <td className="px-4 py-2 font-medium text-gray-700">
@@ -199,23 +208,37 @@ describe('Login Flow', () => {
                     </td>
                   </tr>
                   <tr className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="px-4 py-2 font-medium text-gray-700">{t('e2e.comparison.dx')}</td>
-                    <td className="px-4 py-2 text-gray-600">{t('e2e.comparison.good')}</td>
-                    <td className="px-4 py-2 text-gray-600">🌟 {t('e2e.comparison.excellent')}</td>
+                    <td className="px-4 py-2 font-medium text-gray-700">
+                      {t('e2e.comparison.dx')}
+                    </td>
+                    <td className="px-4 py-2 text-gray-600">
+                      {t('e2e.comparison.good')}
+                    </td>
+                    <td className="px-4 py-2 text-gray-600">
+                      🌟 {t('e2e.comparison.excellent')}
+                    </td>
                   </tr>
                   <tr className="border-b border-gray-200 hover:bg-gray-50">
                     <td className="px-4 py-2 font-medium text-gray-700">
                       {t('e2e.comparison.ciSetup')}
                     </td>
-                    <td className="px-4 py-2 text-gray-600">✅ {t('e2e.comparison.easy')}</td>
-                    <td className="px-4 py-2 text-gray-600">🟡 {t('e2e.comparison.moderate')}</td>
+                    <td className="px-4 py-2 text-gray-600">
+                      ✅ {t('e2e.comparison.easy')}
+                    </td>
+                    <td className="px-4 py-2 text-gray-600">
+                      🟡 {t('e2e.comparison.moderate')}
+                    </td>
                   </tr>
                   <tr className="border-b border-gray-200 hover:bg-gray-50">
                     <td className="px-4 py-2 font-medium text-gray-700">
                       {t('e2e.comparison.learningCurve')}
                     </td>
-                    <td className="px-4 py-2 text-gray-600">{t('e2e.comparison.moderateCurve')}</td>
-                    <td className="px-4 py-2 text-gray-600">🟢 {t('e2e.comparison.easyCurve')}</td>
+                    <td className="px-4 py-2 text-gray-600">
+                      {t('e2e.comparison.moderateCurve')}
+                    </td>
+                    <td className="px-4 py-2 text-gray-600">
+                      🟢 {t('e2e.comparison.easyCurve')}
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -225,22 +248,30 @@ describe('Login Flow', () => {
 
         <SubSection title={t('e2e.bestPractices.title')} icon iconColor="blue">
           <div className="space-y-4">
-            <InfoBox variant="blue" title={t('e2e.bestPractices.guidelines.title')}>
+            <InfoBox
+              variant="blue"
+              title={t('e2e.bestPractices.guidelines.title')}
+            >
               <ol className="list-decimal pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Test critical user paths:</strong> {t('e2e.bestPractices.guidelines.criticalPaths')}
+                  <strong>Test critical user paths:</strong>{' '}
+                  {t('e2e.bestPractices.guidelines.criticalPaths')}
                 </li>
                 <li>
-                  <strong>Avoid testing details:</strong> {t('e2e.bestPractices.guidelines.avoidDetails')}
+                  <strong>Avoid testing details:</strong>{' '}
+                  {t('e2e.bestPractices.guidelines.avoidDetails')}
                 </li>
                 <li>
-                  <strong>Use meaningful waits:</strong> {t('e2e.bestPractices.guidelines.meaningfulWaits')}
+                  <strong>Use meaningful waits:</strong>{' '}
+                  {t('e2e.bestPractices.guidelines.meaningfulWaits')}
                 </li>
                 <li>
-                  <strong>Keep tests isolated:</strong> {t('e2e.bestPractices.guidelines.keepIsolated')}
+                  <strong>Keep tests isolated:</strong>{' '}
+                  {t('e2e.bestPractices.guidelines.keepIsolated')}
                 </li>
                 <li>
-                  <strong>Use test data carefully:</strong> {t('e2e.bestPractices.guidelines.testData')}
+                  <strong>Use test data carefully:</strong>{' '}
+                  {t('e2e.bestPractices.guidelines.testData')}
                 </li>
               </ol>
             </InfoBox>
@@ -279,9 +310,7 @@ test('form has email input field', async ({ page }) => {
 
         <SubSection title={t('e2e.ci.title')} icon iconColor="orange">
           <div className="space-y-4">
-            <p className="text-sm text-gray-700">
-              {t('e2e.ci.description')}
-            </p>
+            <p className="text-sm text-gray-700">{t('e2e.ci.description')}</p>
 
             <CodeBlock
               code={`# .github/workflows/e2e-tests.yml

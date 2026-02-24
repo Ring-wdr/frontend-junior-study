@@ -1,5 +1,5 @@
+import { Check, Clock, Cpu, Globe, Shield, X, Zap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Cpu, Zap, Shield, Globe, Clock, Check, X } from 'lucide-react';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
@@ -16,8 +16,12 @@ export const WasmIntroSection = () => {
   const { t } = useTranslation('week18');
   const concepts = t('wasmIntro.concepts', { returnObjects: true }) as any[];
   const timeline = t('wasmIntro.timeline', { returnObjects: true }) as any[];
-  const suitable = t('wasmIntro.useCases.suitable', { returnObjects: true }) as string[];
-  const unsuitable = t('wasmIntro.useCases.unsuitable', { returnObjects: true }) as string[];
+  const suitable = t('wasmIntro.useCases.suitable', {
+    returnObjects: true,
+  }) as string[];
+  const unsuitable = t('wasmIntro.useCases.unsuitable', {
+    returnObjects: true,
+  }) as string[];
 
   return (
     <SectionCard
@@ -26,10 +30,16 @@ export const WasmIntroSection = () => {
       description={t('wasmIntro.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('wasmIntro.conceptsTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('wasmIntro.conceptsTitle')}
+          icon
+          iconColor="purple"
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {concepts.map((concept: any) => {
-              const IconComponent = conceptIconMap[concept.icon as keyof typeof conceptIconMap] || Cpu;
+              const IconComponent =
+                conceptIconMap[concept.icon as keyof typeof conceptIconMap] ||
+                Cpu;
               return (
                 <div
                   key={concept.title}
@@ -37,7 +47,9 @@ export const WasmIntroSection = () => {
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <IconComponent className="w-5 h-5 text-purple-600" />
-                    <h4 className="font-bold text-sm text-purple-800">{concept.title}</h4>
+                    <h4 className="font-bold text-sm text-purple-800">
+                      {concept.title}
+                    </h4>
                   </div>
                   <p className="text-xs text-gray-600">{concept.desc}</p>
                 </div>
@@ -53,7 +65,9 @@ export const WasmIntroSection = () => {
                 <div key={idx} className="flex items-start gap-3">
                   <div className="flex items-center gap-2 min-w-[80px]">
                     <Clock className="w-4 h-4 text-blue-500" />
-                    <span className="text-xs font-bold text-blue-700">{item.year}</span>
+                    <span className="text-xs font-bold text-blue-700">
+                      {item.year}
+                    </span>
                   </div>
                   <span className="text-xs text-gray-700">{item.event}</span>
                 </div>
@@ -62,10 +76,16 @@ export const WasmIntroSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('wasmIntro.comparisonTitle')} icon iconColor="green">
+        <SubSection
+          title={t('wasmIntro.comparisonTitle')}
+          icon
+          iconColor="green"
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-gray-100 p-4 rounded-lg border border-gray-200">
-              <h4 className="font-bold text-sm text-gray-700 mb-2">JavaScript</h4>
+              <h4 className="font-bold text-sm text-gray-700 mb-2">
+                JavaScript
+              </h4>
               <CodeBlock
                 code={`function fibonacci(n) {
   if (n <= 1) return n;
@@ -79,7 +99,9 @@ console.timeEnd("JS"); // ~1000ms+`}
               />
             </div>
             <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
-              <h4 className="font-bold text-sm text-orange-700 mb-2">C → WebAssembly</h4>
+              <h4 className="font-bold text-sm text-orange-700 mb-2">
+                C → WebAssembly
+              </h4>
               <CodeBlock
                 code={`int fibonacci(int n) {
   if (n <= 1) return n;
@@ -96,7 +118,11 @@ console.timeEnd("JS"); // ~1000ms+`}
           </p>
         </SubSection>
 
-        <SubSection title={t('wasmIntro.whenToUseTitle')} icon iconColor="orange">
+        <SubSection
+          title={t('wasmIntro.whenToUseTitle')}
+          icon
+          iconColor="orange"
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-green-50 p-4 rounded-lg border border-green-200">
               <h4 className="font-bold text-sm text-green-700 mb-2 flex items-center gap-2">
@@ -105,7 +131,10 @@ console.timeEnd("JS"); // ~1000ms+`}
               </h4>
               <ul className="space-y-1">
                 {suitable.map((item: string) => (
-                  <li key={item} className="flex items-center gap-2 text-xs text-green-700">
+                  <li
+                    key={item}
+                    className="flex items-center gap-2 text-xs text-green-700"
+                  >
                     <span className="w-1.5 h-1.5 bg-green-500 rounded-full" />
                     {item}
                   </li>
@@ -119,7 +148,10 @@ console.timeEnd("JS"); // ~1000ms+`}
               </h4>
               <ul className="space-y-1">
                 {unsuitable.map((item: string) => (
-                  <li key={item} className="flex items-center gap-2 text-xs text-red-700">
+                  <li
+                    key={item}
+                    className="flex items-center gap-2 text-xs text-red-700"
+                  >
                     <span className="w-1.5 h-1.5 bg-red-500 rounded-full" />
                     {item}
                   </li>

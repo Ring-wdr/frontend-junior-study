@@ -12,7 +12,11 @@ export const MockingBestPracticesSection = () => {
       description={t('bestPractices.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('bestPractices.mockTypes.title')} icon iconColor="purple">
+        <SubSection
+          title={t('bestPractices.mockTypes.title')}
+          icon
+          iconColor="purple"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('bestPractices.mockTypes.description')}
@@ -48,26 +52,37 @@ spy.mockRestore();`}
               className="text-xs"
             />
 
-            <InfoBox variant="purple" title={t('bestPractices.mockTypes.summary.title')}>
+            <InfoBox
+              variant="purple"
+              title={t('bestPractices.mockTypes.summary.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>vi.fn():</strong> {t('bestPractices.mockTypes.summary.fn')}
+                  <strong>vi.fn():</strong>{' '}
+                  {t('bestPractices.mockTypes.summary.fn')}
                 </li>
                 <li>
-                  <strong>vi.mock():</strong> {t('bestPractices.mockTypes.summary.mock')}
+                  <strong>vi.mock():</strong>{' '}
+                  {t('bestPractices.mockTypes.summary.mock')}
                 </li>
                 <li>
-                  <strong>vi.spyOn():</strong> {t('bestPractices.mockTypes.summary.spy')}
+                  <strong>vi.spyOn():</strong>{' '}
+                  {t('bestPractices.mockTypes.summary.spy')}
                 </li>
                 <li>
-                  <strong>MSW:</strong> {t('bestPractices.mockTypes.summary.msw')}
+                  <strong>MSW:</strong>{' '}
+                  {t('bestPractices.mockTypes.summary.msw')}
                 </li>
               </ul>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title={t('bestPractices.whenToMock.title')} icon iconColor="blue">
+        <SubSection
+          title={t('bestPractices.whenToMock.title')}
+          icon
+          iconColor="blue"
+        >
           <div className="space-y-4">
             <div className="bg-green-50 p-4 rounded-lg border border-green-200 mb-4">
               <p className="text-sm font-semibold text-gray-800 mb-2">
@@ -88,16 +103,28 @@ spy.mockRestore();`}
               </p>
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
                 <li>{t('bestPractices.whenToMock.dontMockList.ownCode')}</li>
-                <li>{t('bestPractices.whenToMock.dontMockList.businessLogic')}</li>
-                <li>{t('bestPractices.whenToMock.dontMockList.reactComponents')}</li>
-                <li>{t('bestPractices.whenToMock.dontMockList.simpleUtils')}</li>
-                <li>{t('bestPractices.whenToMock.dontMockList.unrealistic')}</li>
+                <li>
+                  {t('bestPractices.whenToMock.dontMockList.businessLogic')}
+                </li>
+                <li>
+                  {t('bestPractices.whenToMock.dontMockList.reactComponents')}
+                </li>
+                <li>
+                  {t('bestPractices.whenToMock.dontMockList.simpleUtils')}
+                </li>
+                <li>
+                  {t('bestPractices.whenToMock.dontMockList.unrealistic')}
+                </li>
               </ul>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title={t('bestPractices.antipatterns.title')} icon iconColor="red">
+        <SubSection
+          title={t('bestPractices.antipatterns.title')}
+          icon
+          iconColor="red"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('bestPractices.antipatterns.description')}
@@ -202,24 +229,42 @@ test('updates after action', async () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('bestPractices.mockingBestPractices.title')} icon iconColor="green">
+        <SubSection
+          title={t('bestPractices.mockingBestPractices.title')}
+          icon
+          iconColor="green"
+        >
           <div className="space-y-4">
-            <InfoBox variant="green" title={t('bestPractices.mockingBestPractices.goldenRules.title')}>
+            <InfoBox
+              variant="green"
+              title={t('bestPractices.mockingBestPractices.goldenRules.title')}
+            >
               <ol className="list-decimal pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Mock at the boundary:</strong> {t('bestPractices.mockingBestPractices.goldenRules.boundary')}
+                  <strong>Mock at the boundary:</strong>{' '}
+                  {t('bestPractices.mockingBestPractices.goldenRules.boundary')}
                 </li>
                 <li>
-                  <strong>Keep mocks simple:</strong> {t('bestPractices.mockingBestPractices.goldenRules.keepSimple')}
+                  <strong>Keep mocks simple:</strong>{' '}
+                  {t(
+                    'bestPractices.mockingBestPractices.goldenRules.keepSimple',
+                  )}
                 </li>
                 <li>
-                  <strong>Use MSW for HTTP:</strong> {t('bestPractices.mockingBestPractices.goldenRules.useMSW')}
+                  <strong>Use MSW for HTTP:</strong>{' '}
+                  {t('bestPractices.mockingBestPractices.goldenRules.useMSW')}
                 </li>
                 <li>
-                  <strong>Test behavior, not implementation:</strong> {t('bestPractices.mockingBestPractices.goldenRules.testBehavior')}
+                  <strong>Test behavior, not implementation:</strong>{' '}
+                  {t(
+                    'bestPractices.mockingBestPractices.goldenRules.testBehavior',
+                  )}
                 </li>
                 <li>
-                  <strong>Reset mocks between tests:</strong> {t('bestPractices.mockingBestPractices.goldenRules.resetMocks')}
+                  <strong>Reset mocks between tests:</strong>{' '}
+                  {t(
+                    'bestPractices.mockingBestPractices.goldenRules.resetMocks',
+                  )}
                 </li>
               </ol>
             </InfoBox>
@@ -260,7 +305,11 @@ describe('UserProfile', () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('bestPractices.commonScenarios.title')} icon iconColor="blue">
+        <SubSection
+          title={t('bestPractices.commonScenarios.title')}
+          icon
+          iconColor="blue"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('bestPractices.commonScenarios.description')}
@@ -319,22 +368,40 @@ test('shows notification after delay', async () => {
           iconColor="purple"
         >
           <div className="space-y-4">
-            <InfoBox variant="purple" title={t('bestPractices.testOrganization.keepMaintainable.title')}>
+            <InfoBox
+              variant="purple"
+              title={t('bestPractices.testOrganization.keepMaintainable.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>One concept per test:</strong> {t('bestPractices.testOrganization.keepMaintainable.oneConcept')}
+                  <strong>One concept per test:</strong>{' '}
+                  {t(
+                    'bestPractices.testOrganization.keepMaintainable.oneConcept',
+                  )}
                 </li>
                 <li>
-                  <strong>Clear test names:</strong> {t('bestPractices.testOrganization.keepMaintainable.clearNames')}
+                  <strong>Clear test names:</strong>{' '}
+                  {t(
+                    'bestPractices.testOrganization.keepMaintainable.clearNames',
+                  )}
                 </li>
                 <li>
-                  <strong>Arrange-Act-Assert pattern:</strong> {t('bestPractices.testOrganization.keepMaintainable.arrangeActAssert')}
+                  <strong>Arrange-Act-Assert pattern:</strong>{' '}
+                  {t(
+                    'bestPractices.testOrganization.keepMaintainable.arrangeActAssert',
+                  )}
                 </li>
                 <li>
-                  <strong>Reusable test utilities:</strong> {t('bestPractices.testOrganization.keepMaintainable.reusableUtils')}
+                  <strong>Reusable test utilities:</strong>{' '}
+                  {t(
+                    'bestPractices.testOrganization.keepMaintainable.reusableUtils',
+                  )}
                 </li>
                 <li>
-                  <strong>Run tests frequently:</strong> {t('bestPractices.testOrganization.keepMaintainable.runFrequently')}
+                  <strong>Run tests frequently:</strong>{' '}
+                  {t(
+                    'bestPractices.testOrganization.keepMaintainable.runFrequently',
+                  )}
                 </li>
               </ul>
             </InfoBox>
@@ -362,7 +429,11 @@ describe('TodoForm', () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('bestPractices.strategy.title')} icon iconColor="orange">
+        <SubSection
+          title={t('bestPractices.strategy.title')}
+          icon
+          iconColor="orange"
+        >
           <div className="space-y-4">
             <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg border border-purple-200">
               <p className="text-sm font-semibold text-gray-800 mb-3">
@@ -370,19 +441,24 @@ describe('TodoForm', () => {
               </p>
               <ul className="space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>60-70% Unit Tests:</strong> {t('bestPractices.strategy.unitTests')}
+                  <strong>60-70% Unit Tests:</strong>{' '}
+                  {t('bestPractices.strategy.unitTests')}
                 </li>
                 <li>
-                  <strong>20-30% Integration Tests:</strong> {t('bestPractices.strategy.integrationTests')}
+                  <strong>20-30% Integration Tests:</strong>{' '}
+                  {t('bestPractices.strategy.integrationTests')}
                 </li>
                 <li>
-                  <strong>5-10% E2E Tests:</strong> {t('bestPractices.strategy.e2eTests')}
+                  <strong>5-10% E2E Tests:</strong>{' '}
+                  {t('bestPractices.strategy.e2eTests')}
                 </li>
                 <li>
-                  <strong>Mock strategically:</strong> {t('bestPractices.strategy.mockStrategically')}
+                  <strong>Mock strategically:</strong>{' '}
+                  {t('bestPractices.strategy.mockStrategically')}
                 </li>
                 <li>
-                  <strong>Test behavior:</strong> {t('bestPractices.strategy.testBehavior')}
+                  <strong>Test behavior:</strong>{' '}
+                  {t('bestPractices.strategy.testBehavior')}
                 </li>
               </ul>
             </div>

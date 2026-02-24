@@ -49,8 +49,15 @@ export const PrivacySection = () => {
       description={t('privacy.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('privacy.dataMinimization.title')} icon iconColor="blue">
-          <InfoBox variant="blue" title={t('privacy.dataMinimization.infoTitle')}>
+        <SubSection
+          title={t('privacy.dataMinimization.title')}
+          icon
+          iconColor="blue"
+        >
+          <InfoBox
+            variant="blue"
+            title={t('privacy.dataMinimization.infoTitle')}
+          >
             <p className="text-sm leading-relaxed">
               {t('privacy.dataMinimization.infoDescription')}
             </p>
@@ -63,12 +70,18 @@ export const PrivacySection = () => {
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('privacy.cookieConsent.title')} icon iconColor="blue">
+        <SubSection
+          title={t('privacy.cookieConsent.title')}
+          icon
+          iconColor="blue"
+        >
           <DemoBox label={t('privacy.cookieConsent.demoLabel')}>
             <div className="space-y-4">
               <div className="bg-gray-800 text-white p-4 rounded-lg shadow-xl relative overflow-hidden">
                 <div className="relative z-10">
-                  <h4 className="font-bold mb-2">{t('privacy.cookieConsent.bannerTitle')}</h4>
+                  <h4 className="font-bold mb-2">
+                    {t('privacy.cookieConsent.bannerTitle')}
+                  </h4>
                   <p className="text-sm text-gray-300 mb-4">
                     {t('privacy.cookieConsent.bannerDescription')}
                   </p>
@@ -81,7 +94,9 @@ export const PrivacySection = () => {
                         disabled
                         className="accent-blue-500"
                       />
-                      <span className="text-xs">{t('privacy.cookieConsent.essential')}</span>
+                      <span className="text-xs">
+                        {t('privacy.cookieConsent.essential')}
+                      </span>
                     </div>
                     <div className="flex items-center gap-2 bg-gray-700 px-3 py-1 rounded">
                       <input
@@ -89,11 +104,15 @@ export const PrivacySection = () => {
                         defaultChecked
                         className="accent-blue-500"
                       />
-                      <span className="text-xs">{t('privacy.cookieConsent.analytics')}</span>
+                      <span className="text-xs">
+                        {t('privacy.cookieConsent.analytics')}
+                      </span>
                     </div>
                     <div className="flex items-center gap-2 bg-gray-700 px-3 py-1 rounded">
                       <input type="checkbox" className="accent-blue-500" />
-                      <span className="text-xs">{t('privacy.cookieConsent.marketing')}</span>
+                      <span className="text-xs">
+                        {t('privacy.cookieConsent.marketing')}
+                      </span>
                     </div>
                   </div>
 
@@ -121,11 +140,7 @@ export const PrivacySection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection
-          title={t('privacy.password.title')}
-          icon
-          iconColor="green"
-        >
+        <SubSection title={t('privacy.password.title')} icon iconColor="green">
           <DemoBox label={t('privacy.password.demoLabel')}>
             <div className="space-y-4">
               <div>
@@ -228,8 +243,15 @@ async function logout() {
           />
         </SubSection>
 
-        <SubSection title={t('privacy.sessionTimeout.title')} icon iconColor="orange">
-          <InfoBox variant="orange" title={t('privacy.sessionTimeout.infoTitle')}>
+        <SubSection
+          title={t('privacy.sessionTimeout.title')}
+          icon
+          iconColor="orange"
+        >
+          <InfoBox
+            variant="orange"
+            title={t('privacy.sessionTimeout.infoTitle')}
+          >
             <p className="text-sm leading-relaxed">
               {t('privacy.sessionTimeout.infoDescription')}
             </p>
@@ -349,7 +371,11 @@ function TwoFactorInput({ onComplete }) {
           />
         </SubSection>
 
-        <SubSection title={t('privacy.compliance.title')} icon iconColor="green">
+        <SubSection
+          title={t('privacy.compliance.title')}
+          icon
+          iconColor="green"
+        >
           <div className="space-y-2">
             {[
               {

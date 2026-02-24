@@ -16,8 +16,14 @@ export const AdvancedTypesSection = () => {
       description={t('advancedTypes.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('advancedTypes.unionTitle')} icon iconColor="purple">
-          <p className="text-sm text-gray-600 mb-4">{t('advancedTypes.unionDesc')}</p>
+        <SubSection
+          title={t('advancedTypes.unionTitle')}
+          icon
+          iconColor="purple"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('advancedTypes.unionDesc')}
+          </p>
           <CodeBlock
             code={`// 기본 유니온
 type StringOrNumber = string | number;
@@ -41,8 +47,14 @@ function handleResponse(res: ApiResponse<User>) {
           />
         </SubSection>
 
-        <SubSection title={t('advancedTypes.intersectionTitle')} icon iconColor="blue">
-          <p className="text-sm text-gray-600 mb-4">{t('advancedTypes.intersectionDesc')}</p>
+        <SubSection
+          title={t('advancedTypes.intersectionTitle')}
+          icon
+          iconColor="blue"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('advancedTypes.intersectionDesc')}
+          </p>
           <CodeBlock
             code={`interface HasName {
   name: string;
@@ -64,14 +76,24 @@ const person: Person = {
           />
         </SubSection>
 
-        <SubSection title="Union & Intersection Visualizer" icon iconColor="purple">
+        <SubSection
+          title="Union & Intersection Visualizer"
+          icon
+          iconColor="purple"
+        >
           <DemoBox label={t('advancedTypes.visualizer.title')}>
             <TypeSetVisualizer />
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('advancedTypes.literalTitle')} icon iconColor="pink">
-          <p className="text-sm text-gray-600 mb-4">{t('advancedTypes.literalDesc')}</p>
+        <SubSection
+          title={t('advancedTypes.literalTitle')}
+          icon
+          iconColor="pink"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('advancedTypes.literalDesc')}
+          </p>
           <CodeBlock
             code={`// 문자열 리터럴
 type Direction = "up" | "down" | "left" | "right";
@@ -92,10 +114,19 @@ const config = {
           />
         </SubSection>
 
-        <SubSection title={t('advancedTypes.narrowingTitle')} icon iconColor="green">
-          <p className="text-sm text-gray-600 mb-4">{t('advancedTypes.narrowingDesc')}</p>
+        <SubSection
+          title={t('advancedTypes.narrowingTitle')}
+          icon
+          iconColor="green"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('advancedTypes.narrowingDesc')}
+          </p>
 
-          <InfoBox variant="green" title={t('advancedTypes.narrowingInfoTitle')}>
+          <InfoBox
+            variant="green"
+            title={t('advancedTypes.narrowingInfoTitle')}
+          >
             <p className="text-sm leading-relaxed">
               {t('advancedTypes.narrowingInfoDesc')}
             </p>
@@ -126,8 +157,14 @@ function move(animal: Fish | Bird) {
           />
         </SubSection>
 
-        <SubSection title={t('advancedTypes.assertionTitle')} icon iconColor="orange">
-          <p className="text-sm text-gray-600 mb-4">{t('advancedTypes.assertionDesc')}</p>
+        <SubSection
+          title={t('advancedTypes.assertionTitle')}
+          icon
+          iconColor="orange"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('advancedTypes.assertionDesc')}
+          </p>
           <CodeBlock
             code={`// as 키워드
 const input = document.getElementById("myInput") as HTMLInputElement;

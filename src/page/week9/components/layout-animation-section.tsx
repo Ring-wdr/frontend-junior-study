@@ -31,7 +31,11 @@ export const LayoutAnimationSection = () => {
         <SubSection title={t('layout.magic.title')} icon iconColor="pink">
           <InfoBox variant="purple" title={t('layout.magic.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              <Trans t={t} i18nKey="layout.magic.content" components={{ code: <code /> }} />
+              <Trans
+                t={t}
+                i18nKey="layout.magic.content"
+                components={{ code: <code /> }}
+              />
             </p>
           </InfoBox>
 
@@ -71,7 +75,11 @@ export const LayoutAnimationSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('layout.listReordering.title')} icon iconColor="green">
+        <SubSection
+          title={t('layout.listReordering.title')}
+          icon
+          iconColor="green"
+        >
           <CodeBlock
             code={`// Each item needs layout prop
 {items.map((item) => (
@@ -124,7 +132,11 @@ export const LayoutAnimationSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('layout.gridListToggle.title')} icon iconColor="purple">
+        <SubSection
+          title={t('layout.gridListToggle.title')}
+          icon
+          iconColor="purple"
+        >
           <DemoBox label={t('layout.gridListToggle.demoLabel')}>
             <div className="space-y-4">
               <button
@@ -132,7 +144,10 @@ export const LayoutAnimationSection = () => {
                 onClick={() => setIsGrid(!isGrid)}
                 className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
               >
-                {t('layout.gridListToggle.switchTo')} {isGrid ? t('layout.gridListToggle.list') : t('layout.gridListToggle.grid')}
+                {t('layout.gridListToggle.switchTo')}{' '}
+                {isGrid
+                  ? t('layout.gridListToggle.list')
+                  : t('layout.gridListToggle.grid')}
               </button>
 
               <motion.div
@@ -155,10 +170,16 @@ export const LayoutAnimationSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('layout.layoutPropOptions.title')} icon iconColor="orange">
+        <SubSection
+          title={t('layout.layoutPropOptions.title')}
+          icon
+          iconColor="orange"
+        >
           <div className="grid grid-cols-1 gap-3">
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
-              <p className="text-sm font-semibold text-orange-900">{t('layout.layoutPropOptions.layout')}</p>
+              <p className="text-sm font-semibold text-orange-900">
+                {t('layout.layoutPropOptions.layout')}
+              </p>
               <p className="text-xs text-orange-700 mt-1">
                 {t('layout.layoutPropOptions.layoutDesc')}
               </p>

@@ -1,5 +1,5 @@
+import { Camera, Grid3x3, Package, Sun, Type } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Camera, Sun, Grid3x3, Type, Package } from 'lucide-react';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
@@ -159,7 +159,9 @@ function MultipleRobots() {
   );
 }`;
 
-  const categories = t('dreiUtilities.categories', { returnObjects: true }) as any[];
+  const categories = t('dreiUtilities.categories', {
+    returnObjects: true,
+  }) as any[];
 
   return (
     <SectionCard
@@ -173,7 +175,10 @@ function MultipleRobots() {
             const icons = [Camera, Sun, Grid3x3, Type, Package];
             const IconComponent = icons[idx] || Package;
             return (
-              <div key={cat.name} className="bg-indigo-50 p-3 rounded-lg text-center border border-indigo-200">
+              <div
+                key={cat.name}
+                className="bg-indigo-50 p-3 rounded-lg text-center border border-indigo-200"
+              >
                 <IconComponent className="w-5 h-5 mx-auto text-indigo-600 mb-1" />
                 <span className="text-xs font-bold block">{cat.name}</span>
                 <span className="text-xs text-gray-600">{cat.desc}</span>
@@ -182,7 +187,11 @@ function MultipleRobots() {
           })}
         </div>
 
-        <SubSection title={t('dreiUtilities.cameraTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('dreiUtilities.cameraTitle')}
+          icon
+          iconColor="purple"
+        >
           <CodeBlock
             code={cameraControlsCode}
             language="tsx"
@@ -190,7 +199,11 @@ function MultipleRobots() {
           />
         </SubSection>
 
-        <SubSection title={t('dreiUtilities.environmentTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('dreiUtilities.environmentTitle')}
+          icon
+          iconColor="blue"
+        >
           <CodeBlock
             code={environmentCode}
             language="tsx"
@@ -201,28 +214,28 @@ function MultipleRobots() {
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('dreiUtilities.helpersTitle')} icon iconColor="green">
-          <CodeBlock
-            code={helpersCode}
-            language="tsx"
-            className="text-xs"
-          />
+        <SubSection
+          title={t('dreiUtilities.helpersTitle')}
+          icon
+          iconColor="green"
+        >
+          <CodeBlock code={helpersCode} language="tsx" className="text-xs" />
         </SubSection>
 
-        <SubSection title={t('dreiUtilities.textTitle')} icon iconColor="purple">
-          <CodeBlock
-            code={textCode}
-            language="tsx"
-            className="text-xs"
-          />
+        <SubSection
+          title={t('dreiUtilities.textTitle')}
+          icon
+          iconColor="purple"
+        >
+          <CodeBlock code={textCode} language="tsx" className="text-xs" />
         </SubSection>
 
-        <SubSection title={t('dreiUtilities.modelTitle')} icon iconColor="orange">
-          <CodeBlock
-            code={modelCode}
-            language="tsx"
-            className="text-xs"
-          />
+        <SubSection
+          title={t('dreiUtilities.modelTitle')}
+          icon
+          iconColor="orange"
+        >
+          <CodeBlock code={modelCode} language="tsx" className="text-xs" />
         </SubSection>
 
         <InfoBox variant="purple" title={t('dreiUtilities.tipTitle')}>

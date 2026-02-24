@@ -19,7 +19,11 @@ export const BundlingSection = () => {
       description={t('bundling.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('bundling.comparisonTitle')} icon iconColor="orange">
+        <SubSection
+          title={t('bundling.comparisonTitle')}
+          icon
+          iconColor="orange"
+        >
           <DemoBox label={t('bundling.comparisonLabel')}>
             <div className="space-y-4">
               <div className="flex gap-2 flex-wrap">
@@ -42,7 +46,9 @@ export const BundlingSection = () => {
               <div className="bg-white p-4 rounded-lg border border-gray-200">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <span className="text-3xl">{bundlers[selectedTool].icon}</span>
+                    <span className="text-3xl">
+                      {bundlers[selectedTool].icon}
+                    </span>
                     <h4 className="font-bold text-gray-900">
                       {bundlers[selectedTool].name}
                     </h4>
@@ -53,7 +59,9 @@ export const BundlingSection = () => {
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="bg-green-50 p-3 rounded">
-                    <h5 className="font-bold text-green-700 text-sm mb-2">{t('bundling.prosLabel')}</h5>
+                    <h5 className="font-bold text-green-700 text-sm mb-2">
+                      {t('bundling.prosLabel')}
+                    </h5>
                     <ul className="text-xs text-green-800 space-y-1">
                       {bundlers[selectedTool].pros.map((pro: string) => (
                         <li key={pro}>✓ {pro}</li>
@@ -61,7 +69,9 @@ export const BundlingSection = () => {
                     </ul>
                   </div>
                   <div className="bg-red-50 p-3 rounded">
-                    <h5 className="font-bold text-red-700 text-sm mb-2">{t('bundling.consLabel')}</h5>
+                    <h5 className="font-bold text-red-700 text-sm mb-2">
+                      {t('bundling.consLabel')}
+                    </h5>
                     <ul className="text-xs text-red-800 space-y-1">
                       {bundlers[selectedTool].cons.map((con: string) => (
                         <li key={con}>✗ {con}</li>
@@ -76,12 +86,16 @@ export const BundlingSection = () => {
 
         <SubSection title={t('bundling.webpackTitle')} icon iconColor="blue">
           <div className="grid grid-cols-2 gap-3">
-            {(t('bundling.webpackConcepts', { returnObjects: true }) as any[]).map((item: any) => (
+            {(
+              t('bundling.webpackConcepts', { returnObjects: true }) as any[]
+            ).map((item: any) => (
               <div
                 key={item.concept}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200"
               >
-                <h5 className="font-bold text-sm text-blue-600">{item.concept}</h5>
+                <h5 className="font-bold text-sm text-blue-600">
+                  {item.concept}
+                </h5>
                 <p className="text-xs text-gray-500 mb-1">{item.desc}</p>
                 <code className="text-[10px] text-gray-600 bg-white px-1.5 py-0.5 rounded">
                   {item.example}
@@ -125,20 +139,30 @@ module.exports = {
 
           <div className="mt-4 space-y-3">
             <div className="bg-white p-4 rounded-lg border border-gray-200">
-              <h5 className="font-bold text-sm text-gray-900 mb-3">{t('bundling.viteDiffTitle')}</h5>
+              <h5 className="font-bold text-sm text-gray-900 mb-3">
+                {t('bundling.viteDiffTitle')}
+              </h5>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <h6 className="font-medium text-gray-700 mb-2">{t('bundling.viteDiffWebpack')}</h6>
+                  <h6 className="font-medium text-gray-700 mb-2">
+                    {t('bundling.viteDiffWebpack')}
+                  </h6>
                   <div className="bg-orange-50 p-2 rounded text-xs">
                     <code>{t('bundling.viteDiffWebpackCode')}</code>
-                    <p className="text-orange-600 mt-1">{t('bundling.viteDiffWebpackNote')}</p>
+                    <p className="text-orange-600 mt-1">
+                      {t('bundling.viteDiffWebpackNote')}
+                    </p>
                   </div>
                 </div>
                 <div>
-                  <h6 className="font-medium text-gray-700 mb-2">{t('bundling.viteDiffVite')}</h6>
+                  <h6 className="font-medium text-gray-700 mb-2">
+                    {t('bundling.viteDiffVite')}
+                  </h6>
                   <div className="bg-green-50 p-2 rounded text-xs">
                     <code>{t('bundling.viteDiffViteCode')}</code>
-                    <p className="text-green-600 mt-1">{t('bundling.viteDiffViteNote')}</p>
+                    <p className="text-green-600 mt-1">
+                      {t('bundling.viteDiffViteNote')}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -169,13 +193,17 @@ export default defineConfig({
 
         <SubSection title={t('bundling.conceptsTitle')} icon iconColor="purple">
           <div className="space-y-3">
-            {(t('bundling.buildConcepts', { returnObjects: true }) as any[]).map((item: any) => (
+            {(
+              t('bundling.buildConcepts', { returnObjects: true }) as any[]
+            ).map((item: any) => (
               <div
                 key={item.term}
                 className="bg-gradient-to-r from-purple-50 to-blue-50 p-3 rounded-lg border border-purple-100"
               >
                 <div className="flex items-center justify-between mb-1">
-                  <h5 className="font-bold text-sm text-purple-700">{item.term}</h5>
+                  <h5 className="font-bold text-sm text-purple-700">
+                    {item.term}
+                  </h5>
                 </div>
                 <p className="text-xs text-gray-600 mb-1">{item.desc}</p>
                 <p className="text-[10px] text-purple-500">💡 {item.tip}</p>

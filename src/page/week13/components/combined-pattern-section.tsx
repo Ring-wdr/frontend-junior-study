@@ -34,7 +34,11 @@ export const CombinedPatternSection = () => {
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('combined.architecture.title')} icon iconColor="purple">
+        <SubSection
+          title={t('combined.architecture.title')}
+          icon
+          iconColor="purple"
+        >
           <DemoBox label={t('combined.architecture.label')}>
             <div className="bg-white p-6 rounded-lg">
               <div className="flex flex-col gap-4">
@@ -60,12 +64,16 @@ export const CombinedPatternSection = () => {
                 <div className="flex justify-center gap-8">
                   <div className="flex flex-col items-center">
                     <div className="w-0.5 h-4 bg-green-400" />
-                    <span className="text-xs text-gray-500">{t('combined.architecture.postMessage')}</span>
+                    <span className="text-xs text-gray-500">
+                      {t('combined.architecture.postMessage')}
+                    </span>
                     <div className="w-0.5 h-4 bg-green-400" />
                   </div>
                   <div className="flex flex-col items-center">
                     <div className="w-0.5 h-4 bg-purple-400" />
-                    <span className="text-xs text-gray-500">{t('combined.architecture.fetchEvents')}</span>
+                    <span className="text-xs text-gray-500">
+                      {t('combined.architecture.fetchEvents')}
+                    </span>
                     <div className="w-0.5 h-4 bg-purple-400" />
                   </div>
                 </div>
@@ -125,7 +133,11 @@ export const CombinedPatternSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('combined.realWorldExamples.title')} icon iconColor="green">
+        <SubSection
+          title={t('combined.realWorldExamples.title')}
+          icon
+          iconColor="green"
+        >
           <div className="grid grid-cols-1 gap-3">
             {[
               {
@@ -166,7 +178,10 @@ export const CombinedPatternSection = () => {
                 </div>
                 <ul className="space-y-1">
                   {example.features.map((feature, idx) => (
-                    <li key={idx} className="text-xs text-gray-600 flex items-start gap-2">
+                    <li
+                      key={idx}
+                      className="text-xs text-gray-600 flex items-start gap-2"
+                    >
                       <span className="text-green-500 mt-0.5">✓</span>
                       {feature}
                     </li>
@@ -177,7 +192,11 @@ export const CombinedPatternSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('combined.imageProcessing.title')} icon iconColor="orange">
+        <SubSection
+          title={t('combined.imageProcessing.title')}
+          icon
+          iconColor="orange"
+        >
           <CodeBlock
             code={`// Main thread: Coordinate everything
 class ImageProcessor {
@@ -252,7 +271,11 @@ self.onmessage = async (e) => {
           />
         </SubSection>
 
-        <SubSection title={t('combined.serviceWorkerIntegration.title')} icon iconColor="red">
+        <SubSection
+          title={t('combined.serviceWorkerIntegration.title')}
+          icon
+          iconColor="red"
+        >
           <CodeBlock
             code={`// sw.js - Service Worker for the combined app
 import { precacheAndRoute } from 'workbox-precaching';
@@ -316,9 +339,16 @@ async function syncPendingImages() {
           />
         </SubSection>
 
-        <SubSection title={t('combined.bestPractices.title')} icon iconColor="purple">
+        <SubSection
+          title={t('combined.bestPractices.title')}
+          icon
+          iconColor="purple"
+        >
           <div className="space-y-3">
-            <InfoBox variant="blue" title={t('combined.bestPractices.communication')}>
+            <InfoBox
+              variant="blue"
+              title={t('combined.bestPractices.communication')}
+            >
               <ul className="text-sm space-y-1">
                 <li>{t('combined.bestPractices.communicationItem1')}</li>
                 <li>{t('combined.bestPractices.communicationItem2')}</li>
@@ -326,7 +356,10 @@ async function syncPendingImages() {
               </ul>
             </InfoBox>
 
-            <InfoBox variant="green" title={t('combined.bestPractices.storage')}>
+            <InfoBox
+              variant="green"
+              title={t('combined.bestPractices.storage')}
+            >
               <ul className="text-sm space-y-1">
                 <li>{t('combined.bestPractices.storageItem1')}</li>
                 <li>{t('combined.bestPractices.storageItem2')}</li>
@@ -334,7 +367,10 @@ async function syncPendingImages() {
               </ul>
             </InfoBox>
 
-            <InfoBox variant="purple" title={t('combined.bestPractices.errorHandling')}>
+            <InfoBox
+              variant="purple"
+              title={t('combined.bestPractices.errorHandling')}
+            >
               <ul className="text-sm space-y-1">
                 <li>{t('combined.bestPractices.errorHandlingItem1')}</li>
                 <li>{t('combined.bestPractices.errorHandlingItem2')}</li>
@@ -346,9 +382,7 @@ async function syncPendingImages() {
 
         <SubSection title={t('combined.comlink.title')} icon iconColor="blue">
           <InfoBox variant="gray" title={t('combined.comlink.infoTitle')}>
-            <p className="text-sm mb-2">
-              {t('combined.comlink.description')}
-            </p>
+            <p className="text-sm mb-2">{t('combined.comlink.description')}</p>
           </InfoBox>
 
           <CodeBlock

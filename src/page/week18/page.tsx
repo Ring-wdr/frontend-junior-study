@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { cn } from '../../lib/utils';
+import { AdvancedFeaturesSection } from './components/advanced-features-section';
+import { DebuggingSecuritySection } from './components/debugging-security-section';
+import { DevEnvironmentSection } from './components/dev-environment-section';
+import { OptimizationSection } from './components/optimization-section';
+import { RustWasmSection } from './components/rust-wasm-section';
+import { UseCasesSection } from './components/use-cases-section';
 import { WasmIntroSection } from './components/wasm-intro-section';
 import { WasmMechanicsSection } from './components/wasm-mechanics-section';
-import { DevEnvironmentSection } from './components/dev-environment-section';
-import { RustWasmSection } from './components/rust-wasm-section';
-import { AdvancedFeaturesSection } from './components/advanced-features-section';
-import { UseCasesSection } from './components/use-cases-section';
-import { OptimizationSection } from './components/optimization-section';
-import { DebuggingSecuritySection } from './components/debugging-security-section';
 
 const tabs = [
   'all',

@@ -1,5 +1,13 @@
+import {
+  AlertTriangle,
+  Bug,
+  Check,
+  Lock,
+  Shield,
+  TestTube,
+  X,
+} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Bug, TestTube, Shield, AlertTriangle, Lock, Check, X } from 'lucide-react';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
@@ -7,7 +15,9 @@ import { CodeBlock } from '../../../components/ui/code-block';
 
 export const DebuggingSecuritySection = () => {
   const { t } = useTranslation('week18');
-  const securityPoints = t('debuggingSecurity.securityPoints', { returnObjects: true }) as string[];
+  const securityPoints = t('debuggingSecurity.securityPoints', {
+    returnObjects: true,
+  }) as string[];
 
   return (
     <SectionCard
@@ -16,11 +26,17 @@ export const DebuggingSecuritySection = () => {
       description={t('debuggingSecurity.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('debuggingSecurity.sourcemapTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('debuggingSecurity.sourcemapTitle')}
+          icon
+          iconColor="blue"
+        >
           <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
             <div className="flex items-center gap-2 mb-3">
               <Bug className="w-4 h-4 text-blue-600" />
-              <span className="text-sm font-bold text-blue-700">{t('debuggingSecurity.debugBuild')}</span>
+              <span className="text-sm font-bold text-blue-700">
+                {t('debuggingSecurity.debugBuild')}
+              </span>
             </div>
             <CodeBlock
               code={`# Emscripten 디버그 빌드
@@ -39,7 +55,11 @@ wasm-pack build --dev
           </div>
         </SubSection>
 
-        <SubSection title={t('debuggingSecurity.consoleTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('debuggingSecurity.consoleTitle')}
+          icon
+          iconColor="purple"
+        >
           <CodeBlock
             code={`use wasm_bindgen::prelude::*;
 
@@ -67,12 +87,18 @@ pub fn debug_function(value: i32) {
           />
         </SubSection>
 
-        <SubSection title={t('debuggingSecurity.testingTitle')} icon iconColor="green">
+        <SubSection
+          title={t('debuggingSecurity.testingTitle')}
+          icon
+          iconColor="green"
+        >
           <div className="space-y-4">
             <div className="bg-green-50 p-4 rounded-lg border border-green-200">
               <div className="flex items-center gap-2 mb-3">
                 <TestTube className="w-4 h-4 text-green-600" />
-                <span className="text-sm font-bold text-green-700">Rust {t('debuggingSecurity.unitTest')}</span>
+                <span className="text-sm font-bold text-green-700">
+                  Rust {t('debuggingSecurity.unitTest')}
+                </span>
               </div>
               <CodeBlock
                 code={`#[cfg(test)]
@@ -127,15 +153,24 @@ describe("Wasm Module", () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('debuggingSecurity.sandboxTitle')} icon iconColor="orange">
+        <SubSection
+          title={t('debuggingSecurity.sandboxTitle')}
+          icon
+          iconColor="orange"
+        >
           <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
             <div className="flex items-center gap-2 mb-3">
               <Shield className="w-4 h-4 text-orange-600" />
-              <span className="text-sm font-bold text-orange-700">{t('debuggingSecurity.wasmSandbox')}</span>
+              <span className="text-sm font-bold text-orange-700">
+                {t('debuggingSecurity.wasmSandbox')}
+              </span>
             </div>
             <ul className="space-y-2">
               {securityPoints.map((point: string, idx: number) => (
-                <li key={idx} className="flex items-start gap-2 text-xs text-gray-700">
+                <li
+                  key={idx}
+                  className="flex items-start gap-2 text-xs text-gray-700"
+                >
                   <Lock className="w-3 h-3 text-orange-500 mt-0.5 flex-shrink-0" />
                   {point}
                 </li>
@@ -144,7 +179,11 @@ describe("Wasm Module", () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('debuggingSecurity.securityTipsTitle')} icon iconColor="red">
+        <SubSection
+          title={t('debuggingSecurity.securityTipsTitle')}
+          icon
+          iconColor="red"
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-red-50 p-4 rounded-lg border border-red-200">
               <h4 className="font-bold text-sm text-red-700 mb-2 flex items-center gap-2">
@@ -189,7 +228,11 @@ if (!response.url.startsWith(
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('debuggingSecurity.rustSafetyTitle')} icon iconColor="green">
+        <SubSection
+          title={t('debuggingSecurity.rustSafetyTitle')}
+          icon
+          iconColor="green"
+        >
           <div className="bg-green-50 p-4 rounded-lg border border-green-200">
             <p className="text-xs text-gray-600 mb-3">
               {t('debuggingSecurity.rustSafetyDesc')}
@@ -213,9 +256,7 @@ pub fn safe_function(data: &[u8]) {
           </div>
 
           <InfoBox variant="blue" title={t('debuggingSecurity.finalNote')}>
-            <p className="text-sm">
-              {t('debuggingSecurity.finalNoteDesc')}
-            </p>
+            <p className="text-sm">{t('debuggingSecurity.finalNoteDesc')}</p>
           </InfoBox>
         </SubSection>
       </div>

@@ -21,7 +21,11 @@ export const StructuralPatternsSection = () => {
       description={t('structural.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('structural.decorator.title')} icon iconColor="purple">
+        <SubSection
+          title={t('structural.decorator.title')}
+          icon
+          iconColor="purple"
+        >
           <div className="grid grid-cols-1 gap-6">
             <div>
               <p className="text-sm text-gray-700 mb-4">
@@ -32,8 +36,13 @@ export const StructuralPatternsSection = () => {
               </DemoBox>
             </div>
             <div className="space-y-4">
-              <h5 className="text-sm font-medium text-gray-900">{t('structural.decorator.concept.title')}</h5>
-              <div className="bg-indigo-50 p-3 rounded text-sm text-indigo-900" style={{ whiteSpace: 'pre-line' }}>
+              <h5 className="text-sm font-medium text-gray-900">
+                {t('structural.decorator.concept.title')}
+              </h5>
+              <div
+                className="bg-indigo-50 p-3 rounded text-sm text-indigo-900"
+                style={{ whiteSpace: 'pre-line' }}
+              >
                 {t('structural.decorator.concept.description')}
               </div>
               <CodeBlock

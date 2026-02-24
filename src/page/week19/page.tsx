@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { cn } from '../../lib/utils';
-import { R3fIntroSection } from './components/r3f-intro-section';
-import { DevSetupSection } from './components/dev-setup-section';
+import { AdvancedTechniquesSection } from './components/advanced-techniques-section';
 import { CoreConceptsSection } from './components/core-concepts-section';
-import { HooksAnimationSection } from './components/hooks-animation-section';
+import { DevSetupSection } from './components/dev-setup-section';
 import { DreiUtilitiesSection } from './components/drei-utilities-section';
+import { HooksAnimationSection } from './components/hooks-animation-section';
 import { InteractionSection } from './components/interaction-section';
 import { PerformanceSection } from './components/performance-section';
-import { AdvancedTechniquesSection } from './components/advanced-techniques-section';
+import { R3fIntroSection } from './components/r3f-intro-section';
 
 const tabs = [
   'all',

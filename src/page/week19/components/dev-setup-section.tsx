@@ -1,5 +1,5 @@
+import { FolderTree, Play, Terminal } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Terminal, FolderTree, Play } from 'lucide-react';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
@@ -75,35 +75,43 @@ export default function App() {
         <SubSection title={t('devSetup.installTitle')} icon iconColor="blue">
           <div className="flex items-center gap-2 mb-3">
             <Terminal className="w-4 h-4 text-blue-600" />
-            <span className="text-sm font-medium text-blue-700">{t('devSetup.installSteps')}</span>
+            <span className="text-sm font-medium text-blue-700">
+              {t('devSetup.installSteps')}
+            </span>
           </div>
-          <CodeBlock
-            code={installCode}
-            language="bash"
-            className="text-xs"
-          />
+          <CodeBlock code={installCode} language="bash" className="text-xs" />
         </SubSection>
 
-        <SubSection title={t('devSetup.structureTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('devSetup.structureTitle')}
+          icon
+          iconColor="purple"
+        >
           <div className="flex items-center gap-2 mb-3">
             <FolderTree className="w-4 h-4 text-purple-600" />
-            <span className="text-sm font-medium text-purple-700">{t('devSetup.recommendedStructure')}</span>
+            <span className="text-sm font-medium text-purple-700">
+              {t('devSetup.recommendedStructure')}
+            </span>
           </div>
           <div className="bg-gray-900 p-4 rounded-lg">
-            <pre className="text-xs text-green-400 font-mono">{structureCode}</pre>
+            <pre className="text-xs text-green-400 font-mono">
+              {structureCode}
+            </pre>
           </div>
         </SubSection>
 
-        <SubSection title={t('devSetup.firstSceneTitle')} icon iconColor="green">
+        <SubSection
+          title={t('devSetup.firstSceneTitle')}
+          icon
+          iconColor="green"
+        >
           <div className="flex items-center gap-2 mb-3">
             <Play className="w-4 h-4 text-green-600" />
-            <span className="text-sm font-medium text-green-700">{t('devSetup.basicExample')}</span>
+            <span className="text-sm font-medium text-green-700">
+              {t('devSetup.basicExample')}
+            </span>
           </div>
-          <CodeBlock
-            code={firstSceneCode}
-            language="tsx"
-            className="text-xs"
-          />
+          <CodeBlock code={firstSceneCode} language="tsx" className="text-xs" />
         </SubSection>
 
         <InfoBox variant="green" title={t('devSetup.tipTitle')}>

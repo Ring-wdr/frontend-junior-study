@@ -149,7 +149,11 @@ self.addEventListener('fetch', (event) => {
           <DemoBox label="Lifecycle Visualization">
             <div className="flex items-center justify-between gap-2 overflow-x-auto pb-2">
               {[
-                { step: 'Register', icon: '📝', desc: 'navigator.serviceWorker.register()' },
+                {
+                  step: 'Register',
+                  icon: '📝',
+                  desc: 'navigator.serviceWorker.register()',
+                },
                 { step: 'Install', icon: '📦', desc: 'Pre-cache assets' },
                 { step: 'Activate', icon: '✅', desc: 'Clean old caches' },
                 { step: 'Running', icon: '🏃', desc: 'Handle fetch events' },
@@ -166,9 +170,7 @@ self.addEventListener('fetch', (event) => {
                       {phase.desc}
                     </p>
                   </div>
-                  {idx < 3 && (
-                    <div className="w-8 h-0.5 bg-green-300 mx-1" />
-                  )}
+                  {idx < 3 && <div className="w-8 h-0.5 bg-green-300 mx-1" />}
                 </div>
               ))}
             </div>
@@ -235,10 +237,7 @@ self.addEventListener('fetch', (event) => {
                         {s.use}
                       </span>
                     </div>
-                    <CodeBlock
-                      code={strategyCode[s.id]}
-                      className="text-xs"
-                    />
+                    <CodeBlock code={strategyCode[s.id]} className="text-xs" />
                   </div>
                 ))}
             </div>

@@ -1,5 +1,5 @@
+import { Code, FileText, RefreshCw, Shield } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Shield, Code, FileText, RefreshCw } from 'lucide-react';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -16,8 +16,12 @@ const iconMap = {
 
 export const WhyTypescriptSection = () => {
   const { t } = useTranslation('week16');
-  const benefits = t('whyTypescript.benefits', { returnObjects: true }) as any[];
-  const whenItems = t('whyTypescript.whenItems', { returnObjects: true }) as string[];
+  const benefits = t('whyTypescript.benefits', {
+    returnObjects: true,
+  }) as any[];
+  const whenItems = t('whyTypescript.whenItems', {
+    returnObjects: true,
+  }) as string[];
 
   return (
     <SectionCard
@@ -26,13 +30,21 @@ export const WhyTypescriptSection = () => {
       description={t('whyTypescript.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('whyTypescript.comparisonTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('whyTypescript.comparisonTitle')}
+          icon
+          iconColor="blue"
+        >
           <DemoBox label={t('whyTypescript.comparisonLabel')}>
             <TypeErrorDiscoveryVisualizer />
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('whyTypescript.benefitsTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('whyTypescript.benefitsTitle')}
+          icon
+          iconColor="blue"
+        >
           <InfoBox variant="blue" title={t('whyTypescript.benefitsInfoTitle')}>
             <p className="text-sm leading-relaxed">
               {t('whyTypescript.benefitsInfoDesc')}
@@ -41,15 +53,20 @@ export const WhyTypescriptSection = () => {
 
           <div className="mt-4 grid grid-cols-2 gap-3">
             {benefits.map((benefit: any) => {
-              const IconComponent = iconMap[benefit.icon as keyof typeof iconMap];
+              const IconComponent =
+                iconMap[benefit.icon as keyof typeof iconMap];
               return (
                 <div
                   key={benefit.title}
                   className="bg-gradient-to-br from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-100"
                 >
                   <div className="flex items-center gap-2 mb-2">
-                    {IconComponent && <IconComponent className="w-5 h-5 text-blue-600" />}
-                    <h5 className="font-bold text-sm text-blue-800">{benefit.title}</h5>
+                    {IconComponent && (
+                      <IconComponent className="w-5 h-5 text-blue-600" />
+                    )}
+                    <h5 className="font-bold text-sm text-blue-800">
+                      {benefit.title}
+                    </h5>
                   </div>
                   <p className="text-xs text-gray-600">{benefit.desc}</p>
                 </div>
@@ -62,7 +79,10 @@ export const WhyTypescriptSection = () => {
           <div className="bg-green-50 p-4 rounded-lg border border-green-200">
             <ul className="space-y-2">
               {whenItems.map((item: string) => (
-                <li key={item} className="flex items-center gap-2 text-sm text-green-800">
+                <li
+                  key={item}
+                  className="flex items-center gap-2 text-sm text-green-800"
+                >
                   <span className="w-1.5 h-1.5 bg-green-500 rounded-full" />
                   {item}
                 </li>

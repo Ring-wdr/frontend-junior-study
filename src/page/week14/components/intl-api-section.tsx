@@ -45,7 +45,10 @@ export const IntlApiSection = () => {
     }).format(d);
   };
 
-  const formatRelativeTime = (value: number, unit: Intl.RelativeTimeFormatUnit) => {
+  const formatRelativeTime = (
+    value: number,
+    unit: Intl.RelativeTimeFormatUnit,
+  ) => {
     return new Intl.RelativeTimeFormat(locale, { numeric: 'auto' }).format(
       value,
       unit,
@@ -61,9 +64,7 @@ export const IntlApiSection = () => {
       <div className="space-y-8">
         <SubSection title={t('intl.overview.title')} icon iconColor="green">
           <InfoBox variant="green" title={t('intl.overview.infoTitle')}>
-            <p className="text-sm">
-              {t('intl.overview.infoText')}
-            </p>
+            <p className="text-sm">{t('intl.overview.infoText')}</p>
           </InfoBox>
         </SubSection>
 
@@ -98,7 +99,9 @@ export const IntlApiSection = () => {
                   </h4>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-500">{t('intl.liveDemo.labels.number')}</span>
+                      <span className="text-gray-500">
+                        {t('intl.liveDemo.labels.number')}
+                      </span>
                       <span className="font-mono">{formatNumber(number)}</span>
                     </div>
                     <div className="flex justify-between">
@@ -129,25 +132,33 @@ export const IntlApiSection = () => {
                   </h4>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-500">{t('intl.liveDemo.labels.short')}</span>
+                      <span className="text-gray-500">
+                        {t('intl.liveDemo.labels.short')}
+                      </span>
                       <span className="font-mono">
                         {formatDate(date, 'short')}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500">{t('intl.liveDemo.labels.medium')}</span>
+                      <span className="text-gray-500">
+                        {t('intl.liveDemo.labels.medium')}
+                      </span>
                       <span className="font-mono">
                         {formatDate(date, 'medium')}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500">{t('intl.liveDemo.labels.long')}</span>
+                      <span className="text-gray-500">
+                        {t('intl.liveDemo.labels.long')}
+                      </span>
                       <span className="font-mono text-xs">
                         {formatDate(date, 'long')}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500">{t('intl.liveDemo.labels.time')}</span>
+                      <span className="text-gray-500">
+                        {t('intl.liveDemo.labels.time')}
+                      </span>
                       <span className="font-mono">{formatTime(date)}</span>
                     </div>
                   </div>
@@ -180,7 +191,11 @@ export const IntlApiSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('intl.numberFormat.title')} icon iconColor="purple">
+        <SubSection
+          title={t('intl.numberFormat.title')}
+          icon
+          iconColor="purple"
+        >
           <CodeBlock
             code={`// Basic number formatting
 new Intl.NumberFormat('de-DE').format(1234567.89)
@@ -219,7 +234,11 @@ new Intl.NumberFormat('en-US', {
           />
         </SubSection>
 
-        <SubSection title={t('intl.dateTimeFormat.title')} icon iconColor="orange">
+        <SubSection
+          title={t('intl.dateTimeFormat.title')}
+          icon
+          iconColor="orange"
+        >
           <CodeBlock
             code={`// Date formatting
 new Intl.DateTimeFormat('ko-KR').format(new Date())
@@ -256,7 +275,13 @@ new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
 
         <SubSection title={t('intl.otherApis.title')} icon iconColor="red">
           <div className="space-y-3">
-            {(t('intl.otherApis.apis', { returnObjects: true }) as Array<{ api: string; example: string; result: string }>).map((item) => (
+            {(
+              t('intl.otherApis.apis', { returnObjects: true }) as Array<{
+                api: string;
+                example: string;
+                result: string;
+              }>
+            ).map((item) => (
               <div
                 key={item.api}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200"
@@ -267,7 +292,9 @@ new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
                 <div className="text-xs font-mono text-gray-600 mt-1">
                   {item.example}
                 </div>
-                <div className="text-xs text-green-600 mt-1">→ {item.result}</div>
+                <div className="text-xs text-green-600 mt-1">
+                  → {item.result}
+                </div>
               </div>
             ))}
           </div>

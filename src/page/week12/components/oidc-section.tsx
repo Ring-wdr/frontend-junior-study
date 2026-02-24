@@ -46,7 +46,9 @@ export const OidcSection = () => {
                 </p>
               </div>
               <div className="bg-white p-3 rounded border">
-                <p className="font-semibold text-purple-900 text-sm">{t('oidc.difference.oidc')}</p>
+                <p className="font-semibold text-purple-900 text-sm">
+                  {t('oidc.difference.oidc')}
+                </p>
                 <p className="text-xs text-gray-600 mt-1">
                   {t('oidc.difference.oidcExample')}
                 </p>
@@ -63,7 +65,9 @@ export const OidcSection = () => {
           </InfoBox>
 
           <div className="mt-4 space-y-3">
-            <p className="text-sm font-medium">{t('oidc.idToken.claimsTitle')}</p>
+            <p className="text-sm font-medium">
+              {t('oidc.idToken.claimsTitle')}
+            </p>
             <div className="grid grid-cols-2 gap-2">
               {[
                 { claim: 'sub', desc: t('oidc.idToken.sub') },
@@ -184,9 +188,7 @@ authUrl.searchParams.set('scope', 'openid email profile');
           </div>
 
           <InfoBox variant="gray" className="mt-4">
-            <p className="text-sm">
-              {t('oidc.flowSummary.infoDescription')}
-            </p>
+            <p className="text-sm">{t('oidc.flowSummary.infoDescription')}</p>
           </InfoBox>
         </SubSection>
       </div>

@@ -1,8 +1,8 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
-import { useTranslation } from 'react-i18next';
 
 export const UXDesignSection = () => {
   const { t } = useTranslation('week7');
@@ -14,18 +14,21 @@ export const UXDesignSection = () => {
       description={t('uxDesign.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('uxDesign.errorMessageDesign.title')} icon iconColor="red">
-          <InfoBox variant="red" title={t('uxDesign.errorMessageDesign.commonMistakes.title')}>
+        <SubSection
+          title={t('uxDesign.errorMessageDesign.title')}
+          icon
+          iconColor="red"
+        >
+          <InfoBox
+            variant="red"
+            title={t('uxDesign.errorMessageDesign.commonMistakes.title')}
+          >
             <ul className="list-disc pl-5 space-y-1 text-sm">
-              <li>
-                {t('uxDesign.errorMessageDesign.commonMistakes.generic')}
-              </li>
+              <li>{t('uxDesign.errorMessageDesign.commonMistakes.generic')}</li>
               <li>
                 {t('uxDesign.errorMessageDesign.commonMistakes.tooTechnical')}
               </li>
-              <li>
-                {t('uxDesign.errorMessageDesign.commonMistakes.blaming')}
-              </li>
+              <li>{t('uxDesign.errorMessageDesign.commonMistakes.blaming')}</li>
               <li>
                 {t('uxDesign.errorMessageDesign.commonMistakes.tooEarly')}
               </li>
@@ -97,7 +100,11 @@ const RegistrationForm = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('uxDesign.validationTiming.title')} icon iconColor="orange">
+        <SubSection
+          title={t('uxDesign.validationTiming.title')}
+          icon
+          iconColor="orange"
+        >
           <div className="space-y-3">
             <div className="bg-orange-50 p-4 rounded border border-orange-200">
               <p className="font-semibold text-sm text-orange-900 mb-2">
@@ -136,7 +143,10 @@ const RegistrationForm = () => {
             </div>
           </div>
 
-          <InfoBox variant="blue" title={t('uxDesign.validationTiming.recommendedStrategy.title')}>
+          <InfoBox
+            variant="blue"
+            title={t('uxDesign.validationTiming.recommendedStrategy.title')}
+          >
             <p className="text-sm">
               {t('uxDesign.validationTiming.recommendedStrategy.description')}
             </p>
@@ -204,8 +214,15 @@ const RegistrationForm = () => {
           />
         </SubSection>
 
-        <SubSection title={t('uxDesign.optimisticUI.title')} icon iconColor="purple">
-          <InfoBox variant="purple" title={t('uxDesign.optimisticUI.whatIsOptimistic.title')}>
+        <SubSection
+          title={t('uxDesign.optimisticUI.title')}
+          icon
+          iconColor="purple"
+        >
+          <InfoBox
+            variant="purple"
+            title={t('uxDesign.optimisticUI.whatIsOptimistic.title')}
+          >
             <p className="text-sm">
               {t('uxDesign.optimisticUI.whatIsOptimistic.description')}
             </p>
@@ -324,23 +341,18 @@ const TodoForm = ({ todos, onAdd }) => {
           icon
           iconColor="purple"
         >
-          <InfoBox variant="purple" title={t('uxDesign.a11yBestPractices.requirements.title')}>
+          <InfoBox
+            variant="purple"
+            title={t('uxDesign.a11yBestPractices.requirements.title')}
+          >
             <ul className="list-disc pl-5 space-y-1 text-sm">
-              <li>
-                {t('uxDesign.a11yBestPractices.requirements.labels')}
-              </li>
-              <li>
-                {t('uxDesign.a11yBestPractices.requirements.aria')}
-              </li>
-              <li>
-                {t('uxDesign.a11yBestPractices.requirements.keyboard')}
-              </li>
+              <li>{t('uxDesign.a11yBestPractices.requirements.labels')}</li>
+              <li>{t('uxDesign.a11yBestPractices.requirements.aria')}</li>
+              <li>{t('uxDesign.a11yBestPractices.requirements.keyboard')}</li>
               <li>
                 {t('uxDesign.a11yBestPractices.requirements.screenReaders')}
               </li>
-              <li>
-                {t('uxDesign.a11yBestPractices.requirements.color')}
-              </li>
+              <li>{t('uxDesign.a11yBestPractices.requirements.color')}</li>
             </ul>
           </InfoBox>
 
@@ -390,7 +402,11 @@ const FormSection = ({ title, children }) => (
           />
         </SubSection>
 
-        <SubSection title={t('uxDesign.mobileTouchOptimization.title')} icon iconColor="blue">
+        <SubSection
+          title={t('uxDesign.mobileTouchOptimization.title')}
+          icon
+          iconColor="blue"
+        >
           <CodeBlock
             code={`// Optimize for touch and mobile
 const MobileForm = () => {
@@ -443,11 +459,17 @@ input:focus { font-size: 16px; }
           />
         </SubSection>
 
-        <SubSection title={t('uxDesign.uxChecklist.title')} icon iconColor="green">
+        <SubSection
+          title={t('uxDesign.uxChecklist.title')}
+          icon
+          iconColor="green"
+        >
           <div className="space-y-2">
             <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
               <span className="text-lg">☐</span>
-              <p className="text-sm">{t('uxDesign.uxChecklist.specificErrors')}</p>
+              <p className="text-sm">
+                {t('uxDesign.uxChecklist.specificErrors')}
+              </p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
               <span className="text-lg">☐</span>
@@ -457,11 +479,15 @@ input:focus { font-size: 16px; }
             </div>
             <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
               <span className="text-lg">☐</span>
-              <p className="text-sm">{t('uxDesign.uxChecklist.loadingState')}</p>
+              <p className="text-sm">
+                {t('uxDesign.uxChecklist.loadingState')}
+              </p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
               <span className="text-lg">☐</span>
-              <p className="text-sm">{t('uxDesign.uxChecklist.resetsAfterSubmit')}</p>
+              <p className="text-sm">
+                {t('uxDesign.uxChecklist.resetsAfterSubmit')}
+              </p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
               <span className="text-lg">☐</span>
@@ -483,17 +509,19 @@ input:focus { font-size: 16px; }
             </div>
             <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
               <span className="text-lg">☐</span>
+              <p className="text-sm">{t('uxDesign.uxChecklist.accessible')}</p>
+            </div>
+            <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
+              <span className="text-lg">☐</span>
               <p className="text-sm">
-                {t('uxDesign.uxChecklist.accessible')}
+                {t('uxDesign.uxChecklist.touchTargets')}
               </p>
             </div>
             <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
               <span className="text-lg">☐</span>
-              <p className="text-sm">{t('uxDesign.uxChecklist.touchTargets')}</p>
-            </div>
-            <div className="flex items-start gap-3 p-3 bg-green-50 rounded border border-green-200">
-              <span className="text-lg">☐</span>
-              <p className="text-sm">{t('uxDesign.uxChecklist.worksEverywhere')}</p>
+              <p className="text-sm">
+                {t('uxDesign.uxChecklist.worksEverywhere')}
+              </p>
             </div>
           </div>
         </SubSection>

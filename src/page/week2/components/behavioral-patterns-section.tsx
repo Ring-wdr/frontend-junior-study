@@ -17,7 +17,11 @@ export const BehavioralPatternsSection = () => {
       description={t('behavioral.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('behavioral.observer.title')} icon iconColor="green">
+        <SubSection
+          title={t('behavioral.observer.title')}
+          icon
+          iconColor="green"
+        >
           <div className="grid grid-cols-1 gap-6">
             <div className="space-y-4">
               <div>
@@ -49,13 +53,17 @@ export const BehavioralPatternsSection = () => {
             <StrategyVisualizer />
           </div>
           <div className="bg-gray-50 p-4 rounded-lg">
-            <h4 className="font-semibold text-gray-900 mb-1">{t('behavioral.state.title')}</h4>
+            <h4 className="font-semibold text-gray-900 mb-1">
+              {t('behavioral.state.title')}
+            </h4>
             <p className="text-sm text-gray-700">
               {t('behavioral.state.description')}
             </p>
           </div>
           <div className="bg-gray-50 p-4 rounded-lg">
-            <h4 className="font-semibold text-gray-900 mb-1">{t('behavioral.command.title')}</h4>
+            <h4 className="font-semibold text-gray-900 mb-1">
+              {t('behavioral.command.title')}
+            </h4>
             <p className="text-sm text-gray-700">
               {t('behavioral.command.description')}
             </p>

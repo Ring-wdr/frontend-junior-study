@@ -1,8 +1,8 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
-import { useTranslation } from 'react-i18next';
 
 export const ValidationLibrariesSection = () => {
   const { t } = useTranslation('week7');
@@ -19,23 +19,16 @@ export const ValidationLibrariesSection = () => {
           icon
           iconColor="green"
         >
-          <InfoBox variant="green" title={t('validationLibraries.zod.whyChoose.title')}>
+          <InfoBox
+            variant="green"
+            title={t('validationLibraries.zod.whyChoose.title')}
+          >
             <ul className="list-disc pl-5 space-y-1 text-sm">
-              <li>
-                {t('validationLibraries.zod.whyChoose.tsNative')}
-              </li>
-              <li>
-                {t('validationLibraries.zod.whyChoose.treeShakeable')}
-              </li>
-              <li>
-                {t('validationLibraries.zod.whyChoose.rhfIntegration')}
-              </li>
-              <li>
-                {t('validationLibraries.zod.whyChoose.chainableAPI')}
-              </li>
-              <li>
-                {t('validationLibraries.zod.whyChoose.customValidators')}
-              </li>
+              <li>{t('validationLibraries.zod.whyChoose.tsNative')}</li>
+              <li>{t('validationLibraries.zod.whyChoose.treeShakeable')}</li>
+              <li>{t('validationLibraries.zod.whyChoose.rhfIntegration')}</li>
+              <li>{t('validationLibraries.zod.whyChoose.chainableAPI')}</li>
+              <li>{t('validationLibraries.zod.whyChoose.customValidators')}</li>
             </ul>
           </InfoBox>
 
@@ -105,7 +98,10 @@ const LoginForm = () => {
             />
           </div>
 
-          <InfoBox variant="blue" title={t('validationLibraries.zod.advancedFeatures.title')}>
+          <InfoBox
+            variant="blue"
+            title={t('validationLibraries.zod.advancedFeatures.title')}
+          >
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
                 {t('validationLibraries.zod.advancedFeatures.refinement')}
@@ -114,17 +110,24 @@ const LoginForm = () => {
                 {t('validationLibraries.zod.advancedFeatures.superrefine')}
               </li>
               <li>
-                {t('validationLibraries.zod.advancedFeatures.discriminatedUnions')}
+                {t(
+                  'validationLibraries.zod.advancedFeatures.discriminatedUnions',
+                )}
               </li>
-              <li>
-                {t('validationLibraries.zod.advancedFeatures.transform')}
-              </li>
+              <li>{t('validationLibraries.zod.advancedFeatures.transform')}</li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('validationLibraries.formik.title')} icon iconColor="orange">
-          <InfoBox variant="orange" title={t('validationLibraries.formik.whatIsFormik.title')}>
+        <SubSection
+          title={t('validationLibraries.formik.title')}
+          icon
+          iconColor="orange"
+        >
+          <InfoBox
+            variant="orange"
+            title={t('validationLibraries.formik.whatIsFormik.title')}
+          >
             <p className="text-sm mb-3">
               {t('validationLibraries.formik.whatIsFormik.description')}
             </p>
@@ -205,7 +208,11 @@ const LoginForm = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('validationLibraries.customValidation.title')} icon iconColor="purple">
+        <SubSection
+          title={t('validationLibraries.customValidation.title')}
+          icon
+          iconColor="purple"
+        >
           <CodeBlock
             code={`// Zod Refinement Example
 const passwordSchema = z
@@ -245,17 +252,27 @@ const advancedSchema = z.object({
           />
         </SubSection>
 
-        <SubSection title={t('validationLibraries.whenToUse.title')} icon iconColor="blue">
+        <SubSection
+          title={t('validationLibraries.whenToUse.title')}
+          icon
+          iconColor="blue"
+        >
           <div className="grid grid-cols-1 gap-3">
             <div className="bg-blue-50 p-4 rounded border border-blue-200">
               <p className="font-semibold text-sm mb-2 text-blue-900">
                 {t('validationLibraries.whenToUse.useZodRHF.title')}
               </p>
               <ul className="list-disc pl-5 text-sm space-y-1">
-                <li>{t('validationLibraries.whenToUse.useZodRHF.newProjects')}</li>
+                <li>
+                  {t('validationLibraries.whenToUse.useZodRHF.newProjects')}
+                </li>
                 <li>{t('validationLibraries.whenToUse.useZodRHF.typeSafe')}</li>
-                <li>{t('validationLibraries.whenToUse.useZodRHF.performance')}</li>
-                <li>{t('validationLibraries.whenToUse.useZodRHF.cleanCode')}</li>
+                <li>
+                  {t('validationLibraries.whenToUse.useZodRHF.performance')}
+                </li>
+                <li>
+                  {t('validationLibraries.whenToUse.useZodRHF.cleanCode')}
+                </li>
               </ul>
             </div>
             <div className="bg-orange-50 p-4 rounded border border-orange-200">
@@ -264,9 +281,13 @@ const advancedSchema = z.object({
               </p>
               <ul className="list-disc pl-5 text-sm space-y-1">
                 <li>{t('validationLibraries.whenToUse.useFormik.legacy')}</li>
-                <li>{t('validationLibraries.whenToUse.useFormik.teamFamiliar')}</li>
+                <li>
+                  {t('validationLibraries.whenToUse.useFormik.teamFamiliar')}
+                </li>
                 <li>{t('validationLibraries.whenToUse.useFormik.plugins')}</li>
-                <li>{t('validationLibraries.whenToUse.useFormik.largeCodebase')}</li>
+                <li>
+                  {t('validationLibraries.whenToUse.useFormik.largeCodebase')}
+                </li>
               </ul>
             </div>
           </div>

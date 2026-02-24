@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next';
 import { CheckCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
@@ -7,8 +7,12 @@ import { CodeBlock } from '../../../components/ui/code-block';
 
 export const VerificationSection = () => {
   const { t } = useTranslation('week17');
-  const checklist = t('verification.checklist', { returnObjects: true }) as string[];
-  const guidelines = t('verification.teamGuidelines', { returnObjects: true }) as any;
+  const checklist = t('verification.checklist', {
+    returnObjects: true,
+  }) as string[];
+  const guidelines = t('verification.teamGuidelines', {
+    returnObjects: true,
+  }) as any;
 
   return (
     <SectionCard
@@ -17,7 +21,11 @@ export const VerificationSection = () => {
       description={t('verification.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('verification.autoVerifyTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('verification.autoVerifyTitle')}
+          icon
+          iconColor="blue"
+        >
           <InfoBox variant="blue" title={t('verification.autoVerifyInfoTitle')}>
             <p className="text-sm leading-relaxed">
               {t('verification.autoVerifyInfoDesc')}
@@ -43,7 +51,11 @@ export const VerificationSection = () => {
           />
         </SubSection>
 
-        <SubSection title={t('verification.manualCheckTitle')} icon iconColor="orange">
+        <SubSection
+          title={t('verification.manualCheckTitle')}
+          icon
+          iconColor="orange"
+        >
           <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
             <h4 className="font-bold text-sm text-orange-700 mb-3 flex items-center gap-2">
               <CheckCircle className="w-4 h-4" />
@@ -51,8 +63,14 @@ export const VerificationSection = () => {
             </h4>
             <ul className="space-y-2">
               {checklist.map((item: string) => (
-                <li key={item} className="flex items-start gap-2 text-sm text-orange-800">
-                  <input type="checkbox" className="mt-0.5 rounded border-orange-300" />
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-sm text-orange-800"
+                >
+                  <input
+                    type="checkbox"
+                    className="mt-0.5 rounded border-orange-300"
+                  />
                   {item}
                 </li>
               ))}
@@ -60,7 +78,11 @@ export const VerificationSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('verification.permissionsTitle')} icon iconColor="red">
+        <SubSection
+          title={t('verification.permissionsTitle')}
+          icon
+          iconColor="red"
+        >
           <CodeBlock
             code={`// .claude/settings.json
 {
@@ -89,7 +111,11 @@ export const VerificationSection = () => {
           />
         </SubSection>
 
-        <SubSection title={t('verification.teamGuidelinesTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('verification.teamGuidelinesTitle')}
+          icon
+          iconColor="purple"
+        >
           <div className="space-y-3">
             <div className="bg-green-50 p-4 rounded-lg border border-green-200">
               <h4 className="font-bold text-sm text-green-700 mb-2">
@@ -97,7 +123,10 @@ export const VerificationSection = () => {
               </h4>
               <ul className="space-y-1">
                 {guidelines.allowed.items.map((item: string) => (
-                  <li key={item} className="flex items-center gap-2 text-xs text-green-700">
+                  <li
+                    key={item}
+                    className="flex items-center gap-2 text-xs text-green-700"
+                  >
                     <span className="w-1.5 h-1.5 bg-green-500 rounded-full" />
                     {item}
                   </li>
@@ -111,7 +140,10 @@ export const VerificationSection = () => {
               </h4>
               <ul className="space-y-1">
                 {guidelines.required.items.map((item: string) => (
-                  <li key={item} className="flex items-center gap-2 text-xs text-orange-700">
+                  <li
+                    key={item}
+                    className="flex items-center gap-2 text-xs text-orange-700"
+                  >
                     <span className="w-1.5 h-1.5 bg-orange-500 rounded-full" />
                     {item}
                   </li>
@@ -125,7 +157,10 @@ export const VerificationSection = () => {
               </h4>
               <ul className="space-y-1">
                 {guidelines.prohibited.items.map((item: string) => (
-                  <li key={item} className="flex items-center gap-2 text-xs text-red-700">
+                  <li
+                    key={item}
+                    className="flex items-center gap-2 text-xs text-red-700"
+                  >
                     <span className="w-1.5 h-1.5 bg-red-500 rounded-full" />
                     {item}
                   </li>

@@ -11,8 +11,18 @@ export const ThemeSection = () => {
       description={t('theme.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('theme.cssVariables.title')} icon iconColor="purple">
-          <p className="text-sm text-gray-700 mb-4"><Trans t={t} i18nKey="theme.cssVariables.content" components={{ code: <code /> }} /></p>
+        <SubSection
+          title={t('theme.cssVariables.title')}
+          icon
+          iconColor="purple"
+        >
+          <p className="text-sm text-gray-700 mb-4">
+            <Trans
+              t={t}
+              i18nKey="theme.cssVariables.content"
+              components={{ code: <code /> }}
+            />
+          </p>
 
           <CodeBlock
             code={`/* globals.css */
@@ -35,8 +45,18 @@ body {
           />
         </SubSection>
 
-        <SubSection title={t('theme.tailwindDarkMode.title')} icon iconColor="purple">
-          <p className="text-sm text-gray-700 mb-4"><Trans t={t} i18nKey="theme.tailwindDarkMode.content" components={{ code: <code /> }} /></p>
+        <SubSection
+          title={t('theme.tailwindDarkMode.title')}
+          icon
+          iconColor="purple"
+        >
+          <p className="text-sm text-gray-700 mb-4">
+            <Trans
+              t={t}
+              i18nKey="theme.tailwindDarkMode.content"
+              components={{ code: <code /> }}
+            />
+          </p>
 
           <CodeBlock
             code={`// tailwind.config.js

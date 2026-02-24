@@ -1,5 +1,5 @@
+import { ArrowRight, Cpu, Trash2, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Cpu, Users, Trash2, ArrowRight } from 'lucide-react';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
@@ -15,12 +15,18 @@ export const AdvancedFeaturesSection = () => {
       description={t('advancedFeatures.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('advancedFeatures.simdTitle')} icon iconColor="red">
+        <SubSection
+          title={t('advancedFeatures.simdTitle')}
+          icon
+          iconColor="red"
+        >
           <div className="space-y-4">
             <div className="bg-red-50 p-4 rounded-lg border border-red-200">
               <div className="flex items-center gap-2 mb-2">
                 <Cpu className="w-4 h-4 text-red-600" />
-                <span className="text-sm font-bold text-red-700">{t('advancedFeatures.simdDesc')}</span>
+                <span className="text-sm font-bold text-red-700">
+                  {t('advancedFeatures.simdDesc')}
+                </span>
               </div>
               <p className="text-xs text-gray-600 mb-3">
                 {t('advancedFeatures.simdExplain')}
@@ -60,12 +66,18 @@ console.log("SIMD 지원:", simdSupported);`}
           </div>
         </SubSection>
 
-        <SubSection title={t('advancedFeatures.threadsTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('advancedFeatures.threadsTitle')}
+          icon
+          iconColor="blue"
+        >
           <div className="space-y-4">
             <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
               <div className="flex items-center gap-2 mb-2">
                 <Users className="w-4 h-4 text-blue-600" />
-                <span className="text-sm font-bold text-blue-700">{t('advancedFeatures.threadsDesc')}</span>
+                <span className="text-sm font-bold text-blue-700">
+                  {t('advancedFeatures.threadsDesc')}
+                </span>
               </div>
               <CodeBlock
                 code={`// main.js
@@ -94,18 +106,25 @@ self.onmessage = async (e) => {
 
             <InfoBox variant="blue" title={t('advancedFeatures.coopCoep')}>
               <p className="text-sm font-mono">
-                Cross-Origin-Opener-Policy: same-origin<br />
+                Cross-Origin-Opener-Policy: same-origin
+                <br />
                 Cross-Origin-Embedder-Policy: require-corp
               </p>
             </InfoBox>
           </div>
         </SubSection>
 
-        <SubSection title={t('advancedFeatures.gcTitle')} icon iconColor="green">
+        <SubSection
+          title={t('advancedFeatures.gcTitle')}
+          icon
+          iconColor="green"
+        >
           <div className="bg-green-50 p-4 rounded-lg border border-green-200">
             <div className="flex items-center gap-2 mb-3">
               <Trash2 className="w-4 h-4 text-green-600" />
-              <span className="text-sm font-bold text-green-700">{t('advancedFeatures.gcDesc')}</span>
+              <span className="text-sm font-bold text-green-700">
+                {t('advancedFeatures.gcDesc')}
+              </span>
             </div>
             <p className="text-xs text-gray-600 mb-4">
               {t('advancedFeatures.gcExplain')}
@@ -113,23 +132,35 @@ self.onmessage = async (e) => {
 
             <div className="space-y-3">
               <div className="bg-white p-3 rounded border border-gray-200">
-                <span className="text-xs font-bold text-gray-700 block mb-2">{t('advancedFeatures.beforeGc')}</span>
+                <span className="text-xs font-bold text-gray-700 block mb-2">
+                  {t('advancedFeatures.beforeGc')}
+                </span>
                 <div className="flex items-center gap-2 text-xs">
                   <span className="bg-gray-200 px-2 py-1 rounded">Wasm</span>
                   <ArrowRight className="w-3 h-3 text-gray-400" />
-                  <span className="text-red-600">{t('advancedFeatures.selfGcNeeded')}</span>
+                  <span className="text-red-600">
+                    {t('advancedFeatures.selfGcNeeded')}
+                  </span>
                   <ArrowRight className="w-3 h-3 text-gray-400" />
-                  <span className="text-red-600">{t('advancedFeatures.overhead')}</span>
+                  <span className="text-red-600">
+                    {t('advancedFeatures.overhead')}
+                  </span>
                 </div>
               </div>
               <div className="bg-white p-3 rounded border border-green-200">
-                <span className="text-xs font-bold text-green-700 block mb-2">{t('advancedFeatures.afterGc')}</span>
+                <span className="text-xs font-bold text-green-700 block mb-2">
+                  {t('advancedFeatures.afterGc')}
+                </span>
                 <div className="flex items-center gap-2 text-xs">
                   <span className="bg-green-200 px-2 py-1 rounded">Wasm</span>
                   <ArrowRight className="w-3 h-3 text-gray-400" />
-                  <span className="text-green-600">{t('advancedFeatures.browserGc')}</span>
+                  <span className="text-green-600">
+                    {t('advancedFeatures.browserGc')}
+                  </span>
                   <ArrowRight className="w-3 h-3 text-gray-400" />
-                  <span className="text-green-600">{t('advancedFeatures.efficient')}</span>
+                  <span className="text-green-600">
+                    {t('advancedFeatures.efficient')}
+                  </span>
                 </div>
               </div>
             </div>

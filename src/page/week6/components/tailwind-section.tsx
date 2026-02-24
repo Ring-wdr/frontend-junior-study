@@ -11,7 +11,11 @@ export const TailwindSection = () => {
       description={t('tailwind.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('tailwind.utilityFirst.title')} icon iconColor="blue">
+        <SubSection
+          title={t('tailwind.utilityFirst.title')}
+          icon
+          iconColor="blue"
+        >
           <p className="text-sm text-gray-700 mb-4">
             {t('tailwind.utilityFirst.content')}
           </p>
@@ -42,20 +46,36 @@ export const TailwindSection = () => {
           />
         </SubSection>
 
-        <SubSection title={t('tailwind.keyFeatures.title')} icon iconColor="blue">
+        <SubSection
+          title={t('tailwind.keyFeatures.title')}
+          icon
+          iconColor="blue"
+        >
           <InfoBox variant="blue" title={t('tailwind.keyFeatures.infoTitle')}>
             <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
               <li>
-                <strong>{t('tailwind.keyFeatures.jit')}</strong> {t('tailwind.keyFeatures.jitDesc')}
+                <strong>{t('tailwind.keyFeatures.jit')}</strong>{' '}
+                {t('tailwind.keyFeatures.jitDesc')}
               </li>
               <li>
-                <strong>{t('tailwind.keyFeatures.standardization')}</strong> {t('tailwind.keyFeatures.standardizationDesc')}
+                <strong>{t('tailwind.keyFeatures.standardization')}</strong>{' '}
+                {t('tailwind.keyFeatures.standardizationDesc')}
               </li>
               <li>
-                <strong>{t('tailwind.keyFeatures.responsiveness')}</strong> <Trans t={t} i18nKey="tailwind.keyFeatures.responsivenessDesc" components={{ code: <code /> }} />
+                <strong>{t('tailwind.keyFeatures.responsiveness')}</strong>{' '}
+                <Trans
+                  t={t}
+                  i18nKey="tailwind.keyFeatures.responsivenessDesc"
+                  components={{ code: <code /> }}
+                />
               </li>
               <li>
-                <strong>{t('tailwind.keyFeatures.darkMode')}</strong> <Trans t={t} i18nKey="tailwind.keyFeatures.darkModeDesc" components={{ code: <code /> }} />
+                <strong>{t('tailwind.keyFeatures.darkMode')}</strong>{' '}
+                <Trans
+                  t={t}
+                  i18nKey="tailwind.keyFeatures.darkModeDesc"
+                  components={{ code: <code /> }}
+                />
               </li>
             </ul>
           </InfoBox>

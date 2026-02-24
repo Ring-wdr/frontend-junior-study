@@ -324,11 +324,7 @@ const CacheDemo = () => {
             </>
           )}
           {strategy === 'dynamic' && (
-            <>
-              <span className="text-gray-500">
-                {'// No directive (Dynamic)'}
-              </span>
-            </>
+            <span className="text-gray-500">{'// No directive (Dynamic)'}</span>
           )}
         </div>
       </div>

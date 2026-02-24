@@ -11,7 +11,11 @@ export const DesignSystemSection = () => {
       description={t('designSystem.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('designSystem.whatAreTokens.title')} icon iconColor="blue">
+        <SubSection
+          title={t('designSystem.whatAreTokens.title')}
+          icon
+          iconColor="blue"
+        >
           <p className="text-sm text-gray-700 mb-4">
             {t('designSystem.whatAreTokens.content')}
           </p>
@@ -33,17 +37,24 @@ export const DesignSystemSection = () => {
           />
         </SubSection>
 
-        <SubSection title={t('designSystem.whyUse.title')} icon iconColor="purple">
+        <SubSection
+          title={t('designSystem.whyUse.title')}
+          icon
+          iconColor="purple"
+        >
           <InfoBox variant="gray" title={t('designSystem.whyUse.infoTitle')}>
             <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
               <li>
-                <strong>{t('designSystem.whyUse.consistency')}</strong> {t('designSystem.whyUse.consistencyDesc')}
+                <strong>{t('designSystem.whyUse.consistency')}</strong>{' '}
+                {t('designSystem.whyUse.consistencyDesc')}
               </li>
               <li>
-                <strong>{t('designSystem.whyUse.maintainability')}</strong> {t('designSystem.whyUse.maintainabilityDesc')}
+                <strong>{t('designSystem.whyUse.maintainability')}</strong>{' '}
+                {t('designSystem.whyUse.maintainabilityDesc')}
               </li>
               <li>
-                <strong>{t('designSystem.whyUse.communication')}</strong> {t('designSystem.whyUse.communicationDesc')}
+                <strong>{t('designSystem.whyUse.communication')}</strong>{' '}
+                {t('designSystem.whyUse.communicationDesc')}
               </li>
             </ul>
           </InfoBox>

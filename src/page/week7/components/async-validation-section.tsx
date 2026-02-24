@@ -1,8 +1,8 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
-import { useTranslation } from 'react-i18next';
 
 export const AsyncValidationSection = () => {
   const { t } = useTranslation('week7');
@@ -19,28 +19,34 @@ export const AsyncValidationSection = () => {
           icon
           iconColor="red"
         >
-          <InfoBox variant="red" title={t('asyncValidation.problem.commonIssues.title')}>
+          <InfoBox
+            variant="red"
+            title={t('asyncValidation.problem.commonIssues.title')}
+          >
             <ul className="list-disc pl-5 space-y-1 text-sm">
-              <li>
-                {t('asyncValidation.problem.commonIssues.tooManyCalls')}
-              </li>
-              <li>
-                {t('asyncValidation.problem.commonIssues.uxNoise')}
-              </li>
+              <li>{t('asyncValidation.problem.commonIssues.tooManyCalls')}</li>
+              <li>{t('asyncValidation.problem.commonIssues.uxNoise')}</li>
               <li>
                 {t('asyncValidation.problem.commonIssues.raceConditions')}
               </li>
-              <li>
-                {t('asyncValidation.problem.commonIssues.performance')}
-              </li>
+              <li>{t('asyncValidation.problem.commonIssues.performance')}</li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('asyncValidation.debounceStrategy.title')} icon iconColor="purple">
-          <InfoBox variant="purple" title={t('asyncValidation.debounceStrategy.whatIsDebouncing.title')}>
+        <SubSection
+          title={t('asyncValidation.debounceStrategy.title')}
+          icon
+          iconColor="purple"
+        >
+          <InfoBox
+            variant="purple"
+            title={t('asyncValidation.debounceStrategy.whatIsDebouncing.title')}
+          >
             <p className="text-sm">
-              {t('asyncValidation.debounceStrategy.whatIsDebouncing.description')}
+              {t(
+                'asyncValidation.debounceStrategy.whatIsDebouncing.description',
+              )}
             </p>
           </InfoBox>
 
@@ -95,7 +101,11 @@ const CheckUsernameForm = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('asyncValidation.rhfAsyncValidation.title')} icon iconColor="blue">
+        <SubSection
+          title={t('asyncValidation.rhfAsyncValidation.title')}
+          icon
+          iconColor="blue"
+        >
           <p className="text-sm text-gray-700 mb-3">
             {t('asyncValidation.rhfAsyncValidation.description')}
           </p>
@@ -153,7 +163,11 @@ const RegisterForm = () => {
           />
         </SubSection>
 
-        <SubSection title={t('asyncValidation.timingStrategies.title')} icon iconColor="orange">
+        <SubSection
+          title={t('asyncValidation.timingStrategies.title')}
+          icon
+          iconColor="orange"
+        >
           <div className="space-y-3">
             <div className="bg-gray-50 p-4 rounded border border-gray-200">
               <p className="font-semibold text-sm text-blue-900 mb-2">
@@ -192,15 +206,25 @@ const RegisterForm = () => {
             </div>
           </div>
 
-          <InfoBox variant="green" title={t('asyncValidation.timingStrategies.bestPractice.title')}>
+          <InfoBox
+            variant="green"
+            title={t('asyncValidation.timingStrategies.bestPractice.title')}
+          >
             <p className="text-sm">
               {t('asyncValidation.timingStrategies.bestPractice.description')}
             </p>
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('asyncValidation.raceConditions.title')} icon iconColor="orange">
-          <InfoBox variant="orange" title={t('asyncValidation.raceConditions.problem.title')}>
+        <SubSection
+          title={t('asyncValidation.raceConditions.title')}
+          icon
+          iconColor="orange"
+        >
+          <InfoBox
+            variant="orange"
+            title={t('asyncValidation.raceConditions.problem.title')}
+          >
             <p className="text-sm">
               {t('asyncValidation.raceConditions.problem.description')}
             </p>

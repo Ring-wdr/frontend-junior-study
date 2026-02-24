@@ -23,7 +23,10 @@ export const ContextSection = () => {
               <ContextVisualizer />
             </div>
 
-            <InfoBox variant="blue" title={t('context.what.keyComponents.title')}>
+            <InfoBox
+              variant="blue"
+              title={t('context.what.keyComponents.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>{t('context.what.keyComponents.createContext')}</li>
                 <li>{t('context.what.keyComponents.provider')}</li>
@@ -92,14 +95,21 @@ function Header() {
           </div>
         </SubSection>
 
-        <SubSection title={t('context.bestUseCases.title')} icon iconColor="green">
+        <SubSection
+          title={t('context.bestUseCases.title')}
+          icon
+          iconColor="green"
+        >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
               {t('context.bestUseCases.description')}
             </p>
 
             <div className="grid grid-cols-1 gap-4">
-              <InfoBox variant="green" title={t('context.bestUseCases.good.title')}>
+              <InfoBox
+                variant="green"
+                title={t('context.bestUseCases.good.title')}
+              >
                 <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
                   <li>{t('context.bestUseCases.good.theme')}</li>
                   <li>{t('context.bestUseCases.good.language')}</li>
@@ -109,7 +119,10 @@ function Header() {
                 </ul>
               </InfoBox>
 
-              <InfoBox variant="orange" title={t('context.bestUseCases.poor.title')}>
+              <InfoBox
+                variant="orange"
+                title={t('context.bestUseCases.poor.title')}
+              >
                 <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
                   <li>{t('context.bestUseCases.poor.frequently')}</li>
                   <li>{t('context.bestUseCases.poor.complex')}</li>
@@ -127,7 +140,10 @@ function Header() {
               {t('context.performance.description')}
             </p>
 
-            <InfoBox variant="red" title={t('context.performance.mainProblem.title')}>
+            <InfoBox
+              variant="red"
+              title={t('context.performance.mainProblem.title')}
+            >
               <p className="text-sm text-gray-700 mb-3">
                 {t('context.performance.mainProblem.description')}
               </p>
@@ -145,7 +161,10 @@ const ThemeContext = createContext();
               />
             </InfoBox>
 
-            <InfoBox variant="purple" title={t('context.performance.optimization.title')}>
+            <InfoBox
+              variant="purple"
+              title={t('context.performance.optimization.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>{t('context.performance.optimization.split')}</li>
                 <li>{t('context.performance.optimization.memoize')}</li>
@@ -188,25 +207,64 @@ export function ThemeProvider({ children }) {
           iconColor="purple"
         >
           <div className="space-y-4">
-            <InfoBox variant="blue" title={t('context.vsGlobalState.decisionFramework.title')}>
+            <InfoBox
+              variant="blue"
+              title={t('context.vsGlobalState.decisionFramework.title')}
+            >
               <p className="text-sm text-gray-700 mb-3">
-                <strong>{t('context.vsGlobalState.decisionFramework.useContext')}</strong>
+                <strong>
+                  {t('context.vsGlobalState.decisionFramework.useContext')}
+                </strong>
               </p>
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700 mb-3">
-                <li>{t('context.vsGlobalState.decisionFramework.contextWhen.simple')}</li>
-                <li>{t('context.vsGlobalState.decisionFramework.contextWhen.infrequent')}</li>
-                <li>{t('context.vsGlobalState.decisionFramework.contextWhen.noAsync')}</li>
-                <li>{t('context.vsGlobalState.decisionFramework.contextWhen.small')}</li>
+                <li>
+                  {t(
+                    'context.vsGlobalState.decisionFramework.contextWhen.simple',
+                  )}
+                </li>
+                <li>
+                  {t(
+                    'context.vsGlobalState.decisionFramework.contextWhen.infrequent',
+                  )}
+                </li>
+                <li>
+                  {t(
+                    'context.vsGlobalState.decisionFramework.contextWhen.noAsync',
+                  )}
+                </li>
+                <li>
+                  {t(
+                    'context.vsGlobalState.decisionFramework.contextWhen.small',
+                  )}
+                </li>
               </ul>
 
               <p className="text-sm text-gray-700 mb-3">
-                <strong>{t('context.vsGlobalState.decisionFramework.useLibrary')}</strong>
+                <strong>
+                  {t('context.vsGlobalState.decisionFramework.useLibrary')}
+                </strong>
               </p>
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
-                <li>{t('context.vsGlobalState.decisionFramework.libraryWhen.complex')}</li>
-                <li>{t('context.vsGlobalState.decisionFramework.libraryWhen.frequent')}</li>
-                <li>{t('context.vsGlobalState.decisionFramework.libraryWhen.middleware')}</li>
-                <li>{t('context.vsGlobalState.decisionFramework.libraryWhen.devtools')}</li>
+                <li>
+                  {t(
+                    'context.vsGlobalState.decisionFramework.libraryWhen.complex',
+                  )}
+                </li>
+                <li>
+                  {t(
+                    'context.vsGlobalState.decisionFramework.libraryWhen.frequent',
+                  )}
+                </li>
+                <li>
+                  {t(
+                    'context.vsGlobalState.decisionFramework.libraryWhen.middleware',
+                  )}
+                </li>
+                <li>
+                  {t(
+                    'context.vsGlobalState.decisionFramework.libraryWhen.devtools',
+                  )}
+                </li>
               </ul>
             </InfoBox>
 
@@ -214,36 +272,76 @@ export function ThemeProvider({ children }) {
               <table className="w-full text-xs border-collapse">
                 <thead>
                   <tr className="border-b border-gray-300 bg-gray-50">
-                    <th className="text-left p-2 font-semibold">{t('context.vsGlobalState.comparisonTable.aspect')}</th>
-                    <th className="text-left p-2 font-semibold">{t('context.vsGlobalState.comparisonTable.contextApi')}</th>
-                    <th className="text-left p-2 font-semibold">{t('context.vsGlobalState.comparisonTable.redux')}</th>
-                    <th className="text-left p-2 font-semibold">{t('context.vsGlobalState.comparisonTable.zustand')}</th>
+                    <th className="text-left p-2 font-semibold">
+                      {t('context.vsGlobalState.comparisonTable.aspect')}
+                    </th>
+                    <th className="text-left p-2 font-semibold">
+                      {t('context.vsGlobalState.comparisonTable.contextApi')}
+                    </th>
+                    <th className="text-left p-2 font-semibold">
+                      {t('context.vsGlobalState.comparisonTable.redux')}
+                    </th>
+                    <th className="text-left p-2 font-semibold">
+                      {t('context.vsGlobalState.comparisonTable.zustand')}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b border-gray-200">
-                    <td className="p-2 font-medium">{t('context.vsGlobalState.comparisonTable.setup')}</td>
-                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.simple')}</td>
-                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.complex')}</td>
-                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.verySimple')}</td>
+                    <td className="p-2 font-medium">
+                      {t('context.vsGlobalState.comparisonTable.setup')}
+                    </td>
+                    <td className="p-2">
+                      {t('context.vsGlobalState.comparisonTable.simple')}
+                    </td>
+                    <td className="p-2">
+                      {t('context.vsGlobalState.comparisonTable.complex')}
+                    </td>
+                    <td className="p-2">
+                      {t('context.vsGlobalState.comparisonTable.verySimple')}
+                    </td>
                   </tr>
                   <tr className="border-b border-gray-200">
-                    <td className="p-2 font-medium">{t('context.vsGlobalState.comparisonTable.performance')}</td>
-                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.requiresCare')}</td>
-                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.excellent')}</td>
-                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.excellent')}</td>
+                    <td className="p-2 font-medium">
+                      {t('context.vsGlobalState.comparisonTable.performance')}
+                    </td>
+                    <td className="p-2">
+                      {t('context.vsGlobalState.comparisonTable.requiresCare')}
+                    </td>
+                    <td className="p-2">
+                      {t('context.vsGlobalState.comparisonTable.excellent')}
+                    </td>
+                    <td className="p-2">
+                      {t('context.vsGlobalState.comparisonTable.excellent')}
+                    </td>
                   </tr>
                   <tr className="border-b border-gray-200">
-                    <td className="p-2 font-medium">{t('context.vsGlobalState.comparisonTable.devtools')}</td>
-                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.none')}</td>
-                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.excellent')}</td>
-                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.good')}</td>
+                    <td className="p-2 font-medium">
+                      {t('context.vsGlobalState.comparisonTable.devtools')}
+                    </td>
+                    <td className="p-2">
+                      {t('context.vsGlobalState.comparisonTable.none')}
+                    </td>
+                    <td className="p-2">
+                      {t('context.vsGlobalState.comparisonTable.excellent')}
+                    </td>
+                    <td className="p-2">
+                      {t('context.vsGlobalState.comparisonTable.good')}
+                    </td>
                   </tr>
                   <tr>
-                    <td className="p-2 font-medium">{t('context.vsGlobalState.comparisonTable.for')}</td>
-                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.simpleApps')}</td>
-                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.complexApps')}</td>
-                    <td className="p-2">{t('context.vsGlobalState.comparisonTable.mostApps')}</td>
+                    <td className="p-2 font-medium">
+                      {t('context.vsGlobalState.comparisonTable.for')}
+                    </td>
+                    <td className="p-2">
+                      {t('context.vsGlobalState.comparisonTable.simpleApps')}
+                    </td>
+                    <td className="p-2">
+                      {t('context.vsGlobalState.comparisonTable.complexApps')}
+                    </td>
+                    <td className="p-2">
+                      {t('context.vsGlobalState.comparisonTable.mostApps')}
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -253,7 +351,10 @@ export function ThemeProvider({ children }) {
 
         <SubSection title={t('context.patterns.title')} icon iconColor="orange">
           <div className="space-y-4">
-            <InfoBox variant="orange" title={t('context.patterns.providerHell.title')}>
+            <InfoBox
+              variant="orange"
+              title={t('context.patterns.providerHell.title')}
+            >
               <p className="text-sm text-gray-700 mb-2">
                 {t('context.patterns.providerHell.description')}
               </p>
@@ -275,7 +376,10 @@ export function ThemeProvider({ children }) {
               </p>
             </InfoBox>
 
-            <InfoBox variant="red" title={t('context.patterns.missingProvider.title')}>
+            <InfoBox
+              variant="red"
+              title={t('context.patterns.missingProvider.title')}
+            >
               <p className="text-sm text-gray-700 mb-2">
                 {t('context.patterns.missingProvider.description')}
               </p>

@@ -16,8 +16,14 @@ export const PracticalPatternsSection = () => {
       description={t('practicalPatterns.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('practicalPatterns.typeGuardTitle')} icon iconColor="pink">
-          <p className="text-sm text-gray-600 mb-4">{t('practicalPatterns.typeGuardDesc')}</p>
+        <SubSection
+          title={t('practicalPatterns.typeGuardTitle')}
+          icon
+          iconColor="pink"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('practicalPatterns.typeGuardDesc')}
+          </p>
           <CodeBlock
             code={`// typeof 가드
 function padLeft(value: string, padding: string | number) {
@@ -42,7 +48,11 @@ function speak(animal: Dog | Cat) {
             className="text-xs"
           />
 
-          <InfoBox variant="purple" title={t('practicalPatterns.typeGuardInfoTitle')} className="mt-4">
+          <InfoBox
+            variant="purple"
+            title={t('practicalPatterns.typeGuardInfoTitle')}
+            className="mt-4"
+          >
             <p className="text-sm leading-relaxed">
               {t('practicalPatterns.typeGuardInfoDesc')}
             </p>
@@ -69,8 +79,14 @@ function move(pet: Fish | Bird) {
           />
         </SubSection>
 
-        <SubSection title={t('practicalPatterns.discriminatedTitle')} icon iconColor="purple">
-          <p className="text-sm text-gray-600 mb-4">{t('practicalPatterns.discriminatedDesc')}</p>
+        <SubSection
+          title={t('practicalPatterns.discriminatedTitle')}
+          icon
+          iconColor="purple"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('practicalPatterns.discriminatedDesc')}
+          </p>
 
           <DemoBox label={t('practicalPatterns.visualizer.title')}>
             <DiscriminatedUnionVisualizer />
@@ -104,10 +120,19 @@ function getArea(shape: Shape): number {
           />
         </SubSection>
 
-        <SubSection title={t('practicalPatterns.exhaustiveTitle')} icon iconColor="orange">
-          <p className="text-sm text-gray-600 mb-4">{t('practicalPatterns.exhaustiveDesc')}</p>
+        <SubSection
+          title={t('practicalPatterns.exhaustiveTitle')}
+          icon
+          iconColor="orange"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('practicalPatterns.exhaustiveDesc')}
+          </p>
 
-          <InfoBox variant="orange" title={t('practicalPatterns.exhaustiveInfoTitle')}>
+          <InfoBox
+            variant="orange"
+            title={t('practicalPatterns.exhaustiveInfoTitle')}
+          >
             <p className="text-sm leading-relaxed">
               {t('practicalPatterns.exhaustiveInfoDesc')}
             </p>
@@ -135,10 +160,19 @@ function getAreaExhaustive(shape: Shape): number {
           />
         </SubSection>
 
-        <SubSection title={t('practicalPatterns.brandingTitle')} icon iconColor="blue">
-          <p className="text-sm text-gray-600 mb-4">{t('practicalPatterns.brandingDesc')}</p>
+        <SubSection
+          title={t('practicalPatterns.brandingTitle')}
+          icon
+          iconColor="blue"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('practicalPatterns.brandingDesc')}
+          </p>
 
-          <InfoBox variant="blue" title={t('practicalPatterns.brandingInfoTitle')}>
+          <InfoBox
+            variant="blue"
+            title={t('practicalPatterns.brandingInfoTitle')}
+          >
             <p className="text-sm leading-relaxed">
               {t('practicalPatterns.brandingInfoDesc')}
             </p>

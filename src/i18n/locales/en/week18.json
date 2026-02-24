@@ -20,14 +20,33 @@
     "description": "A binary format that provides near-native performance in the browser",
     "conceptsTitle": "Core Concepts",
     "concepts": [
-      { "title": "Binary Instruction Format", "desc": "Low-level binary format that executes at near-native speed", "icon": "cpu" },
-      { "title": "Language Agnostic", "desc": "Can be compiled from C, C++, Rust, Go, and more", "icon": "globe" },
-      { "title": "JavaScript Complement", "desc": "Not a replacement but offloads performance bottlenecks", "icon": "zap" },
-      { "title": "Security Sandbox", "desc": "Runs safely within the browser's security model", "icon": "shield" }
+      {
+        "title": "Binary Instruction Format",
+        "desc": "Low-level binary format that executes at near-native speed",
+        "icon": "cpu"
+      },
+      {
+        "title": "Language Agnostic",
+        "desc": "Can be compiled from C, C++, Rust, Go, and more",
+        "icon": "globe"
+      },
+      {
+        "title": "JavaScript Complement",
+        "desc": "Not a replacement but offloads performance bottlenecks",
+        "icon": "zap"
+      },
+      {
+        "title": "Security Sandbox",
+        "desc": "Runs safely within the browser's security model",
+        "icon": "shield"
+      }
     ],
     "historyTitle": "History of WebAssembly",
     "timeline": [
-      { "year": "2015", "event": "WebAssembly project announced (Mozilla, Google, MS, Apple)" },
+      {
+        "year": "2015",
+        "event": "WebAssembly project announced (Mozilla, Google, MS, Apple)"
+      },
       { "year": "2017", "event": "Major browsers start MVP support" },
       { "year": "2019", "event": "Adopted as official W3C web standard" },
       { "year": "2020+", "event": "SIMD, Threads, GC extensions added" }
@@ -71,7 +90,10 @@
     "moduleStructure": [
       { "name": "Types", "desc": "Function signature definitions" },
       { "name": "Imports", "desc": "Functions/memory from JS" },
-      { "name": "Functions", "desc": "Actual function implementations (bytecode)" },
+      {
+        "name": "Functions",
+        "desc": "Actual function implementations (bytecode)"
+      },
       { "name": "Exports", "desc": "Functions/memory exported to JS" },
       { "name": "Memory", "desc": "Linear memory (ArrayBuffer)" },
       { "name": "Globals", "desc": "Global variables" }
@@ -92,10 +114,26 @@
       "features": "Features"
     },
     "toolchains": [
-      { "language": "C/C++", "toolchain": "Emscripten", "features": "Most mature, POSIX API emulation" },
-      { "language": "Rust", "toolchain": "wasm-pack + wasm-bindgen", "features": "Memory safe, modern DX" },
-      { "language": "AssemblyScript", "toolchain": "asc compiler", "features": "TypeScript-like syntax" },
-      { "language": "Go", "toolchain": "TinyGo", "features": "Small binary size" }
+      {
+        "language": "C/C++",
+        "toolchain": "Emscripten",
+        "features": "Most mature, POSIX API emulation"
+      },
+      {
+        "language": "Rust",
+        "toolchain": "wasm-pack + wasm-bindgen",
+        "features": "Memory safe, modern DX"
+      },
+      {
+        "language": "AssemblyScript",
+        "toolchain": "asc compiler",
+        "features": "TypeScript-like syntax"
+      },
+      {
+        "language": "Go",
+        "toolchain": "TinyGo",
+        "features": "Small binary size"
+      }
     ],
     "emscriptenTitle": "Emscripten (C/C++)",
     "installSteps": "Installation & Compilation",
@@ -148,11 +186,27 @@
     "dataVizTitle": "Data Visualization",
     "realWorldTitle": "Services Using WebAssembly",
     "cases": [
-      { "name": "Figma", "desc": "Real-time design collaboration tool", "icon": "image" },
-      { "name": "Squoosh", "desc": "Google image optimization app", "icon": "image" },
-      { "name": "FFmpeg.wasm", "desc": "Browser video editing", "icon": "video" },
+      {
+        "name": "Figma",
+        "desc": "Real-time design collaboration tool",
+        "icon": "image"
+      },
+      {
+        "name": "Squoosh",
+        "desc": "Google image optimization app",
+        "icon": "image"
+      },
+      {
+        "name": "FFmpeg.wasm",
+        "desc": "Browser video editing",
+        "icon": "video"
+      },
       { "name": "AutoCAD Web", "desc": "Browser CAD tool", "icon": "gamepad" },
-      { "name": "1Password", "desc": "Password management (encryption)", "icon": "lock" },
+      {
+        "name": "1Password",
+        "desc": "Password management (encryption)",
+        "icon": "lock"
+      },
       { "name": "Google Earth", "desc": "3D globe rendering", "icon": "chart" }
     ]
   },

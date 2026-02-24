@@ -47,7 +47,11 @@ export const CiCdFoundationSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('foundations.processTitle')} icon iconColor="green">
+        <SubSection
+          title={t('foundations.processTitle')}
+          icon
+          iconColor="green"
+        >
           <ol className="space-y-2 text-sm text-gray-700 list-decimal pl-5">
             {process.map((step) => (
               <li key={step}>{step}</li>
@@ -55,7 +59,11 @@ export const CiCdFoundationSection = () => {
           </ol>
         </SubSection>
 
-        <SubSection title={t('foundations.metricsTitle')} icon iconColor="orange">
+        <SubSection
+          title={t('foundations.metricsTitle')}
+          icon
+          iconColor="orange"
+        >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {metrics.map((metric) => (
               <div
@@ -63,7 +71,9 @@ export const CiCdFoundationSection = () => {
                 className="rounded-xl border border-gray-200 bg-gray-50 p-4"
               >
                 <p className="text-xs text-gray-500 mb-1">{metric.title}</p>
-                <p className="text-lg font-bold text-gray-900">{metric.value}</p>
+                <p className="text-lg font-bold text-gray-900">
+                  {metric.value}
+                </p>
               </div>
             ))}
           </div>

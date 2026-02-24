@@ -14,7 +14,11 @@ export const PerformanceSection = () => {
       description={t('performance.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('performance.performanceTips.title')} icon iconColor="green">
+        <SubSection
+          title={t('performance.performanceTips.title')}
+          icon
+          iconColor="green"
+        >
           <div className="grid grid-cols-1 gap-3">
             <div className="bg-green-50 p-3 rounded border border-green-200">
               <p className="text-sm font-semibold text-green-900">
@@ -51,7 +55,11 @@ export const PerformanceSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('performance.measuring.title')} icon iconColor="blue">
+        <SubSection
+          title={t('performance.measuring.title')}
+          icon
+          iconColor="blue"
+        >
           <CodeBlock
             code={`// Use Chrome DevTools Performance tab
 1. Open DevTools → Performance
@@ -75,9 +83,16 @@ npm install @framer/motion-dev
           icon
           iconColor="purple"
         >
-          <InfoBox variant="purple" title={t('performance.reducedMotion.infoTitle')}>
+          <InfoBox
+            variant="purple"
+            title={t('performance.reducedMotion.infoTitle')}
+          >
             <p className="text-sm leading-relaxed">
-              <Trans t={t} i18nKey="performance.reducedMotion.content" components={{ code: <code /> }} />
+              <Trans
+                t={t}
+                i18nKey="performance.reducedMotion.content"
+                components={{ code: <code /> }}
+              />
             </p>
           </InfoBox>
 
@@ -116,7 +131,11 @@ function Component() {
           />
         </SubSection>
 
-        <SubSection title={t('performance.antiPatterns.title')} icon iconColor="red">
+        <SubSection
+          title={t('performance.antiPatterns.title')}
+          icon
+          iconColor="red"
+        >
           <div className="grid grid-cols-1 gap-3">
             <div className="bg-red-50 p-3 rounded border border-red-200">
               <p className="text-sm font-semibold text-red-900">
@@ -153,23 +172,37 @@ function Component() {
           </div>
         </SubSection>
 
-        <SubSection title={t('performance.goodPrinciples.title')} icon iconColor="orange">
-          <InfoBox variant="orange" title={t('performance.goodPrinciples.infoTitle')}>
+        <SubSection
+          title={t('performance.goodPrinciples.title')}
+          icon
+          iconColor="orange"
+        >
+          <InfoBox
+            variant="orange"
+            title={t('performance.goodPrinciples.infoTitle')}
+          >
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>{t('performance.goodPrinciples.purpose')}</strong> {t('performance.goodPrinciples.purposeDesc')}
+                <strong>{t('performance.goodPrinciples.purpose')}</strong>{' '}
+                {t('performance.goodPrinciples.purposeDesc')}
               </li>
               <li>
-                <strong>{t('performance.goodPrinciples.speed')}</strong> {t('performance.goodPrinciples.speedDesc')}
+                <strong>{t('performance.goodPrinciples.speed')}</strong>{' '}
+                {t('performance.goodPrinciples.speedDesc')}
               </li>
               <li>
-                <strong>{t('performance.goodPrinciples.consistency')}</strong> {t('performance.goodPrinciples.consistencyDesc')}
+                <strong>{t('performance.goodPrinciples.consistency')}</strong>{' '}
+                {t('performance.goodPrinciples.consistencyDesc')}
               </li>
               <li>
-                <strong>{t('performance.goodPrinciples.subtlety')}</strong> {t('performance.goodPrinciples.subtletyDesc')}
+                <strong>{t('performance.goodPrinciples.subtlety')}</strong>{' '}
+                {t('performance.goodPrinciples.subtletyDesc')}
               </li>
               <li>
-                <strong>{t('performance.goodPrinciples.interruptibility')}</strong> {t('performance.goodPrinciples.interruptibilityDesc')}
+                <strong>
+                  {t('performance.goodPrinciples.interruptibility')}
+                </strong>{' '}
+                {t('performance.goodPrinciples.interruptibilityDesc')}
               </li>
             </ul>
           </InfoBox>
@@ -195,8 +228,15 @@ const timings = {
           />
         </SubSection>
 
-        <SubSection title={t('performance.resources.title')} icon iconColor="pink">
-          <InfoBox variant="purple" title={t('performance.resources.infoTitle')}>
+        <SubSection
+          title={t('performance.resources.title')}
+          icon
+          iconColor="pink"
+        >
+          <InfoBox
+            variant="purple"
+            title={t('performance.resources.infoTitle')}
+          >
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
                 <a

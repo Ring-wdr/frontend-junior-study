@@ -6,7 +6,9 @@ import { SubSection } from '../../../components/sub-section';
 export const CiCdGovernanceSection = () => {
   const { t } = useTranslation('week21');
   const checks = t('governance.checklist', { returnObjects: true }) as string[];
-  const security = t('governance.security', { returnObjects: true }) as string[];
+  const security = t('governance.security', {
+    returnObjects: true,
+  }) as string[];
 
   return (
     <SectionCard

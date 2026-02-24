@@ -69,7 +69,9 @@ export const CsrfSection = () => {
           </InfoBox>
 
           <div className="mt-4 bg-gray-50 p-4 rounded-lg border">
-            <p className="text-sm font-semibold mb-3">{t('csrf.whatIs.scenarioTitle')}</p>
+            <p className="text-sm font-semibold mb-3">
+              {t('csrf.whatIs.scenarioTitle')}
+            </p>
             <ol className="space-y-2 text-sm">
               <li className="flex gap-2">
                 <span className="text-red-500">1.</span>
@@ -133,7 +135,9 @@ export const CsrfSection = () => {
                   </div>
                   <div className="p-6 space-y-4 bg-white h-full">
                     <div className="text-center">
-                      <p className="text-gray-500 text-sm">{t('csrf.simulator.bankBalance')}</p>
+                      <p className="text-gray-500 text-sm">
+                        {t('csrf.simulator.bankBalance')}
+                      </p>
                       <p className="text-3xl font-bold text-gray-800">
                         ${bankBalance}
                       </p>

@@ -1,5 +1,5 @@
+import { Box, Layers, Palette, RefreshCw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Box, Layers, RefreshCw, Palette } from 'lucide-react';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
@@ -77,7 +77,9 @@ function App() {
         <SubSection title={t('r3fIntro.featuresTitle')} icon iconColor="pink">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {features.map((feature: any) => {
-              const IconComponent = featureIconMap[feature.icon as keyof typeof featureIconMap] || Box;
+              const IconComponent =
+                featureIconMap[feature.icon as keyof typeof featureIconMap] ||
+                Box;
               return (
                 <div
                   key={feature.title}
@@ -85,7 +87,9 @@ function App() {
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <IconComponent className="w-5 h-5 text-pink-600" />
-                    <h4 className="font-bold text-sm text-pink-800">{feature.title}</h4>
+                    <h4 className="font-bold text-sm text-pink-800">
+                      {feature.title}
+                    </h4>
                   </div>
                   <p className="text-xs text-gray-600">{feature.desc}</p>
                 </div>
@@ -94,10 +98,16 @@ function App() {
           </div>
         </SubSection>
 
-        <SubSection title={t('r3fIntro.comparisonTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('r3fIntro.comparisonTitle')}
+          icon
+          iconColor="purple"
+        >
           <div className="grid grid-cols-1 gap-4">
             <div className="bg-gray-100 p-4 rounded-lg border border-gray-200">
-              <h4 className="font-bold text-sm text-gray-700 mb-2">Three.js ({t('r3fIntro.imperative')})</h4>
+              <h4 className="font-bold text-sm text-gray-700 mb-2">
+                Three.js ({t('r3fIntro.imperative')})
+              </h4>
               <CodeBlock
                 code={threeJsCode}
                 language="javascript"
@@ -105,29 +115,38 @@ function App() {
               />
             </div>
             <div className="bg-pink-50 p-4 rounded-lg border border-pink-200">
-              <h4 className="font-bold text-sm text-pink-700 mb-2">React Three Fiber ({t('r3fIntro.declarative')})</h4>
-              <CodeBlock
-                code={r3fCode}
-                language="jsx"
-                className="text-xs"
-              />
+              <h4 className="font-bold text-sm text-pink-700 mb-2">
+                React Three Fiber ({t('r3fIntro.declarative')})
+              </h4>
+              <CodeBlock code={r3fCode} language="jsx" className="text-xs" />
             </div>
           </div>
         </SubSection>
 
-        <SubSection title={t('r3fIntro.advantagesTitle')} icon iconColor="green">
+        <SubSection
+          title={t('r3fIntro.advantagesTitle')}
+          icon
+          iconColor="green"
+        >
           <div className="overflow-x-auto">
             <table className="w-full text-xs">
               <thead>
                 <tr className="bg-gray-100">
-                  <th className="text-left p-2 font-semibold">{t('r3fIntro.table.feature')}</th>
+                  <th className="text-left p-2 font-semibold">
+                    {t('r3fIntro.table.feature')}
+                  </th>
                   <th className="text-left p-2 font-semibold">Three.js</th>
-                  <th className="text-left p-2 font-semibold">React Three Fiber</th>
+                  <th className="text-left p-2 font-semibold">
+                    React Three Fiber
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {advantages.map((adv: any, idx: number) => (
-                  <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                  <tr
+                    key={idx}
+                    className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
+                  >
                     <td className="p-2 font-medium">{adv.feature}</td>
                     <td className="p-2 text-gray-600">{adv.threejs}</td>
                     <td className="p-2 text-pink-700">{adv.r3f}</td>

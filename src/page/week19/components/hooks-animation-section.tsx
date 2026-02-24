@@ -1,5 +1,5 @@
+import { Download, Eye, RefreshCw, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { RefreshCw, Eye, Download, Sparkles } from 'lucide-react';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
@@ -144,10 +144,23 @@ function SmoothBox() {
               <div
                 key={hook.name}
                 className={`bg-${color}-50 p-4 rounded-lg border border-${color}-200`}
-                style={{ backgroundColor: idx === 0 ? '#fff7ed' : idx === 1 ? '#eff6ff' : '#f0fdf4' }}
+                style={{
+                  backgroundColor:
+                    idx === 0 ? '#fff7ed' : idx === 1 ? '#eff6ff' : '#f0fdf4',
+                }}
               >
                 <div className="flex items-center gap-2 mb-2">
-                  <IconComponent className={`w-5 h-5 text-${color}-600`} style={{ color: idx === 0 ? '#ea580c' : idx === 1 ? '#2563eb' : '#16a34a' }} />
+                  <IconComponent
+                    className={`w-5 h-5 text-${color}-600`}
+                    style={{
+                      color:
+                        idx === 0
+                          ? '#ea580c'
+                          : idx === 1
+                            ? '#2563eb'
+                            : '#16a34a',
+                    }}
+                  />
                   <h4 className="font-bold text-sm">{hook.name}</h4>
                 </div>
                 <p className="text-xs text-gray-600">{hook.desc}</p>
@@ -160,45 +173,35 @@ function SmoothBox() {
           <p className="text-sm text-gray-700 mb-3">
             {t('hooksAnimation.useFrameDesc')}
           </p>
-          <CodeBlock
-            code={useFrameCode}
-            language="tsx"
-            className="text-xs"
-          />
+          <CodeBlock code={useFrameCode} language="tsx" className="text-xs" />
         </SubSection>
 
         <SubSection title="useThree" icon iconColor="blue">
           <p className="text-sm text-gray-700 mb-3">
             {t('hooksAnimation.useThreeDesc')}
           </p>
-          <CodeBlock
-            code={useThreeCode}
-            language="tsx"
-            className="text-xs"
-          />
+          <CodeBlock code={useThreeCode} language="tsx" className="text-xs" />
         </SubSection>
 
         <SubSection title="useLoader" icon iconColor="green">
           <p className="text-sm text-gray-700 mb-3">
             {t('hooksAnimation.useLoaderDesc')}
           </p>
-          <CodeBlock
-            code={useLoaderCode}
-            language="tsx"
-            className="text-xs"
-          />
+          <CodeBlock code={useLoaderCode} language="tsx" className="text-xs" />
         </SubSection>
 
-        <SubSection title={t('hooksAnimation.customHookTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('hooksAnimation.customHookTitle')}
+          icon
+          iconColor="purple"
+        >
           <div className="flex items-center gap-2 mb-3">
             <Sparkles className="w-4 h-4 text-purple-600" />
-            <span className="text-sm text-gray-700">{t('hooksAnimation.customHookDesc')}</span>
+            <span className="text-sm text-gray-700">
+              {t('hooksAnimation.customHookDesc')}
+            </span>
           </div>
-          <CodeBlock
-            code={customHookCode}
-            language="tsx"
-            className="text-xs"
-          />
+          <CodeBlock code={customHookCode} language="tsx" className="text-xs" />
         </SubSection>
 
         <InfoBox variant="blue" title={t('hooksAnimation.tipTitle')}>

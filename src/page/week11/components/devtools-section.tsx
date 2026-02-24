@@ -339,9 +339,7 @@ export function DevToolsSection() {
 
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex gap-3">
           <AlertTriangle className="text-amber-600 shrink-0" size={20} />
-          <div className="text-sm text-amber-800">
-            {t('devTools.proTip')}
-          </div>
+          <div className="text-sm text-amber-800">{t('devTools.proTip')}</div>
         </div>
 
         <div className="bg-gray-50 rounded-xl p-5">

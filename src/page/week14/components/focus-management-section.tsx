@@ -67,22 +67,32 @@ export const FocusManagementSection = () => {
       description={t('focus.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('focus.whenToManage.title')} icon iconColor="orange">
+        <SubSection
+          title={t('focus.whenToManage.title')}
+          icon
+          iconColor="orange"
+        >
           <InfoBox variant="orange" title={t('focus.whenToManage.infoTitle')}>
             <ul className="text-sm space-y-2">
               <li>
-                <strong>{t('focus.whenToManage.cases.0.title')}</strong> {t('focus.whenToManage.cases.0.desc')}
+                <strong>{t('focus.whenToManage.cases.0.title')}</strong>{' '}
+                {t('focus.whenToManage.cases.0.desc')}
               </li>
               <li>
                 <strong>{t('focus.whenToManage.cases.1.title')}</strong>
                 <ul className="list-disc pl-5 mt-1 space-y-1">
-                  {(t('focus.whenToManage.cases.1.items', { returnObjects: true }) as string[]).map((item, idx) => (
+                  {(
+                    t('focus.whenToManage.cases.1.items', {
+                      returnObjects: true,
+                    }) as string[]
+                  ).map((item, idx) => (
                     <li key={idx}>{item}</li>
                   ))}
                 </ul>
               </li>
               <li>
-                <strong>{t('focus.whenToManage.cases.2.title')}</strong> {t('focus.whenToManage.cases.2.desc')}
+                <strong>{t('focus.whenToManage.cases.2.title')}</strong>{' '}
+                {t('focus.whenToManage.cases.2.desc')}
               </li>
             </ul>
           </InfoBox>
@@ -125,10 +135,7 @@ export const FocusManagementSection = () => {
                     aria-labelledby="modal-title"
                     className="relative z-10 bg-white rounded-xl p-6 w-80 shadow-2xl"
                   >
-                    <h2
-                      id="modal-title"
-                      className="text-lg font-bold mb-4"
-                    >
+                    <h2 id="modal-title" className="text-lg font-bold mb-4">
                       {t('focus.trapDemo.modalTitle')}
                     </h2>
                     <p className="text-sm text-gray-600 mb-4">
@@ -170,11 +177,19 @@ export const FocusManagementSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('focus.indicatorTracker.title')} icon iconColor="blue">
+        <SubSection
+          title={t('focus.indicatorTracker.title')}
+          icon
+          iconColor="blue"
+        >
           <DemoBox label={t('focus.indicatorTracker.label')}>
             <div className="space-y-3">
               <div className="flex gap-2 flex-wrap">
-                {(t('focus.indicatorTracker.buttons', { returnObjects: true }) as string[]).map((btn) => (
+                {(
+                  t('focus.indicatorTracker.buttons', {
+                    returnObjects: true,
+                  }) as string[]
+                ).map((btn) => (
                   <button
                     key={btn}
                     type="button"
@@ -214,7 +229,11 @@ export const FocusManagementSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('focus.implementation.title')} icon iconColor="green">
+        <SubSection
+          title={t('focus.implementation.title')}
+          icon
+          iconColor="green"
+        >
           <CodeBlock
             code={`// React Focus Trap Hook
 import { useEffect, useRef } from 'react';
@@ -258,7 +277,13 @@ function useFocusTrap(isActive: boolean) {
 
         <SubSection title={t('focus.libraries.title')} icon iconColor="red">
           <div className="grid grid-cols-2 gap-3">
-            {(t('focus.libraries.libs', { returnObjects: true }) as Array<{ name: string; desc: string; use: string }>).map((lib) => (
+            {(
+              t('focus.libraries.libs', { returnObjects: true }) as Array<{
+                name: string;
+                desc: string;
+                use: string;
+              }>
+            ).map((lib) => (
               <div
                 key={lib.name}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200"

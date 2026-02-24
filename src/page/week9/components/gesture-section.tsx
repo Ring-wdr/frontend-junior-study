@@ -16,23 +16,32 @@ export const GestureSection = () => {
       description={t('gesture.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('gesture.gestureProps.title')} icon iconColor="green">
+        <SubSection
+          title={t('gesture.gestureProps.title')}
+          icon
+          iconColor="green"
+        >
           <InfoBox variant="green" title={t('gesture.gestureProps.infoTitle')}>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>{t('gesture.gestureProps.whileHover')}</strong> {t('gesture.gestureProps.whileHoverDesc')}
+                <strong>{t('gesture.gestureProps.whileHover')}</strong>{' '}
+                {t('gesture.gestureProps.whileHoverDesc')}
               </li>
               <li>
-                <strong>{t('gesture.gestureProps.whileTap')}</strong> {t('gesture.gestureProps.whileTapDesc')}
+                <strong>{t('gesture.gestureProps.whileTap')}</strong>{' '}
+                {t('gesture.gestureProps.whileTapDesc')}
               </li>
               <li>
-                <strong>{t('gesture.gestureProps.whileFocus')}</strong> {t('gesture.gestureProps.whileFocusDesc')}
+                <strong>{t('gesture.gestureProps.whileFocus')}</strong>{' '}
+                {t('gesture.gestureProps.whileFocusDesc')}
               </li>
               <li>
-                <strong>{t('gesture.gestureProps.whileInView')}</strong> {t('gesture.gestureProps.whileInViewDesc')}
+                <strong>{t('gesture.gestureProps.whileInView')}</strong>{' '}
+                {t('gesture.gestureProps.whileInViewDesc')}
               </li>
               <li>
-                <strong>{t('gesture.gestureProps.whileDrag')}</strong> {t('gesture.gestureProps.whileDragDesc')}
+                <strong>{t('gesture.gestureProps.whileDrag')}</strong>{' '}
+                {t('gesture.gestureProps.whileDragDesc')}
               </li>
             </ul>
           </InfoBox>
@@ -128,7 +137,11 @@ export const GestureSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('gesture.focusStates.title')} icon iconColor="orange">
+        <SubSection
+          title={t('gesture.focusStates.title')}
+          icon
+          iconColor="orange"
+        >
           <CodeBlock
             code={`<motion.input
   whileFocus={{ scale: 1.02, borderColor: "#3B82F6" }}
@@ -154,11 +167,16 @@ export const GestureSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('gesture.eventHandlers.title')} icon iconColor="pink">
-          <InfoBox variant="purple" title={t('gesture.eventHandlers.infoTitle')}>
-            <p className="text-sm mb-2">
-              {t('gesture.eventHandlers.content')}
-            </p>
+        <SubSection
+          title={t('gesture.eventHandlers.title')}
+          icon
+          iconColor="pink"
+        >
+          <InfoBox
+            variant="purple"
+            title={t('gesture.eventHandlers.infoTitle')}
+          >
+            <p className="text-sm mb-2">{t('gesture.eventHandlers.content')}</p>
             <CodeBlock
               code={`<motion.div
   onHoverStart={() => console.log("Hover started")}

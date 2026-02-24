@@ -37,7 +37,9 @@ const result3 = identityGeneric(42);      // result3의 타입: number`}
         </SubSection>
 
         <SubSection title={t('generics.basicTitle')} icon iconColor="blue">
-          <p className="text-sm text-gray-600 mb-4">{t('generics.basicDesc')}</p>
+          <p className="text-sm text-gray-600 mb-4">
+            {t('generics.basicDesc')}
+          </p>
           <CodeBlock
             code={`// 기본 제네릭 함수
 function first<T>(arr: T[]): T | undefined {
@@ -58,14 +60,24 @@ const p = pair("hello", 42); // [string, number]`}
           />
         </SubSection>
 
-        <SubSection title={t('generics.visualizer.title')} icon iconColor="blue">
+        <SubSection
+          title={t('generics.visualizer.title')}
+          icon
+          iconColor="blue"
+        >
           <DemoBox label={t('generics.visualizer.title')}>
             <GenericTypeFlowVisualizer />
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('generics.constraintTitle')} icon iconColor="green">
-          <p className="text-sm text-gray-600 mb-4">{t('generics.constraintDesc')}</p>
+        <SubSection
+          title={t('generics.constraintTitle')}
+          icon
+          iconColor="green"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('generics.constraintDesc')}
+          </p>
 
           <InfoBox variant="green" title={t('generics.constraintInfoTitle')}>
             <p className="text-sm leading-relaxed">
@@ -93,7 +105,9 @@ logLength(123);       // Error! number doesn't have length`}
         </SubSection>
 
         <SubSection title={t('generics.keyofTitle')} icon iconColor="purple">
-          <p className="text-sm text-gray-600 mb-4">{t('generics.keyofDesc')}</p>
+          <p className="text-sm text-gray-600 mb-4">
+            {t('generics.keyofDesc')}
+          </p>
           <CodeBlock
             code={`// 객체의 키만 허용
 function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
@@ -111,7 +125,9 @@ getProperty(user, "email");             // Error! "email"은 User의 키가 아�
         </SubSection>
 
         <SubSection title={t('generics.interfaceTitle')} icon iconColor="blue">
-          <p className="text-sm text-gray-600 mb-4">{t('generics.interfaceDesc')}</p>
+          <p className="text-sm text-gray-600 mb-4">
+            {t('generics.interfaceDesc')}
+          </p>
           <CodeBlock
             code={`// 제네릭 인터페이스
 interface Box<T> {

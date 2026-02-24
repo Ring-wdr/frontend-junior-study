@@ -15,9 +15,7 @@ export const AtomicDesignSection = () => {
         <AtomicDesignVisualizer />
 
         <InfoBox variant="blue" title={t('atomic.whatIs.title')}>
-          <p className="text-sm text-gray-700">
-            {t('atomic.whatIs.content')}
-          </p>
+          <p className="text-sm text-gray-700">{t('atomic.whatIs.content')}</p>
         </InfoBox>
 
         <InfoBox variant="gray" title={t('atomic.fiveLevels.title')}>

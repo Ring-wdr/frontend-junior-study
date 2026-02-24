@@ -101,10 +101,18 @@
       { "type": "bigint", "example": "9007199254740991n", "desc": "큰 정수" }
     ],
     "comparison": [
-      { "feature": "확장(상속)", "interface": "extends 키워드", "type": "& (intersection)" },
+      {
+        "feature": "확장(상속)",
+        "interface": "extends 키워드",
+        "type": "& (intersection)"
+      },
       { "feature": "선언 병합", "interface": "가능", "type": "불가능" },
       { "feature": "유니온/튜플", "interface": "불가능", "type": "가능" },
-      { "feature": "권장 용도", "interface": "객체 구조, API 계약", "type": "유니온, 복잡한 타입" }
+      {
+        "feature": "권장 용도",
+        "interface": "객체 구조, API 계약",
+        "type": "유니온, 복잡한 타입"
+      }
     ]
   },
   "advancedTypes": {
@@ -188,16 +196,48 @@
       "beforeAfter": "Before / After"
     },
     "utilities": [
-      { "name": "Partial<T>", "desc": "모든 속성을 선택적으로", "category": "object" },
-      { "name": "Required<T>", "desc": "모든 속성을 필수로", "category": "object" },
-      { "name": "Readonly<T>", "desc": "모든 속성을 읽기 전용으로", "category": "object" },
+      {
+        "name": "Partial<T>",
+        "desc": "모든 속성을 선택적으로",
+        "category": "object"
+      },
+      {
+        "name": "Required<T>",
+        "desc": "모든 속성을 필수로",
+        "category": "object"
+      },
+      {
+        "name": "Readonly<T>",
+        "desc": "모든 속성을 읽기 전용으로",
+        "category": "object"
+      },
       { "name": "Pick<T, K>", "desc": "특정 속성만 선택", "category": "pick" },
       { "name": "Omit<T, K>", "desc": "특정 속성 제외", "category": "pick" },
-      { "name": "Record<K, V>", "desc": "키-값 매핑 생성", "category": "record" },
-      { "name": "Extract<T, U>", "desc": "T에서 U에 할당 가능한 타입 추출", "category": "set" },
-      { "name": "Exclude<T, U>", "desc": "T에서 U에 할당 가능한 타입 제외", "category": "set" },
-      { "name": "ReturnType<T>", "desc": "함수 반환 타입 추출", "category": "function" },
-      { "name": "Parameters<T>", "desc": "함수 매개변수 타입 추출", "category": "function" }
+      {
+        "name": "Record<K, V>",
+        "desc": "키-값 매핑 생성",
+        "category": "record"
+      },
+      {
+        "name": "Extract<T, U>",
+        "desc": "T에서 U에 할당 가능한 타입 추출",
+        "category": "set"
+      },
+      {
+        "name": "Exclude<T, U>",
+        "desc": "T에서 U에 할당 가능한 타입 제외",
+        "category": "set"
+      },
+      {
+        "name": "ReturnType<T>",
+        "desc": "함수 반환 타입 추출",
+        "category": "function"
+      },
+      {
+        "name": "Parameters<T>",
+        "desc": "함수 매개변수 타입 추출",
+        "category": "function"
+      }
     ]
   },
   "conditionalTypes": {

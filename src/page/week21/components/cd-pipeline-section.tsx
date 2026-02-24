@@ -61,7 +61,9 @@ export const CdDeploymentSection = () => {
         </SubSection>
 
         <DemoBox label={t('cdPipeline.workflowLabel')}>
-          <p className="text-sm text-gray-600">{t('cdPipeline.workflowText')}</p>
+          <p className="text-sm text-gray-600">
+            {t('cdPipeline.workflowText')}
+          </p>
         </DemoBox>
 
         <InfoBox variant="blue" title={t('cdPipeline.noteTitle')}>

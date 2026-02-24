@@ -1,5 +1,5 @@
+import { Box, Code, Link as LinkIcon, MessageSquare } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Code, Box, MessageSquare, Link as LinkIcon } from 'lucide-react';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
@@ -19,7 +19,9 @@ export const RustWasmSection = () => {
             <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
               <div className="flex items-center gap-2 mb-3">
                 <Code className="w-4 h-4 text-orange-600" />
-                <span className="text-sm font-bold text-orange-700">src/lib.rs</span>
+                <span className="text-sm font-bold text-orange-700">
+                  src/lib.rs
+                </span>
               </div>
               <CodeBlock
                 code={`use wasm_bindgen::prelude::*;
@@ -46,7 +48,9 @@ pub fn fibonacci(n: u32) -> u32 {
             <div className="bg-gray-100 p-4 rounded-lg border border-gray-200">
               <div className="flex items-center gap-2 mb-3">
                 <Code className="w-4 h-4 text-gray-600" />
-                <span className="text-sm font-bold text-gray-700">JavaScript</span>
+                <span className="text-sm font-bold text-gray-700">
+                  JavaScript
+                </span>
               </div>
               <CodeBlock
                 code={`import init, { add, fibonacci } from "./pkg/my_wasm_project.js";
@@ -84,7 +88,9 @@ pub fn reverse_string(s: &str) -> String {
             <div className="bg-green-50 p-4 rounded-lg border border-green-200">
               <div className="flex items-center gap-2 mb-3">
                 <Box className="w-4 h-4 text-green-600" />
-                <span className="text-sm font-bold text-green-700">Rust Struct</span>
+                <span className="text-sm font-bold text-green-700">
+                  Rust Struct
+                </span>
               </div>
               <CodeBlock
                 code={`use wasm_bindgen::prelude::*;
@@ -121,7 +127,9 @@ impl Calculator {
             <div className="bg-gray-100 p-4 rounded-lg border border-gray-200">
               <div className="flex items-center gap-2 mb-3">
                 <Code className="w-4 h-4 text-gray-600" />
-                <span className="text-sm font-bold text-gray-700">{t('rustWasm.jsUsage')}</span>
+                <span className="text-sm font-bold text-gray-700">
+                  {t('rustWasm.jsUsage')}
+                </span>
               </div>
               <CodeBlock
                 code={`import { Calculator } from "./pkg/my_wasm_project.js";
@@ -141,7 +149,9 @@ console.log(calc.result()); // 120`}
           <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
             <div className="flex items-center gap-2 mb-3">
               <LinkIcon className="w-4 h-4 text-purple-600" />
-              <span className="text-sm font-bold text-purple-700">{t('rustWasm.callingJs')}</span>
+              <span className="text-sm font-bold text-purple-700">
+                {t('rustWasm.callingJs')}
+              </span>
             </div>
             <CodeBlock
               code={`use wasm_bindgen::prelude::*;

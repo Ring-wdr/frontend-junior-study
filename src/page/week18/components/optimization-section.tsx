@@ -1,5 +1,5 @@
+import { CheckCircle, HardDrive, Minimize2, Zap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Minimize2, Zap, HardDrive, CheckCircle } from 'lucide-react';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
@@ -7,7 +7,9 @@ import { CodeBlock } from '../../../components/ui/code-block';
 
 export const OptimizationSection = () => {
   const { t } = useTranslation('week18');
-  const checklist = t('optimization.checklist', { returnObjects: true }) as string[];
+  const checklist = t('optimization.checklist', {
+    returnObjects: true,
+  }) as string[];
 
   return (
     <SectionCard
@@ -16,12 +18,18 @@ export const OptimizationSection = () => {
       description={t('optimization.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('optimization.binarySizeTitle')} icon iconColor="green">
+        <SubSection
+          title={t('optimization.binarySizeTitle')}
+          icon
+          iconColor="green"
+        >
           <div className="space-y-4">
             <div className="bg-green-50 p-4 rounded-lg border border-green-200">
               <div className="flex items-center gap-2 mb-3">
                 <Minimize2 className="w-4 h-4 text-green-600" />
-                <span className="text-sm font-bold text-green-700">Cargo.toml</span>
+                <span className="text-sm font-bold text-green-700">
+                  Cargo.toml
+                </span>
               </div>
               <CodeBlock
                 code={`[profile.release]
@@ -52,7 +60,10 @@ brotli output.wasm`}
               </h4>
               <ul className="space-y-1">
                 {checklist.map((item: string) => (
-                  <li key={item} className="flex items-center gap-2 text-xs text-gray-700">
+                  <li
+                    key={item}
+                    className="flex items-center gap-2 text-xs text-gray-700"
+                  >
                     <input type="checkbox" className="rounded text-green-500" />
                     {item}
                   </li>
@@ -62,7 +73,11 @@ brotli output.wasm`}
           </div>
         </SubSection>
 
-        <SubSection title={t('optimization.runtimeTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('optimization.runtimeTitle')}
+          icon
+          iconColor="blue"
+        >
           <CodeBlock
             code={`// 1. 스트리밍 컴파일 (병렬 다운로드 + 컴파일)
 const { instance } = await WebAssembly.instantiateStreaming(
@@ -84,11 +99,17 @@ const memory = new WebAssembly.Memory({
           />
         </SubSection>
 
-        <SubSection title={t('optimization.memoryTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('optimization.memoryTitle')}
+          icon
+          iconColor="purple"
+        >
           <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
             <div className="flex items-center gap-2 mb-3">
               <HardDrive className="w-4 h-4 text-purple-600" />
-              <span className="text-sm font-bold text-purple-700">{t('optimization.memoryPooling')}</span>
+              <span className="text-sm font-bold text-purple-700">
+                {t('optimization.memoryPooling')}
+              </span>
             </div>
             <CodeBlock
               code={`use wasm_bindgen::prelude::*;
@@ -115,7 +136,11 @@ pub fn process_with_pool(data: &[u8]) -> Vec<u8> {
           </div>
         </SubSection>
 
-        <SubSection title={t('optimization.jsIntegrationTitle')} icon iconColor="orange">
+        <SubSection
+          title={t('optimization.jsIntegrationTitle')}
+          icon
+          iconColor="orange"
+        >
           <div className="space-y-4">
             <InfoBox variant="orange" title={t('optimization.typedArrayTitle')}>
               <p className="text-sm mb-2">{t('optimization.typedArrayDesc')}</p>
@@ -146,7 +171,11 @@ wasmModule.exports.deallocate(outputPtr);`}
           </div>
         </SubSection>
 
-        <SubSection title={t('optimization.profilingTitle')} icon iconColor="red">
+        <SubSection
+          title={t('optimization.profilingTitle')}
+          icon
+          iconColor="red"
+        >
           <CodeBlock
             code={`// 성능 측정
 const start = performance.now();

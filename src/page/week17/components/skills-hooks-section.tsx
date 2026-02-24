@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next';
 import { Sparkles } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
@@ -8,7 +8,9 @@ import { CodeBlock } from '../../../components/ui/code-block';
 export const SkillsHooksSection = () => {
   const { t } = useTranslation('week17');
   const hooks = t('skillsHooks.hookTypes', { returnObjects: true }) as any[];
-  const skills = t('skillsHooks.skillExamples', { returnObjects: true }) as any[];
+  const skills = t('skillsHooks.skillExamples', {
+    returnObjects: true,
+  }) as any[];
 
   return (
     <SectionCard
@@ -32,7 +34,9 @@ export const SkillsHooksSection = () => {
               >
                 <div className="flex items-center gap-2 mb-1">
                   <Sparkles className="w-4 h-4 text-green-600" />
-                  <code className="text-xs font-bold text-green-700">{skill.name}</code>
+                  <code className="text-xs font-bold text-green-700">
+                    {skill.name}
+                  </code>
                 </div>
                 <p className="text-xs text-gray-600">{skill.desc}</p>
               </div>
@@ -71,17 +75,32 @@ export const SkillsHooksSection = () => {
             <table className="w-full text-xs">
               <thead>
                 <tr className="bg-orange-50">
-                  <th className="px-3 py-2 text-left font-semibold text-orange-800 border-b border-orange-200">Hook</th>
-                  <th className="px-3 py-2 text-left font-semibold text-orange-800 border-b border-orange-200">{t('skillsHooks.table.timing')}</th>
-                  <th className="px-3 py-2 text-left font-semibold text-orange-800 border-b border-orange-200">{t('skillsHooks.table.usage')}</th>
+                  <th className="px-3 py-2 text-left font-semibold text-orange-800 border-b border-orange-200">
+                    Hook
+                  </th>
+                  <th className="px-3 py-2 text-left font-semibold text-orange-800 border-b border-orange-200">
+                    {t('skillsHooks.table.timing')}
+                  </th>
+                  <th className="px-3 py-2 text-left font-semibold text-orange-800 border-b border-orange-200">
+                    {t('skillsHooks.table.usage')}
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {hooks.map((hook: any, idx: number) => (
-                  <tr key={hook.name} className={idx % 2 === 0 ? 'bg-white' : 'bg-orange-50/50'}>
-                    <td className="px-3 py-2 font-mono text-orange-700 border-b border-orange-100">{hook.name}</td>
-                    <td className="px-3 py-2 text-gray-600 border-b border-orange-100">{hook.timing}</td>
-                    <td className="px-3 py-2 text-gray-600 border-b border-orange-100">{hook.usage}</td>
+                  <tr
+                    key={hook.name}
+                    className={idx % 2 === 0 ? 'bg-white' : 'bg-orange-50/50'}
+                  >
+                    <td className="px-3 py-2 font-mono text-orange-700 border-b border-orange-100">
+                      {hook.name}
+                    </td>
+                    <td className="px-3 py-2 text-gray-600 border-b border-orange-100">
+                      {hook.timing}
+                    </td>
+                    <td className="px-3 py-2 text-gray-600 border-b border-orange-100">
+                      {hook.usage}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -119,7 +138,11 @@ export const SkillsHooksSection = () => {
           />
         </SubSection>
 
-        <SubSection title={t('skillsHooks.claudeMdTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('skillsHooks.claudeMdTitle')}
+          icon
+          iconColor="blue"
+        >
           <InfoBox variant="blue" title={t('skillsHooks.claudeMdInfoTitle')}>
             <p className="text-sm leading-relaxed">
               {t('skillsHooks.claudeMdInfoDesc')}

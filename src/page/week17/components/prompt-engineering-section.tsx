@@ -14,7 +14,11 @@ export const PromptEngineeringSection = () => {
       description={t('promptEngineering.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('promptEngineering.goalOrientedTitle')} icon iconColor="pink">
+        <SubSection
+          title={t('promptEngineering.goalOrientedTitle')}
+          icon
+          iconColor="pink"
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-red-50 p-4 rounded-lg border border-red-200">
               <h4 className="font-bold text-sm text-red-700 mb-2">
@@ -47,8 +51,15 @@ TypeScript 타입을 추가해줘.
           </div>
         </SubSection>
 
-        <SubSection title={t('promptEngineering.contextTitle')} icon iconColor="purple">
-          <InfoBox variant="purple" title={t('promptEngineering.contextInfoTitle')}>
+        <SubSection
+          title={t('promptEngineering.contextTitle')}
+          icon
+          iconColor="purple"
+        >
+          <InfoBox
+            variant="purple"
+            title={t('promptEngineering.contextInfoTitle')}
+          >
             <p className="text-sm leading-relaxed">
               {t('promptEngineering.contextInfoDesc')}
             </p>
@@ -68,7 +79,11 @@ claude "README의 API 문서를 보고 클라이언트 코드 생성해줘"`}
           />
         </SubSection>
 
-        <SubSection title={t('promptEngineering.constraintsTitle')} icon iconColor="orange">
+        <SubSection
+          title={t('promptEngineering.constraintsTitle')}
+          icon
+          iconColor="orange"
+        >
           <CodeBlock
             code={`claude "인증 미들웨어를 구현해줘.
        제약:
@@ -80,8 +95,15 @@ claude "README의 API 문서를 보고 클라이언트 코드 생성해줘"`}
           />
         </SubSection>
 
-        <SubSection title={t('promptEngineering.iterativeTitle')} icon iconColor="blue">
-          <InfoBox variant="blue" title={t('promptEngineering.iterativeInfoTitle')}>
+        <SubSection
+          title={t('promptEngineering.iterativeTitle')}
+          icon
+          iconColor="blue"
+        >
+          <InfoBox
+            variant="blue"
+            title={t('promptEngineering.iterativeInfoTitle')}
+          >
             <p className="text-sm leading-relaxed">
               {t('promptEngineering.iterativeInfoDesc')}
             </p>

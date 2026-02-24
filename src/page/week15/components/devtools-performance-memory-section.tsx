@@ -9,7 +9,9 @@ export const DevToolsPerformanceMemorySection = () => {
   const { t } = useTranslation('week15');
   const [activeMetric, setActiveMetric] = useState(0);
 
-  const metrics = t('devtoolsPerformance.metrics', { returnObjects: true }) as any[];
+  const metrics = t('devtoolsPerformance.metrics', {
+    returnObjects: true,
+  }) as any[];
   const performanceMetrics = [
     { ...metrics[0], icon: '📊', color: 'green' },
     { ...metrics[1], icon: '⏱️', color: 'red' },
@@ -24,8 +26,15 @@ export const DevToolsPerformanceMemorySection = () => {
       description={t('devtoolsPerformance.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('devtoolsPerformance.recordingTitle')} icon iconColor="purple">
-          <InfoBox variant="purple" title={t('devtoolsPerformance.recordingInfoTitle')}>
+        <SubSection
+          title={t('devtoolsPerformance.recordingTitle')}
+          icon
+          iconColor="purple"
+        >
+          <InfoBox
+            variant="purple"
+            title={t('devtoolsPerformance.recordingInfoTitle')}
+          >
             <p className="text-sm leading-relaxed">
               {t('devtoolsPerformance.recordingInfoDesc')}
             </p>
@@ -79,9 +88,17 @@ export const DevToolsPerformanceMemorySection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('devtoolsPerformance.stepsTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('devtoolsPerformance.stepsTitle')}
+          icon
+          iconColor="blue"
+        >
           <div className="space-y-3">
-            {(t('devtoolsPerformance.recordingSteps', { returnObjects: true }) as any[]).map((item: any) => (
+            {(
+              t('devtoolsPerformance.recordingSteps', {
+                returnObjects: true,
+              }) as any[]
+            ).map((item: any) => (
               <div
                 key={item.step}
                 className="flex items-start gap-3 bg-gray-50 p-3 rounded-lg"
@@ -101,21 +118,34 @@ export const DevToolsPerformanceMemorySection = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('devtoolsPerformance.memoryTitle')} icon iconColor="red">
-          <InfoBox variant="red" title={t('devtoolsPerformance.memoryInfoTitle')}>
+        <SubSection
+          title={t('devtoolsPerformance.memoryTitle')}
+          icon
+          iconColor="red"
+        >
+          <InfoBox
+            variant="red"
+            title={t('devtoolsPerformance.memoryInfoTitle')}
+          >
             <p className="text-sm leading-relaxed">
               {t('devtoolsPerformance.memoryInfoDesc')}
             </p>
           </InfoBox>
 
           <div className="mt-4 grid grid-cols-2 gap-3">
-            {(t('devtoolsPerformance.memoryTools', { returnObjects: true }) as any[]).map((item: any, idx: number) => (
+            {(
+              t('devtoolsPerformance.memoryTools', {
+                returnObjects: true,
+              }) as any[]
+            ).map((item: any, idx: number) => (
               <div
                 key={item.title}
                 className="bg-white p-3 rounded-lg border border-gray-200"
               >
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xl">{['📸', '📊', '🎯', '🔗'][idx]}</span>
+                  <span className="text-xl">
+                    {['📸', '📊', '🎯', '🔗'][idx]}
+                  </span>
                   <h5 className="font-bold text-sm text-gray-900">
                     {item.title}
                   </h5>
@@ -127,10 +157,18 @@ export const DevToolsPerformanceMemorySection = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('devtoolsPerformance.leakPatternsTitle')} icon iconColor="orange">
+        <SubSection
+          title={t('devtoolsPerformance.leakPatternsTitle')}
+          icon
+          iconColor="orange"
+        >
           <DemoBox label={t('devtoolsPerformance.leakPatternsLabel')}>
             <div className="space-y-3">
-              {(t('devtoolsPerformance.leakPatterns', { returnObjects: true }) as any[]).map((item: any) => (
+              {(
+                t('devtoolsPerformance.leakPatterns', {
+                  returnObjects: true,
+                }) as any[]
+              ).map((item: any) => (
                 <div
                   key={item.pattern}
                   className="bg-white p-3 rounded-lg border border-gray-200"

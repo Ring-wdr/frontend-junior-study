@@ -1,5 +1,5 @@
+import { Atom, Code, Glasses, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Sparkles, Code, Atom, Glasses } from 'lucide-react';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
@@ -166,8 +166,12 @@ function VRScene() {
   );
 }`;
 
-  const techniques = t('advancedTechniques.techniques', { returnObjects: true }) as any[];
-  const effects = t('advancedTechniques.effects', { returnObjects: true }) as string[];
+  const techniques = t('advancedTechniques.techniques', {
+    returnObjects: true,
+  }) as any[];
+  const effects = t('advancedTechniques.effects', {
+    returnObjects: true,
+  }) as string[];
 
   return (
     <SectionCard
@@ -181,23 +185,37 @@ function VRScene() {
             const icons = [Sparkles, Code, Atom, Glasses];
             const IconComponent = icons[idx] || Sparkles;
             return (
-              <div key={tech.name} className="bg-purple-50 p-3 rounded-lg text-center border border-purple-200">
+              <div
+                key={tech.name}
+                className="bg-purple-50 p-3 rounded-lg text-center border border-purple-200"
+              >
                 <IconComponent className="w-5 h-5 mx-auto text-purple-600 mb-1" />
-                <span className="text-xs font-bold block text-purple-800">{tech.name}</span>
+                <span className="text-xs font-bold block text-purple-800">
+                  {tech.name}
+                </span>
                 <span className="text-xs text-gray-600">{tech.desc}</span>
               </div>
             );
           })}
         </div>
 
-        <SubSection title={t('advancedTechniques.postTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('advancedTechniques.postTitle')}
+          icon
+          iconColor="purple"
+        >
           <p className="text-sm text-gray-700 mb-3">
             {t('advancedTechniques.postDesc')}
           </p>
           <div className="grid grid-cols-3 md:grid-cols-5 gap-2 mb-4">
             {effects.map((effect: string, idx: number) => (
-              <div key={idx} className="bg-purple-100 px-2 py-1 rounded text-center">
-                <span className="text-xs font-medium text-purple-800">{effect}</span>
+              <div
+                key={idx}
+                className="bg-purple-100 px-2 py-1 rounded text-center"
+              >
+                <span className="text-xs font-medium text-purple-800">
+                  {effect}
+                </span>
               </div>
             ))}
           </div>
@@ -208,48 +226,84 @@ function VRScene() {
           />
         </SubSection>
 
-        <SubSection title={t('advancedTechniques.shaderTitle')} icon iconColor="pink">
+        <SubSection
+          title={t('advancedTechniques.shaderTitle')}
+          icon
+          iconColor="pink"
+        >
           <p className="text-sm text-gray-700 mb-3">
             {t('advancedTechniques.shaderDesc')}
           </p>
-          <CodeBlock
-            code={shaderCode}
-            language="tsx"
-            className="text-xs"
-          />
+          <CodeBlock code={shaderCode} language="tsx" className="text-xs" />
           <InfoBox variant="purple" title={t('advancedTechniques.shaderNote')}>
             <p className="text-sm">{t('advancedTechniques.shaderNoteDesc')}</p>
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('advancedTechniques.physicsTitle')} icon iconColor="orange">
+        <SubSection
+          title={t('advancedTechniques.physicsTitle')}
+          icon
+          iconColor="orange"
+        >
           <p className="text-sm text-gray-700 mb-3">
             {t('advancedTechniques.physicsDesc')}
           </p>
-          <CodeBlock
-            code={physicsCode}
-            language="tsx"
-            className="text-xs"
-          />
+          <CodeBlock code={physicsCode} language="tsx" className="text-xs" />
         </SubSection>
 
-        <SubSection title={t('advancedTechniques.xrTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('advancedTechniques.xrTitle')}
+          icon
+          iconColor="blue"
+        >
           <p className="text-sm text-gray-700 mb-3">
             {t('advancedTechniques.xrDesc')}
           </p>
-          <CodeBlock
-            code={xrCode}
-            language="tsx"
-            className="text-xs"
-          />
+          <CodeBlock code={xrCode} language="tsx" className="text-xs" />
         </SubSection>
 
         <InfoBox variant="blue" title={t('advancedTechniques.resourceTitle')}>
           <ul className="list-disc pl-5 space-y-1 text-sm">
-            <li><a href="https://docs.pmnd.rs/react-three-fiber" className="text-blue-600 underline" target="_blank" rel="noopener noreferrer">React Three Fiber Docs</a></li>
-            <li><a href="https://github.com/pmndrs/drei" className="text-blue-600 underline" target="_blank" rel="noopener noreferrer">Drei Components</a></li>
-            <li><a href="https://thebookofshaders.com/" className="text-blue-600 underline" target="_blank" rel="noopener noreferrer">The Book of Shaders</a></li>
-            <li><a href="https://github.com/pmndrs/react-three-rapier" className="text-blue-600 underline" target="_blank" rel="noopener noreferrer">React Three Rapier</a></li>
+            <li>
+              <a
+                href="https://docs.pmnd.rs/react-three-fiber"
+                className="text-blue-600 underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                React Three Fiber Docs
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/pmndrs/drei"
+                className="text-blue-600 underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Drei Components
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://thebookofshaders.com/"
+                className="text-blue-600 underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                The Book of Shaders
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/pmndrs/react-three-rapier"
+                className="text-blue-600 underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                React Three Rapier
+              </a>
+            </li>
           </ul>
         </InfoBox>
       </div>

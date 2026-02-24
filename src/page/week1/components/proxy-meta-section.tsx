@@ -93,7 +93,8 @@ const proxy = new Proxy(target, handler);`}
               onClick={() => handleAccess('secret')}
               className="flex items-center gap-2 px-3 py-2 bg-red-50 text-red-700 rounded-lg text-sm font-medium hover:bg-red-100 transition-colors"
             >
-              <ShieldAlert className="w-4 h-4" /> {t('proxyMeta.buttons.readSecret')}
+              <ShieldAlert className="w-4 h-4" />{' '}
+              {t('proxyMeta.buttons.readSecret')}
             </button>
             <button
               type="button"
@@ -107,7 +108,9 @@ const proxy = new Proxy(target, handler);`}
 
         <div className="bg-gray-900 rounded-xl p-4 text-left border border-gray-800 flex flex-col h-full min-h-[200px]">
           <div className="flex justify-between items-center mb-2 border-b border-gray-800 pb-2">
-            <span className="text-xs font-mono text-gray-400">{t('proxyMeta.logs.title')}</span>
+            <span className="text-xs font-mono text-gray-400">
+              {t('proxyMeta.logs.title')}
+            </span>
             <button
               type="button"
               onClick={clearLogs}

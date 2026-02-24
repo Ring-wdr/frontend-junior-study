@@ -27,8 +27,18 @@
       "good": "2.5초 이하",
       "needsImprovement": "2.5초 ~ 4초",
       "poor": "4초 초과",
-      "causes": ["큰 히어로 이미지", "느린 서버 응답 (TTFB)", "렌더링 차단 리소스", "느린 폰트 로딩"],
-      "solutions": ["CDN 활용 및 서버 최적화", "이미지 최적화 (WebP, AVIF)", "preconnect / preload 사용", "Critical CSS 인라인화"],
+      "causes": [
+        "큰 히어로 이미지",
+        "느린 서버 응답 (TTFB)",
+        "렌더링 차단 리소스",
+        "느린 폰트 로딩"
+      ],
+      "solutions": [
+        "CDN 활용 및 서버 최적화",
+        "이미지 최적화 (WebP, AVIF)",
+        "preconnect / preload 사용",
+        "Critical CSS 인라인화"
+      ],
       "goodMode": "Good (0.8s)",
       "badMode": "Bad (3.5s)",
       "loadingText": "Loading Large Resource...",
@@ -46,8 +56,18 @@
       "good": "200ms 이하",
       "needsImprovement": "200ms ~ 500ms",
       "poor": "500ms 초과",
-      "causes": ["Long Task (50ms+ 메인 스레드 점유)", "과도한 JavaScript 실행", "동기적 레이아웃 계산", "무거운 이벤트 핸들러"],
-      "solutions": ["Heavy 계산을 Web Worker로 분리", "useTransition으로 UI 블로킹 방지", "코드 스플리팅으로 JS 번들 축소", "이벤트 핸들러 최적화 (debounce/throttle)"],
+      "causes": [
+        "Long Task (50ms+ 메인 스레드 점유)",
+        "과도한 JavaScript 실행",
+        "동기적 레이아웃 계산",
+        "무거운 이벤트 핸들러"
+      ],
+      "solutions": [
+        "Heavy 계산을 Web Worker로 분리",
+        "useTransition으로 UI 블로킹 방지",
+        "코드 스플리팅으로 JS 번들 축소",
+        "이벤트 핸들러 최적화 (debounce/throttle)"
+      ],
       "goodMode": "Good (50ms)",
       "badMode": "Bad (600ms)",
       "clickTest": "Click Response Test",
@@ -66,8 +86,18 @@
       "good": "0.1 이하",
       "needsImprovement": "0.1 ~ 0.25",
       "poor": "0.25 초과",
-      "causes": ["이미지 width/height 미지정", "광고/임베드 영역 미예약", "동적으로 삽입되는 콘텐츠", "FOUT (Flash of Unstyled Text)"],
-      "solutions": ["이미지에 width/height 또는 aspect-ratio 지정", "광고 컨테이너에 min-height 설정", "Skeleton UI로 공간 예약", "font-display: swap + preload"],
+      "causes": [
+        "이미지 width/height 미지정",
+        "광고/임베드 영역 미예약",
+        "동적으로 삽입되는 콘텐츠",
+        "FOUT (Flash of Unstyled Text)"
+      ],
+      "solutions": [
+        "이미지에 width/height 또는 aspect-ratio 지정",
+        "광고 컨테이너에 min-height 설정",
+        "Skeleton UI로 공간 예약",
+        "font-display: swap + preload"
+      ],
       "goodMode": "Good (Fixed)",
       "badMode": "Bad (Shift)",
       "layoutView": "Layout View",
@@ -188,7 +218,13 @@
     "lighthouse": {
       "title": "Lighthouse 자동 분석",
       "description": "DevTools → Lighthouse 탭에서 자동으로 Core Web Vitals 및 개선 제안을 받을 수 있습니다.",
-      "categories": ["Performance", "Accessibility", "Best Practices", "SEO", "PWA"]
+      "categories": [
+        "Performance",
+        "Accessibility",
+        "Best Practices",
+        "SEO",
+        "PWA"
+      ]
     }
   },
   "codeSplitting": {

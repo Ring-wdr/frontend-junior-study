@@ -106,7 +106,11 @@ export const React2ShellSection = () => {
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('react2shell.simulator.title')} icon iconColor="blue">
+        <SubSection
+          title={t('react2shell.simulator.title')}
+          icon
+          iconColor="blue"
+        >
           <DemoBox label={t('react2shell.simulator.demoLabel')}>
             <div className="space-y-6">
               {/* Controls */}
@@ -129,7 +133,9 @@ export const React2ShellSection = () => {
                       ) : (
                         <ShieldAlert size={16} />
                       )}
-                      {isPatched ? t('react2shell.simulator.patched') : t('react2shell.simulator.vulnerable')}
+                      {isPatched
+                        ? t('react2shell.simulator.patched')
+                        : t('react2shell.simulator.vulnerable')}
                     </button>
                   </div>
 
@@ -198,7 +204,9 @@ export const React2ShellSection = () => {
                     )}
                   </div>
                   <ArrowRight className="mt-2" />
-                  <span className="text-xs mt-1">{t('react2shell.simulator.flightProtocol')}</span>
+                  <span className="text-xs mt-1">
+                    {t('react2shell.simulator.flightProtocol')}
+                  </span>
                 </div>
 
                 {/* Server */}
@@ -218,7 +226,9 @@ export const React2ShellSection = () => {
                   >
                     <div className="flex items-center gap-2">
                       <Server size={16} />
-                      <span className="text-xs font-bold">{t('react2shell.simulator.targetServer')}</span>
+                      <span className="text-xs font-bold">
+                        {t('react2shell.simulator.targetServer')}
+                      </span>
                     </div>
                     <span className="text-[10px] bg-black/10 px-2 py-0.5 rounded">
                       {isPatched ? 'React 19.1.2' : 'React 19.0.0'}
@@ -271,7 +281,11 @@ export const React2ShellSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('react2shell.vulnerable.title')} icon iconColor="purple">
+        <SubSection
+          title={t('react2shell.vulnerable.title')}
+          icon
+          iconColor="purple"
+        >
           <CodeBlock
             code={`// SERVER ACTION (Vulnerable in unpatched React)
 "use server";
@@ -295,7 +309,11 @@ POST /path/to/action
           />
         </SubSection>
 
-        <SubSection title={t('react2shell.mitigation.title')} icon iconColor="green">
+        <SubSection
+          title={t('react2shell.mitigation.title')}
+          icon
+          iconColor="green"
+        >
           <div className="space-y-2">
             {[
               t('react2shell.mitigation.item1'),

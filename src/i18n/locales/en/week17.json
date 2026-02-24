@@ -35,12 +35,28 @@
     },
     "toolsComparisonTitle": "Major AI Development Tools",
     "tools": [
-      { "name": "Claude Code", "desc": "CLI-based fully autonomous agent", "icon": "bot" },
-      { "name": "Cursor", "desc": "AI-native IDE with Composer", "icon": "zap" },
-      { "name": "GitHub Copilot", "desc": "VS Code integrated agent", "icon": "git-branch" },
+      {
+        "name": "Claude Code",
+        "desc": "CLI-based fully autonomous agent",
+        "icon": "bot"
+      },
+      {
+        "name": "Cursor",
+        "desc": "AI-native IDE with Composer",
+        "icon": "zap"
+      },
+      {
+        "name": "GitHub Copilot",
+        "desc": "VS Code integrated agent",
+        "icon": "git-branch"
+      },
       { "name": "Windsurf", "desc": "Cascade agent IDE", "icon": "brain" },
       { "name": "Cline", "desc": "VS Code autonomous agent", "icon": "wrench" },
-      { "name": "Aider", "desc": "Git-integrated CLI tool", "icon": "git-branch" }
+      {
+        "name": "Aider",
+        "desc": "Git-integrated CLI tool",
+        "icon": "git-branch"
+      }
     ],
     "capabilitiesTitle": "AI Agent Capabilities and Limits",
     "aiGoodAt": "What AI Agents Excel At",
@@ -75,10 +91,30 @@
     },
     "serversTitle": "Popular MCP Servers",
     "servers": [
-      { "name": "PostgreSQL", "desc": "Execute database queries", "icon": "database", "example": "@modelcontextprotocol/server-postgres" },
-      { "name": "Playwright", "desc": "Browser automation and testing", "icon": "globe", "example": "@anthropic/mcp-playwright" },
-      { "name": "GitHub", "desc": "Issues, PRs, comments management", "icon": "git-branch", "example": "@modelcontextprotocol/server-github" },
-      { "name": "Context7", "desc": "Latest documentation search", "icon": "file-search", "example": "@context7/mcp-server" }
+      {
+        "name": "PostgreSQL",
+        "desc": "Execute database queries",
+        "icon": "database",
+        "example": "@modelcontextprotocol/server-postgres"
+      },
+      {
+        "name": "Playwright",
+        "desc": "Browser automation and testing",
+        "icon": "globe",
+        "example": "@anthropic/mcp-playwright"
+      },
+      {
+        "name": "GitHub",
+        "desc": "Issues, PRs, comments management",
+        "icon": "git-branch",
+        "example": "@modelcontextprotocol/server-github"
+      },
+      {
+        "name": "Context7",
+        "desc": "Latest documentation search",
+        "icon": "file-search",
+        "example": "@context7/mcp-server"
+      }
     ],
     "configTitle": "MCP Configuration",
     "usageTitle": "MCP Usage Examples",
@@ -97,7 +133,10 @@
     "skillsInfoTitle": "What are Skills?",
     "skillsInfoDesc": "Skills let you define complex, frequently-used tasks and invoke them with slash commands. /commit and /review-pr are typical examples.",
     "skillExamples": [
-      { "name": "/commit", "desc": "Analyze changes and create conventional commit" },
+      {
+        "name": "/commit",
+        "desc": "Analyze changes and create conventional commit"
+      },
       { "name": "/review-pr", "desc": "PR code review with suggestions" },
       { "name": "/component", "desc": "Generate component + test + story" },
       { "name": "/docs", "desc": "Auto-generate docs from code" }
@@ -110,10 +149,26 @@
       "usage": "Use Case"
     },
     "hookTypes": [
-      { "name": "PreToolUse", "timing": "Before tool execution", "usage": "Block dangerous commands, logging" },
-      { "name": "PostToolUse", "timing": "After tool execution", "usage": "Auto-formatting, linting, testing" },
-      { "name": "Notification", "timing": "Waiting for response", "usage": "Slack/Discord notifications" },
-      { "name": "Stop", "timing": "Agent termination", "usage": "Cleanup, reporting" }
+      {
+        "name": "PreToolUse",
+        "timing": "Before tool execution",
+        "usage": "Block dangerous commands, logging"
+      },
+      {
+        "name": "PostToolUse",
+        "timing": "After tool execution",
+        "usage": "Auto-formatting, linting, testing"
+      },
+      {
+        "name": "Notification",
+        "timing": "Waiting for response",
+        "usage": "Slack/Discord notifications"
+      },
+      {
+        "name": "Stop",
+        "timing": "Agent termination",
+        "usage": "Cleanup, reporting"
+      }
     ],
     "claudeMdTitle": "CLAUDE.md: Project Context",
     "claudeMdInfoTitle": "What is CLAUDE.md?",
@@ -215,10 +270,30 @@
     "dimension": "Dimension",
     "whenToUse": "Best Use",
     "mcpVsCdpRows": [
-      { "dimension": "Abstraction", "mcp": "High-level tool orchestration", "cdp": "Direct browser protocol control", "note": "Use MCP for speed, CDP for precision." },
-      { "dimension": "Context cost", "mcp": "More request context in tool-driven commands", "cdp": "Lower if scripts are reused", "note": "Pair repeatable checks with reusable CLI scripts." },
-      { "dimension": "Stability", "mcp": "Can change across tool updates", "cdp": "Depends on browser version support", "note": "Pin versions to reduce drift." },
-      { "dimension": "Team collaboration", "mcp": "Clearer conversational handoff", "cdp": "Better reproducibility in code reviews", "note": "Use a hybrid approach for mixed teams." }
+      {
+        "dimension": "Abstraction",
+        "mcp": "High-level tool orchestration",
+        "cdp": "Direct browser protocol control",
+        "note": "Use MCP for speed, CDP for precision."
+      },
+      {
+        "dimension": "Context cost",
+        "mcp": "More request context in tool-driven commands",
+        "cdp": "Lower if scripts are reused",
+        "note": "Pair repeatable checks with reusable CLI scripts."
+      },
+      {
+        "dimension": "Stability",
+        "mcp": "Can change across tool updates",
+        "cdp": "Depends on browser version support",
+        "note": "Pin versions to reduce drift."
+      },
+      {
+        "dimension": "Team collaboration",
+        "mcp": "Clearer conversational handoff",
+        "cdp": "Better reproducibility in code reviews",
+        "note": "Use a hybrid approach for mixed teams."
+      }
     ],
     "contextOptimizationTitle": "Context Optimization Playbook",
     "contextOptimizationInfoTitle": "Baseline rules for saving tokens",

@@ -21,8 +21,15 @@ export const TransitionSection = () => {
       description={t('transition.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('transition.springPhysics.title')} icon iconColor="blue">
-          <InfoBox variant="blue" title={t('transition.springPhysics.infoTitle')}>
+        <SubSection
+          title={t('transition.springPhysics.title')}
+          icon
+          iconColor="blue"
+        >
+          <InfoBox
+            variant="blue"
+            title={t('transition.springPhysics.infoTitle')}
+          >
             <p className="text-sm leading-relaxed">
               {t('transition.springPhysics.content')}
             </p>
@@ -62,7 +69,11 @@ transition={{ type: "spring", bounce: 0.25 }}`}
           />
         </SubSection>
 
-        <SubSection title={t('transition.compare.title')} icon iconColor="green">
+        <SubSection
+          title={t('transition.compare.title')}
+          icon
+          iconColor="green"
+        >
           <DemoBox label={t('transition.compare.demoLabel')}>
             <div className="space-y-4">
               <div className="flex gap-2 justify-center flex-wrap">
@@ -139,15 +150,21 @@ transition={{ type: "spring", bounce: 0.25 }}`}
               </div>
 
               <p className="text-xs text-gray-500 text-center">
-                {animationType === 'spring' && t('transition.compare.springNote')}
+                {animationType === 'spring' &&
+                  t('transition.compare.springNote')}
                 {animationType === 'tween' && t('transition.compare.tweenNote')}
-                {animationType === 'keyframes' && t('transition.compare.keyframesNote')}
+                {animationType === 'keyframes' &&
+                  t('transition.compare.keyframesNote')}
               </p>
             </div>
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('transition.keyframes.title')} icon iconColor="pink">
+        <SubSection
+          title={t('transition.keyframes.title')}
+          icon
+          iconColor="pink"
+        >
           <CodeBlock
             code={`// Animate through multiple values
 <motion.div
@@ -185,16 +202,24 @@ transition={{ type: "spring", bounce: 0.25 }}`}
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('transition.transitionOptions.title')} icon iconColor="orange">
+        <SubSection
+          title={t('transition.transitionOptions.title')}
+          icon
+          iconColor="orange"
+        >
           <div className="grid grid-cols-1 gap-3">
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
-              <p className="text-sm font-semibold text-orange-900">{t('transition.transitionOptions.delay')}</p>
+              <p className="text-sm font-semibold text-orange-900">
+                {t('transition.transitionOptions.delay')}
+              </p>
               <p className="text-xs text-orange-700 mt-1">
                 {t('transition.transitionOptions.delayDesc')}
               </p>
             </div>
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
-              <p className="text-sm font-semibold text-orange-900">{t('transition.transitionOptions.repeat')}</p>
+              <p className="text-sm font-semibold text-orange-900">
+                {t('transition.transitionOptions.repeat')}
+              </p>
               <p className="text-xs text-orange-700 mt-1">
                 {t('transition.transitionOptions.repeatDesc')}
               </p>
@@ -218,7 +243,11 @@ transition={{ type: "spring", bounce: 0.25 }}`}
           </div>
         </SubSection>
 
-        <SubSection title={t('transition.perProperty.title')} icon iconColor="blue">
+        <SubSection
+          title={t('transition.perProperty.title')}
+          icon
+          iconColor="blue"
+        >
           <CodeBlock
             code={`// Different transitions for different properties
 <motion.div

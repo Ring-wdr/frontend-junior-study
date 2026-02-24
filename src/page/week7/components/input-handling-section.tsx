@@ -1,8 +1,8 @@
+import { useTranslation } from 'react-i18next';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
-import { useTranslation } from 'react-i18next';
 
 export const InputHandlingSection = () => {
   const { t } = useTranslation('week7');
@@ -14,18 +14,19 @@ export const InputHandlingSection = () => {
       description={t('inputHandling.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('inputHandling.emojiProblem.title')} icon iconColor="orange">
-          <InfoBox variant="orange" title={t('inputHandling.emojiProblem.whyTricky.title')}>
+        <SubSection
+          title={t('inputHandling.emojiProblem.title')}
+          icon
+          iconColor="orange"
+        >
+          <InfoBox
+            variant="orange"
+            title={t('inputHandling.emojiProblem.whyTricky.title')}
+          >
             <ul className="list-disc pl-5 space-y-1 text-sm">
-              <li>
-                {t('inputHandling.emojiProblem.whyTricky.multipleChars')}
-              </li>
-              <li>
-                {t('inputHandling.emojiProblem.whyTricky.lengthIssue')}
-              </li>
-              <li>
-                {t('inputHandling.emojiProblem.whyTricky.composed')}
-              </li>
+              <li>{t('inputHandling.emojiProblem.whyTricky.multipleChars')}</li>
+              <li>{t('inputHandling.emojiProblem.whyTricky.lengthIssue')}</li>
+              <li>{t('inputHandling.emojiProblem.whyTricky.composed')}</li>
               <li>
                 {t('inputHandling.emojiProblem.whyTricky.lengthValidation')}
               </li>
@@ -62,7 +63,10 @@ const getCharacterCount = (str: string): number => {
             />
           </div>
 
-          <InfoBox variant="blue" title={t('inputHandling.emojiProblem.practicalExample.title')}>
+          <InfoBox
+            variant="blue"
+            title={t('inputHandling.emojiProblem.practicalExample.title')}
+          >
             <CodeBlock
               code={`// Input field with emoji support
 <input
@@ -82,20 +86,43 @@ const getCharacterCount = (str: string): number => {
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('inputHandling.unicodeNormalization.title')} icon iconColor="blue">
-          <InfoBox variant="blue" title={t('inputHandling.unicodeNormalization.whatIsNormalization.title')}>
+        <SubSection
+          title={t('inputHandling.unicodeNormalization.title')}
+          icon
+          iconColor="blue"
+        >
+          <InfoBox
+            variant="blue"
+            title={t(
+              'inputHandling.unicodeNormalization.whatIsNormalization.title',
+            )}
+          >
             <p className="text-sm mb-3">
-              {t('inputHandling.unicodeNormalization.whatIsNormalization.intro')}
+              {t(
+                'inputHandling.unicodeNormalization.whatIsNormalization.intro',
+              )}
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                {t('inputHandling.unicodeNormalization.whatIsNormalization.singleCodepoint')}
+                {t(
+                  'inputHandling.unicodeNormalization.whatIsNormalization.singleCodepoint',
+                )}
               </li>
               <li>
-                {t('inputHandling.unicodeNormalization.whatIsNormalization.composed')}
+                {t(
+                  'inputHandling.unicodeNormalization.whatIsNormalization.composed',
+                )}
               </li>
-              <li>{t('inputHandling.unicodeNormalization.whatIsNormalization.lookIdentical')}</li>
-              <li>{t('inputHandling.unicodeNormalization.whatIsNormalization.causesFails')}</li>
+              <li>
+                {t(
+                  'inputHandling.unicodeNormalization.whatIsNormalization.lookIdentical',
+                )}
+              </li>
+              <li>
+                {t(
+                  'inputHandling.unicodeNormalization.whatIsNormalization.causesFails',
+                )}
+              </li>
             </ul>
           </InfoBox>
 
@@ -138,41 +165,69 @@ const userSchema = z.object({
             />
           </div>
 
-          <InfoBox variant="green" title={t('inputHandling.unicodeNormalization.whenToNormalize.title')}>
+          <InfoBox
+            variant="green"
+            title={t(
+              'inputHandling.unicodeNormalization.whenToNormalize.title',
+            )}
+          >
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                {t('inputHandling.unicodeNormalization.whenToNormalize.beforeStoring')}
+                {t(
+                  'inputHandling.unicodeNormalization.whenToNormalize.beforeStoring',
+                )}
               </li>
               <li>
-                {t('inputHandling.unicodeNormalization.whenToNormalize.beforeComparing')}
+                {t(
+                  'inputHandling.unicodeNormalization.whenToNormalize.beforeComparing',
+                )}
               </li>
               <li>
-                {t('inputHandling.unicodeNormalization.whenToNormalize.beforeSearching')}
+                {t(
+                  'inputHandling.unicodeNormalization.whenToNormalize.beforeSearching',
+                )}
               </li>
               <li>
-                {t('inputHandling.unicodeNormalization.whenToNormalize.onDisplay')}
+                {t(
+                  'inputHandling.unicodeNormalization.whenToNormalize.onDisplay',
+                )}
               </li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('inputHandling.whitespaceTrimming.title')} icon iconColor="green">
-          <InfoBox variant="green" title={t('inputHandling.whitespaceTrimming.whitespaceTypes.title')}>
+        <SubSection
+          title={t('inputHandling.whitespaceTrimming.title')}
+          icon
+          iconColor="green"
+        >
+          <InfoBox
+            variant="green"
+            title={t('inputHandling.whitespaceTrimming.whitespaceTypes.title')}
+          >
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                {t('inputHandling.whitespaceTrimming.whitespaceTypes.regularSpace')}
+                {t(
+                  'inputHandling.whitespaceTrimming.whitespaceTypes.regularSpace',
+                )}
               </li>
               <li>
-                {t('inputHandling.whitespaceTrimming.whitespaceTypes.nonBreakingSpace')}
+                {t(
+                  'inputHandling.whitespaceTrimming.whitespaceTypes.nonBreakingSpace',
+                )}
               </li>
               <li>
                 {t('inputHandling.whitespaceTrimming.whitespaceTypes.tab')}
               </li>
               <li>
-                {t('inputHandling.whitespaceTrimming.whitespaceTypes.zeroWidth')}
+                {t(
+                  'inputHandling.whitespaceTrimming.whitespaceTypes.zeroWidth',
+                )}
               </li>
               <li>
-                {t('inputHandling.whitespaceTrimming.whitespaceTypes.lineBreak')}
+                {t(
+                  'inputHandling.whitespaceTrimming.whitespaceTypes.lineBreak',
+                )}
               </li>
             </ul>
           </InfoBox>
@@ -217,8 +272,15 @@ const schema = z.object({
           </div>
         </SubSection>
 
-        <SubSection title={t('inputHandling.botPrevention.title')} icon iconColor="purple">
-          <InfoBox variant="purple" title={t('inputHandling.botPrevention.honeypot.title')}>
+        <SubSection
+          title={t('inputHandling.botPrevention.title')}
+          icon
+          iconColor="purple"
+        >
+          <InfoBox
+            variant="purple"
+            title={t('inputHandling.botPrevention.honeypot.title')}
+          >
             <p className="text-sm">
               {t('inputHandling.botPrevention.honeypot.description')}
             </p>

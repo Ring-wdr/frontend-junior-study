@@ -20,21 +20,57 @@
     "description": "A declarative 3D development library that enables using Three.js the React way",
     "featuresTitle": "Key Features",
     "features": [
-      { "title": "Declarative 3D Development", "desc": "Build 3D scenes with JSX syntax for intuitive development", "icon": "box" },
-      { "title": "React Ecosystem Integration", "desc": "Use React patterns like hooks, context, and suspense directly", "icon": "layers" },
-      { "title": "Automatic Resource Management", "desc": "GPU memory is automatically cleaned up on component unmount", "icon": "refresh" },
-      { "title": "Built-in Performance Optimization", "desc": "Efficient rendering through React's reconciliation algorithm", "icon": "palette" }
+      {
+        "title": "Declarative 3D Development",
+        "desc": "Build 3D scenes with JSX syntax for intuitive development",
+        "icon": "box"
+      },
+      {
+        "title": "React Ecosystem Integration",
+        "desc": "Use React patterns like hooks, context, and suspense directly",
+        "icon": "layers"
+      },
+      {
+        "title": "Automatic Resource Management",
+        "desc": "GPU memory is automatically cleaned up on component unmount",
+        "icon": "refresh"
+      },
+      {
+        "title": "Built-in Performance Optimization",
+        "desc": "Efficient rendering through React's reconciliation algorithm",
+        "icon": "palette"
+      }
     ],
     "comparisonTitle": "Three.js vs React Three Fiber",
     "imperative": "Imperative",
     "declarative": "Declarative",
     "advantagesTitle": "Comparing R3F Advantages",
     "advantages": [
-      { "feature": "Code Style", "threejs": "Imperative", "r3f": "Declarative" },
-      { "feature": "Resource Management", "threejs": "Manual dispose", "r3f": "Auto cleanup" },
-      { "feature": "State Management", "threejs": "Custom implementation", "r3f": "React State/Context" },
-      { "feature": "Component Reuse", "threejs": "Difficult", "r3f": "Natural" },
-      { "feature": "Learning Curve", "threejs": "Learn entire Three.js", "r3f": "Leverage React knowledge" }
+      {
+        "feature": "Code Style",
+        "threejs": "Imperative",
+        "r3f": "Declarative"
+      },
+      {
+        "feature": "Resource Management",
+        "threejs": "Manual dispose",
+        "r3f": "Auto cleanup"
+      },
+      {
+        "feature": "State Management",
+        "threejs": "Custom implementation",
+        "r3f": "React State/Context"
+      },
+      {
+        "feature": "Component Reuse",
+        "threejs": "Difficult",
+        "r3f": "Natural"
+      },
+      {
+        "feature": "Learning Curve",
+        "threejs": "Learn entire Three.js",
+        "r3f": "Leverage React knowledge"
+      }
     ],
     "table": {
       "feature": "Feature"
@@ -70,7 +106,11 @@
     "lightingTitle": "Lighting System",
     "lightTypes": [
       { "name": "ambientLight", "desc": "Ambient light", "icon": "ambient" },
-      { "name": "directionalLight", "desc": "Directional light", "icon": "sun" },
+      {
+        "name": "directionalLight",
+        "desc": "Directional light",
+        "icon": "sun"
+      },
       { "name": "pointLight", "desc": "Point light", "icon": "lightbulb" },
       { "name": "spotLight", "desc": "Spotlight", "icon": "spotlight" }
     ],
@@ -85,9 +125,18 @@
     "title": "Hooks and Animation",
     "description": "Implementing animations with useFrame, useThree, and useLoader",
     "hooks": [
-      { "name": "useFrame", "desc": "Callback executed every frame in render loop" },
-      { "name": "useThree", "desc": "Access R3F internal state (camera, gl, scene, etc.)" },
-      { "name": "useLoader", "desc": "Async loading of assets like textures and models" }
+      {
+        "name": "useFrame",
+        "desc": "Callback executed every frame in render loop"
+      },
+      {
+        "name": "useThree",
+        "desc": "Access R3F internal state (camera, gl, scene, etc.)"
+      },
+      {
+        "name": "useLoader",
+        "desc": "Async loading of assets like textures and models"
+      }
     ],
     "useFrameDesc": "useFrame runs every frame to implement animations. Use the delta value to create frame-independent animations.",
     "useThreeDesc": "useThree provides access to R3F's internal state, allowing you to manipulate camera, renderer, scene, and more.",
@@ -190,7 +239,13 @@
     ],
     "postTitle": "Post Processing",
     "postDesc": "Apply various post-processing effects like bloom, chromatic aberration, and vignette with @react-three/postprocessing.",
-    "effects": ["Bloom", "Vignette", "DepthOfField", "ChromaticAberration", "SMAA"],
+    "effects": [
+      "Bloom",
+      "Vignette",
+      "DepthOfField",
+      "ChromaticAberration",
+      "SMAA"
+    ],
     "shaderTitle": "Custom Shaders (GLSL)",
     "shaderDesc": "Write custom vertex/fragment shaders using shaderMaterial.",
     "shaderNote": "Shader Learning Resources",

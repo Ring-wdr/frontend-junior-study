@@ -18,7 +18,9 @@ export const IndexedDBSection = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [newTodo, setNewTodo] = useState('');
   const [db, setDb] = useState<IDBDatabase | null>(null);
-  const [dbStatus, setDbStatus] = useState<string>(t('indexedDB.demo.initializing'));
+  const [dbStatus, setDbStatus] = useState<string>(
+    t('indexedDB.demo.initializing'),
+  );
 
   useEffect(() => {
     const request = indexedDB.open('week13-demo', 1);
@@ -143,41 +145,81 @@ export const IndexedDBSection = () => {
           </InfoBox>
         </SubSection>
 
-        <SubSection title={t('indexedDB.comparison.title')} icon iconColor="purple">
+        <SubSection
+          title={t('indexedDB.comparison.title')}
+          icon
+          iconColor="purple"
+        >
           <div className="overflow-x-auto">
             <table className="w-full text-sm border-collapse">
               <thead>
                 <tr className="bg-gray-50">
-                  <th className="p-2 text-left border border-gray-200">{t('indexedDB.comparison.feature')}</th>
-                  <th className="p-2 text-left border border-gray-200">{t('indexedDB.comparison.localStorage')}</th>
-                  <th className="p-2 text-left border border-gray-200">{t('indexedDB.comparison.indexedDB')}</th>
+                  <th className="p-2 text-left border border-gray-200">
+                    {t('indexedDB.comparison.feature')}
+                  </th>
+                  <th className="p-2 text-left border border-gray-200">
+                    {t('indexedDB.comparison.localStorage')}
+                  </th>
+                  <th className="p-2 text-left border border-gray-200">
+                    {t('indexedDB.comparison.indexedDB')}
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="p-2 border border-gray-200 font-medium">{t('indexedDB.comparison.capacity')}</td>
-                  <td className="p-2 border border-gray-200">{t('indexedDB.comparison.capacityLS')}</td>
-                  <td className="p-2 border border-gray-200 text-green-600">{t('indexedDB.comparison.capacityIDB')}</td>
+                  <td className="p-2 border border-gray-200 font-medium">
+                    {t('indexedDB.comparison.capacity')}
+                  </td>
+                  <td className="p-2 border border-gray-200">
+                    {t('indexedDB.comparison.capacityLS')}
+                  </td>
+                  <td className="p-2 border border-gray-200 text-green-600">
+                    {t('indexedDB.comparison.capacityIDB')}
+                  </td>
                 </tr>
                 <tr className="bg-gray-50">
-                  <td className="p-2 border border-gray-200 font-medium">{t('indexedDB.comparison.dataType')}</td>
-                  <td className="p-2 border border-gray-200">{t('indexedDB.comparison.dataTypeLS')}</td>
-                  <td className="p-2 border border-gray-200 text-green-600">{t('indexedDB.comparison.dataTypeIDB')}</td>
+                  <td className="p-2 border border-gray-200 font-medium">
+                    {t('indexedDB.comparison.dataType')}
+                  </td>
+                  <td className="p-2 border border-gray-200">
+                    {t('indexedDB.comparison.dataTypeLS')}
+                  </td>
+                  <td className="p-2 border border-gray-200 text-green-600">
+                    {t('indexedDB.comparison.dataTypeIDB')}
+                  </td>
                 </tr>
                 <tr>
-                  <td className="p-2 border border-gray-200 font-medium">{t('indexedDB.comparison.api')}</td>
-                  <td className="p-2 border border-gray-200 text-green-600">{t('indexedDB.comparison.apiLS')}</td>
-                  <td className="p-2 border border-gray-200">{t('indexedDB.comparison.apiIDB')}</td>
+                  <td className="p-2 border border-gray-200 font-medium">
+                    {t('indexedDB.comparison.api')}
+                  </td>
+                  <td className="p-2 border border-gray-200 text-green-600">
+                    {t('indexedDB.comparison.apiLS')}
+                  </td>
+                  <td className="p-2 border border-gray-200">
+                    {t('indexedDB.comparison.apiIDB')}
+                  </td>
                 </tr>
                 <tr className="bg-gray-50">
-                  <td className="p-2 border border-gray-200 font-medium">{t('indexedDB.comparison.indexing')}</td>
-                  <td className="p-2 border border-gray-200 text-red-600">{t('indexedDB.comparison.indexingLS')}</td>
-                  <td className="p-2 border border-gray-200 text-green-600">{t('indexedDB.comparison.indexingIDB')}</td>
+                  <td className="p-2 border border-gray-200 font-medium">
+                    {t('indexedDB.comparison.indexing')}
+                  </td>
+                  <td className="p-2 border border-gray-200 text-red-600">
+                    {t('indexedDB.comparison.indexingLS')}
+                  </td>
+                  <td className="p-2 border border-gray-200 text-green-600">
+                    {t('indexedDB.comparison.indexingIDB')}
+                  </td>
                 </tr>
                 <tr>
-                  <td className="p-2 border border-gray-200 font-medium">{t('indexedDB.comparison.transactions')}</td>
-                  <td className="p-2 border border-gray-200 text-red-600">{t('indexedDB.comparison.transactionsLS')}</td>
-                  <td className="p-2 border border-gray-200 text-green-600">{t('indexedDB.comparison.transactionsIDB')}</td>
+                  <td className="p-2 border border-gray-200 font-medium">
+                    {t('indexedDB.comparison.transactions')}
+                  </td>
+                  <td className="p-2 border border-gray-200 text-red-600">
+                    {t('indexedDB.comparison.transactionsLS')}
+                  </td>
+                  <td className="p-2 border border-gray-200 text-green-600">
+                    {t('indexedDB.comparison.transactionsIDB')}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -275,7 +317,11 @@ export const IndexedDBSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('indexedDB.vanillaAPI.title')} icon iconColor="orange">
+        <SubSection
+          title={t('indexedDB.vanillaAPI.title')}
+          icon
+          iconColor="orange"
+        >
           <CodeBlock
             code={`// Open database (creates if not exists)
 const request = indexedDB.open('myDatabase', 1);
@@ -311,7 +357,11 @@ request.onsuccess = (event) => {
           />
         </SubSection>
 
-        <SubSection title={t('indexedDB.idbLibrary.title')} icon iconColor="red">
+        <SubSection
+          title={t('indexedDB.idbLibrary.title')}
+          icon
+          iconColor="red"
+        >
           <InfoBox variant="blue" title={t('indexedDB.idbLibrary.infoTitle')}>
             <p className="text-sm">
               <Trans t={t} i18nKey="indexedDB.idbLibrary.description" />
@@ -357,15 +407,37 @@ await Promise.all([
           />
         </SubSection>
 
-        <SubSection title={t('indexedDB.useCases.title')} icon iconColor="purple">
+        <SubSection
+          title={t('indexedDB.useCases.title')}
+          icon
+          iconColor="purple"
+        >
           <div className="grid grid-cols-2 gap-3">
             {[
-              { title: t('indexedDB.useCases.offlineFirstApps'), desc: t('indexedDB.useCases.offlineFirstAppsDesc') },
-              { title: t('indexedDB.useCases.fileStorage'), desc: t('indexedDB.useCases.fileStorageDesc') },
-              { title: t('indexedDB.useCases.reactQueryPersist'), desc: t('indexedDB.useCases.reactQueryPersistDesc') },
-              { title: t('indexedDB.useCases.formDrafts'), desc: t('indexedDB.useCases.formDraftsDesc') },
-              { title: t('indexedDB.useCases.syncQueue'), desc: t('indexedDB.useCases.syncQueueDesc') },
-              { title: t('indexedDB.useCases.analyticsBuffer'), desc: t('indexedDB.useCases.analyticsBufferDesc') },
+              {
+                title: t('indexedDB.useCases.offlineFirstApps'),
+                desc: t('indexedDB.useCases.offlineFirstAppsDesc'),
+              },
+              {
+                title: t('indexedDB.useCases.fileStorage'),
+                desc: t('indexedDB.useCases.fileStorageDesc'),
+              },
+              {
+                title: t('indexedDB.useCases.reactQueryPersist'),
+                desc: t('indexedDB.useCases.reactQueryPersistDesc'),
+              },
+              {
+                title: t('indexedDB.useCases.formDrafts'),
+                desc: t('indexedDB.useCases.formDraftsDesc'),
+              },
+              {
+                title: t('indexedDB.useCases.syncQueue'),
+                desc: t('indexedDB.useCases.syncQueueDesc'),
+              },
+              {
+                title: t('indexedDB.useCases.analyticsBuffer'),
+                desc: t('indexedDB.useCases.analyticsBufferDesc'),
+              },
             ].map((item) => (
               <div
                 key={item.title}

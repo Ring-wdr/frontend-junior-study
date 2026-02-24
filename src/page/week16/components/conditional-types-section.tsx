@@ -16,8 +16,14 @@ export const ConditionalTypesSection = () => {
       description={t('conditionalTypes.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('conditionalTypes.basicTitle')} icon iconColor="purple">
-          <p className="text-sm text-gray-600 mb-4">{t('conditionalTypes.basicDesc')}</p>
+        <SubSection
+          title={t('conditionalTypes.basicTitle')}
+          icon
+          iconColor="purple"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('conditionalTypes.basicDesc')}
+          </p>
           <CodeBlock
             code={`// T extends U ? X : Y
 // "T가 U에 할당 가능하면 X, 아니면 Y"
@@ -32,16 +38,29 @@ type C = IsString<"hello">; // "yes" - 리터럴 타입도 string에 할당 가�
           />
         </SubSection>
 
-        <SubSection title={t('conditionalTypes.visualizer.title')} icon iconColor="purple">
+        <SubSection
+          title={t('conditionalTypes.visualizer.title')}
+          icon
+          iconColor="purple"
+        >
           <DemoBox label={t('conditionalTypes.visualizer.title')}>
             <ConditionalTypeFlowchart />
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('conditionalTypes.distributiveTitle')} icon iconColor="blue">
-          <p className="text-sm text-gray-600 mb-4">{t('conditionalTypes.distributiveDesc')}</p>
+        <SubSection
+          title={t('conditionalTypes.distributiveTitle')}
+          icon
+          iconColor="blue"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('conditionalTypes.distributiveDesc')}
+          </p>
 
-          <InfoBox variant="purple" title={t('conditionalTypes.distributiveInfoTitle')}>
+          <InfoBox
+            variant="purple"
+            title={t('conditionalTypes.distributiveInfoTitle')}
+          >
             <p className="text-sm leading-relaxed">
               {t('conditionalTypes.distributiveInfoDesc')}
             </p>
@@ -63,8 +82,14 @@ type Result2 = ToArrayNonDist<string | number>;
           />
         </SubSection>
 
-        <SubSection title={t('conditionalTypes.inferTitle')} icon iconColor="pink">
-          <p className="text-sm text-gray-600 mb-4">{t('conditionalTypes.inferDesc')}</p>
+        <SubSection
+          title={t('conditionalTypes.inferTitle')}
+          icon
+          iconColor="pink"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('conditionalTypes.inferDesc')}
+          </p>
 
           <InfoBox variant="blue" title={t('conditionalTypes.inferInfoTitle')}>
             <p className="text-sm leading-relaxed">
@@ -92,8 +117,14 @@ type D = MyAwaited<Promise<Promise<string>>>; // string`}
           />
         </SubSection>
 
-        <SubSection title={t('conditionalTypes.customTitle')} icon iconColor="orange">
-          <p className="text-sm text-gray-600 mb-4">{t('conditionalTypes.customDesc')}</p>
+        <SubSection
+          title={t('conditionalTypes.customTitle')}
+          icon
+          iconColor="orange"
+        >
+          <p className="text-sm text-gray-600 mb-4">
+            {t('conditionalTypes.customDesc')}
+          </p>
           <CodeBlock
             code={`// 첫 번째 매개변수 타입 추출
 type FirstParam<T> = T extends (first: infer F, ...rest: any[]) => any

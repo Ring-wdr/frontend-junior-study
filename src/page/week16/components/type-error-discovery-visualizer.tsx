@@ -1,9 +1,15 @@
+import { AlertCircle, Play, RotateCcw, XCircle } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Play, RotateCcw, AlertCircle, XCircle } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
 
-type ExecutionState = 'idle' | 'js-running' | 'js-error' | 'ts-compiling' | 'ts-error' | 'ts-success';
+type ExecutionState =
+  | 'idle'
+  | 'js-running'
+  | 'js-error'
+  | 'ts-compiling'
+  | 'ts-error'
+  | 'ts-success';
 
 export const TypeErrorDiscoveryVisualizer = () => {
   const { t } = useTranslation('week16');
@@ -73,14 +79,18 @@ greet(123);`;
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        <div className={`relative ${state.startsWith('js') ? 'ring-2 ring-yellow-400 rounded-lg' : ''}`}>
+        <div
+          className={`relative ${state.startsWith('js') ? 'ring-2 ring-yellow-400 rounded-lg' : ''}`}
+        >
           <div className="bg-gray-900 rounded-lg overflow-hidden">
             <div className="flex items-center justify-between px-3 py-2 bg-gray-800">
               <span className="text-xs font-medium text-yellow-400">
                 {t('whyTypescript.visualizer.jsCode')}
               </span>
               {state === 'js-running' && (
-                <span className="text-xs text-gray-400 animate-pulse">Running...</span>
+                <span className="text-xs text-gray-400 animate-pulse">
+                  Running...
+                </span>
               )}
             </div>
             <pre className="p-3 text-xs text-gray-300 overflow-x-auto">
@@ -107,14 +117,18 @@ greet(123);`;
           </AnimatePresence>
         </div>
 
-        <div className={`relative ${state.startsWith('ts') ? 'ring-2 ring-blue-400 rounded-lg' : ''}`}>
+        <div
+          className={`relative ${state.startsWith('ts') ? 'ring-2 ring-blue-400 rounded-lg' : ''}`}
+        >
           <div className="bg-gray-900 rounded-lg overflow-hidden">
             <div className="flex items-center justify-between px-3 py-2 bg-gray-800">
               <span className="text-xs font-medium text-blue-400">
                 {t('whyTypescript.visualizer.tsCode')}
               </span>
               {state === 'ts-compiling' && (
-                <span className="text-xs text-gray-400 animate-pulse">Compiling...</span>
+                <span className="text-xs text-gray-400 animate-pulse">
+                  Compiling...
+                </span>
               )}
             </div>
             <pre className="p-3 text-xs text-gray-300 overflow-x-auto relative">
@@ -126,9 +140,7 @@ greet(123);`;
                   className="absolute bottom-3 left-3 right-3"
                 >
                   <div className="bg-red-500/20 border-l-2 border-red-500 px-2 py-1">
-                    <span className="text-red-400 text-[10px]">
-                      ~~~~~~
-                    </span>
+                    <span className="text-red-400 text-[10px]">~~~~~~</span>
                   </div>
                 </motion.div>
               )}
@@ -147,7 +159,8 @@ greet(123);`;
                   {t('whyTypescript.visualizer.compileError')}
                 </div>
                 <p className="mt-1 text-xs text-orange-600 font-mono">
-                  Argument of type 'number' is not assignable to parameter of type 'string'
+                  Argument of type 'number' is not assignable to parameter of
+                  type 'string'
                 </p>
               </motion.div>
             )}

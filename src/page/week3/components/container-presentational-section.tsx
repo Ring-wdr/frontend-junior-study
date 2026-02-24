@@ -19,9 +19,7 @@ export const ContainerPresentationalSection = () => {
             <div>
               <strong>{t('container.coreConcept.presentational.label')}</strong>
               <ul className="list-disc pl-5 mt-1">
-                <li>
-                  {t('container.coreConcept.presentational.item1')}
-                </li>
+                <li>{t('container.coreConcept.presentational.item1')}</li>
                 <li>{t('container.coreConcept.presentational.item2')}</li>
                 <li>{t('container.coreConcept.presentational.item3')}</li>
                 <li>{t('container.coreConcept.presentational.item4')}</li>
@@ -30,19 +28,18 @@ export const ContainerPresentationalSection = () => {
             <div>
               <strong>{t('container.coreConcept.container.label')}</strong>
               <ul className="list-disc pl-5 mt-1">
-                <li>
-                  {t('container.coreConcept.container.item1')}
-                </li>
-                <li>
-                  {t('container.coreConcept.container.item2')}
-                </li>
+                <li>{t('container.coreConcept.container.item1')}</li>
+                <li>{t('container.coreConcept.container.item2')}</li>
                 <li>{t('container.coreConcept.container.item3')}</li>
               </ul>
             </div>
           </div>
         </InfoBox>
 
-        <InfoBox variant="orange" title={t('container.evolutionWithHooks.title')}>
+        <InfoBox
+          variant="orange"
+          title={t('container.evolutionWithHooks.title')}
+        >
           <p className="text-sm text-gray-700">
             {t('container.evolutionWithHooks.content')}
           </p>

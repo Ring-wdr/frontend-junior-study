@@ -36,7 +36,9 @@ export const XssCspSection = () => {
 
           <div className="mt-4 grid grid-cols-1 gap-3">
             <div className="bg-red-50 p-3 rounded border border-red-200">
-              <p className="text-sm font-semibold text-red-900">{t('xss.whatIs.stored')}</p>
+              <p className="text-sm font-semibold text-red-900">
+                {t('xss.whatIs.stored')}
+              </p>
               <p className="text-xs text-red-700 mt-1">
                 {t('xss.whatIs.storedDesc')}
               </p>
@@ -50,7 +52,9 @@ export const XssCspSection = () => {
               </p>
             </div>
             <div className="bg-yellow-50 p-3 rounded border border-yellow-200">
-              <p className="text-sm font-semibold text-yellow-900">{t('xss.whatIs.dom')}</p>
+              <p className="text-sm font-semibold text-yellow-900">
+                {t('xss.whatIs.dom')}
+              </p>
               <p className="text-xs text-yellow-700 mt-1">
                 {t('xss.whatIs.domDesc')}
               </p>
@@ -183,11 +187,7 @@ return <div dangerouslySetInnerHTML={{ __html: sanitized }} />;`}
           />
         </SubSection>
 
-        <SubSection
-          title={t('xss.csp.title')}
-          icon
-          iconColor="purple"
-        >
+        <SubSection title={t('xss.csp.title')} icon iconColor="purple">
           <InfoBox variant="purple" title={t('xss.csp.infoTitle')}>
             <p className="text-sm leading-relaxed">
               {t('xss.csp.infoDescription')}
@@ -233,10 +233,16 @@ module.exports = {
               { directive: 'script-src', desc: t('xss.directives.scriptSrc') },
               { directive: 'style-src', desc: t('xss.directives.styleSrc') },
               { directive: 'img-src', desc: t('xss.directives.imgSrc') },
-              { directive: 'connect-src', desc: t('xss.directives.connectSrc') },
+              {
+                directive: 'connect-src',
+                desc: t('xss.directives.connectSrc'),
+              },
               { directive: 'font-src', desc: t('xss.directives.fontSrc') },
               { directive: 'frame-src', desc: t('xss.directives.frameSrc') },
-              { directive: 'frame-ancestors', desc: t('xss.directives.frameAncestors') },
+              {
+                directive: 'frame-ancestors',
+                desc: t('xss.directives.frameAncestors'),
+              },
             ].map((item) => (
               <div
                 key={item.directive}

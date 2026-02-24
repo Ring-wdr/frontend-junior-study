@@ -43,7 +43,11 @@ export const DragSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('drag.dragConstraints.title')} icon iconColor="blue">
+        <SubSection
+          title={t('drag.dragConstraints.title')}
+          icon
+          iconColor="blue"
+        >
           <CodeBlock
             code={`// Using pixel values
 <motion.div
@@ -119,7 +123,11 @@ const constraintsRef = useRef(null);
           </div>
         </SubSection>
 
-        <SubSection title={t('drag.dragWithMomentum.title')} icon iconColor="green">
+        <SubSection
+          title={t('drag.dragWithMomentum.title')}
+          icon
+          iconColor="green"
+        >
           <DemoBox label={t('drag.dragWithMomentum.demoLabel')}>
             <motion.div className="h-40 bg-gray-100 rounded-xl border-2 border-dashed border-gray-300 flex items-center justify-center relative overflow-hidden">
               <motion.div
@@ -142,19 +150,24 @@ const constraintsRef = useRef(null);
           <InfoBox variant="purple" title={t('drag.useCases.infoTitle')}>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>{t('drag.useCases.kanban')}</strong> {t('drag.useCases.kanbanDesc')}
+                <strong>{t('drag.useCases.kanban')}</strong>{' '}
+                {t('drag.useCases.kanbanDesc')}
               </li>
               <li>
-                <strong>{t('drag.useCases.carousels')}</strong> {t('drag.useCases.carouselsDesc')}
+                <strong>{t('drag.useCases.carousels')}</strong>{' '}
+                {t('drag.useCases.carouselsDesc')}
               </li>
               <li>
-                <strong>{t('drag.useCases.sliders')}</strong> {t('drag.useCases.slidersDesc')}
+                <strong>{t('drag.useCases.sliders')}</strong>{' '}
+                {t('drag.useCases.slidersDesc')}
               </li>
               <li>
-                <strong>{t('drag.useCases.reorderable')}</strong> {t('drag.useCases.reorderableDesc')}
+                <strong>{t('drag.useCases.reorderable')}</strong>{' '}
+                {t('drag.useCases.reorderableDesc')}
               </li>
               <li>
-                <strong>{t('drag.useCases.dismissible')}</strong> {t('drag.useCases.dismissibleDesc')}
+                <strong>{t('drag.useCases.dismissible')}</strong>{' '}
+                {t('drag.useCases.dismissibleDesc')}
               </li>
             </ul>
           </InfoBox>

@@ -10,7 +10,9 @@ export const DevToolsElementsConsoleSection = () => {
   const { t } = useTranslation('week15');
   const [activeTab, setActiveTab] = useState(0);
 
-  const features = t('devtoolsElements.features', { returnObjects: true }) as any;
+  const features = t('devtoolsElements.features', {
+    returnObjects: true,
+  }) as any;
   const elementFeatures = [
     {
       title: features.domInspection.title,
@@ -45,7 +47,11 @@ export const DevToolsElementsConsoleSection = () => {
       description={t('devtoolsElements.description')}
     >
       <div className="space-y-8">
-        <SubSection title={t('devtoolsElements.elementsTitle')} icon iconColor="blue">
+        <SubSection
+          title={t('devtoolsElements.elementsTitle')}
+          icon
+          iconColor="blue"
+        >
           <DemoBox label={t('devtoolsElements.featureExplorer')}>
             <div className="space-y-4">
               <div className="flex gap-2 flex-wrap">
@@ -95,8 +101,15 @@ export const DevToolsElementsConsoleSection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('devtoolsElements.consoleTitle')} icon iconColor="green">
-          <InfoBox variant="green" title={t('devtoolsElements.consoleInfoTitle')}>
+        <SubSection
+          title={t('devtoolsElements.consoleTitle')}
+          icon
+          iconColor="green"
+        >
+          <InfoBox
+            variant="green"
+            title={t('devtoolsElements.consoleInfoTitle')}
+          >
             <p className="text-sm leading-relaxed mb-3">
               {t('devtoolsElements.consoleInfoDesc')}
             </p>
@@ -137,10 +150,18 @@ console.groupEnd();`}
           </div>
         </SubSection>
 
-        <SubSection title={t('devtoolsElements.consoleCommandsTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('devtoolsElements.consoleCommandsTitle')}
+          icon
+          iconColor="purple"
+        >
           <DemoBox label={t('devtoolsElements.consoleCommandsLabel')}>
             <div className="grid grid-cols-2 gap-3">
-              {(t('devtoolsElements.consoleCommands', { returnObjects: true }) as any[]).map((item: any) => (
+              {(
+                t('devtoolsElements.consoleCommands', {
+                  returnObjects: true,
+                }) as any[]
+              ).map((item: any) => (
                 <div
                   key={item.cmd}
                   className="bg-white p-3 rounded-lg border border-gray-200"
@@ -158,10 +179,18 @@ console.groupEnd();`}
           </DemoBox>
         </SubSection>
 
-        <SubSection title={t('devtoolsElements.shortcutsTitle')} icon iconColor="orange">
+        <SubSection
+          title={t('devtoolsElements.shortcutsTitle')}
+          icon
+          iconColor="orange"
+        >
           <div className="bg-gradient-to-r from-orange-50 to-yellow-50 p-4 rounded-lg border border-orange-200">
             <div className="grid grid-cols-2 gap-2 text-sm">
-              {(t('devtoolsElements.shortcuts', { returnObjects: true }) as any[]).map((shortcut: any) => (
+              {(
+                t('devtoolsElements.shortcuts', {
+                  returnObjects: true,
+                }) as any[]
+              ).map((shortcut: any) => (
                 <div key={shortcut.key} className="flex items-center gap-2">
                   <kbd className="px-2 py-1 bg-white text-xs font-mono rounded border border-gray-300 shadow-sm">
                     {shortcut.key}

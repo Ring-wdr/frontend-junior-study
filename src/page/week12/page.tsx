@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { cn } from '../../lib/utils';
 import { CsrfSection } from './components/csrf-section';
 import { JwtSessionSection } from './components/jwt-session-section';
@@ -23,7 +23,6 @@ const tabs = [
   'privacy',
 ] as const;
 type Tab = (typeof tabs)[number];
-
 
 const sections = [
   { id: 'oauth', component: <OAuthSection /> },

@@ -1,10 +1,10 @@
+import { Database, FileSearch, GitBranch, Globe, Server } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Database, Globe, GitBranch, FileSearch, Server } from 'lucide-react';
+import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
-import { DemoBox } from '../../../components/demo-box';
 import { McpArchitectureVisualizer } from './mcp-architecture-visualizer';
 
 const serverIconMap = {
@@ -28,9 +28,7 @@ export const McpSection = () => {
       <div className="space-y-8">
         <SubSection title={t('mcp.whatIsTitle')} icon iconColor="blue">
           <InfoBox variant="blue" title={t('mcp.conceptTitle')}>
-            <p className="text-sm leading-relaxed">
-              {t('mcp.conceptDesc')}
-            </p>
+            <p className="text-sm leading-relaxed">{t('mcp.conceptDesc')}</p>
           </InfoBox>
 
           <DemoBox label={t('mcp.architectureLabel')}>
@@ -41,7 +39,9 @@ export const McpSection = () => {
         <SubSection title={t('mcp.serversTitle')} icon iconColor="purple">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {servers.map((server: any) => {
-              const IconComponent = serverIconMap[server.icon as keyof typeof serverIconMap] || Server;
+              const IconComponent =
+                serverIconMap[server.icon as keyof typeof serverIconMap] ||
+                Server;
               return (
                 <div
                   key={server.name}
@@ -49,7 +49,9 @@ export const McpSection = () => {
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <IconComponent className="w-5 h-5 text-purple-600" />
-                    <h5 className="font-bold text-sm text-purple-800">{server.name}</h5>
+                    <h5 className="font-bold text-sm text-purple-800">
+                      {server.name}
+                    </h5>
                   </div>
                   <p className="text-xs text-gray-600 mb-2">{server.desc}</p>
                   <code className="text-xs bg-purple-100 px-2 py-0.5 rounded text-purple-700">

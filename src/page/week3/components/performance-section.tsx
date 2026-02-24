@@ -26,7 +26,8 @@ export const PerformanceSection = () => {
               <code>useMemo</code>: {t('performance.memoization.useMemo')}
             </li>
             <li>
-              <code>useCallback</code>: {t('performance.memoization.useCallback')}
+              <code>useCallback</code>:{' '}
+              {t('performance.memoization.useCallback')}
             </li>
           </ul>
         </InfoBox>

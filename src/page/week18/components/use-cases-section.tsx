@@ -1,5 +1,5 @@
+import { BarChart3, Gamepad2, Image, Lock, Video } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Image, Video, Gamepad2, Lock, BarChart3 } from 'lucide-react';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
@@ -28,7 +28,9 @@ export const UseCasesSection = () => {
             <div className="bg-pink-50 p-4 rounded-lg border border-pink-200">
               <div className="flex items-center gap-2 mb-3">
                 <Image className="w-4 h-4 text-pink-600" />
-                <span className="text-sm font-bold text-pink-700">Rust - {t('useCases.grayscale')}</span>
+                <span className="text-sm font-bold text-pink-700">
+                  Rust - {t('useCases.grayscale')}
+                </span>
               </div>
               <CodeBlock
                 code={`#[wasm_bindgen]
@@ -72,7 +74,9 @@ ctx.putImageData(imageData, 0, 0);`}
           <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
             <div className="flex items-center gap-2 mb-3">
               <Video className="w-4 h-4 text-purple-600" />
-              <span className="text-sm font-bold text-purple-700">FFmpeg.wasm</span>
+              <span className="text-sm font-bold text-purple-700">
+                FFmpeg.wasm
+              </span>
             </div>
             <CodeBlock
               code={`import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
@@ -156,10 +160,13 @@ pub fn moving_average(data: &[f32], window: usize) -> Vec<f32> {
         </SubSection>
 
         <div className="bg-gray-100 p-4 rounded-lg border border-gray-200">
-          <h4 className="font-bold text-sm text-gray-700 mb-3">{t('useCases.realWorldTitle')}</h4>
+          <h4 className="font-bold text-sm text-gray-700 mb-3">
+            {t('useCases.realWorldTitle')}
+          </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {useCases.map((uc: any) => {
-              const IconComponent = useCaseIconMap[uc.icon as keyof typeof useCaseIconMap] || Image;
+              const IconComponent =
+                useCaseIconMap[uc.icon as keyof typeof useCaseIconMap] || Image;
               return (
                 <div
                   key={uc.name}
@@ -167,7 +174,9 @@ pub fn moving_average(data: &[f32], window: usize) -> Vec<f32> {
                 >
                   <IconComponent className="w-5 h-5 text-gray-500 mt-0.5" />
                   <div>
-                    <span className="text-xs font-bold text-gray-800 block">{uc.name}</span>
+                    <span className="text-xs font-bold text-gray-800 block">
+                      {uc.name}
+                    </span>
                     <span className="text-xs text-gray-600">{uc.desc}</span>
                   </div>
                 </div>

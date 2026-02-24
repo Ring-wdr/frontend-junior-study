@@ -23,7 +23,10 @@ export const ModernStateSection = () => {
               <ModernStateVisualizer />
             </div>
 
-            <InfoBox variant="blue" title={t('modern.evolution.commonGoals.title')}>
+            <InfoBox
+              variant="blue"
+              title={t('modern.evolution.commonGoals.title')}
+            >
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
                 <li>{t('modern.evolution.commonGoals.reduceBoilerplate')}</li>
                 <li>{t('modern.evolution.commonGoals.betterIntegration')}</li>
@@ -98,7 +101,10 @@ const Counter = observer(({ store }) => (
               {t('modern.recoil.description')}
             </p>
 
-            <InfoBox variant="blue" title={t('modern.recoil.coreConcepts.title')}>
+            <InfoBox
+              variant="blue"
+              title={t('modern.recoil.coreConcepts.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>{t('modern.recoil.coreConcepts.atoms')}</li>
                 <li>{t('modern.recoil.coreConcepts.selectors')}</li>
@@ -140,7 +146,10 @@ function Counter() {
               className="text-xs"
             />
 
-            <InfoBox variant="gray" title={t('modern.recoil.prosAndCons.title')}>
+            <InfoBox
+              variant="gray"
+              title={t('modern.recoil.prosAndCons.title')}
+            >
               <div className="space-y-2 text-sm text-gray-700">
                 <p>{t('modern.recoil.prosAndCons.pros')}</p>
                 <p>{t('modern.recoil.prosAndCons.cons')}</p>
@@ -198,7 +207,10 @@ function Counter() {
               className="text-xs"
             />
 
-            <InfoBox variant="gray" title={t('modern.zustand.prosAndCons.title')}>
+            <InfoBox
+              variant="gray"
+              title={t('modern.zustand.prosAndCons.title')}
+            >
               <div className="space-y-2 text-sm text-gray-700">
                 <p>{t('modern.zustand.prosAndCons.pros')}</p>
                 <p>{t('modern.zustand.prosAndCons.cons')}</p>
@@ -213,54 +225,105 @@ function Counter() {
               <table className="w-full text-sm border-collapse">
                 <thead>
                   <tr className="border-b border-gray-300">
-                    <th className="text-left p-2 font-semibold">{t('modern.comparison.table.feature')}</th>
-                    <th className="text-left p-2 font-semibold">{t('modern.comparison.table.redux')}</th>
-                    <th className="text-left p-2 font-semibold">{t('modern.comparison.table.mobx')}</th>
-                    <th className="text-left p-2 font-semibold">{t('modern.comparison.table.recoil')}</th>
-                    <th className="text-left p-2 font-semibold">{t('modern.comparison.table.zustand')}</th>
+                    <th className="text-left p-2 font-semibold">
+                      {t('modern.comparison.table.feature')}
+                    </th>
+                    <th className="text-left p-2 font-semibold">
+                      {t('modern.comparison.table.redux')}
+                    </th>
+                    <th className="text-left p-2 font-semibold">
+                      {t('modern.comparison.table.mobx')}
+                    </th>
+                    <th className="text-left p-2 font-semibold">
+                      {t('modern.comparison.table.recoil')}
+                    </th>
+                    <th className="text-left p-2 font-semibold">
+                      {t('modern.comparison.table.zustand')}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b border-gray-200">
-                    <td className="p-2 font-medium">{t('modern.comparison.table.learningCurve')}</td>
-                    <td className="p-2">{t('modern.comparison.table.steep')}</td>
-                    <td className="p-2">{t('modern.comparison.table.moderate')}</td>
-                    <td className="p-2">{t('modern.comparison.table.moderate')}</td>
+                    <td className="p-2 font-medium">
+                      {t('modern.comparison.table.learningCurve')}
+                    </td>
+                    <td className="p-2">
+                      {t('modern.comparison.table.steep')}
+                    </td>
+                    <td className="p-2">
+                      {t('modern.comparison.table.moderate')}
+                    </td>
+                    <td className="p-2">
+                      {t('modern.comparison.table.moderate')}
+                    </td>
                     <td className="p-2">{t('modern.comparison.table.easy')}</td>
                   </tr>
                   <tr className="border-b border-gray-200">
-                    <td className="p-2 font-medium">{t('modern.comparison.table.boilerplate')}</td>
+                    <td className="p-2 font-medium">
+                      {t('modern.comparison.table.boilerplate')}
+                    </td>
                     <td className="p-2">{t('modern.comparison.table.high')}</td>
                     <td className="p-2">{t('modern.comparison.table.low')}</td>
                     <td className="p-2">{t('modern.comparison.table.low')}</td>
-                    <td className="p-2">{t('modern.comparison.table.minimal')}</td>
+                    <td className="p-2">
+                      {t('modern.comparison.table.minimal')}
+                    </td>
                   </tr>
                   <tr className="border-b border-gray-200">
-                    <td className="p-2 font-medium">{t('modern.comparison.table.bundleSize')}</td>
-                    <td className="p-2">{t('modern.comparison.table.large')}</td>
-                    <td className="p-2">{t('modern.comparison.table.medium')}</td>
-                    <td className="p-2">{t('modern.comparison.table.medium')}</td>
-                    <td className="p-2">{t('modern.comparison.table.small')}</td>
+                    <td className="p-2 font-medium">
+                      {t('modern.comparison.table.bundleSize')}
+                    </td>
+                    <td className="p-2">
+                      {t('modern.comparison.table.large')}
+                    </td>
+                    <td className="p-2">
+                      {t('modern.comparison.table.medium')}
+                    </td>
+                    <td className="p-2">
+                      {t('modern.comparison.table.medium')}
+                    </td>
+                    <td className="p-2">
+                      {t('modern.comparison.table.small')}
+                    </td>
                   </tr>
                   <tr className="border-b border-gray-200">
-                    <td className="p-2 font-medium">{t('modern.comparison.table.devtools')}</td>
-                    <td className="p-2">{t('modern.comparison.table.excellent')}</td>
+                    <td className="p-2 font-medium">
+                      {t('modern.comparison.table.devtools')}
+                    </td>
+                    <td className="p-2">
+                      {t('modern.comparison.table.excellent')}
+                    </td>
                     <td className="p-2">{t('modern.comparison.table.good')}</td>
                     <td className="p-2">{t('modern.comparison.table.good')}</td>
-                    <td className="p-2">{t('modern.comparison.table.decent')}</td>
+                    <td className="p-2">
+                      {t('modern.comparison.table.decent')}
+                    </td>
                   </tr>
                   <tr>
-                    <td className="p-2 font-medium">{t('modern.comparison.table.bestFor')}</td>
-                    <td className="p-2">{t('modern.comparison.table.largeApps')}</td>
-                    <td className="p-2">{t('modern.comparison.table.reactiveApps')}</td>
-                    <td className="p-2">{t('modern.comparison.table.reactNative')}</td>
-                    <td className="p-2">{t('modern.comparison.table.simpleApps')}</td>
+                    <td className="p-2 font-medium">
+                      {t('modern.comparison.table.bestFor')}
+                    </td>
+                    <td className="p-2">
+                      {t('modern.comparison.table.largeApps')}
+                    </td>
+                    <td className="p-2">
+                      {t('modern.comparison.table.reactiveApps')}
+                    </td>
+                    <td className="p-2">
+                      {t('modern.comparison.table.reactNative')}
+                    </td>
+                    <td className="p-2">
+                      {t('modern.comparison.table.simpleApps')}
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <InfoBox variant="gray" title={t('modern.comparison.selectionGuide.title')}>
+            <InfoBox
+              variant="gray"
+              title={t('modern.comparison.selectionGuide.title')}
+            >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>{t('modern.comparison.selectionGuide.redux')}</li>
                 <li>{t('modern.comparison.selectionGuide.mobx')}</li>
