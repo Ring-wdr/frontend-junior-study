@@ -10,6 +10,7 @@
     "react19": "React 19",
     "appRouter": "App Router",
     "data": "Data Fetching",
+    "rulesOfReact": "Rules of React",
     "optimization": "Optimization"
   },
   "concurrency": {
@@ -235,6 +236,77 @@
       "noUseCache": "no \"use cache\"",
       "patternUseOptimistic": "Pattern: useOptimistic (React 19)",
       "patternUseCache": "Pattern: use cache (Next.js 16)"
+    }
+  },
+  "rulesOfReact": {
+    "badge": "Rules of React",
+    "title": "Rules of React",
+    "description": "Core principles that keep components predictable, testable, and safe under concurrent rendering.",
+    "componentsAndHooksPure": {
+      "title": "Render Purity (No Side Effects in Render)",
+      "intro": "<strong>Components</strong> should be treated as pure functions of props and state. Avoid side effects such as DOM mutation, random output, or external mutable state during render.",
+      "badCodeTitle": "Bad: side effects in render phase",
+      "goodCodeTitle": "Good: side effects in effects/events",
+      "checklist": {
+        "title": "Render Purity Checklist",
+        "item1": "Same inputs should always produce the same output",
+        "item2": "Do not mutate module-level or global state during render",
+        "item3": "Avoid reading/writing refs or globals as render-critical state",
+        "item4": "Compute derived values from current props/state",
+        "item5": "Move DOM/effectful logic to useEffect or event handlers"
+      }
+    },
+    "reactCallsComponentsAndHooks": {
+      "title": "Call React Components and Hooks Correctly",
+      "intro": "<strong>Components</strong> must be rendered with JSX. React <strong>Hooks</strong> are only valid in React function components or custom Hooks.",
+      "badCodeTitle": "Bad: calling Components/Hooks incorrectly",
+      "goodCodeTitle": "Good: JSX + top-level hook usage",
+      "checklist": {
+        "title": "Component and Hook Rules",
+        "item1": "Render components with JSX, not direct function calls",
+        "item2": "Call hooks only inside React components or custom Hooks",
+        "item3": "Never call hooks from callbacks or pass hooks as values"
+      }
+    },
+    "rulesOfHooks": {
+      "title": "Rules of Hooks",
+      "intro": "Hooks must be called in a <strong>consistent order</strong> on every render. They cannot be inside conditions, loops, nested functions, or callbacks.",
+      "badCodeTitle": "Bad: conditional/callback/loop hook calls",
+      "goodCodeTitle": "Good: always call hooks in the same order",
+      "checklist": {
+        "title": "Rules of Hooks Checklist",
+        "item1": "Use hooks at component top-level",
+        "item2": "Do not place hooks inside if/for/while/try blocks",
+        "item3": "Do not call hooks in nested functions or event handlers",
+        "item4": "Move conditionals around rendered values, not hook invocation",
+        "item5": "Keep early returns after all hooks are declared"
+      }
+    },
+    "setStateInEffect": {
+      "title": "Avoid setState in Effects for Derived State",
+      "intro": "The <strong>set-state-in-effect</strong> warning points to effects that only copy props or state into another state variable. Effects are for side effects, not derivation logic.",
+      "badCodeTitle": "Bad: syncing derived values in useEffect",
+      "goodCodeTitle": "Good: compute derived values in render",
+      "checklist": {
+        "title": "setState-in-Effect Checklist",
+        "item1": "Keep derivation inside render unless synchronization is external",
+        "item2": "Store only source-of-truth state, not duplicated state",
+        "item3": "Use useMemo for expensive derived calculations",
+        "item4": "Use effects only when synchronizing with APIs, DOM, or subscriptions"
+      }
+    },
+    "youMightNotNeedAnEffect": {
+      "title": "You Might Not Need an Effect",
+      "intro": "<strong>Prefer rendering logic</strong> over effects. If you are setting local state to transform props, derive it during render instead.",
+      "badCodeTitle": "Bad: effect-only data transformation",
+      "goodCodeTitle": "Good: transform data inline or with memo",
+      "checklist": {
+        "title": "Avoid Unnecessary Effects Checklist",
+        "item1": "Remove effects that only copy/mutate local view state",
+        "item2": "Derive filtered/sorted data directly before JSX",
+        "item3": "Use useMemo for medium/high-cost recalculations",
+        "item4": "Keep effects for imperative I/O (network, subscriptions, timers)"
+      }
     }
   },
   "dataFetching": {

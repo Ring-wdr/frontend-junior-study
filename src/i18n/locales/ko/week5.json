@@ -10,7 +10,8 @@
     "react19": "React 19",
     "appRouter": "App Router",
     "data": "데이터 페칭",
-    "optimization": "최적화"
+    "optimization": "최적화",
+    "rulesOfReact": "React 규칙"
   },
   "concurrency": {
     "badge": "React 18",
@@ -386,7 +387,6 @@
       "triggers": "트리거",
       "static": "정적",
       "dynamic": "동적",
-
       "componentMount": "컴포넌트 마운트",
       "windowFocus": "윈도우 포커스",
       "autoReval": "자동 재검증",
@@ -635,6 +635,77 @@
       "description1": "세계 곳곳에서 가장 숨막히는 전망을 발견하세요. 산봉우리에서 평온한 호수까지, 자연은 끝없는 영감을 제공합니다.",
       "description2": "사진은 이러한 순간을 영원히 포착할 수 있게 해줍니다. 장비에 관한 것이 아니라 관점에 관한 것입니다.",
       "whyItMatters": "<strong>중요한 이유:</strong> <strong>최적화되지 않은</strong> 모드에서는 브라우저가 다운로드할 때까지 이미지 높이를 알 수 없습니다. 이는 아래 콘텐츠가 점프하는 원인이 되어 (CLS) 사용자를 좌절시킵니다. <strong>Next/Image</strong> (최적화됨)는 width/height 속성을 강제하여 로딩 중에도 안정적인 레이아웃을 보장하면서 즉시 공간을 예약합니다."
+    }
+  },
+  "rulesOfReact": {
+    "badge": "React 규칙",
+    "title": "Rules of React",
+    "description": "컴포넌트를 예측 가능하고 테스트 가능하며 동시 렌더링 환경에서도 안정적으로 동작하게 만드는 원칙입니다.",
+    "componentsAndHooksPure": {
+      "title": "렌더 순수성 (렌더 단계에서 부작용 금지)",
+      "intro": "<strong>컴포넌트</strong>는 props/state를 기반으로 한 순수한 렌더 계산으로 취급되어야 합니다. 렌더 단계에서 DOM 조작, 난수 생성, 외부 상태 변조 같은 부작용을 피하세요.",
+      "badCodeTitle": "나쁜 예: 렌더 단계에서 부작용 수행",
+      "goodCodeTitle": "좋은 예: 부작용은 effect/event로 분리",
+      "checklist": {
+        "title": "렌더 순수성 체크리스트",
+        "item1": "동일한 입력이라면 동일한 출력이 나와야 합니다",
+        "item2": "렌더 중 모듈/전역 상태를 직접 변경하지 않습니다",
+        "item3": "렌더 크리티컬 값으로 ref/전역값을 사용하지 않습니다",
+        "item4": "파생 계산은 현재 props/state로 렌더에서 처리합니다",
+        "item5": "DOM/로컬 I/O 부작용은 useEffect 또는 이벤트 핸들러로 이동합니다"
+      }
+    },
+    "reactCallsComponentsAndHooks": {
+      "title": "컴포넌트/훅 호출 규칙",
+      "intro": "<strong>컴포넌트</strong>는 JSX로 렌더링해야 합니다. React <strong>훅</strong>은 React 함수 컴포넌트나 커스텀 훅 내부에서만 호출할 수 있습니다.",
+      "badCodeTitle": "나쁜 예: 컴포넌트/훅을 잘못 호출",
+      "goodCodeTitle": "좋은 예: JSX 렌더 + 최상위 훅 호출",
+      "checklist": {
+        "title": "컴포넌트와 훅 규칙",
+        "item1": "컴포넌트는 JSX를 통해 렌더링합니다",
+        "item2": "훅은 React 컴포넌트 또는 custom hook 안에서 호출합니다",
+        "item3": "훅을 값처럼 전달하거나 콜백 안에서 호출하지 않습니다"
+      }
+    },
+    "rulesOfHooks": {
+      "title": "Hooks 규칙",
+      "intro": "훅은 렌더마다 항상 <strong>일관된 순서</strong>로 호출해야 합니다. 조건문, 반복문, 중첩 함수, 이벤트 콜백 내부에서 호출하면 안 됩니다.",
+      "badCodeTitle": "나쁜 예: 조건/반복/콜백에서의 훅 호출",
+      "goodCodeTitle": "좋은 예: 항상 같은 순서로 최상위에서 호출",
+      "checklist": {
+        "title": "Hooks 규칙 체크리스트",
+        "item1": "훅은 컴포넌트 최상위에서만 호출",
+        "item2": "if/for/while/try 블록 안에서 훅을 호출하지 않기",
+        "item3": "중첩 함수나 이벤트 핸들러에서 훅을 호출하지 않기",
+        "item4": "조건 분기는 훅 호출 주변이 아니라 값 처리 로직으로 이동",
+        "item5": "모든 훅 호출이 끝난 뒤에 early return 처리"
+      }
+    },
+    "setStateInEffect": {
+      "title": "Effect에서 setState로 파생 상태 만들기 금지",
+      "intro": "<strong>set-state-in-effect</strong> 경고는 props/state를 또 다른 상태로 단순 복사할 때 발생합니다. Effect는 부작용 동기화를 위한 것이고, 파생 상태 계산은 렌더에서 처리해야 합니다.",
+      "badCodeTitle": "나쁜 예: useEffect 안에서 파생값을 다시 setState",
+      "goodCodeTitle": "좋은 예: 렌더에서 파생값 계산",
+      "checklist": {
+        "title": "setState-in-effect 체크리스트",
+        "item1": "파생 계산은 렌더에서 수행하고 Effect는 동기화 용도로만 사용",
+        "item2": "단일 소스 상태만 저장하고 중복 상태는 제거",
+        "item3": "비용이 큰 파생 연산은 useMemo 고려",
+        "item4": "Effect는 API/DOM/구독 동기화에만 사용"
+      }
+    },
+    "youMightNotNeedAnEffect": {
+      "title": "Effect가 불필요한 패턴",
+      "intro": "<strong>렌더링으로 표현 가능한 로직</strong>은 Effect로 만들지 않습니다. props 기반 변환은 useState로 복사하지 말고 렌더에서 직접 계산하세요.",
+      "badCodeTitle": "나쁜 예: Effect에서 필터링/정렬 상태 갱신",
+      "goodCodeTitle": "좋은 예: useMemo 또는 인라인 계산 사용",
+      "checklist": {
+        "title": "불필요한 Effect 제거 체크리스트",
+        "item1": "로컬 뷰 상태를 복제하려는 Effect 제거",
+        "item2": "정렬/필터링/매핑은 렌더 계산으로 대체",
+        "item3": "반복 비용이 큰 계산은 useMemo로 최적화",
+        "item4": "Effect는 외부 I/O(네트워크, 타이머, 구독)일 때만 사용"
+      }
     }
   }
 }

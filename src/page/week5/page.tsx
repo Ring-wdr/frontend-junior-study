@@ -7,6 +7,7 @@ import { ConcurrencySection } from './components/concurrency-section';
 import { DataFetchingSection } from './components/data-fetching-section';
 import { OptimizationSection } from './components/optimization-section';
 import { React19Section } from './components/react19-section';
+import { RulesOfReactSection } from './components/rules-of-react-section';
 
 const tabs = [
   'all',
@@ -14,6 +15,7 @@ const tabs = [
   'react-19',
   'app-router',
   'data',
+  'rules-of-react',
   'optimization',
 ] as const;
 type Tab = (typeof tabs)[number];
@@ -23,6 +25,7 @@ const sections = [
   { id: 'react-19', component: <React19Section /> },
   { id: 'app-router', component: <AppRouterSection /> },
   { id: 'data', component: <DataFetchingSection /> },
+  { id: 'rules-of-react', component: <RulesOfReactSection /> },
   { id: 'optimization', component: <OptimizationSection /> },
 ];
 
@@ -45,6 +48,8 @@ export default function Week5Page() {
         return t('tabs.appRouter');
       case 'data':
         return t('tabs.data');
+      case 'rules-of-react':
+        return t('tabs.rulesOfReact');
       case 'optimization':
         return t('tabs.optimization');
       default:
