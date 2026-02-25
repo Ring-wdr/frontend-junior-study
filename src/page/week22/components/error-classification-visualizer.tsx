@@ -1,5 +1,3 @@
-import { AnimatePresence, motion } from 'motion/react';
-import { useCallback, useRef, useState } from 'react';
 import {
   AlertCircle,
   ArrowRight,
@@ -8,6 +6,8 @@ import {
   Shield,
   Zap,
 } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
+import { useCallback, useRef, useState } from 'react';
 import { cn } from '../../../lib/utils';
 
 type Severity = 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
@@ -76,30 +76,38 @@ export const ErrorClassificationVisualizer = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const timeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
-  const clearTimeouts = () => {
+  const clearTimeouts = useCallback(() => {
     for (const t of timeoutsRef.current) clearTimeout(t);
     timeoutsRef.current = [];
-  };
-
-  const runFlow = useCallback((errorIndex: number) => {
-    clearTimeouts();
-    setSelectedError(errorIndex);
-    setIsAnimating(true);
-    setPhase('idle');
-
-    const delays = [100, 700, 1400, 2100];
-    const phases: FlowPhase[] = ['incoming', 'analyzing', 'classified', 'action'];
-
-    for (let i = 0; i < phases.length; i++) {
-      const t = setTimeout(() => {
-        setPhase(phases[i]);
-        if (i === phases.length - 1) {
-          setIsAnimating(false);
-        }
-      }, delays[i]);
-      timeoutsRef.current.push(t);
-    }
   }, []);
+
+  const runFlow = useCallback(
+    (errorIndex: number) => {
+      clearTimeouts();
+      setSelectedError(errorIndex);
+      setIsAnimating(true);
+      setPhase('idle');
+
+      const delays = [100, 700, 1400, 2100];
+      const phases: FlowPhase[] = [
+        'incoming',
+        'analyzing',
+        'classified',
+        'action',
+      ];
+
+      for (let i = 0; i < phases.length; i++) {
+        const t = setTimeout(() => {
+          setPhase(phases[i]);
+          if (i === phases.length - 1) {
+            setIsAnimating(false);
+          }
+        }, delays[i]);
+        timeoutsRef.current.push(t);
+      }
+    },
+    [clearTimeouts],
+  );
 
   const reset = () => {
     clearTimeouts();
@@ -108,7 +116,8 @@ export const ErrorClassificationVisualizer = () => {
     setIsAnimating(false);
   };
 
-  const currentError = selectedError !== null ? ERROR_CASES[selectedError] : null;
+  const currentError =
+    selectedError !== null ? ERROR_CASES[selectedError] : null;
   const currentPhaseIndex = PHASE_ORDER.indexOf(phase);
 
   return (
