@@ -1,0 +1,215 @@
+{
+  "header": {
+    "title": "에러 추적 및 프로덕션 모니터링",
+    "description": "실사용자 환경에서 발생하는 이슈를 감지하고, 추적하며, 해결하는 전체 워크플로를 구축합니다."
+  },
+  "tabs": {
+    "all": "전체",
+    "monitoring-intro": "모니터링 개요",
+    "sentry": "Sentry",
+    "session-replay": "세션 리플레이",
+    "rum": "RUM",
+    "analytics": "사용자 분석",
+    "alerts": "알림",
+    "best-practices": "모범 사례",
+    "privacy": "개인정보 보호"
+  },
+  "monitoringIntro": {
+    "badge": "모니터링",
+    "title": "프로덕션 모니터링이 필요한 이유",
+    "description": "시스템 내부 상태를 외부에서 파악할 수 있는 능력, 즉 가시성(Observability)이 안정적인 서비스 운영의 핵심입니다.",
+    "principlesTitle": "핵심 개념",
+    "principles": [
+      { "title": "가시성 (Observability)", "desc": "시스템 내부 상태를 외부에서 파악할 수 있는 능력입니다." },
+      { "title": "MTTD (Mean Time To Detect)", "desc": "문제 발견까지 걸리는 평균 시간입니다." },
+      { "title": "MTTR (Mean Time To Resolve)", "desc": "문제 해결까지 걸리는 평균 시간입니다." },
+      { "title": "SLI / SLO / SLA", "desc": "서비스 수준 지표, 목표, 계약으로 이루어진 서비스 품질 프레임워크입니다." }
+    ],
+    "comparisonTitle": "로컬 vs 프로덕션 환경",
+    "comparison": [
+      { "aspect": "디버깅", "local": "console.log로 즉시 확인", "production": "로그 수집 시스템 필요" },
+      { "aspect": "에러 확인", "local": "스택트레이스 즉시 확인", "production": "사용자 신고 없으면 모름" },
+      { "aspect": "네트워크", "local": "DevTools 탭으로 확인", "production": "다양한 환경 변수 존재" },
+      { "aspect": "환경 통제", "local": "모든 환경 통제 가능", "production": "수천 가지 브라우저/기기" }
+    ],
+    "problemsTitle": "모니터링 없이 발생하는 문제",
+    "problems": [
+      { "problem": "사일런트 에러", "result": "사용자가 떠나도 모름" },
+      { "problem": "성능 저하", "result": "전환율 하락, 원인 불명" },
+      { "problem": "특정 환경 버그", "result": "재현 불가, 해결 불가" },
+      { "problem": "메모리 누수", "result": "점진적 성능 저하" }
+    ],
+    "sliSloSlaTitle": "SLI / SLO / SLA 프레임워크",
+    "framework": [
+      { "term": "SLI (Service Level Indicator)", "definition": "서비스 수준을 측정하는 지표", "example": "99.5% 요청이 200ms 이내 응답" },
+      { "term": "SLO (Service Level Objective)", "definition": "서비스 수준 목표", "example": "월간 가용성 99.9% 이상 유지" },
+      { "term": "SLA (Service Level Agreement)", "definition": "서비스 수준 계약", "example": "SLO 미달 시 크레딧 보상 약정" }
+    ],
+    "noteTitle": "핵심 정리",
+    "note": "프로덕션 모니터링은 '사후 대응'이 아닌 '사전 예방'을 위한 것입니다. 에러가 발생하기 전에 경고 신호를 파악하고, 사용자가 불편을 느끼기 전에 문제를 해결하는 것이 목표입니다."
+  },
+  "sentry": {
+    "badge": "Sentry",
+    "title": "에러 추적 (Sentry)",
+    "description": "가장 널리 사용되는 에러 트래킹 플랫폼으로 프로덕션 에러를 실시간으로 수집하고 분석합니다.",
+    "featuresTitle": "핵심 기능",
+    "features": [
+      { "title": "에러 자동 그룹핑", "desc": "유사 에러를 자동으로 묶어 중복 알림을 줄입니다." },
+      { "title": "소스맵 지원", "desc": "난독화된 코드를 원본으로 복원하여 디버깅합니다." },
+      { "title": "릴리스 추적", "desc": "어떤 배포 버전에서 에러가 발생했는지 추적합니다." },
+      { "title": "사용자 영향도 분석", "desc": "에러로 인해 영향받는 사용자 수를 파악합니다." }
+    ],
+    "setupTitle": "설치 및 설정",
+    "setupCode": "import * as Sentry from \"@sentry/react\";\n\nSentry.init({\n  dsn: \"https://xxxxx@xxx.ingest.sentry.io/xxxxx\",\n  environment: import.meta.env.MODE,\n  release: import.meta.env.VITE_APP_VERSION,\n  integrations: [\n    Sentry.browserTracingIntegration(),\n    Sentry.replayIntegration(),\n  ],\n  tracesSampleRate: 0.1,\n  replaysSessionSampleRate: 0.1,\n  replaysOnErrorSampleRate: 1.0,\n  beforeSend(event) {\n    if (event.user) {\n      delete event.user.email;\n    }\n    return event;\n  },\n});",
+    "captureTitle": "수동 에러 캡처",
+    "captureCode": "import * as Sentry from \"@sentry/react\";\n\ntry {\n  await riskyOperation();\n} catch (error) {\n  Sentry.captureException(error, {\n    tags: {\n      feature: \"checkout\",\n      severity: \"critical\",\n    },\n    extra: {\n      userId: currentUser.id,\n      cartItems: cart.items.length,\n    },\n  });\n}\n\n// 스코프 설정\nSentry.withScope((scope) => {\n  scope.setTag(\"transaction\", \"checkout\");\n  scope.setUser({ id: user.id });\n  scope.setContext(\"order\", { orderId, amount });\n  Sentry.captureException(error);\n});",
+    "reactTitle": "React 통합",
+    "reactCode": "import * as Sentry from \"@sentry/react\";\n\nfunction App() {\n  return (\n    <Sentry.ErrorBoundary\n      fallback={({ error, resetError }) => (\n        <div>\n          <h1>오류가 발생했습니다</h1>\n          <p>{error.message}</p>\n          <button onClick={resetError}>다시 시도</button>\n        </div>\n      )}\n      onError={(error, componentStack) => {\n        console.error(\"Error caught:\", error);\n      }}\n    >\n      <Router>\n        <Routes />\n      </Router>\n    </Sentry.ErrorBoundary>\n  );\n}",
+    "sourceMapTitle": "소스맵 업로드",
+    "sourceMapCode": "// vite.config.ts\nimport { sentryVitePlugin } from \"@sentry/vite-plugin\";\n\nexport default defineConfig({\n  build: {\n    sourcemap: true,\n  },\n  plugins: [\n    sentryVitePlugin({\n      org: \"my-org\",\n      project: \"my-project\",\n      authToken: process.env.SENTRY_AUTH_TOKEN,\n    }),\n  ],\n});",
+    "noteTitle": "주의사항",
+    "note": "Sentry에 전송되는 데이터에 민감한 개인정보(PII)가 포함되지 않도록 beforeSend 콜백에서 반드시 필터링하세요. 이메일, 비밀번호, 신용카드 정보 등이 로깅되면 보안 문제가 발생할 수 있습니다."
+  },
+  "sessionReplay": {
+    "badge": "Session Replay",
+    "title": "세션 리플레이",
+    "description": "사용자의 세션을 비디오처럼 재생하여 문제 상황을 정확히 이해할 수 있게 해주는 기능입니다.",
+    "whatIsTitle": "세션 리플레이란?",
+    "whatIsItems": [
+      { "label": "기존 에러 리포트", "desc": "\"TypeError: Cannot read property 'name' of undefined\" → 어떤 상황에서? 어떤 동작 후?" },
+      { "label": "세션 리플레이", "desc": "사용자가 상품 목록 → 상세 → 장바구니 → 에러 발생 → 정확한 재현 경로 파악" }
+    ],
+    "sentryReplayTitle": "Sentry Replay 설정",
+    "sentryReplayCode": "import * as Sentry from \"@sentry/react\";\n\nSentry.init({\n  dsn: \"...\",\n  integrations: [\n    Sentry.replayIntegration({\n      maskAllText: false,\n      maskAllInputs: true,\n      blockAllMedia: false,\n      networkDetailAllowUrls: [\"/api\"],\n      networkCaptureBodies: true,\n    }),\n  ],\n  replaysSessionSampleRate: 0.1,\n  replaysOnErrorSampleRate: 1.0,\n});",
+    "logRocketTitle": "LogRocket 설정",
+    "logRocketCode": "import LogRocket from \"logrocket\";\nimport setupLogRocketReact from \"logrocket-react\";\n\nLogRocket.init(\"org-id/app-id\", {\n  release: import.meta.env.VITE_APP_VERSION,\n  network: {\n    requestSanitizer: (request) => {\n      if (request.headers.Authorization) {\n        request.headers.Authorization = \"[REDACTED]\";\n      }\n      return request;\n    },\n  },\n  dom: {\n    inputSanitizer: true,\n    textSanitizer: (text) => {\n      return text.replace(/\\S+@\\S+/g, \"[EMAIL]\");\n    },\n  },\n});\n\nsetupLogRocketReact(LogRocket);",
+    "integrationTitle": "Sentry + LogRocket 통합",
+    "integrationCode": "import LogRocket from \"logrocket\";\nimport * as Sentry from \"@sentry/react\";\n\nLogRocket.getSessionURL((sessionURL) => {\n  Sentry.configureScope((scope) => {\n    scope.setExtra(\"sessionURL\", sessionURL);\n  });\n});",
+    "privacyItems": [
+      { "concern": "입력 필드", "solution": "maskAllInputs: true로 모든 입력 마스킹" },
+      { "concern": "네트워크 요청", "solution": "Authorization 헤더 등 인증 정보 제거" },
+      { "concern": "텍스트 콘텐츠", "solution": "이메일, 전화번호 등 정규식으로 마스킹" },
+      { "concern": "미디어", "solution": "blockAllMedia로 이미지/비디오 차단 가능" }
+    ],
+    "noteTitle": "성능 영향",
+    "note": "세션 리플레이는 DOM 변경을 지속적으로 캡처하므로 성능에 영향을 줄 수 있습니다. 프로덕션에서는 replaysSessionSampleRate를 낮게 설정하고, 에러 발생 시에만 100% 캡처하는 전략을 권장합니다."
+  },
+  "rum": {
+    "badge": "RUM",
+    "title": "실사용자 모니터링 (RUM)",
+    "description": "실제 사용자의 브라우저에서 성능 데이터를 수집하여 분석하는 기법입니다.",
+    "comparisonTitle": "합성 모니터링 vs RUM",
+    "comparisonItems": [
+      { "aspect": "환경", "synthetic": "통제된 환경", "rum": "실제 사용자 환경" },
+      { "aspect": "범위", "synthetic": "주기적 테스트", "rum": "모든 페이지뷰" },
+      { "aspect": "용도", "synthetic": "문제 탐지", "rum": "실제 경험 측정" }
+    ],
+    "vitalsTitle": "Core Web Vitals",
+    "vitals": [
+      { "metric": "LCP (Largest Contentful Paint)", "threshold": "2.5초 이하", "description": "메인 콘텐츠가 로딩되는 시간" },
+      { "metric": "INP (Interaction to Next Paint)", "threshold": "200ms 이하", "description": "사용자 인터랙션 후 다음 페인트까지의 시간" },
+      { "metric": "CLS (Cumulative Layout Shift)", "threshold": "0.1 이하", "description": "예상치 못한 레이아웃 이동 정도" },
+      { "metric": "FCP (First Contentful Paint)", "threshold": "1.8초 이하", "description": "첫 번째 콘텐츠가 렌더링되는 시간" },
+      { "metric": "TTFB (Time To First Byte)", "threshold": "0.8초 이하", "description": "서버 응답 첫 바이트까지의 시간" }
+    ],
+    "webVitalsTitle": "web-vitals 라이브러리",
+    "webVitalsCode": "import { onCLS, onINP, onLCP, onFCP, onTTFB } from \"web-vitals\";\n\nfunction sendToAnalytics(metric) {\n  // Sentry로 전송\n  Sentry.captureMessage(\"Web Vital\", {\n    level: \"info\",\n    tags: {\n      metric_name: metric.name,\n      metric_rating: metric.rating,\n    },\n    extra: {\n      value: metric.value,\n      delta: metric.delta,\n      id: metric.id,\n    },\n  });\n}\n\nexport function reportWebVitals() {\n  onCLS(sendToAnalytics);\n  onINP(sendToAnalytics);\n  onLCP(sendToAnalytics);\n  onFCP(sendToAnalytics);\n  onTTFB(sendToAnalytics);\n}",
+    "customTitle": "커스텀 성능 측정",
+    "customCode": "function useRenderTracking(componentName: string) {\n  const startTime = useRef(performance.now());\n\n  useEffect(() => {\n    const duration = performance.now() - startTime.current;\n    Sentry.addBreadcrumb({\n      category: \"render\",\n      message: `${componentName} rendered`,\n      data: { duration },\n      level: \"info\",\n    });\n\n    if (duration > 100) {\n      Sentry.captureMessage(\n        `Slow render: ${componentName}`,\n        { level: \"warning\", extra: { duration } }\n      );\n    }\n  }, [componentName]);\n}",
+    "sendingTitle": "분석 서비스로 전송",
+    "sendingCode": "// Google Analytics로 전송\ngtag(\"event\", metric.name, {\n  event_category: \"Web Vitals\",\n  value: Math.round(\n    metric.name === \"CLS\"\n      ? metric.value * 1000\n      : metric.value\n  ),\n  event_label: metric.id,\n  non_interaction: true,\n});",
+    "noteTitle": "샘플링 전략",
+    "note": "프로덕션 환경에서 모든 사용자의 성능 데이터를 수집하면 비용이 급증합니다. tracesSampleRate를 0.1(10%)로 설정하여 적절한 샘플링 비율을 유지하세요. 통계적으로 유의미한 데이터만 수집해도 충분합니다."
+  },
+  "analytics": {
+    "badge": "Analytics",
+    "title": "사용자 분석",
+    "description": "이벤트 트래킹으로 사용자 행동을 이해하고, 데이터 기반 의사결정을 지원합니다.",
+    "ga4SetupTitle": "Google Analytics 4 설정",
+    "ga4SetupCode": "export function initGA(measurementId: string) {\n  const script = document.createElement(\"script\");\n  script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;\n  script.async = true;\n  document.head.appendChild(script);\n\n  window.dataLayer = window.dataLayer || [];\n  window.gtag = function () {\n    window.dataLayer.push(arguments);\n  };\n\n  window.gtag(\"js\", new Date());\n  window.gtag(\"config\", measurementId, {\n    send_page_view: false, // SPA에서는 수동으로 처리\n  });\n}",
+    "eventDesignTitle": "이벤트 트래킹 설계",
+    "eventTypes": [
+      { "type": "product_view", "desc": "상품 조회", "params": "productId, category" },
+      { "type": "add_to_cart", "desc": "장바구니 추가", "params": "productId, quantity, price" },
+      { "type": "checkout_start", "desc": "결제 시작", "params": "cartValue, itemCount" },
+      { "type": "checkout_complete", "desc": "결제 완료", "params": "orderId, value" },
+      { "type": "search", "desc": "검색", "params": "query, resultCount" },
+      { "type": "error", "desc": "에러 발생", "params": "errorType, message" }
+    ],
+    "routerTitle": "React Router 통합",
+    "routerCode": "import { useLocation } from \"react-router-dom\";\nimport { useEffect } from \"react\";\nimport { trackPageView } from \"./utils/analytics\";\n\nfunction App() {\n  const location = useLocation();\n\n  useEffect(() => {\n    trackPageView(\n      location.pathname + location.search\n    );\n  }, [location]);\n\n  return <Routes />;\n}",
+    "customEventTitle": "커스텀 이벤트 추적",
+    "customEventCode": "type AnalyticsEvent =\n  | { type: \"product_view\"; productId: string }\n  | { type: \"add_to_cart\"; productId: string;\n      quantity: number; price: number }\n  | { type: \"checkout_complete\"; orderId: string;\n      value: number };\n\nexport function track(event: AnalyticsEvent) {\n  switch (event.type) {\n    case \"product_view\":\n      window.gtag(\"event\", \"view_item\", {\n        items: [{ item_id: event.productId }],\n      });\n      break;\n    case \"add_to_cart\":\n      window.gtag(\"event\", \"add_to_cart\", {\n        currency: \"KRW\",\n        value: event.price * event.quantity,\n      });\n      break;\n  }\n}",
+    "noteTitle": "프라이버시 정책",
+    "note": "분석 데이터 수집 시 개인정보보호법과 GDPR 규정을 반드시 준수하세요. SPA에서는 send_page_view를 비활성화하고 라우트 변경 시 수동으로 페이지뷰를 전송해야 정확한 데이터를 수집할 수 있습니다."
+  },
+  "alerts": {
+    "badge": "알림",
+    "title": "알림 및 대시보드",
+    "description": "심각도에 따른 알림 체계를 구축하고, 핵심 지표를 모니터링하는 대시보드를 설계합니다.",
+    "slackTitle": "Slack 알림 설정",
+    "slackCode": "type AlertLevel = \"info\" | \"warning\" | \"critical\";\n\nasync function sendSlackAlert(alert: {\n  level: AlertLevel;\n  title: string;\n  message: string;\n  context?: Record<string, any>;\n}) {\n  const color = {\n    info: \"#36a64f\",\n    warning: \"#ff9500\",\n    critical: \"#ff0000\",\n  }[alert.level];\n\n  await fetch(webhookUrl, {\n    method: \"POST\",\n    body: JSON.stringify({\n      attachments: [{\n        color,\n        title: alert.title,\n        text: alert.message,\n        ts: Math.floor(Date.now() / 1000),\n      }],\n    }),\n  });\n}",
+    "rulesTitle": "알림 규칙 설정",
+    "rules": [
+      { "condition": "새로운 이슈 발생", "threshold": "즉시", "action": "Slack 채널 알림" },
+      { "condition": "동일 이슈 반복", "threshold": "1시간 내 10회 이상", "action": "Slack + 이메일 알림" },
+      { "condition": "에러율 급증", "threshold": "5분간 에러율 5% 초과", "action": "긴급 호출 (PagerDuty)" },
+      { "condition": "성능 저하", "threshold": "LCP > 4초", "action": "성능 채널 알림" }
+    ],
+    "dashboardTitle": "대시보드 구성",
+    "dashboardMetrics": [
+      { "category": "에러 메트릭", "items": ["시간당 에러 수", "에러 유형별 분포", "영향받은 사용자 수", "가장 빈번한 에러 TOP 10"] },
+      { "category": "성능 메트릭", "items": ["Core Web Vitals (LCP, INP, CLS)", "페이지별 로드 시간", "API 응답 시간", "JavaScript 에러율"] },
+      { "category": "사용자 메트릭", "items": ["DAU/MAU", "전환율 (퍼널 분석)", "이탈률", "세션 지속 시간"] }
+    ],
+    "fatigueTitle": "알림 피로도 관리",
+    "fatiguePractices": [
+      "심각도별 채널 분리 (critical → 긴급 채널, info → 일반 채널)",
+      "중복 알림 억제 (같은 이슈 반복 시 요약 전송)",
+      "근무 시간 외 알림은 critical만 전송",
+      "주간 리뷰를 통한 알림 규칙 최적화"
+    ],
+    "noteTitle": "인시던트 대응",
+    "note": "알림 시스템의 핵심은 '행동 가능한 알림'만 보내는 것입니다. 모든 에러를 알림으로 보내면 알림 피로도가 높아져 정작 중요한 알림을 놓칠 수 있습니다. 심각도 분류와 에스컬레이션 정책을 사전에 수립하세요."
+  },
+  "bestPractices": {
+    "badge": "Best Practices",
+    "title": "에러 처리 모범 사례",
+    "description": "전역 에러 핸들러부터 Error Boundary 계층화, 에러 분류 체계까지 체계적인 에러 처리 전략을 세웁니다.",
+    "globalTitle": "전역 에러 핸들러",
+    "globalCode": "// 전역 에러 핸들러\nwindow.onerror = (message, source, lineno, colno, error) => {\n  Sentry.captureException(\n    error || new Error(String(message)),\n    { extra: { source, lineno, colno } }\n  );\n};\n\n// Promise 거부 핸들러\nwindow.onunhandledrejection = (event) => {\n  Sentry.captureException(event.reason, {\n    tags: { type: \"unhandledrejection\" },\n  });\n};\n\n// 안전한 fetch 래퍼\nexport async function safeFetch<T>(\n  url: string,\n  options?: RequestInit\n): Promise<T> {\n  try {\n    const response = await fetch(url, options);\n    if (!response.ok) {\n      const error = new Error(\n        `HTTP ${response.status}: ${response.statusText}`\n      );\n      Sentry.captureException(error);\n      throw error;\n    }\n    return response.json();\n  } catch (error) {\n    if (error instanceof TypeError) {\n      Sentry.captureException(error, {\n        tags: { errorType: \"network\" },\n      });\n    }\n    throw error;\n  }\n}",
+    "boundaryTitle": "Error Boundary 계층화",
+    "boundaryCode": "// 페이지 레벨 에러 경계\nfunction PageErrorBoundary({ children }) {\n  return (\n    <Sentry.ErrorBoundary\n      fallback={({ error, resetError }) => (\n        <div className=\"error-page\">\n          <h1>페이지를 불러올 수 없습니다</h1>\n          <button onClick={resetError}>다시 시도</button>\n        </div>\n      )}\n      beforeCapture={(scope) => {\n        scope.setTag(\"errorBoundary\", \"page\");\n      }}\n    >\n      {children}\n    </Sentry.ErrorBoundary>\n  );\n}\n\n// 컴포넌트 레벨 에러 경계\nfunction ComponentErrorBoundary({ children, fallback }) {\n  return (\n    <Sentry.ErrorBoundary\n      fallback={fallback || <div>콘텐츠를 불러올 수 없습니다.</div>}\n      beforeCapture={(scope) => {\n        scope.setTag(\"errorBoundary\", \"component\");\n      }}\n    >\n      {children}\n    </Sentry.ErrorBoundary>\n  );\n}",
+    "boundaryUsage": "// 사용 예시\nfunction App() {\n  return (\n    <PageErrorBoundary>\n      <Header />\n      <main>\n        <ComponentErrorBoundary>\n          <ProductList />\n        </ComponentErrorBoundary>\n        <ComponentErrorBoundary>\n          <Recommendations />\n        </ComponentErrorBoundary>\n      </main>\n      <Footer />\n    </PageErrorBoundary>\n  );\n}",
+    "classificationTitle": "에러 분류 체계",
+    "classifications": [
+      { "severity": "LOW", "description": "무시해도 되는 에러", "examples": "네트워크 일시 오류, 확장 프로그램 충돌", "handling": "로깅만 수행" },
+      { "severity": "MEDIUM", "description": "기능 저하", "examples": "비핵심 API 실패, 이미지 로드 실패", "handling": "대체 UI 표시, 비동기 알림" },
+      { "severity": "HIGH", "description": "주요 기능 장애", "examples": "인증 실패, 결제 페이지 오류", "handling": "즉시 알림, 에러 페이지 표시" },
+      { "severity": "CRITICAL", "description": "서비스 불가", "examples": "메인 페이지 렌더링 실패, 데이터 손실", "handling": "긴급 호출, 즉시 롤백 검토" }
+    ],
+    "classificationCode": "enum ErrorSeverity {\n  LOW = \"low\",\n  MEDIUM = \"medium\",\n  HIGH = \"high\",\n  CRITICAL = \"critical\",\n}\n\nfunction classifyError(error: Error): ErrorSeverity {\n  if (error.name === \"TypeError\"\n    && error.message.includes(\"fetch\")) {\n    return ErrorSeverity.LOW;\n  }\n  if (error.message.includes(\"payment\")) {\n    return ErrorSeverity.CRITICAL;\n  }\n  if (error.message.includes(\"auth\")) {\n    return ErrorSeverity.HIGH;\n  }\n  return ErrorSeverity.MEDIUM;\n}",
+    "noteTitle": "에러 처리 체크리스트",
+    "note": "전역 핸들러 설정, Error Boundary 계층화, 에러 심각도 분류, 네트워크 에러 재시도 로직, 사용자 친화적 에러 메시지, Sentry 컨텍스트 추가를 반드시 점검하세요."
+  },
+  "privacy": {
+    "badge": "Privacy",
+    "title": "개인정보 보호",
+    "description": "모니터링 데이터 수집 시 개인정보보호법과 GDPR 규정을 준수하며, 사용자 동의 기반 초기화를 구현합니다.",
+    "maskingTitle": "민감 데이터 마스킹",
+    "maskingCode": "Sentry.init({\n  beforeSend(event) {\n    // 이메일 마스킹\n    if (event.user?.email) {\n      event.user.email = maskEmail(event.user.email);\n    }\n    // 요청 데이터에서 민감 정보 제거\n    if (event.request?.data) {\n      const data = JSON.parse(event.request.data);\n      delete data.password;\n      delete data.creditCard;\n      delete data.ssn;\n      event.request.data = JSON.stringify(data);\n    }\n    return event;\n  },\n  beforeBreadcrumb(breadcrumb) {\n    if (breadcrumb.category === \"console\") {\n      if (breadcrumb.message?.includes(\"token\")) {\n        return null;\n      }\n    }\n    return breadcrumb;\n  },\n  denyUrls: [\n    /\\/api\\/auth/,\n    /\\/api\\/payment/,\n  ],\n});\n\nfunction maskEmail(email: string): string {\n  const [local, domain] = email.split(\"@\");\n  return `${local[0]}***@${domain}`;\n}",
+    "gdprTitle": "GDPR 준수",
+    "gdprRequirements": [
+      { "requirement": "명시적 동의", "implementation": "쿠키 동의 배너를 통해 모니터링 도구별 동의를 수집합니다." },
+      { "requirement": "데이터 최소화", "implementation": "목적에 필요한 최소한의 데이터만 수집하고 불필요한 PII를 제거합니다." },
+      { "requirement": "데이터 접근권", "implementation": "사용자가 자신의 수집 데이터를 조회할 수 있는 API를 제공합니다." },
+      { "requirement": "삭제 요청 처리", "implementation": "GDPR 삭제 요청 시 Sentry, 분석 서비스에서 사용자 데이터를 삭제합니다." }
+    ],
+    "consentTitle": "동의 기반 초기화",
+    "consentCode": "interface UserConsent {\n  analytics: boolean;\n  errorTracking: boolean;\n  sessionReplay: boolean;\n}\n\nfunction initializeMonitoring(consent: UserConsent) {\n  if (consent.analytics) {\n    initGA(GA_ID);\n  }\n\n  if (consent.errorTracking) {\n    Sentry.init({\n      dsn: SENTRY_DSN,\n      integrations: consent.sessionReplay\n        ? [Sentry.replayIntegration()]\n        : [],\n    });\n  }\n}",
+    "deletionTitle": "데이터 삭제 요청 처리",
+    "deletionCode": "async function handleDataDeletionRequest(\n  userId: string\n) {\n  // Sentry 사용자 데이터 삭제\n  await fetch(\n    `https://sentry.io/api/0/projects/.../users/${userId}/`,\n    {\n      method: \"DELETE\",\n      headers: {\n        Authorization: `Bearer ${SENTRY_API_TOKEN}`,\n      },\n    }\n  );\n\n  // 분석 데이터 삭제\n  await deleteUserAnalyticsData(userId);\n}",
+    "noteTitle": "법적 고려사항",
+    "note": "개인정보 보호 규정은 지역마다 다릅니다(한국 개인정보보호법, EU GDPR, 미국 CCPA 등). 서비스 대상 지역의 법률을 확인하고, 모니터링 도구 도입 시 반드시 법무팀과 협의하세요. 기술적 구현뿐 아니라 조직적 프로세스(데이터 보호 책임자 지정, 영향 평가 등)도 필요합니다."
+  }
+}

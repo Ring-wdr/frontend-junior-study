@@ -1,0 +1,215 @@
+{
+  "header": {
+    "title": "Error Tracking & Production Monitoring",
+    "description": "Build a complete workflow to detect, track, and resolve issues in real user environments."
+  },
+  "tabs": {
+    "all": "All",
+    "monitoring-intro": "Monitoring Intro",
+    "sentry": "Sentry",
+    "session-replay": "Session Replay",
+    "rum": "RUM",
+    "analytics": "Analytics",
+    "alerts": "Alerts",
+    "best-practices": "Best Practices",
+    "privacy": "Privacy"
+  },
+  "monitoringIntro": {
+    "badge": "Monitoring",
+    "title": "Why Production Monitoring Matters",
+    "description": "Observability — the ability to understand internal system state from the outside — is the cornerstone of reliable service operations.",
+    "principlesTitle": "Core Concepts",
+    "principles": [
+      { "title": "Observability", "desc": "The ability to understand internal system state from external outputs." },
+      { "title": "MTTD (Mean Time To Detect)", "desc": "Average time to discover a problem after it occurs." },
+      { "title": "MTTR (Mean Time To Resolve)", "desc": "Average time to resolve a problem after detection." },
+      { "title": "SLI / SLO / SLA", "desc": "A service quality framework comprising indicators, objectives, and agreements." }
+    ],
+    "comparisonTitle": "Local vs Production",
+    "comparison": [
+      { "aspect": "Debugging", "local": "console.log for instant feedback", "production": "Log aggregation systems required" },
+      { "aspect": "Error visibility", "local": "Stack traces visible immediately", "production": "Invisible unless users report" },
+      { "aspect": "Network", "local": "DevTools network tab", "production": "Countless environment variables" },
+      { "aspect": "Control", "local": "Full environment control", "production": "Thousands of browsers/devices" }
+    ],
+    "problemsTitle": "Problems Without Monitoring",
+    "problems": [
+      { "problem": "Silent errors", "result": "Users leave without you knowing" },
+      { "problem": "Performance degradation", "result": "Conversion drops, cause unknown" },
+      { "problem": "Environment-specific bugs", "result": "Cannot reproduce, cannot fix" },
+      { "problem": "Memory leaks", "result": "Gradual performance decline" }
+    ],
+    "sliSloSlaTitle": "SLI / SLO / SLA Framework",
+    "framework": [
+      { "term": "SLI (Service Level Indicator)", "definition": "A metric that measures service level", "example": "99.5% of requests respond within 200ms" },
+      { "term": "SLO (Service Level Objective)", "definition": "A service level target", "example": "Maintain 99.9% monthly availability" },
+      { "term": "SLA (Service Level Agreement)", "definition": "A service level contract", "example": "Credit compensation when SLO is not met" }
+    ],
+    "noteTitle": "Key Takeaway",
+    "note": "Production monitoring is about prevention, not reaction. The goal is to detect warning signals before errors occur and fix issues before users feel the impact."
+  },
+  "sentry": {
+    "badge": "Sentry",
+    "title": "Error Tracking (Sentry)",
+    "description": "The most widely used error tracking platform — it captures and analyzes production errors in real time.",
+    "featuresTitle": "Key Features",
+    "features": [
+      { "title": "Automatic Error Grouping", "desc": "Automatically groups similar errors to reduce duplicate alerts." },
+      { "title": "Source Map Support", "desc": "Restores obfuscated code to the original source for debugging." },
+      { "title": "Release Tracking", "desc": "Tracks which deployment version triggered the error." },
+      { "title": "User Impact Analysis", "desc": "Identifies how many users are affected by each error." }
+    ],
+    "setupTitle": "Installation & Setup",
+    "setupCode": "import * as Sentry from \"@sentry/react\";\n\nSentry.init({\n  dsn: \"https://xxxxx@xxx.ingest.sentry.io/xxxxx\",\n  environment: import.meta.env.MODE,\n  release: import.meta.env.VITE_APP_VERSION,\n  integrations: [\n    Sentry.browserTracingIntegration(),\n    Sentry.replayIntegration(),\n  ],\n  tracesSampleRate: 0.1,\n  replaysSessionSampleRate: 0.1,\n  replaysOnErrorSampleRate: 1.0,\n  beforeSend(event) {\n    if (event.user) {\n      delete event.user.email;\n    }\n    return event;\n  },\n});",
+    "captureTitle": "Manual Error Capture",
+    "captureCode": "import * as Sentry from \"@sentry/react\";\n\ntry {\n  await riskyOperation();\n} catch (error) {\n  Sentry.captureException(error, {\n    tags: {\n      feature: \"checkout\",\n      severity: \"critical\",\n    },\n    extra: {\n      userId: currentUser.id,\n      cartItems: cart.items.length,\n    },\n  });\n}\n\n// Scope configuration\nSentry.withScope((scope) => {\n  scope.setTag(\"transaction\", \"checkout\");\n  scope.setUser({ id: user.id });\n  scope.setContext(\"order\", { orderId, amount });\n  Sentry.captureException(error);\n});",
+    "reactTitle": "React Integration",
+    "reactCode": "import * as Sentry from \"@sentry/react\";\n\nfunction App() {\n  return (\n    <Sentry.ErrorBoundary\n      fallback={({ error, resetError }) => (\n        <div>\n          <h1>Something went wrong</h1>\n          <p>{error.message}</p>\n          <button onClick={resetError}>Try again</button>\n        </div>\n      )}\n      onError={(error, componentStack) => {\n        console.error(\"Error caught:\", error);\n      }}\n    >\n      <Router>\n        <Routes />\n      </Router>\n    </Sentry.ErrorBoundary>\n  );\n}",
+    "sourceMapTitle": "Source Map Upload",
+    "sourceMapCode": "// vite.config.ts\nimport { sentryVitePlugin } from \"@sentry/vite-plugin\";\n\nexport default defineConfig({\n  build: {\n    sourcemap: true,\n  },\n  plugins: [\n    sentryVitePlugin({\n      org: \"my-org\",\n      project: \"my-project\",\n      authToken: process.env.SENTRY_AUTH_TOKEN,\n    }),\n  ],\n});",
+    "noteTitle": "Caution",
+    "note": "Always filter sensitive PII from data sent to Sentry using the beforeSend callback. Logging emails, passwords, or credit card info can lead to serious security issues."
+  },
+  "sessionReplay": {
+    "badge": "Session Replay",
+    "title": "Session Replay",
+    "description": "Replay user sessions like a video to understand exactly what happened during a problem.",
+    "whatIsTitle": "What is Session Replay?",
+    "whatIsItems": [
+      { "label": "Traditional error report", "desc": "\"TypeError: Cannot read property 'name' of undefined\" — What context? After what action?" },
+      { "label": "Session Replay", "desc": "User: Product list → Detail → Cart → Error — Exact reproduction path identified" }
+    ],
+    "sentryReplayTitle": "Sentry Replay Setup",
+    "sentryReplayCode": "import * as Sentry from \"@sentry/react\";\n\nSentry.init({\n  dsn: \"...\",\n  integrations: [\n    Sentry.replayIntegration({\n      maskAllText: false,\n      maskAllInputs: true,\n      blockAllMedia: false,\n      networkDetailAllowUrls: [\"/api\"],\n      networkCaptureBodies: true,\n    }),\n  ],\n  replaysSessionSampleRate: 0.1,\n  replaysOnErrorSampleRate: 1.0,\n});",
+    "logRocketTitle": "LogRocket Setup",
+    "logRocketCode": "import LogRocket from \"logrocket\";\nimport setupLogRocketReact from \"logrocket-react\";\n\nLogRocket.init(\"org-id/app-id\", {\n  release: import.meta.env.VITE_APP_VERSION,\n  network: {\n    requestSanitizer: (request) => {\n      if (request.headers.Authorization) {\n        request.headers.Authorization = \"[REDACTED]\";\n      }\n      return request;\n    },\n  },\n  dom: {\n    inputSanitizer: true,\n    textSanitizer: (text) => {\n      return text.replace(/\\S+@\\S+/g, \"[EMAIL]\");\n    },\n  },\n});\n\nsetupLogRocketReact(LogRocket);",
+    "integrationTitle": "Sentry + LogRocket Integration",
+    "integrationCode": "import LogRocket from \"logrocket\";\nimport * as Sentry from \"@sentry/react\";\n\nLogRocket.getSessionURL((sessionURL) => {\n  Sentry.configureScope((scope) => {\n    scope.setExtra(\"sessionURL\", sessionURL);\n  });\n});",
+    "privacyItems": [
+      { "concern": "Input fields", "solution": "maskAllInputs: true to mask all inputs" },
+      { "concern": "Network requests", "solution": "Strip Authorization headers and auth info" },
+      { "concern": "Text content", "solution": "Mask emails and phone numbers via regex" },
+      { "concern": "Media", "solution": "blockAllMedia to block images/video capture" }
+    ],
+    "noteTitle": "Performance Impact",
+    "note": "Session replay continuously captures DOM changes, which can affect performance. In production, set replaysSessionSampleRate low and capture 100% only on errors."
+  },
+  "rum": {
+    "badge": "RUM",
+    "title": "Real User Monitoring (RUM)",
+    "description": "Collect and analyze performance data from real users' browsers.",
+    "comparisonTitle": "Synthetic Monitoring vs RUM",
+    "comparisonItems": [
+      { "aspect": "Environment", "synthetic": "Controlled environment", "rum": "Real user environment" },
+      { "aspect": "Scope", "synthetic": "Periodic tests", "rum": "Every page view" },
+      { "aspect": "Purpose", "synthetic": "Issue detection", "rum": "Actual experience measurement" }
+    ],
+    "vitalsTitle": "Core Web Vitals",
+    "vitals": [
+      { "metric": "LCP (Largest Contentful Paint)", "threshold": "≤ 2.5s", "description": "Time until the main content is loaded" },
+      { "metric": "INP (Interaction to Next Paint)", "threshold": "≤ 200ms", "description": "Time from user interaction to the next paint" },
+      { "metric": "CLS (Cumulative Layout Shift)", "threshold": "≤ 0.1", "description": "Unexpected layout shift amount" },
+      { "metric": "FCP (First Contentful Paint)", "threshold": "≤ 1.8s", "description": "Time until first content is rendered" },
+      { "metric": "TTFB (Time To First Byte)", "threshold": "≤ 0.8s", "description": "Time until the first byte from the server" }
+    ],
+    "webVitalsTitle": "web-vitals Library",
+    "webVitalsCode": "import { onCLS, onINP, onLCP, onFCP, onTTFB } from \"web-vitals\";\n\nfunction sendToAnalytics(metric) {\n  // Send to Sentry\n  Sentry.captureMessage(\"Web Vital\", {\n    level: \"info\",\n    tags: {\n      metric_name: metric.name,\n      metric_rating: metric.rating,\n    },\n    extra: {\n      value: metric.value,\n      delta: metric.delta,\n      id: metric.id,\n    },\n  });\n}\n\nexport function reportWebVitals() {\n  onCLS(sendToAnalytics);\n  onINP(sendToAnalytics);\n  onLCP(sendToAnalytics);\n  onFCP(sendToAnalytics);\n  onTTFB(sendToAnalytics);\n}",
+    "customTitle": "Custom Performance Measurement",
+    "customCode": "function useRenderTracking(componentName: string) {\n  const startTime = useRef(performance.now());\n\n  useEffect(() => {\n    const duration = performance.now() - startTime.current;\n    Sentry.addBreadcrumb({\n      category: \"render\",\n      message: `${componentName} rendered`,\n      data: { duration },\n      level: \"info\",\n    });\n\n    if (duration > 100) {\n      Sentry.captureMessage(\n        `Slow render: ${componentName}`,\n        { level: \"warning\", extra: { duration } }\n      );\n    }\n  }, [componentName]);\n}",
+    "sendingTitle": "Sending to Analytics",
+    "sendingCode": "// Send to Google Analytics\ngtag(\"event\", metric.name, {\n  event_category: \"Web Vitals\",\n  value: Math.round(\n    metric.name === \"CLS\"\n      ? metric.value * 1000\n      : metric.value\n  ),\n  event_label: metric.id,\n  non_interaction: true,\n});",
+    "noteTitle": "Sampling Strategy",
+    "note": "Collecting performance data from every user in production can get expensive fast. Set tracesSampleRate to 0.1 (10%) for a reasonable sampling rate. Statistically meaningful data can still be gathered with proper sampling."
+  },
+  "analytics": {
+    "badge": "Analytics",
+    "title": "User Analytics",
+    "description": "Understand user behavior through event tracking and support data-driven decisions.",
+    "ga4SetupTitle": "Google Analytics 4 Setup",
+    "ga4SetupCode": "export function initGA(measurementId: string) {\n  const script = document.createElement(\"script\");\n  script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;\n  script.async = true;\n  document.head.appendChild(script);\n\n  window.dataLayer = window.dataLayer || [];\n  window.gtag = function () {\n    window.dataLayer.push(arguments);\n  };\n\n  window.gtag(\"js\", new Date());\n  window.gtag(\"config\", measurementId, {\n    send_page_view: false, // Manual handling for SPAs\n  });\n}",
+    "eventDesignTitle": "Event Tracking Design",
+    "eventTypes": [
+      { "type": "product_view", "desc": "Product view", "params": "productId, category" },
+      { "type": "add_to_cart", "desc": "Add to cart", "params": "productId, quantity, price" },
+      { "type": "checkout_start", "desc": "Checkout start", "params": "cartValue, itemCount" },
+      { "type": "checkout_complete", "desc": "Checkout complete", "params": "orderId, value" },
+      { "type": "search", "desc": "Search", "params": "query, resultCount" },
+      { "type": "error", "desc": "Error occurred", "params": "errorType, message" }
+    ],
+    "routerTitle": "React Router Integration",
+    "routerCode": "import { useLocation } from \"react-router-dom\";\nimport { useEffect } from \"react\";\nimport { trackPageView } from \"./utils/analytics\";\n\nfunction App() {\n  const location = useLocation();\n\n  useEffect(() => {\n    trackPageView(\n      location.pathname + location.search\n    );\n  }, [location]);\n\n  return <Routes />;\n}",
+    "customEventTitle": "Custom Event Tracking",
+    "customEventCode": "type AnalyticsEvent =\n  | { type: \"product_view\"; productId: string }\n  | { type: \"add_to_cart\"; productId: string;\n      quantity: number; price: number }\n  | { type: \"checkout_complete\"; orderId: string;\n      value: number };\n\nexport function track(event: AnalyticsEvent) {\n  switch (event.type) {\n    case \"product_view\":\n      window.gtag(\"event\", \"view_item\", {\n        items: [{ item_id: event.productId }],\n      });\n      break;\n    case \"add_to_cart\":\n      window.gtag(\"event\", \"add_to_cart\", {\n        currency: \"KRW\",\n        value: event.price * event.quantity,\n      });\n      break;\n  }\n}",
+    "noteTitle": "Privacy Policy",
+    "note": "Always comply with privacy laws (GDPR, CCPA) when collecting analytics data. In SPAs, disable send_page_view and manually send page views on route changes for accurate data."
+  },
+  "alerts": {
+    "badge": "Alerts",
+    "title": "Alerts & Dashboards",
+    "description": "Build a severity-based alert system and design dashboards to monitor key metrics.",
+    "slackTitle": "Slack Alert Setup",
+    "slackCode": "type AlertLevel = \"info\" | \"warning\" | \"critical\";\n\nasync function sendSlackAlert(alert: {\n  level: AlertLevel;\n  title: string;\n  message: string;\n  context?: Record<string, any>;\n}) {\n  const color = {\n    info: \"#36a64f\",\n    warning: \"#ff9500\",\n    critical: \"#ff0000\",\n  }[alert.level];\n\n  await fetch(webhookUrl, {\n    method: \"POST\",\n    body: JSON.stringify({\n      attachments: [{\n        color,\n        title: alert.title,\n        text: alert.message,\n        ts: Math.floor(Date.now() / 1000),\n      }],\n    }),\n  });\n}",
+    "rulesTitle": "Alert Rule Configuration",
+    "rules": [
+      { "condition": "New issue detected", "threshold": "Immediately", "action": "Slack channel notification" },
+      { "condition": "Repeated same issue", "threshold": "10+ times within 1 hour", "action": "Slack + Email notification" },
+      { "condition": "Error rate spike", "threshold": "Error rate > 5% over 5 min", "action": "Emergency call (PagerDuty)" },
+      { "condition": "Performance degradation", "threshold": "LCP > 4s", "action": "Performance channel notification" }
+    ],
+    "dashboardTitle": "Dashboard Design",
+    "dashboardMetrics": [
+      { "category": "Error Metrics", "items": ["Errors per hour", "Error type distribution", "Affected user count", "Top 10 most frequent errors"] },
+      { "category": "Performance Metrics", "items": ["Core Web Vitals (LCP, INP, CLS)", "Page load time by page", "API response time", "JavaScript error rate"] },
+      { "category": "User Metrics", "items": ["DAU/MAU", "Conversion rate (funnel analysis)", "Bounce rate", "Session duration"] }
+    ],
+    "fatigueTitle": "Alert Fatigue Management",
+    "fatiguePractices": [
+      "Separate channels by severity (critical → urgent channel, info → general channel)",
+      "Suppress duplicate alerts (send summaries for repeated issues)",
+      "Only send critical alerts outside business hours",
+      "Optimize alert rules through weekly reviews"
+    ],
+    "noteTitle": "Incident Response",
+    "note": "The key to alerting is sending only actionable alerts. Alerting on every error leads to fatigue and missed critical alerts. Establish severity classification and escalation policies upfront."
+  },
+  "bestPractices": {
+    "badge": "Best Practices",
+    "title": "Error Handling Best Practices",
+    "description": "Build a systematic error handling strategy from global handlers to Error Boundary layering and error classification.",
+    "globalTitle": "Global Error Handlers",
+    "globalCode": "// Global error handler\nwindow.onerror = (message, source, lineno, colno, error) => {\n  Sentry.captureException(\n    error || new Error(String(message)),\n    { extra: { source, lineno, colno } }\n  );\n};\n\n// Promise rejection handler\nwindow.onunhandledrejection = (event) => {\n  Sentry.captureException(event.reason, {\n    tags: { type: \"unhandledrejection\" },\n  });\n};\n\n// Safe fetch wrapper\nexport async function safeFetch<T>(\n  url: string,\n  options?: RequestInit\n): Promise<T> {\n  try {\n    const response = await fetch(url, options);\n    if (!response.ok) {\n      const error = new Error(\n        `HTTP ${response.status}: ${response.statusText}`\n      );\n      Sentry.captureException(error);\n      throw error;\n    }\n    return response.json();\n  } catch (error) {\n    if (error instanceof TypeError) {\n      Sentry.captureException(error, {\n        tags: { errorType: \"network\" },\n      });\n    }\n    throw error;\n  }\n}",
+    "boundaryTitle": "Error Boundary Layering",
+    "boundaryCode": "// Page-level error boundary\nfunction PageErrorBoundary({ children }) {\n  return (\n    <Sentry.ErrorBoundary\n      fallback={({ error, resetError }) => (\n        <div className=\"error-page\">\n          <h1>Unable to load page</h1>\n          <button onClick={resetError}>Try again</button>\n        </div>\n      )}\n      beforeCapture={(scope) => {\n        scope.setTag(\"errorBoundary\", \"page\");\n      }}\n    >\n      {children}\n    </Sentry.ErrorBoundary>\n  );\n}\n\n// Component-level error boundary\nfunction ComponentErrorBoundary({ children, fallback }) {\n  return (\n    <Sentry.ErrorBoundary\n      fallback={fallback || <div>Unable to load content.</div>}\n      beforeCapture={(scope) => {\n        scope.setTag(\"errorBoundary\", \"component\");\n      }}\n    >\n      {children}\n    </Sentry.ErrorBoundary>\n  );\n}",
+    "boundaryUsage": "// Usage example\nfunction App() {\n  return (\n    <PageErrorBoundary>\n      <Header />\n      <main>\n        <ComponentErrorBoundary>\n          <ProductList />\n        </ComponentErrorBoundary>\n        <ComponentErrorBoundary>\n          <Recommendations />\n        </ComponentErrorBoundary>\n      </main>\n      <Footer />\n    </PageErrorBoundary>\n  );\n}",
+    "classificationTitle": "Error Classification",
+    "classifications": [
+      { "severity": "LOW", "description": "Negligible errors", "examples": "Transient network errors, extension crashes", "handling": "Log only" },
+      { "severity": "MEDIUM", "description": "Feature degradation", "examples": "Non-critical API failure, image load failure", "handling": "Show fallback UI, async alert" },
+      { "severity": "HIGH", "description": "Major feature failure", "examples": "Auth failure, payment page errors", "handling": "Immediate alert, show error page" },
+      { "severity": "CRITICAL", "description": "Service down", "examples": "Main page render failure, data loss", "handling": "Emergency call, immediate rollback review" }
+    ],
+    "classificationCode": "enum ErrorSeverity {\n  LOW = \"low\",\n  MEDIUM = \"medium\",\n  HIGH = \"high\",\n  CRITICAL = \"critical\",\n}\n\nfunction classifyError(error: Error): ErrorSeverity {\n  if (error.name === \"TypeError\"\n    && error.message.includes(\"fetch\")) {\n    return ErrorSeverity.LOW;\n  }\n  if (error.message.includes(\"payment\")) {\n    return ErrorSeverity.CRITICAL;\n  }\n  if (error.message.includes(\"auth\")) {\n    return ErrorSeverity.HIGH;\n  }\n  return ErrorSeverity.MEDIUM;\n}",
+    "noteTitle": "Error Handling Checklist",
+    "note": "Always verify: global handlers configured, Error Boundaries layered, error severity classification in place, network error retry logic, user-friendly error messages, and Sentry context enrichment."
+  },
+  "privacy": {
+    "badge": "Privacy",
+    "title": "Privacy Protection",
+    "description": "Comply with privacy laws and GDPR when collecting monitoring data, implementing consent-based initialization.",
+    "maskingTitle": "Sensitive Data Masking",
+    "maskingCode": "Sentry.init({\n  beforeSend(event) {\n    // Mask email\n    if (event.user?.email) {\n      event.user.email = maskEmail(event.user.email);\n    }\n    // Remove sensitive data from requests\n    if (event.request?.data) {\n      const data = JSON.parse(event.request.data);\n      delete data.password;\n      delete data.creditCard;\n      delete data.ssn;\n      event.request.data = JSON.stringify(data);\n    }\n    return event;\n  },\n  beforeBreadcrumb(breadcrumb) {\n    if (breadcrumb.category === \"console\") {\n      if (breadcrumb.message?.includes(\"token\")) {\n        return null;\n      }\n    }\n    return breadcrumb;\n  },\n  denyUrls: [\n    /\\/api\\/auth/,\n    /\\/api\\/payment/,\n  ],\n});\n\nfunction maskEmail(email: string): string {\n  const [local, domain] = email.split(\"@\");\n  return `${local[0]}***@${domain}`;\n}",
+    "gdprTitle": "GDPR Compliance",
+    "gdprRequirements": [
+      { "requirement": "Explicit consent", "implementation": "Collect per-tool monitoring consent via cookie consent banner." },
+      { "requirement": "Data minimization", "implementation": "Collect only the minimum data necessary and strip unnecessary PII." },
+      { "requirement": "Data access rights", "implementation": "Provide an API for users to view their collected data." },
+      { "requirement": "Deletion requests", "implementation": "Delete user data from Sentry and analytics services on GDPR deletion requests." }
+    ],
+    "consentTitle": "Consent-Based Initialization",
+    "consentCode": "interface UserConsent {\n  analytics: boolean;\n  errorTracking: boolean;\n  sessionReplay: boolean;\n}\n\nfunction initializeMonitoring(consent: UserConsent) {\n  if (consent.analytics) {\n    initGA(GA_ID);\n  }\n\n  if (consent.errorTracking) {\n    Sentry.init({\n      dsn: SENTRY_DSN,\n      integrations: consent.sessionReplay\n        ? [Sentry.replayIntegration()]\n        : [],\n    });\n  }\n}",
+    "deletionTitle": "Data Deletion Requests",
+    "deletionCode": "async function handleDataDeletionRequest(\n  userId: string\n) {\n  // Delete Sentry user data\n  await fetch(\n    `https://sentry.io/api/0/projects/.../users/${userId}/`,\n    {\n      method: \"DELETE\",\n      headers: {\n        Authorization: `Bearer ${SENTRY_API_TOKEN}`,\n      },\n    }\n  );\n\n  // Delete analytics data\n  await deleteUserAnalyticsData(userId);\n}",
+    "noteTitle": "Legal Considerations",
+    "note": "Privacy regulations vary by region (Korea PIPA, EU GDPR, US CCPA, etc.). Check the laws applicable to your service's target regions and always consult your legal team before introducing monitoring tools. Organizational processes (DPO appointment, impact assessment) are just as important as technical implementation."
+  }
+}

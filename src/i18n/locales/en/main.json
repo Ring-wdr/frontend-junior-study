@@ -88,6 +88,10 @@
     "week21": {
       "title": "CI/CD & DevOps",
       "description": "Build delivery pipelines, automate releases, and set operational guardrails."
+    },
+    "week22": {
+      "title": "Error Tracking & Production Monitoring",
+      "description": "Build production observability with Sentry, Session Replay, RUM, and GA4."
     }
   }
 }

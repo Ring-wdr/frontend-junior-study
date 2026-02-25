@@ -88,6 +88,10 @@
     "week21": {
       "title": "CI/CD & DevOps",
       "description": "배포 파이프라인을 만들고 릴리스를 자동화하며 운영 방어장치를 설정합니다."
+    },
+    "week22": {
+      "title": "에러 추적 & 프로덕션 모니터링",
+      "description": "Sentry, 세션 리플레이, RUM, GA4를 활용한 프로덕션 관찰 시스템 구축."
     }
   }
 }
