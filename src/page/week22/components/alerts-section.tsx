@@ -4,6 +4,7 @@ import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { AlertRuleVisualizer } from './alert-rule-visualizer';
 
 type Rule = { condition: string; threshold: string; action: string };
 type DashboardCategory = { category: string; items: string[] };
@@ -69,6 +70,12 @@ export const AlertsSection = () => {
               </tbody>
             </table>
           </div>
+        </SubSection>
+
+        <SubSection title="Alert Rule Simulator" icon iconColor="pink">
+          <DemoBox label="Interactive Demo">
+            <AlertRuleVisualizer />
+          </DemoBox>
         </SubSection>
 
         <SubSection title={t('alerts.dashboardTitle')} icon iconColor="blue">

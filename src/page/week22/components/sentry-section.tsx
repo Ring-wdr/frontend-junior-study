@@ -4,6 +4,7 @@ import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { ErrorTrackerVisualizer } from './error-tracker-visualizer';
 
 type Feature = { title: string; desc: string };
 
@@ -34,6 +35,12 @@ export const SentrySection = () => {
               </div>
             ))}
           </div>
+        </SubSection>
+
+        <SubSection title="Error Tracking Simulator" icon iconColor="red">
+          <DemoBox label="Interactive Demo">
+            <ErrorTrackerVisualizer />
+          </DemoBox>
         </SubSection>
 
         <SubSection title={t('sentry.setupTitle')} icon iconColor="purple">

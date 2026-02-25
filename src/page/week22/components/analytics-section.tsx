@@ -4,6 +4,7 @@ import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { EventStreamVisualizer } from './event-stream-visualizer';
 
 type EventType = { type: string; desc: string; params: string };
 
@@ -72,6 +73,12 @@ export const AnalyticsSection = () => {
               </tbody>
             </table>
           </div>
+        </SubSection>
+
+        <SubSection title="Event Stream Demo" icon iconColor="orange">
+          <DemoBox label="Interactive Demo">
+            <EventStreamVisualizer />
+          </DemoBox>
         </SubSection>
 
         <SubSection title={t('analytics.routerTitle')} icon iconColor="purple">

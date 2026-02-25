@@ -4,6 +4,7 @@ import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { DataMaskingVisualizer } from './data-masking-visualizer';
 
 type GdprRequirement = { requirement: string; implementation: string };
 
@@ -27,6 +28,12 @@ export const PrivacySection = () => {
               language="typescript"
               className="text-xs"
             />
+          </DemoBox>
+        </SubSection>
+
+        <SubSection title="Data Masking Demo" icon iconColor="blue">
+          <DemoBox label="Interactive Demo">
+            <DataMaskingVisualizer />
           </DemoBox>
         </SubSection>
 

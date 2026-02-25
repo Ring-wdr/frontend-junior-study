@@ -1,7 +1,9 @@
 import { useTranslation } from 'react-i18next';
+import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
+import { IncidentTimelineVisualizer } from './incident-timeline-visualizer';
 
 type Principle = { title: string; desc: string };
 type Comparison = { aspect: string; local: string; production: string };
@@ -125,6 +127,12 @@ export const MonitoringIntroSection = () => {
               </div>
             ))}
           </div>
+        </SubSection>
+
+        <SubSection title="Incident Response Simulator" icon iconColor="blue">
+          <DemoBox label="Interactive Demo">
+            <IncidentTimelineVisualizer />
+          </DemoBox>
         </SubSection>
 
         <InfoBox variant="blue" title={t('monitoringIntro.noteTitle')}>

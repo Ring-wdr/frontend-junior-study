@@ -4,6 +4,7 @@ import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { SessionReplayVisualizer } from './session-replay-visualizer';
 
 type WhatIsItem = { label: string; desc: string };
 type PrivacyItem = { concern: string; solution: string };
@@ -42,6 +43,12 @@ export const SessionReplaySection = () => {
               </div>
             ))}
           </div>
+        </SubSection>
+
+        <SubSection title="Session Replay Demo" icon iconColor="purple">
+          <DemoBox label="Interactive Demo">
+            <SessionReplayVisualizer />
+          </DemoBox>
         </SubSection>
 
         <SubSection

@@ -4,6 +4,7 @@ import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { ErrorClassificationVisualizer } from './error-classification-visualizer';
 
 type Classification = {
   severity: string;
@@ -104,6 +105,12 @@ export const BestPracticesSection = () => {
               />
             </DemoBox>
           </div>
+        </SubSection>
+
+        <SubSection title="Classification Flow Simulator" icon iconColor="green">
+          <DemoBox label="Interactive Demo">
+            <ErrorClassificationVisualizer />
+          </DemoBox>
         </SubSection>
 
         <InfoBox variant="blue" title={t('bestPractices.noteTitle')}>

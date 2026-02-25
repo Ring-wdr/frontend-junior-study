@@ -4,6 +4,7 @@ import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { WebVitalsVisualizer } from './web-vitals-visualizer';
 
 type ComparisonItem = { aspect: string; synthetic: string; rum: string };
 type Vital = { metric: string; threshold: string; description: string };
@@ -75,6 +76,12 @@ export const RumSection = () => {
               </div>
             ))}
           </div>
+        </SubSection>
+
+        <SubSection title="Web Vitals Simulator" icon iconColor="green">
+          <DemoBox label="Interactive Demo">
+            <WebVitalsVisualizer />
+          </DemoBox>
         </SubSection>
 
         <SubSection title={t('rum.webVitalsTitle')} icon iconColor="purple">
