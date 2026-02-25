@@ -7,7 +7,7 @@ Common patterns and templates for organizing content in weekly pages.
 2. [Section Organization Patterns](#section-organization-patterns)
 3. [Badge Color Strategy](#badge-color-strategy)
 4. [Content Grid Layouts](#content-grid-layouts)
-5. [Common Section Types](#common-section-types)
+5. [Common Section Types](#common-section-types) (including Type 6: Section with Interactive Visualizer)
 
 ---
 
@@ -45,14 +45,22 @@ export const WeekNPage = () => {
 ### File Organization
 ```
 src/page/weekN/
-├── page.tsx                 # Main page component
-├── README.md               # Week notes and reference
+├── page.tsx                     # Main page component
+├── README.md                    # Week notes and reference
 └── components/
-    ├── section1-section.tsx
+    ├── section1-section.tsx      # Section component (static content + visualizer embed)
+    ├── section1-visualizer.tsx   # Interactive visualizer for section1
     ├── section2-section.tsx
+    ├── section2-visualizer.tsx   # Interactive visualizer for section2
     ├── section3-section.tsx
-    └── [visualizers and helpers]
+    ├── section3-visualizer.tsx   # Interactive visualizer for section3
+    └── [shared helpers]
 ```
+
+**Naming Convention:**
+- Section files: `[topic]-section.tsx`
+- Visualizer files: `[concept]-visualizer.tsx`
+- Each section has a paired visualizer file (1:1 mapping)
 
 ---
 
@@ -320,6 +328,48 @@ Choose badge colors to create visual coherence with content type and section the
 
 **Badge Color:** Green
 **Icon Color:** Green + sequential colors
+
+### Type 6: Section with Interactive Visualizer
+**Use When:** Any section benefits from hands-on interactive demonstration
+
+**Structure:**
+- Concept explanation (SubSection with text/cards/tables)
+- Interactive visualizer (SubSection + DemoBox + Visualizer component)
+- Code implementation examples (SubSection with CodeBlock)
+- Key notes (InfoBox)
+
+```typescript
+<SectionCard
+  badge={{ label: t('section.badge'), color: 'blue' }}
+  title={t('section.title')}
+  description={t('section.description')}
+>
+  <div className="space-y-8">
+    <SubSection title={t('section.conceptTitle')} icon iconColor="blue">
+      {/* Concept explanation content */}
+    </SubSection>
+
+    <SubSection title="Interactive Demo" icon iconColor="blue">
+      <DemoBox label="Interactive Demo">
+        <ConceptVisualizer />
+      </DemoBox>
+    </SubSection>
+
+    <SubSection title={t('section.codeTitle')} icon iconColor="purple">
+      <DemoBox label={t('section.codeTitle')}>
+        <CodeBlock code={t('section.code')} language="typescript" className="text-xs" />
+      </DemoBox>
+    </SubSection>
+
+    <InfoBox variant="blue" title={t('section.noteTitle')}>
+      {t('section.note')}
+    </InfoBox>
+  </div>
+</SectionCard>
+```
+
+**Badge Color:** Any (match section topic)
+**Icon Color:** Match badge color for concept, secondary for demo
 
 ---
 

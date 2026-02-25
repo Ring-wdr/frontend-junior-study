@@ -1,13 +1,13 @@
 ---
 name: weekly-page-development
-description: Guide for developing consistent weekly page layouts using shared components (PageLayout, SectionCard, InfoBox, DemoBox, SubSection, etc.). Use when building a new week's educational content page to maintain visual consistency, proper component usage, and design guidelines across all pages. Includes component guides, layout patterns, and design system specifications.
+description: Guide for developing consistent weekly page layouts using shared components (PageLayout, SectionCard, InfoBox, DemoBox, SubSection, etc.) and interactive generative UI visualizers. Use when building a new week's educational content page to maintain visual consistency, proper component usage, design guidelines, and interactive visualizer creation across all pages. Includes component guides, layout patterns, design system specifications, and visualizer development patterns.
 ---
 
 # Weekly Page Development Guide
 
 ## Overview
 
-This skill provides comprehensive guidance for developing new weekly education pages while maintaining consistent design, component usage, and visual hierarchy. It ensures all pages follow established patterns, leverage shared components effectively, and maintain a cohesive learning experience across weeks.
+This skill provides comprehensive guidance for developing new weekly education pages while maintaining consistent design, component usage, and visual hierarchy. It also covers creating **interactive generative UI visualizers** that bring concepts to life through hands-on demonstrations. It ensures all pages follow established patterns, leverage shared components effectively, and maintain a cohesive learning experience across weeks.
 
 ## Getting Started
 
@@ -145,6 +145,42 @@ See [layout-patterns.md](references/layout-patterns.md) for:
 - Content grid layouts
 - Common section configurations
 
+## Generative UI / Interactive Visualizers
+
+Each section can include an interactive visualizer that lets users visually experience the concept. Visualizers are self-contained React components using `motion/react`, `lucide-react`, and `cn()` utility.
+
+See [visualizer-guide.md](references/visualizer-guide.md) for:
+- Complete visualizer architecture and patterns
+- Animation techniques (AnimatePresence, motion.div, SVG animations)
+- Interactive control patterns (buttons, toggles, sliders, playback)
+- Visual feedback patterns (status badges, color-coded cards, pipelines)
+- Six visualizer categories with templates (toggle, trigger+list, gauges, slider, flow, playback)
+- Integration steps with section components
+- Complete code examples from existing visualizers
+- Best practices and icon selection guide
+
+### Quick Start: Adding a Visualizer to a Section
+
+1. **Create** `src/page/weekN/components/concept-visualizer.tsx`
+2. **Import** in the section: `import { ConceptVisualizer } from './concept-visualizer';`
+3. **Embed** in a SubSection + DemoBox:
+
+```typescript
+<SubSection title="Interactive Demo" icon iconColor="blue">
+  <DemoBox label="Interactive Demo">
+    <ConceptVisualizer />
+  </DemoBox>
+</SubSection>
+```
+
+### Key Rules
+- Use `motion/react` (not `framer-motion`) for animations
+- All state is local (`useState`) - no external state management
+- No i18n for visualizer labels (hardcoded English)
+- No new dependencies - use existing: `motion/react`, `lucide-react`, `cn()`
+- Always include a Reset button with `<RotateCcw />` icon
+- Target 100-300 lines per visualizer
+
 ## Section Template
 
 Use the boilerplate section template in `assets/section-template/` as a starting point when creating new sections.
@@ -171,3 +207,6 @@ See [i18n-guide.md](references/i18n-guide.md) for:
 - Organize content with SubSection + grid layouts for clean visual hierarchy
 - Use `t()` for all user-facing text to support multi-language display
 - Keep translation keys hierarchical and descriptive
+- Add one interactive visualizer per section to enhance the learning experience
+- Place visualizers after concept explanations, before code implementation examples
+- Keep visualizers self-contained (local state only, no external dependencies)
