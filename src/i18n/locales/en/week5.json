@@ -154,12 +154,12 @@
         "context": "<strong>Context:</strong> Can read context conditionally",
         "suspense": "<strong>Works with Suspense:</strong> Properly integrates with Suspense boundaries"
       },
-      "nextjsCaching": "Next.js 16 (Canary) introduces revolutionary caching APIs (<code>use cache</code>, <code>cacheLife</code>, <code>cacheTag</code>) to simplify data fetching."
+      "nextjsCaching": "Next.js 16's caching model now centers on Cache Components and <code>use cache</code>. The detailed comparison with classic fetch caching is covered in this week's Data Fetching section."
     },
     "nextjs": {
       "title": "Next.js 16 Caching",
       "subtitle": "Next.js 16: \"Dynamic by Default\" & Caching",
-      "description": "Next.js 16 moves towards a <strong>\"Dynamic by Default\"</strong> model (unlike the \"Cached by Default\" of v13-14). You now explicitly opt-in to caching with <code>\"use cache\"</code>.",
+      "description": "Next.js 16 shifts caching toward <strong>Cache Components</strong> and explicit <code>\"use cache\"</code> opt-in, instead of treating the whole route as the primary cache unit.",
       "oldWay": {
         "title": "Old way (ISR)",
         "description": "Complex config with <code>revalidate</code> per page/segment. Hard to share cache rules.",
@@ -323,6 +323,65 @@
         "incremental": "<strong>Incremental (next.revalidate):</strong> Data is cached but revalidated after a set duration (like ISR)"
       }
     },
+    "cacheComponents": {
+      "title": "Cache Components",
+      "intro": "<strong>Cache Components</strong> is Next.js's newer caching model for the App Router. After enabling <code>cacheComponents: true</code>, you opt specific async functions or components into caching with <code>'use cache'</code>, instead of treating the entire route as one static or ISR page.",
+      "howItWorks": {
+        "title": "How the model changes",
+        "enable": "<code>cacheComponents: true</code> turns on the Cache Components model for the app.",
+        "unit": "<code>'use cache'</code> marks a function or component as the cacheable unit, so caching decisions live closer to the data or UI they affect.",
+        "shell": "Static parts of the route can stream immediately, while dynamic parts stay behind <code>Suspense</code> boundaries until they are ready.",
+        "revalidation": "Use <code>cacheLife</code> to define freshness and tag cached work so mutations can target it with <code>revalidateTag</code>."
+      },
+      "comparison": {
+        "oldModel": {
+          "title": "Classic fetch / ISR mental model",
+          "scope": "<code>fetch(..., { cache: 'force-cache' })</code> and <code>next.revalidate</code> attach caching behavior to the request or route segment.",
+          "mentalModel": "You typically think in terms of full-page static rendering, SSR, or ISR windows.",
+          "tradeoff": "Good for straightforward route-level caching, but harder to share cache rules across multiple components."
+        },
+        "newModel": {
+          "title": "Cache Components mental model",
+          "scope": "<code>'use cache'</code> moves caching to the function or component boundary.",
+          "mentalModel": "Think in terms of a static shell plus dynamic islands that are revealed through <code>Suspense</code>.",
+          "tradeoff": "<strong>Result:</strong> caching becomes more composable, and revalidation can target the exact cached unit instead of broad route-level settings."
+        }
+      },
+      "examples": {
+        "title": "Good vs Bad Patterns",
+        "description": "Switch between the patterns below to see what usually goes wrong and how the Cache Components approach fixes it.",
+        "badge": "Interactive comparison",
+        "badTitle": "Bad",
+        "goodTitle": "Good",
+        "viewBad": "Show bad example",
+        "viewGood": "Show good example",
+        "whyTitle": "Why the good pattern works",
+        "takeawayTitle": "Takeaway",
+        "items": {
+          "cache-boundary": {
+            "tab": "Cache Boundary",
+            "badLabel": "Cache policy is scattered across fetch options",
+            "goodLabel": "Cache policy lives on the reusable data boundary",
+            "why": "With Cache Components, the cacheable unit should be the function or component you want to reuse. That keeps policy close to the actual abstraction instead of repeating it across requests.",
+            "takeaway": "Cache the unit, not the request."
+          },
+          "dynamic-rendering": {
+            "tab": "Dynamic Rendering",
+            "badLabel": "Dynamic fetch blocks the whole page",
+            "goodLabel": "Static shell streams first, dynamic island follows",
+            "why": "The new model works best when stable UI renders immediately and request-time data is isolated behind Suspense. That makes the page feel faster and preserves clear cache boundaries.",
+            "takeaway": "Stream dynamic islands instead of turning the whole page dynamic."
+          },
+          "revalidation": {
+            "tab": "Revalidation",
+            "badLabel": "Invalidate an entire route for one change",
+            "goodLabel": "Invalidate the exact cached tag you changed",
+            "why": "Tag-based revalidation matches the finer cache granularity of Cache Components. It avoids broad invalidation and refreshes only the cached work affected by the mutation.",
+            "takeaway": "Revalidate the exact cached unit."
+          }
+        }
+      }
+    },
     "clientLibraries": {
       "title": "Client-Side Fetching Libraries",
       "intro": "For client components, use specialized libraries designed for managing server state, caching, and automatic revalidation. Each has different trade-offs.",
@@ -471,6 +530,13 @@
       "clientStale": "Client (Stale-While-Revalidate)",
       "serverCache": "Server-side Cache (Data Cache)",
       "manualControl": "Manual control via <code>cache: 'force-cache'</code> etc.",
+      "cacheComponentsRelation": "Cache Components builds on this server-side model, but shifts the cache unit from route-level fetch configuration to <code>'use cache'</code> functions and component boundaries.",
+      "cacheComponentsCard": {
+        "title": "Where Cache Components fits",
+        "shell": "Static shell: render shared layout and immediately stream what can stay stable.",
+        "cachedUnit": "Cached unit: opt individual async work into reuse with <code>'use cache'</code> and <code>cacheLife()</code>.",
+        "revalidation": "Targeted refresh: use tags and <code>revalidateTag()</code> instead of only relying on broad route revalidation."
+      },
       "clientCache": "Client-side Cache (SWR / React Query)",
       "autoRevalDesc": "Automatic revalidation on focus/reconnect.",
       "optimisticUI": "<strong>Optimistic UI:</strong> Shows stale data immediately while fetching fresh data working in background."

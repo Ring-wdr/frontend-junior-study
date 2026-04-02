@@ -321,16 +321,36 @@ export const DataFetchingVisualizer = () => {
       {/* Explanation */}
       <div className="bg-gray-50 p-3 rounded-lg text-xs text-gray-600">
         {library === 'native' ? (
-          <ul className="list-disc pl-4 space-y-1">
-            <li>{t('dataFetching.visualizer.serverCache')}</li>
-            <li>
-              <Trans
-                t={t}
-                i18nKey="dataFetching.visualizer.manualControl"
-                components={{ code: <code /> }}
-              />
-            </li>
-          </ul>
+          <div className="space-y-3">
+            <ul className="list-disc pl-4 space-y-1">
+              <li>{t('dataFetching.visualizer.serverCache')}</li>
+              <li>
+                <Trans
+                  t={t}
+                  i18nKey="dataFetching.visualizer.manualControl"
+                  components={{ code: <code /> }}
+                />
+              </li>
+              <li>
+                <Trans
+                  t={t}
+                  i18nKey="dataFetching.visualizer.cacheComponentsRelation"
+                  components={{ code: <code /> }}
+                />
+              </li>
+            </ul>
+
+            <div className="rounded-lg border border-indigo-200 bg-indigo-50 p-3">
+              <div className="text-[11px] font-semibold uppercase tracking-wide text-indigo-700">
+                {t('dataFetching.visualizer.cacheComponentsCard.title')}
+              </div>
+              <div className="mt-2 space-y-1 text-xs text-indigo-900">
+                <p>{t('dataFetching.visualizer.cacheComponentsCard.shell')}</p>
+                <p>{t('dataFetching.visualizer.cacheComponentsCard.cachedUnit')}</p>
+                <p>{t('dataFetching.visualizer.cacheComponentsCard.revalidation')}</p>
+              </div>
+            </div>
+          </div>
         ) : (
           <ul className="list-disc pl-4 space-y-1">
             <li>{t('dataFetching.visualizer.clientCache')}</li>

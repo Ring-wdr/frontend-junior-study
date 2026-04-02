@@ -154,12 +154,12 @@
         "context": "<strong>컨텍스트:</strong> 조건부로 컨텍스트를 읽을 수 있음",
         "suspense": "<strong>Suspense와 작동:</strong> Suspense 경계와 적절히 통합"
       },
-      "nextjsCaching": "Next.js 16 (Canary)은 데이터 페칭을 단순화하는 혁신적인 캐싱 API(<code>use cache</code>, <code>cacheLife</code>, <code>cacheTag</code>)를 도입합니다."
+      "nextjsCaching": "Next.js 16의 캐싱 모델은 이제 Cache Components와 <code>use cache</code> 중심으로 설명하는 편이 더 정확합니다. 기존 fetch 캐싱과의 비교는 이번 주 Data Fetching 섹션에서 자세히 다룹니다."
     },
     "nextjs": {
       "title": "Next.js 16 캐싱",
       "subtitle": "Next.js 16: \"Dynamic by Default\" & 캐싱",
-      "description": "Next.js 16은 <strong>\"Dynamic by Default\"</strong> 모델로 전환합니다 (v13-14의 \"Cached by Default\"와 달리). 이제 <code>\"use cache\"</code>로 명시적으로 캐싱을 선택합니다.",
+      "description": "Next.js 16은 라우트 전체를 기본 캐시 단위로 보기보다 <strong>Cache Components</strong>와 <code>\"use cache\"</code> 기반의 명시적 캐싱으로 이동합니다.",
       "oldWay": {
         "title": "기존 방식 (ISR)",
         "description": "페이지/세그먼트별로 <code>revalidate</code>를 설정하는 복잡한 구성. 캐시 규칙 공유가 어려움.",
@@ -250,6 +250,65 @@
         "static": "<strong>정적 (cache: 'force-cache'):</strong> 데이터가 빌드 시점에 페칭되어 무기한 재사용됨",
         "dynamic": "<strong>동적 (cache: 'no-store'):</strong> 모든 요청마다 데이터가 페칭됨 (SSR과 같음)",
         "incremental": "<strong>증분 (next.revalidate):</strong> 데이터가 캐시되지만 설정된 기간 후 재검증됨 (ISR과 같음)"
+      }
+    },
+    "cacheComponents": {
+      "title": "Cache Components",
+      "intro": "<strong>Cache Components</strong>는 App Router를 위한 Next.js의 최신 캐싱 모델입니다. <code>cacheComponents: true</code>를 켠 뒤에는 라우트 전체를 정적 페이지처럼 다루기보다, 특정 비동기 함수나 컴포넌트에 <code>'use cache'</code>를 붙여 필요한 단위만 캐시합니다.",
+      "howItWorks": {
+        "title": "모델이 바뀌는 방식",
+        "enable": "<code>cacheComponents: true</code>로 앱 전체에서 Cache Components 모델을 활성화합니다.",
+        "unit": "<code>'use cache'</code>는 함수나 컴포넌트를 캐시 단위로 만들어, 데이터와 UI 가까이에서 캐싱 결정을 내리게 합니다.",
+        "shell": "라우트의 정적인 부분은 바로 스트리밍하고, 동적인 부분은 <code>Suspense</code> 경계 뒤에서 준비가 끝난 뒤 표시할 수 있습니다.",
+        "revalidation": "<code>cacheLife</code>로 신선도 정책을 정하고, 태그를 붙인 뒤 <code>revalidateTag</code>로 필요한 캐시만 다시 갱신합니다."
+      },
+      "comparison": {
+        "oldModel": {
+          "title": "기존 fetch / ISR 사고방식",
+          "scope": "<code>fetch(..., { cache: 'force-cache' })</code>나 <code>next.revalidate</code>처럼 요청 또는 라우트 세그먼트에 캐시 정책을 붙입니다.",
+          "mentalModel": "페이지 전체를 정적 생성, SSR, ISR 중 하나로 보는 방식에 가깝습니다.",
+          "tradeoff": "단순한 라우트 단위 캐싱에는 좋지만, 여러 컴포넌트에 걸친 캐시 규칙을 재사용하기는 어렵습니다."
+        },
+        "newModel": {
+          "title": "Cache Components 사고방식",
+          "scope": "<code>'use cache'</code>로 캐시 경계를 함수나 컴포넌트 수준으로 내립니다.",
+          "mentalModel": "정적 셸과 <code>Suspense</code>를 통해 드러나는 동적 아일랜드로 나눠 생각합니다.",
+          "tradeoff": "<strong>결과:</strong> 캐싱 구성이 더 조합 가능해지고, 라우트 전체가 아니라 필요한 캐시 단위만 정밀하게 재검증할 수 있습니다."
+        }
+      },
+      "examples": {
+        "title": "좋은 예 vs 나쁜 예",
+        "description": "아래 패턴을 전환하면서 어떤 부분이 어긋나는지, 그리고 Cache Components 방식이 어떻게 더 자연스러운지 바로 비교해보세요.",
+        "badge": "인터랙티브 비교",
+        "badTitle": "나쁜 예",
+        "goodTitle": "좋은 예",
+        "viewBad": "나쁜 예 보기",
+        "viewGood": "좋은 예 보기",
+        "whyTitle": "왜 이 방식이 더 좋은가",
+        "takeawayTitle": "핵심 takeaway",
+        "items": {
+          "cache-boundary": {
+            "tab": "캐시 경계",
+            "badLabel": "fetch 옵션 곳곳에 캐시 정책을 흩뿌림",
+            "goodLabel": "재사용 가능한 데이터 경계에 정책을 모음",
+            "why": "Cache Components에서는 재사용하려는 함수나 컴포넌트 자체가 캐시 단위가 되는 편이 자연스럽습니다. 그래야 동일한 정책을 요청마다 반복하지 않고 추상화 수준에서 관리할 수 있습니다.",
+            "takeaway": "요청이 아니라 캐시 단위를 캐시하세요."
+          },
+          "dynamic-rendering": {
+            "tab": "동적 렌더링",
+            "badLabel": "동적 fetch가 페이지 전체를 막음",
+            "goodLabel": "정적 셸을 먼저 그리고 동적 아일랜드를 스트리밍",
+            "why": "안정적인 UI는 먼저 렌더하고, 요청 시점 데이터만 Suspense 뒤로 분리하는 것이 새 모델과 잘 맞습니다. 이렇게 해야 체감 성능과 캐시 경계가 모두 더 명확해집니다.",
+            "takeaway": "페이지 전체를 동적으로 만들지 말고 동적 아일랜드만 분리하세요."
+          },
+          "revalidation": {
+            "tab": "재검증",
+            "badLabel": "작은 변경에도 라우트 전체를 무효화",
+            "goodLabel": "변경된 캐시 태그만 정확히 무효화",
+            "why": "Cache Components는 캐시 단위를 더 잘게 나누기 때문에 태그 기반 재검증이 더 잘 어울립니다. 넓은 경로 무효화보다 실제로 바뀐 캐시 결과만 갱신하는 편이 정확합니다.",
+            "takeaway": "넓게 지우지 말고 정확한 캐시 단위만 재검증하세요."
+          }
+        }
       }
     },
     "clientLibraries": {
@@ -399,6 +458,13 @@
       "clientStale": "클라이언트 (Stale-While-Revalidate)",
       "serverCache": "서버 사이드 캐시 (데이터 캐시)",
       "manualControl": "<code>cache: 'force-cache'</code> 등을 통한 수동 제어.",
+      "cacheComponentsRelation": "Cache Components는 이 서버 캐싱 모델 위에서 동작하지만, 캐시 단위를 라우트 수준 fetch 설정에서 <code>'use cache'</code> 함수와 컴포넌트 경계 쪽으로 옮깁니다.",
+      "cacheComponentsCard": {
+        "title": "Cache Components가 들어오는 위치",
+        "shell": "정적 셸: 공통 레이아웃과 안정적인 UI를 먼저 스트리밍합니다.",
+        "cachedUnit": "캐시 단위: 개별 비동기 작업에 <code>'use cache'</code>와 <code>cacheLife()</code>를 붙여 재사용합니다.",
+        "revalidation": "정밀 갱신: 넓은 라우트 재검증만 쓰기보다 태그와 <code>revalidateTag()</code>로 필요한 캐시만 갱신합니다."
+      },
       "clientCache": "클라이언트 사이드 캐시 (SWR / React Query)",
       "autoRevalDesc": "포커스/재연결 시 자동 재검증.",
       "optimisticUI": "<strong>낙관적 UI:</strong> 백그라운드에서 새로운 데이터를 가져오는 동안 오래된 데이터를 즉시 표시합니다."

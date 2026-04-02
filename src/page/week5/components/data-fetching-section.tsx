@@ -1,6 +1,7 @@
 import { Trans, useTranslation } from 'react-i18next';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { CacheComponentsExamples } from './cache-components-examples';
 import { DataFetchingVisualizer } from './data-fetching-visualizer';
 
 export const DataFetchingSection = () => {
@@ -85,6 +86,172 @@ export default async function PostsPage() {
 }`}
               className="text-xs"
             />
+          </div>
+        </SubSection>
+
+        <SubSection
+          title={t('dataFetching.cacheComponents.title')}
+          icon
+          iconColor="purple"
+        >
+          <div className="space-y-4">
+            <p className="text-sm text-gray-700">
+              <Trans
+                t={t}
+                i18nKey="dataFetching.cacheComponents.intro"
+                components={{ code: <code />, strong: <strong /> }}
+              />
+            </p>
+
+            <InfoBox
+              variant="purple"
+              title={t('dataFetching.cacheComponents.howItWorks.title')}
+            >
+              <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
+                <li>
+                  <Trans
+                    t={t}
+                    i18nKey="dataFetching.cacheComponents.howItWorks.enable"
+                    components={{ code: <code /> }}
+                  />
+                </li>
+                <li>
+                  <Trans
+                    t={t}
+                    i18nKey="dataFetching.cacheComponents.howItWorks.unit"
+                    components={{ code: <code /> }}
+                  />
+                </li>
+                <li>
+                  <Trans
+                    t={t}
+                    i18nKey="dataFetching.cacheComponents.howItWorks.shell"
+                    components={{ code: <code /> }}
+                  />
+                </li>
+                <li>
+                  <Trans
+                    t={t}
+                    i18nKey="dataFetching.cacheComponents.howItWorks.revalidation"
+                    components={{ code: <code /> }}
+                  />
+                </li>
+              </ul>
+            </InfoBox>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <InfoBox
+                variant="orange"
+                title={t('dataFetching.cacheComponents.comparison.oldModel.title')}
+              >
+                <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
+                  <li>
+                    <Trans
+                      t={t}
+                      i18nKey="dataFetching.cacheComponents.comparison.oldModel.scope"
+                      components={{ code: <code /> }}
+                    />
+                  </li>
+                  <li>
+                    <Trans
+                      t={t}
+                      i18nKey="dataFetching.cacheComponents.comparison.oldModel.mentalModel"
+                      components={{ code: <code /> }}
+                    />
+                  </li>
+                  <li>
+                    <Trans
+                      t={t}
+                      i18nKey="dataFetching.cacheComponents.comparison.oldModel.tradeoff"
+                      components={{ code: <code /> }}
+                    />
+                  </li>
+                </ul>
+              </InfoBox>
+
+              <InfoBox
+                variant="blue"
+                title={t('dataFetching.cacheComponents.comparison.newModel.title')}
+              >
+                <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
+                  <li>
+                    <Trans
+                      t={t}
+                      i18nKey="dataFetching.cacheComponents.comparison.newModel.scope"
+                      components={{ code: <code /> }}
+                    />
+                  </li>
+                  <li>
+                    <Trans
+                      t={t}
+                      i18nKey="dataFetching.cacheComponents.comparison.newModel.mentalModel"
+                      components={{ code: <code /> }}
+                    />
+                  </li>
+                  <li>
+                    <Trans
+                      t={t}
+                      i18nKey="dataFetching.cacheComponents.comparison.newModel.tradeoff"
+                      components={{ code: <code />, strong: <strong /> }}
+                    />
+                  </li>
+                </ul>
+              </InfoBox>
+            </div>
+
+            <CodeBlock
+              code={`// next.config.ts
+import type { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
+  cacheComponents: true,
+};
+
+export default nextConfig;
+
+// app/products/page.tsx
+import { Suspense } from 'react';
+import {
+  cacheLife,
+  cacheTag,
+  revalidateTag,
+} from 'next/cache';
+
+async function getProduct(id: string) {
+  'use cache';
+  cacheLife('hours');
+  cacheTag(\`product-\${id}\`);
+
+  const res = await fetch(\`https://api.example.com/products/\${id}\`);
+  return res.json();
+}
+
+async function ProductDetails({ id }: { id: string }) {
+  const product = await getProduct(id);
+  return <section>{product.name}</section>;
+}
+
+export default function ProductPage() {
+  return (
+    <main>
+      <Hero />
+      <Suspense fallback={<ProductDetailsSkeleton />}>
+        <ProductDetails id="42" />
+      </Suspense>
+    </main>
+  );
+}
+
+export async function updateProductAction(id: string) {
+  'use server';
+
+  await db.products.update(id);
+  revalidateTag(\`product-\${id}\`);
+}`}
+              className="text-xs"
+            />
+
+            <CacheComponentsExamples />
           </div>
         </SubSection>
 
