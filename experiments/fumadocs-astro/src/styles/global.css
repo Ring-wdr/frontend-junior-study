@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+
+@source "../../../../src/weeks/week1";
+@source "../../../../src/weeks/week2";
+@source "../../../../src/components";

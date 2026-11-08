@@ -1,0 +1,30 @@
+---
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+import Layout from '~/layouts/layout.astro';
+import { i18n } from '~/lib/i18n';
+
+export const prerender = true;
+
+export const getStaticPaths = (() => {
+  return i18n.languages.map((lang) => ({
+    params: { lang: lang === i18n.defaultLanguage ? undefined : lang },
+    props: { lang },
+  }));
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { lang } = Astro.props;
+const prefix = lang === i18n.defaultLanguage ? '' : `/${lang}`;
+const title =
+  lang === 'ko' ? 'Fumadocs + Astro 실험' : 'Fumadocs + Astro experiment';
+---
+
+<Layout lang={lang} title={title}>
+  <main class="mx-auto flex w-full max-w-xl flex-1 flex-col gap-3 px-4 py-12">
+    <h1 class="text-2xl font-bold">{title}</h1>
+    <a class="underline" href={`${prefix}/docs/week-1`}>Week 1</a>
+    <a class="underline" href={`${prefix}/docs/week-2`}>Week 2</a>
+    <a class="underline" href={lang === 'ko' ? '/en' : '/'}>{lang === 'ko' ? 'English' : '한국어'}</a>
+  </main>
+</Layout>

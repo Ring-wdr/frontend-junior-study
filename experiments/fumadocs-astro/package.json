@@ -1,0 +1,24 @@
+{
+  "name": "fumadocs-astro-experiment",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "typecheck": "astro sync && tsc --noEmit"
+  },
+  "dependencies": {
+    "@astrojs/react": "7",
+    "@fumadocs/astro": "^0.2.1",
+    "astro": "7",
+    "fumadocs-core": "^16.18.2",
+    "fumadocs-ui": "^16.18.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/mdx": "^2.0.14",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^7.0.2"
+  }
+}
