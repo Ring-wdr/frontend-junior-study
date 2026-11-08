@@ -184,7 +184,7 @@
       "title": "Weak References (GC Friendly)",
       "description1": "WeakMap/WeakSet: 키는 객체여야 합니다. 객체에 대한 참조가 '약하게' 유지되므로, 다른 참조가 없으면 가비지 컬렉션될 수 있습니다. 반복 불가능합니다.",
       "description2": "WeakRef (ES2021): 객체에 대한 약한 참조를 유지하는 고급 기능입니다.",
-      "gcTitle": "Garbage Collection Visualizer",
+      "gcTitle": "가비지 컬렉션 시각화",
       "gcDemo": {
         "mapStrong": "Map (강한 참조)",
         "weakMapWeak": "WeakMap (약한 참조)",

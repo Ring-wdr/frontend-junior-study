@@ -62,14 +62,14 @@
     "coreConcept": {
       "title": "핵심 개념",
       "presentational": {
-        "label": "Presentational Components:",
+        "label": "Presentational 컴포넌트:",
         "item1": "어떻게 보이는지에 관심을 둡니다.",
         "item2": "props를 통해 데이터와 콜백을 받습니다.",
         "item3": "자체 상태를 거의 갖지 않습니다 (UI 상태 제외).",
         "item4": "주로 함수형 컴포넌트로 작성됩니다."
       },
       "container": {
-        "label": "Container Components:",
+        "label": "Container 컴포넌트:",
         "item1": "어떻게 동작하는지에 관심을 둡니다.",
         "item2": "presentational 컴포넌트 또는 다른 container 컴포넌트에 데이터와 동작을 제공합니다.",
         "item3": "상태를 가지며 데이터 소스 역할을 합니다."

@@ -159,7 +159,7 @@
     "features": {
       "title": "핵심 기능",
       "infoTitle": "왜 Vanilla Extract인가?",
-      "zeroRuntime": "Zero Runtime:",
+      "zeroRuntime": "제로 런타임:",
       "zeroRuntimeDesc": "모든 스타일이 빌드 타임에 생성되어 런타임 성능에 영향을 주지 않습니다.",
       "typeSafety": "타입 안전성:",
       "typeSafetyDesc": "TypeScript 지원으로 스타일 정의 시 자동완성과 타입 체크를 제공합니다.",
