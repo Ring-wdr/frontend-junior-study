@@ -66,7 +66,7 @@ export const XssCspSection = () => {
         <SubSection title={t('xss.sanitization.title')} icon iconColor="blue">
           <DemoBox label={t('xss.sanitization.demoLabel')}>
             <div className="space-y-6">
-              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border">
+              <div className="flex items-center justify-between gap-3 p-3 sm:p-4 bg-gray-50 rounded-lg border">
                 <div className="flex items-center gap-3">
                   <div
                     className={`w-3 h-3 rounded-full ${unsafeInput.includes('<script>') ? 'bg-red-500 animate-pulse' : 'bg-gray-300'}`}
@@ -86,7 +86,7 @@ export const XssCspSection = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-2">
                   <label
                     htmlFor="malicious-input"
@@ -101,7 +101,7 @@ export const XssCspSection = () => {
                     className="w-full p-3 border rounded-lg text-sm font-mono h-32 focus:ring-2 focus:ring-blue-500 outline-none"
                     placeholder={t('xss.sanitization.inputPlaceholder')}
                   />
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap gap-2">
                     <button
                       type="button"
                       onClick={() =>
@@ -134,7 +134,7 @@ export const XssCspSection = () => {
                       {unsafeInput.includes('<script>') ||
                       unsafeInput.includes('onerror') ? (
                         <div className="absolute inset-0 flex items-center justify-center bg-red-900/10 backdrop-blur-[1px]">
-                          <div className="bg-white p-4 rounded shadow-xl border border-red-200 animate-bounce">
+                          <div className="bg-white p-4 rounded shadow-xl border border-red-200 animate-in fade-in zoom-in-95 duration-200">
                             <p className="font-bold text-red-600 flex items-center gap-2">
                               ⚠️ {t('xss.sanitization.scriptExecuted')}
                             </p>
@@ -144,7 +144,7 @@ export const XssCspSection = () => {
                           </div>
                         </div>
                       ) : (
-                        <div className="text-sm">{unsafeInput}</div>
+                        <div className="text-sm break-all">{unsafeInput}</div>
                       )}
                     </div>
                   </div>
@@ -225,7 +225,7 @@ module.exports = {
         </SubSection>
 
         <SubSection title={t('xss.directives.title')} icon iconColor="orange">
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {[
               {
                 directive: 'default-src',

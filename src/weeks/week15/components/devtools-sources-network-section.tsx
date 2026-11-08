@@ -140,11 +140,9 @@ export const DevToolsSourcesNetworkSection = () => {
                   {t('devtoolsSources.watchPanelTitle')}
                 </h5>
                 <ul className="text-sm text-gray-600 space-y-1">
-                  {raw('devtoolsSources.watchItems').map(
-                    (item: string, idx: number) => (
-                      <li key={idx}>• {item}</li>
-                    ),
-                  )}
+                  {raw('devtoolsSources.watchItems').map((item) => (
+                    <li key={item}>• {item}</li>
+                  ))}
                 </ul>
               </div>
             </div>

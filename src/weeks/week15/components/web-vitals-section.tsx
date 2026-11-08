@@ -179,11 +179,9 @@ onCLS(sendToSentry);`}
                 {t('webVitals.labDataTitle')}
               </h5>
               <ul className="text-xs text-blue-700 space-y-1">
-                {raw('webVitals.labDataItems').map(
-                  (item: string, idx: number) => (
-                    <li key={idx}>• {item}</li>
-                  ),
-                )}
+                {raw('webVitals.labDataItems').map((item) => (
+                  <li key={item}>• {item}</li>
+                ))}
               </ul>
             </div>
             <div className="bg-green-50 p-3 rounded-lg border border-green-200">
@@ -191,11 +189,9 @@ onCLS(sendToSentry);`}
                 {t('webVitals.fieldDataTitle')}
               </h5>
               <ul className="text-xs text-green-700 space-y-1">
-                {raw('webVitals.fieldDataItems').map(
-                  (item: string, idx: number) => (
-                    <li key={idx}>• {item}</li>
-                  ),
-                )}
+                {raw('webVitals.fieldDataItems').map((item) => (
+                  <li key={item}>• {item}</li>
+                ))}
               </ul>
             </div>
           </div>

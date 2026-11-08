@@ -133,14 +133,13 @@ export const CsrfSection = () => {
                     </div>
 
                     {lastTransaction && (
-                      <div
-                        role="status"
-                        className={`p-3 rounded text-sm text-center font-bold animate-in fade-in duration-200 ${lastTransaction === 'blocked' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}
+                      <output
+                        className={`block p-3 rounded text-sm text-center font-bold animate-in fade-in duration-200 ${lastTransaction === 'blocked' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}
                       >
                         {lastTransaction === 'blocked'
                           ? t('csrf.simulator.transactionBlocked')
                           : t('csrf.simulator.transactionUnauthorized')}
-                      </div>
+                      </output>
                     )}
                   </div>
                 </div>

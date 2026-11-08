@@ -269,9 +269,9 @@ export const React2ShellSection = () => {
                             {t('react2shell.simulator.waitingRequests')}
                           </div>
                         ) : (
-                          logs.map((log, i) => (
+                          logs.map((log) => (
                             <div
-                              key={i}
+                              key={log}
                               className="text-xs font-mono border-b border-gray-50 pb-1 last:border-0"
                             >
                               <span

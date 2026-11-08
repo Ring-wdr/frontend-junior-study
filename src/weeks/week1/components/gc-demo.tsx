@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'motion/react';
 import { Box, Key, RefreshCw, Trash2 } from 'lucide-react';
-import { useReducer } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import { Badge } from '../../../components/ui/badge';
 import { cn } from '../../../lib/utils';
 
@@ -61,21 +61,31 @@ export const GcDemo = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { mode, hasReference, gcRunning, entryExists } = state;
 
+  const gcTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (gcTimerRef.current) clearTimeout(gcTimerRef.current);
+    },
+    [],
+  );
+
   const runGc = () => {
     dispatch({ type: 'START_GC' });
-    setTimeout(() => {
+    if (gcTimerRef.current) clearTimeout(gcTimerRef.current);
+    gcTimerRef.current = setTimeout(() => {
       dispatch({ type: 'GC_COMPLETE' });
     }, 2000);
   };
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-center space-x-4">
+      <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
         <button
           type="button"
           onClick={() => dispatch({ type: 'SET_MODE', payload: 'Map' })}
           className={cn(
-            'px-4 py-2 rounded-lg font-bold transition-all',
+            'px-3 py-2 rounded-lg text-sm font-bold transition-all sm:px-4 sm:text-base',
             mode === 'Map'
               ? 'bg-blue-100 text-blue-700 ring-2 ring-blue-500'
               : 'bg-gray-100 text-gray-500 hover:bg-gray-200',
@@ -87,7 +97,7 @@ export const GcDemo = () => {
           type="button"
           onClick={() => dispatch({ type: 'SET_MODE', payload: 'WeakMap' })}
           className={cn(
-            'px-4 py-2 rounded-lg font-bold transition-all',
+            'px-3 py-2 rounded-lg text-sm font-bold transition-all sm:px-4 sm:text-base',
             mode === 'WeakMap'
               ? 'bg-orange-100 text-orange-700 ring-2 ring-orange-500'
               : 'bg-gray-100 text-gray-500 hover:bg-gray-200',
@@ -97,13 +107,13 @@ export const GcDemo = () => {
         </button>
       </div>
 
-      <div className="relative h-[300px] bg-slate-50 rounded-xl border-2 border-slate-200 p-6 overflow-hidden">
+      <div className="relative h-[300px] bg-slate-50 rounded-xl border-2 border-slate-200 p-4 overflow-hidden sm:p-6">
         {/* External Reference Block */}
-        <div className="absolute top-6 left-6 z-10">
+        <div className="absolute top-4 left-3 z-10 sm:top-6 sm:left-6">
           <div className="flex flex-col items-center gap-2">
             <div
               className={cn(
-                'p-3 rounded-lg border-2 font-mono text-xs font-bold transition-all duration-500',
+                'p-2 rounded-lg border-2 font-mono text-[11px] font-bold transition-colors duration-300 sm:p-3 sm:text-xs',
                 hasReference
                   ? 'bg-green-100 border-green-500 text-green-700'
                   : 'bg-gray-100 border-gray-300 text-gray-400',
@@ -117,11 +127,13 @@ export const GcDemo = () => {
 
         {/* The Key Object in Heap */}
         <motion.div
+          initial={false}
           animate={{
             opacity: entryExists ? 1 : 0.3,
             scale: entryExists ? 1 : 0.9,
           }}
-          className="absolute top-24 left-10"
+          transition={{ duration: 0.4 }}
+          className="absolute top-28 left-6 sm:top-24 sm:left-10"
         >
           <div className="w-16 h-16 bg-yellow-100 border-2 border-yellow-400 rounded-lg flex items-center justify-center shadow-md relative z-20">
             <Key className="w-8 h-8 text-yellow-600" />
@@ -132,7 +144,7 @@ export const GcDemo = () => {
         </motion.div>
 
         {/* The Map/WeakMap Structure */}
-        <div className="absolute top-20 right-10 w-48 h-48 border-2 border-dashed border-gray-300 rounded-xl p-4 flex flex-col items-center bg-white/50">
+        <div className="absolute top-24 right-3 w-36 h-44 border-2 sm:top-20 sm:right-10 sm:w-48 sm:h-48 border-dashed border-gray-300 rounded-xl p-4 flex flex-col items-center bg-white/50">
           <Badge color={mode === 'Map' ? 'blue' : 'orange'}>{mode}</Badge>
 
           <AnimatePresence>
@@ -140,8 +152,8 @@ export const GcDemo = () => {
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0, rotate: 10 }}
-                transition={{ duration: 0.5 }}
+                exit={{ opacity: 0, scale: 0.6 }}
+                transition={{ duration: 0.4 }}
                 className="mt-6 w-full p-2 bg-white border border-gray-200 rounded shadow-sm flex items-center gap-2 relative"
               >
                 <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
@@ -184,6 +196,7 @@ export const GcDemo = () => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
               className="mt-10 text-xs text-gray-400 text-center"
             >
               Entry Collected
@@ -198,15 +211,16 @@ export const GcDemo = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
               className="absolute inset-0 bg-green-500/10 flex items-center justify-center z-30 backdrop-blur-[1px]"
             >
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
               >
-                <RefreshCw className="w-16 h-16 text-green-600" />
+                <RefreshCw className="w-12 h-12 text-green-600 sm:w-16 sm:h-16" />
               </motion.div>
-              <div className="absolute mt-24 font-bold text-green-700 bg-white/80 px-3 py-1 rounded-full">
+              <div className="absolute mt-24 text-sm font-bold text-green-700 bg-white/80 px-3 py-1 rounded-full">
                 Garbage Collector Running...
               </div>
             </motion.div>
@@ -215,13 +229,13 @@ export const GcDemo = () => {
       </div>
 
       {/* Controls */}
-      <div className="flex gap-4 justify-center">
+      <div className="flex flex-wrap gap-2 justify-center sm:gap-4">
         <button
           onClick={() => dispatch({ type: 'TOGGLE_REFERENCE' })}
           type="button"
           disabled={gcRunning}
           className={cn(
-            'flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all',
+            'flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all sm:px-4',
             hasReference
               ? 'bg-red-100 text-red-700 hover:bg-red-200'
               : 'bg-green-100 text-green-700 hover:bg-green-200',
@@ -241,7 +255,7 @@ export const GcDemo = () => {
           type="button"
           disabled={gcRunning}
           className={cn(
-            'flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 transition-all',
+            'flex items-center gap-2 px-3 py-2 bg-gray-900 text-white rounded-lg text-sm font-medium hover:bg-gray-800 transition-all sm:px-4',
             gcRunning && 'opacity-50 cursor-not-allowed',
           )}
         >

@@ -157,9 +157,9 @@ describe("Wasm Module", () => {
               </span>
             </div>
             <ul className="space-y-2">
-              {securityPoints.map((point: string, idx: number) => (
+              {securityPoints.map((point) => (
                 <li
-                  key={idx}
+                  key={point}
                   className="flex items-start gap-2 text-xs text-gray-700"
                 >
                   <Lock className="w-3 h-3 text-orange-500 mt-0.5 flex-shrink-0" />

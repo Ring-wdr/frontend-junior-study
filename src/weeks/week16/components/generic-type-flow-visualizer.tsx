@@ -126,7 +126,10 @@ export const GenericTypeFlowVisualizer = () => {
           <span className="text-green-400">T</span>
           <br />
           <br />
-          <span className="text-gray-500">// T = {selectedType}</span>
+          <span className="text-gray-500">
+            {'// T = '}
+            {selectedType}
+          </span>
           <br />
           <span className="text-purple-400">const</span> result{' '}
           <span className="text-gray-400">=</span>{' '}
@@ -148,7 +151,10 @@ export const GenericTypeFlowVisualizer = () => {
           </span>
           <span className="text-gray-400">);</span>
           <br />
-          <span className="text-gray-500">// result: {selectedType}</span>
+          <span className="text-gray-500">
+            {'// result: '}
+            {selectedType}
+          </span>
         </code>
       </motion.div>
     </div>

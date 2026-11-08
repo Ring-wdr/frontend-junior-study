@@ -58,8 +58,11 @@ export const WasmIntroSection = () => {
         <SubSection title={t('wasmIntro.historyTitle')} icon iconColor="blue">
           <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
             <div className="space-y-3">
-              {timeline.map((item, idx) => (
-                <div key={idx} className="flex items-start gap-3">
+              {timeline.map((item) => (
+                <div
+                  key={`${item.year}-${item.event}`}
+                  className="flex items-start gap-3"
+                >
                   <div className="flex items-center gap-2 min-w-[80px]">
                     <Clock className="w-4 h-4 text-blue-500" />
                     <span className="text-xs font-bold text-blue-700">

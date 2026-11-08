@@ -158,7 +158,7 @@ export const PromiseVisualizer = () => {
               )}
             />
 
-            <div className="flex items-center gap-3 z-10 pl-2">
+            <div className="relative flex items-center gap-3 z-10 pl-2">
               <div
                 className={cn(
                   'w-8 h-8 rounded-full flex items-center justify-center font-mono font-bold text-sm',
@@ -178,7 +178,7 @@ export const PromiseVisualizer = () => {
               </div>
             </div>
 
-            <div className="flex gap-2 z-10">
+            <div className="relative flex gap-2 z-10">
               {p.status === 'idle' && (
                 <button
                   type="button"

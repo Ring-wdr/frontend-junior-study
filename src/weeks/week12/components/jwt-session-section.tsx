@@ -113,9 +113,9 @@ export const JwtSessionSection = () => {
                       {t('jwt.comparison.prosLabel')}
                     </p>
                     <ul className="space-y-1">
-                      {comparisons[activeComparison].pros.map((pro, idx) => (
+                      {comparisons[activeComparison].pros.map((pro) => (
                         <li
-                          key={idx}
+                          key={pro}
                           className="text-xs flex items-start gap-1"
                         >
                           <span className="text-green-500">+</span>
@@ -129,9 +129,9 @@ export const JwtSessionSection = () => {
                       {t('jwt.comparison.consLabel')}
                     </p>
                     <ul className="space-y-1">
-                      {comparisons[activeComparison].cons.map((con, idx) => (
+                      {comparisons[activeComparison].cons.map((con) => (
                         <li
-                          key={idx}
+                          key={con}
                           className="text-xs flex items-start gap-1"
                         >
                           <span className="text-red-500">-</span>

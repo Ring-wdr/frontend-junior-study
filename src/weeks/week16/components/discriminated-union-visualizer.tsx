@@ -41,7 +41,7 @@ export const DiscriminatedUnionVisualizer = () => {
   const { t } = useTranslation('week16');
   const [selected, setSelected] = useState<ShapeType>('circle');
 
-  const selectedShape = shapes.find((s) => s.type === selected)!;
+  const selectedShape = shapes.find((s) => s.type === selected) ?? shapes[0];
   const Icon = selectedShape.icon;
 
   const getFormula = () => {
@@ -155,7 +155,7 @@ export const DiscriminatedUnionVisualizer = () => {
             <span className="text-green-400">"{shape.type}"</span>:
             {selected === shape.type && (
               <span className="text-gray-400 ml-2">
-                // shape:{' '}
+                {'// shape: '}
                 {shape.type.charAt(0).toUpperCase() + shape.type.slice(1)}
               </span>
             )}
