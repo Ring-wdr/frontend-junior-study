@@ -8,7 +8,7 @@ import {
 } from '@testing-library/react';
 import type React from 'react';
 import type { ComponentProps } from 'react';
-import { AdvancedDataStructureSection } from '../../../src/page/week1/components/advanced-data-structure-section';
+import { AdvancedDataStructureSection } from '../../../src/weeks/week1/components/advanced-data-structure-section';
 
 // Mock framer-motion
 rs.mock('framer-motion', async () => {

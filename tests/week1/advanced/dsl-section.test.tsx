@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, test } from '@rstest/core';
 import { cleanup, render, screen, within } from '@testing-library/react';
-import { DslSection } from '../../../src/page/week1/components/dsl-section';
+import { DslSection } from '../../../src/weeks/week1/components/dsl-section';
 
 describe('DslSection', () => {
   afterEach(() => {

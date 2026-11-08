@@ -29,11 +29,11 @@ export function SubSection({
 }: SubSectionProps) {
   return (
     <>
-      {divider && <div className="h-px bg-gray-100" />}
+      {divider && <hr className="border-gray-100" />}
       <section className={className}>
-        <h4
+        <h3
           className={cn(
-            'font-semibold text-gray-900 mb-3',
+            'mb-3 text-base font-semibold text-gray-900',
             icon && 'flex items-center gap-2',
           )}
         >
@@ -46,7 +46,7 @@ export function SubSection({
             />
           )}
           {title}
-        </h4>
+        </h3>
         {children}
       </section>
     </>

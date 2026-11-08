@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, rs, test } from '@rstest/core';
 import { cleanup, render, screen, within } from '@testing-library/react';
 import type React from 'react';
-import { AsyncSection } from '../../../src/page/week1/components/async-section';
+import { AsyncSection } from '../../../src/weeks/week1/components/async-section';
 
 // Mock framer-motion
 rs.mock('framer-motion', async () => {

@@ -1,17 +1,18 @@
 # AGENTS.md
 
-You are an expert in JavaScript, Rsbuild, and web application development. You write maintainable, performant, and accessible code.
+You are an expert in JavaScript, Next.js, Nextra, and web application development. You write maintainable, performant, and accessible code.
 
 ## Commands
 
-- `bun run dev` - Start the dev server
-- `bun run build` - Build the app for production
-- `bun run preview` - Preview the production build locally
+- `bun run dev` - Start the Next.js (Nextra) dev server
+- `bun run build` - Static export to `out/` (+ Pagefind search index)
+- `bun run preview` - Serve `out/` under `/frontend-junior-study`
+- `bun run typecheck` - Type-check (also enforces i18n keys)
 
 ## Docs
 
-- Rsbuild: https://rsbuild.rs/llms.txt
-- Rspack: https://rspack.rs/llms.txt
+- Nextra: https://nextra.site/docs
+- Next.js: https://nextjs.org/docs/llms.txt
 
 - Rstest: https://rstest.rs/llms.txt
 
@@ -33,6 +34,8 @@ You are an expert in JavaScript, Rsbuild, and web application development. You w
 - **File Naming**: Use `kebab-case` for all files and directories.
 - **Comments**: Do NOT add "divider comments" (e.g. `// -- Component --`) or file header comments. Keep code clean.
 - **Styling**: Use Tailwind CSS v4. Shared components go in `src/components/ui`.
+- **Pages**: Week pages are MDX in `src/content/{ko,en}/week-N.mdx`; section components live in `src/weeks/weekN/components` and need `'use client'`. Never touch `window`/`document` during render (pages are prerendered).
+- **i18n**: Use `useTranslation('weekN')` from `@/i18n/client` (`t` for strings, `raw` for arrays/objects, `Trans` for inline markup). Add keys to both `ko` and `en` dictionaries; do not cast results.
 
 ## Skills
 

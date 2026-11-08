@@ -7,7 +7,7 @@ import {
   within,
 } from '@testing-library/react';
 import type React from 'react';
-import { ProxyMetaSection } from '../../../src/page/week1/components/proxy-meta-section';
+import { ProxyMetaSection } from '../../../src/weeks/week1/components/proxy-meta-section';
 
 // Mock framer-motion
 rs.mock('framer-motion', async () => {

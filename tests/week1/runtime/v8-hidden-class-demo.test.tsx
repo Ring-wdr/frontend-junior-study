@@ -2,7 +2,7 @@ import { afterEach, describe, expect, rs, test } from '@rstest/core';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import type React from 'react';
 import type { ComponentProps } from 'react';
-import { V8HiddenClassDemo } from '../../../src/page/week1/components/v8-hidden-class-demo';
+import { V8HiddenClassDemo } from '../../../src/weeks/week1/components/v8-hidden-class-demo';
 
 // Mock framer-motion
 rs.mock('framer-motion', async () => {

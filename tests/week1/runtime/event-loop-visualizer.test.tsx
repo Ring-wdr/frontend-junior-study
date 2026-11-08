@@ -16,7 +16,7 @@ import {
 } from '@testing-library/react';
 import type React from 'react';
 import type { ComponentProps } from 'react';
-import { EventLoopVisualizer } from '../../../src/page/week1/components/event-loop-visualizer';
+import { EventLoopVisualizer } from '../../../src/weeks/week1/components/event-loop-visualizer';
 
 // Mock framer-motion to avoid animation issues in tests
 rs.mock('framer-motion', async () => {

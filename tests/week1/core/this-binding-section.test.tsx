@@ -7,7 +7,7 @@ import {
   within,
 } from '@testing-library/react';
 import type React from 'react';
-import { ThisBindingSection } from '../../../src/page/week1/components/this-binding-section';
+import { ThisBindingSection } from '../../../src/weeks/week1/components/this-binding-section';
 
 // Mock framer-motion
 rs.mock('framer-motion', async () => {

@@ -7,7 +7,7 @@ import {
   within,
 } from '@testing-library/react';
 import type React from 'react';
-import { ScopeClosureSection } from '../../../src/page/week1/components/scope-closure-section';
+import { ScopeClosureSection } from '../../../src/weeks/week1/components/scope-closure-section';
 
 // Mock framer-motion
 rs.mock('framer-motion', async () => {

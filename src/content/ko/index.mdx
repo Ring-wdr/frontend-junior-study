@@ -1,0 +1,35 @@
+---
+title: "프론트엔드 스터디 대시보드"
+description: "커리큘럼과 인터랙티브 예제를 확인하려면 주차를 선택하세요."
+---
+
+import { WeekCard, WeekGrid } from '@/components/week-card';
+
+# 프론트엔드 스터디 대시보드
+
+커리큘럼과 인터랙티브 예제를 확인하려면 주차를 선택하세요.
+
+<WeekGrid>
+  <WeekCard week={1} href="/ko/week-1" badge="1주차" title="JS 딥 다이브" description="이벤트 루프, `this`, 클로저, 비동기 패턴." />
+  <WeekCard week={2} href="/ko/week-2" badge="2주차" title="OOP & SOLID" description="객체 지향 프로그래밍과 SOLID 원칙." />
+  <WeekCard week={3} href="/ko/week-3" badge="3주차" title="컴포넌트 패턴" description="Container vs Presentational 등 다양한 패턴." />
+  <WeekCard week={4} href="/ko/week-4" badge="4주차" title="상태 관리" description="Redux 심화, 미들웨어, 모던 라이브러리(MobX/Recoil/Zustand) 등." />
+  <WeekCard week={5} href="/ko/week-5" badge="5주차" title="React & Next.js 고급" description="동시성, React 19, 앱 라우터, 데이터 전략." />
+  <WeekCard week={6} href="/ko/week-6" badge="6주차" title="최신 스타일링 전략" description="CSS-in-JS, Tailwind 등." />
+  <WeekCard week={7} href="/ko/week-7" badge="7주차" title="폼 & 유효성 검사" description="React Hook Form, Zod, 비동기 검증, 보안, UX." />
+  <WeekCard week={8} href="/ko/week-8" badge="8주차" title="프론트엔드 테스팅" description="Jest, Vitest, RTL, MSW를 활용한 단위, 통합, E2E 테스트." />
+  <WeekCard week={9} href="/ko/week-9" badge="9주차" title="Framer Motion" description="제스처, 드래그, 레이아웃 애니메이션, 트랜지션, 성능." />
+  <WeekCard week={10} href="/ko/week-10" badge="10주차" title="GSAP 애니메이션" description="GSAP 기초, ScrollTrigger, SVG 애니메이션, 성능." />
+  <WeekCard week={11} href="/ko/week-11" badge="11주차" title="웹 성능" description="Core Web Vitals, LCP, INP, CLS, 최적화 전략." />
+  <WeekCard week={12} href="/ko/week-12" badge="12주차" title="인증 & 보안" description="OAuth 2.0, OIDC, NextAuth.js, JWT, XSS, CSRF 보호." />
+  <WeekCard week={13} href="/ko/week-13" badge="13주차" title="워커 & PWA" description="Web Workers, Service Workers, PWA, IndexedDB, 오프라인 우선." />
+  <WeekCard week={14} href="/ko/week-14" badge="14주차" title="접근성 & i18n" description="WCAG, 시맨틱 HTML, ARIA, 포커스 관리, i18n, RTL 지원." />
+  <WeekCard week={15} href="/ko/week-15" badge="15주차" title="DevTools & 번들링" description="Chrome DevTools, Webpack/Vite, 번들 최적화, Sentry, Web Vitals." />
+  <WeekCard week={16} href="/ko/week-16" badge="16주차" title="TypeScript" description="기본 타입부터 제네릭, 유틸리티 타입, 조건부 타입까지 마스터하기." />
+  <WeekCard week={17} href="/ko/week-17" badge="17주차" title="AI 기반 개발 도구" description="AI 코드 에이전트, MCP, Skills, Hooks를 활용한 워크플로우 자동화." />
+  <WeekCard week={18} href="/ko/week-18" badge="18주차" title="WebAssembly" description="네이티브에 가까운 성능, Rust 개발, SIMD, 이미지/비디오 처리." />
+  <WeekCard week={19} href="/ko/week-19" badge="19주차" title="React Three Fiber" description="3D 씬, 렌더링 파이프라인, 인터랙션, 성능 최적화." />
+  <WeekCard week={20} href="/ko/week-20" badge="20주차" title="MFE & 모노레포" description="마이크로 프론트엔드 아키텍처와 모노레포 도구 전략." />
+  <WeekCard week={21} href="/ko/week-21" badge="21주차" title="CI/CD & DevOps" description="배포 파이프라인을 만들고 릴리스를 자동화하며 운영 방어장치를 설정합니다." />
+  <WeekCard week={22} href="/ko/week-22" badge="22주차" title="에러 추적 & 프로덕션 모니터링" description="Sentry, 세션 리플레이, RUM, GA4를 활용한 프로덕션 관찰 시스템 구축." />
+</WeekGrid>

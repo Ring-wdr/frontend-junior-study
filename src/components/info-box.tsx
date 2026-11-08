@@ -63,7 +63,7 @@ export function InfoBox({
   return (
     <div
       className={cn(
-        `${styles.bg} p-4 rounded-xl border ${styles.border} text-left`,
+        `${styles.bg} rounded-xl border p-3 text-left sm:p-4 ${styles.border}`,
         className,
       )}
     >
