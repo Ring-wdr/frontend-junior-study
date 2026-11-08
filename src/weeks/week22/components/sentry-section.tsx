@@ -34,8 +34,8 @@ export const SentrySection = () => {
           </div>
         </SubSection>
 
-        <SubSection title="Error Tracking Simulator" icon iconColor="red">
-          <DemoBox label="Interactive Demo">
+        <SubSection title={t('sentry.demoTitle')} icon iconColor="red">
+          <DemoBox label={t('interactiveDemo')}>
             <ErrorTrackerVisualizer />
           </DemoBox>
         </SubSection>

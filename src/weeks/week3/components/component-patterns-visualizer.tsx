@@ -9,6 +9,7 @@ import {
   useContext,
   useState,
 } from 'react';
+import { Trans, useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
@@ -86,6 +87,7 @@ const MouseTracker = ({
 }: {
   render: (position: { x: number; y: number }) => ReactNode;
 }) => {
+  const { t } = useTranslation('week3');
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   return (
@@ -97,7 +99,7 @@ const MouseTracker = ({
       }}
     >
       <div className="absolute top-2 left-2 text-xs text-gray-400 pointer-events-none">
-        Move your mouse here
+        {t('patterns.visualizer.mouseHint')}
       </div>
       {render(position)}
     </div>
@@ -133,6 +135,7 @@ const SimpleList = ({ items }: { items: string[] }) => (
 const ListWithLoading = withLoading(SimpleList);
 
 export const ComponentPatternsVisualizer = () => {
+  const { t, raw } = useTranslation('week3');
   const [loading, setLoading] = useState(false);
 
   return (
@@ -144,7 +147,7 @@ export const ComponentPatternsVisualizer = () => {
             Compound Pattern
           </div>
           <h3 className="font-semibold text-gray-800">
-            Implicit State Sharing
+            {t('patterns.visualizer.compound.heading')}
           </h3>
         </div>
 
@@ -152,26 +155,34 @@ export const ComponentPatternsVisualizer = () => {
           {/* Interactive Demo */}
           <Tabs defaultValue="account">
             <TabList>
-              <Tab id="account">Account</Tab>
-              <Tab id="privacy">Privacy</Tab>
-              <Tab id="settings">Settings</Tab>
+              <Tab id="account">{t('patterns.visualizer.compound.tabs.account')}</Tab>
+              <Tab id="privacy">{t('patterns.visualizer.compound.tabs.privacy')}</Tab>
+              <Tab id="settings">
+                {t('patterns.visualizer.compound.tabs.settings')}
+              </Tab>
             </TabList>
             <TabPanel id="account">
-              <h4 className="font-bold">Account Settings</h4>
+              <h4 className="font-bold">
+                {t('patterns.visualizer.compound.accountTitle')}
+              </h4>
               <p className="text-sm text-gray-500">
-                Manage your account details here.
+                {t('patterns.visualizer.compound.accountDescription')}
               </p>
             </TabPanel>
             <TabPanel id="privacy">
-              <h4 className="font-bold">Privacy Options</h4>
+              <h4 className="font-bold">
+                {t('patterns.visualizer.compound.privacyTitle')}
+              </h4>
               <p className="text-sm text-gray-500">
-                Control who sees your profile.
+                {t('patterns.visualizer.compound.privacyDescription')}
               </p>
             </TabPanel>
             <TabPanel id="settings">
-              <h4 className="font-bold">General Settings</h4>
+              <h4 className="font-bold">
+                {t('patterns.visualizer.compound.settingsTitle')}
+              </h4>
               <p className="text-sm text-gray-500">
-                App preferences and configurations.
+                {t('patterns.visualizer.compound.settingsDescription')}
               </p>
             </TabPanel>
           </Tabs>
@@ -196,11 +207,10 @@ export const ComponentPatternsVisualizer = () => {
             />
             <div className="text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-200">
               <p className="mb-1 font-semibold text-gray-900">
-                Key Characteristic:
+                {t('patterns.visualizer.keyCharacteristic')}
               </p>
               <p className="text-sm">
-                Sub-components (Tab, TabPanel) communicate via Context provided
-                by parent (Tabs), not via direct prop passing from user.
+                {t('patterns.visualizer.compound.characteristic')}
               </p>
             </div>
           </div>
@@ -214,7 +224,7 @@ export const ComponentPatternsVisualizer = () => {
             Render Props
           </div>
           <h3 className="font-semibold text-gray-800">
-            Logic Reuse via Function Prop
+            {t('patterns.visualizer.renderProps.heading')}
           </h3>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -245,12 +255,10 @@ export const ComponentPatternsVisualizer = () => {
             />
             <div className="text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-200">
               <p className="mb-1 font-semibold text-gray-900">
-                Key Characteristic:
+                {t('patterns.visualizer.keyCharacteristic')}
               </p>
               <p className="text-sm">
-                The component doesn't decide <em>what</em> to render, but
-                delegates that decision to the <code>render</code> prop
-                function, sharing its internal state (x, y).
+                <Trans t={t} i18nKey="patterns.visualizer.renderProps.characteristic" />
               </p>
             </div>
           </div>
@@ -264,7 +272,7 @@ export const ComponentPatternsVisualizer = () => {
             High-Order Components
           </div>
           <h3 className="font-semibold text-gray-800">
-            Logic Injection (Wrapper)
+            {t('patterns.visualizer.hoc.heading')}
           </h3>
         </div>
 
@@ -281,16 +289,22 @@ export const ComponentPatternsVisualizer = () => {
                     : 'bg-blue-50 text-blue-600 border-blue-200 hover:bg-blue-100',
                 )}
               >
-                {loading ? 'Stop Loading' : 'Start Loading'}
+                {loading
+                  ? t('patterns.visualizer.hoc.stopLoading')
+                  : t('patterns.visualizer.hoc.startLoading')}
               </button>
               <span className="text-xs text-gray-500">
-                Passes <code>isLoading={`{${loading.toString()}}`}</code> to HOC
+                <Trans
+                  t={t}
+                  i18nKey="patterns.visualizer.hoc.passes"
+                  values={{ value: `{${loading.toString()}}` }}
+                />
               </span>
             </div>
 
             <ListWithLoading
               isLoading={loading}
-              items={['Message 1', 'Message 2', 'Message 3']}
+              items={raw('patterns.visualizer.hoc.messages')}
             />
           </div>
 
@@ -316,11 +330,10 @@ const ListWithLoading = withLoading(List);
             />
             <div className="text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-200">
               <p className="mb-1 font-semibold text-gray-900">
-                Key Characteristic:
+                {t('patterns.visualizer.keyCharacteristic')}
               </p>
               <p className="text-sm">
-                A function that takes a component and returns a new component
-                ("Wrapper"), injecting new props or behavior (like the Spinner).
+                {t('patterns.visualizer.hoc.characteristic')}
               </p>
             </div>
           </div>

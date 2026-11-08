@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { Play, RotateCcw, SkipForward } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
@@ -19,6 +20,7 @@ Promise.resolve().then(() => {
 console.log('End');`;
 
 export const EventLoopVisualizer = () => {
+  const { t } = useTranslation('week1');
   const [step, setStep] = useState(0);
   const [output, setOutput] = useState<string[]>([]);
   const [callStack, setCallStack] = useState<string[]>([]);
@@ -40,77 +42,77 @@ export const EventLoopVisualizer = () => {
 
   const steps = [
     {
-      desc: 'Execute: console.log("Start")',
+      desc: t('eventLoop.visualizer.steps.execute', { code: 'console.log("Start")' }),
       action: () => {
         setCallStack(['console.log']);
         setOutput(['Start']);
       },
     },
     {
-      desc: 'Pop Call Stack',
+      desc: t('eventLoop.visualizer.steps.popCallStack'),
       action: () => {
         setCallStack([]);
       },
     },
     {
-      desc: 'Register setTimeout (Macrotask)',
+      desc: t('eventLoop.visualizer.steps.registerTimeout'),
       action: () => {
         setMacrotaskQueue(['setTimeout callback']);
       },
     },
     {
-      desc: 'Register Promise.then (Microtask)',
+      desc: t('eventLoop.visualizer.steps.registerPromise'),
       action: () => {
         setMicrotaskQueue(['Promise callback']);
       },
     },
     {
-      desc: 'Execute: console.log("End")',
+      desc: t('eventLoop.visualizer.steps.execute', { code: 'console.log("End")' }),
       action: () => {
         setCallStack(['console.log']);
         setOutput((prev) => [...prev, 'End']);
       },
     },
     {
-      desc: 'Pop Call Stack',
+      desc: t('eventLoop.visualizer.steps.popCallStack'),
       action: () => {
         setCallStack([]);
       },
     },
     {
-      desc: 'Process Microtask Queue',
+      desc: t('eventLoop.visualizer.steps.processMicrotask'),
       action: () => {
         setCallStack(['Promise callback']);
         setMicrotaskQueue([]);
       },
     },
     {
-      desc: 'Execute: console.log("Promise")',
+      desc: t('eventLoop.visualizer.steps.execute', { code: 'console.log("Promise")' }),
       action: () => {
         setOutput((prev) => [...prev, 'Promise']);
       },
     },
     {
-      desc: 'Pop Call Stack',
+      desc: t('eventLoop.visualizer.steps.popCallStack'),
       action: () => {
         setCallStack([]);
       },
     },
     {
-      desc: 'Process Macrotask Queue',
+      desc: t('eventLoop.visualizer.steps.processMacrotask'),
       action: () => {
         setCallStack(['setTimeout callback']);
         setMacrotaskQueue([]);
       },
     },
     {
-      desc: 'Execute: console.log("Timeout")',
+      desc: t('eventLoop.visualizer.steps.execute', { code: 'console.log("Timeout")' }),
       action: () => {
         setOutput((prev) => [...prev, 'Timeout']);
       },
     },
     {
-      desc: 'Pop Call Stack - Done!',
+      desc: t('eventLoop.visualizer.steps.popDone'),
       action: () => {
         setCallStack([]);
       },
@@ -167,7 +169,7 @@ export const EventLoopVisualizer = () => {
           )}
         >
           <SkipForward className="w-4 h-4" />
-          Next Step
+          {t('eventLoop.visualizer.nextStep')}
         </button>
         <button
           type="button"
@@ -176,7 +178,7 @@ export const EventLoopVisualizer = () => {
           className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg font-medium text-sm hover:bg-green-600 transition-all"
         >
           <Play className="w-4 h-4" />
-          Run All
+          {t('eventLoop.visualizer.runAll')}
         </button>
         <button
           type="button"
@@ -185,17 +187,21 @@ export const EventLoopVisualizer = () => {
           className="flex items-center gap-2 px-4 py-2 bg-gray-500 text-white rounded-lg font-medium text-sm hover:bg-gray-600 transition-all"
         >
           <RotateCcw className="w-4 h-4" />
-          Reset
+          {t('eventLoop.visualizer.reset')}
         </button>
       </div>
 
       <div className="text-center text-sm font-medium text-gray-600 min-h-[24px]">
         {step > 0 && step <= steps.length && (
           <span>
-            Step {step}/{steps.length}: {steps[step - 1].desc}
+            {t('eventLoop.visualizer.stepProgress', {
+              step,
+              total: steps.length,
+              desc: steps[step - 1].desc,
+            })}
           </span>
         )}
-        {step === 0 && <span>Click "Next Step" to begin</span>}
+        {step === 0 && <span>{t('eventLoop.visualizer.clickToBegin')}</span>}
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -265,7 +271,7 @@ export const EventLoopVisualizer = () => {
       </div>
 
       <div className="bg-gray-900 text-green-400 p-4 rounded-xl font-mono text-sm min-h-[120px]">
-        <div className="text-gray-500 mb-2">Console Output:</div>
+        <div className="text-gray-500 mb-2">{t('eventLoop.visualizer.consoleOutput')}</div>
         {output.map((line) => (
           <motion.div
             key={line}

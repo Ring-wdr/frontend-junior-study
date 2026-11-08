@@ -72,8 +72,8 @@ export const AnalyticsSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title="Event Stream Demo" icon iconColor="orange">
-          <DemoBox label="Interactive Demo">
+        <SubSection title={t('analytics.demoTitle')} icon iconColor="orange">
+          <DemoBox label={t('interactiveDemo')}>
             <EventStreamVisualizer />
           </DemoBox>
         </SubSection>

@@ -17,17 +17,78 @@
     "keyRule": {
       "title": "Key Rule",
       "content": "Microtasks (Promises, queueMicrotask) are processed immediately after the current script and before any new Macrotask (setTimeout, I/O)."
+    },
+    "visualizer": {
+      "nextStep": "Next Step",
+      "runAll": "Run All",
+      "reset": "Reset",
+      "consoleOutput": "Console Output:",
+      "stepProgress": "Step {{step}}/{{total}}: {{desc}}",
+      "clickToBegin": "Click \"Next Step\" to begin",
+      "steps": {
+        "execute": "Execute: {{code}}",
+        "popCallStack": "Pop Call Stack",
+        "registerTimeout": "Register setTimeout (Macrotask)",
+        "registerPromise": "Register Promise.then (Microtask)",
+        "processMicrotask": "Process Microtask Queue",
+        "processMacrotask": "Process Macrotask Queue",
+        "popDone": "Pop Call Stack - Done!"
+      }
     }
   },
   "thisBinding": {
     "badge": "Core",
     "title": "5 Rules of 'this'",
-    "description": "Explore how 'this' binding works in different contexts."
+    "description": "Explore how 'this' binding works in different contexts.",
+    "demo": {
+      "run": "Run",
+      "output": "Output:",
+      "examples": {
+        "default": {
+          "title": "Default Binding",
+          "desc": "Standalone function call → global object (or undefined in strict mode)",
+          "result": "window (or undefined in strict mode)"
+        },
+        "implicit": {
+          "title": "Implicit Binding",
+          "desc": "Object method call → 'this' is the object",
+          "result": "'JavaScript'"
+        },
+        "explicit": {
+          "title": "Explicit Binding",
+          "desc": "call/apply/bind → manually specify 'this'",
+          "result": "'Alice'"
+        },
+        "new": {
+          "title": "new Binding",
+          "desc": "Constructor call → 'this' is the new instance",
+          "result": "'Alice'"
+        },
+        "arrow": {
+          "title": "Lexical Binding (Arrow)",
+          "desc": "Arrow functions inherit 'this' from parent scope",
+          "result": "undefined (lexical scope)"
+        }
+      }
+    }
   },
   "scopeClosure": {
     "badge": "Scope",
     "title": "Closures",
-    "description": "Create multiple counters to see how closures maintain independent state."
+    "description": "Create multiple counters to see how closures maintain independent state.",
+    "demo": {
+      "createCounter": "Create Counter",
+      "reset": "Reset",
+      "explanationTitle": "Each counter has its own closure!",
+      "explanation": "Every time you call <code>createCounter()</code>, a new closure is created with its own private <code>count</code> variable.",
+      "increment": "Increment",
+      "privateScope": "Private scope:",
+      "emptyHint": "Click \"Create Counter\" to see closures in action!",
+      "keyConcept": {
+        "title": "Key Concept",
+        "content": "A closure is a function that remembers its outer variables and can access them even when the outer function has finished executing. Each closure maintains its own independent copy of the variables."
+      }
+    }
   },
   "async": {
     "badge": "Async",
@@ -63,7 +124,40 @@
     },
     "abortController": {
       "title": "AbortController (Cancel Async Tasks)",
-      "description": "Fetch requests (and other async tasks) can be cancelled using AbortController."
+      "description": "Fetch requests (and other async tasks) can be cancelled using AbortController.",
+      "demo": {
+        "title": "Network Request Simulator",
+        "ready": "Ready to start...",
+        "fetching": "Fetching data...",
+        "success": "Success!",
+        "aborted": "Request Aborted",
+        "start": "Start Request",
+        "abort": "Abort"
+      }
+    },
+    "promiseVisualizer": {
+      "result": "Result:",
+      "resolve": "Resolve",
+      "reject": "Reject",
+      "start": "Start",
+      "reset": "Reset",
+      "resetAll": "Reset All",
+      "status": {
+        "idle": "Idle",
+        "pending": "Pending...",
+        "resolved": "Resolved",
+        "rejected": "Rejected"
+      },
+      "results": {
+        "ready": "Ready to start",
+        "oneFailed": "Rejected (One failed)",
+        "allSucceeded": "Resolved (All succeeded)",
+        "allSettled": "Resolved (All settled)",
+        "raceSettled": "Settled as {{status}} (First one wins)",
+        "oneSucceeded": "Resolved (One succeeded)",
+        "allFailed": "Rejected (All failed)",
+        "waiting": "Waiting..."
+      }
     }
   },
   "advancedDataStructure": {
@@ -90,7 +184,36 @@
       "title": "Weak References (GC Friendly)",
       "description1": "WeakMap/WeakSet: Keys must be objects. They are held \"weakly\", meaning if there are no other references to the object, it can be garbage collected. Not iterable.",
       "description2": "WeakRef (ES2021): advanced feature to hold a weak reference to an object.",
-      "gcTitle": "Garbage Collection Visualizer"
+      "gcTitle": "Garbage Collection Visualizer",
+      "gcDemo": {
+        "mapStrong": "Map (Strong)",
+        "weakMapWeak": "WeakMap (Weak)",
+        "keyObject": "Key Object",
+        "value": "Value",
+        "connectionLine": "Connection Line",
+        "entryCollected": "Entry Collected",
+        "gcRunning": "Garbage Collector Running...",
+        "removeReference": "Remove Reference (key = null)",
+        "restoreReference": "Restore Reference",
+        "runGc": "Run Garbage Collector",
+        "strongReference": "Strong Reference",
+        "weakReference": "Weak Reference",
+        "mapExplanation": "Map holds a STRONG reference to its keys. Even if you remove the external reference (key = null), the Map still prevents the object from being garbage collected. Potentially causing memory leaks if not careful.",
+        "weakMapExplanation": "WeakMap holds a WEAK reference. If the key object has no other STRONG references (i.e., key = null), the Garbage Collector sees it as unreachable and removes both the key and the value from the WeakMap automatically."
+      }
+    },
+    "mapComparison": {
+      "scenario": "<strong>Scenario:</strong> Adding distinct object keys <code>{id:1}</code>, <code>{id:2}</code>...",
+      "addKey": "Add Key",
+      "reset": "Reset",
+      "plainObject": "Plain Object",
+      "stringKeysOnly": "String Keys Only",
+      "emptyObject": "Empty Object",
+      "overwritten": "Overwritten!",
+      "issue": "<strong>Issue:</strong> Objects stringify keys. <br /><code>{id:1}.toString()</code> is <code>\"[object Object]\"</code>.",
+      "anyKeyType": "Any Key Type",
+      "emptyMap": "Empty Map",
+      "solved": "<strong>Solved:</strong> Map keeps object references distinct."
     }
   },
   "optimization": {
@@ -100,6 +223,21 @@
     "keyTakeaway": {
       "title": "Key Takeaway",
       "content": "Always initialize properties in the exact same order to help V8 share hidden classes and optimize property access (Monomorphism)."
+    },
+    "demo": {
+      "goodPattern": "Good Pattern",
+      "badPattern": "Bad Pattern",
+      "reset": "Reset",
+      "monomorphic": {
+        "title": "Monomorphic (Optimized)",
+        "description": "All objects share the same hidden class. V8 can optimize property access."
+      },
+      "polymorphic": {
+        "title": "Polymorphic (Slow)",
+        "description": "Different property orders create different hidden classes. V8 cannot optimize."
+      },
+      "shared": "✓ All objects share the same Hidden Class (Fast!)",
+      "different": "✗ Different Hidden Classes (Slow!)"
     }
   },
   "proxyMeta": {

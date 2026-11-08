@@ -108,13 +108,13 @@ export function ScrollTriggerSection() {
               {t('scrollTrigger.triggerAnimation')}
             </h3>
             <div className="fade-item p-3 bg-white rounded-xl shadow-sm border border-gray-100">
-              Item 1
+              {t('scrollTrigger.item', { n: 1 })}
             </div>
             <div className="fade-item p-3 bg-white rounded-xl shadow-sm border border-gray-100">
-              Item 2
+              {t('scrollTrigger.item', { n: 2 })}
             </div>
             <div className="fade-item p-3 bg-white rounded-xl shadow-sm border border-gray-100">
-              Item 3
+              {t('scrollTrigger.item', { n: 3 })}
             </div>
           </div>
 

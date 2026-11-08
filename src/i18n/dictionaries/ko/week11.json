@@ -416,17 +416,18 @@
         "description": "다양한 weight/style을 하나의 파일로. 여러 폰트 파일 대체"
       }
     },
-    "koreanFontWarning": "한글 폰트 주의: 한글은 글리프가 많아 용량이 큽니다(2~5MB). 반드시 서브셋을 적용하거나 Google Fonts의 자동 서브셋 기능을 활용하세요."
+    "koreanFontWarning": "한글 폰트 주의: 한글은 글리프가 많아 용량이 큽니다(2~5MB). 반드시 서브셋을 적용하거나 Google Fonts의 자동 서브셋 기능을 활용하세요.",
+    "nextFontTitle": "Next.js next/font (권장)"
   },
   "networkOptimization": {
     "title": "네트워크 최적화",
     "description": "네트워크 레이턴시를 줄이고 캐시를 효과적으로 활용하면 반복 방문 시 성능이 극적으로 향상됩니다.",
-    "simulatorTitle": "Network Waterfall",
-    "simulatorDesc": "HTTP/1.1 vs HTTP/2 Multiplexing",
-    "totalLoadTime": "Total Load Time",
-    "http1Queued": "HTTP/1.1 (Queued)",
-    "http2Multiplexed": "HTTP/2 (Multiplexed)",
-    "clickPlayToStart": "Click play to start simulation",
+    "simulatorTitle": "네트워크 워터폴",
+    "simulatorDesc": "HTTP/1.1 vs HTTP/2 멀티플렉싱",
+    "totalLoadTime": "총 로드 시간",
+    "http1Queued": "HTTP/1.1 (대기열)",
+    "http2Multiplexed": "HTTP/2 (멀티플렉싱)",
+    "clickPlayToStart": "재생 버튼을 눌러 시뮬레이션을 시작하세요",
     "resourceHints": {
       "title": "Resource Hints",
       "preconnect": {
@@ -477,7 +478,9 @@
         ]
       }
     },
-    "staleWhileRevalidateInfo": "stale-while-revalidate: 캐시된 콘텐츠를 즉시 반환하면서 백그라운드에서 새 데이터를 가져옵니다. 사용자는 즉각적인 응답을 받고, 다음 요청부터 최신 데이터를 사용합니다."
+    "staleWhileRevalidateInfo": "<strong>stale-while-revalidate:</strong> 캐시된 콘텐츠를 즉시 반환하면서 백그라운드에서 새 데이터를 가져옵니다. 사용자는 즉각적인 응답을 받고, 다음 요청부터 최신 데이터를 사용합니다.",
+    "startSimulation": "시뮬레이션 시작",
+    "cacheControlTitle": "Cache-Control 전략"
   },
   "bundleSize": {
     "title": "번들 사이즈 최적화",

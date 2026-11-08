@@ -52,7 +52,7 @@ export const BestPracticesSection = () => {
             />
           </DemoBox>
           <div className="mt-4">
-            <DemoBox label="Usage">
+            <DemoBox label={t('bestPractices.usageLabel')}>
               <CodeBlock
                 code={t('bestPractices.boundaryUsage')}
                 language="tsx"
@@ -100,11 +100,11 @@ export const BestPracticesSection = () => {
         </SubSection>
 
         <SubSection
-          title="Classification Flow Simulator"
+          title={t('bestPractices.demoTitle')}
           icon
           iconColor="green"
         >
-          <DemoBox label="Interactive Demo">
+          <DemoBox label={t('interactiveDemo')}>
             <ErrorClassificationVisualizer />
           </DemoBox>
         </SubSection>

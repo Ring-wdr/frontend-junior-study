@@ -416,7 +416,8 @@
         "description": "Multiple weights/styles in one file. Replaces multiple font files"
       }
     },
-    "koreanFontWarning": "Korean Font Warning: Korean fonts are large (2~5MB) due to many glyphs. Always apply subsetting or use Google Fonts' automatic subsetting."
+    "koreanFontWarning": "Korean Font Warning: Korean fonts are large (2~5MB) due to many glyphs. Always apply subsetting or use Google Fonts' automatic subsetting.",
+    "nextFontTitle": "Next.js next/font (Recommended)"
   },
   "networkOptimization": {
     "title": "Network Optimization",
@@ -477,7 +478,9 @@
         ]
       }
     },
-    "staleWhileRevalidateInfo": "stale-while-revalidate: Returns cached content immediately while fetching fresh data in the background. Users get instant responses and use latest data from next request."
+    "staleWhileRevalidateInfo": "<strong>stale-while-revalidate:</strong> Returns cached content immediately while fetching fresh data in the background. Users get instant responses and use latest data from next request.",
+    "startSimulation": "Start simulation",
+    "cacheControlTitle": "Cache-Control Strategy"
   },
   "bundleSize": {
     "title": "Bundle Size Optimization",

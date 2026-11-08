@@ -28,8 +28,8 @@ export const PrivacySection = () => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Data Masking Demo" icon iconColor="blue">
-          <DemoBox label="Interactive Demo">
+        <SubSection title={t('privacy.demoTitle')} icon iconColor="blue">
+          <DemoBox label={t('interactiveDemo')}>
             <DataMaskingVisualizer />
           </DemoBox>
         </SubSection>

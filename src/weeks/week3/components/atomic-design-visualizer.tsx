@@ -2,6 +2,7 @@
 
 import { Search, User } from 'lucide-react';
 import { type ReactNode, useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
 
 type ThemeColor = 'blue' | 'green' | 'purple' | 'orange';
@@ -68,16 +69,24 @@ const InputAtom = ({
   />
 );
 
-const SearchFormMolecule = (theme: ThemeProps) => (
-  <div className="flex gap-2 w-full max-w-sm">
-    <InputAtom placeholder="Search..." {...theme} />
-    <ButtonAtom {...theme}>
-      <Search className="w-4 h-4" />
-    </ButtonAtom>
-  </div>
-);
+const SearchFormMolecule = (theme: ThemeProps) => {
+  const { t } = useTranslation('week3');
+  return (
+    <div className="flex gap-2 w-full max-w-sm">
+      <InputAtom
+        placeholder={t('atomic.visualizer.searchPlaceholder')}
+        {...theme}
+      />
+      <ButtonAtom {...theme}>
+        <Search className="w-4 h-4" />
+      </ButtonAtom>
+    </div>
+  );
+};
 
-const HeaderOrganism = (theme: ThemeProps) => (
+const HeaderOrganism = (theme: ThemeProps) => {
+  const { t } = useTranslation('week3');
+  return (
   <div
     className={cn(
       'w-full p-3 border bg-white shadow-sm flex items-center justify-between gap-3 transition-all duration-200 sm:p-4',
@@ -92,7 +101,7 @@ const HeaderOrganism = (theme: ThemeProps) => (
           theme.radius,
         )}
       >
-        <span className="text-xs">Logo</span>
+        <span className="text-xs">{t('atomic.visualizer.logo')}</span>
       </div>
       <span>MyApp</span>
     </div>
@@ -101,7 +110,7 @@ const HeaderOrganism = (theme: ThemeProps) => (
     </div>
     <div className="flex items-center gap-2">
       <ButtonAtom {...theme} className="text-xs px-3">
-        Log In
+        {t('atomic.visualizer.logIn')}
       </ButtonAtom>
       <div
         className={cn(
@@ -113,9 +122,11 @@ const HeaderOrganism = (theme: ThemeProps) => (
       </div>
     </div>
   </div>
-);
+  );
+};
 
 export const AtomicDesignVisualizer = () => {
+  const { t } = useTranslation('week3');
   const [color, setColor] = useState<ThemeColor>('blue');
   const [radius, setRadius] = useState<BorderRadius>('rounded-md');
   const theme = { color, radius };
@@ -126,16 +137,16 @@ export const AtomicDesignVisualizer = () => {
       <div className="bg-white p-3 rounded-xl border border-gray-200 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between sm:p-4">
         <div>
           <h4 className="font-semibold text-gray-900 mb-1">
-            Design System Controls
+            {t('atomic.visualizer.controlsTitle')}
           </h4>
           <p className="text-sm text-gray-500">
-            Change Atoms to update the entire UI.
+            {t('atomic.visualizer.controlsDescription')}
           </p>
         </div>
         <div className="flex flex-wrap gap-4">
           <div className="space-y-1">
             <span className="block text-xs uppercase font-semibold text-gray-500">
-              Color
+              {t('atomic.visualizer.color')}
             </span>
             <div className="flex gap-2">
               {THEME_COLORS.map((c) => (
@@ -160,7 +171,7 @@ export const AtomicDesignVisualizer = () => {
           </div>
           <div className="space-y-1">
             <span className="block text-xs uppercase font-semibold text-gray-500">
-              Radius
+              {t('atomic.visualizer.radius')}
             </span>
             <div className="flex text-xs bg-gray-100 p-1 rounded-lg">
               {RADII.map((r) => (
@@ -187,17 +198,17 @@ export const AtomicDesignVisualizer = () => {
         {/* Level 1: Atom */}
         <div className="space-y-2">
           <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-            Level 1: Atom
+            {t('atomic.visualizer.levelAtom')}
           </div>
           <div className="bg-gray-50 border border-dashed border-gray-200 p-4 rounded-xl flex items-center justify-center h-28">
-            <ButtonAtom {...theme}>Button</ButtonAtom>
+            <ButtonAtom {...theme}>{t('atomic.visualizer.button')}</ButtonAtom>
           </div>
         </div>
 
         {/* Level 2: Molecule */}
         <div className="space-y-2">
           <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-            Level 2: Molecule
+            {t('atomic.visualizer.levelMolecule')}
           </div>
           <div className="bg-gray-50 border border-dashed border-gray-200 p-4 rounded-xl flex items-center justify-center h-28 w-full">
             <SearchFormMolecule {...theme} />
@@ -207,7 +218,7 @@ export const AtomicDesignVisualizer = () => {
         {/* Level 3: Organism */}
         <div className="col-span-1 sm:col-span-2 space-y-2">
           <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-            Level 3: Organism
+            {t('atomic.visualizer.levelOrganism')}
           </div>
           <div className="bg-gray-100 border border-gray-200 p-3 rounded-xl sm:p-6">
             <HeaderOrganism {...theme} />

@@ -117,8 +117,8 @@ export const MonitoringIntroSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title="Incident Response Simulator" icon iconColor="blue">
-          <DemoBox label="Interactive Demo">
+        <SubSection title={t('monitoringIntro.demoTitle')} icon iconColor="blue">
+          <DemoBox label={t('interactiveDemo')}>
             <IncidentTimelineVisualizer />
           </DemoBox>
         </SubSection>

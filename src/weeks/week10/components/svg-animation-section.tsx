@@ -103,7 +103,7 @@ export function SvgAnimationSection() {
           role="img"
           aria-labelledby={titleId}
         >
-          <title id={titleId}>Line drawing animation demo</title>
+          <title id={titleId}>{t('svg.demoTitle')}</title>
           <path
             d={WAVE_PATH}
             fill="none"

@@ -72,8 +72,8 @@ export const RumSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title="Web Vitals Simulator" icon iconColor="green">
-          <DemoBox label="Interactive Demo">
+        <SubSection title={t('rum.demoTitle')} icon iconColor="green">
+          <DemoBox label={t('interactiveDemo')}>
             <WebVitalsVisualizer />
           </DemoBox>
         </SubSection>

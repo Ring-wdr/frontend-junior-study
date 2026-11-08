@@ -371,7 +371,13 @@
     },
     "resources": {
       "title": "Resources",
-      "infoTitle": "Learn More"
+      "infoTitle": "Learn More",
+      "links": {
+        "docs": "Framer Motion Docs",
+        "variants": "Variants Guide",
+        "drag": "Drag Gestures",
+        "layout": "Layout Animations"
+      }
     }
   }
 }

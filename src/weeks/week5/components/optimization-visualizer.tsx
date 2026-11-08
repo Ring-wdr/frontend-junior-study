@@ -3,10 +3,12 @@
 import { AlertTriangle, Image as ImageIcon, Zap } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
+import { Trans, useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
 export const OptimizationVisualizer = () => {
+  const { t } = useTranslation('week5');
   const [mode, setMode] = useState<'bad' | 'good'>('bad');
   const [loading, setLoading] = useState(false);
   const [contentVisible, setContentVisible] = useState(false);
@@ -58,10 +60,10 @@ export const OptimizationVisualizer = () => {
         <div className="min-w-0">
           <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
             <Zap className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-            Image Optimization & CLS
+            {t('optimization.visualizer.title')}
           </h3>
           <p className="text-sm text-gray-500 mt-1">
-            See how reserving space prevents Cumulative Layout Shift (CLS).
+            {t('optimization.visualizer.subtitle')}
           </p>
         </div>
         <div className="flex flex-wrap bg-gray-100 p-1 rounded-lg">
@@ -78,7 +80,7 @@ export const OptimizationVisualizer = () => {
                 : 'text-gray-500 hover:text-gray-900',
             )}
           >
-            Unoptimized (Standard img)
+            {t('optimization.visualizer.unoptimized')}
           </button>
           <button
             type="button"
@@ -93,7 +95,7 @@ export const OptimizationVisualizer = () => {
                 : 'text-gray-500 hover:text-gray-900',
             )}
           >
-            Optimized (next/image)
+            {t('optimization.visualizer.optimized')}
           </button>
         </div>
       </div>
@@ -106,10 +108,10 @@ export const OptimizationVisualizer = () => {
           className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading
-            ? 'Loading...'
+            ? t('optimization.visualizer.loading')
             : imageLoaded
-              ? 'Reload to try again'
-              : 'Load Content'}
+              ? t('optimization.visualizer.reloadToTry')
+              : t('optimization.visualizer.loadContent')}
         </button>
         {clsScore > 0 && (
           <motion.div
@@ -119,7 +121,7 @@ export const OptimizationVisualizer = () => {
             className="flex items-center gap-2 text-sm text-red-600 font-bold"
           >
             <AlertTriangle className="w-5 h-5" />
-            CLS Detected! (Score: {clsScore})
+            {t('optimization.visualizer.clsDetected', { score: clsScore })}
           </motion.div>
         )}
         {mode === 'good' && imageLoaded && (
@@ -130,7 +132,7 @@ export const OptimizationVisualizer = () => {
             className="flex items-center gap-2 text-sm text-green-600 font-bold"
           >
             <Zap className="w-5 h-5" />
-            Stable Layout (CLS: 0)
+            {t('optimization.visualizer.stableLayout')}
           </motion.div>
         )}
       </div>
@@ -149,12 +151,10 @@ export const OptimizationVisualizer = () => {
               className="space-y-2"
             >
               <div className="text-xl sm:text-2xl font-bold text-gray-900">
-                Beautiful Landscapes
+                {t('optimization.visualizer.beautifulLandscapes')}
               </div>
               <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-                Discover the most breathtaking views from around the world. From
-                mountain peaks to serene lakes, nature offers endless
-                inspiration.
+                {t('optimization.visualizer.description1')}
               </p>
             </motion.div>
           )}
@@ -174,7 +174,7 @@ export const OptimizationVisualizer = () => {
                       'absolute inset-0 w-full h-full object-cover transition-opacity duration-500',
                       imageLoaded ? 'opacity-100' : 'opacity-0',
                     )}
-                    alt="Landscape"
+                    alt={t('optimization.visualizer.imageAlt')}
                   />
                 </div>
               ) : (
@@ -182,7 +182,7 @@ export const OptimizationVisualizer = () => {
                   <img
                     src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2670&auto=format&fit=crop"
                     className="w-full rounded-lg shadow-md"
-                    alt="Landscape"
+                    alt={t('optimization.visualizer.imageAlt')}
                   />
                 )
               )}
@@ -196,8 +196,7 @@ export const OptimizationVisualizer = () => {
               transition={{ duration: 0.3, ease: 'easeOut', delay: 0.1 }}
               className="text-sm sm:text-base text-gray-600 leading-relaxed"
             >
-              Photography allows us to capture these moments forever. It's not
-              just about the gear, but about the perspective.
+              {t('optimization.visualizer.description2')}
             </motion.p>
           )}
         </div>
@@ -205,12 +204,7 @@ export const OptimizationVisualizer = () => {
 
       <div className="bg-blue-50 p-4 rounded-lg text-sm text-blue-800">
         <p>
-          <strong>Why it matters:</strong> In the <strong>Unoptimized</strong>{' '}
-          mode, the browser doesn't know the image height until it downloads.
-          This causes content below it to jump (CLS), frustrating users.
-          <strong> Next/Image</strong> (Optimized) enforces width/height props
-          to reserve space immediately, ensuring a stable layout even while
-          loading.
+          <Trans t={t} i18nKey="optimization.visualizer.whyItMatters" />
         </p>
       </div>
 

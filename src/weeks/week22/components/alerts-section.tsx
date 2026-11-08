@@ -64,8 +64,8 @@ export const AlertsSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title="Alert Rule Simulator" icon iconColor="pink">
-          <DemoBox label="Interactive Demo">
+        <SubSection title={t('alerts.demoTitle')} icon iconColor="pink">
+          <DemoBox label={t('interactiveDemo')}>
             <AlertRuleVisualizer />
           </DemoBox>
         </SubSection>

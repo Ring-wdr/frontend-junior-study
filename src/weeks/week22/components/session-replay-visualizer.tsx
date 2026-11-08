@@ -12,6 +12,7 @@ import {
   RotateCcw,
   Type,
 } from 'lucide-react';
+import { useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
 
 type EventType = 'click' | 'scroll' | 'navigation' | 'error' | 'input';
@@ -19,38 +20,46 @@ type EventType = 'click' | 'scroll' | 'navigation' | 'error' | 'input';
 type SessionEvent = {
   time: number;
   type: EventType;
-  label: string;
+  label:
+    | 'pageLoad'
+    | 'scrollDown'
+    | 'clickProduct'
+    | 'navigate'
+    | 'addToCart'
+    | 'formInput'
+    | 'checkout'
+    | 'error';
   detail: string;
 };
 
 const SESSION_EVENTS: SessionEvent[] = [
-  { time: 0, type: 'navigation', label: 'Page Load', detail: '/products' },
-  { time: 2, type: 'scroll', label: 'Scroll Down', detail: 'scrollY: 450px' },
+  { time: 0, type: 'navigation', label: 'pageLoad', detail: '/products' },
+  { time: 2, type: 'scroll', label: 'scrollDown', detail: 'scrollY: 450px' },
   {
     time: 4,
     type: 'click',
-    label: 'Click Product',
+    label: 'clickProduct',
     detail: 'Product #42 card',
   },
-  { time: 5, type: 'navigation', label: 'Navigate', detail: '/products/42' },
+  { time: 5, type: 'navigation', label: 'navigate', detail: '/products/42' },
   {
     time: 7,
     type: 'click',
-    label: 'Add to Cart',
+    label: 'addToCart',
     detail: 'Button: Add to Cart',
   },
-  { time: 9, type: 'navigation', label: 'Navigate', detail: '/cart' },
-  { time: 11, type: 'input', label: 'Form Input', detail: 'Email field' },
+  { time: 9, type: 'navigation', label: 'navigate', detail: '/cart' },
+  { time: 11, type: 'input', label: 'formInput', detail: 'Email field' },
   {
     time: 13,
     type: 'click',
-    label: 'Checkout',
+    label: 'checkout',
     detail: 'Button: Pay Now',
   },
   {
     time: 14,
     type: 'error',
-    label: 'Error!',
+    label: 'error',
     detail: "TypeError: Cannot read property 'id' of null",
   },
 ];
@@ -81,6 +90,7 @@ const EVENT_COLORS: Record<
 };
 
 export const SessionReplayVisualizer = () => {
+  const { t } = useTranslation('week22');
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { amount: 0.2 });
   const [isPlaying, setIsPlaying] = useState(false);
@@ -137,7 +147,9 @@ export const SessionReplayVisualizer = () => {
           ) : (
             <Play className="w-4 h-4" />
           )}
-          {isRunning ? 'Pause' : 'Play'}
+          {isRunning
+            ? t('sessionReplay.replayVisualizer.pause')
+            : t('sessionReplay.replayVisualizer.play')}
         </button>
         <button
           type="button"
@@ -200,7 +212,7 @@ export const SessionReplayVisualizer = () => {
                   event.type === 'error' && 'w-3.5 h-3.5 ring-2 ring-red-200',
                 )}
                 style={{ left: `${leftPct}%`, top: '2px' }}
-                title={event.label}
+                title={t(`sessionReplay.replayVisualizer.events.${event.label}`)}
               />
             );
           })}
@@ -251,7 +263,9 @@ export const SessionReplayVisualizer = () => {
                   EVENT_COLORS[currentEvent.type].text,
                 )}
               >
-                {currentEvent.label}
+                {t(
+                  `sessionReplay.replayVisualizer.events.${currentEvent.label}`,
+                )}
               </p>
               <p className="text-xs text-gray-600 font-mono break-words">
                 {currentEvent.detail}
@@ -291,7 +305,7 @@ export const SessionReplayVisualizer = () => {
                   isPast ? 'text-gray-800' : 'text-gray-400',
                 )}
               >
-                {event.label}
+                {t(`sessionReplay.replayVisualizer.events.${event.label}`)}
               </span>
               <span className="text-gray-400 truncate min-w-0">
                 {event.detail}

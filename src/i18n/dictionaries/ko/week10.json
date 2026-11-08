@@ -69,12 +69,14 @@
     "pinnedSection": "Pinned Section",
     "pinnedDescription": "이 섹션은 잠시 고정됩니다.",
     "endOfContent": "End of Content",
-    "codeSnippet": "Code Snippet"
+    "codeSnippet": "Code Snippet",
+    "item": "아이템 {{n}}"
   },
   "svg": {
     "title": "SVG Animation",
     "replay": "Replay",
-    "description": "<code>stroke-dasharray</code>와 <code>stroke-dashoffset</code> 속성을 이용하면 손글씨나 라인 드로잉 효과를 구현할 수 있습니다."
+    "description": "<code>stroke-dasharray</code>와 <code>stroke-dashoffset</code> 속성을 이용하면 손글씨나 라인 드로잉 효과를 구현할 수 있습니다.",
+    "demoTitle": "선 그리기 애니메이션 데모"
   },
   "performance": {
     "title": "성능 최적화 (Performance)",

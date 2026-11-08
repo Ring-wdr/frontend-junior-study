@@ -371,7 +371,13 @@
     },
     "resources": {
       "title": "리소스",
-      "infoTitle": "더 알아보기"
+      "infoTitle": "더 알아보기",
+      "links": {
+        "docs": "Framer Motion 문서",
+        "variants": "Variants 가이드",
+        "drag": "드래그 제스처",
+        "layout": "레이아웃 애니메이션"
+      }
     }
   }
 }
