@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import withRspack from 'next-rspack';
 import nextra from 'nextra';
 import { defaultLocale, locales } from './src/i18n/config';
 
@@ -20,4 +21,6 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withNextra(nextConfig);
+const config = withNextra(nextConfig);
+
+export default process.env.USE_RSPACK ? withRspack(config) : config;
