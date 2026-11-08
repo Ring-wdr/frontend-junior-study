@@ -133,7 +133,7 @@ export const FocusManagementSection = () => {
                     onKeyDown={(e) => e.key === 'Enter' && setModalOpen(false)}
                     role="button"
                     tabIndex={-1}
-                    aria-label="Close modal"
+                    aria-label={t('focus.trapDemo.closeModal')}
                   />
 
                   {/* Modal Content */}

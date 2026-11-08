@@ -1,8 +1,8 @@
 'use client';
 
+import { Bug, Code, FileWarning, Trash2, Wifi } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
-import { Bug, Code, FileWarning, Trash2, Wifi } from 'lucide-react';
 import { useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
 

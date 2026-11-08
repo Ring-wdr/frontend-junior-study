@@ -43,15 +43,15 @@
       "label": "UI 차단 비교",
       "animationTest": "애니메이션 테스트",
       "animationDesc": "토글을 클릭한 후 계산을 실행하여 차단 확인",
-      "start": "시작",
-      "stop": "정지",
       "mainThread": "메인 스레드",
       "mainThreadDesc": "계산 중 UI 차단",
       "runOnMain": "메인에서 실행",
       "running": "실행 중...",
       "webWorker": "Web Worker",
       "webWorkerDesc": "UI가 반응형 유지",
-      "runOnWorker": "Worker에서 실행"
+      "runOnWorker": "Worker에서 실행",
+      "startAnimation": "애니메이션 시작",
+      "stopAnimation": "애니메이션 정지"
     },
     "basicUsage": {
       "title": "기본 사용법"

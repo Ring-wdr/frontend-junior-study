@@ -100,12 +100,30 @@
       }
     ],
     "shortcuts": [
-      { "key": "Cmd/Ctrl + Shift + C", "action": "Element inspection mode" },
-      { "key": "Cmd/Ctrl + Shift + J", "action": "Open Console directly" },
-      { "key": "Cmd/Ctrl + K", "action": "Clear Console" },
-      { "key": "Cmd/Ctrl + F", "action": "Search in Elements" },
-      { "key": "H", "action": "Hide element (Elements)" },
-      { "key": "Esc", "action": "Toggle Drawer" }
+      {
+        "key": "Cmd/Ctrl + Shift + C",
+        "action": "Element inspection mode"
+      },
+      {
+        "key": "Cmd/Ctrl + Shift + J",
+        "action": "Open Console directly"
+      },
+      {
+        "key": "Cmd/Ctrl + K",
+        "action": "Clear Console"
+      },
+      {
+        "key": "Cmd/Ctrl + F",
+        "action": "Search in Elements"
+      },
+      {
+        "key": "H",
+        "action": "Hide element (Elements)"
+      },
+      {
+        "key": "Esc",
+        "action": "Toggle Drawer"
+      }
     ]
   },
   "devtoolsSources": {
@@ -159,19 +177,31 @@
       }
     ],
     "debugControls": [
-      { "name": "Resume", "shortcut": "F8", "desc": "Run to next breakpoint" },
+      {
+        "name": "Resume",
+        "shortcut": "F8",
+        "desc": "Run to next breakpoint"
+      },
       {
         "name": "Step Over",
         "shortcut": "F10",
         "desc": "Execute current line, don't enter functions"
       },
-      { "name": "Step Into", "shortcut": "F11", "desc": "Enter into function" },
+      {
+        "name": "Step Into",
+        "shortcut": "F11",
+        "desc": "Enter into function"
+      },
       {
         "name": "Step Out",
         "shortcut": "Shift+F11",
         "desc": "Exit current function"
       },
-      { "name": "Pause", "shortcut": "F8", "desc": "Pause running script" },
+      {
+        "name": "Pause",
+        "shortcut": "F8",
+        "desc": "Pause running script"
+      },
       {
         "name": "Restart",
         "shortcut": "Ctrl+Shift+F8",
@@ -179,9 +209,18 @@
       }
     ],
     "scopeItems": [
-      { "label": "Local:", "desc": "Local variables in current function" },
-      { "label": "Closure:", "desc": "Variables captured by closure" },
-      { "label": "Global:", "desc": "Properties on window object" }
+      {
+        "label": "Local:",
+        "desc": "Local variables in current function"
+      },
+      {
+        "label": "Closure:",
+        "desc": "Variables captured by closure"
+      },
+      {
+        "label": "Global:",
+        "desc": "Properties on window object"
+      }
     ],
     "watchItems": [
       "Continuously monitor specific variables/expressions",
@@ -192,24 +231,44 @@
       {
         "label": "Headers",
         "desc": "View request/response headers",
-        "check": ["Cache-Control", "Content-Type", "Authorization"]
+        "check": [
+          "Cache-Control",
+          "Content-Type",
+          "Authorization"
+        ]
       },
       {
         "label": "Timing",
         "desc": "Analyze timing for each request phase",
-        "check": ["DNS Lookup", "TTFB", "Content Download"]
+        "check": [
+          "DNS Lookup",
+          "TTFB",
+          "Content Download"
+        ]
       },
       {
         "label": "Throttling",
         "desc": "Test network speed limitations",
-        "check": ["Slow 3G", "Fast 3G", "Offline"]
+        "check": [
+          "Slow 3G",
+          "Fast 3G",
+          "Offline"
+        ]
       },
       {
         "label": "Filter",
         "desc": "Filter by resource type",
-        "check": ["XHR", "JS", "CSS", "Img", "Font"]
+        "check": [
+          "XHR",
+          "JS",
+          "CSS",
+          "Img",
+          "Font"
+        ]
       }
-    ]
+    ],
+    "howLabel": "How:",
+    "tipLabel": "Tip:"
   },
   "devtoolsPerformance": {
     "targetLabel": "Target",
@@ -355,19 +414,37 @@
           "Fine-grained configuration",
           "Proven stability"
         ],
-        "cons": ["Slow build", "Complex configuration", "Learning curve"]
+        "cons": [
+          "Slow build",
+          "Complex configuration",
+          "Learning curve"
+        ]
       },
       {
         "name": "Vite",
         "status": "Modern Standard",
-        "pros": ["Fast dev server", "ES Modules based", "Simple configuration"],
-        "cons": ["CommonJS compatibility issues", "Relatively new"]
+        "pros": [
+          "Fast dev server",
+          "ES Modules based",
+          "Simple configuration"
+        ],
+        "cons": [
+          "CommonJS compatibility issues",
+          "Relatively new"
+        ]
       },
       {
         "name": "Rollup",
         "status": "For Libraries",
-        "pros": ["Optimal tree shaking", "Small bundles", "ES Module output"],
-        "cons": ["Not ideal for app builds", "Smaller plugin ecosystem"]
+        "pros": [
+          "Optimal tree shaking",
+          "Small bundles",
+          "ES Module output"
+        ],
+        "cons": [
+          "Not ideal for app builds",
+          "Smaller plugin ecosystem"
+        ]
       }
     ],
     "webpackConcepts": [
@@ -459,9 +536,24 @@
         "percent": 44.3,
         "issue": true
       },
-      { "name": "moment.js", "size": "288KB", "percent": 24, "issue": true },
-      { "name": "axios", "size": "14KB", "percent": 1.2, "issue": false },
-      { "name": "app code", "size": "239KB", "percent": 19.8, "issue": false }
+      {
+        "name": "moment.js",
+        "size": "288KB",
+        "percent": 24,
+        "issue": true
+      },
+      {
+        "name": "axios",
+        "size": "14KB",
+        "percent": 1.2,
+        "issue": false
+      },
+      {
+        "name": "app code",
+        "size": "239KB",
+        "percent": 19.8,
+        "issue": false
+      }
     ],
     "libraryOptimizations": [
       {

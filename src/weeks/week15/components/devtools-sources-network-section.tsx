@@ -75,13 +75,17 @@ export const DevToolsSourcesNetworkSection = () => {
                 </div>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-start gap-2">
-                    <span className="text-green-500 font-bold">How:</span>
+                    <span className="text-green-500 font-bold">
+                      {t('devtoolsSources.howLabel')}
+                    </span>
                     <span className="text-gray-700">
                       {breakpointTypes[selectedBreakpoint].how}
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="text-blue-500 font-bold">Tip:</span>
+                    <span className="text-blue-500 font-bold">
+                      {t('devtoolsSources.tipLabel')}
+                    </span>
                     <span className="text-gray-700">
                       {breakpointTypes[selectedBreakpoint].tip}
                     </span>

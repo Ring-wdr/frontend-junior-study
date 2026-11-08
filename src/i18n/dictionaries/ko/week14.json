@@ -289,14 +289,20 @@
       "input1": "Input field 1",
       "input2": "Input field 2",
       "cancel": "Cancel",
-      "confirm": "Confirm"
+      "confirm": "Confirm",
+      "closeModal": "모달 닫기"
     },
     "indicatorTracker": {
       "title": "Focus Indicator Tracker",
       "label": "Tab Through These Buttons",
       "historyLabel": "Focus History:",
       "placeholder": "Tab through buttons...",
-      "buttons": ["Button A", "Button B", "Button C", "Button D"]
+      "buttons": [
+        "Button A",
+        "Button B",
+        "Button C",
+        "Button D"
+      ]
     },
     "implementation": {
       "title": "Focus Trap 구현"

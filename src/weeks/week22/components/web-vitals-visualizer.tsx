@@ -1,8 +1,8 @@
 'use client';
 
+import { RotateCcw } from 'lucide-react';
 import { motion, useInView } from 'motion/react';
 import { useRef, useState } from 'react';
-import { RotateCcw } from 'lucide-react';
 import { useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
 

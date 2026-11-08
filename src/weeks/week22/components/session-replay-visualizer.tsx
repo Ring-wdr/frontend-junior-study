@@ -1,7 +1,5 @@
 'use client';
 
-import { AnimatePresence, motion, useInView } from 'motion/react';
-import { useEffect, useRef, useState } from 'react';
 import {
   AlertCircle,
   ArrowDown,
@@ -12,6 +10,8 @@ import {
   RotateCcw,
   Type,
 } from 'lucide-react';
+import { AnimatePresence, motion, useInView } from 'motion/react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
 

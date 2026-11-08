@@ -43,15 +43,15 @@
       "label": "UI Blocking Comparison",
       "animationTest": "Animation Test",
       "animationDesc": "Click toggle, then run calculations to see blocking",
-      "start": "Start",
-      "stop": "Stop",
       "mainThread": "Main Thread",
       "mainThreadDesc": "Blocks UI during calculation",
       "runOnMain": "Run on Main",
       "running": "Running...",
       "webWorker": "Web Worker",
       "webWorkerDesc": "UI stays responsive",
-      "runOnWorker": "Run on Worker"
+      "runOnWorker": "Run on Worker",
+      "startAnimation": "Start Animation",
+      "stopAnimation": "Stop Animation"
     },
     "basicUsage": {
       "title": "Basic Usage"

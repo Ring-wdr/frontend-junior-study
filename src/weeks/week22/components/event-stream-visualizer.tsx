@@ -1,8 +1,5 @@
 'use client';
 
-import { AnimatePresence, motion } from 'motion/react';
-import { useRef, useState } from 'react';
-import { useTranslation } from '@/i18n/client';
 import {
   Activity,
   ExternalLink,
@@ -11,6 +8,9 @@ import {
   Trash2,
   UserPlus,
 } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
+import { useRef, useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 
 type AnalyticsEvent = {
   id: number;

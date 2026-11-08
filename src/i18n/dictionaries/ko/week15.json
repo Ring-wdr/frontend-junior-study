@@ -100,12 +100,30 @@
       }
     ],
     "shortcuts": [
-      { "key": "Cmd/Ctrl + Shift + C", "action": "요소 검사 모드" },
-      { "key": "Cmd/Ctrl + Shift + J", "action": "Console 직접 열기" },
-      { "key": "Cmd/Ctrl + K", "action": "Console 클리어" },
-      { "key": "Cmd/Ctrl + F", "action": "Elements에서 검색" },
-      { "key": "H", "action": "요소 숨기기 (Elements)" },
-      { "key": "Esc", "action": "Drawer 토글" }
+      {
+        "key": "Cmd/Ctrl + Shift + C",
+        "action": "요소 검사 모드"
+      },
+      {
+        "key": "Cmd/Ctrl + Shift + J",
+        "action": "Console 직접 열기"
+      },
+      {
+        "key": "Cmd/Ctrl + K",
+        "action": "Console 클리어"
+      },
+      {
+        "key": "Cmd/Ctrl + F",
+        "action": "Elements에서 검색"
+      },
+      {
+        "key": "H",
+        "action": "요소 숨기기 (Elements)"
+      },
+      {
+        "key": "Esc",
+        "action": "Drawer 토글"
+      }
     ]
   },
   "devtoolsSources": {
@@ -169,7 +187,11 @@
         "shortcut": "F10",
         "desc": "현재 라인 실행, 함수 내부 안 들어감"
       },
-      { "name": "Step Into", "shortcut": "F11", "desc": "함수 내부로 진입" },
+      {
+        "name": "Step Into",
+        "shortcut": "F11",
+        "desc": "함수 내부로 진입"
+      },
       {
         "name": "Step Out",
         "shortcut": "Shift+F11",
@@ -187,9 +209,18 @@
       }
     ],
     "scopeItems": [
-      { "label": "Local:", "desc": "현재 함수의 지역 변수" },
-      { "label": "Closure:", "desc": "클로저로 캡처된 변수" },
-      { "label": "Global:", "desc": "window 객체의 속성들" }
+      {
+        "label": "Local:",
+        "desc": "현재 함수의 지역 변수"
+      },
+      {
+        "label": "Closure:",
+        "desc": "클로저로 캡처된 변수"
+      },
+      {
+        "label": "Global:",
+        "desc": "window 객체의 속성들"
+      }
     ],
     "watchItems": [
       "특정 변수/표현식을 지속적으로 모니터링",
@@ -200,24 +231,44 @@
       {
         "label": "Headers",
         "desc": "요청/응답 헤더 확인",
-        "check": ["Cache-Control", "Content-Type", "Authorization"]
+        "check": [
+          "Cache-Control",
+          "Content-Type",
+          "Authorization"
+        ]
       },
       {
         "label": "Timing",
         "desc": "요청 각 단계 시간 분석",
-        "check": ["DNS Lookup", "TTFB", "Content Download"]
+        "check": [
+          "DNS Lookup",
+          "TTFB",
+          "Content Download"
+        ]
       },
       {
         "label": "Throttling",
         "desc": "네트워크 속도 제한 테스트",
-        "check": ["Slow 3G", "Fast 3G", "Offline"]
+        "check": [
+          "Slow 3G",
+          "Fast 3G",
+          "Offline"
+        ]
       },
       {
         "label": "Filter",
         "desc": "리소스 타입별 필터링",
-        "check": ["XHR", "JS", "CSS", "Img", "Font"]
+        "check": [
+          "XHR",
+          "JS",
+          "CSS",
+          "Img",
+          "Font"
+        ]
       }
-    ]
+    ],
+    "howLabel": "방법:",
+    "tipLabel": "팁:"
   },
   "devtoolsPerformance": {
     "targetLabel": "목표",
@@ -358,20 +409,42 @@
       {
         "name": "Webpack",
         "status": "레거시 표준",
-        "pros": ["풍부한 생태계", "세밀한 설정", "검증된 안정성"],
-        "cons": ["느린 빌드", "복잡한 설정", "러닝 커브"]
+        "pros": [
+          "풍부한 생태계",
+          "세밀한 설정",
+          "검증된 안정성"
+        ],
+        "cons": [
+          "느린 빌드",
+          "복잡한 설정",
+          "러닝 커브"
+        ]
       },
       {
         "name": "Vite",
         "status": "현대 표준",
-        "pros": ["빠른 dev 서버", "ES Modules 기반", "간단한 설정"],
-        "cons": ["CommonJS 호환 이슈", "상대적으로 새로움"]
+        "pros": [
+          "빠른 dev 서버",
+          "ES Modules 기반",
+          "간단한 설정"
+        ],
+        "cons": [
+          "CommonJS 호환 이슈",
+          "상대적으로 새로움"
+        ]
       },
       {
         "name": "Rollup",
         "status": "라이브러리용",
-        "pros": ["최적의 tree shaking", "작은 번들", "ES Module 출력"],
-        "cons": ["앱 빌드에 부적합", "플러그인 생태계 작음"]
+        "pros": [
+          "최적의 tree shaking",
+          "작은 번들",
+          "ES Module 출력"
+        ],
+        "cons": [
+          "앱 빌드에 부적합",
+          "플러그인 생태계 작음"
+        ]
       }
     ],
     "webpackConcepts": [
@@ -463,9 +536,24 @@
         "percent": 44.3,
         "issue": true
       },
-      { "name": "moment.js", "size": "288KB", "percent": 24, "issue": true },
-      { "name": "axios", "size": "14KB", "percent": 1.2, "issue": false },
-      { "name": "app code", "size": "239KB", "percent": 19.8, "issue": false }
+      {
+        "name": "moment.js",
+        "size": "288KB",
+        "percent": 24,
+        "issue": true
+      },
+      {
+        "name": "axios",
+        "size": "14KB",
+        "percent": 1.2,
+        "issue": false
+      },
+      {
+        "name": "app code",
+        "size": "239KB",
+        "percent": 19.8,
+        "issue": false
+      }
     ],
     "libraryOptimizations": [
       {
@@ -648,7 +736,11 @@
         "desc": "첫 번째 콘텐츠가 그려지는 시간",
         "good": "1.8s 이하",
         "poor": "3.0s 초과",
-        "improve": ["렌더 블로킹 리소스 제거", "CSS/JS 최적화", "CDN 활용"]
+        "improve": [
+          "렌더 블로킹 리소스 제거",
+          "CSS/JS 최적화",
+          "CDN 활용"
+        ]
       },
       {
         "name": "TTFB",
@@ -656,7 +748,11 @@
         "desc": "서버 첫 응답까지 걸리는 시간",
         "good": "0.8s 이하",
         "poor": "1.8s 초과",
-        "improve": ["서버 최적화", "CDN 엣지 캐싱", "데이터베이스 쿼리 최적화"]
+        "improve": [
+          "서버 최적화",
+          "CDN 엣지 캐싱",
+          "데이터베이스 쿼리 최적화"
+        ]
       }
     ],
     "labDataItems": [
@@ -714,7 +810,11 @@
         "action": "FCP 개선: Critical CSS 인라인",
         "impact": "Medium"
       },
-      { "priority": 5, "action": "TTFB 개선: CDN/캐싱 최적화", "impact": "Low" }
+      {
+        "priority": 5,
+        "action": "TTFB 개선: CDN/캐싱 최적화",
+        "impact": "Low"
+      }
     ]
   }
 }

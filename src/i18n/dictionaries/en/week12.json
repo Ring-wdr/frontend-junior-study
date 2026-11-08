@@ -183,7 +183,8 @@
         "Scaling requires shared session store",
         "Session lookup on every request",
         "Sticky sessions or Redis needed"
-      ]
+      ],
+      "sessionTab": "Session"
     },
     "storage": {
       "title": "Token Storage Best Practices",
@@ -352,7 +353,18 @@
       "targetServer": "Target Server",
       "waitingRequests": "Waiting for requests...",
       "patched": "Patched (v19.1.2)",
-      "vulnerable": "Vulnerable (v19.0.0)"
+      "vulnerable": "Vulnerable (v19.0.0)",
+      "logs": {
+        "request": "POST /action/updateUser",
+        "payloadSize": "Payload size: {{size}}",
+        "deserializing": "RSC Flight Protocol Deserializing...",
+        "success": "✅ Object deserialized successfully",
+        "executed": "Executed: updateUser({ name: \"John Doe\" ... })",
+        "securityException": "🛡️ Security Exception: Illegal object structure",
+        "blocked": "❌ Deserialization blocked by React 19.1.2 patch",
+        "pollution": "⚠️ WARNING: Prototype pollution detected",
+        "executing": "🔥 Executing arbitrary code..."
+      }
     },
     "vulnerable": {
       "title": "Vulnerable Code Pattern"

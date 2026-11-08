@@ -94,7 +94,7 @@ export const JwtSessionSection = () => {
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
                 >
-                  Session
+                  {t('jwt.comparison.sessionTab')}
                 </button>
               </div>
 

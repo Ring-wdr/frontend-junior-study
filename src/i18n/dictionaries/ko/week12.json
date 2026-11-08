@@ -183,7 +183,8 @@
         "확장 시 공유 세션 저장소 필요",
         "매 요청마다 세션 조회",
         "스티키 세션 또는 Redis 필요"
-      ]
+      ],
+      "sessionTab": "세션"
     },
     "storage": {
       "title": "토큰 저장 모범 사례",
@@ -352,7 +353,18 @@
       "targetServer": "대상 서버",
       "waitingRequests": "요청 대기 중...",
       "patched": "패치됨 (v19.1.2)",
-      "vulnerable": "취약함 (v19.0.0)"
+      "vulnerable": "취약함 (v19.0.0)",
+      "logs": {
+        "request": "POST /action/updateUser",
+        "payloadSize": "페이로드 크기: {{size}}",
+        "deserializing": "RSC Flight 프로토콜 역직렬화 중...",
+        "success": "✅ 객체 역직렬화 성공",
+        "executed": "실행됨: updateUser({ name: \"John Doe\" ... })",
+        "securityException": "🛡️ 보안 예외: 허용되지 않은 객체 구조",
+        "blocked": "❌ React 19.1.2 패치로 역직렬화 차단됨",
+        "pollution": "⚠️ 경고: 프로토타입 오염 감지",
+        "executing": "🔥 임의 코드 실행 중..."
+      }
     },
     "vulnerable": {
       "title": "취약한 코드 패턴"

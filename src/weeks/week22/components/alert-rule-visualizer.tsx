@@ -1,8 +1,8 @@
 'use client';
 
+import { AlertTriangle, Bell, BellRing, Hash, RotateCcw } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useRef, useState } from 'react';
-import { AlertTriangle, Bell, BellRing, Hash, RotateCcw } from 'lucide-react';
 import { Trans, useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
 
