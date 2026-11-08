@@ -247,7 +247,7 @@ export function FontOptimizationSection() {
         <div className="flex items-center gap-2 mb-3">
           <Code2 className="text-cyan-400" size={18} />
           <span className="text-cyan-400 text-sm font-medium">
-            Next.js next/font (권장)
+            {t('fontOptimization.nextFontTitle')}
           </span>
         </div>
         <div className="overflow-hidden rounded-lg">

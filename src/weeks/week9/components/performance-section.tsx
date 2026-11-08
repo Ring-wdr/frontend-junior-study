@@ -246,7 +246,7 @@ const timings = {
                   rel="noopener noreferrer"
                   className="text-pink-700 underline"
                 >
-                  Framer Motion Docs
+                  {t('performance.resources.links.docs')}
                 </a>
               </li>
               <li>
@@ -256,7 +256,7 @@ const timings = {
                   rel="noopener noreferrer"
                   className="text-pink-700 underline"
                 >
-                  Variants Guide
+                  {t('performance.resources.links.variants')}
                 </a>
               </li>
               <li>
@@ -266,7 +266,7 @@ const timings = {
                   rel="noopener noreferrer"
                   className="text-pink-700 underline"
                 >
-                  Drag Gestures
+                  {t('performance.resources.links.drag')}
                 </a>
               </li>
               <li>
@@ -276,7 +276,7 @@ const timings = {
                   rel="noopener noreferrer"
                   className="text-pink-700 underline"
                 >
-                  Layout Animations
+                  {t('performance.resources.links.layout')}
                 </a>
               </li>
             </ul>

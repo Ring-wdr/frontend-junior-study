@@ -10,17 +10,31 @@ import {
   Terminal,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
 type DecoratorType = 'auth' | 'logger' | 'cache';
 
+type LogKey =
+  | 'authChecking'
+  | 'authValid'
+  | 'loggerStart'
+  | 'cacheChecking'
+  | 'cacheMiss'
+  | 'serviceFetching'
+  | 'serviceFound'
+  | 'loggerFinish';
+
+type LogEntry = { key: LogKey; time?: string };
+
 const PACKET_SPRING = { type: 'spring', stiffness: 350, damping: 30 } as const;
 
 export const DecoratorVisualizer = () => {
+  const { t } = useTranslation('week2');
   const [decorators, setDecorators] = useState<DecoratorType[]>([]); // Order matters!
   const [isAnimating, setIsAnimating] = useState(false);
-  const [logs, setLogs] = useState<string[]>([]);
+  const [logs, setLogs] = useState<LogEntry[]>([]);
   const [packetPosition, setPacketPosition] = useState(0); // 0 = outside, 1 = layer 1, 2 = layer 2...
   const activeRef = useRef(true);
 
@@ -45,7 +59,7 @@ export const DecoratorVisualizer = () => {
     setLogs([]);
     setPacketPosition(0);
 
-    const addLog = (msg: string) => setLogs((prev) => [...prev, msg]);
+    const addLog = (entry: LogEntry) => setLogs((prev) => [...prev, entry]);
     const wait = async () => {
       await new Promise((r) => setTimeout(r, 600));
       return activeRef.current;
@@ -61,24 +75,22 @@ export const DecoratorVisualizer = () => {
       if (!(await wait())) return;
 
       if (type === 'auth') {
-        addLog(`[@Auth] Checking Token...`);
-        addLog(`[@Auth] Token Valid.`);
+        addLog({ key: 'authChecking' });
+        addLog({ key: 'authValid' });
       } else if (type === 'logger') {
-        addLog(
-          `[@Logger] Request started at ${new Date().toLocaleTimeString()}`,
-        );
+        addLog({ key: 'loggerStart', time: new Date().toLocaleTimeString() });
       } else if (type === 'cache') {
-        addLog(`[@Cache] Checking Cache...`);
-        addLog(`[@Cache] Cache Miss. Forwarding...`);
+        addLog({ key: 'cacheChecking' });
+        addLog({ key: 'cacheMiss' });
       }
     }
 
     // CORE PHASE
     setPacketPosition(decorators.length + 1); // Center
     if (!(await wait())) return;
-    addLog(`[Service] Fetching Data from DB...`);
+    addLog({ key: 'serviceFetching' });
     if (!(await wait())) return;
-    addLog(`[Service] Data Found: { id: 1, name: "User" }`);
+    addLog({ key: 'serviceFound' });
 
     // OUTBOUND PHASE
     for (let i = decorators.length - 1; i >= 0; i--) {
@@ -87,7 +99,7 @@ export const DecoratorVisualizer = () => {
       if (!(await wait())) return;
 
       if (type === 'logger') {
-        addLog(`[@Logger] Request finished. Duration: 12ms`);
+        addLog({ key: 'loggerFinish' });
       }
     }
 
@@ -126,7 +138,8 @@ export const DecoratorVisualizer = () => {
           <div className="space-y-6">
             <div className="space-y-4">
               <h5 className="font-semibold text-gray-900 flex items-center gap-2">
-                <Terminal className="w-4 h-4" /> Pipeline Configuration
+                <Terminal className="w-4 h-4" />{' '}
+                {t('structural.decorator.visualizer.pipelineConfig')}
               </h5>
               <div className="grid grid-cols-1 gap-3">
                 <button
@@ -153,7 +166,7 @@ export const DecoratorVisualizer = () => {
                     <div>
                       <div className="font-medium text-gray-900">@Auth</div>
                       <div className="text-xs text-gray-500">
-                        Class Decorator
+                        {t('structural.decorator.visualizer.classDecorator')}
                       </div>
                     </div>
                   </div>
@@ -191,7 +204,9 @@ export const DecoratorVisualizer = () => {
                     <div>
                       <div className="font-medium text-gray-900">@Logger</div>
                       <div className="text-xs text-gray-500">
-                        Method/Class Decorator
+                        {t(
+                          'structural.decorator.visualizer.methodClassDecorator',
+                        )}
                       </div>
                     </div>
                   </div>
@@ -229,7 +244,7 @@ export const DecoratorVisualizer = () => {
                     <div>
                       <div className="font-medium text-gray-900">@Cache</div>
                       <div className="text-xs text-gray-500">
-                        Method Decorator
+                        {t('structural.decorator.visualizer.methodDecorator')}
                       </div>
                     </div>
                   </div>
@@ -257,29 +272,34 @@ export const DecoratorVisualizer = () => {
                 ) : (
                   <Play className="w-4 h-4" />
                 )}
-                {isAnimating ? 'Processing Request...' : 'Run Request'}
+                {isAnimating
+                  ? t('structural.decorator.visualizer.processing')
+                  : t('structural.decorator.visualizer.run')}
               </button>
 
               <div className="bg-gray-900 rounded-lg p-3 min-h-[100px]">
                 <div className="text-xs font-mono text-gray-500 mb-2 border-b border-gray-800 pb-1">
-                  System Logs
+                  {t('structural.decorator.visualizer.systemLogs')}
                 </div>
                 <div className="space-y-1 font-mono text-xs">
                   {logs.length === 0 && (
                     <span className="text-gray-600">
-                      Waiting for request...
+                      {t('structural.decorator.visualizer.waiting')}
                     </span>
                   )}
 
                   {logs.map((log, i) => (
                     <motion.div
-                      key={`${i}-${log}`}
+                      key={`${i}-${log.key}`}
                       initial={{ opacity: 0, x: -8 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.2 }}
                       className="text-green-400 break-words"
                     >
-                      {'>'} {log}
+                      {'>'}{' '}
+                      {t(`structural.decorator.visualizer.logs.${log.key}`, {
+                        time: log.time ?? '',
+                      })}
                     </motion.div>
                   ))}
                 </div>
@@ -397,7 +417,7 @@ export const DecoratorVisualizer = () => {
         {/* Separated Code Section */}
         <div className="bg-gray-900 rounded-lg p-3">
           <div className="text-xs font-mono text-gray-500 mb-2 border-b border-gray-800 pb-1">
-            Generated Code
+            {t('structural.decorator.visualizer.generatedCode')}
           </div>
           <CodeBlock code={generateCode()} className="text-xs" />
         </div>

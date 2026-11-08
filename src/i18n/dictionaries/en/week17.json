@@ -87,7 +87,14 @@
     "conceptDesc": "MCP is a standard protocol that allows AI agents to safely access databases, browsers, external APIs, and more. MCP servers provide specific capabilities that AI agents can invoke.",
     "architectureLabel": "MCP Architecture",
     "visualizer": {
-      "description": "AI agents access various external services (databases, browsers, GitHub, etc.) through MCP servers."
+      "description": "AI agents access various external services (databases, browsers, GitHub, etc.) through MCP servers.",
+      "agent": "AI Agent",
+      "server": "MCP Server",
+      "servers": {
+        "database": "Database",
+        "browser": "Browser",
+        "github": "GitHub"
+      }
     },
     "serversTitle": "Popular MCP Servers",
     "servers": [

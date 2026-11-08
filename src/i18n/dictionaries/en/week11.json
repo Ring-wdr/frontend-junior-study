@@ -102,7 +102,8 @@
       "badMode": "Bad (Shift)",
       "layoutView": "Layout View",
       "targetContent": "Target Content",
-      "targetContentDesc": "This is the content the user is trying to read."
+      "targetContentDesc": "This is the content the user is trying to read.",
+      "triggerContentLoad": "Trigger Content Load"
     },
     "metrics": {
       "good": "Good",
@@ -285,7 +286,6 @@
     "resetDemo": "Reset Demo",
     "headingSection": "Heading Section",
     "aboveTheFold": "Above the fold content (Always loaded)",
-    "image": "Image",
     "waitingForScroll": "Waiting for Scroll...",
     "endOfContent": "End of Content",
     "viewport": "Viewport",
@@ -310,7 +310,8 @@
         "description": "Fetch only what's needed via infinite scroll or pagination"
       }
     },
-    "warning": "Warning: Don't apply lazy loading to Above the Fold content. Loading LCP elements late degrades scores."
+    "warning": "<strong>Warning:</strong> Don't apply lazy loading to Above the Fold content. Loading LCP elements late degrades scores.",
+    "imageN": "Image {{id}}"
   },
   "imageOptimization": {
     "title": "Image Optimization (Biggest Impact!)",
@@ -355,7 +356,10 @@
       "preconnect": "Pre-establish CDN connections",
       "lazy": "Defer loading images outside viewport",
       "decoding": "Separate decoding with async"
-    }
+    },
+    "optimizedFormat": "Optimized ({{format}})",
+    "comparisonAria": "Original / optimized comparison",
+    "nextImageTitle": "Next.js Image Component"
   },
   "fontOptimization": {
     "title": "Font Optimization",
@@ -413,7 +417,8 @@
         "description": "Multiple weights/styles in one file. Replaces multiple font files"
       }
     },
-    "koreanFontWarning": "Korean Font Warning: Korean fonts are large (2~5MB) due to many glyphs. Always apply subsetting or use Google Fonts' automatic subsetting."
+    "koreanFontWarning": "Korean Font Warning: Korean fonts are large (2~5MB) due to many glyphs. Always apply subsetting or use Google Fonts' automatic subsetting.",
+    "nextFontTitle": "Next.js next/font (Recommended)"
   },
   "networkOptimization": {
     "title": "Network Optimization",
@@ -474,7 +479,9 @@
         ]
       }
     },
-    "staleWhileRevalidateInfo": "stale-while-revalidate: Returns cached content immediately while fetching fresh data in the background. Users get instant responses and use latest data from next request."
+    "staleWhileRevalidateInfo": "<strong>stale-while-revalidate:</strong> Returns cached content immediately while fetching fresh data in the background. Users get instant responses and use latest data from next request.",
+    "startSimulation": "Start simulation",
+    "cacheControlTitle": "Cache-Control Strategy"
   },
   "bundleSize": {
     "title": "Bundle Size Optimization",
@@ -486,10 +493,14 @@
     "reset": "Reset",
     "runTreeShaking": "Run Tree Shaking",
     "avoidPatterns": {
-      "title": "Patterns to Avoid"
+      "title": "Patterns to Avoid",
+      "lodashFull": "Importing all of <code>lodash</code>",
+      "iconLibrary": "Importing an entire icon library you don't use",
+      "polyfill": "Indiscriminately including polyfills"
     },
     "recommendedPatterns": {
-      "title": "Recommended Patterns"
+      "title": "Recommended Patterns",
+      "browserslist": "Automatic polyfills based on browserslist"
     },
     "bundleAnalyzer": {
       "title": "Bundle Analyzer",
@@ -505,6 +516,13 @@
         ]
       }
     },
-    "sideEffectsInfo": "sideEffects: Declaring \"sideEffects\": false in package.json allows bundlers to safely remove unused exports. If CSS imports exist, specify \"sideEffects\": [\"*.css\"]."
+    "sideEffectsInfo": "sideEffects: Declaring \"sideEffects\": false in package.json allows bundlers to safely remove unused exports. If CSS imports exist, specify \"sideEffects\": [\"*.css\"].",
+    "treeShakingExample": "Tree Shaking Example",
+    "targets": {
+      "initialJs": "Initial JS (gzip)",
+      "parseTime": "JS parse time",
+      "esm": "Tree-shakeable",
+      "sideEffects": "Declare false"
+    }
   }
 }

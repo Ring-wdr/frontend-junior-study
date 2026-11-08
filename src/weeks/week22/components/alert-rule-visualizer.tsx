@@ -1,16 +1,19 @@
 'use client';
 
+import { AlertTriangle, Bell, BellRing, Hash, RotateCcw } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useRef, useState } from 'react';
-import { AlertTriangle, Bell, BellRing, Hash, RotateCcw } from 'lucide-react';
+import { Trans, useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
 
 type AlertLevel = 'info' | 'warning' | 'critical';
 
+type AlertRuleId = 'baseline' | 'elevated' | 'critical' | 'degradation';
+
 type AlertNotification = {
   id: number;
   level: AlertLevel;
-  message: string;
+  ruleId: AlertRuleId;
   channel: string;
 };
 
@@ -26,33 +29,33 @@ const SCALE_TICKS = [
 ];
 
 const ALERT_RULES: {
+  id: AlertRuleId;
   threshold: number;
   level: AlertLevel;
-  message: string;
   channel: string;
 }[] = [
   {
     threshold: 1,
+    id: 'baseline',
     level: 'info',
-    message: 'Error rate above baseline',
     channel: '#monitoring',
   },
   {
     threshold: 3,
+    id: 'elevated',
     level: 'warning',
-    message: 'Error rate elevated - investigate',
     channel: '#alerts',
   },
   {
     threshold: 5,
+    id: 'critical',
     level: 'critical',
-    message: 'Error rate critical - immediate action',
     channel: '#incidents',
   },
   {
     threshold: 10,
+    id: 'degradation',
     level: 'critical',
-    message: 'Service degradation - page on-call',
     channel: '#emergency',
   },
 ];
@@ -82,6 +85,7 @@ const LEVEL_STYLES: Record<
 };
 
 export const AlertRuleVisualizer = () => {
+  const { t } = useTranslation('week22');
   const [errorRate, setErrorRate] = useState(0.5);
   const [notifications, setNotifications] = useState<AlertNotification[]>([]);
   const nextIdRef = useRef(1);
@@ -93,7 +97,7 @@ export const AlertRuleVisualizer = () => {
         newNotifications.push({
           id: nextIdRef.current++,
           level: rule.level,
-          message: rule.message,
+          ruleId: rule.id,
           channel: rule.channel,
         });
       }
@@ -119,7 +123,7 @@ export const AlertRuleVisualizer = () => {
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <span className="text-sm font-semibold text-gray-700">
-            Error Rate
+            {t('alerts.alertRule.errorRate')}
           </span>
           <motion.span
             key={errorRate}
@@ -181,7 +185,7 @@ export const AlertRuleVisualizer = () => {
           className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-all"
         >
           <BellRing className="w-4 h-4" />
-          Check Alerts
+          {t('alerts.alertRule.checkAlerts')}
         </button>
         <button
           type="button"
@@ -189,13 +193,13 @@ export const AlertRuleVisualizer = () => {
           className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-200 transition-all"
         >
           <RotateCcw className="w-3.5 h-3.5" />
-          Reset
+          {t('alerts.alertRule.reset')}
         </button>
       </div>
 
       <div className="space-y-2">
         <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-          Alert Rules
+          {t('alerts.alertRule.rulesTitle')}
         </span>
         {ALERT_RULES.map((rule) => {
           const isActive = errorRate >= rule.threshold;
@@ -224,7 +228,7 @@ export const AlertRuleVisualizer = () => {
                     isActive ? 'text-gray-800' : 'text-gray-400',
                   )}
                 >
-                  {rule.message}
+                  {t(`alerts.alertRule.rules.${rule.id}`)}
                 </span>
               </div>
               <div className="flex items-center gap-2 shrink-0">
@@ -249,7 +253,7 @@ export const AlertRuleVisualizer = () => {
       {notifications.length > 0 && (
         <div className="space-y-2">
           <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-            Notification Feed
+            {t('alerts.alertRule.feedTitle')}
           </span>
           <AnimatePresence>
             {notifications.map((notif, index) => {
@@ -271,10 +275,12 @@ export const AlertRuleVisualizer = () => {
                   />
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-medium text-gray-800">
-                      {notif.message}
+                      {t(`alerts.alertRule.rules.${notif.ruleId}`)}
                     </p>
                     <span className="text-[10px] text-gray-500 font-mono">
-                      Sent to {notif.channel}
+                      {t('alerts.alertRule.sentTo', {
+                        channel: notif.channel,
+                      })}
                     </span>
                   </div>
                 </motion.div>
@@ -295,9 +301,7 @@ export const AlertRuleVisualizer = () => {
           >
             <AlertTriangle className="w-4 h-4 text-red-500 shrink-0" />
             <p className="text-xs text-red-700">
-              <strong>Alert Fatigue Warning:</strong> Too many alerts firing
-              simultaneously can desensitize the team. Consider tuning
-              thresholds and using escalation policies.
+              <Trans t={t} i18nKey="alerts.alertRule.fatigueWarning" />
             </p>
           </motion.div>
         )}

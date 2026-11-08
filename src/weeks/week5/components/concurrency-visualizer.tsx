@@ -4,21 +4,24 @@ import { RefreshCw, Zap } from 'lucide-react';
 import { useInView } from 'motion/react';
 import type React from 'react';
 import { memo, useEffect, useRef, useState, useTransition } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
 const SlowItem = ({ text }: { text: string }) => {
+  const { t } = useTranslation('week5');
   const startTime = performance.now();
   while (performance.now() - startTime < 1) {}
   return (
     <div className="p-2 mb-1 text-sm bg-white rounded border border-gray-100 shadow-sm">
-      Item: {text}
+      {t('concurrency.visualizer.item', { text })}
     </div>
   );
 };
 
 const SlowList = memo(
   ({ text, count = 50 }: { text: string; count?: number }) => {
+    const { t } = useTranslation('week5');
     const items = [];
     for (let i = 0; i < count; i++) {
       items.push(<SlowItem key={i} text={`${text} #${i + 1}`} />);
@@ -28,7 +31,9 @@ const SlowList = memo(
         {text ? (
           items
         ) : (
-          <div className="text-gray-400 text-center p-4">Start typing...</div>
+          <div className="text-gray-400 text-center p-4">
+            {t('concurrency.visualizer.startTyping')}
+          </div>
         )}
       </div>
     );
@@ -37,6 +42,7 @@ const SlowList = memo(
 SlowList.displayName = 'SlowList';
 
 const MainThreadSpinner = () => {
+  const { t } = useTranslation('week5');
   const containerRef = useRef<HTMLDivElement>(null);
   const spinnerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef);
@@ -70,13 +76,14 @@ const MainThreadSpinner = () => {
         className="w-8 h-8 shrink-0 border-4 border-blue-500 border-t-transparent rounded-full"
       />
       <span className="text-sm font-medium text-gray-600">
-        UI Responsiveness Indicator (Spinning = Good)
+        {t('concurrency.visualizer.uiIndicator')}
       </span>
     </div>
   );
 };
 
 export const ConcurrencyVisualizer = () => {
+  const { t } = useTranslation('week5');
   const [inputVal, setInputVal] = useState('');
   const [mode, setMode] = useState<'blocking' | 'concurrent'>('blocking');
   const [isPending, startTransition] = useTransition();
@@ -101,10 +108,10 @@ export const ConcurrencyVisualizer = () => {
         <div className="min-w-0">
           <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
             <Zap className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-            Blocking vs Concurrent Rendering
+            {t('concurrency.visualizer.title')}
           </h3>
           <p className="text-sm text-gray-500 mt-1">
-            Type quickly below to see how React 18 keeps the UI responsive.
+            {t('concurrency.visualizer.subtitle')}
           </p>
         </div>
         <div className="flex flex-wrap bg-gray-100 p-1 rounded-lg">
@@ -122,7 +129,7 @@ export const ConcurrencyVisualizer = () => {
                 : 'text-gray-500 hover:text-gray-900',
             )}
           >
-            Blocking (Old)
+            {t('concurrency.visualizer.blockingOld')}
           </button>
           <button
             type="button"
@@ -138,7 +145,7 @@ export const ConcurrencyVisualizer = () => {
                 : 'text-gray-500 hover:text-gray-900',
             )}
           >
-            Concurrent (New)
+            {t('concurrency.visualizer.concurrentNew')}
           </button>
         </div>
       </div>
@@ -152,7 +159,7 @@ export const ConcurrencyVisualizer = () => {
               type="text"
               value={inputVal}
               onChange={handleChange}
-              placeholder="Type fast here..."
+              placeholder={t('concurrency.visualizer.typeFast')}
               className={cn(
                 'w-full px-4 py-2 border rounded-lg focus:ring-2 focus:outline-none transition-colors',
                 mode === 'concurrent'
@@ -169,13 +176,13 @@ export const ConcurrencyVisualizer = () => {
 
           <div className="bg-gray-50 p-3 rounded-md text-xs text-gray-600 space-y-2">
             <div className="flex items-center justify-between">
-              <span>Input Status:</span>
+              <span>{t('concurrency.visualizer.inputStatus')}</span>
               <span className="font-semibold text-green-600">
-                Updated Immediately
+                {t('concurrency.visualizer.updatedImmediately')}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span>List Render:</span>
+              <span>{t('concurrency.visualizer.listRender')}</span>
               <span
                 className={cn(
                   'font-semibold',
@@ -187,29 +194,31 @@ export const ConcurrencyVisualizer = () => {
                 )}
               >
                 {mode === 'concurrent' && isPending
-                  ? 'Pending (Background)...'
-                  : 'Updated'}
+                  ? t('concurrency.visualizer.pendingBackground')
+                  : t('concurrency.visualizer.updated')}
               </span>
             </div>
           </div>
 
           <p className="text-xs text-gray-500">
             {mode === 'blocking'
-              ? "Notice how the 'Spinner' stutters while you type. The main thread is blocked by rendering the list."
-              : "Notice the 'Spinner' stays smooth. The list acts efficiently in the background without freezing the UI."}
+              ? t('concurrency.visualizer.blockingNotice')
+              : t('concurrency.visualizer.concurrentNotice')}
           </p>
         </div>
 
         <div className="space-y-2 min-w-0">
           <h4 className="text-xs font-semibold uppercase text-gray-400">
-            Heavy Render Output (50 items x 1ms)
+            {t('concurrency.visualizer.heavyOutput')}
           </h4>
           <SlowList text={listText} count={50} />
         </div>
       </div>
 
       <div className="pt-4 border-t border-gray-100">
-        <h4 className="text-sm font-semibold mb-2">Code Pattern</h4>
+        <h4 className="text-sm font-semibold mb-2">
+          {t('concurrency.visualizer.codePattern')}
+        </h4>
         <CodeBlock
           code={
             mode === 'blocking'

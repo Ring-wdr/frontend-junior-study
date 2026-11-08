@@ -163,9 +163,8 @@ export const WebWorkerSection = () => {
                     className="mt-2 px-3 py-1 text-xs bg-gray-200 rounded hover:bg-gray-300"
                   >
                     {animating
-                      ? t('webWorker.demo.stop')
-                      : t('webWorker.demo.start')}{' '}
-                    Animation
+                      ? t('webWorker.demo.stopAnimation')
+                      : t('webWorker.demo.startAnimation')}
                   </button>
                 </div>
               </div>

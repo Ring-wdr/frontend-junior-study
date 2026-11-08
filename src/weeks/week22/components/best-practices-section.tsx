@@ -52,7 +52,7 @@ export const BestPracticesSection = () => {
             />
           </DemoBox>
           <div className="mt-4">
-            <DemoBox label="Usage">
+            <DemoBox label={t('bestPractices.usageLabel')}>
               <CodeBlock
                 code={t('bestPractices.boundaryUsage')}
                 language="tsx"
@@ -80,10 +80,12 @@ export const BestPracticesSection = () => {
                   <span className="text-sm font-semibold">{c.description}</span>
                 </div>
                 <p className="text-xs mb-1">
-                  <strong>Examples:</strong> {c.examples}
+                  <strong>{t('bestPractices.examplesLabel')}</strong>{' '}
+                  {c.examples}
                 </p>
                 <p className="text-xs">
-                  <strong>Handling:</strong> {c.handling}
+                  <strong>{t('bestPractices.handlingLabel')}</strong>{' '}
+                  {c.handling}
                 </p>
               </div>
             ))}
@@ -99,12 +101,8 @@ export const BestPracticesSection = () => {
           </div>
         </SubSection>
 
-        <SubSection
-          title="Classification Flow Simulator"
-          icon
-          iconColor="green"
-        >
-          <DemoBox label="Interactive Demo">
+        <SubSection title={t('bestPractices.demoTitle')} icon iconColor="green">
+          <DemoBox label={t('interactiveDemo')}>
             <ErrorClassificationVisualizer />
           </DemoBox>
         </SubSection>

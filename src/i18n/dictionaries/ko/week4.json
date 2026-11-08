@@ -55,6 +55,18 @@
         "createAsyncThunk": "createAsyncThunk - 비동기 작업을 우아하게 처리",
         "immer": "Immer 통합 - 실제로는 불변인 \"변경\" 코드 작성"
       }
+    },
+    "visualizer": {
+      "title": "Flux 데이터 흐름 사이클",
+      "storeCount": "Store 카운트:",
+      "dispatch": "클릭하여 Dispatch",
+      "processing": "처리 중...",
+      "status": {
+        "idle": "사용자 상호작용을 기다리는 중...",
+        "action": "View가 Action 페이로드를 생성합니다...",
+        "dispatcher": "Dispatcher가 Action을 받습니다...",
+        "store": "Store가 상태를 업데이트하고 View에 알립니다..."
+      }
     }
   },
   "middleware": {
@@ -109,6 +121,23 @@
       "promise": {
         "title": "Redux Promise",
         "description": "Promise 기반 action을 자동으로 해결하는 간단한 middleware입니다. Thunk의 경량 대안을 원할 때 유용합니다."
+      }
+    },
+    "visualizer": {
+      "actionTypes": "Action 유형",
+      "standardAction": "일반 Action",
+      "standardActionDesc": "reducer에 바로 도달",
+      "thunkAction": "Thunk (비동기)",
+      "thunkActionDesc": "미들웨어에서 일시 정지",
+      "empty": "아직 dispatch된 action이 없습니다.",
+      "processing": "... 처리 중 ...",
+      "footer": "미들웨어는 dispatch된 action이 reducer에 도달하기 전에 가로채서 API 호출이나 지연 같은 부수 효과를 가능하게 합니다.",
+      "logs": {
+        "syncDispatch": "Dispatch: INCREMENT (동기)",
+        "syncReduced": "Reducer: 상태가 즉시 업데이트됨",
+        "asyncDispatch": "Dispatch: FETCH_USER_REQUEST (Thunk)",
+        "apiComplete": "Middleware: API 호출 완료...",
+        "asyncSuccess": "Reducer: FETCH_USER_SUCCESS"
       }
     }
   },
@@ -212,6 +241,14 @@
         "recoil": "Recoil: 세분화된 상태를 가진 React-concurrent-mode 준비 앱",
         "zustand": "Zustand: 단순성을 우선시하는 소규모에서 중규모 앱"
       }
+    },
+    "visualizer": {
+      "bears": "Bears: {{count}}",
+      "addBear": "Bear 추가",
+      "count": "Count: {{count}}",
+      "increment": "증가",
+      "simpleHooks": "간단한 Hooks",
+      "atomsSelectors": "Atoms & Selectors"
     }
   },
   "advanced": {
@@ -407,6 +444,11 @@
         "title": "누락된 Provider 오류",
         "description": "context를 소비할 때 항상 확인을 추가하여 유용한 오류를 제공하세요:"
       }
+    },
+    "visualizer": {
+      "pathTitle": "Context 값 전달 경로",
+      "drillingDesc": "<strong>Prop Drilling:</strong> 데이터를 사용하지 않는 중간 컴포넌트(Layout)라도 모든 단계를 거쳐 데이터를 전달해야 합니다.",
+      "contextDesc": "<strong>Context API:</strong> 데이터가 Provider(App)에서 Consumer(UserProfile)로 중간 컴포넌트를 건너뛰고 바로 \"순간이동\"합니다."
     }
   }
 }

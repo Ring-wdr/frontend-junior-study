@@ -6,12 +6,6 @@ import { CodeBlock } from '../../../components/ui/code-block';
 
 type DeployMode = 'build-time' | 'federation' | 'single-spa';
 
-const hostByMode: Record<DeployMode, string> = {
-  'build-time': 'npm package integration',
-  federation: 'module federation host',
-  'single-spa': 'single-spa root config',
-};
-
 export const ArchitectureGenerator = () => {
   const { t } = useTranslation('week20');
 
@@ -99,7 +93,9 @@ ${shared.join('\n')}
             onChange={(e) => setDeployMode(e.target.value as DeployMode)}
             className="mt-2 w-full rounded-md border border-gray-300 px-2 py-1.5 text-sm bg-white"
           >
-            <option value="build-time">Build-time</option>
+            <option value="build-time">
+              {t('playbook.generator.modes.buildTime')}
+            </option>
             <option value="federation">Module Federation</option>
             <option value="single-spa">single-spa</option>
           </select>
@@ -132,7 +128,7 @@ ${shared.join('\n')}
         <p className="text-xs text-indigo-800">
           {t('playbook.generator.outputSummary', {
             teamCount,
-            host: hostByMode[deployMode],
+            host: t(`playbook.generator.hosts.${deployMode}`),
           })}
         </p>
 

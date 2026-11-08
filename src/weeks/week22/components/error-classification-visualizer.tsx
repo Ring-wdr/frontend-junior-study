@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
 
 type Severity = 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
@@ -18,29 +19,29 @@ type FlowPhase = 'idle' | 'incoming' | 'analyzing' | 'classified' | 'action';
 type ErrorCase = {
   message: string;
   severity: Severity;
-  action: string;
+  action: 'logOnly' | 'fallbackUi' | 'alertErrorPage' | 'rollback';
 };
 
 const ERROR_CASES: ErrorCase[] = [
   {
     message: 'Network timeout on analytics endpoint',
     severity: 'LOW',
-    action: 'Log only',
+    action: 'logOnly',
   },
   {
     message: 'Failed to load product thumbnail',
     severity: 'MEDIUM',
-    action: 'Show fallback UI',
+    action: 'fallbackUi',
   },
   {
     message: 'Auth token expired during checkout',
     severity: 'HIGH',
-    action: 'Alert + error page',
+    action: 'alertErrorPage',
   },
   {
     message: 'Uncaught exception in root render',
     severity: 'CRITICAL',
-    action: 'Emergency rollback',
+    action: 'rollback',
   },
 ];
 
@@ -59,14 +60,14 @@ const SEVERITY_BTN_COLORS: Record<Severity, string> = {
 };
 
 const PIPELINE_NODES: {
-  label: string;
+  id: 'errorIn' | 'analysis' | 'severity' | 'action';
   icon: typeof AlertCircle;
   phase: FlowPhase;
 }[] = [
-  { label: 'Error In', icon: AlertCircle, phase: 'incoming' },
-  { label: 'Analysis', icon: Search, phase: 'analyzing' },
-  { label: 'Severity', icon: Shield, phase: 'classified' },
-  { label: 'Action', icon: Zap, phase: 'action' },
+  { id: 'errorIn', icon: AlertCircle, phase: 'incoming' },
+  { id: 'analysis', icon: Search, phase: 'analyzing' },
+  { id: 'severity', icon: Shield, phase: 'classified' },
+  { id: 'action', icon: Zap, phase: 'action' },
 ];
 
 const PHASE_ORDER: FlowPhase[] = [
@@ -77,13 +78,14 @@ const PHASE_ORDER: FlowPhase[] = [
 ];
 
 export const ErrorClassificationVisualizer = () => {
+  const { t } = useTranslation('week22');
   const [selectedError, setSelectedError] = useState<number | null>(null);
   const [phase, setPhase] = useState<FlowPhase>('idle');
   const [isAnimating, setIsAnimating] = useState(false);
   const timeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   const clearTimeouts = useCallback(() => {
-    for (const t of timeoutsRef.current) clearTimeout(t);
+    for (const id of timeoutsRef.current) clearTimeout(id);
     timeoutsRef.current = [];
   }, []);
 
@@ -105,13 +107,13 @@ export const ErrorClassificationVisualizer = () => {
       ];
 
       for (let i = 0; i < phases.length; i++) {
-        const t = setTimeout(() => {
+        const timeout = setTimeout(() => {
           setPhase(phases[i]);
           if (i === phases.length - 1) {
             setIsAnimating(false);
           }
         }, delays[i]);
-        timeoutsRef.current.push(t);
+        timeoutsRef.current.push(timeout);
       }
     },
     [clearTimeouts],
@@ -151,7 +153,7 @@ export const ErrorClassificationVisualizer = () => {
           className="flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-200 transition-all"
         >
           <RotateCcw className="w-3 h-3" />
-          Reset
+          {t('bestPractices.errorClassification.reset')}
         </button>
       </div>
 
@@ -161,7 +163,7 @@ export const ErrorClassificationVisualizer = () => {
           const isCurrent = phase === node.phase;
           const Icon = node.icon;
           return (
-            <div key={node.label} className="flex items-center min-w-0">
+            <div key={node.id} className="flex items-center min-w-0">
               <div className="flex flex-col items-center">
                 <motion.div
                   animate={{
@@ -184,7 +186,7 @@ export const ErrorClassificationVisualizer = () => {
                     isReached ? 'text-blue-600' : 'text-gray-400',
                   )}
                 >
-                  {node.label}
+                  {t(`bestPractices.errorClassification.nodes.${node.id}`)}
                 </span>
               </div>
               {i < PIPELINE_NODES.length - 1 && (
@@ -214,7 +216,7 @@ export const ErrorClassificationVisualizer = () => {
               {phase === 'incoming' && (
                 <div className="text-center">
                   <span className="text-xs font-semibold text-red-500 uppercase tracking-wide">
-                    Error Received
+                    {t('bestPractices.errorClassification.received')}
                   </span>
                   <p className="text-xs sm:text-sm text-gray-800 mt-1 font-mono break-words">
                     {currentError.message}
@@ -224,7 +226,7 @@ export const ErrorClassificationVisualizer = () => {
               {phase === 'analyzing' && (
                 <div className="text-center">
                   <span className="text-xs font-semibold text-blue-500 uppercase tracking-wide">
-                    Analyzing Error...
+                    {t('bestPractices.errorClassification.analyzing')}
                   </span>
                   <div className="flex justify-center gap-1 mt-2">
                     {[0, 1, 2].map((i) => (
@@ -245,7 +247,7 @@ export const ErrorClassificationVisualizer = () => {
               {phase === 'classified' && (
                 <div className="text-center">
                   <span className="text-xs font-semibold text-purple-500 uppercase tracking-wide">
-                    Classified
+                    {t('bestPractices.errorClassification.classified')}
                   </span>
                   <motion.div
                     initial={{ scale: 0.9 }}
@@ -263,17 +265,21 @@ export const ErrorClassificationVisualizer = () => {
               {phase === 'action' && (
                 <div className="text-center">
                   <span className="text-xs font-semibold text-green-500 uppercase tracking-wide">
-                    Action Taken
+                    {t('bestPractices.errorClassification.actionTaken')}
                   </span>
                   <motion.p
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     className="text-sm font-semibold text-gray-800 mt-1"
                   >
-                    {currentError.action}
+                    {t(
+                      `bestPractices.errorClassification.actions.${currentError.action}`,
+                    )}
                   </motion.p>
                   <p className="text-xs text-gray-500 mt-1">
-                    Error: {currentError.message}
+                    {t('bestPractices.errorClassification.errorMessage', {
+                      message: currentError.message,
+                    })}
                   </p>
                 </div>
               )}

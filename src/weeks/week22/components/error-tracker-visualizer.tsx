@@ -1,8 +1,9 @@
 'use client';
 
+import { Bug, Code, FileWarning, Trash2, Wifi } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
-import { Bug, Code, FileWarning, Trash2, Wifi } from 'lucide-react';
+import { useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
 
 type ErrorEntry = {
@@ -57,6 +58,7 @@ const ERROR_TEMPLATES = [
 ];
 
 export const ErrorTrackerVisualizer = () => {
+  const { t } = useTranslation('week22');
   const [errors, setErrors] = useState<ErrorEntry[]>([]);
   const [nextId, setNextId] = useState(1);
 
@@ -114,32 +116,32 @@ export const ErrorTrackerVisualizer = () => {
           className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-200 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
         >
           <Trash2 className="w-3.5 h-3.5" />
-          Clear
+          {t('sentry.errorTracker.clear')}
         </button>
       </div>
 
       <div className="rounded-xl bg-gray-900 p-3 sm:p-4 min-h-[180px]">
         <div className="flex items-center justify-between mb-3">
           <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
-            Error Dashboard
+            {t('sentry.errorTracker.dashboard')}
           </span>
           {totalErrors > 0 && (
             <span className="text-xs font-mono text-gray-500">
-              {totalErrors} total events
+              {t('sentry.errorTracker.totalEvents', { count: totalErrors })}
             </span>
           )}
         </div>
 
         {errors.length === 0 ? (
           <div className="flex items-center justify-center h-[120px] text-gray-600 text-sm">
-            Trigger errors to see them grouped here
+            {t('sentry.errorTracker.empty')}
           </div>
         ) : (
           <div className="space-y-2">
             <AnimatePresence initial={false}>
               {errors.map((error) => {
                 const template = ERROR_TEMPLATES.find(
-                  (t) => t.type === error.type,
+                  (item) => item.type === error.type,
                 );
                 return (
                   <motion.div
@@ -189,10 +191,12 @@ export const ErrorTrackerVisualizer = () => {
       {errors.length > 0 && (
         <div className="space-y-2">
           <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-            Error Distribution
+            {t('sentry.errorTracker.distribution')}
           </span>
           {errors.map((error) => {
-            const template = ERROR_TEMPLATES.find((t) => t.type === error.type);
+            const template = ERROR_TEMPLATES.find(
+              (item) => item.type === error.type,
+            );
             const pct = (error.count / maxCount) * 100;
             return (
               <div key={error.type} className="flex items-center gap-3">

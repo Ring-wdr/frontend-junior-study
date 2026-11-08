@@ -221,7 +221,7 @@
     "title": "고급 기법",
     "description": "포스트 프로세싱, 셰이더, 물리 엔진, VR/AR",
     "techniques": [
-      { "name": "Post Processing", "desc": "후처리 효과" },
+      { "name": "포스트 프로세싱", "desc": "후처리 효과" },
       { "name": "Shaders", "desc": "커스텀 셰이더" },
       { "name": "Physics", "desc": "물리 엔진" },
       { "name": "XR", "desc": "VR/AR 지원" }

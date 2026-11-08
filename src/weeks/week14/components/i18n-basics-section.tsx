@@ -122,7 +122,7 @@ export const I18nBasicsSection = () => {
                     max="10"
                     value={itemCount}
                     onChange={(e) => setItemCount(Number(e.target.value))}
-                    aria-label="count"
+                    aria-label={t('i18nBasics.liveDemo.countLabel')}
                     className="flex-1 min-w-0"
                   />
                   <span className="text-sm font-medium min-w-[88px] text-right">

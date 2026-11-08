@@ -3,10 +3,20 @@
 import { CheckCircle2, Play, RefreshCw, XCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
 
 type PromiseStatus = 'idle' | 'pending' | 'resolved' | 'rejected';
 type CombinatorType = 'all' | 'allSettled' | 'race' | 'any';
+type ResultMessage =
+  | 'ready'
+  | 'oneFailed'
+  | 'allSucceeded'
+  | 'allSettled'
+  | 'raceSettled'
+  | 'oneSucceeded'
+  | 'allFailed'
+  | 'waiting';
 
 interface PromiseItem {
   id: number;
@@ -17,25 +27,25 @@ interface PromiseItem {
 function evaluateCombinator(
   currentPromises: PromiseItem[],
   type: CombinatorType,
-): { status: PromiseStatus; message: string } {
+): { status: PromiseStatus; message: ResultMessage } {
   const statuses = currentPromises.map((p) => p.status);
 
   if (statuses.every((s) => s === 'idle')) {
-    return { status: 'idle', message: 'Ready to start' };
+    return { status: 'idle', message: 'ready' };
   }
 
   switch (type) {
     case 'all':
       if (statuses.some((s) => s === 'rejected')) {
-        return { status: 'rejected', message: 'Rejected (One failed)' };
+        return { status: 'rejected', message: 'oneFailed' };
       }
       if (statuses.every((s) => s === 'resolved')) {
-        return { status: 'resolved', message: 'Resolved (All succeeded)' };
+        return { status: 'resolved', message: 'allSucceeded' };
       }
       break;
     case 'allSettled':
       if (statuses.every((s) => s === 'resolved' || s === 'rejected')) {
-        return { status: 'resolved', message: 'Resolved (All settled)' };
+        return { status: 'resolved', message: 'allSettled' };
       }
       break;
     case 'race': {
@@ -45,25 +55,26 @@ function evaluateCombinator(
       if (firstSettled) {
         return {
           status: firstSettled,
-          message: `Settled as ${firstSettled} (First one wins)`,
+          message: 'raceSettled',
         };
       }
       break;
     }
     case 'any':
       if (statuses.some((s) => s === 'resolved')) {
-        return { status: 'resolved', message: 'Resolved (One succeeded)' };
+        return { status: 'resolved', message: 'oneSucceeded' };
       }
       if (statuses.every((s) => s === 'rejected')) {
-        return { status: 'rejected', message: 'Rejected (All failed)' };
+        return { status: 'rejected', message: 'allFailed' };
       }
       break;
   }
 
-  return { status: 'pending', message: 'Waiting...' };
+  return { status: 'pending', message: 'waiting' };
 }
 
 export const PromiseVisualizer = () => {
+  const { t } = useTranslation('week1');
   const [combinator, setCombinator] = useState<CombinatorType>('all');
   const [promises, setPromises] = useState<PromiseItem[]>([
     { id: 1, status: 'idle', duration: 0 },
@@ -118,7 +129,9 @@ export const PromiseVisualizer = () => {
           globalStatus === 'idle' && 'border-gray-100 bg-gray-50',
         )}
       >
-        <span className="font-semibold text-gray-700">Result:</span>
+        <span className="font-semibold text-gray-700">
+          {t('async.promiseVisualizer.result')}
+        </span>
         <div className="flex items-center gap-2">
           {globalStatus === 'resolved' && (
             <CheckCircle2 className="w-5 h-5 text-green-600" />
@@ -138,7 +151,9 @@ export const PromiseVisualizer = () => {
               globalStatus === 'idle' && 'text-gray-500',
             )}
           >
-            {globalResult || 'Idle'}
+            {t(`async.promiseVisualizer.results.${globalResult}`, {
+              status: globalStatus,
+            })}
           </span>
         </div>
       </div>
@@ -171,10 +186,7 @@ export const PromiseVisualizer = () => {
                 P{p.id}
               </div>
               <div className="text-sm text-gray-600 font-medium">
-                {p.status === 'idle' && 'Idle'}
-                {p.status === 'pending' && 'Pending...'}
-                {p.status === 'resolved' && 'Resolved'}
-                {p.status === 'rejected' && 'Rejected'}
+                {t(`async.promiseVisualizer.status.${p.status}`)}
               </div>
             </div>
 
@@ -184,7 +196,7 @@ export const PromiseVisualizer = () => {
                   type="button"
                   onClick={() => updatePromise(p.id, 'pending')}
                   className="p-2 hover:bg-gray-100 rounded-lg text-gray-500 hover:text-blue-600 transition-colors"
-                  title="Start"
+                  title={t('async.promiseVisualizer.start')}
                 >
                   <Play className="w-4 h-4" />
                 </button>
@@ -196,14 +208,14 @@ export const PromiseVisualizer = () => {
                     onClick={() => updatePromise(p.id, 'resolved')}
                     className="px-3 py-1 bg-green-50 hover:bg-green-100 text-green-700 text-xs rounded-md font-medium transition-colors border border-green-200"
                   >
-                    Resolve
+                    {t('async.promiseVisualizer.resolve')}
                   </button>
                   <button
                     type="button"
                     onClick={() => updatePromise(p.id, 'rejected')}
                     className="px-3 py-1 bg-red-50 hover:bg-red-100 text-red-700 text-xs rounded-md font-medium transition-colors border border-red-200"
                   >
-                    Reject
+                    {t('async.promiseVisualizer.reject')}
                   </button>
                 </>
               )}
@@ -212,7 +224,7 @@ export const PromiseVisualizer = () => {
                   type="button"
                   onClick={() => updatePromise(p.id, 'idle')}
                   className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-gray-600 transition-colors"
-                  title="Reset"
+                  title={t('async.promiseVisualizer.reset')}
                 >
                   <RefreshCw className="w-4 h-4" />
                 </button>
@@ -239,7 +251,7 @@ export const PromiseVisualizer = () => {
           className="flex items-center gap-2 text-xs text-gray-400 hover:text-gray-600 transition-colors"
         >
           <RefreshCw className="w-3 h-3" />
-          Reset All
+          {t('async.promiseVisualizer.resetAll')}
         </button>
       </div>
     </div>

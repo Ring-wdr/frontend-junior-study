@@ -2,34 +2,44 @@
 
 import { motion } from 'motion/react';
 import { memo, type UIEvent, useState } from 'react';
+import { Trans, useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
 
-const NonMemoizedItem = ({ count }: { count: number }) => (
-  <motion.div
-    key={count}
-    initial={{ backgroundColor: 'rgba(239, 68, 68, 0.2)' }}
-    animate={{ backgroundColor: 'rgba(255, 255, 255, 1)' }}
-    transition={{ duration: 0.6, ease: 'easeOut' }}
-    className="p-3 border rounded-lg flex justify-between gap-2 text-sm"
-  >
-    <span>I re-render every time parent updates!</span>
-    <span className="text-red-500 font-mono">Rendered</span>
-  </motion.div>
-);
+const NonMemoizedItem = ({ count }: { count: number }) => {
+  const { t } = useTranslation('week3');
+  return (
+    <motion.div
+      key={count}
+      initial={{ backgroundColor: 'rgba(239, 68, 68, 0.2)' }}
+      animate={{ backgroundColor: 'rgba(255, 255, 255, 1)' }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      className="p-3 border rounded-lg flex justify-between gap-2 text-sm"
+    >
+      <span>{t('performance.visualizer.nonMemoized')}</span>
+      <span className="text-red-500 font-mono">
+        {t('performance.visualizer.rendered')}
+      </span>
+    </motion.div>
+  );
+};
 
-const MemoizedItem = memo(({ label }: { label: string }) => (
-  <motion.div
-    initial={{ backgroundColor: 'rgba(34, 197, 94, 0.2)' }}
-    animate={{ backgroundColor: 'rgba(255, 255, 255, 1)' }}
-    transition={{ duration: 0.6, ease: 'easeOut' }}
-    className="p-3 border rounded-lg flex justify-between gap-2 text-sm"
-  >
-    <span>I only render when MY props change.</span>
-    <span className="text-green-600 font-mono">{label}</span>
-  </motion.div>
-));
+const MemoizedItem = memo(({ label }: { label: string }) => {
+  const { t } = useTranslation('week3');
+  return (
+    <motion.div
+      initial={{ backgroundColor: 'rgba(34, 197, 94, 0.2)' }}
+      animate={{ backgroundColor: 'rgba(255, 255, 255, 1)' }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      className="p-3 border rounded-lg flex justify-between gap-2 text-sm"
+    >
+      <span>{t('performance.visualizer.memoized')}</span>
+      <span className="text-green-600 font-mono">{label}</span>
+    </motion.div>
+  );
+});
 
 const MemoizationDemo = () => {
+  const { t } = useTranslation('week3');
   const [count, setCount] = useState(0);
 
   return (
@@ -40,42 +50,42 @@ const MemoizationDemo = () => {
           onClick={() => setCount((c) => c + 1)}
           className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
         >
-          Trigger Parent Update (Count: {count})
+          {t('performance.visualizer.triggerUpdate', { count })}
         </button>
         <button
           type="button"
           onClick={() => setCount(0)}
           className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition"
         >
-          Reset
+          {t('performance.visualizer.reset')}
         </button>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
           <h4 className="font-semibold text-red-600 text-sm">
-            Without Memoization
+            {t('performance.visualizer.withoutMemo')}
           </h4>
           <NonMemoizedItem count={count} />
           <NonMemoizedItem count={count} />
         </div>
         <div className="space-y-2">
           <h4 className="font-semibold text-green-600 text-sm">
-            With React.memo
+            {t('performance.visualizer.withMemo')}
           </h4>
-          <MemoizedItem label="Stable" />
-          <MemoizedItem label="Stable" />
+          <MemoizedItem label={t('performance.visualizer.stable')} />
+          <MemoizedItem label={t('performance.visualizer.stable')} />
         </div>
       </div>
       <p className="text-xs text-gray-400">
-        *Colored backgrounds flash on render. Notice red side flashes on every
-        button click.
+        {t('performance.visualizer.flashNote')}
       </p>
     </div>
   );
 };
 
 const VirtualizationDemo = () => {
+  const { t } = useTranslation('week3');
   const [isVirtual, setIsVirtual] = useState(true);
   const [scrollTop, setScrollTop] = useState(0);
 
@@ -83,7 +93,9 @@ const VirtualizationDemo = () => {
   const itemHeight = 40;
   const windowHeight = 200;
   const totalItems = 1000;
-  const items = Array.from({ length: totalItems }, (_, i) => `Item ${i + 1}`);
+  const items = Array.from({ length: totalItems }, (_, i) =>
+    t('performance.visualizer.item', { n: i + 1 }),
+  );
 
   // Virtualization Logic
   const startIndex = Math.floor(scrollTop / itemHeight);
@@ -127,12 +139,16 @@ const VirtualizationDemo = () => {
               className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
             />
             <span className="text-sm font-medium text-gray-900">
-              Enable Virtualization
+              {t('performance.visualizer.enableVirtualization')}
             </span>
           </label>
         </div>
         <div className="text-xs font-mono bg-gray-200 px-2 py-1 rounded">
-          DOM Nodes: <strong>{visibleItems.length}</strong> / {totalItems}
+          <Trans
+            t={t}
+            i18nKey="performance.visualizer.domNodes"
+            values={{ visible: visibleItems.length, total: totalItems }}
+          />
         </div>
       </div>
 
@@ -163,27 +179,30 @@ const VirtualizationDemo = () => {
 
       <p className="text-xs text-gray-500">
         {isVirtual
-          ? 'Currently rendering only visible items + buffer. Fast!'
-          : 'Rendering ALL 1000 items. Check the DOM node count!'}
+          ? t('performance.visualizer.virtualOn')
+          : t('performance.visualizer.virtualOff')}
       </p>
     </div>
   );
 };
 
 export const PerformanceVisualizer = () => {
+  const { t } = useTranslation('week3');
   return (
     <div className="space-y-6">
       <div className="space-y-2">
         <h3 className="text-lg font-bold text-gray-900">Memoization</h3>
         <p className="text-sm text-gray-600">
-          Preventing unnecessary re-renders.
+          {t('performance.visualizer.memoDescription')}
         </p>
         <MemoizationDemo />
       </div>
 
       <div className="space-y-2">
         <h3 className="text-lg font-bold text-gray-900">Virtualization</h3>
-        <p className="text-sm text-gray-600">Rendering only what is visible.</p>
+        <p className="text-sm text-gray-600">
+          {t('performance.visualizer.virtualDescription')}
+        </p>
         <VirtualizationDemo />
       </div>
     </div>

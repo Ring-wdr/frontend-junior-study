@@ -289,7 +289,8 @@
       "input1": "Input field 1",
       "input2": "Input field 2",
       "cancel": "Cancel",
-      "confirm": "Confirm"
+      "confirm": "Confirm",
+      "closeModal": "Close modal"
     },
     "indicatorTracker": {
       "title": "Focus Indicator Tracker",
@@ -368,7 +369,8 @@
         "en": "English",
         "ja": "日本語"
       },
-      "currentLocale": "Current locale:"
+      "currentLocale": "Current locale:",
+      "countLabel": "count"
     },
     "icuFormat": {
       "title": "ICU Message Format",

@@ -1,8 +1,9 @@
 'use client';
 
+import { RotateCcw } from 'lucide-react';
 import { motion, useInView } from 'motion/react';
 import { useRef, useState } from 'react';
-import { RotateCcw } from 'lucide-react';
+import { useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
 
 type Rating = 'good' | 'needs-improvement' | 'poor';
@@ -16,34 +17,34 @@ const VITALS_CONFIG = {
 
 const SCENARIOS = [
   {
-    label: 'Good Performance',
+    id: 'good',
     lcp: 1.8,
     inp: 120,
     cls: 0.05,
     color: 'bg-green-100 text-green-700 border-green-200',
   },
   {
-    label: 'Slow Loading',
+    id: 'slowLoading',
     lcp: 4.5,
     inp: 150,
     cls: 0.08,
     color: 'bg-red-100 text-red-700 border-red-200',
   },
   {
-    label: 'Layout Shifts',
+    id: 'layoutShifts',
     lcp: 2.0,
     inp: 130,
     cls: 0.35,
     color: 'bg-orange-100 text-orange-700 border-orange-200',
   },
   {
-    label: 'Slow Interactions',
+    id: 'slowInteractions',
     lcp: 2.2,
     inp: 450,
     cls: 0.06,
     color: 'bg-yellow-100 text-yellow-700 border-yellow-200',
   },
-];
+] as const;
 
 const getRating = (name: VitalName, value: number): Rating => {
   const config = VITALS_CONFIG[name];
@@ -52,24 +53,18 @@ const getRating = (name: VitalName, value: number): Rating => {
   return 'poor';
 };
 
-const RATING_COLORS: Record<
-  Rating,
-  { stroke: string; badge: string; text: string }
-> = {
+const RATING_COLORS: Record<Rating, { stroke: string; badge: string }> = {
   good: {
     stroke: '#22c55e',
     badge: 'bg-green-100 text-green-700',
-    text: 'Good',
   },
   'needs-improvement': {
     stroke: '#f59e0b',
     badge: 'bg-yellow-100 text-yellow-700',
-    text: 'Needs Improvement',
   },
   poor: {
     stroke: '#ef4444',
     badge: 'bg-red-100 text-red-700',
-    text: 'Poor',
   },
 };
 
@@ -82,6 +77,7 @@ const GaugeMeter = ({
   value: number;
   isActive: boolean;
 }) => {
+  const { t } = useTranslation('week22');
   const config = VITALS_CONFIG[name];
   const rating = getRating(name, value);
   const ratingStyle = RATING_COLORS[rating];
@@ -137,13 +133,14 @@ const GaugeMeter = ({
           ratingStyle.badge,
         )}
       >
-        {ratingStyle.text}
+        {t(`rum.webVitals.ratings.${rating}`)}
       </motion.span>
     </div>
   );
 };
 
 export const WebVitalsVisualizer = () => {
+  const { t } = useTranslation('week22');
   const gaugesRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(gaugesRef, { once: true, amount: 0.3 });
   const [lcp, setLcp] = useState(1.8);
@@ -161,7 +158,7 @@ export const WebVitalsVisualizer = () => {
       <div className="flex flex-wrap gap-2 justify-center">
         {SCENARIOS.map((s) => (
           <button
-            key={s.label}
+            key={s.id}
             type="button"
             onClick={() => applyScenario(s)}
             className={cn(
@@ -169,7 +166,7 @@ export const WebVitalsVisualizer = () => {
               s.color,
             )}
           >
-            {s.label}
+            {t(`rum.webVitals.scenarios.${s.id}`)}
           </button>
         ))}
         <button
@@ -178,7 +175,7 @@ export const WebVitalsVisualizer = () => {
           className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-200 transition-all"
         >
           <RotateCcw className="w-3 h-3" />
-          Reset
+          {t('rum.webVitals.reset')}
         </button>
       </div>
 
@@ -195,7 +192,7 @@ export const WebVitalsVisualizer = () => {
             className="rounded-lg bg-gray-50 border border-gray-100 p-2"
           >
             <span className="text-[10px] font-semibold text-gray-500 block">
-              {name} Thresholds
+              {t('rum.webVitals.thresholds', { name })}
             </span>
             <div className="flex flex-wrap justify-center gap-x-2 mt-1">
               <span className="text-[10px] text-green-600">

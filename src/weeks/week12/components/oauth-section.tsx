@@ -11,11 +11,11 @@ import { CodeBlock } from '../../../components/ui/code-block';
 
 type ActorId = 'client' | 'browser' | 'auth' | 'api';
 
-const actors: { id: ActorId; label: string; icon: string }[] = [
-  { id: 'client', label: 'Client App', icon: '💻' },
-  { id: 'browser', label: 'Browser', icon: '🌍' },
-  { id: 'auth', label: 'Auth Server', icon: '🛡️' },
-  { id: 'api', label: 'API', icon: '📦' },
+const actors: { id: ActorId; icon: string }[] = [
+  { id: 'client', icon: '💻' },
+  { id: 'browser', icon: '🌍' },
+  { id: 'auth', icon: '🛡️' },
+  { id: 'api', icon: '📦' },
 ];
 
 export const OAuthSection = () => {
@@ -64,43 +64,45 @@ export const OAuthSection = () => {
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Key Roles in OAuth 2.0" icon iconColor="purple">
+        <SubSection title={t('oauth.roles.title')} icon iconColor="purple">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="bg-blue-50 p-3 rounded border border-blue-200">
               <p className="text-sm font-semibold text-blue-900">
-                Resource Owner
+                {t('oauth.roles.resourceOwner')}
               </p>
               <p className="text-xs text-blue-700 mt-1">
-                The user who owns the data
-              </p>
-            </div>
-            <div className="bg-blue-50 p-3 rounded border border-blue-200">
-              <p className="text-sm font-semibold text-blue-900">Client</p>
-              <p className="text-xs text-blue-700 mt-1">
-                Your application requesting access
+                {t('oauth.roles.resourceOwnerDesc')}
               </p>
             </div>
             <div className="bg-blue-50 p-3 rounded border border-blue-200">
               <p className="text-sm font-semibold text-blue-900">
-                Authorization Server
+                {t('oauth.roles.client')}
               </p>
               <p className="text-xs text-blue-700 mt-1">
-                Issues tokens (e.g., Google OAuth)
+                {t('oauth.roles.clientDesc')}
               </p>
             </div>
             <div className="bg-blue-50 p-3 rounded border border-blue-200">
               <p className="text-sm font-semibold text-blue-900">
-                Resource Server
+                {t('oauth.roles.authServer')}
               </p>
               <p className="text-xs text-blue-700 mt-1">
-                Hosts protected resources (API)
+                {t('oauth.roles.authServerDesc')}
+              </p>
+            </div>
+            <div className="bg-blue-50 p-3 rounded border border-blue-200">
+              <p className="text-sm font-semibold text-blue-900">
+                {t('oauth.roles.resourceServer')}
+              </p>
+              <p className="text-xs text-blue-700 mt-1">
+                {t('oauth.roles.resourceServerDesc')}
               </p>
             </div>
           </div>
         </SubSection>
 
-        <SubSection title="Authorization Code Flow" icon iconColor="green">
-          <DemoBox label="OAuth 2.0 Flow Interactive Map">
+        <SubSection title={t('oauth.flow.title')} icon iconColor="green">
+          <DemoBox label={t('oauth.flow.demoLabel')}>
             <div className="space-y-6">
               {/* Visual Map */}
               <div className="relative h-48 bg-gray-50 rounded-xl border border-gray-200 p-4 flex items-center justify-between px-3 sm:px-8 md:px-12 overflow-hidden">
@@ -131,7 +133,7 @@ export const OAuthSection = () => {
                       {actor.icon}
                     </div>
                     <span className="text-[10px] sm:text-xs font-bold text-gray-600 text-center">
-                      {actor.label}
+                      {actorLabels[actor.id]}
                     </span>
                   </div>
                 ))}
@@ -141,7 +143,10 @@ export const OAuthSection = () => {
               <div className="bg-white p-4 sm:p-6 rounded-xl border border-green-100 shadow-sm text-center relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-green-500" />
                 <h4 className="text-lg font-bold text-gray-800 mb-2">
-                  Step {current.step}: {actorLabels[current.actorId]}
+                  {t('oauth.flow.stepHeading', {
+                    step: current.step,
+                    actor: actorLabels[current.actorId],
+                  })}
                 </h4>
                 <motion.p
                   initial={{ opacity: 0, y: 8 }}
@@ -170,7 +175,7 @@ export const OAuthSection = () => {
                   disabled={flowStep === 0}
                   className="px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-gray-600 hover:text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
                 >
-                  ← Previous Step
+                  {t('oauth.flow.prevButton')}
                 </button>
                 <div className="text-xs font-mono text-gray-400">
                   {flowStep + 1} / {flowSteps.length}
@@ -183,14 +188,14 @@ export const OAuthSection = () => {
                   disabled={flowStep === flowSteps.length - 1}
                   className="px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
                 >
-                  Next Step →
+                  {t('oauth.flow.nextButton')}
                 </button>
               </div>
             </div>
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Authorization URL Example" icon iconColor="orange">
+        <SubSection title={t('oauth.authUrl.title')} icon iconColor="orange">
           <CodeBlock
             code={`// OAuth 2.0 Authorization Request
 const authUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth');
@@ -209,7 +214,7 @@ window.location.href = authUrl.toString();
           />
         </SubSection>
 
-        <SubSection title="Token Exchange" icon iconColor="red">
+        <SubSection title={t('oauth.tokenExchange.title')} icon iconColor="red">
           <CodeBlock
             code={`// Exchange authorization code for tokens (server-side)
 const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
@@ -235,11 +240,13 @@ const tokens = await tokenResponse.json();
             className="text-xs"
           />
 
-          <InfoBox variant="orange" title="Security Note" className="mt-4">
+          <InfoBox
+            variant="orange"
+            title={t('oauth.tokenExchange.securityNote')}
+            className="mt-4"
+          >
             <p className="text-sm">
-              The <code>client_secret</code> must never be exposed to the
-              frontend. Token exchange should always happen on a secure backend
-              server.
+              <Trans t={t} i18nKey="oauth.tokenExchange.securityDescription" />
             </p>
           </InfoBox>
         </SubSection>

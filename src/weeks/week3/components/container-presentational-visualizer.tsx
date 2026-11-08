@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useInView } from 'motion/react';
 import { Database, LayoutTemplate, Loader2 } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { Trans, useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 // Types for our "Data"
@@ -23,6 +24,7 @@ const DogImageCard = ({
   data: DogData | null;
   onRefresh: () => void;
 }) => {
+  const { t } = useTranslation('week3');
   return (
     <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center gap-4 w-full h-full min-h-[200px] justify-center relative overflow-hidden">
       {/* Visual indicator that this is UI layer */}
@@ -42,7 +44,9 @@ const DogImageCard = ({
             className="flex flex-col items-center gap-2 text-gray-400"
           >
             <Loader2 className="w-8 h-8 animate-spin" />
-            <span className="text-sm">Rendering UI skeleton...</span>
+            <span className="text-sm">
+              {t('container.visualizer.renderingSkeleton')}
+            </span>
           </motion.div>
         ) : data ? (
           <motion.div
@@ -66,7 +70,7 @@ const DogImageCard = ({
               onClick={onRefresh}
               className="mt-3 text-xs bg-gray-900 text-white px-3 py-1.5 rounded-full hover:scale-105 transition-transform"
             >
-              Request New Data
+              {t('container.visualizer.requestNewData')}
             </button>
           </motion.div>
         ) : null}
@@ -78,6 +82,7 @@ const DogImageCard = ({
 // 2. Container Component (Logic/Data)
 // Knows NOTHING about how to look. Just manages state.
 export const ContainerPresentationalVisualizer = () => {
+  const { t } = useTranslation('week3');
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<DogData | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -120,7 +125,7 @@ export const ContainerPresentationalVisualizer = () => {
             Container
           </div>
           <div className="text-sm font-semibold text-blue-900 mb-2">
-            State Manager
+            {t('container.visualizer.stateManager')}
           </div>
           <div className="flex-1 font-mono text-xs bg-white/50 p-3 rounded-lg border border-blue-100 space-y-2 break-words">
             <div>
@@ -184,10 +189,7 @@ export const ContainerPresentationalVisualizer = () => {
 
       <div className="text-sm text-gray-600 bg-gray-50 p-4 rounded-lg border border-gray-100">
         <p>
-          The <strong>Container</strong> (left) handles <em>how things work</em>{' '}
-          (fetching data, state), while the <strong>Presentational</strong>{' '}
-          (right) handles <em>how things look</em> (rendering HTML/CSS). This
-          separation makes components more reusable and easier to test.
+          <Trans t={t} i18nKey="container.visualizer.summary" />
         </p>
       </div>
     </div>

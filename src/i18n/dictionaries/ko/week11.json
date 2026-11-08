@@ -41,12 +41,12 @@
       ],
       "goodMode": "Good (0.8s)",
       "badMode": "Bad (3.5s)",
-      "loadingText": "Loading Large Resource...",
-      "heroImage": "Hero Image",
+      "loadingText": "대용량 리소스 로딩 중...",
+      "heroImage": "히어로 이미지",
       "time": "Time:",
-      "needsImprovementLabel": "Needs Improvement",
+      "needsImprovementLabel": "개선 필요",
       "goodLabel": "Good",
-      "reloadPage": "Reload Page",
+      "reloadPage": "페이지 새로고침",
       "loading": "Loading..."
     },
     "inp": {
@@ -70,14 +70,14 @@
       ],
       "goodMode": "Good (50ms)",
       "badMode": "Bad (600ms)",
-      "clickTest": "Click Response Test",
-      "testButton": "Test the button responsiveness",
+      "clickTest": "클릭 응답 테스트",
+      "testButton": "버튼 반응성을 테스트해 보세요",
       "clickMe": "Click Me!",
       "processing": "Processing...",
       "slow": "Slow (Blocking)",
       "fast": "Fast (Non-blocking)",
-      "simulateHeavy": "Simulates heavy Work by looping on main thread.",
-      "simulateLightweight": "Simulates lightweight event handler."
+      "simulateHeavy": "Main Thread에서 루프를 돌려 무거운 작업을 시뮬레이션합니다.",
+      "simulateLightweight": "가벼운 이벤트 핸들러를 시뮬레이션합니다."
     },
     "cls": {
       "name": "CLS",
@@ -100,13 +100,14 @@
       ],
       "goodMode": "Good (Fixed)",
       "badMode": "Bad (Shift)",
-      "layoutView": "Layout View",
-      "targetContent": "Target Content",
-      "targetContentDesc": "This is the content the user is trying to read."
+      "layoutView": "레이아웃 뷰",
+      "targetContent": "대상 콘텐츠",
+      "targetContentDesc": "사용자가 읽으려는 콘텐츠입니다.",
+      "triggerContentLoad": "콘텐츠 로드 트리거"
     },
     "metrics": {
       "good": "Good",
-      "needsWork": "Needs Work",
+      "needsWork": "개선 필요",
       "poor": "Poor",
       "causes": "주요 원인",
       "solutions": "개선 방법"
@@ -116,28 +117,28 @@
   "browserRendering": {
     "title": "브라우저 렌더링 파이프라인",
     "description": "브라우저가 화면을 그리는 과정을 이해하면, 어떤 코드가 성능을 해치는지 알 수 있습니다.",
-    "simulatorTitle": "Pixel Pipeline Simulator",
-    "simulatorDesc": "Click buttons to see triggered pipeline stages",
+    "simulatorTitle": "픽셀 파이프라인 시뮬레이터",
+    "simulatorDesc": "버튼을 클릭하여 트리거되는 파이프라인 단계를 확인하세요",
     "changeWidthLayout": "Change Width (Layout)",
     "changeColorPaint": "Change Color (Paint)",
     "rotateComposite": "Rotate (Composite)",
     "box": "Box",
     "hoverMessage": "각 단계를 hover하거나 버튼을 클릭하여 파이프라인을 확인하세요",
-    "expensiveFull": "Expensive! Triggers Reflow & Repaint",
-    "moderatePaint": "Moderate. Triggers Repaint",
+    "expensiveFull": "비용이 큼! Reflow와 Repaint를 유발합니다",
+    "moderatePaint": "보통. Repaint를 유발합니다",
     "cheapComposite": "Cheap! Composite Only (Best Performance)",
     "steps": {
       "javascript": {
         "name": "JavaScript",
         "description": "JS 실행 및 DOM 조작",
         "details": "JavaScript가 실행되어 DOM을 변경합니다.",
-        "triggers": "Script execution"
+        "triggers": "스크립트 실행"
       },
       "style": {
         "name": "Style",
         "description": "CSS 계산",
         "details": "변경된 DOM에 어떤 CSS 규칙이 적용되는지 계산합니다.",
-        "triggers": "Script execution"
+        "triggers": "스크립트 실행"
       },
       "layout": {
         "name": "Layout",
@@ -175,18 +176,18 @@
   "devTools": {
     "title": "DevTools Performance 프로파일링",
     "description": "\"추측으로 성능 개선하는 것\"은 금물입니다. 측정 → 문제 확인 → 개선 → 재측정 프로세스를 반드시 익혀야 합니다.",
-    "simulatorTitle": "Main Thread Simulator",
-    "simulatorDesc": "Simulating tasks on the main thread",
+    "simulatorTitle": "Main Thread 시뮬레이터",
+    "simulatorDesc": "Main Thread의 작업을 시뮬레이션합니다",
     "fps": "FPS",
-    "frameRate": "Frame Rate",
+    "frameRate": "프레임 레이트",
     "runShortTask": "Run Short Task (20ms)",
     "runLongTask": "Run Long Task (1s)",
     "timeMs": "Time (ms)",
-    "interactionTest": "Interaction Test",
-    "mainThreadBlocked": "Main Thread Blocked! UI Unresponsive",
+    "interactionTest": "인터랙션 테스트",
+    "mainThreadBlocked": "Main Thread 차단됨! UI가 응답하지 않습니다",
     "uiResponsive": "UI Responsive",
     "clicked": "Clicked:",
-    "blockingWarning": "⚠️ MAIN THREAD BLOCKED",
+    "blockingWarning": "⚠️ MAIN THREAD 차단됨",
     "usageTitle": "Performance 탭 사용법",
     "usageSteps": {
       "step1": "Chrome DevTools 열기 (F12) → Performance 탭 선택",
@@ -230,33 +231,33 @@
   "codeSplitting": {
     "title": "코드 스플리팅 (Code Splitting)",
     "description": "초기 JS 번들을 작게 유지하여 First Load 속도를 개선합니다. 사용자가 실제로 필요할 때 코드를 로드합니다.",
-    "simulatorTitle": "Bundle Loader Simulator",
-    "simulatorDesc": "Compare Initial Load performance",
+    "simulatorTitle": "번들 로더 시뮬레이터",
+    "simulatorDesc": "초기 로드 성능을 비교합니다",
     "monolithicBundle": "Monolithic Bundle (Classic)",
     "codeSplittingModern": "Code Splitting (Modern)",
     "server": "Server",
     "client": "Client",
-    "runningRequest": "Running Request...",
+    "runningRequest": "요청 실행 중...",
     "downloading": "Downloading...",
     "idle": "Idle",
-    "mainApp": "Main App",
-    "coreChunk": "Core chunk",
+    "mainApp": "메인 앱",
+    "coreChunk": "코어 청크",
     "loaded": "✓ Loaded",
     "readyToInteract": "Ready to interact",
-    "loadApp": "Load App",
+    "loadApp": "앱 로드",
     "loading": "로딩 중...",
     "dashboard": "Dashboard",
-    "lazyChunk": "Lazy chunk",
-    "userRequested": "User requested",
-    "bundledWithMain": "Bundled with Main",
-    "waitingForMain": "Waiting for Main...",
-    "loadFeature": "Load Feature",
-    "heavyChart": "Heavy Chart",
+    "lazyChunk": "Lazy 청크",
+    "userRequested": "사용자 요청 시",
+    "bundledWithMain": "메인 번들에 포함됨",
+    "waitingForMain": "메인 번들 대기 중...",
+    "loadFeature": "기능 로드",
+    "heavyChart": "무거운 차트",
     "containsEverything": "Contains Everything (Huge Size!!)",
-    "blockingTime": "Blocking Time:",
-    "totalBundleSize": "Total Bundle Size:",
-    "initialBundle": "Initial Bundle:",
-    "otherChunks": "Other chunks loaded on demand",
+    "blockingTime": "차단 시간:",
+    "totalBundleSize": "전체 번들 크기:",
+    "initialBundle": "초기 번들:",
+    "otherChunks": "나머지 청크는 필요할 때 로드됩니다",
     "whenToUse": {
       "title": "언제 사용해야 할까?",
       "items": [
@@ -280,14 +281,13 @@
   "lazyLoading": {
     "title": "Lazy Loading 전략",
     "description": "사용자가 실제로 필요로 할 때 리소스를 로드합니다. 초기 로드 시간을 줄이고 불필요한 네트워크 요청을 방지합니다.",
-    "simulatorTitle": "IntersectionObserver Simulator",
-    "simulatorDesc": "Scroll down to see images load on demand",
-    "resetDemo": "Reset Demo",
-    "headingSection": "Heading Section",
-    "aboveTheFold": "Above the fold content (Always loaded)",
-    "image": "Image",
-    "waitingForScroll": "Waiting for Scroll...",
-    "endOfContent": "End of Content",
+    "simulatorTitle": "IntersectionObserver 시뮬레이터",
+    "simulatorDesc": "스크롤을 내리면 이미지가 필요할 때 로드됩니다",
+    "resetDemo": "데모 초기화",
+    "headingSection": "헤딩 섹션",
+    "aboveTheFold": "Above the fold 콘텐츠 (항상 로드됨)",
+    "waitingForScroll": "스크롤 대기 중...",
+    "endOfContent": "콘텐츠 끝",
     "viewport": "Viewport",
     "imageLazyLoading": {
       "title": "이미지 Lazy Loading"
@@ -310,19 +310,20 @@
         "description": "무한 스크롤, 페이지네이션으로 필요한 만큼만 fetch"
       }
     },
-    "warning": "주의: Above the fold (첫 화면에 보이는 영역) 콘텐츠에는 lazy loading을 적용하지 마세요. LCP 요소가 늦게 로드되면 점수가 하락합니다."
+    "warning": "<strong>주의:</strong> Above the fold (첫 화면에 보이는 영역) 콘텐츠에는 lazy loading을 적용하지 마세요. LCP 요소가 늦게 로드되면 점수가 하락합니다.",
+    "imageN": "이미지 {{id}}"
   },
   "imageOptimization": {
     "title": "이미지 최적화 (가장 효과 큰 영역!)",
     "description": "이미지는 웹 페이지 용량의 대부분을 차지합니다. 최적화만 잘해도 LCP를 획기적으로 개선할 수 있습니다.",
-    "simulatorTitle": "Image Optimization Lab",
-    "simulatorDesc": "Simulate compression savings and quality",
-    "sizeReduction": "Size Reduction",
-    "format": "Format",
-    "quality": "Quality",
-    "original": "Original:",
-    "optimized": "Optimized:",
-    "originalJpeg": "Original (JPEG)",
+    "simulatorTitle": "이미지 최적화 실험실",
+    "simulatorDesc": "압축에 따른 용량 절감과 품질 시뮬레이션",
+    "sizeReduction": "용량 감소",
+    "format": "포맷",
+    "quality": "품질",
+    "original": "원본:",
+    "optimized": "최적화:",
+    "originalJpeg": "원본 (JPEG)",
     "nextGenFormats": {
       "title": "차세대 포맷",
       "webp": {
@@ -355,26 +356,29 @@
       "preconnect": "CDN 연결 미리 수립",
       "lazy": "viewport 밖 이미지 지연 로드",
       "decoding": "async로 디코딩 분리"
-    }
+    },
+    "optimizedFormat": "최적화 ({{format}})",
+    "comparisonAria": "원본 / 최적화 비교",
+    "nextImageTitle": "Next.js Image 컴포넌트"
   },
   "fontOptimization": {
     "title": "폰트 최적화",
     "description": "폰트는 CLS와 LCP에 직접적인 영향을 미칩니다. FOUT (Flash of Unstyled Text)를 방지하고 빠르게 로드하는 전략이 필요합니다.",
-    "simulatorTitle": "Font Loading Simulator",
+    "simulatorTitle": "폰트 로딩 시뮬레이터",
     "simulatorDesc": "Compare FOUT (Swap) vs FOIT (Block)",
     "displaySwap": "display: swap (FOUT)",
     "displayBlock": "display: block (FOIT)",
     "status": "Status:",
-    "downloadingFont": "Downloading Font...",
-    "customFontApplied": "Custom Font Applied",
-    "fallbackFont": "Fallback Font",
+    "downloadingFont": "폰트 다운로드 중...",
+    "customFontApplied": "커스텀 폰트 적용됨",
+    "fallbackFont": "대체 폰트",
     "loadCustomFont": "Load Custom Font (2s delay)",
-    "resetToTryAgain": "Reset to Try Again",
+    "resetToTryAgain": "초기화 후 다시 시도",
     "uxImpact": "UX Impact",
-    "clsImpact": "CLS Impact",
-    "textAlwaysVisible": "Text Always Visible",
+    "clsImpact": "CLS 영향",
+    "textAlwaysVisible": "텍스트 항상 표시",
     "textInvisible": "Text Invisible (3s)",
-    "minorShift": "Minor Shift",
+    "minorShift": "약간의 이동",
     "noShift": "No Shift",
     "foutFoit": {
       "title": "FOUT / FOIT",
@@ -413,17 +417,18 @@
         "description": "다양한 weight/style을 하나의 파일로. 여러 폰트 파일 대체"
       }
     },
-    "koreanFontWarning": "한글 폰트 주의: 한글은 글리프가 많아 용량이 큽니다(2~5MB). 반드시 서브셋을 적용하거나 Google Fonts의 자동 서브셋 기능을 활용하세요."
+    "koreanFontWarning": "한글 폰트 주의: 한글은 글리프가 많아 용량이 큽니다(2~5MB). 반드시 서브셋을 적용하거나 Google Fonts의 자동 서브셋 기능을 활용하세요.",
+    "nextFontTitle": "Next.js next/font (권장)"
   },
   "networkOptimization": {
     "title": "네트워크 최적화",
     "description": "네트워크 레이턴시를 줄이고 캐시를 효과적으로 활용하면 반복 방문 시 성능이 극적으로 향상됩니다.",
-    "simulatorTitle": "Network Waterfall",
-    "simulatorDesc": "HTTP/1.1 vs HTTP/2 Multiplexing",
-    "totalLoadTime": "Total Load Time",
-    "http1Queued": "HTTP/1.1 (Queued)",
-    "http2Multiplexed": "HTTP/2 (Multiplexed)",
-    "clickPlayToStart": "Click play to start simulation",
+    "simulatorTitle": "네트워크 워터폴",
+    "simulatorDesc": "HTTP/1.1 vs HTTP/2 멀티플렉싱",
+    "totalLoadTime": "총 로드 시간",
+    "http1Queued": "HTTP/1.1 (대기열)",
+    "http2Multiplexed": "HTTP/2 (멀티플렉싱)",
+    "clickPlayToStart": "재생 버튼을 눌러 시뮬레이션을 시작하세요",
     "resourceHints": {
       "title": "Resource Hints",
       "preconnect": {
@@ -460,7 +465,7 @@
         "features": [
           "멀티플렉싱 (병렬 요청)",
           "헤더 압축 (HPACK)",
-          "Server Push",
+          "서버 푸시",
           "스트림 우선순위"
         ]
       },
@@ -474,22 +479,28 @@
         ]
       }
     },
-    "staleWhileRevalidateInfo": "stale-while-revalidate: 캐시된 콘텐츠를 즉시 반환하면서 백그라운드에서 새 데이터를 가져옵니다. 사용자는 즉각적인 응답을 받고, 다음 요청부터 최신 데이터를 사용합니다."
+    "staleWhileRevalidateInfo": "<strong>stale-while-revalidate:</strong> 캐시된 콘텐츠를 즉시 반환하면서 백그라운드에서 새 데이터를 가져옵니다. 사용자는 즉각적인 응답을 받고, 다음 요청부터 최신 데이터를 사용합니다.",
+    "startSimulation": "시뮬레이션 시작",
+    "cacheControlTitle": "Cache-Control 전략"
   },
   "bundleSize": {
     "title": "번들 사이즈 최적화",
     "description": "JavaScript 번들 크기는 파싱, 컴파일, 실행 시간에 직접적인 영향을 미칩니다. 불필요한 코드를 제거하고 효율적으로 패키징해야 합니다.",
-    "simulatorTitle": "Tree Shaking Simulator",
-    "simulatorDesc": "Remove dead code to reduce bundle size",
-    "totalBundleSize": "Total Bundle Size",
+    "simulatorTitle": "Tree Shaking 시뮬레이터",
+    "simulatorDesc": "사용하지 않는 코드를 제거하여 번들 크기를 줄입니다",
+    "totalBundleSize": "전체 번들 크기",
     "unused": "Unused",
     "reset": "Reset",
-    "runTreeShaking": "Run Tree Shaking",
+    "runTreeShaking": "Tree Shaking 실행",
     "avoidPatterns": {
-      "title": "피해야 할 패턴"
+      "title": "피해야 할 패턴",
+      "lodashFull": "<code>lodash</code> 전체 import",
+      "iconLibrary": "사용하지 않는 아이콘 라이브러리 전체 import",
+      "polyfill": "Polyfill 무분별 포함"
     },
     "recommendedPatterns": {
-      "title": "권장 패턴"
+      "title": "권장 패턴",
+      "browserslist": "browserslist 기반 자동 polyfill"
     },
     "bundleAnalyzer": {
       "title": "Bundle Analyzer",
@@ -505,6 +516,13 @@
         ]
       }
     },
-    "sideEffectsInfo": "sideEffects: package.json에 \"sideEffects\": false를 선언하면 번들러가 사용하지 않는 export를 안전하게 제거할 수 있습니다. CSS import가 있다면 \"sideEffects\": [\"*.css\"]로 명시하세요."
+    "sideEffectsInfo": "sideEffects: package.json에 \"sideEffects\": false를 선언하면 번들러가 사용하지 않는 export를 안전하게 제거할 수 있습니다. CSS import가 있다면 \"sideEffects\": [\"*.css\"]로 명시하세요.",
+    "treeShakingExample": "Tree Shaking 예시",
+    "targets": {
+      "initialJs": "초기 JS (gzip)",
+      "parseTime": "JS 파싱 시간",
+      "esm": "Tree-shake 가능",
+      "sideEffects": "false 명시"
+    }
   }
 }

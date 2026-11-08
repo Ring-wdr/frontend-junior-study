@@ -1,7 +1,5 @@
 'use client';
 
-import { AnimatePresence, motion } from 'motion/react';
-import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   AlertTriangle,
   Bell,
@@ -10,6 +8,9 @@ import {
   RotateCcw,
   Users,
 } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
 
 type Mode = 'with-monitoring' | 'without-monitoring';
@@ -22,22 +23,22 @@ type Phase =
   | 'resolved';
 
 type Milestone = {
+  id: 'errorOccurs' | 'alertFires' | 'teamResponds' | 'resolved';
   phase: Phase;
-  label: string;
   icon: typeof AlertTriangle;
   color: 'red' | 'orange' | 'blue' | 'green';
 };
 
 const MILESTONES: Milestone[] = [
   {
+    id: 'errorOccurs',
     phase: 'error-occurs',
-    label: 'Error Occurs',
     icon: AlertTriangle,
     color: 'red',
   },
-  { phase: 'detected', label: 'Alert Fires', icon: Bell, color: 'orange' },
-  { phase: 'resolving', label: 'Team Responds', icon: Users, color: 'blue' },
-  { phase: 'resolved', label: 'Resolved', icon: CheckCircle, color: 'green' },
+  { id: 'alertFires', phase: 'detected', icon: Bell, color: 'orange' },
+  { id: 'teamResponds', phase: 'resolving', icon: Users, color: 'blue' },
+  { id: 'resolved', phase: 'resolved', icon: CheckCircle, color: 'green' },
 ];
 
 const TRACK_PROGRESS: Record<Phase, number> = {
@@ -54,15 +55,11 @@ const TIMINGS = {
     detect: 800,
     respond: 1600,
     resolve: 2400,
-    mttd: '2 min',
-    mttr: '5 min',
   },
   'without-monitoring': {
     detect: 2500,
     respond: 4500,
     resolve: 6500,
-    mttd: '45 min',
-    mttr: '3 hours',
   },
 };
 
@@ -89,13 +86,14 @@ const DOT_RING_COLORS: Record<string, string> = {
 };
 
 export const IncidentTimelineVisualizer = () => {
+  const { t } = useTranslation('week22');
   const [mode, setMode] = useState<Mode>('with-monitoring');
   const [phase, setPhase] = useState<Phase>('idle');
   const [isAnimating, setIsAnimating] = useState(false);
   const timeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   const clearTimeouts = useCallback(() => {
-    for (const t of timeoutsRef.current) clearTimeout(t);
+    for (const id of timeoutsRef.current) clearTimeout(id);
     timeoutsRef.current = [];
   }, []);
 
@@ -131,7 +129,6 @@ export const IncidentTimelineVisualizer = () => {
   };
 
   const currentPhaseIndex = PHASE_ORDER.indexOf(phase);
-  const timing = TIMINGS[mode];
 
   return (
     <div className="space-y-5">
@@ -148,7 +145,7 @@ export const IncidentTimelineVisualizer = () => {
                 : 'text-gray-500 hover:text-gray-900',
             )}
           >
-            With Monitoring
+            {t('monitoringIntro.incidentTimeline.withMonitoring')}
           </button>
           <button
             type="button"
@@ -161,7 +158,7 @@ export const IncidentTimelineVisualizer = () => {
                 : 'text-gray-500 hover:text-gray-900',
             )}
           >
-            Without Monitoring
+            {t('monitoringIntro.incidentTimeline.withoutMonitoring')}
           </button>
         </div>
       </div>
@@ -174,7 +171,7 @@ export const IncidentTimelineVisualizer = () => {
           className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold bg-red-600 text-white hover:bg-red-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Play className="w-4 h-4" />
-          Trigger Error
+          {t('monitoringIntro.incidentTimeline.triggerError')}
         </button>
         <button
           type="button"
@@ -182,7 +179,7 @@ export const IncidentTimelineVisualizer = () => {
           className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-200 transition-all"
         >
           <RotateCcw className="w-3.5 h-3.5" />
-          Reset
+          {t('monitoringIntro.incidentTimeline.reset')}
         </button>
       </div>
 
@@ -208,7 +205,7 @@ export const IncidentTimelineVisualizer = () => {
             const Icon = milestone.icon;
             return (
               <div
-                key={milestone.label}
+                key={milestone.id}
                 className="flex flex-col items-center w-1/4 min-w-0"
               >
                 <motion.div
@@ -234,7 +231,9 @@ export const IncidentTimelineVisualizer = () => {
                     isReached ? 'text-gray-800' : 'text-gray-400',
                   )}
                 >
-                  {milestone.label}
+                  {t(
+                    `monitoringIntro.incidentTimeline.milestones.${milestone.id}`,
+                  )}
                 </span>
               </div>
             );
@@ -274,10 +273,10 @@ export const IncidentTimelineVisualizer = () => {
                       : 'text-red-700',
                   )}
                 >
-                  {timing.mttd}
+                  {t(`monitoringIntro.incidentTimeline.timing.${mode}.mttd`)}
                 </motion.p>
                 <span className="text-[10px] text-gray-500">
-                  Mean Time to Detect
+                  {t('monitoringIntro.incidentTimeline.mttdDesc')}
                 </span>
               </div>
               <div
@@ -302,10 +301,10 @@ export const IncidentTimelineVisualizer = () => {
                       : 'text-orange-700',
                   )}
                 >
-                  {timing.mttr}
+                  {t(`monitoringIntro.incidentTimeline.timing.${mode}.mttr`)}
                 </motion.p>
                 <span className="text-[10px] text-gray-500">
-                  Mean Time to Resolve
+                  {t('monitoringIntro.incidentTimeline.mttrDesc')}
                 </span>
               </div>
             </motion.div>

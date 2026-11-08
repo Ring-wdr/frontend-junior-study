@@ -79,7 +79,14 @@
     "conceptDesc": "MCP는 AI 에이전트가 데이터베이스, 브라우저, 외부 API 등에 안전하게 접근할 수 있게 해주는 표준 프로토콜입니다. MCP 서버가 특정 기능을 제공하고, AI 에이전트가 이를 호출합니다.",
     "architectureLabel": "MCP 아키텍처",
     "visualizer": {
-      "description": "AI 에이전트가 MCP 서버를 통해 다양한 외부 서비스(데이터베이스, 브라우저, GitHub 등)에 접근합니다."
+      "description": "AI 에이전트가 MCP 서버를 통해 다양한 외부 서비스(데이터베이스, 브라우저, GitHub 등)에 접근합니다.",
+      "agent": "AI 에이전트",
+      "server": "MCP 서버",
+      "servers": {
+        "database": "데이터베이스",
+        "browser": "브라우저",
+        "github": "GitHub"
+      }
     },
     "serversTitle": "주요 MCP 서버",
     "servers": [
@@ -178,10 +185,10 @@
       { "name": "Plan", "desc": "구현 계획 수립" },
       { "name": "Code", "desc": "코드 작성 및 수정" }
     ],
-    "cursorTitle": "Cursor Agent Mode",
+    "cursorTitle": "Cursor 에이전트 모드",
     "cursorInfoTitle": "Cursor Rules 설정",
     "cursorInfoDesc": "Cursor의 .cursor/rules 파일로 AI의 코드 스타일, 자동 작업, 금지 사항 등을 정의할 수 있습니다.",
-    "interviewModeTitle": "Interview Mode",
+    "interviewModeTitle": "인터뷰 모드",
     "interviewModeInfoTitle": "Interview Mode 소개",
     "interviewModeInfoDesc": "인터뷰 모드는 한 번에 큰 결정을 내리기보다, 질문-확인-수정 루프를 통해 점진적으로 컨텍스트를 정교화하는 방식입니다.",
     "interviewModeTipTitle": "권장 사용 패턴",
@@ -211,7 +218,7 @@
     ],
     "teamsVsSubAgentsParallelToken": "예측 가능한 결과 경로로 토큰 사용량이 안정적",
     "teamsVsSubAgentsTeamsToken": "의사결정 메타 데이터가 추가되어 더 많은 컨텍스트가 필요할 수 있음",
-    "teamsTitle": "Claude Code Teams",
+    "teamsTitle": "Claude Code 팀 활용",
     "teamsCompareTitle": "Teams 사용 유무로 보기",
     "teamsDescription": "동일 작업에서 Teams 기능을 켰을 때와 끄고 작업했을 때 결과 형태가 다릅니다.",
     "teamsWithGenerativeTitle": "Teams 사용",

@@ -3,39 +3,48 @@
 import { motion } from 'motion/react';
 import { Clock, Zap } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
 
+type LogKey =
+  | 'syncDispatch'
+  | 'syncReduced'
+  | 'asyncDispatch'
+  | 'apiComplete'
+  | 'asyncSuccess';
+
 export const MiddlewareVisualizer = () => {
+  const { t } = useTranslation('week4');
   const [log, setLog] = useState<
-    { id: number; msg: string; type: 'sync' | 'async' }[]
+    { id: number; msg: LogKey; type: 'sync' | 'async' }[]
   >([]);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const addLog = (msg: string, type: 'sync' | 'async') => {
+  const addLog = (msg: LogKey, type: 'sync' | 'async') => {
     setLog((prev) => [{ id: Date.now(), msg, type }, ...prev].slice(0, 5));
   };
 
   const handleSyncDispatch = () => {
     setIsProcessing(true);
-    addLog('Dispatch: INCREMENT (Sync)', 'sync');
+    addLog('syncDispatch', 'sync');
     setTimeout(() => {
-      addLog('Reducer: State updated immediately', 'sync');
+      addLog('syncReduced', 'sync');
       setIsProcessing(false);
     }, 500);
   };
 
   const handleAsyncThunk = async () => {
     setIsProcessing(true);
-    addLog('Dispatch: FETCH_USER_REQUEST (Thunk)', 'async');
+    addLog('asyncDispatch', 'async');
 
     // Simulate Middleware Delay
     await new Promise((r) => setTimeout(r, 1000));
 
-    addLog('Middleware: API Call Complete...', 'async');
+    addLog('apiComplete', 'async');
 
     // Simulate Reducer Update
     await new Promise((r) => setTimeout(r, 500));
-    addLog('Reducer: FETCH_USER_SUCCESS', 'async');
+    addLog('asyncSuccess', 'async');
     setIsProcessing(false);
   };
 
@@ -44,7 +53,7 @@ export const MiddlewareVisualizer = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         <div className="space-y-4">
           <h4 className="font-semibold text-gray-900 border-b pb-2">
-            Action Types
+            {t('middleware.visualizer.actionTypes')}
           </h4>
 
           <button
@@ -54,8 +63,12 @@ export const MiddlewareVisualizer = () => {
             className="w-full flex items-center justify-between p-3 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors disabled:opacity-50 text-left"
           >
             <div>
-              <div className="font-bold text-sm">Standard Action</div>
-              <div className="text-xs opacity-75">Directly reaches reducer</div>
+              <div className="font-bold text-sm">
+                {t('middleware.visualizer.standardAction')}
+              </div>
+              <div className="text-xs opacity-75">
+                {t('middleware.visualizer.standardActionDesc')}
+              </div>
             </div>
             <Zap size={18} />
           </button>
@@ -67,8 +80,12 @@ export const MiddlewareVisualizer = () => {
             className="w-full flex items-center justify-between p-3 rounded-lg border border-purple-200 bg-purple-50 text-purple-700 hover:bg-purple-100 transition-colors disabled:opacity-50 text-left"
           >
             <div>
-              <div className="font-bold text-sm">Thunk (Async)</div>
-              <div className="text-xs opacity-75">Paused by middleware</div>
+              <div className="font-bold text-sm">
+                {t('middleware.visualizer.thunkAction')}
+              </div>
+              <div className="text-xs opacity-75">
+                {t('middleware.visualizer.thunkActionDesc')}
+              </div>
             </div>
             <Clock size={18} />
           </button>
@@ -81,7 +98,7 @@ export const MiddlewareVisualizer = () => {
           <div className="flex-1 space-y-2 overflow-hidden">
             {log.length === 0 && (
               <div className="text-gray-600 italic text-center mt-8">
-                No actions dispatched yet.
+                {t('middleware.visualizer.empty')}
               </div>
             )}
             {log.map((item) => (
@@ -98,12 +115,14 @@ export const MiddlewareVisualizer = () => {
                 <span className="opacity-50 shrink-0">
                   [{new Date(item.id).toLocaleTimeString().split(' ')[0]}]
                 </span>
-                <span className="min-w-0 break-words">{item.msg}</span>
+                <span className="min-w-0 break-words">
+                  {t(`middleware.visualizer.logs.${item.msg}`)}
+                </span>
               </motion.div>
             ))}
             {isProcessing && (
               <div className="text-gray-500 animate-pulse">
-                ... processing ...
+                {t('middleware.visualizer.processing')}
               </div>
             )}
           </div>
@@ -111,8 +130,7 @@ export const MiddlewareVisualizer = () => {
       </div>
 
       <div className="bg-gray-50 p-3 rounded text-xs text-gray-500 text-center">
-        Middleware intercepts dispatched actions before they reach the reducer,
-        enabling side effects like API calls and delays.
+        {t('middleware.visualizer.footer')}
       </div>
     </div>
   );

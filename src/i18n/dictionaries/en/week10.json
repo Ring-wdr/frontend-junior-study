@@ -69,12 +69,14 @@
     "pinnedSection": "Pinned Section",
     "pinnedDescription": "This section is pinned for a moment.",
     "endOfContent": "End of Content",
-    "codeSnippet": "Code Snippet"
+    "codeSnippet": "Code Snippet",
+    "item": "Item {{n}}"
   },
   "svg": {
     "title": "SVG Animation",
     "replay": "Replay",
-    "description": "Using <code>stroke-dasharray</code> and <code>stroke-dashoffset</code> properties, you can implement handwriting or line drawing effects."
+    "description": "Using <code>stroke-dasharray</code> and <code>stroke-dashoffset</code> properties, you can implement handwriting or line drawing effects.",
+    "demoTitle": "Line drawing animation demo"
   },
   "performance": {
     "title": "Performance Optimization",

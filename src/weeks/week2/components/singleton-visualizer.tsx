@@ -3,12 +3,16 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { Box, RefreshCcw } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
 
+type LogEntry = { kind: 'created' | 'returned'; id: string };
+
 export const SingletonVisualizer = () => {
+  const { t } = useTranslation('week2');
   const [instanceId, setInstanceId] = useState<string | null>(null);
   const [flash, setFlash] = useState(false);
-  const [log, setLog] = useState<string[]>([]);
+  const [log, setLog] = useState<LogEntry[]>([]);
   const flashTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(
@@ -22,9 +26,9 @@ export const SingletonVisualizer = () => {
     if (!instanceId) {
       const newId = Math.random().toString(36).substring(7).toUpperCase();
       setInstanceId(newId);
-      setLog((prev) => [...prev, `Created new instance: ${newId}`]);
+      setLog((prev) => [...prev, { kind: 'created', id: newId }]);
     } else {
-      setLog((prev) => [...prev, `Returning existing instance: ${instanceId}`]);
+      setLog((prev) => [...prev, { kind: 'returned', id: instanceId }]);
       setFlash(true);
       if (flashTimerRef.current) clearTimeout(flashTimerRef.current);
       flashTimerRef.current = setTimeout(() => setFlash(false), 500);
@@ -47,7 +51,7 @@ export const SingletonVisualizer = () => {
               className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium flex items-center gap-2"
             >
               <Box className="w-4 h-4" />
-              Get Instance
+              {t('creation.singleton.visualizer.getInstance')}
             </button>
             <button
               type="button"
@@ -55,7 +59,7 @@ export const SingletonVisualizer = () => {
               className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors text-sm font-medium flex items-center gap-2"
             >
               <RefreshCcw className="w-4 h-4" />
-              Reset
+              {t('creation.singleton.visualizer.reset')}
             </button>
           </div>
 
@@ -97,23 +101,29 @@ export const SingletonVisualizer = () => {
 
         <div className="min-w-0 flex-1 h-40 bg-gray-900 sm:h-48 rounded-xl p-3 overflow-y-auto font-mono text-xs text-green-400 border border-gray-800">
           <div className="mb-2 text-gray-500 border-b border-gray-800 pb-1">
-            Console Log
+            {t('creation.singleton.visualizer.consoleLog')}
           </div>
           {log.map((entry, i) => (
-            <div key={`${i}-${entry}`} className="mb-1 break-words">
+            <div
+              key={`${i}-${entry.kind}-${entry.id}`}
+              className="mb-1 break-words"
+            >
               <span className="text-gray-500 mr-2">{'>'}</span>
-              {entry}
+              {t(`creation.singleton.visualizer.logs.${entry.kind}`, {
+                id: entry.id,
+              })}
             </div>
           ))}
           {log.length === 0 && (
-            <span className="text-gray-600 italic">No activity yet...</span>
+            <span className="text-gray-600 italic">
+              {t('creation.singleton.visualizer.noActivity')}
+            </span>
           )}
         </div>
       </div>
 
       <div className="text-xs text-gray-500 mt-2">
-        Notice how the ID remains the same regardless of how many times you
-        request the instance.
+        {t('creation.singleton.visualizer.note')}
       </div>
     </div>
   );

@@ -17,7 +17,6 @@ const servers = [
   {
     id: 'database',
     icon: Database,
-    label: 'Database',
     activeClass: 'bg-blue-100 border-blue-300',
     activeIconClass: 'text-blue-600',
     activeTextClass: 'text-blue-700',
@@ -25,7 +24,6 @@ const servers = [
   {
     id: 'browser',
     icon: Globe,
-    label: 'Browser',
     activeClass: 'bg-green-100 border-green-300',
     activeIconClass: 'text-green-600',
     activeTextClass: 'text-green-700',
@@ -33,7 +31,6 @@ const servers = [
   {
     id: 'github',
     icon: GitBranch,
-    label: 'GitHub',
     activeClass: 'bg-purple-100 border-purple-300',
     activeIconClass: 'text-purple-600',
     activeTextClass: 'text-purple-700',
@@ -56,7 +53,7 @@ export const McpArchitectureVisualizer = () => {
             <Bot className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
           </div>
           <span className="mt-2 text-sm font-medium text-gray-700">
-            AI Agent
+            {t('mcp.visualizer.agent')}
           </span>
         </div>
 
@@ -79,7 +76,7 @@ export const McpArchitectureVisualizer = () => {
             <Server className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
           </button>
           <span className="mt-2 text-sm font-medium text-gray-700">
-            MCP Server
+            {t('mcp.visualizer.server')}
           </span>
         </div>
 
@@ -107,7 +104,7 @@ export const McpArchitectureVisualizer = () => {
                 <span
                   className={`text-xs font-medium ${isActive ? server.activeTextClass : 'text-gray-600'}`}
                 >
-                  {server.label}
+                  {t(`mcp.visualizer.servers.${server.id}`)}
                 </span>
               </button>
             );

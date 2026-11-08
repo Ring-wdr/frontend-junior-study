@@ -51,10 +51,10 @@ export const MonitoringIntroSection = () => {
                 <tr className="border-b border-gray-200">
                   <th className="text-left py-2 px-3 font-semibold text-gray-700" />
                   <th className="text-left py-2 px-3 font-semibold text-green-700">
-                    Local
+                    {t('monitoringIntro.tableHeaders.local')}
                   </th>
                   <th className="text-left py-2 px-3 font-semibold text-red-700">
-                    Production
+                    {t('monitoringIntro.tableHeaders.production')}
                   </th>
                 </tr>
               </thead>
@@ -117,8 +117,12 @@ export const MonitoringIntroSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title="Incident Response Simulator" icon iconColor="blue">
-          <DemoBox label="Interactive Demo">
+        <SubSection
+          title={t('monitoringIntro.demoTitle')}
+          icon
+          iconColor="blue"
+        >
+          <DemoBox label={t('interactiveDemo')}>
             <IncidentTimelineVisualizer />
           </DemoBox>
         </SubSection>

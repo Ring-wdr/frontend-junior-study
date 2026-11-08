@@ -99,7 +99,8 @@
       "concurrentNotice": "'회전 표시기'가 부드럽게 유지됩니다. 리스트는 UI를 정지시키지 않고 백그라운드에서 효율적으로 작동합니다.",
       "heavyOutput": "무거운 렌더링 출력 (50개 항목 x 1ms)",
       "codePattern": "코드 패턴",
-      "startTyping": "타이핑 시작..."
+      "startTyping": "타이핑 시작...",
+      "item": "항목: {{text}}"
     }
   },
   "react19": {
@@ -695,12 +696,13 @@
       "loadContent": "콘텐츠 로드",
       "loading": "로딩 중...",
       "reloadToTry": "다시 시도하려면 다시 로드",
-      "clsDetected": "CLS 감지됨! (점수: {score})",
+      "clsDetected": "CLS 감지됨! (점수: {{score}})",
       "stableLayout": "안정적인 레이아웃 (CLS: 0)",
       "beautifulLandscapes": "아름다운 풍경",
       "description1": "세계 곳곳에서 가장 숨막히는 전망을 발견하세요. 산봉우리에서 평온한 호수까지, 자연은 끝없는 영감을 제공합니다.",
       "description2": "사진은 이러한 순간을 영원히 포착할 수 있게 해줍니다. 장비에 관한 것이 아니라 관점에 관한 것입니다.",
-      "whyItMatters": "<strong>중요한 이유:</strong> <strong>최적화되지 않은</strong> 모드에서는 브라우저가 다운로드할 때까지 이미지 높이를 알 수 없습니다. 이는 아래 콘텐츠가 점프하는 원인이 되어 (CLS) 사용자를 좌절시킵니다. <strong>Next/Image</strong> (최적화됨)는 width/height 속성을 강제하여 로딩 중에도 안정적인 레이아웃을 보장하면서 즉시 공간을 예약합니다."
+      "whyItMatters": "<strong>중요한 이유:</strong> <strong>최적화되지 않은</strong> 모드에서는 브라우저가 다운로드할 때까지 이미지 높이를 알 수 없습니다. 이는 아래 콘텐츠가 점프하는 원인이 되어 (CLS) 사용자를 좌절시킵니다. <strong>Next/Image</strong> (최적화됨)는 width/height 속성을 강제하여 로딩 중에도 안정적인 레이아웃을 보장하면서 즉시 공간을 예약합니다.",
+      "imageAlt": "풍경"
     }
   },
   "rulesOfReact": {

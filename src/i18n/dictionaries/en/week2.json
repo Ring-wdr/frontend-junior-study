@@ -45,7 +45,18 @@
     "description": "Patterns focused on object creation mechanisms.",
     "singleton": {
       "title": "Singleton Pattern",
-      "description": "Ensures a class has only one instance and provides a global point of access to it."
+      "description": "Ensures a class has only one instance and provides a global point of access to it.",
+      "visualizer": {
+        "getInstance": "Get Instance",
+        "reset": "Reset",
+        "consoleLog": "Console Log",
+        "noActivity": "No activity yet...",
+        "note": "Notice how the ID remains the same regardless of how many times you request the instance.",
+        "logs": {
+          "created": "Created new instance: {{id}}",
+          "returned": "Returning existing instance: {{id}}"
+        }
+      }
     },
     "factory": {
       "title": "Factory Pattern",
@@ -56,11 +67,31 @@
       "abstract": {
         "title": "Abstract Factory",
         "description": "Provides an interface for creating families of related or dependent objects."
+      },
+      "visualizer": {
+        "type": "Type:",
+        "shapes": {
+          "circle": "Circle",
+          "square": "Square",
+          "triangle": "Triangle"
+        },
+        "create": "Create",
+        "empty": "Factory storage is empty. Create some shapes!",
+        "note": "The client (buttons) doesn't need to know <em>how</em> the shapes are created, just requests them."
       }
     },
     "builder": {
       "title": "Builder Pattern",
-      "description": "Separates the construction of a complex object from its representation, allowing you to create different representations with the same construction process."
+      "description": "Separates the construction of a complex object from its representation, allowing you to create different representations with the same construction process.",
+      "visualizer": {
+        "addHead": "Add Head",
+        "addArms": "Add Arms",
+        "legs": "Legs",
+        "wheels": "Wheels",
+        "build": "Build",
+        "built": "BUILT",
+        "chassis": "CHASSIS"
+      }
     }
   },
   "structural": {
@@ -73,23 +104,72 @@
       "concept": {
         "title": "Concept",
         "description": "Modern TypeScript & ES: @Decorators.\n\nWe annotate classes or methods with `@DecoratorName`. Under the hood, this \"wraps\" the original class/method with new logic (logging, validation, etc.)."
+      },
+      "visualizer": {
+        "pipelineConfig": "Pipeline Configuration",
+        "classDecorator": "Class Decorator",
+        "methodClassDecorator": "Method/Class Decorator",
+        "methodDecorator": "Method Decorator",
+        "processing": "Processing Request...",
+        "run": "Run Request",
+        "systemLogs": "System Logs",
+        "waiting": "Waiting for request...",
+        "generatedCode": "Generated Code",
+        "logs": {
+          "authChecking": "[@Auth] Checking Token...",
+          "authValid": "[@Auth] Token Valid.",
+          "loggerStart": "[@Logger] Request started at {{time}}",
+          "cacheChecking": "[@Cache] Checking Cache...",
+          "cacheMiss": "[@Cache] Cache Miss. Forwarding...",
+          "serviceFetching": "[Service] Fetching Data from DB...",
+          "serviceFound": "[Service] Data Found: { id: 1, name: \"User\" }",
+          "loggerFinish": "[@Logger] Request finished. Duration: 12ms"
+        }
       }
     },
     "adapter": {
       "title": "Adapter Pattern",
-      "description": "Collaborate with incompatible interfaces (Plug Adapter)."
+      "description": "Collaborate with incompatible interfaces (Plug Adapter).",
+      "visualizer": {
+        "useAdapter": "Use Adapter",
+        "incompatible": "⚠️ INCOMPATIBLE INTERFACE",
+        "connectWithAdapter": "Connect with Adapter",
+        "connectDirectly": "Try connecting directly"
+      }
     },
     "proxy": {
       "title": "Proxy Pattern",
-      "description": "A placeholder to control access (security, lazy loading)."
+      "description": "A placeholder to control access (security, lazy loading).",
+      "visualizer": {
+        "guestUser": "Guest User",
+        "adminUser": "Admin User",
+        "proxyServer": "PROXY SERVER",
+        "accessVault": "Access Vault"
+      }
     },
     "facade": {
       "title": "Facade Pattern",
-      "description": "Simplified interface for complex subsystems (Smart Home)."
+      "description": "Simplified interface for complex subsystems (Smart Home).",
+      "visualizer": {
+        "movieMode": "Movie Mode",
+        "sleepMode": "Sleep Mode",
+        "lights": "Lights: {{value}}%",
+        "ac": "AC: {{value}}°C",
+        "volume": "Vol: {{value}}%"
+      }
     },
     "bridge": {
       "title": "Bridge Pattern",
-      "description": "Connecting Abstractions (Remote) to Implementations (Device)."
+      "description": "Connecting Abstractions (Remote) to Implementations (Device).",
+      "visualizer": {
+        "abstraction": "Abstraction (Remote)",
+        "basicRemote": "Basic Remote",
+        "advancedRemote": "Advanced Remote",
+        "implementation": "Implementation (Device)",
+        "radio": "Radio",
+        "remote": "REMOTE",
+        "mute": "Mute"
+      }
     }
   },
   "behavioral": {
@@ -99,11 +179,23 @@
     "observer": {
       "title": "Observer Pattern",
       "description": "Lets you define a subscription mechanism to notify multiple objects about any events that happen to the object they're observing.",
-      "note": "Common in JS: Event Listeners, RxJS, Redux (Flux)."
+      "note": "Common in JS: Event Listeners, RxJS, Redux (Flux).",
+      "visualizer": {
+        "broadcast": "Broadcast",
+        "note": "The <strong>Subject</strong> maintains a list of observers and notifies them automatically of any state changes."
+      }
     },
     "strategy": {
       "title": "Strategy Pattern",
-      "description": "Interchangeable algorithms (Payment Methods)."
+      "description": "Interchangeable algorithms (Payment Methods).",
+      "visualizer": {
+        "creditCard": "Credit Card",
+        "crypto": "Crypto",
+        "totalAmount": "Total Amount",
+        "processing": "Processing...",
+        "paid": "PAID",
+        "pay": "Pay Context"
+      }
     },
     "state": {
       "title": "State",
@@ -139,15 +231,28 @@
           "label": "Higher-Order Functions:",
           "description": "Functions that take others as args."
         }
+      },
+      "visualizer": {
+        "push": "Push (Immutable)",
+        "reset": "Reset",
+        "latest": "(Latest)"
       }
     },
     "currying": {
       "title": "Currying",
-      "description": "Function taking multiple args to Sequence of functions."
+      "description": "Function taking multiple args to Sequence of functions.",
+      "visualizer": {
+        "makeAnother": "Make another"
+      }
     },
     "monads": {
       "title": "Monads (Maybe)",
-      "description": "Safe chainable computations (Handling Nulls)."
+      "description": "Safe chainable computations (Handling Nulls).",
+      "visualizer": {
+        "makeNull": "Make Null",
+        "reset": "Reset",
+        "safeMode": "SAFE MODE: Operations ignored"
+      }
     }
   }
 }

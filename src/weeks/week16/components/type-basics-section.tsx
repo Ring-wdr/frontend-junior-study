@@ -121,7 +121,7 @@ const user: { name: string; age: number } = {
               <thead>
                 <tr className="bg-gray-100">
                   <th className="text-left p-2 font-medium text-gray-700">
-                    Feature
+                    {t('typeBasics.comparisonFeature')}
                   </th>
                   <th className="text-left p-2 font-medium text-indigo-600">
                     interface

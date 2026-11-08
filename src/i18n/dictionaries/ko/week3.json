@@ -40,6 +40,19 @@
         "label": "Pages:",
         "description": "실제 대표 콘텐츠가 포함된 UI의 모습을 보여주는 템플릿의 구체적인 인스턴스."
       }
+    },
+    "visualizer": {
+      "logo": "로고",
+      "logIn": "로그인",
+      "searchPlaceholder": "검색...",
+      "controlsTitle": "디자인 시스템 컨트롤",
+      "controlsDescription": "Atom을 변경하면 전체 UI가 업데이트됩니다.",
+      "color": "색상",
+      "radius": "모서리",
+      "levelAtom": "1단계: Atom",
+      "levelMolecule": "2단계: Molecule",
+      "levelOrganism": "3단계: Organism",
+      "button": "버튼"
     }
   },
   "container": {
@@ -49,14 +62,14 @@
     "coreConcept": {
       "title": "핵심 개념",
       "presentational": {
-        "label": "Presentational Components:",
+        "label": "Presentational 컴포넌트:",
         "item1": "어떻게 보이는지에 관심을 둡니다.",
         "item2": "props를 통해 데이터와 콜백을 받습니다.",
         "item3": "자체 상태를 거의 갖지 않습니다 (UI 상태 제외).",
         "item4": "주로 함수형 컴포넌트로 작성됩니다."
       },
       "container": {
-        "label": "Container Components:",
+        "label": "Container 컴포넌트:",
         "item1": "어떻게 동작하는지에 관심을 둡니다.",
         "item2": "presentational 컴포넌트 또는 다른 container 컴포넌트에 데이터와 동작을 제공합니다.",
         "item3": "상태를 가지며 데이터 소스 역할을 합니다."
@@ -65,6 +78,12 @@
     "evolutionWithHooks": {
       "title": "Hooks와의 발전",
       "content": "현대 React에서 이 패턴은 Custom Hooks를 포함합니다. Container로 컴포넌트를 감싸는 대신, 비즈니스 로직을 훅(예: useDogImages)으로 추출하여 컴포넌트 내에서 직접 사용할 수 있습니다. 이는 중첩을 줄이면서 동일한 관심사의 분리를 달성합니다."
+    },
+    "visualizer": {
+      "renderingSkeleton": "UI 스켈레톤 렌더링 중...",
+      "requestNewData": "새 데이터 요청",
+      "stateManager": "상태 관리자",
+      "summary": "<strong>Container</strong>(왼쪽)는 <em>어떻게 동작하는지</em>(데이터 페칭, 상태)를 담당하고, <strong>Presentational</strong>(오른쪽)은 <em>어떻게 보이는지</em>(HTML/CSS 렌더링)를 담당합니다. 이러한 분리 덕분에 컴포넌트를 재사용하기 쉽고 테스트하기도 쉬워집니다."
     }
   },
   "patterns": {
@@ -82,6 +101,37 @@
     "hoc": {
       "title": "Higher-Order Components (HOC)",
       "description": "컴포넌트를 받아서 새로운 컴포넌트를 반환하는 함수로, 일반적으로 props나 로직을 주입합니다. 과거에 인기가 있었지만 (예: Redux의 connect), \"Wrapper Hell\"을 피하기 위해 오늘날에는 Hooks로 대체되는 경우가 많습니다."
+    },
+    "visualizer": {
+      "mouseHint": "여기서 마우스를 움직여 보세요",
+      "keyCharacteristic": "핵심 특징:",
+      "compound": {
+        "heading": "암시적 상태 공유",
+        "tabs": {
+          "account": "계정",
+          "privacy": "개인정보",
+          "settings": "설정"
+        },
+        "accountTitle": "계정 설정",
+        "accountDescription": "여기에서 계정 정보를 관리합니다.",
+        "privacyTitle": "개인정보 옵션",
+        "privacyDescription": "프로필을 볼 수 있는 사람을 설정합니다.",
+        "settingsTitle": "일반 설정",
+        "settingsDescription": "앱 환경설정 및 구성.",
+        "characteristic": "하위 컴포넌트(Tab, TabPanel)는 사용자가 prop을 직접 전달하는 대신, 부모(Tabs)가 제공하는 Context를 통해 소통합니다."
+      },
+      "renderProps": {
+        "heading": "함수 Prop을 통한 로직 재사용",
+        "characteristic": "컴포넌트는 <em>무엇을</em> 렌더링할지 직접 결정하지 않고, 내부 상태(x, y)를 공유하면서 그 결정을 <code>render</code> prop 함수에 위임합니다."
+      },
+      "hoc": {
+        "heading": "로직 주입 (Wrapper)",
+        "startLoading": "로딩 시작",
+        "stopLoading": "로딩 중지",
+        "passes": "HOC에 <code>isLoading={{value}}</code>를 전달합니다",
+        "messages": ["메시지 1", "메시지 2", "메시지 3"],
+        "characteristic": "컴포넌트를 받아 새로운 컴포넌트(\"Wrapper\")를 반환하는 함수로, 새로운 props나 동작(예: Spinner)을 주입합니다."
+      }
     }
   },
   "performance": {
@@ -98,6 +148,24 @@
     "virtualization": {
       "title": "Virtualization (Windowing)",
       "description": "전체 목록 대신 현재 보이는 항목(플러스 작은 버퍼)만 렌더링합니다. 이는 대용량 데이터셋의 성능을 크게 향상시킵니다. react-window나 react-virtualized와 같은 라이브러리가 일반적으로 사용됩니다."
+    },
+    "visualizer": {
+      "nonMemoized": "부모가 업데이트될 때마다 리렌더링됩니다!",
+      "rendered": "렌더링됨",
+      "memoized": "내 props가 변경될 때만 렌더링됩니다.",
+      "stable": "변경 없음",
+      "triggerUpdate": "부모 업데이트 실행 (Count: {{count}})",
+      "reset": "초기화",
+      "withoutMemo": "Memoization 미적용",
+      "withMemo": "React.memo 적용",
+      "flashNote": "*렌더링될 때 배경색이 깜빡입니다. 버튼을 클릭할 때마다 빨간색 쪽이 깜빡이는 것을 확인하세요.",
+      "enableVirtualization": "Virtualization 활성화",
+      "domNodes": "DOM 노드: <strong>{{visible}}</strong> / {{total}}",
+      "item": "항목 {{n}}",
+      "virtualOn": "현재 보이는 항목과 버퍼만 렌더링하고 있습니다. 빠릅니다!",
+      "virtualOff": "1000개 항목을 모두 렌더링하고 있습니다. DOM 노드 수를 확인해 보세요!",
+      "memoDescription": "불필요한 리렌더링을 방지합니다.",
+      "virtualDescription": "보이는 것만 렌더링합니다."
     }
   }
 }

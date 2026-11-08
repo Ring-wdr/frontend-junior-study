@@ -16,6 +16,20 @@ import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
+type LogId =
+  | 'request'
+  | 'payloadSize'
+  | 'deserializing'
+  | 'success'
+  | 'executed'
+  | 'securityException'
+  | 'blocked'
+  | 'pollution'
+  | 'executing';
+
+const errorLogs: LogId[] = ['blocked', 'pollution'];
+const successLogs: LogId[] = ['success', 'securityException'];
+
 export const React2ShellSection = () => {
   const { t } = useTranslation('week12');
   const [isPatched, setIsPatched] = useState(false);
@@ -25,7 +39,9 @@ export const React2ShellSection = () => {
   const [serverStatus, setServerStatus] = useState<
     'idle' | 'processing' | 'compromised' | 'safe'
   >('idle');
-  const [logs, setLogs] = useState<string[]>([]);
+  const [logs, setLogs] = useState<
+    { time: string; id: LogId; size?: string }[]
+  >([]);
   const [showShell, setShowShell] = useState(false);
 
   const payloads = {
@@ -40,11 +56,11 @@ export const React2ShellSection = () => {
     },
   };
 
-  const addLog = (msg: string) =>
+  const addLog = (id: LogId, size?: string) =>
     setLogs((prev) =>
       [
         ...prev,
-        `[${new Date().toLocaleTimeString().split(' ')[0]}] ${msg}`,
+        { time: new Date().toLocaleTimeString().split(' ')[0], id, size },
       ].slice(-6),
     );
 
@@ -53,27 +69,27 @@ export const React2ShellSection = () => {
     setShowShell(false);
     setLogs([]);
 
-    addLog(`POST /action/updateUser`);
-    addLog(`Payload size: ${payloadType === 'legit' ? '54B' : '108B'}`);
+    addLog('request');
+    addLog('payloadSize', payloadType === 'legit' ? '54B' : '108B');
 
     await new Promise((r) => setTimeout(r, 800));
 
-    addLog('RSC Flight Protocol Deserializing...');
+    addLog('deserializing');
 
     await new Promise((r) => setTimeout(r, 800));
 
     if (payloadType === 'legit') {
-      addLog('✅ Object deserialized successfully');
-      addLog('Executed: updateUser({ name: "John Doe" ... })');
+      addLog('success');
+      addLog('executed');
       setServerStatus('safe');
     } else {
       if (isPatched) {
-        addLog('🛡️ Security Exception: Illegal object structure');
-        addLog('❌ Deserialization blocked by React 19.1.2 patch');
+        addLog('securityException');
+        addLog('blocked');
         setServerStatus('safe');
       } else {
-        addLog('⚠️ WARNING: Prototype pollution detected');
-        addLog('🔥 Executing arbitrary code...');
+        addLog('pollution');
+        addLog('executing');
         setServerStatus('compromised');
         setTimeout(() => setShowShell(true), 500);
       }
@@ -276,19 +292,22 @@ export const React2ShellSection = () => {
                         ) : (
                           logs.map((log) => (
                             <div
-                              key={log}
+                              key={`${log.time}-${log.id}`}
                               className="text-xs font-mono border-b border-gray-50 pb-1 last:border-0"
                             >
                               <span
                                 className={
-                                  log.includes('❌') || log.includes('⚠️')
+                                  errorLogs.includes(log.id)
                                     ? 'text-red-600 font-bold'
-                                    : log.includes('✅') || log.includes('🛡️')
+                                    : successLogs.includes(log.id)
                                       ? 'text-green-600 font-bold'
                                       : 'text-gray-600'
                                 }
                               >
-                                {log}
+                                [{log.time}]{' '}
+                                {t(`react2shell.simulator.logs.${log.id}`, {
+                                  size: log.size ?? '',
+                                })}
                               </span>
                             </div>
                           ))

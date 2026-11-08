@@ -87,6 +87,7 @@
     "functionDesc": "함수의 매개변수와 반환 타입 정의하기",
     "interfaceVsTypeTitle": "interface vs type 선택 기준",
     "interfaceVsTypeInfoTitle": "언제 무엇을 사용할까?",
+    "comparisonFeature": "특징",
     "interfaceVsTypeInfoDesc": "interface는 객체 구조 정의와 확장에 적합하고, type은 유니온, 튜플 등 복잡한 타입 조합에 적합합니다. 일반적으로 객체는 interface, 나머지는 type을 권장합니다.",
     "visualizer": {
       "title": "타입 추론 플레이그라운드",
@@ -133,8 +134,10 @@
     "narrowingDesc": "조건문을 통해 타입을 더 구체적으로 좁히는 기법",
     "narrowingInfoTitle": "왜 타입 좁히기가 중요한가",
     "narrowingInfoDesc": "Union 타입을 사용할 때, 각 타입에 맞는 메서드를 사용하려면 타입을 좁혀야 합니다. typeof, instanceof, in 연산자 등을 활용합니다.",
-    "assertionTitle": "Type Assertion",
+    "assertionTitle": "타입 단언 (Type Assertion)",
     "assertionDesc": "컴파일러에게 타입을 알려주는 방법",
+    "visualizerSectionTitle": "Union & Intersection 시각화",
+    "assertionWarningTitle": "주의",
     "assertionWarning": "주의: 타입 단언은 남용하면 타입 안전성이 깨집니다. 가능하면 타입 가드를 사용하세요.",
     "visualizer": {
       "title": "타입 집합 시각화",

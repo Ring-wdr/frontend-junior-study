@@ -1,28 +1,30 @@
 'use client';
 
+import { Eye, EyeOff, ShieldAlert, ShieldCheck } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
-import { Eye, EyeOff, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
 
 const USER_DATA = [
-  { field: 'Name', raw: 'Kim Manjoong', masked: 'K** *******' },
+  { field: 'name', raw: 'Kim Manjoong', masked: 'K** *******' },
   {
-    field: 'Email',
+    field: 'email',
     raw: 'kim.manjoong@example.com',
     masked: 'k***@example.com',
   },
-  { field: 'Phone', raw: '+82-10-1234-5678', masked: '+82-10-****-****' },
-  { field: 'SSN', raw: '901215-1234567', masked: '******-*******' },
-  { field: 'IP Address', raw: '192.168.1.42', masked: '192.168.x.x' },
+  { field: 'phone', raw: '+82-10-1234-5678', masked: '+82-10-****-****' },
+  { field: 'ssn', raw: '901215-1234567', masked: '******-*******' },
+  { field: 'ipAddress', raw: '192.168.1.42', masked: '192.168.x.x' },
   {
-    field: 'Credit Card',
+    field: 'creditCard',
     raw: '4242-4242-4242-4242',
     masked: '****-****-****-4242',
   },
-];
+] as const;
 
 export const DataMaskingVisualizer = () => {
+  const { t } = useTranslation('week22');
   const [isMasked, setIsMasked] = useState(false);
 
   return (
@@ -43,7 +45,7 @@ export const DataMaskingVisualizer = () => {
           ) : (
             <Eye className="w-4 h-4" />
           )}
-          Masking: {isMasked ? 'ON' : 'OFF'}
+          {t('privacy.dataMasking.toggle', { state: isMasked ? 'ON' : 'OFF' })}
         </button>
       </div>
 
@@ -57,7 +59,7 @@ export const DataMaskingVisualizer = () => {
             className="flex items-center justify-between gap-3 py-2 border-b border-gray-800 last:border-0"
           >
             <span className="text-xs sm:text-sm text-gray-400 font-mono shrink-0">
-              {item.field}
+              {t(`privacy.dataMasking.fields.${item.field}`)}
             </span>
             <AnimatePresence mode="wait">
               <motion.div
@@ -106,12 +108,12 @@ export const DataMaskingVisualizer = () => {
           {isMasked ? (
             <>
               <ShieldCheck className="w-4 h-4 shrink-0" />
-              Safe to send to monitoring service
+              {t('privacy.dataMasking.safe')}
             </>
           ) : (
             <>
               <ShieldAlert className="w-4 h-4 shrink-0" />
-              WARNING: PII data exposed in raw form
+              {t('privacy.dataMasking.warning')}
             </>
           )}
         </motion.div>

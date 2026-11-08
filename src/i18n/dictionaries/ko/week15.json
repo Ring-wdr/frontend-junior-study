@@ -18,12 +18,12 @@
     "title": "Elements & Console 패널",
     "description": "DOM/CSS 디버깅과 강력한 Console 기능 마스터",
     "elementsTitle": "Elements 패널 핵심 기능",
-    "featureExplorer": "Feature Explorer",
+    "featureExplorer": "기능 탐색기",
     "consoleTitle": "Console 고급 기능",
     "consoleInfoTitle": "console.log 그 이상의 기능들",
     "consoleInfoDesc": "Console은 단순 로깅을 넘어 강력한 디버깅 도구입니다. $0, $1로 최근 선택 요소 참조, debug(fn)으로 함수 호출 시 자동 브레이크!",
     "consoleCommandsTitle": "Console 특수 명령어",
-    "consoleCommandsLabel": "Special Console Commands",
+    "consoleCommandsLabel": "특수 Console 명령어",
     "shortcutsTitle": "단축키 마스터",
     "features": {
       "domInspection": {
@@ -100,12 +100,30 @@
       }
     ],
     "shortcuts": [
-      { "key": "Cmd/Ctrl + Shift + C", "action": "요소 검사 모드" },
-      { "key": "Cmd/Ctrl + Shift + J", "action": "Console 직접 열기" },
-      { "key": "Cmd/Ctrl + K", "action": "Console 클리어" },
-      { "key": "Cmd/Ctrl + F", "action": "Elements에서 검색" },
-      { "key": "H", "action": "요소 숨기기 (Elements)" },
-      { "key": "Esc", "action": "Drawer 토글" }
+      {
+        "key": "Cmd/Ctrl + Shift + C",
+        "action": "요소 검사 모드"
+      },
+      {
+        "key": "Cmd/Ctrl + Shift + J",
+        "action": "Console 직접 열기"
+      },
+      {
+        "key": "Cmd/Ctrl + K",
+        "action": "Console 클리어"
+      },
+      {
+        "key": "Cmd/Ctrl + F",
+        "action": "Elements에서 검색"
+      },
+      {
+        "key": "H",
+        "action": "요소 숨기기 (Elements)"
+      },
+      {
+        "key": "Esc",
+        "action": "Drawer 토글"
+      }
     ]
   },
   "devtoolsSources": {
@@ -115,20 +133,20 @@
     "breakpointsTitle": "Breakpoint 종류 마스터",
     "breakpointsInfoTitle": "디버깅 실력이 곧 실력이다",
     "breakpointsInfoDesc": "console.log로 디버깅하는 시대는 지났습니다. Breakpoint와 Step through를 활용하면 버그를 훨씬 빠르게 찾을 수 있습니다.",
-    "breakpointsLabel": "Breakpoint Types",
+    "breakpointsLabel": "브레이크포인트 유형",
     "debugControlTitle": "디버깅 컨트롤",
     "scopeWatchTitle": "Scope & Watch",
-    "scopeWatchLabel": "Debugging Context",
+    "scopeWatchLabel": "디버깅 컨텍스트",
     "scopePanelTitle": "Scope 패널",
     "watchPanelTitle": "Watch 패널",
     "networkTitle": "Network 패널 분석",
     "networkInfoTitle": "네트워크 분석의 핵심",
     "networkInfoDesc": "리소스 병목을 찾을 때 필수! TTFB, 페이로드 크기, 캐싱 정책을 확인하세요.",
-    "asyncTitle": "Async Stack Traces",
+    "asyncTitle": "비동기 스택 트레이스",
     "asyncDesc": "Settings → Preferences → Async stack traces를 활성화하면 Promise, setTimeout, async/await의 전체 호출 스택을 추적할 수 있습니다. 비동기 버그 디버깅에 필수!",
     "breakpointTypes": [
       {
-        "name": "Line Breakpoint",
+        "name": "라인 브레이크포인트",
         "desc": "특정 코드 라인에서 멈춤",
         "how": "라인 번호 클릭",
         "tip": "가장 기본적인 디버깅 방법"
@@ -152,7 +170,7 @@
         "tip": "subtree/attribute/removal 선택"
       },
       {
-        "name": "Event Listener",
+        "name": "이벤트 리스너",
         "desc": "특정 이벤트 발생 시 멈춤",
         "how": "Event Listener Breakpoints",
         "tip": "click, scroll, keyboard 등"
@@ -169,7 +187,11 @@
         "shortcut": "F10",
         "desc": "현재 라인 실행, 함수 내부 안 들어감"
       },
-      { "name": "Step Into", "shortcut": "F11", "desc": "함수 내부로 진입" },
+      {
+        "name": "Step Into",
+        "shortcut": "F11",
+        "desc": "함수 내부로 진입"
+      },
       {
         "name": "Step Out",
         "shortcut": "Shift+F11",
@@ -187,9 +209,18 @@
       }
     ],
     "scopeItems": [
-      { "label": "Local:", "desc": "현재 함수의 지역 변수" },
-      { "label": "Closure:", "desc": "클로저로 캡처된 변수" },
-      { "label": "Global:", "desc": "window 객체의 속성들" }
+      {
+        "label": "Local:",
+        "desc": "현재 함수의 지역 변수"
+      },
+      {
+        "label": "Closure:",
+        "desc": "클로저로 캡처된 변수"
+      },
+      {
+        "label": "Global:",
+        "desc": "window 객체의 속성들"
+      }
     ],
     "watchItems": [
       "특정 변수/표현식을 지속적으로 모니터링",
@@ -205,7 +236,7 @@
       {
         "label": "Timing",
         "desc": "요청 각 단계 시간 분석",
-        "check": ["DNS Lookup", "TTFB", "Content Download"]
+        "check": ["DNS 조회", "TTFB", "콘텐츠 다운로드"]
       },
       {
         "label": "Throttling",
@@ -217,7 +248,9 @@
         "desc": "리소스 타입별 필터링",
         "check": ["XHR", "JS", "CSS", "Img", "Font"]
       }
-    ]
+    ],
+    "howLabel": "방법:",
+    "tipLabel": "팁:"
   },
   "devtoolsPerformance": {
     "targetLabel": "목표",
@@ -229,13 +262,13 @@
     "recordingTitle": "Performance 녹화 분석",
     "recordingInfoTitle": "성능 튜닝의 핵심 도구",
     "recordingInfoDesc": "Performance 패널은 프론트엔드 성능 최적화의 핵심 도구입니다. 프레임 분석, Long Task 탐지, 레이아웃 시프트 확인까지 모든 것이 가능합니다.",
-    "recordingLabel": "Key Metrics",
+    "recordingLabel": "핵심 지표",
     "stepsTitle": "Performance 녹화 단계",
     "memoryTitle": "Memory 패널 - 누수 탐지",
     "memoryInfoTitle": "메모리 누수는 SPA의 적",
     "memoryInfoDesc": "대규모 SPA에서 메모리 누수는 점점 앱을 느리게 만듭니다. Detached DOM nodes와 Heap snapshot으로 누수를 찾으세요.",
     "leakPatternsTitle": "흔한 메모리 누수 패턴",
-    "leakPatternsLabel": "Memory Leak Patterns",
+    "leakPatternsLabel": "메모리 누수 패턴",
     "metrics": [
       {
         "name": "FPS",
@@ -250,7 +283,7 @@
         "issue": "메인 스레드 블로킹 → 입력 지연"
       },
       {
-        "name": "Layout Shift",
+        "name": "레이아웃 시프트",
         "desc": "레이아웃이 갑자기 변경되는 현상",
         "target": "CLS 0.1 이하",
         "issue": "사용자 클릭 실수 유발"
@@ -320,7 +353,7 @@
       {
         "pattern": "setInterval 미정리",
         "code": "setInterval(() => { ... }, 1000);",
-        "fix": "clearInterval in useEffect cleanup"
+        "fix": "useEffect cleanup에서 clearInterval 호출"
       },
       {
         "pattern": "클로저가 DOM 참조 유지",
@@ -339,7 +372,7 @@
     "title": "번들링 이해 (Webpack/Vite/Rollup)",
     "description": "모던 프론트엔드 빌드 도구의 핵심 개념",
     "comparisonTitle": "번들러 비교",
-    "comparisonLabel": "Bundler Comparison",
+    "comparisonLabel": "번들러 비교",
     "webpackTitle": "Webpack 핵심 개념",
     "viteTitle": "Vite - 현대 프론트엔드 표준",
     "viteInfoTitle": "왜 Vite인가?",
@@ -408,12 +441,12 @@
     ],
     "buildConcepts": [
       {
-        "term": "Tree Shaking",
+        "term": "트리 쉐이킹",
         "desc": "사용하지 않는 코드를 번들에서 제거",
         "tip": "ES Modules + sideEffects: false 필요"
       },
       {
-        "term": "Code Splitting",
+        "term": "코드 스플리팅",
         "desc": "번들을 여러 청크로 분리",
         "tip": "dynamic import()로 구현"
       },
@@ -433,10 +466,10 @@
     "badge": "Optimize",
     "title": "번들 최적화 전략",
     "description": "번들 분석과 최적화로 성능 극대화하기",
-    "analyzerTitle": "Bundle Analyzer",
+    "analyzerTitle": "번들 분석기",
     "analyzerInfoTitle": "번들 분석의 중요성",
     "analyzerInfoDesc": "어떤 라이브러리가 번들을 비대하게 만드는지 시각화합니다. moment.js, lodash 전체 import 등 숨겨진 비용을 발견하세요.",
-    "analyzerLabel": "Bundle Analyzer Demo",
+    "analyzerLabel": "번들 분석기 데모",
     "analyzerButtonShow": "번들 분석 시뮬레이션",
     "analyzerButtonHide": "분석 결과 숨기기",
     "analyzerResultTitle": "번들 구성 (Total: 1.2MB)",
@@ -463,9 +496,24 @@
         "percent": 44.3,
         "issue": true
       },
-      { "name": "moment.js", "size": "288KB", "percent": 24, "issue": true },
-      { "name": "axios", "size": "14KB", "percent": 1.2, "issue": false },
-      { "name": "app code", "size": "239KB", "percent": 19.8, "issue": false }
+      {
+        "name": "moment.js",
+        "size": "288KB",
+        "percent": 24,
+        "issue": true
+      },
+      {
+        "name": "axios",
+        "size": "14KB",
+        "percent": 1.2,
+        "issue": false
+      },
+      {
+        "name": "앱 코드",
+        "size": "239KB",
+        "percent": 19.8,
+        "issue": false
+      }
     ],
     "libraryOptimizations": [
       {
@@ -512,7 +560,7 @@
     "whyInfoTitle": "프론트엔드 에러는 숨는다",
     "whyInfoDesc": "프론트엔드 에러는 서버 로그에 남지 않습니다. 사용자가 \"안 돼요\"라고 할 때 이미 수많은 에러가 발생했을 수 있습니다. 실시간 에러 수집 시스템은 프로덕션 필수입니다.",
     "featuresTitle": "Sentry 핵심 기능",
-    "featuresLabel": "Feature Explorer",
+    "featuresLabel": "기능 탐색기",
     "integrationTitle": "React 프로젝트에 Sentry 연동",
     "sourcemapTitle": "Source Map 업로드",
     "sourcemapInfoTitle": "원본 코드 라인 표시",
@@ -521,7 +569,7 @@
     "bestPracticesTitle": "모니터링 Best Practices",
     "sentryFeatures": [
       {
-        "name": "Error Tracking",
+        "name": "에러 추적",
         "desc": "JS 에러 자동 수집 및 분류",
         "details": [
           "스택 트레이스 + 소스맵으로 원본 코드 위치 표시",
@@ -548,7 +596,7 @@
         ]
       },
       {
-        "name": "Session Replay",
+        "name": "세션 리플레이",
         "desc": "사용자 세션 재생 (유료)",
         "details": [
           "에러 발생 전후 화면 녹화",
@@ -592,16 +640,16 @@
     "introInfoTitle": "Google의 성능 지표",
     "introInfoDesc": "Core Web Vitals는 LCP, INP, CLS 세 가지 지표로 구성됩니다. 실제 사용자 경험을 측정하며, SEO 랭킹에도 영향을 미칩니다.",
     "metricsTitle": "지표 상세 분석",
-    "metricsLabel": "Web Vitals Explorer",
+    "metricsLabel": "Web Vitals 탐색기",
     "collectionTitle": "Web Vitals 수집 코드",
     "environmentTitle": "측정 환경의 차이",
-    "environmentInfoTitle": "Lab vs Field Data",
+    "environmentInfoTitle": "Lab 데이터 vs Field 데이터",
     "environmentInfoDesc": "Lab Data (Lighthouse)는 시뮬레이션 환경이고, Field Data (RUM)는 실제 사용자 환경입니다. 두 데이터 모두 중요하지만, Field Data가 실제 사용자 경험을 반영합니다.",
     "labDataTitle": "Lab Data (Synthetic)",
     "fieldDataTitle": "Field Data (RUM)",
     "dashboardTitle": "성능 대시보드 구축",
     "priorityTitle": "성능 개선 우선순위",
-    "priorityLabel": "Optimization Priority",
+    "priorityLabel": "최적화 우선순위",
     "goodLabel": "Good",
     "poorLabel": "Poor",
     "improvementLabel": "개선 방법",
@@ -688,7 +736,7 @@
         "link": "analytics.google.com"
       },
       {
-        "tool": "Custom Dashboard",
+        "tool": "커스텀 대시보드",
         "desc": "Grafana + Prometheus로 자체 구축",
         "link": "grafana.com"
       }
@@ -714,7 +762,11 @@
         "action": "FCP 개선: Critical CSS 인라인",
         "impact": "Medium"
       },
-      { "priority": 5, "action": "TTFB 개선: CDN/캐싱 최적화", "impact": "Low" }
+      {
+        "priority": 5,
+        "action": "TTFB 개선: CDN/캐싱 최적화",
+        "impact": "Low"
+      }
     ]
   }
 }

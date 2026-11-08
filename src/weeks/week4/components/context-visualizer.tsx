@@ -2,6 +2,7 @@
 
 import { motion } from 'motion/react';
 import { useState } from 'react';
+import { Trans, useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
 
 type Mode = 'drilling' | 'context';
@@ -55,6 +56,7 @@ const TreeNode = ({
 );
 
 export const ContextVisualizer = () => {
+  const { t } = useTranslation('week4');
   const [mode, setMode] = useState<Mode>('drilling');
 
   return (
@@ -89,7 +91,7 @@ export const ContextVisualizer = () => {
       <div className="relative flex flex-col items-center">
         {mode === 'context' && (
           <svg className="absolute top-5 left-1/2 ml-[56px] w-20 h-[140px] z-0 overflow-visible">
-            <title>Context Value Teleportation Path</title>
+            <title>{t('context.visualizer.pathTitle')}</title>
             <motion.path
               d="M 0 0 C 40 0, 40 140, 0 140"
               fill="none"
@@ -131,15 +133,19 @@ export const ContextVisualizer = () => {
       <div className="mt-6 text-center text-sm text-gray-600 bg-gray-50 p-4 rounded-lg">
         {mode === 'drilling' ? (
           <p>
-            <strong className="text-red-600">Prop Drilling:</strong> Data must
-            be passed through every intermediate component (Layout), even if
-            they don't use it.
+            <Trans
+              t={t}
+              i18nKey="context.visualizer.drillingDesc"
+              components={{ strong: <strong className="text-red-600" /> }}
+            />
           </p>
         ) : (
           <p>
-            <strong className="text-green-600">Context API:</strong> Data is
-            "teleported" directly from the Provider (App) to the Consumer
-            (UserProfile), bypassing intermediates.
+            <Trans
+              t={t}
+              i18nKey="context.visualizer.contextDesc"
+              components={{ strong: <strong className="text-green-600" /> }}
+            />
           </p>
         )}
       </div>

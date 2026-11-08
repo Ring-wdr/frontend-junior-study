@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslation } from '@/i18n/client';
+import { Trans, useTranslation } from '@/i18n/client';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
@@ -29,27 +29,35 @@ export const IntegrationTestingSection = () => {
             >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>No backend dependency:</strong>{' '}
-                  {t('integrationTesting.whatIsMSW.whyMSW.noBackend')}
+                  <Trans
+                    t={t}
+                    i18nKey="integrationTesting.whatIsMSW.whyMSW.noBackend"
+                  />
                 </li>
                 <li>
-                  <strong>Realistic scenarios:</strong>{' '}
-                  {t('integrationTesting.whatIsMSW.whyMSW.realistic')}
+                  <Trans
+                    t={t}
+                    i18nKey="integrationTesting.whatIsMSW.whyMSW.realistic"
+                  />
                 </li>
                 <li>
-                  <strong>Deterministic tests:</strong>{' '}
-                  {t('integrationTesting.whatIsMSW.whyMSW.deterministic')}
+                  <Trans
+                    t={t}
+                    i18nKey="integrationTesting.whatIsMSW.whyMSW.deterministic"
+                  />
                 </li>
                 <li>
-                  <strong>Fast execution:</strong>{' '}
-                  {t('integrationTesting.whatIsMSW.whyMSW.fast')}
+                  <Trans
+                    t={t}
+                    i18nKey="integrationTesting.whatIsMSW.whyMSW.fast"
+                  />
                 </li>
               </ul>
             </InfoBox>
 
             <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
               <p className="text-sm text-gray-700">
-                <strong>Flow:</strong> {t('integrationTesting.whatIsMSW.flow')}
+                <Trans t={t} i18nKey="integrationTesting.whatIsMSW.flow" />
               </p>
             </div>
           </div>
@@ -272,26 +280,34 @@ test('shows loading spinner during slow requests', async () => {
             >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Test the happy path:</strong>{' '}
-                  {t('integrationTesting.bestPractices.guidelines.happyPath')}
+                  <Trans
+                    t={t}
+                    i18nKey="integrationTesting.bestPractices.guidelines.happyPath"
+                  />
                 </li>
                 <li>
-                  <strong>Test error cases:</strong>{' '}
-                  {t('integrationTesting.bestPractices.guidelines.errorCases')}
+                  <Trans
+                    t={t}
+                    i18nKey="integrationTesting.bestPractices.guidelines.errorCases"
+                  />
                 </li>
                 <li>
-                  <strong>Test edge cases:</strong>{' '}
-                  {t('integrationTesting.bestPractices.guidelines.edgeCases')}
+                  <Trans
+                    t={t}
+                    i18nKey="integrationTesting.bestPractices.guidelines.edgeCases"
+                  />
                 </li>
                 <li>
-                  <strong>Use MSW:</strong>{' '}
-                  {t('integrationTesting.bestPractices.guidelines.useMSW')}
+                  <Trans
+                    t={t}
+                    i18nKey="integrationTesting.bestPractices.guidelines.useMSW"
+                  />
                 </li>
                 <li>
-                  <strong>Don't mock components:</strong>{' '}
-                  {t(
-                    'integrationTesting.bestPractices.guidelines.dontMockComponents',
-                  )}
+                  <Trans
+                    t={t}
+                    i18nKey="integrationTesting.bestPractices.guidelines.dontMockComponents"
+                  />
                 </li>
               </ul>
             </InfoBox>

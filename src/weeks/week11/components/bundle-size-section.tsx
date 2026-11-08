@@ -9,7 +9,7 @@ import {
   Scissors,
 } from 'lucide-react';
 import { useState } from 'react';
-import { useTranslation } from '@/i18n/client';
+import { Trans, useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 type BundleNode = {
@@ -272,17 +272,22 @@ export function BundleSizeSection() {
             <li className="flex items-start gap-2">
               <span className="text-red-500">✗</span>
               <span>
-                <code className="bg-white/70 px-1 rounded">lodash</code> 전체
-                import
+                <Trans
+                  t={t}
+                  i18nKey="bundleSize.avoidPatterns.lodashFull"
+                  components={{
+                    code: <code className="bg-white/70 px-1 rounded" />,
+                  }}
+                />
               </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-red-500">✗</span>
-              <span>사용하지 않는 아이콘 라이브러리 전체 import</span>
+              <span>{t('bundleSize.avoidPatterns.iconLibrary')}</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-red-500">✗</span>
-              <span>Polyfill 무분별 포함</span>
+              <span>{t('bundleSize.avoidPatterns.polyfill')}</span>
             </li>
           </ul>
         </div>
@@ -322,7 +327,7 @@ export function BundleSizeSection() {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-green-500">✓</span>
-              <span>browserslist 기반 자동 polyfill</span>
+              <span>{t('bundleSize.recommendedPatterns.browserslist')}</span>
             </li>
           </ul>
         </div>
@@ -332,7 +337,7 @@ export function BundleSizeSection() {
         <div className="flex items-center gap-2 mb-3">
           <Code2 className="text-cyan-400" size={18} />
           <span className="text-cyan-400 text-sm font-medium">
-            Tree Shaking 예시
+            {t('bundleSize.treeShakingExample')}
           </span>
         </div>
         <div className="overflow-hidden rounded-lg">
@@ -406,12 +411,14 @@ module.exports = withBundleAnalyzer({});
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {[
-          { label: '< 200KB', desc: '초기 JS (gzip)', color: 'green' },
-          { label: '< 1s', desc: 'JS 파싱 시간', color: 'green' },
-          { label: 'ESM', desc: 'Tree-shake 가능', color: 'blue' },
-          { label: 'Side Effects', desc: 'false 명시', color: 'purple' },
-        ].map((item) => (
+        {(
+          [
+            { id: 'initialJs', label: '< 200KB', color: 'green' },
+            { id: 'parseTime', label: '< 1s', color: 'green' },
+            { id: 'esm', label: 'ESM', color: 'blue' },
+            { id: 'sideEffects', label: 'Side Effects', color: 'purple' },
+          ] as const
+        ).map((item) => (
           <div
             key={item.label}
             className={`bg-${item.color}-50 rounded-lg p-3 text-center border border-${item.color}-200`}
@@ -419,7 +426,9 @@ module.exports = withBundleAnalyzer({});
             <p className={`text-lg font-bold text-${item.color}-600`}>
               {item.label}
             </p>
-            <p className="text-xs text-gray-500 mt-1">{item.desc}</p>
+            <p className="text-xs text-gray-500 mt-1">
+              {t(`bundleSize.targets.${item.id}`)}
+            </p>
           </div>
         ))}
       </div>

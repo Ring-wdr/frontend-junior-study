@@ -3,12 +3,14 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { Bitcoin, CreditCard, Wallet } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
 type StrategyType = 'credit-card' | 'paypal' | 'crypto';
 
 export const StrategyVisualizer = () => {
+  const { t } = useTranslation('week2');
   const [strategy, setStrategy] = useState<StrategyType>('credit-card');
   const [processing, setProcessing] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success'>('idle');
@@ -60,7 +62,8 @@ context.pay(100);`;
               : 'border-gray-200',
           )}
         >
-          <CreditCard className="w-5 h-5" /> Credit Card
+          <CreditCard className="w-5 h-5" />{' '}
+          {t('behavioral.strategy.visualizer.creditCard')}
         </button>
         <button
           type="button"
@@ -84,14 +87,17 @@ context.pay(100);`;
               : 'border-gray-200',
           )}
         >
-          <Bitcoin className="w-5 h-5" /> Crypto
+          <Bitcoin className="w-5 h-5" />{' '}
+          {t('behavioral.strategy.visualizer.crypto')}
         </button>
       </div>
 
       <div className="flex flex-col md:flex-row gap-4 items-center bg-gray-100 rounded-xl p-4 border border-gray-200">
         <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-w-[120px] text-center">
           <div className="text-2xl font-bold text-gray-800">$100.00</div>
-          <div className="text-xs text-gray-400">Total Amount</div>
+          <div className="text-xs text-gray-400">
+            {t('behavioral.strategy.visualizer.totalAmount')}
+          </div>
         </div>
 
         <div className="flex-1 flex flex-col items-center min-h-12 justify-center">
@@ -107,7 +113,7 @@ context.pay(100);`;
               >
                 <div className="w-8 h-8 rounded-full border-4 border-blue-500 border-t-transparent animate-spin" />
                 <span className="text-xs text-gray-500 font-mono">
-                  Processing...
+                  {t('behavioral.strategy.visualizer.processing')}
                 </span>
               </motion.div>
             ) : status === 'success' ? (
@@ -134,7 +140,9 @@ context.pay(100);`;
                     />
                   </svg>
                 </div>
-                <span className="text-xs font-bold">PAID</span>
+                <span className="text-xs font-bold">
+                  {t('behavioral.strategy.visualizer.paid')}
+                </span>
               </motion.div>
             ) : (
               <motion.div
@@ -172,7 +180,7 @@ context.pay(100);`;
           disabled={processing || status === 'success'}
           className="px-6 py-2 bg-gray-900 text-white rounded-lg text-sm font-medium hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95"
         >
-          Pay Context
+          {t('behavioral.strategy.visualizer.pay')}
         </button>
       </div>
 

@@ -3,9 +3,11 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { Play, Plus } from 'lucide-react';
 import { useState } from 'react';
+import { Trans, useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const ClosureDemo = () => {
+  const { t } = useTranslation('week1');
   const [counters, setCounters] = useState<number[]>([]);
   const [showExplanation, setShowExplanation] = useState(false);
 
@@ -56,7 +58,7 @@ counter2(); // 1 (separate closure!)`}
           className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg font-medium text-sm hover:bg-green-600 transition-all"
         >
           <Plus className="w-4 h-4" />
-          Create Counter
+          {t('scopeClosure.demo.createCounter')}
         </button>
         <button
           type="button"
@@ -64,7 +66,7 @@ counter2(); // 1 (separate closure!)`}
           data-testid="closure-reset"
           className="px-4 py-2 bg-gray-500 text-white rounded-lg font-medium text-sm hover:bg-gray-600 transition-all"
         >
-          Reset
+          {t('scopeClosure.demo.reset')}
         </button>
       </div>
 
@@ -76,13 +78,16 @@ counter2(); // 1 (separate closure!)`}
           className="bg-purple-50 p-4 rounded-xl border border-purple-200"
         >
           <h4 className="font-semibold text-purple-900 mb-2">
-            Each counter has its own closure!
+            {t('scopeClosure.demo.explanationTitle')}
           </h4>
           <p className="text-sm text-purple-800">
-            Every time you call{' '}
-            <code className="bg-purple-100 px-1 rounded">createCounter()</code>,
-            a new closure is created with its own private{' '}
-            <code className="bg-purple-100 px-1 rounded">count</code> variable.
+            <Trans
+              t={t}
+              i18nKey="scopeClosure.demo.explanation"
+              components={{
+                code: <code className="bg-purple-100 px-1 rounded" />,
+              }}
+            />
           </p>
         </motion.div>
       )}
@@ -112,12 +117,12 @@ counter2(); // 1 (separate closure!)`}
                   className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-purple-500 text-white rounded-lg font-medium text-sm hover:bg-purple-600 transition-all"
                 >
                   <Play className="w-3 h-3" />
-                  Increment
+                  {t('scopeClosure.demo.increment')}
                 </button>
               </div>
               <div className="mt-4 pt-4 border-t border-purple-200">
                 <div className="text-xs text-purple-700 font-mono">
-                  Private scope:
+                  {t('scopeClosure.demo.privateScope')}
                 </div>
                 <div className="text-xs bg-purple-900 text-purple-100 p-2 rounded mt-1 font-mono">
                   count = {value}
@@ -130,16 +135,16 @@ counter2(); // 1 (separate closure!)`}
 
       {counters.length === 0 && (
         <div className="text-center text-sm text-gray-500 py-6">
-          Click "Create Counter" to see closures in action!
+          {t('scopeClosure.demo.emptyHint')}
         </div>
       )}
 
       <div className="bg-green-50 p-4 rounded-xl border border-green-200">
-        <h4 className="font-semibold text-green-900 mb-2">Key Concept</h4>
+        <h4 className="font-semibold text-green-900 mb-2">
+          {t('scopeClosure.demo.keyConcept.title')}
+        </h4>
         <p className="text-sm text-green-800">
-          A closure is a function that remembers its outer variables and can
-          access them even when the outer function has finished executing. Each
-          closure maintains its own independent copy of the variables.
+          {t('scopeClosure.demo.keyConcept.content')}
         </p>
       </div>
     </div>

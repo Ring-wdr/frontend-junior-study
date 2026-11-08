@@ -40,6 +40,19 @@
         "label": "Pages:",
         "description": "Specific instances of templates that show what a UI looks like with real representative content in place."
       }
+    },
+    "visualizer": {
+      "logo": "Logo",
+      "logIn": "Log In",
+      "searchPlaceholder": "Search...",
+      "controlsTitle": "Design System Controls",
+      "controlsDescription": "Change Atoms to update the entire UI.",
+      "color": "Color",
+      "radius": "Radius",
+      "levelAtom": "Level 1: Atom",
+      "levelMolecule": "Level 2: Molecule",
+      "levelOrganism": "Level 3: Organism",
+      "button": "Button"
     }
   },
   "container": {
@@ -65,6 +78,12 @@
     "evolutionWithHooks": {
       "title": "Evolution with Hooks",
       "content": "In modern React, this pattern involves Custom Hooks. Instead of wrapping a component in a Container, we can extract the business logic into a hook (e.g., useDogImages) and use it directly within the component. This achieves the same separation of concerns with less nesting."
+    },
+    "visualizer": {
+      "renderingSkeleton": "Rendering UI skeleton...",
+      "requestNewData": "Request New Data",
+      "stateManager": "State Manager",
+      "summary": "The <strong>Container</strong> (left) handles <em>how things work</em> (fetching data, state), while the <strong>Presentational</strong> (right) handles <em>how things look</em> (rendering HTML/CSS). This separation makes components more reusable and easier to test."
     }
   },
   "patterns": {
@@ -82,6 +101,37 @@
     "hoc": {
       "title": "Higher-Order Components (HOC)",
       "description": "A function that takes a component and returns a new component, typically to inject props or logic. Popular in the past (e.g., Redux connect), but often replaced by Hooks today to avoid \"Wrapper Hell\"."
+    },
+    "visualizer": {
+      "mouseHint": "Move your mouse here",
+      "keyCharacteristic": "Key Characteristic:",
+      "compound": {
+        "heading": "Implicit State Sharing",
+        "tabs": {
+          "account": "Account",
+          "privacy": "Privacy",
+          "settings": "Settings"
+        },
+        "accountTitle": "Account Settings",
+        "accountDescription": "Manage your account details here.",
+        "privacyTitle": "Privacy Options",
+        "privacyDescription": "Control who sees your profile.",
+        "settingsTitle": "General Settings",
+        "settingsDescription": "App preferences and configurations.",
+        "characteristic": "Sub-components (Tab, TabPanel) communicate via Context provided by parent (Tabs), not via direct prop passing from user."
+      },
+      "renderProps": {
+        "heading": "Logic Reuse via Function Prop",
+        "characteristic": "The component doesn't decide <em>what</em> to render, but delegates that decision to the <code>render</code> prop function, sharing its internal state (x, y)."
+      },
+      "hoc": {
+        "heading": "Logic Injection (Wrapper)",
+        "startLoading": "Start Loading",
+        "stopLoading": "Stop Loading",
+        "passes": "Passes <code>isLoading={{value}}</code> to HOC",
+        "messages": ["Message 1", "Message 2", "Message 3"],
+        "characteristic": "A function that takes a component and returns a new component (\"Wrapper\"), injecting new props or behavior (like the Spinner)."
+      }
     }
   },
   "performance": {
@@ -98,6 +148,24 @@
     "virtualization": {
       "title": "Virtualization (Windowing)",
       "description": "Rendering only the items in a list that are currently visible (plus a small buffer) instead of the entire list. This significantly improves performance for large datasets. Libraries like react-window or react-virtualized are commonly used."
+    },
+    "visualizer": {
+      "nonMemoized": "I re-render every time parent updates!",
+      "rendered": "Rendered",
+      "memoized": "I only render when MY props change.",
+      "stable": "Stable",
+      "triggerUpdate": "Trigger Parent Update (Count: {{count}})",
+      "reset": "Reset",
+      "withoutMemo": "Without Memoization",
+      "withMemo": "With React.memo",
+      "flashNote": "*Colored backgrounds flash on render. Notice red side flashes on every button click.",
+      "enableVirtualization": "Enable Virtualization",
+      "domNodes": "DOM Nodes: <strong>{{visible}}</strong> / {{total}}",
+      "item": "Item {{n}}",
+      "virtualOn": "Currently rendering only visible items + buffer. Fast!",
+      "virtualOff": "Rendering ALL 1000 items. Check the DOM node count!",
+      "memoDescription": "Preventing unnecessary re-renders.",
+      "virtualDescription": "Rendering only what is visible."
     }
   }
 }

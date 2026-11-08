@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslation } from '@/i18n/client';
+import { Trans, useTranslation } from '@/i18n/client';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
@@ -60,16 +60,22 @@ export const TestingFundamentalsSection = () => {
             >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Unit Tests:</strong>{' '}
-                  {t('fundamentals.pyramid.whyPyramid.unitTests')}
+                  <Trans
+                    t={t}
+                    i18nKey="fundamentals.pyramid.whyPyramid.unitTests"
+                  />
                 </li>
                 <li>
-                  <strong>Integration Tests:</strong>{' '}
-                  {t('fundamentals.pyramid.whyPyramid.integrationTests')}
+                  <Trans
+                    t={t}
+                    i18nKey="fundamentals.pyramid.whyPyramid.integrationTests"
+                  />
                 </li>
                 <li>
-                  <strong>E2E Tests:</strong>{' '}
-                  {t('fundamentals.pyramid.whyPyramid.e2eTests')}
+                  <Trans
+                    t={t}
+                    i18nKey="fundamentals.pyramid.whyPyramid.e2eTests"
+                  />
                 </li>
               </ul>
             </InfoBox>
@@ -181,8 +187,7 @@ test('user can login and view dashboard', async ({ page }) => {
 
             <div className="bg-red-50 p-4 rounded-lg border border-red-200">
               <p className="text-sm text-gray-700">
-                <strong>When to use E2E tests:</strong>{' '}
-                {t('fundamentals.e2eTesting.whenToUse')}
+                <Trans t={t} i18nKey="fundamentals.e2eTesting.whenToUse" />
               </p>
             </div>
           </div>
@@ -200,16 +205,16 @@ test('user can login and view dashboard', async ({ page }) => {
               </p>
               <ul className="space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Unit Tests: 60-70%</strong> -{' '}
-                  {t('fundamentals.testRatio.unitTests')}
+                  <Trans t={t} i18nKey="fundamentals.testRatio.unitTests" />
                 </li>
                 <li>
-                  <strong>Integration Tests: 20-30%</strong> -{' '}
-                  {t('fundamentals.testRatio.integrationTests')}
+                  <Trans
+                    t={t}
+                    i18nKey="fundamentals.testRatio.integrationTests"
+                  />
                 </li>
                 <li>
-                  <strong>E2E Tests: 5-10%</strong> -{' '}
-                  {t('fundamentals.testRatio.e2eTests')}
+                  <Trans t={t} i18nKey="fundamentals.testRatio.e2eTests" />
                 </li>
               </ul>
             </div>

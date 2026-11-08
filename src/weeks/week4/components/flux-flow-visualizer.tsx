@@ -3,11 +3,14 @@
 import { motion } from 'motion/react';
 import { ArrowRight, Database, Layout, RefreshCw, Send } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
 
 const STEP_CENTERS = [12.5, 37.5, 62.5, 87.5] as const;
+const STATUS_KEYS = ['idle', 'action', 'dispatcher', 'store'] as const;
 
 export const FluxFlowVisualizer = () => {
+  const { t } = useTranslation('week4');
   const [activeStep, setActiveStep] = useState<0 | 1 | 2 | 3>(0);
   const [count, setCount] = useState(0);
 
@@ -46,9 +49,11 @@ export const FluxFlowVisualizer = () => {
   return (
     <div className="bg-white p-4 sm:p-6 rounded-xl border border-gray-200 overflow-hidden">
       <div className="flex flex-wrap justify-between items-center gap-2 mb-2">
-        <h4 className="font-semibold text-gray-900">Flux Data Flow Cycle</h4>
+        <h4 className="font-semibold text-gray-900">
+          {t('fluxRedux.visualizer.title')}
+        </h4>
         <div className="text-sm font-mono bg-gray-100 px-3 py-1 rounded-full text-gray-600">
-          Store Count:{' '}
+          {t('fluxRedux.visualizer.storeCount')}{' '}
           <span className="font-bold text-purple-600">{count}</span>
         </div>
       </div>
@@ -104,12 +109,12 @@ export const FluxFlowVisualizer = () => {
         >
           {activeStep === 0 ? (
             <>
-              Click to Dispatch
+              {t('fluxRedux.visualizer.dispatch')}
               <ArrowRight size={16} />
             </>
           ) : (
             <>
-              Processing...
+              {t('fluxRedux.visualizer.processing')}
               <RefreshCw size={16} className="animate-spin" />
             </>
           )}
@@ -117,10 +122,7 @@ export const FluxFlowVisualizer = () => {
       </div>
 
       <p className="text-center text-xs text-gray-500 mt-4 h-4">
-        {activeStep === 0 && 'Waiting for user interaction...'}
-        {activeStep === 1 && 'View creates an Action payload...'}
-        {activeStep === 2 && 'Dispatcher receives Action...'}
-        {activeStep === 3 && 'Store updates state & notifies View...'}
+        {t(`fluxRedux.visualizer.status.${STATUS_KEYS[activeStep]}`)}
       </p>
     </div>
   );
