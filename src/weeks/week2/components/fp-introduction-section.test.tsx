@@ -14,7 +14,10 @@ describe('FpIntroductionSection', () => {
     const { container } = render(<FpIntroductionSection />);
 
     expect(
-      within(container).getByRole('heading', { level: 3, name: /Immutability/ }),
+      within(container).getByRole('heading', {
+        level: 3,
+        name: /Immutability/,
+      }),
     ).toBeInTheDocument();
     expect(container.textContent).not.toContain('Introduction to FP');
   });

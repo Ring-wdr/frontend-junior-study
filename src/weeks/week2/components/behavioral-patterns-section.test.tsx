@@ -14,7 +14,10 @@ describe('BehavioralPatternsSection', () => {
     const { container } = render(<BehavioralPatternsSection />);
 
     expect(
-      within(container).getByRole('heading', { level: 3, name: /Observer\ Pattern/ }),
+      within(container).getByRole('heading', {
+        level: 3,
+        name: /Observer\ Pattern/,
+      }),
     ).toBeInTheDocument();
     expect(container.textContent).not.toContain('Behavioral Patterns');
   });

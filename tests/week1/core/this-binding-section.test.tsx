@@ -6,28 +6,49 @@ import {
   screen,
   within,
 } from '@testing-library/react';
-import type { ReactNode } from 'react';
+import { createElement, type ReactNode } from 'react';
 import { ThisBindingSection } from '../../../src/weeks/week1/components/this-binding-section';
 
-rs.mock('motion/react', async () => {
-  const actual =
-    await rs.importActual<typeof import('motion/react')>('motion/react');
-  const MotionDiv = ({
-    children,
-    className,
-  }: {
-    children?: ReactNode;
-    className?: string;
-  }) => <div className={className}>{children}</div>;
+rs.mock('motion/react', () => {
+  const motionOnlyProps = new Set([
+    'initial',
+    'animate',
+    'exit',
+    'transition',
+    'layout',
+    'layoutId',
+    'variants',
+    'whileHover',
+    'whileTap',
+    'whileInView',
+    'viewport',
+    'style',
+  ]);
+  const motion = new Proxy(
+    {},
+    {
+      get:
+        (_target, tag: string) =>
+        ({
+          children,
+          ...props
+        }: { children?: ReactNode } & Record<string, unknown>) =>
+          createElement(
+            tag,
+            Object.fromEntries(
+              Object.entries(props).filter(
+                ([key]) => !motionOnlyProps.has(key),
+              ),
+            ),
+            children,
+          ),
+    },
+  );
   return {
-    ...actual,
+    motion,
     AnimatePresence: ({ children }: { children?: ReactNode }) => (
       <>{children}</>
     ),
-    motion: new Proxy(actual.motion, {
-      get: (target, key, receiver) =>
-        key === 'div' ? MotionDiv : Reflect.get(target, key, receiver),
-    }),
   };
 });
 
@@ -35,12 +56,12 @@ describe('ThisBindingSection', () => {
   afterEach(() => {
     cleanup();
   });
-  test('renders section with badge and title', () => {
+  test('renders the badge but leaves the title to the MDX heading', () => {
     render(<ThisBindingSection />);
 
     const section = screen.getByTestId('this-binding-section');
-    expect(within(section).getByText(/5 Rules of/)).toBeInTheDocument();
     expect(within(section).getByText('Core')).toBeInTheDocument();
+    expect(within(section).queryByText(/5 Rules of/)).not.toBeInTheDocument();
   });
 
   test('renders ThisBindingDemo with example buttons', () => {

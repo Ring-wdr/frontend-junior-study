@@ -14,7 +14,6 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   images: { unoptimized: true },
   reactCompiler: true,
-  typescript: { ignoreBuildErrors: true },
   i18n: {
     locales: [...locales],
     defaultLocale,

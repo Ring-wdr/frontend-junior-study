@@ -14,7 +14,10 @@ describe('CreationPatternsSection', () => {
     const { container } = render(<CreationPatternsSection />);
 
     expect(
-      within(container).getByRole('heading', { level: 3, name: /Singleton\ Pattern/ }),
+      within(container).getByRole('heading', {
+        level: 3,
+        name: /Singleton\ Pattern/,
+      }),
     ).toBeInTheDocument();
     expect(container.textContent).not.toContain('Creation Patterns');
   });

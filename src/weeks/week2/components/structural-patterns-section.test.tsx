@@ -14,7 +14,10 @@ describe('StructuralPatternsSection', () => {
     const { container } = render(<StructuralPatternsSection />);
 
     expect(
-      within(container).getByRole('heading', { level: 3, name: /Decorator\ Pattern/ }),
+      within(container).getByRole('heading', {
+        level: 3,
+        name: /Decorator\ Pattern/,
+      }),
     ).toBeInTheDocument();
     expect(container.textContent).not.toContain('Structural Patterns');
   });

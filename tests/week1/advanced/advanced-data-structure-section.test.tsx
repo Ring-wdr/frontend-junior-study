@@ -6,28 +6,49 @@ import {
   screen,
   within,
 } from '@testing-library/react';
-import type { ReactNode } from 'react';
+import { createElement, type ReactNode } from 'react';
 import { AdvancedDataStructureSection } from '../../../src/weeks/week1/components/advanced-data-structure-section';
 
-rs.mock('motion/react', async () => {
-  const actual =
-    await rs.importActual<typeof import('motion/react')>('motion/react');
-  const MotionDiv = ({
-    children,
-    className,
-  }: {
-    children?: ReactNode;
-    className?: string;
-  }) => <div className={className}>{children}</div>;
+rs.mock('motion/react', () => {
+  const motionOnlyProps = new Set([
+    'initial',
+    'animate',
+    'exit',
+    'transition',
+    'layout',
+    'layoutId',
+    'variants',
+    'whileHover',
+    'whileTap',
+    'whileInView',
+    'viewport',
+    'style',
+  ]);
+  const motion = new Proxy(
+    {},
+    {
+      get:
+        (_target, tag: string) =>
+        ({
+          children,
+          ...props
+        }: { children?: ReactNode } & Record<string, unknown>) =>
+          createElement(
+            tag,
+            Object.fromEntries(
+              Object.entries(props).filter(
+                ([key]) => !motionOnlyProps.has(key),
+              ),
+            ),
+            children,
+          ),
+    },
+  );
   return {
-    ...actual,
+    motion,
     AnimatePresence: ({ children }: { children?: ReactNode }) => (
       <>{children}</>
     ),
-    motion: new Proxy(actual.motion, {
-      get: (target, key, receiver) =>
-        key === 'div' ? MotionDiv : Reflect.get(target, key, receiver),
-    }),
   };
 });
 
@@ -35,14 +56,14 @@ describe('AdvancedDataStructureSection', () => {
   afterEach(() => {
     cleanup();
   });
-  test('renders section with badge and title', () => {
+  test('renders the badge but leaves the title to the MDX heading', () => {
     render(<AdvancedDataStructureSection />);
 
     const section = screen.getByTestId('advanced-data-structure-section');
-    expect(
-      within(section).getByText('Advanced Data Structures'),
-    ).toBeInTheDocument();
     expect(within(section).getByText('Data Structures')).toBeInTheDocument();
+    expect(
+      within(section).queryByText('Advanced Data Structures'),
+    ).not.toBeInTheDocument();
   });
 
   test('renders description', () => {
@@ -82,23 +103,21 @@ describe('AdvancedDataStructureSection', () => {
     ).toBeGreaterThanOrEqual(2);
   });
 
-  test('clicking Set tab shows Set content', () => {
+  test('clicking Set tab shows Set content', async () => {
     render(<AdvancedDataStructureSection />);
 
     const section = screen.getByTestId('advanced-data-structure-section');
     const buttons = within(section).getAllByRole('button');
-    const setTab = buttons.find((btn) => btn.textContent?.trim() === 'set');
+    const setTab = buttons.find((btn) => btn.textContent?.trim() === 'Set');
     if (!setTab) throw new Error('Set tab not found');
     fireEvent.click(setTab);
 
-    // Check that Set content is displayed (text may be split across elements)
     expect(
-      within(section).getAllByText(/Stores/i).length +
-        within(section).getAllByText(/unique/i).length,
-    ).toBeGreaterThanOrEqual(2);
+      await within(section).findByText(/Stores unique values/i),
+    ).toBeInTheDocument();
   });
 
-  test('clicking WeakMap/Ref tab shows Weak References content', () => {
+  test('clicking WeakMap/Ref tab shows Weak References content', async () => {
     render(<AdvancedDataStructureSection />);
 
     const section = screen.getByTestId('advanced-data-structure-section');
@@ -107,14 +126,11 @@ describe('AdvancedDataStructureSection', () => {
     if (!weakTab) throw new Error('WeakMap/Ref tab not found');
     fireEvent.click(weakTab);
 
-    // Check that WeakMap/WeakSet content is displayed
-    expect(
-      within(section).getAllByText(/WeakMap/i).length +
-        within(section).getAllByText(/Keys must/i).length,
-    ).toBeGreaterThanOrEqual(2);
+    expect(await within(section).findByText(/Keys must/i)).toBeInTheDocument();
+    expect(within(section).getAllByText(/WeakMap/i).length).toBeGreaterThan(1);
   });
 
-  test('displays Garbage Collection Visualizer in weak references tab', () => {
+  test('displays Garbage Collection Visualizer in weak references tab', async () => {
     render(<AdvancedDataStructureSection />);
 
     const section = screen.getByTestId('advanced-data-structure-section');
@@ -123,10 +139,10 @@ describe('AdvancedDataStructureSection', () => {
     });
     fireEvent.click(weakTab);
 
-    // Check for Garbage Collection Visualizer text
     expect(
-      within(section).getAllByText(/Garbage/i).length +
-        within(section).getAllByText(/Collection/i).length,
-    ).toBeGreaterThanOrEqual(1);
+      await within(section).findByRole('button', {
+        name: /Run Garbage Collector/,
+      }),
+    ).toBeInTheDocument();
   });
 });

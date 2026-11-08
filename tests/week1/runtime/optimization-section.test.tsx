@@ -1,27 +1,48 @@
 import { afterEach, describe, expect, rs, test } from '@rstest/core';
 import { cleanup, render, screen, within } from '@testing-library/react';
-import type { ReactNode } from 'react';
+import { createElement, type ReactNode } from 'react';
 import { OptimizationSection } from '../../../src/weeks/week1/components/optimization-section';
 
-rs.mock('motion/react', async () => {
-  const actual =
-    await rs.importActual<typeof import('motion/react')>('motion/react');
-  const MotionDiv = ({
-    children,
-    className,
-  }: {
-    children?: ReactNode;
-    className?: string;
-  }) => <div className={className}>{children}</div>;
+rs.mock('motion/react', () => {
+  const motionOnlyProps = new Set([
+    'initial',
+    'animate',
+    'exit',
+    'transition',
+    'layout',
+    'layoutId',
+    'variants',
+    'whileHover',
+    'whileTap',
+    'whileInView',
+    'viewport',
+    'style',
+  ]);
+  const motion = new Proxy(
+    {},
+    {
+      get:
+        (_target, tag: string) =>
+        ({
+          children,
+          ...props
+        }: { children?: ReactNode } & Record<string, unknown>) =>
+          createElement(
+            tag,
+            Object.fromEntries(
+              Object.entries(props).filter(
+                ([key]) => !motionOnlyProps.has(key),
+              ),
+            ),
+            children,
+          ),
+    },
+  );
   return {
-    ...actual,
+    motion,
     AnimatePresence: ({ children }: { children?: ReactNode }) => (
       <>{children}</>
     ),
-    motion: new Proxy(actual.motion, {
-      get: (target, key, receiver) =>
-        key === 'div' ? MotionDiv : Reflect.get(target, key, receiver),
-    }),
   };
 });
 
@@ -29,12 +50,14 @@ describe('OptimizationSection', () => {
   afterEach(() => {
     cleanup();
   });
-  test('renders section with badge and title', () => {
+  test('renders the badge but leaves the title to the MDX heading', () => {
     render(<OptimizationSection />);
 
     const section = screen.getByTestId('optimization-section');
-    expect(within(section).getByText('V8 Hidden Classes')).toBeInTheDocument();
     expect(within(section).getByText('Advanced')).toBeInTheDocument();
+    expect(
+      within(section).queryByText('V8 Hidden Classes'),
+    ).not.toBeInTheDocument();
   });
 
   test('renders description', () => {
