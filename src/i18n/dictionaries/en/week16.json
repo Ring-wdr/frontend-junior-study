@@ -87,6 +87,7 @@
     "functionDesc": "Define function parameter and return types",
     "interfaceVsTypeTitle": "interface vs type selection criteria",
     "interfaceVsTypeInfoTitle": "When to use which?",
+    "comparisonFeature": "Feature",
     "interfaceVsTypeInfoDesc": "interface is suitable for object structure definition and extension, while type is suitable for complex type combinations like unions and tuples. Generally, interface for objects, type for everything else is recommended.",
     "visualizer": {
       "title": "Type Inference Playground",
@@ -155,6 +156,8 @@
     "narrowingInfoDesc": "When using Union types, you need to narrow the type to use methods specific to each type. Use typeof, instanceof, in operator, etc.",
     "assertionTitle": "Type Assertion",
     "assertionDesc": "Way to tell the compiler about the type",
+    "visualizerSectionTitle": "Union & Intersection Visualizer",
+    "assertionWarningTitle": "Warning",
     "assertionWarning": "Warning: Overusing type assertions breaks type safety. Use type guards when possible.",
     "visualizer": {
       "title": "Type Set Visualization",

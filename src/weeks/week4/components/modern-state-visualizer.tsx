@@ -1,21 +1,23 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 
 const ZustandDemo = () => {
+  const { t } = useTranslation('week4');
   const [bears, setBears] = useState(0); // Simulating store
   return (
     <div className="space-y-2">
       <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg flex justify-between items-center">
         <span className="text-sm font-semibold text-orange-900">
-          Bears: {bears}
+          {t('modern.visualizer.bears', { count: bears })}
         </span>
         <button
           type="button"
           onClick={() => setBears((b) => b + 1)}
           className="px-3 py-1 bg-orange-500 text-white text-xs rounded hover:bg-orange-600"
         >
-          Add Bear
+          {t('modern.visualizer.addBear')}
         </button>
       </div>
       <div className="bg-gray-800 p-3 rounded-lg text-xs font-mono text-gray-200 overflow-x-auto">
@@ -36,19 +38,20 @@ const ZustandDemo = () => {
 };
 
 const RecoilDemo = () => {
+  const { t } = useTranslation('week4');
   const [count, setCount] = useState(0); // Simulating atom
   return (
     <div className="space-y-2">
       <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg flex justify-between items-center">
         <span className="text-sm font-semibold text-blue-900">
-          Count: {count}
+          {t('modern.visualizer.count', { count })}
         </span>
         <button
           type="button"
           onClick={() => setCount((c) => c + 1)}
           className="px-3 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600"
         >
-          Increment
+          {t('modern.visualizer.increment')}
         </button>
       </div>
       <div className="bg-gray-800 p-3 rounded-lg text-xs font-mono text-gray-200 overflow-x-auto">
@@ -65,6 +68,7 @@ const RecoilDemo = () => {
 };
 
 export const ModernStateVisualizer = () => {
+  const { t } = useTranslation('week4');
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div className="border border-gray-200 rounded-xl p-4">
@@ -73,7 +77,7 @@ export const ModernStateVisualizer = () => {
             🐻 Zustand
           </h4>
           <span className="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">
-            Simple Hooks
+            {t('modern.visualizer.simpleHooks')}
           </span>
         </div>
         <ZustandDemo />
@@ -85,7 +89,7 @@ export const ModernStateVisualizer = () => {
             ⚛️ Recoil
           </h4>
           <span className="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">
-            Atoms & Selectors
+            {t('modern.visualizer.atomsSelectors')}
           </span>
         </div>
         <RecoilDemo />

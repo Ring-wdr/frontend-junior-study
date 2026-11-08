@@ -14,6 +14,7 @@
     "best-practices": "Best Practices",
     "privacy": "Privacy"
   },
+  "interactiveDemo": "Interactive Demo",
   "monitoringIntro": {
     "badge": "Monitoring",
     "title": "Why Production Monitoring Matters",
@@ -46,7 +47,32 @@
       { "term": "SLA (Service Level Agreement)", "definition": "A service level contract", "example": "Credit compensation when SLO is not met" }
     ],
     "noteTitle": "Key Takeaway",
-    "note": "Production monitoring is about prevention, not reaction. The goal is to detect warning signals before errors occur and fix issues before users feel the impact."
+    "note": "Production monitoring is about prevention, not reaction. The goal is to detect warning signals before errors occur and fix issues before users feel the impact.",
+    "demoTitle": "Incident Response Simulator",
+    "incidentTimeline": {
+      "withMonitoring": "With Monitoring",
+      "withoutMonitoring": "Without Monitoring",
+      "triggerError": "Trigger Error",
+      "reset": "Reset",
+      "milestones": {
+        "errorOccurs": "Error Occurs",
+        "alertFires": "Alert Fires",
+        "teamResponds": "Team Responds",
+        "resolved": "Resolved"
+      },
+      "timing": {
+        "with-monitoring": {
+          "mttd": "2 min",
+          "mttr": "5 min"
+        },
+        "without-monitoring": {
+          "mttd": "45 min",
+          "mttr": "3 hours"
+        }
+      },
+      "mttdDesc": "Mean Time to Detect",
+      "mttrDesc": "Mean Time to Resolve"
+    }
   },
   "sentry": {
     "badge": "Sentry",
@@ -68,7 +94,15 @@
     "sourceMapTitle": "Source Map Upload",
     "sourceMapCode": "// vite.config.ts\nimport { sentryVitePlugin } from \"@sentry/vite-plugin\";\n\nexport default defineConfig({\n  build: {\n    sourcemap: true,\n  },\n  plugins: [\n    sentryVitePlugin({\n      org: \"my-org\",\n      project: \"my-project\",\n      authToken: process.env.SENTRY_AUTH_TOKEN,\n    }),\n  ],\n});",
     "noteTitle": "Caution",
-    "note": "Always filter sensitive PII from data sent to Sentry using the beforeSend callback. Logging emails, passwords, or credit card info can lead to serious security issues."
+    "note": "Always filter sensitive PII from data sent to Sentry using the beforeSend callback. Logging emails, passwords, or credit card info can lead to serious security issues.",
+    "demoTitle": "Error Tracking Simulator",
+    "errorTracker": {
+      "clear": "Clear",
+      "dashboard": "Error Dashboard",
+      "totalEvents": "{{count}} total events",
+      "empty": "Trigger errors to see them grouped here",
+      "distribution": "Error Distribution"
+    }
   },
   "sessionReplay": {
     "badge": "Session Replay",
@@ -92,7 +126,22 @@
       { "concern": "Media", "solution": "blockAllMedia to block images/video capture" }
     ],
     "noteTitle": "Performance Impact",
-    "note": "Session replay continuously captures DOM changes, which can affect performance. In production, set replaysSessionSampleRate low and capture 100% only on errors."
+    "note": "Session replay continuously captures DOM changes, which can affect performance. In production, set replaysSessionSampleRate low and capture 100% only on errors.",
+    "demoTitle": "Session Replay Demo",
+    "replayVisualizer": {
+      "play": "Play",
+      "pause": "Pause",
+      "events": {
+        "pageLoad": "Page Load",
+        "scrollDown": "Scroll Down",
+        "clickProduct": "Click Product",
+        "navigate": "Navigate",
+        "addToCart": "Add to Cart",
+        "formInput": "Form Input",
+        "checkout": "Checkout",
+        "error": "Error!"
+      }
+    }
   },
   "rum": {
     "badge": "RUM",
@@ -119,7 +168,23 @@
     "sendingTitle": "Sending to Analytics",
     "sendingCode": "// Send to Google Analytics\ngtag(\"event\", metric.name, {\n  event_category: \"Web Vitals\",\n  value: Math.round(\n    metric.name === \"CLS\"\n      ? metric.value * 1000\n      : metric.value\n  ),\n  event_label: metric.id,\n  non_interaction: true,\n});",
     "noteTitle": "Sampling Strategy",
-    "note": "Collecting performance data from every user in production can get expensive fast. Set tracesSampleRate to 0.1 (10%) for a reasonable sampling rate. Statistically meaningful data can still be gathered with proper sampling."
+    "note": "Collecting performance data from every user in production can get expensive fast. Set tracesSampleRate to 0.1 (10%) for a reasonable sampling rate. Statistically meaningful data can still be gathered with proper sampling.",
+    "demoTitle": "Web Vitals Simulator",
+    "webVitals": {
+      "reset": "Reset",
+      "scenarios": {
+        "good": "Good Performance",
+        "slowLoading": "Slow Loading",
+        "layoutShifts": "Layout Shifts",
+        "slowInteractions": "Slow Interactions"
+      },
+      "ratings": {
+        "good": "Good",
+        "needs-improvement": "Needs Improvement",
+        "poor": "Poor"
+      },
+      "thresholds": "{{name}} Thresholds"
+    }
   },
   "analytics": {
     "badge": "Analytics",
@@ -141,7 +206,18 @@
     "customEventTitle": "Custom Event Tracking",
     "customEventCode": "type AnalyticsEvent =\n  | { type: \"product_view\"; productId: string }\n  | { type: \"add_to_cart\"; productId: string;\n      quantity: number; price: number }\n  | { type: \"checkout_complete\"; orderId: string;\n      value: number };\n\nexport function track(event: AnalyticsEvent) {\n  switch (event.type) {\n    case \"product_view\":\n      window.gtag(\"event\", \"view_item\", {\n        items: [{ item_id: event.productId }],\n      });\n      break;\n    case \"add_to_cart\":\n      window.gtag(\"event\", \"add_to_cart\", {\n        currency: \"KRW\",\n        value: event.price * event.quantity,\n      });\n      break;\n  }\n}",
     "noteTitle": "Privacy Policy",
-    "note": "Always comply with privacy laws (GDPR, CCPA) when collecting analytics data. In SPAs, disable send_page_view and manually send page views on route changes for accurate data."
+    "note": "Always comply with privacy laws (GDPR, CCPA) when collecting analytics data. In SPAs, disable send_page_view and manually send page views on route changes for accurate data.",
+    "demoTitle": "Event Stream Demo",
+    "eventStream": {
+      "searchPlaceholder": "Search products...",
+      "productImage": "Product Image",
+      "buyNow": "Buy Now",
+      "learnMore": "Learn More",
+      "signUp": "Sign Up Free",
+      "streamTitle": "Event Stream",
+      "clear": "Clear",
+      "empty": "Interact with the website to see events"
+    }
   },
   "alerts": {
     "badge": "Alerts",
@@ -170,7 +246,23 @@
       "Optimize alert rules through weekly reviews"
     ],
     "noteTitle": "Incident Response",
-    "note": "The key to alerting is sending only actionable alerts. Alerting on every error leads to fatigue and missed critical alerts. Establish severity classification and escalation policies upfront."
+    "note": "The key to alerting is sending only actionable alerts. Alerting on every error leads to fatigue and missed critical alerts. Establish severity classification and escalation policies upfront.",
+    "demoTitle": "Alert Rule Simulator",
+    "alertRule": {
+      "errorRate": "Error Rate",
+      "checkAlerts": "Check Alerts",
+      "reset": "Reset",
+      "rulesTitle": "Alert Rules",
+      "feedTitle": "Notification Feed",
+      "sentTo": "Sent to {{channel}}",
+      "rules": {
+        "baseline": "Error rate above baseline",
+        "elevated": "Error rate elevated - investigate",
+        "critical": "Error rate critical - immediate action",
+        "degradation": "Service degradation - page on-call"
+      },
+      "fatigueWarning": "<strong>Alert Fatigue Warning:</strong> Too many alerts firing simultaneously can desensitize the team. Consider tuning thresholds and using escalation policies."
+    }
   },
   "bestPractices": {
     "badge": "Best Practices",
@@ -190,7 +282,29 @@
     ],
     "classificationCode": "enum ErrorSeverity {\n  LOW = \"low\",\n  MEDIUM = \"medium\",\n  HIGH = \"high\",\n  CRITICAL = \"critical\",\n}\n\nfunction classifyError(error: Error): ErrorSeverity {\n  if (error.name === \"TypeError\"\n    && error.message.includes(\"fetch\")) {\n    return ErrorSeverity.LOW;\n  }\n  if (error.message.includes(\"payment\")) {\n    return ErrorSeverity.CRITICAL;\n  }\n  if (error.message.includes(\"auth\")) {\n    return ErrorSeverity.HIGH;\n  }\n  return ErrorSeverity.MEDIUM;\n}",
     "noteTitle": "Error Handling Checklist",
-    "note": "Always verify: global handlers configured, Error Boundaries layered, error severity classification in place, network error retry logic, user-friendly error messages, and Sentry context enrichment."
+    "note": "Always verify: global handlers configured, Error Boundaries layered, error severity classification in place, network error retry logic, user-friendly error messages, and Sentry context enrichment.",
+    "usageLabel": "Usage",
+    "demoTitle": "Classification Flow Simulator",
+    "errorClassification": {
+      "reset": "Reset",
+      "nodes": {
+        "errorIn": "Error In",
+        "analysis": "Analysis",
+        "severity": "Severity",
+        "action": "Action"
+      },
+      "actions": {
+        "logOnly": "Log only",
+        "fallbackUi": "Show fallback UI",
+        "alertErrorPage": "Alert + error page",
+        "rollback": "Emergency rollback"
+      },
+      "received": "Error Received",
+      "analyzing": "Analyzing Error...",
+      "classified": "Classified",
+      "actionTaken": "Action Taken",
+      "errorMessage": "Error: {{message}}"
+    }
   },
   "privacy": {
     "badge": "Privacy",
@@ -210,6 +324,20 @@
     "deletionTitle": "Data Deletion Requests",
     "deletionCode": "async function handleDataDeletionRequest(\n  userId: string\n) {\n  // Delete Sentry user data\n  await fetch(\n    `https://sentry.io/api/0/projects/.../users/${userId}/`,\n    {\n      method: \"DELETE\",\n      headers: {\n        Authorization: `Bearer ${SENTRY_API_TOKEN}`,\n      },\n    }\n  );\n\n  // Delete analytics data\n  await deleteUserAnalyticsData(userId);\n}",
     "noteTitle": "Legal Considerations",
-    "note": "Privacy regulations vary by region (Korea PIPA, EU GDPR, US CCPA, etc.). Check the laws applicable to your service's target regions and always consult your legal team before introducing monitoring tools. Organizational processes (DPO appointment, impact assessment) are just as important as technical implementation."
+    "note": "Privacy regulations vary by region (Korea PIPA, EU GDPR, US CCPA, etc.). Check the laws applicable to your service's target regions and always consult your legal team before introducing monitoring tools. Organizational processes (DPO appointment, impact assessment) are just as important as technical implementation.",
+    "demoTitle": "Data Masking Demo",
+    "dataMasking": {
+      "toggle": "Masking: {{state}}",
+      "fields": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "ssn": "SSN",
+        "ipAddress": "IP Address",
+        "creditCard": "Credit Card"
+      },
+      "safe": "Safe to send to monitoring service",
+      "warning": "WARNING: PII data exposed in raw form"
+    }
   }
 }

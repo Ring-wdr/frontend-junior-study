@@ -211,7 +211,15 @@
       "on": "ON",
       "off": "OFF",
       "outputTitle": "Generated Output",
-      "outputSummary": "{{teamCount}} teams configured, host mode: {{host}}"
+      "outputSummary": "{{teamCount}} teams configured, host mode: {{host}}",
+      "modes": {
+        "buildTime": "Build-time"
+      },
+      "hosts": {
+        "build-time": "npm package integration",
+        "federation": "module federation host",
+        "single-spa": "single-spa root config"
+      }
     },
     "finalNoteTitle": "Final Summary",
     "finalNote": "Micro frontends and monorepo are most effective together: MFE defines deployment boundaries, and monorepo standardizes how those boundaries are operated."

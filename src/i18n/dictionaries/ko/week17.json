@@ -79,7 +79,14 @@
     "conceptDesc": "MCP는 AI 에이전트가 데이터베이스, 브라우저, 외부 API 등에 안전하게 접근할 수 있게 해주는 표준 프로토콜입니다. MCP 서버가 특정 기능을 제공하고, AI 에이전트가 이를 호출합니다.",
     "architectureLabel": "MCP 아키텍처",
     "visualizer": {
-      "description": "AI 에이전트가 MCP 서버를 통해 다양한 외부 서비스(데이터베이스, 브라우저, GitHub 등)에 접근합니다."
+      "description": "AI 에이전트가 MCP 서버를 통해 다양한 외부 서비스(데이터베이스, 브라우저, GitHub 등)에 접근합니다.",
+      "agent": "AI 에이전트",
+      "server": "MCP 서버",
+      "servers": {
+        "database": "데이터베이스",
+        "browser": "브라우저",
+        "github": "GitHub"
+      }
     },
     "serversTitle": "주요 MCP 서버",
     "servers": [

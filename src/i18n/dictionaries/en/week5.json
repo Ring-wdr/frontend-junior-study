@@ -99,7 +99,8 @@
       "concurrentNotice": "Notice the 'Spinner' stays smooth. The list acts efficiently in the background without freezing the UI.",
       "heavyOutput": "Heavy Render Output (50 items x 1ms)",
       "codePattern": "Code Pattern",
-      "startTyping": "Start typing..."
+      "startTyping": "Start typing...",
+      "item": "Item: {{text}}"
     }
   },
   "react19": {
@@ -517,7 +518,6 @@
       "triggers": "Triggers",
       "static": "Static",
       "dynamic": "Dynamic",
-
       "componentMount": "Component Mount",
       "windowFocus": "Window Focus",
       "autoReval": "Auto Reval",
@@ -767,12 +767,13 @@
       "loadContent": "Load Content",
       "loading": "Loading...",
       "reloadToTry": "Reload to try again",
-      "clsDetected": "CLS Detected! (Score: {score})",
+      "clsDetected": "CLS Detected! (Score: {{score}})",
       "stableLayout": "Stable Layout (CLS: 0)",
       "beautifulLandscapes": "Beautiful Landscapes",
       "description1": "Discover the most breathtaking views from around the world. From mountain peaks to serene lakes, nature offers endless inspiration.",
       "description2": "Photography allows us to capture these moments forever. It's not just about the gear, but about the perspective.",
-      "whyItMatters": "<strong>Why it matters:</strong> In the <strong>Unoptimized</strong> mode, the browser doesn't know the image height until it downloads. This causes content below it to jump (CLS), frustrating users. <strong>Next/Image</strong> (Optimized) enforces width/height props to reserve space immediately, ensuring a stable layout even while loading."
+      "whyItMatters": "<strong>Why it matters:</strong> In the <strong>Unoptimized</strong> mode, the browser doesn't know the image height until it downloads. This causes content below it to jump (CLS), frustrating users. <strong>Next/Image</strong> (Optimized) enforces width/height props to reserve space immediately, ensuring a stable layout even while loading.",
+      "imageAlt": "Landscape"
     }
   }
 }

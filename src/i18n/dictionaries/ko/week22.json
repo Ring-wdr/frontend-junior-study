@@ -14,6 +14,7 @@
     "best-practices": "모범 사례",
     "privacy": "개인정보 보호"
   },
+  "interactiveDemo": "인터랙티브 데모",
   "monitoringIntro": {
     "badge": "모니터링",
     "title": "프로덕션 모니터링이 필요한 이유",
@@ -46,7 +47,32 @@
       { "term": "SLA (Service Level Agreement)", "definition": "서비스 수준 계약", "example": "SLO 미달 시 크레딧 보상 약정" }
     ],
     "noteTitle": "핵심 정리",
-    "note": "프로덕션 모니터링은 '사후 대응'이 아닌 '사전 예방'을 위한 것입니다. 에러가 발생하기 전에 경고 신호를 파악하고, 사용자가 불편을 느끼기 전에 문제를 해결하는 것이 목표입니다."
+    "note": "프로덕션 모니터링은 '사후 대응'이 아닌 '사전 예방'을 위한 것입니다. 에러가 발생하기 전에 경고 신호를 파악하고, 사용자가 불편을 느끼기 전에 문제를 해결하는 것이 목표입니다.",
+    "demoTitle": "장애 대응 시뮬레이터",
+    "incidentTimeline": {
+      "withMonitoring": "모니터링 있음",
+      "withoutMonitoring": "모니터링 없음",
+      "triggerError": "에러 발생시키기",
+      "reset": "초기화",
+      "milestones": {
+        "errorOccurs": "에러 발생",
+        "alertFires": "알림 발생",
+        "teamResponds": "팀 대응",
+        "resolved": "해결 완료"
+      },
+      "timing": {
+        "with-monitoring": {
+          "mttd": "2분",
+          "mttr": "5분"
+        },
+        "without-monitoring": {
+          "mttd": "45분",
+          "mttr": "3시간"
+        }
+      },
+      "mttdDesc": "평균 탐지 시간",
+      "mttrDesc": "평균 해결 시간"
+    }
   },
   "sentry": {
     "badge": "Sentry",
@@ -68,7 +94,15 @@
     "sourceMapTitle": "소스맵 업로드",
     "sourceMapCode": "// vite.config.ts\nimport { sentryVitePlugin } from \"@sentry/vite-plugin\";\n\nexport default defineConfig({\n  build: {\n    sourcemap: true,\n  },\n  plugins: [\n    sentryVitePlugin({\n      org: \"my-org\",\n      project: \"my-project\",\n      authToken: process.env.SENTRY_AUTH_TOKEN,\n    }),\n  ],\n});",
     "noteTitle": "주의사항",
-    "note": "Sentry에 전송되는 데이터에 민감한 개인정보(PII)가 포함되지 않도록 beforeSend 콜백에서 반드시 필터링하세요. 이메일, 비밀번호, 신용카드 정보 등이 로깅되면 보안 문제가 발생할 수 있습니다."
+    "note": "Sentry에 전송되는 데이터에 민감한 개인정보(PII)가 포함되지 않도록 beforeSend 콜백에서 반드시 필터링하세요. 이메일, 비밀번호, 신용카드 정보 등이 로깅되면 보안 문제가 발생할 수 있습니다.",
+    "demoTitle": "에러 추적 시뮬레이터",
+    "errorTracker": {
+      "clear": "지우기",
+      "dashboard": "에러 대시보드",
+      "totalEvents": "총 {{count}}개 이벤트",
+      "empty": "에러를 발생시키면 여기에 그룹화되어 표시됩니다",
+      "distribution": "에러 분포"
+    }
   },
   "sessionReplay": {
     "badge": "Session Replay",
@@ -92,7 +126,22 @@
       { "concern": "미디어", "solution": "blockAllMedia로 이미지/비디오 차단 가능" }
     ],
     "noteTitle": "성능 영향",
-    "note": "세션 리플레이는 DOM 변경을 지속적으로 캡처하므로 성능에 영향을 줄 수 있습니다. 프로덕션에서는 replaysSessionSampleRate를 낮게 설정하고, 에러 발생 시에만 100% 캡처하는 전략을 권장합니다."
+    "note": "세션 리플레이는 DOM 변경을 지속적으로 캡처하므로 성능에 영향을 줄 수 있습니다. 프로덕션에서는 replaysSessionSampleRate를 낮게 설정하고, 에러 발생 시에만 100% 캡처하는 전략을 권장합니다.",
+    "demoTitle": "세션 리플레이 데모",
+    "replayVisualizer": {
+      "play": "재생",
+      "pause": "일시정지",
+      "events": {
+        "pageLoad": "페이지 로드",
+        "scrollDown": "스크롤 다운",
+        "clickProduct": "상품 클릭",
+        "navigate": "페이지 이동",
+        "addToCart": "장바구니 담기",
+        "formInput": "폼 입력",
+        "checkout": "결제",
+        "error": "에러!"
+      }
+    }
   },
   "rum": {
     "badge": "RUM",
@@ -119,7 +168,23 @@
     "sendingTitle": "분석 서비스로 전송",
     "sendingCode": "// Google Analytics로 전송\ngtag(\"event\", metric.name, {\n  event_category: \"Web Vitals\",\n  value: Math.round(\n    metric.name === \"CLS\"\n      ? metric.value * 1000\n      : metric.value\n  ),\n  event_label: metric.id,\n  non_interaction: true,\n});",
     "noteTitle": "샘플링 전략",
-    "note": "프로덕션 환경에서 모든 사용자의 성능 데이터를 수집하면 비용이 급증합니다. tracesSampleRate를 0.1(10%)로 설정하여 적절한 샘플링 비율을 유지하세요. 통계적으로 유의미한 데이터만 수집해도 충분합니다."
+    "note": "프로덕션 환경에서 모든 사용자의 성능 데이터를 수집하면 비용이 급증합니다. tracesSampleRate를 0.1(10%)로 설정하여 적절한 샘플링 비율을 유지하세요. 통계적으로 유의미한 데이터만 수집해도 충분합니다.",
+    "demoTitle": "Web Vitals 시뮬레이터",
+    "webVitals": {
+      "reset": "초기화",
+      "scenarios": {
+        "good": "양호한 성능",
+        "slowLoading": "느린 로딩",
+        "layoutShifts": "레이아웃 이동",
+        "slowInteractions": "느린 상호작용"
+      },
+      "ratings": {
+        "good": "좋음",
+        "needs-improvement": "개선 필요",
+        "poor": "나쁨"
+      },
+      "thresholds": "{{name}} 임계값"
+    }
   },
   "analytics": {
     "badge": "Analytics",
@@ -141,7 +206,18 @@
     "customEventTitle": "커스텀 이벤트 추적",
     "customEventCode": "type AnalyticsEvent =\n  | { type: \"product_view\"; productId: string }\n  | { type: \"add_to_cart\"; productId: string;\n      quantity: number; price: number }\n  | { type: \"checkout_complete\"; orderId: string;\n      value: number };\n\nexport function track(event: AnalyticsEvent) {\n  switch (event.type) {\n    case \"product_view\":\n      window.gtag(\"event\", \"view_item\", {\n        items: [{ item_id: event.productId }],\n      });\n      break;\n    case \"add_to_cart\":\n      window.gtag(\"event\", \"add_to_cart\", {\n        currency: \"KRW\",\n        value: event.price * event.quantity,\n      });\n      break;\n  }\n}",
     "noteTitle": "프라이버시 정책",
-    "note": "분석 데이터 수집 시 개인정보보호법과 GDPR 규정을 반드시 준수하세요. SPA에서는 send_page_view를 비활성화하고 라우트 변경 시 수동으로 페이지뷰를 전송해야 정확한 데이터를 수집할 수 있습니다."
+    "note": "분석 데이터 수집 시 개인정보보호법과 GDPR 규정을 반드시 준수하세요. SPA에서는 send_page_view를 비활성화하고 라우트 변경 시 수동으로 페이지뷰를 전송해야 정확한 데이터를 수집할 수 있습니다.",
+    "demoTitle": "이벤트 스트림 데모",
+    "eventStream": {
+      "searchPlaceholder": "상품 검색...",
+      "productImage": "상품 이미지",
+      "buyNow": "지금 구매",
+      "learnMore": "자세히 보기",
+      "signUp": "무료로 가입하기",
+      "streamTitle": "이벤트 스트림",
+      "clear": "지우기",
+      "empty": "웹사이트와 상호작용하면 이벤트가 표시됩니다"
+    }
   },
   "alerts": {
     "badge": "알림",
@@ -170,7 +246,23 @@
       "주간 리뷰를 통한 알림 규칙 최적화"
     ],
     "noteTitle": "인시던트 대응",
-    "note": "알림 시스템의 핵심은 '행동 가능한 알림'만 보내는 것입니다. 모든 에러를 알림으로 보내면 알림 피로도가 높아져 정작 중요한 알림을 놓칠 수 있습니다. 심각도 분류와 에스컬레이션 정책을 사전에 수립하세요."
+    "note": "알림 시스템의 핵심은 '행동 가능한 알림'만 보내는 것입니다. 모든 에러를 알림으로 보내면 알림 피로도가 높아져 정작 중요한 알림을 놓칠 수 있습니다. 심각도 분류와 에스컬레이션 정책을 사전에 수립하세요.",
+    "demoTitle": "알림 규칙 시뮬레이터",
+    "alertRule": {
+      "errorRate": "에러율",
+      "checkAlerts": "알림 확인",
+      "reset": "초기화",
+      "rulesTitle": "알림 규칙",
+      "feedTitle": "알림 피드",
+      "sentTo": "{{channel}} 채널로 전송됨",
+      "rules": {
+        "baseline": "에러율이 기준치를 초과함",
+        "elevated": "에러율 상승 - 조사 필요",
+        "critical": "에러율 위험 - 즉시 조치 필요",
+        "degradation": "서비스 성능 저하 - 온콜 호출"
+      },
+      "fatigueWarning": "<strong>알림 피로 경고:</strong> 너무 많은 알림이 동시에 발생하면 팀이 알림에 둔감해질 수 있습니다. 임계값을 조정하고 에스컬레이션 정책을 활용하는 것을 고려하세요."
+    }
   },
   "bestPractices": {
     "badge": "Best Practices",
@@ -190,7 +282,29 @@
     ],
     "classificationCode": "enum ErrorSeverity {\n  LOW = \"low\",\n  MEDIUM = \"medium\",\n  HIGH = \"high\",\n  CRITICAL = \"critical\",\n}\n\nfunction classifyError(error: Error): ErrorSeverity {\n  if (error.name === \"TypeError\"\n    && error.message.includes(\"fetch\")) {\n    return ErrorSeverity.LOW;\n  }\n  if (error.message.includes(\"payment\")) {\n    return ErrorSeverity.CRITICAL;\n  }\n  if (error.message.includes(\"auth\")) {\n    return ErrorSeverity.HIGH;\n  }\n  return ErrorSeverity.MEDIUM;\n}",
     "noteTitle": "에러 처리 체크리스트",
-    "note": "전역 핸들러 설정, Error Boundary 계층화, 에러 심각도 분류, 네트워크 에러 재시도 로직, 사용자 친화적 에러 메시지, Sentry 컨텍스트 추가를 반드시 점검하세요."
+    "note": "전역 핸들러 설정, Error Boundary 계층화, 에러 심각도 분류, 네트워크 에러 재시도 로직, 사용자 친화적 에러 메시지, Sentry 컨텍스트 추가를 반드시 점검하세요.",
+    "usageLabel": "사용 예시",
+    "demoTitle": "에러 분류 흐름 시뮬레이터",
+    "errorClassification": {
+      "reset": "초기화",
+      "nodes": {
+        "errorIn": "에러 수신",
+        "analysis": "분석",
+        "severity": "심각도",
+        "action": "조치"
+      },
+      "actions": {
+        "logOnly": "로그만 기록",
+        "fallbackUi": "폴백 UI 표시",
+        "alertErrorPage": "알림 + 에러 페이지",
+        "rollback": "긴급 롤백"
+      },
+      "received": "에러 수신됨",
+      "analyzing": "에러 분석 중...",
+      "classified": "분류 완료",
+      "actionTaken": "조치 실행",
+      "errorMessage": "에러: {{message}}"
+    }
   },
   "privacy": {
     "badge": "Privacy",
@@ -210,6 +324,20 @@
     "deletionTitle": "데이터 삭제 요청 처리",
     "deletionCode": "async function handleDataDeletionRequest(\n  userId: string\n) {\n  // Sentry 사용자 데이터 삭제\n  await fetch(\n    `https://sentry.io/api/0/projects/.../users/${userId}/`,\n    {\n      method: \"DELETE\",\n      headers: {\n        Authorization: `Bearer ${SENTRY_API_TOKEN}`,\n      },\n    }\n  );\n\n  // 분석 데이터 삭제\n  await deleteUserAnalyticsData(userId);\n}",
     "noteTitle": "법적 고려사항",
-    "note": "개인정보 보호 규정은 지역마다 다릅니다(한국 개인정보보호법, EU GDPR, 미국 CCPA 등). 서비스 대상 지역의 법률을 확인하고, 모니터링 도구 도입 시 반드시 법무팀과 협의하세요. 기술적 구현뿐 아니라 조직적 프로세스(데이터 보호 책임자 지정, 영향 평가 등)도 필요합니다."
+    "note": "개인정보 보호 규정은 지역마다 다릅니다(한국 개인정보보호법, EU GDPR, 미국 CCPA 등). 서비스 대상 지역의 법률을 확인하고, 모니터링 도구 도입 시 반드시 법무팀과 협의하세요. 기술적 구현뿐 아니라 조직적 프로세스(데이터 보호 책임자 지정, 영향 평가 등)도 필요합니다.",
+    "demoTitle": "데이터 마스킹 데모",
+    "dataMasking": {
+      "toggle": "마스킹: {{state}}",
+      "fields": {
+        "name": "이름",
+        "email": "이메일",
+        "phone": "전화번호",
+        "ssn": "주민등록번호",
+        "ipAddress": "IP 주소",
+        "creditCard": "신용카드"
+      },
+      "safe": "모니터링 서비스로 안전하게 전송할 수 있습니다",
+      "warning": "경고: 개인정보(PII)가 원본 그대로 노출되어 있습니다"
+    }
   }
 }

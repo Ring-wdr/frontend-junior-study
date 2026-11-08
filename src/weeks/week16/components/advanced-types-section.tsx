@@ -78,7 +78,7 @@ const person: Person = {
         </SubSection>
 
         <SubSection
-          title="Union & Intersection Visualizer"
+          title={t('advancedTypes.visualizerSectionTitle')}
           icon
           iconColor="purple"
         >
@@ -179,7 +179,11 @@ function processValue(value: string | null) {
             className="text-xs"
           />
 
-          <InfoBox variant="orange" title="Warning" className="mt-4">
+          <InfoBox
+            variant="orange"
+            title={t('advancedTypes.assertionWarningTitle')}
+            className="mt-4"
+          >
             <p className="text-sm leading-relaxed">
               {t('advancedTypes.assertionWarning')}
             </p>

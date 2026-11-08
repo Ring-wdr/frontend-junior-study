@@ -55,6 +55,18 @@
         "createAsyncThunk": "createAsyncThunk - Handles async operations elegantly",
         "immer": "Immer integration - Write \"mutating\" code that's actually immutable"
       }
+    },
+    "visualizer": {
+      "title": "Flux Data Flow Cycle",
+      "storeCount": "Store Count:",
+      "dispatch": "Click to Dispatch",
+      "processing": "Processing...",
+      "status": {
+        "idle": "Waiting for user interaction...",
+        "action": "View creates an Action payload...",
+        "dispatcher": "Dispatcher receives Action...",
+        "store": "Store updates state & notifies View..."
+      }
     }
   },
   "middleware": {
@@ -109,6 +121,23 @@
       "promise": {
         "title": "Redux Promise",
         "description": "Simple middleware that resolves Promise-based actions automatically. Useful when you want a lightweight alternative to Thunk."
+      }
+    },
+    "visualizer": {
+      "actionTypes": "Action Types",
+      "standardAction": "Standard Action",
+      "standardActionDesc": "Directly reaches reducer",
+      "thunkAction": "Thunk (Async)",
+      "thunkActionDesc": "Paused by middleware",
+      "empty": "No actions dispatched yet.",
+      "processing": "... processing ...",
+      "footer": "Middleware intercepts dispatched actions before they reach the reducer, enabling side effects like API calls and delays.",
+      "logs": {
+        "syncDispatch": "Dispatch: INCREMENT (Sync)",
+        "syncReduced": "Reducer: State updated immediately",
+        "asyncDispatch": "Dispatch: FETCH_USER_REQUEST (Thunk)",
+        "apiComplete": "Middleware: API Call Complete...",
+        "asyncSuccess": "Reducer: FETCH_USER_SUCCESS"
       }
     }
   },
@@ -212,6 +241,14 @@
         "recoil": "Recoil: React-concurrent-mode-ready apps with granular state",
         "zustand": "Zustand: Simple to medium apps prioritizing simplicity"
       }
+    },
+    "visualizer": {
+      "bears": "Bears: {{count}}",
+      "addBear": "Add Bear",
+      "count": "Count: {{count}}",
+      "increment": "Increment",
+      "simpleHooks": "Simple Hooks",
+      "atomsSelectors": "Atoms & Selectors"
     }
   },
   "advanced": {
@@ -407,6 +444,11 @@
         "title": "Missing Provider Error",
         "description": "Always add a check when consuming context to provide helpful errors:"
       }
+    },
+    "visualizer": {
+      "pathTitle": "Context Value Teleportation Path",
+      "drillingDesc": "<strong>Prop Drilling:</strong> Data must be passed through every intermediate component (Layout), even if they don't use it.",
+      "contextDesc": "<strong>Context API:</strong> Data is \"teleported\" directly from the Provider (App) to the Consumer (UserProfile), bypassing intermediates."
     }
   }
 }

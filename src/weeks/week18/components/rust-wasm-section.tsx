@@ -90,7 +90,7 @@ pub fn reverse_string(s: &str) -> String {
               <div className="flex items-center gap-2 mb-3">
                 <Box className="w-4 h-4 text-green-600" />
                 <span className="text-sm font-bold text-green-700">
-                  Rust Struct
+                  {t('rustWasm.structLabel')}
                 </span>
               </div>
               <CodeBlock

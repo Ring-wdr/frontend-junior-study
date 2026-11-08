@@ -151,6 +151,7 @@
     "basicTitle": "Basic Example: Number Calculation",
     "stringTitle": "String Handling",
     "structTitle": "Structs and Methods",
+    "structLabel": "Rust Struct",
     "jsUsage": "Usage in JavaScript",
     "externTitle": "Calling JavaScript Functions",
     "callingJs": "JS Function Bindings"

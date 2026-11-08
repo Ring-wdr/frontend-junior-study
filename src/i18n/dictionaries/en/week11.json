@@ -285,7 +285,6 @@
     "resetDemo": "Reset Demo",
     "headingSection": "Heading Section",
     "aboveTheFold": "Above the fold content (Always loaded)",
-    "image": "Image",
     "waitingForScroll": "Waiting for Scroll...",
     "endOfContent": "End of Content",
     "viewport": "Viewport",
@@ -310,7 +309,8 @@
         "description": "Fetch only what's needed via infinite scroll or pagination"
       }
     },
-    "warning": "Warning: Don't apply lazy loading to Above the Fold content. Loading LCP elements late degrades scores."
+    "warning": "<strong>Warning:</strong> Don't apply lazy loading to Above the Fold content. Loading LCP elements late degrades scores.",
+    "imageN": "Image {{id}}"
   },
   "imageOptimization": {
     "title": "Image Optimization (Biggest Impact!)",
@@ -355,7 +355,10 @@
       "preconnect": "Pre-establish CDN connections",
       "lazy": "Defer loading images outside viewport",
       "decoding": "Separate decoding with async"
-    }
+    },
+    "optimizedFormat": "Optimized ({{format}})",
+    "comparisonAria": "Original / optimized comparison",
+    "nextImageTitle": "Next.js Image Component"
   },
   "fontOptimization": {
     "title": "Font Optimization",

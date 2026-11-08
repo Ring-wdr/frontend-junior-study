@@ -6,7 +6,7 @@ import { useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export function ImageOptimizationSection() {
-  const { t } = useTranslation('week11');
+  const { t, raw } = useTranslation('week11');
   const [format, setFormat] = useState<'jpg' | 'webp' | 'avif'>('jpg');
   const [quality, setQuality] = useState(80);
   const [sliderPosition, setSliderPosition] = useState(50);
@@ -65,16 +65,18 @@ export function ImageOptimizationSection() {
         <div className="flex justify-between items-end gap-3 mb-6">
           <div>
             <h3 className="font-bold text-white flex items-center gap-2">
-              <Sliders size={18} className="text-pink-400" /> Image Optimization
-              Lab
+              <Sliders size={18} className="text-pink-400" />{' '}
+              {t('imageOptimization.simulatorTitle')}
             </h3>
             <p className="text-xs text-gray-400 mt-1">
-              Simulate compression savings and quality
+              {t('imageOptimization.simulatorDesc')}
             </p>
           </div>
           <div className="text-right">
             <div className="text-2xl font-bold text-green-400">-{savings}%</div>
-            <div className="text-xs text-gray-500">Size Reduction</div>
+            <div className="text-xs text-gray-500">
+              {t('imageOptimization.sizeReduction')}
+            </div>
           </div>
         </div>
 
@@ -83,7 +85,7 @@ export function ImageOptimizationSection() {
           <div className="space-y-4 bg-gray-800 p-4 rounded-lg h-fit">
             <div>
               <div className="text-xs text-gray-400 font-medium mb-2">
-                Format
+                {t('imageOptimization.format')}
               </div>
               <div className="grid grid-cols-3 gap-2">
                 {(['jpg', 'webp', 'avif'] as const).map((f) => (
@@ -108,7 +110,7 @@ export function ImageOptimizationSection() {
                 htmlFor={qualityId}
                 className="text-xs text-gray-400 font-medium mb-2 flex justify-between"
               >
-                <span>Quality</span>
+                <span>{t('imageOptimization.quality')}</span>
                 <span>{quality}%</span>
               </label>
               <input
@@ -124,11 +126,15 @@ export function ImageOptimizationSection() {
 
             <div className="pt-4 border-t border-gray-700 space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-gray-400">Original:</span>
+                <span className="text-gray-400">
+                  {t('imageOptimization.original')}
+                </span>
                 <span className="text-white font-mono">{originalSize} KB</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-gray-400 font-bold">Optimized:</span>
+                <span className="text-gray-400 font-bold">
+                  {t('imageOptimization.optimized')}
+                </span>
                 <span className="text-green-400 font-mono font-bold">
                   {optimizedSize} KB
                 </span>
@@ -142,7 +148,7 @@ export function ImageOptimizationSection() {
             ref={sliderRef}
             role="slider"
             tabIndex={0}
-            aria-label="Original / optimized comparison"
+            aria-label={t('imageOptimization.comparisonAria')}
             aria-valuemin={0}
             aria-valuemax={100}
             aria-valuenow={Math.round(sliderPosition)}
@@ -165,7 +171,9 @@ export function ImageOptimizationSection() {
               }}
             >
               <div className="absolute top-4 right-4 bg-black/60 text-white px-2 py-1 rounded text-xs backdrop-blur-sm">
-                Optimized ({format.toUpperCase()})
+                {t('imageOptimization.optimizedFormat', {
+                  format: format.toUpperCase(),
+                })}
               </div>
             </div>
 
@@ -179,7 +187,7 @@ export function ImageOptimizationSection() {
               }}
             >
               <div className="absolute top-4 left-4 bg-black/60 text-white px-2 py-1 rounded text-xs backdrop-blur-sm">
-                Original (JPEG)
+                {t('imageOptimization.originalJpeg')}
               </div>
             </div>
 
@@ -198,29 +206,33 @@ export function ImageOptimizationSection() {
         <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-5 border border-blue-100">
           <h3 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
             <Zap className="text-blue-600" size={20} />
-            차세대 포맷
+            {t('imageOptimization.nextGenFormats.title')}
           </h3>
           <div className="space-y-3">
             <div className="bg-white rounded-lg p-3">
               <div className="flex justify-between items-center mb-1">
-                <span className="font-medium">WebP</span>
+                <span className="font-medium">
+                  {t('imageOptimization.nextGenFormats.webp.name')}
+                </span>
                 <span className="text-xs text-green-600 bg-green-100 px-2 py-0.5 rounded">
-                  -25~35%
+                  {t('imageOptimization.nextGenFormats.webp.saving')}
                 </span>
               </div>
               <p className="text-xs text-gray-500">
-                JPEG/PNG 대비 훨씬 작은 용량, 모든 브라우저 지원
+                {t('imageOptimization.nextGenFormats.webp.description')}
               </p>
             </div>
             <div className="bg-white rounded-lg p-3">
               <div className="flex justify-between items-center mb-1">
-                <span className="font-medium">AVIF</span>
+                <span className="font-medium">
+                  {t('imageOptimization.nextGenFormats.avif.name')}
+                </span>
                 <span className="text-xs text-green-600 bg-green-100 px-2 py-0.5 rounded">
-                  -50%
+                  {t('imageOptimization.nextGenFormats.avif.saving')}
                 </span>
               </div>
               <p className="text-xs text-gray-500">
-                최신 포맷, 가장 작은 용량 (Chrome, Firefox 지원)
+                {t('imageOptimization.nextGenFormats.avif.description')}
               </p>
             </div>
           </div>
@@ -229,7 +241,7 @@ export function ImageOptimizationSection() {
         <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-5 border border-purple-100">
           <h3 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
             <Maximize className="text-purple-600" size={20} />
-            Responsive Images
+            {t('imageOptimization.responsiveImages.title')}
           </h3>
           <div className="bg-gray-900 rounded-lg p-3 overflow-x-auto">
             <div className="overflow-hidden rounded-lg">
@@ -259,7 +271,7 @@ export function ImageOptimizationSection() {
         <div className="flex items-center gap-2 mb-3">
           <Code2 className="text-green-400" size={18} />
           <span className="text-green-400 text-sm font-medium">
-            Next.js Image 컴포넌트
+            {t('imageOptimization.nextImageTitle')}
           </span>
         </div>
         <div className="overflow-hidden rounded-lg">
@@ -287,20 +299,12 @@ export function ImageOptimizationSection() {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {[
-          { label: 'preload', desc: 'LCP 이미지 미리 로드' },
-          { label: 'preconnect', desc: 'CDN 연결 미리 수립' },
-          { label: 'lazy', desc: 'viewport 밖 이미지 지연 로드' },
-          { label: 'decoding', desc: 'async로 디코딩 분리' },
-        ].map((item) => (
-          <div
-            key={item.label}
-            className="bg-gray-50 rounded-lg p-3 text-center"
-          >
-            <code className="text-sm text-pink-600 font-medium">
-              {item.label}
-            </code>
-            <p className="text-xs text-gray-500 mt-1">{item.desc}</p>
+        {(['preload', 'preconnect', 'lazy', 'decoding'] as const).map((hint) => (
+          <div key={hint} className="bg-gray-50 rounded-lg p-3 text-center">
+            <code className="text-sm text-pink-600 font-medium">{hint}</code>
+            <p className="text-xs text-gray-500 mt-1">
+              {t(`imageOptimization.hints.${hint}`)}
+            </p>
           </div>
         ))}
       </div>
@@ -308,15 +312,12 @@ export function ImageOptimizationSection() {
       <div className="bg-green-50 border border-green-200 rounded-lg p-4">
         <h4 className="font-semibold text-green-900 mb-2 flex items-center gap-2">
           <CheckCircle2 size={18} />
-          이미지 최적화 체크리스트
+          {t('imageOptimization.checklist.title')}
         </h4>
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-green-800">
-          <li>✓ WebP/AVIF 포맷 사용</li>
-          <li>✓ 적절한 크기로 리사이즈</li>
-          <li>✓ width/height 또는 aspect-ratio 지정</li>
-          <li>✓ LCP 이미지에 priority/preload</li>
-          <li>✓ Below the fold에 lazy loading</li>
-          <li>✓ CDN 활용</li>
+          {raw('imageOptimization.checklist.items').map((item) => (
+            <li key={item}>✓ {item}</li>
+          ))}
         </ul>
       </div>
     </div>

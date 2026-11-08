@@ -125,7 +125,7 @@ export const TypeSetVisualizer = () => {
             className="text-xs fill-gray-600"
             textAnchor="middle"
           >
-            Type A
+            {t('advancedTypes.visualizer.typeA')}
           </text>
           <text
             x="200"
@@ -133,7 +133,7 @@ export const TypeSetVisualizer = () => {
             className="text-xs fill-gray-600"
             textAnchor="middle"
           >
-            Type B
+            {t('advancedTypes.visualizer.typeB')}
           </text>
         </svg>
       </div>

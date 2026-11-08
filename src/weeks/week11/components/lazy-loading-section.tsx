@@ -3,10 +3,11 @@
 import { motion } from 'motion/react';
 import { ArrowDown, Code2, Image, Loader2, Monitor } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from '@/i18n/client';
+import { Trans, useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 function LazyViewport() {
+  const { t } = useTranslation('week11');
   const [items, setItems] = useState(() =>
     Array.from({ length: 12 }, (_, i) => ({ id: i + 1, loaded: false })),
   );
@@ -53,9 +54,11 @@ function LazyViewport() {
       className="h-full overflow-y-auto p-4 space-y-8 scroll-smooth"
     >
       <div className="text-center p-4 bg-gray-100 rounded-lg mb-8">
-        <h4 className="font-bold text-gray-800">Heading Section</h4>
+        <h4 className="font-bold text-gray-800">
+          {t('lazyLoading.headingSection')}
+        </h4>
         <p className="text-xs text-gray-500">
-          Above the fold content (Always loaded)
+          {t('lazyLoading.aboveTheFold')}
         </p>
       </div>
 
@@ -77,19 +80,23 @@ function LazyViewport() {
               className="text-white flex flex-col items-center"
             >
               <Image size={32} />
-              <span className="font-bold">Image {item.id}</span>
+              <span className="font-bold">
+                {t('lazyLoading.imageN', { id: item.id })}
+              </span>
             </motion.div>
           ) : (
             <div className="text-gray-400 flex flex-col items-center gap-2">
               <Loader2 size={24} className="animate-spin" />
-              <span className="text-xs">Waiting for Scroll...</span>
+              <span className="text-xs">
+                {t('lazyLoading.waitingForScroll')}
+              </span>
             </div>
           )}
         </div>
       ))}
 
       <div className="text-center p-8 text-gray-400 text-sm">
-        End of Content
+        {t('lazyLoading.endOfContent')}
       </div>
     </div>
   );
@@ -111,10 +118,10 @@ export function LazyLoadingSection() {
           <div>
             <h3 className="font-bold text-white flex items-center gap-2">
               <Monitor size={18} className="text-cyan-400" />{' '}
-              IntersectionObserver Simulator
+              {t('lazyLoading.simulatorTitle')}
             </h3>
             <p className="text-xs text-slate-400 mt-1">
-              Scroll down to see images load on demand
+              {t('lazyLoading.simulatorDesc')}
             </p>
           </div>
           <button
@@ -122,7 +129,7 @@ export function LazyLoadingSection() {
             onClick={() => setResetKey((k) => k + 1)}
             className="shrink-0 px-3 py-1.5 bg-slate-700 text-slate-200 text-xs rounded hover:bg-slate-600"
           >
-            Reset Demo
+            {t('lazyLoading.resetDemo')}
           </button>
         </div>
 
@@ -132,7 +139,7 @@ export function LazyLoadingSection() {
           {/* Visual Overlay for "Viewport" */}
           <div className="absolute top-0 left-0 w-full h-full pointer-events-none border-[4px] border-cyan-500/30 rounded-lg">
             <div className="absolute top-2 right-2 bg-cyan-500/80 text-white text-[10px] px-2 py-1 rounded font-mono">
-              Viewport
+              {t('lazyLoading.viewport')}
             </div>
           </div>
         </div>
@@ -143,7 +150,9 @@ export function LazyLoadingSection() {
           <div className="border border-gray-200 rounded-xl p-5">
             <div className="flex items-center gap-2 mb-3">
               <Image className="text-blue-600" size={20} />
-              <h4 className="font-bold text-gray-900">이미지 Lazy Loading</h4>
+              <h4 className="font-bold text-gray-900">
+                {t('lazyLoading.imageLazyLoading.title')}
+              </h4>
             </div>
             <div className="bg-gray-900 rounded-lg p-3 overflow-x-auto">
               <div className="overflow-hidden rounded-lg">
@@ -196,31 +205,33 @@ export function LazyLoadingSection() {
         <div className="bg-gray-50 rounded-xl p-5">
           <div className="flex items-center gap-2 mb-4">
             <Code2 className="text-gray-600" size={20} />
-            <h4 className="font-bold text-gray-900">Lazy Loading 유형</h4>
+            <h4 className="font-bold text-gray-900">
+              {t('lazyLoading.types.title')}
+            </h4>
           </div>
           <div className="space-y-4">
             <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
               <h5 className="font-semibold text-gray-900 mb-1 flex items-center gap-2">
-                <Image size={14} /> 이미지
+                <Image size={14} /> {t('lazyLoading.types.image.title')}
               </h5>
               <p className="text-xs text-gray-500">
-                loading="lazy" 속성 또는 IntersectionObserver 사용
+                {t('lazyLoading.types.image.description')}
               </p>
             </div>
             <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
               <h5 className="font-semibold text-gray-900 mb-1 flex items-center gap-2">
-                <Code2 size={14} /> 컴포넌트
+                <Code2 size={14} /> {t('lazyLoading.types.component.title')}
               </h5>
               <p className="text-xs text-gray-500">
-                React.lazy() + Suspense로 조건부 로드
+                {t('lazyLoading.types.component.description')}
               </p>
             </div>
             <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
               <h5 className="font-semibold text-gray-900 mb-1 flex items-center gap-2">
-                <ArrowDown size={14} /> 데이터
+                <ArrowDown size={14} /> {t('lazyLoading.types.data.title')}
               </h5>
               <p className="text-xs text-gray-500">
-                무한 스크롤, 페이지네이션으로 필요한 만큼만 fetch
+                {t('lazyLoading.types.data.description')}
               </p>
             </div>
           </div>
@@ -228,9 +239,7 @@ export function LazyLoadingSection() {
       </div>
 
       <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-800">
-        <strong>주의:</strong> Above the fold (첫 화면에 보이는 영역) 콘텐츠에는
-        lazy loading을 적용하지 마세요. LCP 요소가 늦게 로드되면 점수가
-        하락합니다.
+        <Trans t={t} i18nKey="lazyLoading.warning" />
       </div>
     </div>
   );

@@ -148,6 +148,7 @@
     "basicTitle": "기본 예제: 숫자 계산",
     "stringTitle": "문자열 처리",
     "structTitle": "구조체와 메서드",
+    "structLabel": "Rust 구조체",
     "jsUsage": "JavaScript에서 사용",
     "externTitle": "JavaScript 함수 호출하기",
     "callingJs": "JS 함수 바인딩"
