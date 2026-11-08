@@ -36,7 +36,7 @@
   },
   "basics": {
     "title": "GSAP 기본 문법",
-    "resetAll": "Reset All",
+    "resetAll": "모두 초기화",
     "to": {
       "title": "gsap.to()",
       "description": "현재 상태에서 지정한 값으로 애니메이션"
@@ -53,8 +53,8 @@
   "easing": {
     "title": "Easing (가속도)",
     "description": "애니메이션의 느낌을 결정하는 가장 중요한 요소입니다. \"빠르게 시작해서 부드럽게 멈추는\" 것이 UI 모션의 기본 원칙입니다.",
-    "selectEasing": "Select Easing",
-    "runAnimation": "Run Animation",
+    "selectEasing": "Easing 선택",
+    "runAnimation": "애니메이션 실행",
     "animating": "Animating...",
     "start": "Start (0%)",
     "end": "End (100%)"
@@ -62,14 +62,14 @@
   "scrollTrigger": {
     "title": "ScrollTrigger",
     "description": "스크롤 위치에 따라 애니메이션을 제어합니다. 페이지를 아래로 스크롤하면서 아래 데모가 스크롤 위치에 반응하는 모습을 확인해보세요.",
-    "scrollDown": "Scroll Down",
-    "triggerAnimation": "Trigger Animation",
-    "scrubAnimation": "Scrub Animation",
+    "scrollDown": "아래로 스크롤",
+    "triggerAnimation": "트리거 애니메이션",
+    "scrubAnimation": "Scrub 애니메이션",
     "scrubDescription": "스크롤 속도에 맞춰 움직입니다.",
-    "pinnedSection": "Pinned Section",
+    "pinnedSection": "고정된 섹션",
     "pinnedDescription": "이 섹션은 잠시 고정됩니다.",
     "endOfContent": "End of Content",
-    "codeSnippet": "Code Snippet",
+    "codeSnippet": "코드 스니펫",
     "item": "아이템 {{n}}"
   },
   "svg": {
