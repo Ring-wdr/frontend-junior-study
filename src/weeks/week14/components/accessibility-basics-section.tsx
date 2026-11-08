@@ -17,28 +17,28 @@ export const AccessibilityBasicsSection = () => {
       icon: '👁️',
       color: 'blue',
       description: t('wcag.principles.perceivable.description'),
-      items: raw('wcag.principles.perceivable.items') as string[],
+      items: raw('wcag.principles.perceivable.items'),
     },
     {
       title: 'Operable',
       icon: '⌨️',
       color: 'green',
       description: t('wcag.principles.operable.description'),
-      items: raw('wcag.principles.operable.items') as string[],
+      items: raw('wcag.principles.operable.items'),
     },
     {
       title: 'Understandable',
       icon: '💡',
       color: 'orange',
       description: t('wcag.principles.understandable.description'),
-      items: raw('wcag.principles.understandable.items') as string[],
+      items: raw('wcag.principles.understandable.items'),
     },
     {
       title: 'Robust',
       icon: '🛡️',
       color: 'purple',
       description: t('wcag.principles.robust.description'),
-      items: raw('wcag.principles.robust.items') as string[],
+      items: raw('wcag.principles.robust.items'),
     },
   ];
 
@@ -84,7 +84,7 @@ export const AccessibilityBasicsSection = () => {
                     key={principle.title}
                     type="button"
                     onClick={() => setActiveTab(idx)}
-                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
+                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors duration-200 ${
                       activeTab === idx
                         ? 'bg-gray-900 text-white'
                         : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
@@ -175,14 +175,8 @@ export const AccessibilityBasicsSection = () => {
           icon
           iconColor="orange"
         >
-          <div className="grid grid-cols-2 gap-3">
-            {(
-              raw('wcag.testingTools.tools') as Array<{
-                name: string;
-                desc: string;
-                badge: string;
-              }>
-            ).map((tool) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {raw('wcag.testingTools.tools').map((tool) => (
               <div
                 key={tool.name}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200"

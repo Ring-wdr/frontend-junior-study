@@ -1,5 +1,6 @@
 'use client';
 
+import { motion } from 'motion/react';
 import {
   AlertTriangle,
   CheckCircle2,
@@ -141,13 +142,14 @@ export function CoreWebVitalsSection() {
 
   // CLS Simulator
   const runClsSim = () => {
+    const id = Math.random();
     if (clsMode === 'bad') {
       // Bad: Insert item at top without reserving space
-      setClsItems((prev) => [Math.random(), ...prev]);
+      setClsItems((prev) => [id, ...prev]);
       setClsScore((prev) => Math.min(prev + 0.15, 0.5));
     } else {
       // Good: Append or insert with reserved space (simulated)
-      setClsItems((prev) => [...prev, Math.random()]);
+      setClsItems((prev) => [...prev, id]);
       // No layout shift score increase
     }
   };
@@ -273,9 +275,14 @@ export function CoreWebVitalsSection() {
                 {/* LCP Element */}
                 <div className="relative aspect-video bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden border border-gray-200">
                   {lcpState === 'loaded' ? (
-                    <div className="w-full h-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl animate-in zoom-in-95 duration-500">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3, ease: 'easeOut' }}
+                      className="w-full h-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl"
+                    >
                       {t('coreWebVitals.lcp.heroImage')}
-                    </div>
+                    </motion.div>
                   ) : (
                     <div className="text-gray-400 text-sm">
                       {t('coreWebVitals.lcp.loadingText')}
@@ -332,8 +339,11 @@ export function CoreWebVitalsSection() {
               </button>
 
               {inpState === 'responded' && (
-                <div
-                  className={`text-center space-y-1 animate-in slide-in-from-bottom-2`}
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.25, ease: 'easeOut' }}
+                  className={`text-center space-y-1`}
                 >
                   <div className="text-2xl font-bold font-mono">
                     {inpTime}ms
@@ -345,7 +355,7 @@ export function CoreWebVitalsSection() {
                       ? t('coreWebVitals.inp.slow')
                       : t('coreWebVitals.inp.fast')}
                   </div>
-                </div>
+                </motion.div>
               )}
 
               <div className="text-xs text-center text-gray-400 max-w-[200px]">
@@ -383,9 +393,12 @@ export function CoreWebVitalsSection() {
 
                 <div className="space-y-4 transition-all duration-300">
                   {clsItems.map((item, idx) => (
-                    <div
+                    <motion.div
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.25, ease: 'easeOut' }}
                       key={item}
-                      className="animate-in fade-in slide-in-from-top-2 duration-300"
+                      className=""
                     >
                       {/* If it's the newest item in bad mode, it pushes things down */}
                       <div
@@ -401,7 +414,7 @@ export function CoreWebVitalsSection() {
                           <div className="h-2 w-1/2 bg-gray-200 rounded"></div>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                   <div className="p-4 bg-blue-50 border border-blue-100 rounded-lg">
                     <h4 className="font-semibold text-blue-900 mb-1">

@@ -10,13 +10,18 @@ import { CodeBlock } from '../../../components/ui/code-block';
 
 type Locale = 'ko-KR' | 'en-US' | 'de-DE' | 'ja-JP' | 'ar-SA';
 
+const date = new Date(2025, 2, 14, 15, 30, 45);
+
 export const IntlApiSection = () => {
   const { t, raw } = useTranslation('week14');
   const [locale, setLocale] = useState<Locale>('ko-KR');
   const [number] = useState(1234567.89);
-  const [date] = useState(new Date());
 
-  const localeOptions: { value: Locale; key: string; flag: string }[] = [
+  const localeOptions: {
+    value: Locale;
+    key: 'ko' | 'en' | 'de' | 'ja' | 'ar';
+    flag: string;
+  }[] = [
     { value: 'ko-KR', key: 'ko', flag: '🇰🇷' },
     { value: 'en-US', key: 'en', flag: '🇺🇸' },
     { value: 'de-DE', key: 'de', flag: '🇩🇪' },
@@ -79,7 +84,7 @@ export const IntlApiSection = () => {
                     key={opt.value}
                     type="button"
                     onClick={() => setLocale(opt.value)}
-                    className={`px-3 py-1.5 rounded text-sm font-medium transition flex items-center gap-1 ${
+                    className={`px-3 py-1.5 rounded text-sm font-medium transition-colors duration-200 flex items-center gap-1 ${
                       locale === opt.value
                         ? 'bg-green-600 text-white'
                         : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
@@ -99,27 +104,29 @@ export const IntlApiSection = () => {
                     {t('intl.liveDemo.numberFormat')}
                   </h4>
                   <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between gap-3">
                       <span className="text-gray-500">
                         {t('intl.liveDemo.labels.number')}
                       </span>
-                      <span className="font-mono">{formatNumber(number)}</span>
+                      <span className="font-mono text-right break-words min-w-0">
+                        {formatNumber(number)}
+                      </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between gap-3">
                       <span className="text-gray-500">USD:</span>
-                      <span className="font-mono">
+                      <span className="font-mono text-right break-words min-w-0">
                         {formatCurrency(number, 'USD')}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between gap-3">
                       <span className="text-gray-500">KRW:</span>
-                      <span className="font-mono">
+                      <span className="font-mono text-right break-words min-w-0">
                         {formatCurrency(number, 'KRW')}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between gap-3">
                       <span className="text-gray-500">EUR:</span>
-                      <span className="font-mono">
+                      <span className="font-mono text-right break-words min-w-0">
                         {formatCurrency(number, 'EUR')}
                       </span>
                     </div>
@@ -132,23 +139,23 @@ export const IntlApiSection = () => {
                     {t('intl.liveDemo.dateTimeFormat')}
                   </h4>
                   <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between gap-3">
                       <span className="text-gray-500">
                         {t('intl.liveDemo.labels.short')}
                       </span>
-                      <span className="font-mono">
+                      <span className="font-mono text-right break-words min-w-0">
                         {formatDate(date, 'short')}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between gap-3">
                       <span className="text-gray-500">
                         {t('intl.liveDemo.labels.medium')}
                       </span>
-                      <span className="font-mono">
+                      <span className="font-mono text-right break-words min-w-0">
                         {formatDate(date, 'medium')}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between gap-3">
                       <span className="text-gray-500">
                         {t('intl.liveDemo.labels.long')}
                       </span>
@@ -156,11 +163,13 @@ export const IntlApiSection = () => {
                         {formatDate(date, 'long')}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between gap-3">
                       <span className="text-gray-500">
                         {t('intl.liveDemo.labels.time')}
                       </span>
-                      <span className="font-mono">{formatTime(date)}</span>
+                      <span className="font-mono text-right break-words min-w-0">
+                        {formatTime(date)}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -276,13 +285,7 @@ new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
 
         <SubSection title={t('intl.otherApis.title')} icon iconColor="red">
           <div className="space-y-3">
-            {(
-              raw('intl.otherApis.apis') as Array<{
-                api: string;
-                example: string;
-                result: string;
-              }>
-            ).map((item) => (
+            {raw('intl.otherApis.apis').map((item) => (
               <div
                 key={item.api}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200"

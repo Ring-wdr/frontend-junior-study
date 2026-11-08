@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@rstest/core';
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 
 import { BehavioralPatternsSection } from './behavioral-patterns-section';
 
@@ -10,10 +10,13 @@ describe('BehavioralPatternsSection', () => {
     expect(screen.getByText('Design Patterns')).toBeInTheDocument();
   });
 
-  it('should render the main title', () => {
+  it('should render subsection headings instead of the section title', () => {
     const { container } = render(<BehavioralPatternsSection />);
 
-    expect(container.textContent).toContain('Behavioral Patterns');
+    expect(
+      within(container).getByRole('heading', { level: 3, name: /Observer\ Pattern/ }),
+    ).toBeInTheDocument();
+    expect(container.textContent).not.toContain('Behavioral Patterns');
   });
 
   it('should render the description', () => {

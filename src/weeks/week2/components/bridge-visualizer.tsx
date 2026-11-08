@@ -39,11 +39,11 @@ ${remote === 'advanced' ? 'remote.mute(); // Advanced feature' : '// Basic remot
   return (
     <div className="space-y-6">
       {/* Configuration Controls */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="space-y-2">
-          <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+          <span className="block text-xs font-semibold text-gray-500 uppercase tracking-wider">
             Abstraction (Remote)
-          </label>
+          </span>
           <div className="flex gap-2">
             <button
               type="button"
@@ -72,9 +72,9 @@ ${remote === 'advanced' ? 'remote.mute(); // Advanced feature' : '// Basic remot
           </div>
         </div>
         <div className="space-y-2">
-          <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+          <span className="block text-xs font-semibold text-gray-500 uppercase tracking-wider">
             Implementation (Device)
-          </label>
+          </span>
           <div className="flex gap-2">
             <button
               type="button"
@@ -105,9 +105,9 @@ ${remote === 'advanced' ? 'remote.mute(); // Advanced feature' : '// Basic remot
       </div>
 
       {/* Visualizer Area */}
-      <div className="flex flex-col md:flex-row gap-8 items-center bg-gray-100 p-6 rounded-xl border border-gray-200">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-center bg-gray-100 p-4 rounded-xl border border-gray-200 overflow-hidden">
         {/* Remote Control (Abstraction) */}
-        <div className="w-32 bg-gray-800 rounded-2xl p-4 shadow-xl flex flex-col gap-4 items-center border border-gray-700">
+        <div className="w-32 shrink-0 bg-gray-800 rounded-2xl p-4 shadow-xl flex flex-col gap-4 items-center border border-gray-700">
           <div className="text-[10px] text-gray-400 font-mono tracking-widest text-center mb-2">
             REMOTE
           </div>
@@ -142,6 +142,7 @@ ${remote === 'advanced' ? 'remote.mute(); // Advanced feature' : '// Basic remot
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
                 type="button"
                 onClick={mute}
                 className="w-full py-2 bg-yellow-600 text-[10px] font-bold text-white rounded uppercase tracking-wider overflow-hidden"
@@ -162,7 +163,7 @@ ${remote === 'advanced' ? 'remote.mute(); // Advanced feature' : '// Basic remot
         {/* Device (Implementation) */}
         <div
           className={cn(
-            'w-64 h-40 bg-black rounded-xl border-8 shadow-2xl relative overflow-hidden flex items-center justify-center transition-all duration-500',
+            'w-full max-w-64 h-40 shrink-0 bg-black rounded-xl border-8 shadow-2xl relative overflow-hidden flex items-center justify-center transition-colors duration-300',
             device === 'tv'
               ? 'border-gray-800 rounded-xl'
               : 'border-amber-900 rounded-lg bg-amber-950 aspect-video h-auto py-8',
@@ -173,6 +174,7 @@ ${remote === 'advanced' ? 'remote.mute(); // Advanced feature' : '// Basic remot
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
                 className="text-white mb-2"
               >
                 {device === 'tv' ? (
@@ -190,7 +192,9 @@ ${remote === 'advanced' ? 'remote.mute(); // Advanced feature' : '// Basic remot
                     'h-full',
                     device === 'tv' ? 'bg-blue-500' : 'bg-amber-500',
                   )}
+                  initial={false}
                   animate={{ width: `${volume}%` }}
+                  transition={{ duration: 0.2, ease: 'easeOut' }}
                 />
               </div>
             </div>
@@ -200,9 +204,7 @@ ${remote === 'advanced' ? 'remote.mute(); // Advanced feature' : '// Basic remot
         </div>
       </div>
 
-      <div className="bg-gray-900 rounded-lg p-3">
-        <CodeBlock code={generateCode()} className="text-xs" />
-      </div>
+      <CodeBlock code={generateCode()} className="text-xs" />
     </div>
   );
 };

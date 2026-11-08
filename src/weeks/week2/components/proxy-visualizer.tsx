@@ -2,11 +2,13 @@
 
 import { AnimatePresence, motion } from 'motion/react';
 import { Lock, ShieldAlert, User, UserCog } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
 type UserRole = 'guest' | 'admin';
+
+const ICON_SPRING = { type: 'spring', stiffness: 400, damping: 25 } as const;
 
 export const ProxyVisualizer = () => {
   const [role, setRole] = useState<UserRole>('guest');
@@ -14,10 +16,19 @@ export const ProxyVisualizer = () => {
     'idle',
   );
 
+  const accessTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (accessTimerRef.current) clearTimeout(accessTimerRef.current);
+    },
+    [],
+  );
+
   const tryAccess = () => {
     setAccessState('idle');
-    // Simulate slight network delay
-    setTimeout(() => {
+    if (accessTimerRef.current) clearTimeout(accessTimerRef.current);
+    accessTimerRef.current = setTimeout(() => {
       if (role === 'admin') {
         setAccessState('success');
       } else {
@@ -43,7 +54,7 @@ ${accessState === 'denied' ? '// Error: Access Denied' : accessState === 'succes
 
   return (
     <div className="space-y-6">
-      <div className="flex gap-4">
+      <div className="flex flex-wrap gap-2 sm:gap-4">
         <button
           type="button"
           onClick={() => {
@@ -76,8 +87,8 @@ ${accessState === 'denied' ? '// Error: Access Denied' : accessState === 'succes
         </button>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-8 items-center">
-        <div className="flex-1 w-full relative h-[180px] bg-gray-100 rounded-xl border border-gray-200 flex items-center justify-center">
+      <div className="flex flex-col md:flex-row gap-4 items-center">
+        <div className="flex-1 w-full min-w-0 relative h-[180px] bg-gray-100 rounded-xl border border-gray-200 flex items-center justify-center overflow-hidden">
           <div className="absolute top-4 left-4 text-xs font-mono text-gray-400">
             PROXY SERVER
           </div>
@@ -85,7 +96,7 @@ ${accessState === 'denied' ? '// Error: Access Denied' : accessState === 'succes
           {/* Vault */}
           <div
             className={cn(
-              'w-24 h-24 rounded-xl flex items-center justify-center transition-all duration-500',
+              'w-24 h-24 rounded-xl flex items-center justify-center transition-colors duration-300',
               accessState === 'success'
                 ? 'bg-green-100 border-4 border-green-500'
                 : accessState === 'denied'
@@ -96,24 +107,34 @@ ${accessState === 'denied' ? '// Error: Access Denied' : accessState === 'succes
             <AnimatePresence mode="wait">
               {accessState === 'success' ? (
                 <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  exit={{ scale: 0 }}
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.5, opacity: 0 }}
+                  transition={ICON_SPRING}
                   key="unlock"
                 >
                   <div className="text-4xl">💰</div>
                 </motion.div>
               ) : accessState === 'denied' ? (
                 <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  exit={{ scale: 0 }}
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.5, opacity: 0 }}
+                  transition={ICON_SPRING}
                   key="lock"
                 >
                   <ShieldAlert className="w-10 h-10 text-red-500" />
                 </motion.div>
               ) : (
-                <Lock className="w-10 h-10 text-gray-500" />
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                  key="idle"
+                >
+                  <Lock className="w-10 h-10 text-gray-500" />
+                </motion.div>
               )}
             </AnimatePresence>
           </div>
@@ -124,6 +145,8 @@ ${accessState === 'denied' ? '// Error: Access Denied' : accessState === 'succes
               <motion.div
                 initial={{ width: 0, opacity: 0 }}
                 animate={{ width: 60, opacity: 1 }}
+                exit={{ width: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
                 className={cn(
                   'absolute left-1/2 ml-12 h-1 top-1/2 -mt-0.5 rounded-full',
                   accessState === 'success' ? 'bg-green-500' : 'bg-red-500',
@@ -144,9 +167,7 @@ ${accessState === 'denied' ? '// Error: Access Denied' : accessState === 'succes
         </div>
       </div>
 
-      <div className="bg-gray-900 rounded-lg p-3">
-        <CodeBlock code={generateCode()} className="text-xs" />
-      </div>
+      <CodeBlock code={generateCode()} className="text-xs" />
     </div>
   );
 };

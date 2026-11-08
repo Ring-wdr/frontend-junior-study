@@ -31,7 +31,12 @@ export const EventLoopVisualizer = () => {
     timersRef.current = [];
   };
 
-  useEffect(() => clearTimers, []);
+  useEffect(
+    () => () => {
+      for (const timer of timersRef.current) clearTimeout(timer);
+    },
+    [],
+  );
 
   const steps = [
     {

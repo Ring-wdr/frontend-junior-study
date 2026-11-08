@@ -6,24 +6,28 @@ import {
   screen,
   within,
 } from '@testing-library/react';
-import type React from 'react';
+import type { ReactNode } from 'react';
 import { ProxyMetaSection } from '../../../src/weeks/week1/components/proxy-meta-section';
 
-// Mock motion/react
 rs.mock('motion/react', async () => {
-  const actual = await rs.importActual('motion/react');
+  const actual =
+    await rs.importActual<typeof import('motion/react')>('motion/react');
+  const MotionDiv = ({
+    children,
+    className,
+  }: {
+    children?: ReactNode;
+    className?: string;
+  }) => <div className={className}>{children}</div>;
   return {
     ...actual,
-    AnimatePresence: ({ children }: { children: React.ReactNode }) => (
+    AnimatePresence: ({ children }: { children?: ReactNode }) => (
       <>{children}</>
     ),
-    motion: {
-      div: ({ children, ...props }: Record<string, unknown>) => {
-        // biome-ignore lint: exclude style from props
-        const { style, ...divProps } = props;
-        return <div {...divProps}>{children}</div>;
-      },
-    },
+    motion: new Proxy(actual.motion, {
+      get: (target, key, receiver) =>
+        key === 'div' ? MotionDiv : Reflect.get(target, key, receiver),
+    }),
   };
 });
 

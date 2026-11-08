@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@rstest/core';
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 
 import { CreationPatternsSection } from './creation-patterns-section';
 
@@ -10,10 +10,13 @@ describe('CreationPatternsSection', () => {
     expect(screen.getByText('Design Patterns')).toBeInTheDocument();
   });
 
-  it('should render the main title', () => {
+  it('should render subsection headings instead of the section title', () => {
     const { container } = render(<CreationPatternsSection />);
 
-    expect(container.textContent).toContain('Creation Patterns');
+    expect(
+      within(container).getByRole('heading', { level: 3, name: /Singleton\ Pattern/ }),
+    ).toBeInTheDocument();
+    expect(container.textContent).not.toContain('Creation Patterns');
   });
 
   it('should render the description', () => {

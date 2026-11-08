@@ -10,7 +10,7 @@ import {
   Search,
   Zap,
 } from 'lucide-react';
-import { useInView } from 'motion/react';
+import { motion, useInView } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
@@ -140,13 +140,17 @@ export function DevToolsSection() {
         </div>
 
         {/* Timeline */}
-        <div className="relative h-24 bg-gray-800 rounded-lg mb-4 overflow-x-hidden flex items-center px-4">
+        <div className="relative h-24 bg-gray-800 rounded-lg mb-4 overflow-hidden flex items-center px-4">
           <div className="flex gap-1 items-end h-16 w-full justify-end pr-10">
             {tasks.slice(-15).map((task) => (
-              <div
+              <motion.div
                 key={task.id}
+                layout
+                initial={{ opacity: 0, x: 16 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
                 className={cn(
-                  'relative rounded-t-sm animate-in slide-in-from-right-10 duration-300',
+                  'relative shrink-0 rounded-t-sm',
                   task.type === 'long'
                     ? 'bg-red-500 w-20 sm:w-32'
                     : 'bg-green-500 w-3 sm:w-4',
@@ -163,7 +167,7 @@ export function DevToolsSection() {
                     Long Task
                   </span>
                 )}
-              </div>
+              </motion.div>
             ))}
             {/* Placeholder for current time */}
             <div className="h-full w-[1px] bg-yellow-500 absolute right-10 top-0 z-10 opacity-50"></div>

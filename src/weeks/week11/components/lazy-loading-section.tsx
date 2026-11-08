@@ -1,5 +1,6 @@
 'use client';
 
+import { motion } from 'motion/react';
 import { ArrowDown, Code2, Image, Loader2, Monitor } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from '@/i18n/client';
@@ -69,10 +70,15 @@ function LazyViewport() {
           }`}
         >
           {item.loaded ? (
-            <div className="text-white flex flex-col items-center animate-in zoom-in-50">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              className="text-white flex flex-col items-center"
+            >
               <Image size={32} />
               <span className="font-bold">Image {item.id}</span>
-            </div>
+            </motion.div>
           ) : (
             <div className="text-gray-400 flex flex-col items-center gap-2">
               <Loader2 size={24} className="animate-spin" />

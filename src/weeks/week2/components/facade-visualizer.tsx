@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
+const BAR_TRANSITION = { duration: 0.5, ease: 'easeOut' } as const;
+
 export const FacadeVisualizer = () => {
   const [lights, setLights] = useState(100);
   const [temp, setTemp] = useState(24);
@@ -35,7 +37,7 @@ smartHome.movieMode();
 
   return (
     <div className="space-y-6">
-      <div className="flex gap-4">
+      <div className="flex flex-wrap gap-2 sm:gap-4">
         <button
           type="button"
           onClick={activateMovieMode}
@@ -52,12 +54,12 @@ smartHome.movieMode();
         </button>
       </div>
 
-      <div className="grid grid-cols-3 gap-4 bg-gray-50 p-4 rounded-xl border border-gray-200">
+      <div className="grid grid-cols-3 gap-2 bg-gray-50 p-3 rounded-xl border border-gray-200 sm:gap-4 sm:p-4">
         {/* Lights */}
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex min-w-0 flex-col items-center gap-2">
           <div
             className={cn(
-              'w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500',
+              'w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 sm:w-12 sm:h-12',
               lights > 0
                 ? 'bg-yellow-400 shadow-[0_0_20px_rgba(250,204,21,0.6)]'
                 : 'bg-gray-300',
@@ -76,14 +78,16 @@ smartHome.movieMode();
           <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
             <motion.div
               className="h-full bg-yellow-400"
+              initial={false}
+              transition={BAR_TRANSITION}
               animate={{ width: `${lights}%` }}
             />
           </div>
         </div>
 
         {/* Temp */}
-        <div className="flex flex-col items-center gap-2">
-          <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+        <div className="flex min-w-0 flex-col items-center gap-2">
+          <div className="w-10 h-10 rounded-full bg-blue-100 sm:w-12 sm:h-12 flex items-center justify-center text-blue-600">
             <Thermometer className="w-6 h-6" />
           </div>
           <div className="text-xs font-semibold text-gray-600">
@@ -92,14 +96,16 @@ smartHome.movieMode();
           <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
             <motion.div
               className="h-full bg-blue-500"
+              initial={false}
+              transition={BAR_TRANSITION}
               animate={{ width: `${(temp / 30) * 100}%` }}
             />
           </div>
         </div>
 
         {/* Audio */}
-        <div className="flex flex-col items-center gap-2">
-          <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+        <div className="flex min-w-0 flex-col items-center gap-2">
+          <div className="w-10 h-10 rounded-full bg-green-100 sm:w-12 sm:h-12 flex items-center justify-center text-green-600">
             <Volume2 className="w-6 h-6" />
           </div>
           <div className="text-xs font-semibold text-gray-600">
@@ -108,15 +114,15 @@ smartHome.movieMode();
           <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
             <motion.div
               className="h-full bg-green-500"
+              initial={false}
+              transition={BAR_TRANSITION}
               animate={{ width: `${volume}%` }}
             />
           </div>
         </div>
       </div>
 
-      <div className="bg-gray-900 rounded-lg p-3">
-        <CodeBlock code={generateCode()} className="text-xs" />
-      </div>
+      <CodeBlock code={generateCode()} className="text-xs" />
     </div>
   );
 };

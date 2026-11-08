@@ -1,5 +1,6 @@
 'use client';
 
+import { motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { DemoBox } from '../../../components/demo-box';
@@ -133,13 +134,16 @@ export const CsrfSection = () => {
                     </div>
 
                     {lastTransaction && (
-                      <output
-                        className={`block p-3 rounded text-sm text-center font-bold animate-in fade-in duration-200 ${lastTransaction === 'blocked' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}
+                      <motion.output
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.2 }}
+                        className={`block p-3 rounded text-sm text-center font-bold ${lastTransaction === 'blocked' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}
                       >
                         {lastTransaction === 'blocked'
                           ? t('csrf.simulator.transactionBlocked')
                           : t('csrf.simulator.transactionUnauthorized')}
-                      </output>
+                      </motion.output>
                     )}
                   </div>
                 </div>

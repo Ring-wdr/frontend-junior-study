@@ -41,10 +41,10 @@ export const CombinedPatternSection = () => {
           iconColor="purple"
         >
           <DemoBox label={t('combined.architecture.label')}>
-            <div className="bg-white p-6 rounded-lg">
+            <div className="bg-white p-2 sm:p-6 rounded-lg">
               <div className="flex flex-col gap-4">
                 {/* Main Thread */}
-                <div className="bg-blue-50 p-4 rounded-lg border-2 border-blue-200">
+                <div className="bg-blue-50 p-3 sm:p-4 rounded-lg border-2 border-blue-200">
                   <p className="font-bold text-blue-800 text-sm mb-2">
                     {t('combined.architecture.mainThread')}
                   </p>
@@ -62,7 +62,7 @@ export const CombinedPatternSection = () => {
                 </div>
 
                 {/* Connection lines */}
-                <div className="flex justify-center gap-8">
+                <div className="flex justify-center gap-4 sm:gap-8">
                   <div className="flex flex-col items-center">
                     <div className="w-0.5 h-4 bg-green-400" />
                     <span className="text-xs text-gray-500">
@@ -80,8 +80,8 @@ export const CombinedPatternSection = () => {
                 </div>
 
                 {/* Worker Threads */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-green-50 p-4 rounded-lg border-2 border-green-200">
+                <div className="grid grid-cols-2 gap-2 sm:gap-4">
+                  <div className="bg-green-50 p-3 sm:p-4 rounded-lg border-2 border-green-200">
                     <p className="font-bold text-green-800 text-sm mb-2">
                       {t('combined.architecture.webWorker')}
                     </p>
@@ -94,7 +94,7 @@ export const CombinedPatternSection = () => {
                       </span>
                     </div>
                   </div>
-                  <div className="bg-purple-50 p-4 rounded-lg border-2 border-purple-200">
+                  <div className="bg-purple-50 p-3 sm:p-4 rounded-lg border-2 border-purple-200">
                     <p className="font-bold text-purple-800 text-sm mb-2">
                       {t('combined.architecture.serviceWorker')}
                     </p>
@@ -113,7 +113,7 @@ export const CombinedPatternSection = () => {
                 <div className="flex justify-center">
                   <div className="w-0.5 h-4 bg-orange-400" />
                 </div>
-                <div className="bg-orange-50 p-4 rounded-lg border-2 border-orange-200 max-w-xs mx-auto">
+                <div className="bg-orange-50 p-3 sm:p-4 rounded-lg border-2 border-orange-200 max-w-xs mx-auto">
                   <p className="font-bold text-orange-800 text-sm mb-2 text-center">
                     {t('combined.architecture.indexedDB')}
                   </p>
@@ -178,9 +178,9 @@ export const CombinedPatternSection = () => {
                   <h4 className="font-bold text-gray-900">{example.title}</h4>
                 </div>
                 <ul className="space-y-1">
-                  {example.features.map((feature, idx) => (
+                  {example.features.map((feature) => (
                     <li
-                      key={idx}
+                      key={feature}
                       className="text-xs text-gray-600 flex items-start gap-2"
                     >
                       <span className="text-green-500 mt-0.5">✓</span>

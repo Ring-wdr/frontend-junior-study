@@ -20,43 +20,50 @@ export const IndexedDBSection = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [newTodo, setNewTodo] = useState('');
   const [db, setDb] = useState<IDBDatabase | null>(null);
-  const [dbStatus, setDbStatus] = useState<string>(
-    t('indexedDB.demo.initializing'),
-  );
+  const [dbStatus, setDbStatus] = useState<
+    'initializing' | 'connected' | 'error'
+  >('initializing');
 
   useEffect(() => {
+    let database: IDBDatabase | null = null;
+    let cancelled = false;
     const request = indexedDB.open('week13-demo', 1);
 
     request.onerror = () => {
-      setDbStatus('Error opening database');
+      if (!cancelled) setDbStatus('error');
     };
 
     request.onsuccess = () => {
-      const database = request.result;
+      database = request.result;
+      if (cancelled) {
+        database.close();
+        return;
+      }
       setDb(database);
-      setDbStatus(t('indexedDB.demo.connected'));
-      loadTodos(database);
+      setDbStatus('connected');
+      const getAll = database
+        .transaction('todos', 'readonly')
+        .objectStore('todos')
+        .getAll();
+      getAll.onsuccess = () => {
+        if (!cancelled) setTodos(getAll.result);
+      };
     };
 
-    request.onupgradeneeded = (event) => {
-      const database = (event.target as IDBOpenDBRequest).result;
-      if (!database.objectStoreNames.contains('todos')) {
-        const store = database.createObjectStore('todos', { keyPath: 'id' });
+    request.onupgradeneeded = () => {
+      const upgradeDb = request.result;
+      if (!upgradeDb.objectStoreNames.contains('todos')) {
+        const store = upgradeDb.createObjectStore('todos', { keyPath: 'id' });
         store.createIndex('completed', 'completed', { unique: false });
         store.createIndex('createdAt', 'createdAt', { unique: false });
       }
     };
-  }, []);
 
-  const loadTodos = (database: IDBDatabase) => {
-    const transaction = database.transaction('todos', 'readonly');
-    const store = transaction.objectStore('todos');
-    const request = store.getAll();
-
-    request.onsuccess = () => {
-      setTodos(request.result);
+    return () => {
+      cancelled = true;
+      database?.close();
     };
-  };
+  }, []);
 
   const addTodo = () => {
     if (!db || !newTodo.trim()) return;
@@ -73,7 +80,7 @@ export const IndexedDBSection = () => {
     store.add(todo);
 
     transaction.oncomplete = () => {
-      setTodos([...todos, todo]);
+      setTodos((prev) => [...prev, todo]);
       setNewTodo('');
     };
   };
@@ -90,7 +97,7 @@ export const IndexedDBSection = () => {
     store.put(updated);
 
     transaction.oncomplete = () => {
-      setTodos(todos.map((t) => (t.id === id ? updated : t)));
+      setTodos((prev) => prev.map((item) => (item.id === id ? updated : item)));
     };
   };
 
@@ -102,7 +109,7 @@ export const IndexedDBSection = () => {
     store.delete(id);
 
     transaction.oncomplete = () => {
-      setTodos(todos.filter((t) => t.id !== id));
+      setTodos((prev) => prev.filter((item) => item.id !== id));
     };
   };
 
@@ -236,12 +243,14 @@ export const IndexedDBSection = () => {
                 </span>
                 <span
                   className={`text-xs px-2 py-0.5 rounded ${
-                    dbStatus === t('indexedDB.demo.connected')
+                    dbStatus === 'connected'
                       ? 'bg-green-100 text-green-700'
-                      : 'bg-yellow-100 text-yellow-700'
+                      : dbStatus === 'error'
+                        ? 'bg-red-100 text-red-700'
+                        : 'bg-yellow-100 text-yellow-700'
                   }`}
                 >
-                  {dbStatus}
+                  {t(`indexedDB.demo.${dbStatus}`)}
                 </span>
               </div>
 
@@ -252,7 +261,7 @@ export const IndexedDBSection = () => {
                   onChange={(e) => setNewTodo(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && addTodo()}
                   placeholder={t('indexedDB.demo.placeholder')}
-                  className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="flex-1 min-w-0 px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
                 <button
                   type="button"
@@ -281,7 +290,7 @@ export const IndexedDBSection = () => {
                         className="w-4 h-4"
                       />
                       <span
-                        className={`flex-1 text-sm ${
+                        className={`flex-1 min-w-0 break-words text-sm ${
                           todo.completed
                             ? 'line-through text-gray-400'
                             : 'text-gray-700'
@@ -413,7 +422,7 @@ await Promise.all([
           icon
           iconColor="purple"
         >
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
               {
                 title: t('indexedDB.useCases.offlineFirstApps'),

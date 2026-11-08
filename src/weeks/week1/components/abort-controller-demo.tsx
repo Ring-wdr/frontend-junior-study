@@ -21,7 +21,7 @@ export const AbortControllerDemo = () => {
 
   useEffect(
     () => () => {
-      stopInterval();
+      if (intervalRef.current) clearInterval(intervalRef.current);
       abortControllerRef.current?.abort();
     },
     [],

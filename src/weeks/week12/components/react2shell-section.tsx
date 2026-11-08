@@ -253,7 +253,12 @@ export const React2ShellSection = () => {
 
                   <div className="p-4 flex-1 bg-white relative min-h-[160px]">
                     {showShell ? (
-                      <div className="absolute inset-0 bg-black p-4 font-mono text-green-500 text-xs animate-in fade-in zoom-in-95">
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3, ease: 'easeOut' }}
+                        className="absolute inset-0 bg-black p-4 font-mono text-green-500 text-xs"
+                      >
                         <p>root@server:~# whoami</p>
                         <p>root</p>
                         <p>root@server:~# ls -la /etc/passwd</p>
@@ -261,7 +266,7 @@ export const React2ShellSection = () => {
                           -rw-r--r-- 1 root root 2883 Dec 20 10:00 /etc/passwd
                         </p>
                         <p className="animate-pulse">_</p>
-                      </div>
+                      </motion.div>
                     ) : (
                       <div className="space-y-2">
                         {logs.length === 0 ? (

@@ -15,6 +15,8 @@ interface RobotState {
   isBuilt: boolean;
 }
 
+const PART_SPRING = { type: 'spring', stiffness: 350, damping: 30 } as const;
+
 export const BuilderVisualizer = () => {
   const [robot, setRobot] = useState<RobotState>({
     parts: new Set(),
@@ -62,9 +64,9 @@ export const BuilderVisualizer = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col md:flex-row gap-8 items-start">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-stretch md:items-start">
         {/* Controls */}
-        <div className="flex-1 space-y-4">
+        <div className="min-w-0 flex-1 space-y-4">
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
@@ -164,13 +166,11 @@ export const BuilderVisualizer = () => {
             </button>
           </div>
 
-          <div className="bg-gray-900 rounded-lg p-3 overflow-hidden">
-            <CodeBlock code={generateCode()} className="text-xs" />
-          </div>
+          <CodeBlock code={generateCode()} className="text-xs" />
         </div>
 
         {/* Visualizer */}
-        <div className="flex-1 min-h-[300px] bg-gray-100 rounded-xl border border-gray-200 relative flex items-center justify-center overflow-hidden">
+        <div className="min-w-0 flex-1 min-h-[300px] bg-gray-100 rounded-xl border border-gray-200 relative flex items-center justify-center overflow-hidden">
           <div
             className="absolute inset-0 grid grid-cols-[20px_20px] opacity-20 pointer-events-none"
             style={{
@@ -183,9 +183,11 @@ export const BuilderVisualizer = () => {
           <AnimatePresence>
             {robot.isBuilt && (
               <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
+                initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-sm flex items-center gap-1"
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="absolute top-3 right-3 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-sm flex items-center gap-1"
               >
                 <Check className="w-3 h-3" /> BUILT
               </motion.div>
@@ -194,10 +196,9 @@ export const BuilderVisualizer = () => {
 
           <div className="relative w-40 h-60 flex flex-col items-center justify-center">
             {/* Body (Always present roughly) */}
-            <motion.div
-              layout
+            <div
               className={cn(
-                'w-24 h-32 rounded-xl border-2 border-gray-700 flex items-center justify-center z-10 transition-colors duration-500',
+                'w-24 h-32 rounded-xl border-2 border-gray-700 flex items-center justify-center z-10 transition-colors duration-300',
                 robot.color === 'red'
                   ? 'bg-red-400'
                   : robot.color === 'blue'
@@ -206,17 +207,18 @@ export const BuilderVisualizer = () => {
               )}
             >
               <div className="text-[10px] font-mono opacity-50">CHASSIS</div>
-            </motion.div>
+            </div>
 
             {/* Head */}
             <AnimatePresence>
               {robot.parts.has('head') && (
                 <motion.div
                   initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: -45, opacity: 1 }} // Relative to body center roughly
+                  animate={{ y: -45, opacity: 1 }}
                   exit={{ y: 0, opacity: 0 }}
+                  transition={PART_SPRING}
                   className={cn(
-                    'absolute w-16 h-16 rounded-xl border-2 border-gray-800 z-20 transition-colors duration-500 flex items-center justify-center',
+                    'absolute w-16 h-16 rounded-xl border-2 border-gray-800 z-20 transition-colors duration-300 flex items-center justify-center',
                     robot.color === 'red'
                       ? 'bg-red-300'
                       : robot.color === 'blue'
@@ -241,8 +243,9 @@ export const BuilderVisualizer = () => {
                     initial={{ x: -10, opacity: 0 }}
                     animate={{ x: -35, opacity: 1 }}
                     exit={{ x: -10, opacity: 0 }}
+                    transition={PART_SPRING}
                     className={cn(
-                      'absolute left-1/2 w-8 h-24 rounded-full border-2 border-gray-700 top-1/2 -mt-12 transition-colors duration-500 origin-top-right',
+                      'absolute left-1/2 w-8 h-24 rounded-full border-2 border-gray-700 top-1/2 -mt-12 transition-colors duration-300 origin-top-right',
                       robot.color === 'red'
                         ? 'bg-red-400'
                         : robot.color === 'blue'
@@ -254,8 +257,9 @@ export const BuilderVisualizer = () => {
                     initial={{ x: 10, opacity: 0 }}
                     animate={{ x: 35, opacity: 1 }}
                     exit={{ x: 10, opacity: 0 }}
+                    transition={PART_SPRING}
                     className={cn(
-                      'absolute left-1/2 w-8 h-24 rounded-full border-2 border-gray-700 top-1/2 -mt-12 transition-colors duration-500 origin-top-left',
+                      'absolute left-1/2 w-8 h-24 rounded-full border-2 border-gray-700 top-1/2 -mt-12 transition-colors duration-300 origin-top-left',
                       robot.color === 'red'
                         ? 'bg-red-400'
                         : robot.color === 'blue'
@@ -274,11 +278,12 @@ export const BuilderVisualizer = () => {
                   initial={{ y: -20, opacity: 0 }}
                   animate={{ y: 40, opacity: 1 }}
                   exit={{ y: 0, opacity: 0 }}
+                  transition={PART_SPRING}
                   className="absolute top-1/2 left-1/2 -translate-x-1/2 flex gap-4"
                 >
                   <div
                     className={cn(
-                      'w-6 h-20 rounded-b-lg border-2 border-gray-700 transition-colors duration-500',
+                      'w-6 h-20 rounded-b-lg border-2 border-gray-700 transition-colors duration-300',
                       robot.color === 'red'
                         ? 'bg-red-500'
                         : robot.color === 'blue'
@@ -288,7 +293,7 @@ export const BuilderVisualizer = () => {
                   />
                   <div
                     className={cn(
-                      'w-6 h-20 rounded-b-lg border-2 border-gray-700 transition-colors duration-500',
+                      'w-6 h-20 rounded-b-lg border-2 border-gray-700 transition-colors duration-300',
                       robot.color === 'red'
                         ? 'bg-red-500'
                         : robot.color === 'blue'
@@ -303,6 +308,7 @@ export const BuilderVisualizer = () => {
                   initial={{ y: -20, opacity: 0 }}
                   animate={{ y: 40, opacity: 1 }}
                   exit={{ y: 0, opacity: 0 }}
+                  transition={PART_SPRING}
                   className="absolute top-1/2 left-1/2 -translate-x-1/2 flex gap-1" // Tracks
                 >
                   <div className="w-32 h-12 bg-gray-800 rounded-full border-4 border-gray-600 flex items-center justify-around px-2">

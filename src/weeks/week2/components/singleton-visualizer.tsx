@@ -2,13 +2,21 @@
 
 import { AnimatePresence, motion } from 'motion/react';
 import { Box, RefreshCcw } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { cn } from '../../../lib/utils';
 
 export const SingletonVisualizer = () => {
   const [instanceId, setInstanceId] = useState<string | null>(null);
   const [flash, setFlash] = useState(false);
   const [log, setLog] = useState<string[]>([]);
+  const flashTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (flashTimerRef.current) clearTimeout(flashTimerRef.current);
+    },
+    [],
+  );
 
   const getInstance = () => {
     if (!instanceId) {
@@ -18,7 +26,8 @@ export const SingletonVisualizer = () => {
     } else {
       setLog((prev) => [...prev, `Returning existing instance: ${instanceId}`]);
       setFlash(true);
-      setTimeout(() => setFlash(false), 500);
+      if (flashTimerRef.current) clearTimeout(flashTimerRef.current);
+      flashTimerRef.current = setTimeout(() => setFlash(false), 500);
     }
   };
 
@@ -29,9 +38,9 @@ export const SingletonVisualizer = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex gap-4 items-start">
-        <div className="flex-1 space-y-4">
-          <div className="flex gap-2">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+        <div className="min-w-0 flex-1 space-y-4">
+          <div className="flex flex-wrap gap-2">
             <button
               type="button"
               onClick={getInstance}
@@ -54,15 +63,16 @@ export const SingletonVisualizer = () => {
             <AnimatePresence>
               {instanceId && (
                 <motion.div
-                  initial={{ scale: 0, rotate: -180 }}
+                  initial={{ scale: 0.6, opacity: 0 }}
                   animate={{
-                    scale: flash ? 1.2 : 1,
-                    rotate: 0,
-                    borderColor: flash ? '#9333ea' : '#e5e7eb', // purple-600 vs gray-200
+                    scale: flash ? 1.1 : 1,
+                    opacity: 1,
+                    borderColor: flash ? '#9333ea' : '#e5e7eb',
                   }}
-                  exit={{ scale: 0, rotate: 180 }}
+                  exit={{ scale: 0.6, opacity: 0 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                   className={cn(
-                    'w-16 h-16 bg-white rounded-xl shadow-lg flex items-center justify-center border-4 transition-colors duration-300',
+                    'w-16 h-16 bg-white rounded-xl shadow-lg flex items-center justify-center border-4',
                     flash
                       ? 'border-purple-500 shadow-purple-200'
                       : 'border-gray-200',
@@ -74,8 +84,9 @@ export const SingletonVisualizer = () => {
             </AnimatePresence>
             {instanceId && (
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25 }}
                 className="absolute bottom-2 text-xs font-mono text-gray-500"
               >
                 ID: {instanceId}
@@ -84,12 +95,12 @@ export const SingletonVisualizer = () => {
           </div>
         </div>
 
-        <div className="flex-1 h-48 bg-gray-900 rounded-xl p-3 overflow-y-auto font-mono text-xs text-green-400 border border-gray-800">
+        <div className="min-w-0 flex-1 h-40 bg-gray-900 sm:h-48 rounded-xl p-3 overflow-y-auto font-mono text-xs text-green-400 border border-gray-800">
           <div className="mb-2 text-gray-500 border-b border-gray-800 pb-1">
             Console Log
           </div>
           {log.map((entry, i) => (
-            <div key={`${i}-${entry}`} className="mb-1">
+            <div key={`${i}-${entry}`} className="mb-1 break-words">
               <span className="text-gray-500 mr-2">{'>'}</span>
               {entry}
             </div>

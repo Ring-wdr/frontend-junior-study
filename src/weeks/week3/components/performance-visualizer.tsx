@@ -4,16 +4,13 @@ import { motion } from 'motion/react';
 import { memo, type UIEvent, useState } from 'react';
 import { cn } from '../../../lib/utils';
 
-// ==========================================
-// 1. Memoization Demo
-// ==========================================
-
 const NonMemoizedItem = ({ count }: { count: number }) => (
   <motion.div
-    key={Math.random()}
+    key={count}
     initial={{ backgroundColor: 'rgba(239, 68, 68, 0.2)' }}
     animate={{ backgroundColor: 'rgba(255, 255, 255, 1)' }}
-    className="p-3 border rounded-lg flex justify-between text-sm"
+    transition={{ duration: 0.6, ease: 'easeOut' }}
+    className="p-3 border rounded-lg flex justify-between gap-2 text-sm"
   >
     <span>I re-render every time parent updates!</span>
     <span className="text-red-500 font-mono">Rendered</span>
@@ -22,13 +19,13 @@ const NonMemoizedItem = ({ count }: { count: number }) => (
 
 const MemoizedItem = memo(({ label }: { label: string }) => (
   <motion.div
-    // No random key here, we want it TO update only when it actually updates
     initial={{ backgroundColor: 'rgba(34, 197, 94, 0.2)' }}
     animate={{ backgroundColor: 'rgba(255, 255, 255, 1)' }}
-    className="p-3 border rounded-lg flex justify-between text-sm"
+    transition={{ duration: 0.6, ease: 'easeOut' }}
+    className="p-3 border rounded-lg flex justify-between gap-2 text-sm"
   >
     <span>I only render when MY props change.</span>
-    <span className="text-green-600 font-mono">Stable</span>
+    <span className="text-green-600 font-mono">{label}</span>
   </motion.div>
 ));
 
@@ -36,8 +33,8 @@ const MemoizationDemo = () => {
   const [count, setCount] = useState(0);
 
   return (
-    <div className="space-y-4 border p-4 rounded-xl bg-gray-50">
-      <div className="flex items-center gap-2">
+    <div className="space-y-4 border p-3 rounded-xl bg-gray-50 sm:p-4">
+      <div className="flex flex-wrap items-center gap-2">
         <button
           type="button"
           onClick={() => setCount((c) => c + 1)}
@@ -54,7 +51,7 @@ const MemoizationDemo = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
           <h4 className="font-semibold text-red-600 text-sm">
             Without Memoization
@@ -66,8 +63,8 @@ const MemoizationDemo = () => {
           <h4 className="font-semibold text-green-600 text-sm">
             With React.memo
           </h4>
-          <MemoizedItem label="Static Prop" />
-          <MemoizedItem label="Static Prop" />
+          <MemoizedItem label="Stable" />
+          <MemoizedItem label="Stable" />
         </div>
       </div>
       <p className="text-xs text-gray-400">
@@ -77,10 +74,6 @@ const MemoizationDemo = () => {
     </div>
   );
 };
-
-// ==========================================
-// 2. Virtualization Demo
-// ==========================================
 
 const VirtualizationDemo = () => {
   const [isVirtual, setIsVirtual] = useState(true);
@@ -123,8 +116,8 @@ const VirtualizationDemo = () => {
   };
 
   return (
-    <div className="space-y-4 border p-4 rounded-xl bg-gray-50">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 border p-3 rounded-xl bg-gray-50 sm:p-4">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <label className="flex items-center gap-2 cursor-pointer">
             <input
@@ -147,10 +140,6 @@ const VirtualizationDemo = () => {
         className="border bg-white h-[200px] overflow-auto rounded-lg relative"
         onScroll={onScroll}
       >
-        {/* 
-                   In virtual mode, we need a "fake" height container to ensure scrolling works 
-                   even though we don't render content.
-                */}
         <div
           style={{
             height: isVirtual ? totalItems * itemHeight : 'auto',
@@ -183,7 +172,7 @@ const VirtualizationDemo = () => {
 
 export const PerformanceVisualizer = () => {
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div className="space-y-2">
         <h3 className="text-lg font-bold text-gray-900">Memoization</h3>
         <p className="text-sm text-gray-600">

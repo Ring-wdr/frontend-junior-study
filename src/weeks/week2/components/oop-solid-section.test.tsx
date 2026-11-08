@@ -10,10 +10,11 @@ describe('OopSolidSection', () => {
     expect(screen.getByText('Object-Oriented Programming')).toBeInTheDocument();
   });
 
-  it('should render the main title', () => {
+  it('should render content instead of the section title', () => {
     const { container } = render(<OopSolidSection />);
 
-    expect(container.textContent).toContain('OOP & SOLID Principles');
+    expect(container.textContent).toContain('Core Concepts');
+    expect(container.textContent).not.toContain('OOP & SOLID Principles');
   });
 
   it('should render the description', () => {

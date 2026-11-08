@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'motion/react';
 import { Bitcoin, CreditCard, Wallet } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
@@ -13,14 +13,25 @@ export const StrategyVisualizer = () => {
   const [processing, setProcessing] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success'>('idle');
 
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  useEffect(
+    () => () => {
+      for (const timer of timersRef.current) clearTimeout(timer);
+    },
+    [],
+  );
+
   const pay = () => {
     setProcessing(true);
     setStatus('idle');
-    setTimeout(() => {
-      setProcessing(false);
-      setStatus('success');
-      setTimeout(() => setStatus('idle'), 2000);
-    }, 1500);
+    timersRef.current.push(
+      setTimeout(() => {
+        setProcessing(false);
+        setStatus('success');
+        timersRef.current.push(setTimeout(() => setStatus('idle'), 2000));
+      }, 1500),
+    );
   };
 
   const generateCode = () => {
@@ -77,20 +88,21 @@ context.pay(100);`;
         </button>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-8 items-center bg-gray-100 rounded-xl p-4 border border-gray-200">
+      <div className="flex flex-col md:flex-row gap-4 items-center bg-gray-100 rounded-xl p-4 border border-gray-200">
         <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-w-[120px] text-center">
           <div className="text-2xl font-bold text-gray-800">$100.00</div>
           <div className="text-xs text-gray-400">Total Amount</div>
         </div>
 
-        <div className="flex-1 flex flex-col items-center">
+        <div className="flex-1 flex flex-col items-center min-h-12 justify-center">
           <AnimatePresence mode="wait">
             {processing ? (
               <motion.div
                 key="processing"
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.2 }}
                 className="flex flex-col items-center gap-2"
               >
                 <div className="w-8 h-8 rounded-full border-4 border-blue-500 border-t-transparent animate-spin" />
@@ -101,9 +113,10 @@ context.pay(100);`;
             ) : status === 'success' ? (
               <motion.div
                 key="success"
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.2 }}
                 className="flex flex-col items-center gap-2 text-green-600"
               >
                 <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
@@ -126,9 +139,11 @@ context.pay(100);`;
             ) : (
               <motion.div
                 key="arrow"
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="text-gray-300"
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="rotate-90 text-gray-300 md:rotate-0"
               >
                 ➜
               </motion.div>
@@ -161,9 +176,7 @@ context.pay(100);`;
         </button>
       </div>
 
-      <div className="bg-gray-900 rounded-lg p-3">
-        <CodeBlock code={generateCode()} className="text-xs" />
-      </div>
+      <CodeBlock code={generateCode()} className="text-xs" />
     </div>
   );
 };

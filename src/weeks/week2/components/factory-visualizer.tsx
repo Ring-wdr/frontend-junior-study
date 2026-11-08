@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'motion/react';
 import { Circle, Plus, Square, Triangle } from 'lucide-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 type ShapeType = 'circle' | 'square' | 'triangle';
 
@@ -15,6 +15,7 @@ interface Shape {
 export const FactoryVisualizer = () => {
   const [shapes, setShapes] = useState<Shape[]>([]);
   const [selectedType, setSelectedType] = useState<ShapeType>('circle');
+  const nextId = useRef(0);
 
   const createShape = () => {
     const colors = [
@@ -27,7 +28,7 @@ export const FactoryVisualizer = () => {
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
     const newShape: Shape = {
-      id: Date.now(),
+      id: nextId.current++,
       type: selectedType,
       color: randomColor,
     };
@@ -37,7 +38,7 @@ export const FactoryVisualizer = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-4 bg-gray-50 p-4 rounded-xl border border-gray-200">
+      <div className="flex flex-wrap items-center gap-3 bg-gray-50 p-3 rounded-xl border border-gray-200 sm:p-4">
         <div className="flex items-center gap-2">
           <span className="text-sm font-medium text-gray-700">Type:</span>
           <select
@@ -60,14 +61,15 @@ export const FactoryVisualizer = () => {
         </button>
       </div>
 
-      <div className="min-h-[160px] bg-gray-100 rounded-xl border border-gray-200 p-4 flex flex-wrap gap-4 content-start">
+      <div className="min-h-[160px] bg-gray-100 rounded-xl border border-gray-200 p-3 flex flex-wrap gap-3 content-start overflow-hidden sm:p-4">
         <AnimatePresence>
           {shapes.map((shape) => (
             <motion.div
               key={shape.id}
-              initial={{ opacity: 0, scale: 0 }}
+              initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0 }}
+              exit={{ opacity: 0, scale: 0.5 }}
+              transition={{ type: 'spring', stiffness: 350, damping: 30 }}
               layout
               className={`w-12 h-12 flex items-center justify-center shadow-sm text-white ${shape.color} ${shape.type === 'circle' ? 'rounded-full' : shape.type === 'square' ? 'rounded-lg' : 'clip-triangle'}`}
               style={

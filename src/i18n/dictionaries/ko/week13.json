@@ -169,6 +169,7 @@
       "dbStatus": "데이터베이스 상태:",
       "connected": "연결됨",
       "initializing": "초기화 중...",
+      "error": "데이터베이스 열기 오류",
       "placeholder": "할 일 추가...",
       "add": "추가",
       "noTodos": "아직 할 일이 없습니다. 위에서 추가하세요!",

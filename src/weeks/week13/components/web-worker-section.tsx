@@ -1,5 +1,6 @@
 'use client';
 
+import { useInView } from 'motion/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from '@/i18n/client';
 import { DemoBox } from '../../../components/demo-box';
@@ -16,29 +17,19 @@ export const WebWorkerSection = () => {
   const [isWorkerRunning, setIsWorkerRunning] = useState(false);
   const [animating, setAnimating] = useState(false);
   const [rotation, setRotation] = useState(0);
-  const animationRef = useRef<number | null>(null);
+  const demoRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(demoRef);
 
-  // JavaScript-based animation (runs on main thread)
   useEffect(() => {
-    if (animating) {
-      const animate = () => {
-        setRotation((prev) => (prev + 3) % 360);
-        animationRef.current = requestAnimationFrame(animate);
-      };
-      animationRef.current = requestAnimationFrame(animate);
-    } else {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-        animationRef.current = null;
-      }
-    }
-
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
+    if (!animating || !isInView) return;
+    let rafId = 0;
+    const animate = () => {
+      setRotation((prev) => (prev + 3) % 360);
+      rafId = requestAnimationFrame(animate);
     };
-  }, [animating]);
+    rafId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafId);
+  }, [animating, isInView]);
 
   const runOnMainThread = useCallback(() => {
     setIsMainRunning(true);
@@ -69,13 +60,15 @@ export const WebWorkerSection = () => {
     `;
 
     const blob = new Blob([workerCode], { type: 'application/javascript' });
-    const worker = new Worker(URL.createObjectURL(blob));
+    const url = URL.createObjectURL(blob);
+    const worker = new Worker(url);
 
     worker.onmessage = (e) => {
       const duration = (performance.now() - start).toFixed(2);
       setWorkerResult(`Result: ${e.data.result.toFixed(2)} (${duration}ms)`);
       setIsWorkerRunning(false);
       worker.terminate();
+      URL.revokeObjectURL(url);
     };
 
     worker.postMessage({ count: 10000000 });
@@ -111,7 +104,7 @@ export const WebWorkerSection = () => {
           icon
           iconColor="purple"
         >
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
               {
                 title: t('webWorker.useCases.largeJson'),
@@ -153,10 +146,10 @@ export const WebWorkerSection = () => {
 
         <SubSection title={t('webWorker.demo.title')} icon iconColor="green">
           <DemoBox label={t('webWorker.demo.label')}>
-            <div className="space-y-4">
+            <div ref={demoRef} className="space-y-4">
               <div className="flex items-center gap-4 mb-4">
                 <div
-                  className="w-16 h-16 rounded-lg bg-gradient-to-br from-green-400 to-blue-500"
+                  className="w-16 h-16 shrink-0 rounded-lg bg-gradient-to-br from-green-400 to-blue-500"
                   style={{ transform: `rotate(${rotation}deg)` }}
                 />
                 <div className="text-sm text-gray-600">
@@ -177,7 +170,7 @@ export const WebWorkerSection = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white p-4 rounded-lg border border-gray-200">
                   <h4 className="font-semibold text-sm mb-2 text-red-600">
                     {t('webWorker.demo.mainThread')}

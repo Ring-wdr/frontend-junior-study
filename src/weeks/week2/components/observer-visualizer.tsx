@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'motion/react';
 import { Bell, Radio, User, UserCheck, UserMinus } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Observer {
   id: number;
@@ -16,6 +16,14 @@ export const ObserverVisualizer = () => {
     { id: 2, name: 'User B', notified: false },
   ]);
   const [isBroadcasting, setIsBroadcasting] = useState(false);
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  useEffect(
+    () => () => {
+      for (const timer of timersRef.current) clearTimeout(timer);
+    },
+    [],
+  );
 
   const addObserver = () => {
     const newId = Math.max(...observers.map((o) => o.id), 0) + 1;
@@ -37,31 +45,38 @@ export const ObserverVisualizer = () => {
     setIsBroadcasting(true);
     setObservers(observers.map((o) => ({ ...o, notified: true })));
 
-    setTimeout(() => {
-      setIsBroadcasting(false);
+    timersRef.current.push(
       setTimeout(() => {
-        setObservers(observers.map((o) => ({ ...o, notified: false })));
-      }, 1000);
-    }, 1500);
+        setIsBroadcasting(false);
+        timersRef.current.push(
+          setTimeout(() => {
+            setObservers((prev) =>
+              prev.map((o) => ({ ...o, notified: false })),
+            );
+          }, 1000),
+        );
+      }, 1500),
+    );
   };
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col md:flex-row items-center justify-center gap-8 relative min-h-[200px]">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-6 relative min-h-[200px] overflow-hidden py-4">
         {/* Subject */}
         <div className="relative z-10">
           <motion.button
             type="button"
             whileTap={{ scale: 0.95 }}
+            initial={false}
             animate={
               isBroadcasting
                 ? {
-                    scale: [1, 1.1, 1],
+                    scale: [1, 1.08, 1],
                     boxShadow: '0 0 20px rgba(59, 130, 246, 0.5)',
                   }
-                : {}
+                : { scale: 1, boxShadow: '0 0 0px rgba(59, 130, 246, 0)' }
             }
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
             onClick={notify}
             disabled={isBroadcasting}
             className="w-24 h-24 rounded-full bg-blue-600 text-white flex flex-col items-center justify-center shadow-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
@@ -74,34 +89,34 @@ export const ObserverVisualizer = () => {
           </motion.button>
 
           {/* Signal Waves */}
-          {isBroadcasting && (
-            <>
-              {[1, 2, 3].map((i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0.8, scale: 1 }}
-                  animate={{ opacity: 0, scale: 3 }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    delay: i * 0.4,
-                  }}
-                  className="absolute inset-0 rounded-full border-2 border-blue-400"
-                />
-              ))}
-            </>
-          )}
+          {isBroadcasting &&
+            [1, 2, 3].map((i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0.8, scale: 1 }}
+                animate={{ opacity: 0, scale: 2.2 }}
+                transition={{
+                  duration: 1.2,
+                  ease: 'easeOut',
+                  repeat: Infinity,
+                  delay: (i - 1) * 0.4,
+                }}
+                className="pointer-events-none absolute inset-0 rounded-full border-2 border-blue-400"
+              />
+            ))}
         </div>
 
         {/* Observers Grid */}
-        <div className="flex flex-wrap gap-4 justify-center items-center max-w-sm">
-          <AnimatePresence>
+        <div className="flex flex-wrap gap-3 justify-center items-center max-w-sm">
+          <AnimatePresence mode="popLayout">
             {observers.map((obs) => (
               <motion.div
                 key={obs.id}
+                layout
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                 className={`relative p-3 rounded-xl border-2 flex flex-col items-center min-w-[80px] transition-colors duration-300 ${
                   obs.notified
                     ? 'bg-green-50 border-green-400'
@@ -116,6 +131,11 @@ export const ObserverVisualizer = () => {
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 400,
+                        damping: 25,
+                      }}
                       className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-0.5"
                     >
                       <Bell className="w-3 h-3" />
@@ -138,6 +158,7 @@ export const ObserverVisualizer = () => {
 
           <motion.button
             type="button"
+            layout
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={addObserver}

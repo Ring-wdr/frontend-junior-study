@@ -169,6 +169,7 @@
       "dbStatus": "Database Status:",
       "connected": "Connected",
       "initializing": "Initializing...",
+      "error": "Error opening database",
       "placeholder": "Add a todo...",
       "add": "Add",
       "noTodos": "No todos yet. Add one above!",

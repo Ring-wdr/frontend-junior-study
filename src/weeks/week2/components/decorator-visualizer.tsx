@@ -9,17 +9,27 @@ import {
   Shield,
   Terminal,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
 type DecoratorType = 'auth' | 'logger' | 'cache';
+
+const PACKET_SPRING = { type: 'spring', stiffness: 350, damping: 30 } as const;
 
 export const DecoratorVisualizer = () => {
   const [decorators, setDecorators] = useState<DecoratorType[]>([]); // Order matters!
   const [isAnimating, setIsAnimating] = useState(false);
   const [logs, setLogs] = useState<string[]>([]);
   const [packetPosition, setPacketPosition] = useState(0); // 0 = outside, 1 = layer 1, 2 = layer 2...
+  const activeRef = useRef(true);
+
+  useEffect(() => {
+    activeRef.current = true;
+    return () => {
+      activeRef.current = false;
+    };
+  }, []);
 
   const toggleDecorator = (type: DecoratorType) => {
     if (decorators.includes(type)) {
@@ -36,6 +46,10 @@ export const DecoratorVisualizer = () => {
     setPacketPosition(0);
 
     const addLog = (msg: string) => setLogs((prev) => [...prev, msg]);
+    const wait = async () => {
+      await new Promise((r) => setTimeout(r, 600));
+      return activeRef.current;
+    };
 
     // Simulate the Chain
     // The packet travels inwards: index 0 -> index N -> Core
@@ -44,7 +58,7 @@ export const DecoratorVisualizer = () => {
     for (let i = 0; i < decorators.length; i++) {
       setPacketPosition(i + 1);
       const type = decorators[i];
-      await new Promise((r) => setTimeout(r, 600));
+      if (!(await wait())) return;
 
       if (type === 'auth') {
         addLog(`[@Auth] Checking Token...`);
@@ -61,16 +75,16 @@ export const DecoratorVisualizer = () => {
 
     // CORE PHASE
     setPacketPosition(decorators.length + 1); // Center
-    await new Promise((r) => setTimeout(r, 600));
+    if (!(await wait())) return;
     addLog(`[Service] Fetching Data from DB...`);
-    await new Promise((r) => setTimeout(r, 600));
+    if (!(await wait())) return;
     addLog(`[Service] Data Found: { id: 1, name: "User" }`);
 
     // OUTBOUND PHASE
     for (let i = decorators.length - 1; i >= 0; i--) {
       setPacketPosition(i + 1);
       const type = decorators[i];
-      await new Promise((r) => setTimeout(r, 600));
+      if (!(await wait())) return;
 
       if (type === 'logger') {
         addLog(`[@Logger] Request finished. Duration: 12ms`);
@@ -106,8 +120,8 @@ export const DecoratorVisualizer = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-8">
-        <div className="grid grid-cols-1 gap-8">
+      <div className="flex flex-col gap-6">
+        <div className="grid grid-cols-1 gap-6">
           {/* Controls */}
           <div className="space-y-6">
             <div className="space-y-4">
@@ -260,9 +274,10 @@ export const DecoratorVisualizer = () => {
                   {logs.map((log, i) => (
                     <motion.div
                       key={`${i}-${log}`}
-                      initial={{ opacity: 0, x: -10 }}
+                      initial={{ opacity: 0, x: -8 }}
                       animate={{ opacity: 1, x: 0 }}
-                      className="text-green-400"
+                      transition={{ duration: 0.2 }}
+                      className="text-green-400 break-words"
                     >
                       {'>'} {log}
                     </motion.div>
@@ -273,7 +288,7 @@ export const DecoratorVisualizer = () => {
           </div>
 
           {/* Visualizer */}
-          <div className="relative flex items-center justify-center min-h-[400px] bg-slate-50 rounded-xl border border-gray-200 overflow-hidden">
+          <div className="relative flex items-center justify-center min-h-[320px] p-3 bg-slate-50 sm:min-h-[400px] rounded-xl border border-gray-200 overflow-hidden">
             <div
               className="absolute inset-0 grid grid-cols-[20px_20px] opacity-10 pointer-events-none"
               style={{
@@ -301,18 +316,19 @@ export const DecoratorVisualizer = () => {
                       return (
                         <div
                           className={cn(
-                            'relative w-32 h-32 bg-gray-900 rounded-xl flex flex-col items-center justify-center shadow-xl transition-all duration-500',
+                            'relative w-24 h-24 bg-gray-900 rounded-xl flex flex-col items-center justify-center shadow-xl transition-all duration-300 sm:w-32 sm:h-32',
                             packetPosition === decorators.length + 1 &&
                               'ring-4 ring-green-400 scale-105',
                           )}
                         >
-                          <Database className="w-10 h-10 text-white mb-2" />
+                          <Database className="w-8 h-8 text-white mb-2 sm:w-10 sm:h-10" />
                           <span className="text-xs font-bold text-gray-300">
                             CORE DB
                           </span>
                           {packetPosition === decorators.length + 1 && (
                             <motion.div
                               layoutId="packet"
+                              transition={PACKET_SPRING}
                               className="absolute w-4 h-4 bg-green-500 rounded-full shadow-[0_0_10px_rgba(74,222,128,0.8)]"
                             />
                           )}
@@ -347,7 +363,7 @@ export const DecoratorVisualizer = () => {
                     return (
                       <div
                         className={cn(
-                          'p-6 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center relative gap-2',
+                          'px-3 pt-7 pb-3 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center relative gap-2 sm:p-6 sm:pt-8',
                           colorClass,
                         )}
                       >
@@ -359,6 +375,7 @@ export const DecoratorVisualizer = () => {
                         {isActive && (
                           <motion.div
                             layoutId="packet"
+                            transition={PACKET_SPRING}
                             className="absolute top-2 right-4 w-3 h-3 bg-gray-800 rounded-full"
                           />
                         )}
@@ -378,7 +395,7 @@ export const DecoratorVisualizer = () => {
         </div>
 
         {/* Separated Code Section */}
-        <div className="bg-gray-900 rounded-lg p-4">
+        <div className="bg-gray-900 rounded-lg p-3">
           <div className="text-xs font-mono text-gray-500 mb-2 border-b border-gray-800 pb-1">
             Generated Code
           </div>

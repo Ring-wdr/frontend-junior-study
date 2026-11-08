@@ -9,15 +9,10 @@ export const MonadVisualizer = () => {
   const [value, setValue] = useState<number | null>(5);
   const [history, setHistory] = useState<(number | null)[]>([]);
 
-  const updateValue = (
-    operation: (n: number) => number | null,
-    label: string,
-  ) => {
-    setValue((prev) => {
-      const next = prev !== null ? operation(prev) : null;
-      setHistory((h) => [...h, next]);
-      return next;
-    });
+  const updateValue = (operation: (n: number) => number | null) => {
+    const next = value !== null ? operation(value) : null;
+    setValue(next);
+    setHistory((h) => [...h, next]);
   };
 
   const reset = () => {
@@ -25,9 +20,9 @@ export const MonadVisualizer = () => {
     setHistory([]);
   };
 
-  const double = () => updateValue((n) => n * 2, 'map(x => x * 2)');
-  const addOne = () => updateValue((n) => n + 1, 'map(x => x + 1)');
-  const makeNull = () => updateValue(() => null, 'map(x => null)');
+  const double = () => updateValue((n) => n * 2);
+  const addOne = () => updateValue((n) => n + 1);
+  const makeNull = () => updateValue(() => null);
 
   const generateCode = () => {
     return `const Maybe = (val) => ({
@@ -51,7 +46,7 @@ ${history
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-center gap-2">
+      <div className="flex flex-wrap justify-center gap-2">
         <button
           type="button"
           onClick={double}
@@ -94,9 +89,10 @@ ${history
           {value !== null ? (
             <motion.div
               key={value}
-              initial={{ scale: 0.5, opacity: 0 }}
+              initial={{ scale: 0.6, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 1.5, opacity: 0 }}
+              exit={{ scale: 1.2, opacity: 0 }}
+              transition={{ duration: 0.2 }}
               className="w-16 h-16 bg-white rounded-lg shadow-lg flex items-center justify-center border-2 border-indigo-500 text-2xl font-bold text-indigo-700 z-10"
             >
               {value}
@@ -104,8 +100,10 @@ ${history
           ) : (
             <motion.div
               key="null"
-              initial={{ scale: 0.5, opacity: 0 }}
+              initial={{ scale: 0.6, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
               className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-400 z-10"
             >
               <XCircle className="w-8 h-8 text-gray-400" />
@@ -120,9 +118,7 @@ ${history
         )}
       </div>
 
-      <div className="bg-gray-900 rounded-lg p-3">
-        <CodeBlock code={generateCode()} className="text-xs" />
-      </div>
+      <CodeBlock code={generateCode()} className="text-xs" />
     </div>
   );
 };

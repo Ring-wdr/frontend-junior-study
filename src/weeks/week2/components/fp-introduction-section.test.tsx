@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@rstest/core';
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 
 import { FpIntroductionSection } from './fp-introduction-section';
 
@@ -10,10 +10,13 @@ describe('FpIntroductionSection', () => {
     expect(screen.getByText('Functional Programming')).toBeInTheDocument();
   });
 
-  it('should render the main title', () => {
+  it('should render subsection headings instead of the section title', () => {
     const { container } = render(<FpIntroductionSection />);
 
-    expect(container.textContent).toContain('Introduction to FP');
+    expect(
+      within(container).getByRole('heading', { level: 3, name: /Immutability/ }),
+    ).toBeInTheDocument();
+    expect(container.textContent).not.toContain('Introduction to FP');
   });
 
   it('should render the description', () => {

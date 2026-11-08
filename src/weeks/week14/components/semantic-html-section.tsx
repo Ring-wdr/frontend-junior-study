@@ -37,7 +37,7 @@ export const SemanticHtmlSection = () => {
                 <button
                   type="button"
                   onClick={() => setShowBad(false)}
-                  className={`px-3 py-1.5 rounded text-sm font-medium transition ${
+                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors duration-200 ${
                     !showBad
                       ? 'bg-green-600 text-white'
                       : 'bg-gray-100 text-gray-600'
@@ -48,7 +48,7 @@ export const SemanticHtmlSection = () => {
                 <button
                   type="button"
                   onClick={() => setShowBad(true)}
-                  className={`px-3 py-1.5 rounded text-sm font-medium transition ${
+                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors duration-200 ${
                     showBad
                       ? 'bg-red-600 text-white'
                       : 'bg-gray-100 text-gray-600'
@@ -119,10 +119,8 @@ export const SemanticHtmlSection = () => {
           icon
           iconColor="purple"
         >
-          <div className="grid grid-cols-2 gap-3">
-            {(
-              raw('semantic.coreElements.elements') as Array<{ tag: string; wrong: string; desc: string }>
-            ).map((item) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {raw('semantic.coreElements.elements').map((item) => (
               <div
                 key={item.tag}
                 className="bg-white p-3 rounded-lg border border-gray-200"
@@ -186,10 +184,8 @@ export const SemanticHtmlSection = () => {
           />
           <InfoBox variant="orange" className="mt-3">
             <ul className="text-xs space-y-1">
-              {(
-                raw('semantic.formAccessibility.tips') as string[]
-              ).map((tip, idx) => (
-                <li key={idx}>• {tip}</li>
+              {raw('semantic.formAccessibility.tips').map((tip) => (
+                <li key={tip}>• {tip}</li>
               ))}
             </ul>
           </InfoBox>

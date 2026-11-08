@@ -1,5 +1,6 @@
 'use client';
 
+import { motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { DemoBox } from '../../../components/demo-box';
@@ -134,14 +135,19 @@ export const XssCspSection = () => {
                       {unsafeInput.includes('<script>') ||
                       unsafeInput.includes('onerror') ? (
                         <div className="absolute inset-0 flex items-center justify-center bg-red-900/10 backdrop-blur-[1px]">
-                          <div className="bg-white p-4 rounded shadow-xl border border-red-200 animate-in fade-in zoom-in-95 duration-200">
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.3, ease: 'easeOut' }}
+                            className="bg-white p-4 rounded shadow-xl border border-red-200"
+                          >
                             <p className="font-bold text-red-600 flex items-center gap-2">
                               ⚠️ {t('xss.sanitization.scriptExecuted')}
                             </p>
                             <p className="text-xs text-gray-500 mt-1">
                               {t('xss.sanitization.xssSuccessful')}
                             </p>
-                          </div>
+                          </motion.div>
                         </div>
                       ) : (
                         <div className="text-sm break-all">{unsafeInput}</div>

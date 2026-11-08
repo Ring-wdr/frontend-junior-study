@@ -12,9 +12,6 @@ import {
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
-// ==========================================
-// 1. Compound Component Pattern: Tabs
-// ==========================================
 const TabsContext = createContext<{
   activeTab: string;
   setActiveTab: (id: string) => void;
@@ -30,7 +27,7 @@ const Tabs = ({
   const [activeTab, setActiveTab] = useState(defaultValue);
   return (
     <TabsContext.Provider value={{ activeTab, setActiveTab }}>
-      <div className="flex flex-col gap-4 border p-4 rounded-xl bg-gray-50">
+      <div className="flex min-w-0 flex-col gap-4 border p-3 rounded-xl bg-gray-50 sm:p-4">
         <div className="text-xs font-mono text-gray-500 mb-2 border-b pb-2">
           Context State: {JSON.stringify({ activeTab })}
         </div>
@@ -41,7 +38,9 @@ const Tabs = ({
 };
 
 const TabList = ({ children }: { children: ReactNode }) => (
-  <div className="flex gap-2 p-1 bg-gray-200 rounded-lg w-fit">{children}</div>
+  <div className="flex max-w-full gap-1 overflow-x-auto p-1 bg-gray-200 rounded-lg w-fit">
+    {children}
+  </div>
 );
 
 const Tab = ({ id, children }: { id: string; children: ReactNode }) => {
@@ -54,7 +53,7 @@ const Tab = ({ id, children }: { id: string; children: ReactNode }) => {
       type="button"
       onClick={() => context.setActiveTab(id)}
       className={cn(
-        'px-4 py-2 rounded-md text-sm font-medium transition-all',
+        'shrink-0 px-3 py-2 rounded-md text-sm font-medium transition-all sm:px-4',
         isActive
           ? 'bg-white text-gray-900 shadow-sm'
           : 'text-gray-600 hover:text-gray-900',
@@ -72,8 +71,9 @@ const TabPanel = ({ id, children }: { id: string; children: ReactNode }) => {
   if (context.activeTab !== id) return null;
   return (
     <motion.div
-      initial={{ opacity: 0, y: 5 }}
+      initial={{ opacity: 0, y: 4 }}
       animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2 }}
       className="p-4 bg-white rounded-xl border border-gray-200 shadow-sm"
     >
       {children}
@@ -81,9 +81,6 @@ const TabPanel = ({ id, children }: { id: string; children: ReactNode }) => {
   );
 };
 
-// ==========================================
-// 2. Render Props Pattern: Mouse Tracker
-// ==========================================
 const MouseTracker = ({
   render,
 }: {
@@ -94,7 +91,7 @@ const MouseTracker = ({
   return (
     <div
       className="relative h-[200px] bg-gray-900 rounded-xl overflow-hidden cursor-crosshair group"
-      onMouseMove={(e) => {
+      onPointerMove={(e) => {
         const rect = e.currentTarget.getBoundingClientRect();
         setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
       }}
@@ -107,9 +104,6 @@ const MouseTracker = ({
   );
 };
 
-// ==========================================
-// 3. HOC Pattern: withLoading
-// ==========================================
 function withLoading<P extends object>(WrappedComponent: ComponentType<P>) {
   return (props: P & { isLoading: boolean }) => {
     const { isLoading, ...rest } = props;
@@ -128,8 +122,8 @@ function withLoading<P extends object>(WrappedComponent: ComponentType<P>) {
 
 const SimpleList = ({ items }: { items: string[] }) => (
   <ul className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm space-y-2">
-    {items.map((item, i) => (
-      <li key={i} className="p-2 bg-gray-50 rounded text-sm">
+    {items.map((item) => (
+      <li key={item} className="p-2 bg-gray-50 rounded text-sm">
         {item}
       </li>
     ))}
@@ -142,7 +136,7 @@ export const ComponentPatternsVisualizer = () => {
   const [loading, setLoading] = useState(false);
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-8">
       {/* Compound Components */}
       <div className="space-y-4">
         <div className="flex items-center gap-2 mb-2">
@@ -154,7 +148,7 @@ export const ComponentPatternsVisualizer = () => {
           </h3>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Interactive Demo */}
           <Tabs defaultValue="account">
             <TabList>
@@ -223,11 +217,11 @@ export const ComponentPatternsVisualizer = () => {
             Logic Reuse via Function Prop
           </h3>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <MouseTracker
             render={({ x, y }) => (
               <div
-                className="absolute pointer-events-none w-6 h-6 bg-pink-500 rounded-full shadow-[0_0_15px_rgba(236,72,153,0.6)] transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-75"
+                className="absolute pointer-events-none w-6 h-6 bg-pink-500 rounded-full shadow-[0_0_15px_rgba(236,72,153,0.6)] -translate-x-1/2 -translate-y-1/2"
                 style={{ left: x, top: y }}
               >
                 <span className="absolute top-full left-1/2 -translate-x-1/2 mt-1 text-[10px] text-white whitespace-nowrap bg-black/50 px-1 rounded">
@@ -274,7 +268,7 @@ export const ComponentPatternsVisualizer = () => {
           </h3>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="space-y-4">
             <div className="flex items-center gap-4 mb-4">
               <button
@@ -290,8 +284,7 @@ export const ComponentPatternsVisualizer = () => {
                 {loading ? 'Stop Loading' : 'Start Loading'}
               </button>
               <span className="text-xs text-gray-500">
-                Passes <code>isLoading={'{' + loading.toString() + '}'}</code>{' '}
-                to HOC
+                Passes <code>isLoading={`{${loading.toString()}}`}</code> to HOC
               </span>
             </div>
 

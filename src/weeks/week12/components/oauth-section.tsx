@@ -1,5 +1,6 @@
 'use client';
 
+import { motion } from 'motion/react';
 import { useState } from 'react';
 import { Trans, useTranslation } from '@/i18n/client';
 import { DemoBox } from '../../../components/demo-box';
@@ -142,12 +143,15 @@ export const OAuthSection = () => {
                 <h4 className="text-lg font-bold text-gray-800 mb-2">
                   Step {current.step}: {actorLabels[current.actorId]}
                 </h4>
-                <p
+                <motion.p
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.25, ease: 'easeOut' }}
                   key={flowStep}
-                  className="text-gray-600 text-base sm:text-lg animate-in fade-in slide-in-from-bottom-2 duration-300"
+                  className="text-gray-600 text-base sm:text-lg"
                 >
                   {current.title}
-                </p>
+                </motion.p>
                 <div className="mt-4 flex gap-2 justify-center">
                   {flowSteps.map((s, i) => (
                     <div

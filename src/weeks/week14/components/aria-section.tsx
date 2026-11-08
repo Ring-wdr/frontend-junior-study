@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { Trans, useTranslation } from '@/i18n/client';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
@@ -11,6 +11,7 @@ import { CodeBlock } from '../../../components/ui/code-block';
 export const AriaSection = () => {
   const { t, raw } = useTranslation('week14');
   const [expanded, setExpanded] = useState(false);
+  const accordionId = useId();
   const [notification, setNotification] = useState('');
 
   return (
@@ -36,9 +37,7 @@ export const AriaSection = () => {
           iconColor="purple"
         >
           <div className="space-y-3">
-            {(
-              raw('aria.commonAttributes.attributes') as Array<{ attr: string; desc: string; example: string }>
-            ).map((item) => (
+            {raw('aria.commonAttributes.attributes').map((item) => (
               <div
                 key={item.attr}
                 className="bg-purple-50 p-3 rounded-lg border border-purple-100"
@@ -62,25 +61,29 @@ export const AriaSection = () => {
                 type="button"
                 onClick={() => setExpanded(!expanded)}
                 aria-expanded={expanded}
-                aria-controls="accordion-content"
-                className="w-full flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200 hover:bg-gray-50 transition"
+                aria-controls={accordionId}
+                className="w-full flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors duration-200"
               >
                 <span className="font-medium">
                   {t('aria.ariaExpanded.buttonText')}
                 </span>
                 <span
-                  className={`transition-transform ${expanded ? 'rotate-180' : ''}`}
+                  aria-hidden="true"
+                  className={`transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}
                 >
                   ▼
                 </span>
               </button>
 
               <div
-                id="accordion-content"
-                className={`overflow-hidden transition-all duration-300 ${expanded ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}
+                id={accordionId}
+                inert={!expanded}
+                className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${expanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
               >
-                <div className="p-3 bg-blue-50 rounded-lg text-sm text-blue-800">
-                  {t('aria.ariaExpanded.explanation')}
+                <div className="overflow-hidden">
+                  <div className="p-3 bg-blue-50 rounded-lg text-sm text-blue-800">
+                    {t('aria.ariaExpanded.explanation')}
+                  </div>
                 </div>
               </div>
 
@@ -98,13 +101,13 @@ export const AriaSection = () => {
                 {t('aria.ariaLive.instructions')}
               </p>
 
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
                   onClick={() =>
                     setNotification(t('aria.ariaLive.notification1'))
                   }
-                  className="px-3 py-1.5 bg-green-600 text-white rounded text-sm hover:bg-green-700 transition"
+                  className="px-3 py-1.5 bg-green-600 text-white rounded text-sm hover:bg-green-700 transition-colors duration-200"
                 >
                   {t('aria.ariaLive.addToCart')}
                 </button>
@@ -113,28 +116,27 @@ export const AriaSection = () => {
                   onClick={() =>
                     setNotification(t('aria.ariaLive.notification2'))
                   }
-                  className="px-3 py-1.5 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition"
+                  className="px-3 py-1.5 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition-colors duration-200"
                 >
                   {t('aria.ariaLive.submitForm')}
                 </button>
                 <button
                   type="button"
                   onClick={() => setNotification('')}
-                  className="px-3 py-1.5 bg-gray-200 text-gray-700 rounded text-sm hover:bg-gray-300 transition"
+                  className="px-3 py-1.5 bg-gray-200 text-gray-700 rounded text-sm hover:bg-gray-300 transition-colors duration-200"
                 >
                   {t('aria.ariaLive.clear')}
                 </button>
               </div>
 
               {/* Live Region */}
-              <div
-                role="status"
+              <output
                 aria-live="polite"
                 aria-atomic="true"
-                className={`p-3 rounded-lg transition-all ${notification ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-400'}`}
+                className={`block p-3 rounded-lg transition-colors duration-200 ${notification ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-400'}`}
               >
                 {notification || t('aria.ariaLive.placeholder')}
-              </div>
+              </output>
 
               <CodeBlock
                 code={`<div
@@ -182,9 +184,7 @@ export const AriaSection = () => {
 
         <SubSection title={t('aria.antiPatterns.title')} icon iconColor="red">
           <div className="space-y-2">
-            {(
-              raw('aria.antiPatterns.patterns') as Array<{ bad: string; good: string; reason: string }>
-            ).map((item) => (
+            {raw('aria.antiPatterns.patterns').map((item) => (
               <div
                 key={item.bad}
                 className="p-3 bg-red-50 rounded-lg border border-red-100"

@@ -34,6 +34,8 @@ const translations: Record<Locale, Record<string, string>> = {
   },
 };
 
+const coreElementIcons = ['🌐', '📅', '💰', '➡️', '📝', '🕐'];
+
 export const I18nBasicsSection = () => {
   const { t, raw } = useTranslation('week14');
   const [locale, setLocale] = useState<Locale>('ko');
@@ -60,23 +62,15 @@ export const I18nBasicsSection = () => {
           icon
           iconColor="blue"
         >
-          <div className="grid grid-cols-2 gap-3">
-            {[
-              { icon: '🌐' },
-              { icon: '📅' },
-              { icon: '💰' },
-              { icon: '➡️' },
-              { icon: '📝' },
-              { icon: '🕐' },
-            ].map((item, idx) => {
-              const element = raw(`i18nBasics.coreElements.elements.${idx}`) as { title: string; desc: string };
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {raw('i18nBasics.coreElements.elements').map((element, idx) => {
               return (
                 <div
                   key={element.title}
                   className="bg-blue-50 p-3 rounded-lg border border-blue-100"
                 >
                   <div className="flex items-center gap-2 mb-1">
-                    <span>{item.icon}</span>
+                    <span>{coreElementIcons[idx]}</span>
                     <span className="font-medium text-sm text-blue-900">
                       {element.title}
                     </span>
@@ -96,13 +90,13 @@ export const I18nBasicsSection = () => {
           <DemoBox label={t('i18nBasics.liveDemo.label')}>
             <div className="space-y-4">
               {/* Locale Selector */}
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 {(['ko', 'en', 'ja'] as const).map((l) => (
                   <button
                     key={l}
                     type="button"
                     onClick={() => setLocale(l)}
-                    className={`px-3 py-1.5 rounded text-sm font-medium transition ${
+                    className={`px-3 py-1.5 rounded text-sm font-medium transition-colors duration-200 ${
                       locale === l
                         ? 'bg-blue-600 text-white'
                         : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
@@ -128,9 +122,10 @@ export const I18nBasicsSection = () => {
                     max="10"
                     value={itemCount}
                     onChange={(e) => setItemCount(Number(e.target.value))}
-                    className="flex-1"
+                    aria-label="count"
+                    className="flex-1 min-w-0"
                   />
-                  <span className="text-sm font-medium min-w-[100px]">
+                  <span className="text-sm font-medium min-w-[88px] text-right">
                     {locale === 'en' && itemCount !== 1
                       ? tDemo('items_plural', { count: itemCount })
                       : tDemo('items', { count: itemCount })}
@@ -139,7 +134,7 @@ export const I18nBasicsSection = () => {
 
                 <button
                   type="button"
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors duration-200"
                 >
                   {tDemo('button')}
                 </button>
@@ -285,24 +280,20 @@ export const getDictionary = async (locale: string) =>
                 </tr>
               </thead>
               <tbody>
-                {(
-                  raw('i18nBasics.libraryComparison.libraries') as Array<{
-                    name: string;
-                    features: string;
-                    useCase: string;
-                  }>
-                ).map((lib, idx) => (
-                  <tr
-                    key={lib.name}
-                    className={`border-t ${idx === 1 ? 'bg-gray-50' : ''}`}
-                  >
-                    <td className="p-2 font-mono text-purple-600">
-                      {lib.name}
-                    </td>
-                    <td className="p-2 text-xs">{lib.features}</td>
-                    <td className="p-2 text-xs">{lib.useCase}</td>
-                  </tr>
-                ))}
+                {raw('i18nBasics.libraryComparison.libraries').map(
+                  (lib, idx) => (
+                    <tr
+                      key={lib.name}
+                      className={`border-t ${idx === 1 ? 'bg-gray-50' : ''}`}
+                    >
+                      <td className="p-2 font-mono text-purple-600">
+                        {lib.name}
+                      </td>
+                      <td className="p-2 text-xs">{lib.features}</td>
+                      <td className="p-2 text-xs">{lib.useCase}</td>
+                    </tr>
+                  ),
+                )}
               </tbody>
             </table>
           </div>

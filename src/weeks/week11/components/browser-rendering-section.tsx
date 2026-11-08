@@ -1,5 +1,6 @@
 'use client';
 
+import { motion } from 'motion/react';
 import { AlertTriangle, ArrowRight, Cpu, RefreshCw, Zap } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
@@ -199,7 +200,12 @@ export function BrowserRenderingSection() {
 
         <div className="mt-4 min-h-[60px] text-center">
           {hoveredStep !== null ? (
-            <div className="animate-in fade-in duration-200">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
+              className=""
+            >
               <p className="font-semibold text-gray-900">
                 {renderingSteps[hoveredStep].description}
               </p>
@@ -212,9 +218,14 @@ export function BrowserRenderingSection() {
                 </span>
                 {renderingSteps[hoveredStep].triggers.join(', ')}
               </div>
-            </div>
+            </motion.div>
           ) : activeStages.length > 0 ? (
-            <div className="animate-in fade-in duration-200">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
+              className=""
+            >
               <p className="font-bold text-indigo-600">
                 {activeStages.length === 5
                   ? t('browserRendering.expensiveFull')
@@ -222,7 +233,7 @@ export function BrowserRenderingSection() {
                     ? t('browserRendering.moderatePaint')
                     : t('browserRendering.cheapComposite')}
               </p>
-            </div>
+            </motion.div>
           ) : (
             <p className="text-sm text-gray-400">
               {t('browserRendering.hoverMessage')}

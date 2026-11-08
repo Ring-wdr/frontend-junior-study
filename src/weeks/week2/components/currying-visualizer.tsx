@@ -56,10 +56,10 @@ export const CurryingVisualizer = () => {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 items-center">
         {/* Visual Pipeline */}
-        <div className="flex items-center gap-2 w-full justify-center text-sm font-mono text-gray-500 overflow-x-auto p-2">
+        <div className="flex items-center gap-2 w-full justify-start sm:justify-center text-sm font-mono text-gray-500 overflow-x-auto p-2">
           <div
             className={cn(
-              'px-3 py-1 rounded transition-colors',
+              'shrink-0 px-3 py-1 rounded transition-colors',
               step === 'bread'
                 ? 'bg-orange-100 text-orange-700 font-bold border-2 border-orange-300'
                 : 'bg-gray-100',
@@ -70,7 +70,7 @@ export const CurryingVisualizer = () => {
           <span>➜</span>
           <div
             className={cn(
-              'px-3 py-1 rounded transition-colors',
+              'shrink-0 px-3 py-1 rounded transition-colors',
               step === 'filling'
                 ? 'bg-orange-100 text-orange-700 font-bold border-2 border-orange-300'
                 : 'bg-gray-100',
@@ -81,7 +81,7 @@ export const CurryingVisualizer = () => {
           <span>➜</span>
           <div
             className={cn(
-              'px-3 py-1 rounded transition-colors',
+              'shrink-0 px-3 py-1 rounded transition-colors',
               step === 'sauce'
                 ? 'bg-orange-100 text-orange-700 font-bold border-2 border-orange-300'
                 : 'bg-gray-100',
@@ -97,10 +97,11 @@ export const CurryingVisualizer = () => {
             {step === 'bread' && (
               <motion.div
                 key="bread"
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="flex gap-4"
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.2 }}
+                className="flex flex-wrap justify-center gap-3 sm:gap-4"
               >
                 <button
                   type="button"
@@ -121,10 +122,11 @@ export const CurryingVisualizer = () => {
             {step === 'filling' && (
               <motion.div
                 key="filling"
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="flex gap-4"
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.2 }}
+                className="flex flex-wrap justify-center gap-3 sm:gap-4"
               >
                 <button
                   type="button"
@@ -145,10 +147,11 @@ export const CurryingVisualizer = () => {
             {step === 'sauce' && (
               <motion.div
                 key="sauce"
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="flex gap-4"
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.2 }}
+                className="flex flex-wrap justify-center gap-3 sm:gap-4"
               >
                 <button
                   type="button"
@@ -169,11 +172,12 @@ export const CurryingVisualizer = () => {
             {step === 'complete' && (
               <motion.div
                 key="complete"
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
+                transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                 className="flex flex-col items-center gap-4"
               >
-                <div className="text-xl font-bold text-gray-800 bg-white p-6 rounded-xl shadow-lg border-b-4 border-orange-400 flex flex-col items-center">
+                <div className="text-lg font-bold text-gray-800 bg-white p-4 rounded-xl text-center sm:p-6 sm:text-xl shadow-lg border-b-4 border-orange-400 flex flex-col items-center">
                   <span className="text-4xl mb-2">🥪</span>
                   {ingredients[0]} + {ingredients[1]} + {ingredients[2]}
                 </div>
@@ -190,9 +194,7 @@ export const CurryingVisualizer = () => {
         </div>
       </div>
 
-      <div className="bg-gray-900 rounded-lg p-3">
-        <CodeBlock code={generateCode()} className="text-xs" />
-      </div>
+      <CodeBlock code={generateCode()} className="text-xs" />
     </div>
   );
 };

@@ -8,49 +8,70 @@ import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
+type StrategyId =
+  | 'cache-first'
+  | 'network-first'
+  | 'stale-while-revalidate'
+  | 'network-only'
+  | 'cache-only';
+
+const lifecyclePhases = [
+  { id: 'register', icon: '📝' },
+  { id: 'install', icon: '📦' },
+  { id: 'activate', icon: '✅' },
+  { id: 'running', icon: '🏃' },
+] as const;
+
+const pwaComponents = [
+  { id: 'manifest', icon: '📄' },
+  { id: 'serviceWorker', icon: '⚙️' },
+  { id: 'https', icon: '🔒' },
+] as const;
+
 export const ServiceWorkerSection = () => {
   const { t } = useTranslation('week13');
-  const [activeStrategy, setActiveStrategy] = useState<string>('cache-first');
+  const [activeStrategy, setActiveStrategy] =
+    useState<StrategyId>('cache-first');
 
-  const strategies = [
+  const strategies: {
+    id: StrategyId;
+    name: string;
+    desc: string;
+    use: string;
+  }[] = [
     {
       id: 'cache-first',
       name: t('serviceWorker.cacheStrategies.cacheFirst'),
       desc: t('serviceWorker.cacheStrategies.cacheFirstDesc'),
       use: t('serviceWorker.cacheStrategies.cacheFirstUse'),
-      color: 'blue',
     },
     {
       id: 'network-first',
       name: t('serviceWorker.cacheStrategies.networkFirst'),
       desc: t('serviceWorker.cacheStrategies.networkFirstDesc'),
       use: t('serviceWorker.cacheStrategies.networkFirstUse'),
-      color: 'green',
     },
     {
       id: 'stale-while-revalidate',
       name: t('serviceWorker.cacheStrategies.staleWhileRevalidate'),
       desc: t('serviceWorker.cacheStrategies.staleWhileRevalidateDesc'),
       use: t('serviceWorker.cacheStrategies.staleWhileRevalidateUse'),
-      color: 'purple',
     },
     {
       id: 'network-only',
       name: t('serviceWorker.cacheStrategies.networkOnly'),
       desc: t('serviceWorker.cacheStrategies.networkOnlyDesc'),
       use: t('serviceWorker.cacheStrategies.networkOnlyUse'),
-      color: 'orange',
     },
     {
       id: 'cache-only',
       name: t('serviceWorker.cacheStrategies.cacheOnly'),
       desc: t('serviceWorker.cacheStrategies.cacheOnlyDesc'),
       use: t('serviceWorker.cacheStrategies.cacheOnlyUse'),
-      color: 'red',
     },
   ];
 
-  const strategyCode: Record<string, string> = {
+  const strategyCode: Record<StrategyId, string> = {
     'cache-first': `// Cache First Strategy
 self.addEventListener('fetch', (event) => {
   event.respondWith(
@@ -116,94 +137,89 @@ self.addEventListener('fetch', (event) => {
 
   return (
     <SectionCard
-      badge={{ label: 'PWA', color: 'green' }}
-      description="Build offline-capable web applications with programmable proxy"
+      badge={{ label: t('serviceWorker.badge'), color: 'green' }}
+      description={t('serviceWorker.description')}
     >
       <div className="space-y-8">
-        <SubSection title="What is Service Worker?" icon iconColor="blue">
-          <InfoBox variant="green" title="Programmable Network Proxy">
+        <SubSection
+          title={t('serviceWorker.whatIs.title')}
+          icon
+          iconColor="blue"
+        >
+          <InfoBox variant="green" title={t('serviceWorker.whatIs.infoTitle')}>
             <p className="text-sm leading-relaxed">
-              Service Worker is a script that runs in the background, separate
-              from the web page. It acts as a{' '}
-              <strong>programmable proxy layer</strong> between your app and the
-              network.
+              {t('serviceWorker.whatIs.description')}
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm mt-3">
-              <li>
-                <strong>Intercept Requests:</strong> Handle fetch events for
-                custom responses
-              </li>
-              <li>
-                <strong>Cache Storage:</strong> Store and serve cached resources
-              </li>
-              <li>
-                <strong>Background Sync:</strong> Queue requests when offline
-              </li>
-              <li>
-                <strong>Push Notifications:</strong> Receive push messages
-              </li>
+              <li>{t('serviceWorker.whatIs.interceptRequests')}</li>
+              <li>{t('serviceWorker.whatIs.cacheStorage')}</li>
+              <li>{t('serviceWorker.whatIs.backgroundSync')}</li>
+              <li>{t('serviceWorker.whatIs.pushNotifications')}</li>
             </ul>
           </InfoBox>
         </SubSection>
 
-        <SubSection title="Service Worker Lifecycle" icon iconColor="purple">
-          <DemoBox label="Lifecycle Visualization">
-            <div className="flex items-center justify-between gap-2 overflow-x-auto pb-2">
-              {[
-                {
-                  step: 'Register',
-                  icon: '📝',
-                  desc: 'navigator.serviceWorker.register()',
-                },
-                { step: 'Install', icon: '📦', desc: 'Pre-cache assets' },
-                { step: 'Activate', icon: '✅', desc: 'Clean old caches' },
-                { step: 'Running', icon: '🏃', desc: 'Handle fetch events' },
-              ].map((phase, idx) => (
-                <div key={phase.step} className="flex items-center">
-                  <div className="flex flex-col items-center min-w-[80px]">
+        <SubSection
+          title={t('serviceWorker.lifecycle.title')}
+          icon
+          iconColor="purple"
+        >
+          <DemoBox label={t('serviceWorker.lifecycle.label')}>
+            <div className="grid grid-cols-2 sm:flex sm:items-start sm:justify-between gap-3 sm:gap-2">
+              {lifecyclePhases.map((phase, idx) => (
+                <div
+                  key={phase.id}
+                  className="flex items-start min-w-0 sm:flex-1"
+                >
+                  <div className="flex flex-col items-center min-w-0 flex-1">
                     <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-2xl border-2 border-green-300">
                       {phase.icon}
                     </div>
                     <p className="text-xs font-bold mt-2 text-gray-800">
-                      {phase.step}
+                      {t(`serviceWorker.lifecycle.${phase.id}`)}
                     </p>
-                    <p className="text-[10px] text-gray-500 text-center mt-1">
-                      {phase.desc}
+                    <p className="text-[10px] text-gray-500 text-center mt-1 break-all sm:break-normal">
+                      {t(`serviceWorker.lifecycle.${phase.id}Desc`)}
                     </p>
                   </div>
-                  {idx < 3 && <div className="w-8 h-0.5 bg-green-300 mx-1" />}
+                  {idx < lifecyclePhases.length - 1 && (
+                    <div className="hidden sm:block w-6 h-0.5 bg-green-300 mx-1 mt-6 shrink-0" />
+                  )}
                 </div>
               ))}
             </div>
           </DemoBox>
         </SubSection>
 
-        <SubSection title="PWA Components" icon iconColor="green">
-          <div className="grid grid-cols-3 gap-3">
-            <div className="bg-green-50 p-3 rounded border border-green-200 text-center">
-              <p className="text-2xl mb-2">📄</p>
-              <p className="text-sm font-semibold text-green-900">
-                manifest.json
-              </p>
-              <p className="text-xs text-green-700 mt-1">App metadata</p>
-            </div>
-            <div className="bg-green-50 p-3 rounded border border-green-200 text-center">
-              <p className="text-2xl mb-2">⚙️</p>
-              <p className="text-sm font-semibold text-green-900">
-                Service Worker
-              </p>
-              <p className="text-xs text-green-700 mt-1">Offline logic</p>
-            </div>
-            <div className="bg-green-50 p-3 rounded border border-green-200 text-center">
-              <p className="text-2xl mb-2">🔒</p>
-              <p className="text-sm font-semibold text-green-900">HTTPS</p>
-              <p className="text-xs text-green-700 mt-1">Secure origin</p>
-            </div>
+        <SubSection
+          title={t('serviceWorker.pwaComponents.title')}
+          icon
+          iconColor="green"
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {pwaComponents.map((item) => (
+              <div
+                key={item.id}
+                className="bg-green-50 p-3 rounded border border-green-200 text-center"
+              >
+                <p className="text-2xl mb-2">{item.icon}</p>
+                <p className="text-sm font-semibold text-green-900">
+                  {t(`serviceWorker.pwaComponents.${item.id}`)}
+                </p>
+                <p className="text-xs text-green-700 mt-1">
+                  {t(`serviceWorker.pwaComponents.${item.id}Desc`)}
+                </p>
+              </div>
+            ))}
           </div>
         </SubSection>
 
-        <SubSection title="Cache Strategies" icon iconColor="orange">
-          <DemoBox label="Interactive Strategy Explorer">
+        <SubSection
+          title={t('serviceWorker.cacheStrategies.title')}
+          icon
+          iconColor="orange"
+        >
+          <DemoBox label={t('serviceWorker.cacheStrategies.label')}>
             <div className="space-y-4">
               <div className="flex flex-wrap gap-2">
                 {strategies.map((s) => (
@@ -211,7 +227,7 @@ self.addEventListener('fetch', (event) => {
                     key={s.id}
                     type="button"
                     onClick={() => setActiveStrategy(s.id)}
-                    className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all ${
+                    className={`px-3 py-1.5 text-xs font-medium rounded-full transition-colors duration-200 ${
                       activeStrategy === s.id
                         ? 'bg-gray-900 text-white'
                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -229,12 +245,12 @@ self.addEventListener('fetch', (event) => {
                     key={s.id}
                     className="bg-white p-4 rounded-lg border border-gray-200"
                   >
-                    <div className="flex items-start justify-between mb-3">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
                       <div>
                         <h4 className="font-bold text-gray-900">{s.name}</h4>
                         <p className="text-sm text-gray-600">{s.desc}</p>
                       </div>
-                      <span className="text-xs bg-gray-100 px-2 py-1 rounded">
+                      <span className="self-start shrink-0 text-xs bg-gray-100 px-2 py-1 rounded">
                         {s.use}
                       </span>
                     </div>
@@ -245,7 +261,11 @@ self.addEventListener('fetch', (event) => {
           </DemoBox>
         </SubSection>
 
-        <SubSection title="Registration Example" icon iconColor="blue">
+        <SubSection
+          title={t('serviceWorker.registration.title')}
+          icon
+          iconColor="blue"
+        >
           <CodeBlock
             code={`// Register Service Worker
 if ('serviceWorker' in navigator) {
@@ -275,11 +295,17 @@ if ('serviceWorker' in navigator) {
           />
         </SubSection>
 
-        <SubSection title="Workbox (Recommended)" icon iconColor="red">
-          <InfoBox variant="purple" title="Production-Ready PWA">
+        <SubSection
+          title={t('serviceWorker.workbox.title')}
+          icon
+          iconColor="red"
+        >
+          <InfoBox
+            variant="purple"
+            title={t('serviceWorker.workbox.infoTitle')}
+          >
             <p className="text-sm mb-3">
-              Workbox provides a declarative API for common caching patterns,
-              precaching, routing, and more. Highly recommended for production.
+              {t('serviceWorker.workbox.description')}
             </p>
           </InfoBox>
 

@@ -1,8 +1,8 @@
 'use client';
 
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useInView } from 'motion/react';
 import { Database, LayoutTemplate, Loader2 } from 'lucide-react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 // Types for our "Data"
@@ -38,6 +38,7 @@ const DogImageCard = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             className="flex flex-col items-center gap-2 text-gray-400"
           >
             <Loader2 className="w-8 h-8 animate-spin" />
@@ -46,8 +47,10 @@ const DogImageCard = ({
         ) : data ? (
           <motion.div
             key="content"
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
             className="text-center"
           >
             <div className="w-32 h-32 rounded-full overflow-hidden mb-2 bg-gray-100 border-4 border-white shadow-md mx-auto">
@@ -75,13 +78,16 @@ const DogImageCard = ({
 // 2. Container Component (Logic/Data)
 // Knows NOTHING about how to look. Just manages state.
 export const ContainerPresentationalVisualizer = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState<DogData | null>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isInView = useInView(rootRef, { once: true, amount: 0.3 });
 
-  const fetchData = useCallback(async () => {
+  const fetchData = useCallback(() => {
     setLoading(true);
-    // Simulate network delay
-    setTimeout(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
       const breeds = ['Golden Retriever', 'Beagle', 'Poodle', 'Husky'];
       const randomBreed = breeds[Math.floor(Math.random() * breeds.length)];
       setData({
@@ -94,14 +100,21 @@ export const ContainerPresentationalVisualizer = () => {
   }, []);
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    if (isInView) fetchData();
+  }, [isInView, fetchData]);
+
+  useEffect(
+    () => () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    },
+    [],
+  );
 
   return (
-    <div className="space-y-6">
+    <div ref={rootRef} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Logical Layer Visualization */}
-        <div className="bg-blue-50 p-4 rounded-xl border border-blue-100 flex flex-col gap-4 relative">
+        <div className="min-w-0 bg-blue-50 p-4 rounded-xl border border-blue-100 flex flex-col gap-4 relative">
           <div className="absolute top-2 right-2 text-[10px] font-bold text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full flex items-center gap-1">
             <Database className="w-3 h-3" />
             Container
@@ -109,7 +122,7 @@ export const ContainerPresentationalVisualizer = () => {
           <div className="text-sm font-semibold text-blue-900 mb-2">
             State Manager
           </div>
-          <div className="flex-1 font-mono text-xs bg-white/50 p-3 rounded-lg border border-blue-100 space-y-2">
+          <div className="flex-1 font-mono text-xs bg-white/50 p-3 rounded-lg border border-blue-100 space-y-2 break-words">
             <div>
               <span className="text-gray-400">const</span> [loading, setLoading]
               ={' '}
@@ -141,7 +154,7 @@ export const ContainerPresentationalVisualizer = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
+        <div className="min-w-0">
           <CodeBlock
             code={`const DogContainer = () => {
   const [data, setData] = useState(null);
@@ -155,7 +168,7 @@ export const ContainerPresentationalVisualizer = () => {
             className="text-xs"
           />
         </div>
-        <div>
+        <div className="min-w-0">
           <CodeBlock
             code={`const DogImageCard = ({ data }) => (
   <div className="card">

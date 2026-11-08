@@ -22,12 +22,7 @@ export const RtlSection = () => {
           <InfoBox variant="red" title={t('rtl.languages.infoTitle')}>
             <p className="text-sm mb-3">{t('rtl.languages.infoText')}</p>
             <div className="flex flex-wrap gap-2">
-              {(
-                raw('rtl.languages.list') as Array<{
-                  lang: string;
-                  speakers: string;
-                }>
-              ).map((item) => (
+              {raw('rtl.languages.list').map((item) => (
                 <div
                   key={item.lang}
                   className="px-2 py-1 bg-red-100 text-red-700 rounded text-xs"
@@ -46,7 +41,7 @@ export const RtlSection = () => {
                 <button
                   type="button"
                   onClick={() => setIsRtl(false)}
-                  className={`px-3 py-1.5 rounded text-sm font-medium transition ${
+                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors duration-200 ${
                     !isRtl
                       ? 'bg-blue-600 text-white'
                       : 'bg-white text-gray-600 border border-gray-200'
@@ -57,7 +52,7 @@ export const RtlSection = () => {
                 <button
                   type="button"
                   onClick={() => setIsRtl(true)}
-                  className={`px-3 py-1.5 rounded text-sm font-medium transition ${
+                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors duration-200 ${
                     isRtl
                       ? 'bg-blue-600 text-white'
                       : 'bg-white text-gray-600 border border-gray-200'
@@ -70,7 +65,7 @@ export const RtlSection = () => {
               {/* Demo Card */}
               <div
                 dir={isRtl ? 'rtl' : 'ltr'}
-                className="bg-white p-4 rounded-lg border border-gray-200 transition-all"
+                className="bg-white p-4 rounded-lg border border-gray-200"
               >
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
@@ -265,12 +260,7 @@ module.exports = {
 
         <SubSection title={t('rtl.checklist.title')} icon iconColor="blue">
           <div className="space-y-2">
-            {(
-              raw('rtl.checklist.items') as Array<{
-                item: string;
-                done: boolean;
-              }>
-            ).map((check) => (
+            {raw('rtl.checklist.items').map((check) => (
               <div
                 key={check.item}
                 className={`flex items-center gap-2 p-2 rounded ${
