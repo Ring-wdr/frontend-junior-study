@@ -12,27 +12,50 @@ import {
   fireEvent,
   render,
   screen,
-  waitFor,
 } from '@testing-library/react';
-import type React from 'react';
-import type { ComponentProps } from 'react';
-import { EventLoopVisualizer } from '../../../src/page/week1/components/event-loop-visualizer';
+import { createElement, type ReactNode } from 'react';
+import { EventLoopVisualizer } from '../../../src/weeks/week1/components/event-loop-visualizer';
 
-// Mock framer-motion to avoid animation issues in tests
-rs.mock('framer-motion', async () => {
-  const actual = await rs.importActual('framer-motion');
+rs.mock('motion/react', () => {
+  const motionOnlyProps = new Set([
+    'initial',
+    'animate',
+    'exit',
+    'transition',
+    'layout',
+    'layoutId',
+    'variants',
+    'whileHover',
+    'whileTap',
+    'whileInView',
+    'viewport',
+    'style',
+  ]);
+  const motion = new Proxy(
+    {},
+    {
+      get:
+        (_target, tag: string) =>
+        ({
+          children,
+          ...props
+        }: { children?: ReactNode } & Record<string, unknown>) =>
+          createElement(
+            tag,
+            Object.fromEntries(
+              Object.entries(props).filter(
+                ([key]) => !motionOnlyProps.has(key),
+              ),
+            ),
+            children,
+          ),
+    },
+  );
   return {
-    ...actual,
-    AnimatePresence: ({ children }: { children: React.ReactNode }) => (
+    motion,
+    AnimatePresence: ({ children }: { children?: ReactNode }) => (
       <>{children}</>
     ),
-    motion: {
-      div: ({ children, ...props }: ComponentProps<'div'>) => {
-        // biome-ignore lint: exclude style from props
-        const { style, ...divProps } = props;
-        return <div {...divProps}>{children}</div>;
-      },
-    },
   };
 });
 
@@ -69,27 +92,24 @@ describe('EventLoopVisualizer', () => {
     expect(screen.getAllByText('Start')[0]).toBeInTheDocument(); // In output
 
     // More clicks to progress...
-    fireEvent.click(nextButton); // Pop call stack
-    // After popping, the next step message should change
-    expect(
-      screen.getByText(/Execute: console.log\("Start"\)/).textContent,
-    ).toBeTruthy();
+    fireEvent.click(nextButton);
+    expect(screen.getByText(/Step 2\/12: Pop Call Stack/)).toBeInTheDocument();
   });
 
-  test('Run All button executes all steps automatically', async () => {
+  test('Run All button executes all steps automatically', () => {
     render(<EventLoopVisualizer />);
     const runAllButton = screen.getByTestId('event-loop-run-all');
 
     fireEvent.click(runAllButton);
 
-    // Fast-forward processing
     act(() => {
-      rs.runAllTimers();
+      rs.advanceTimersByTime(10_000);
     });
 
-    await waitFor(() => {
-      expect(screen.getByText('Timeout')).toBeInTheDocument();
-    });
+    expect(screen.getByText('Timeout')).toBeInTheDocument();
+    expect(
+      screen.getByText(/Step 12\/12: Pop Call Stack - Done!/),
+    ).toBeInTheDocument();
   });
 
   test('Reset button clears the state', () => {

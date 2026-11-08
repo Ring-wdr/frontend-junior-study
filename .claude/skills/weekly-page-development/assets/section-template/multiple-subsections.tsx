@@ -1,3 +1,6 @@
+'use client';
+
+import { Trans, useTranslation } from '@/i18n/client';
 import {
   DemoBox,
   InfoBox,
@@ -6,130 +9,63 @@ import {
   SubSection,
 } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
-// import { VisualizerA, VisualizerB, VisualizerC } from './visualizers';
+import { ConceptAVisualizer } from './concept-a-visualizer';
+import { ConceptBVisualizer } from './concept-b-visualizer';
 
-/**
- * Template: Multiple Related Concepts Section
- *
- * Use this template when teaching several related concepts:
- * - Each concept gets a SubSection
- * - Visual separators between concepts
- * - Each subsection follows same structure (description, demo, code)
- */
+const CONCEPT_A_CODE = `const conceptA = () => {
+  return 'A';
+};`;
+
+const CONCEPT_B_CODE = `const conceptB = () => {
+  return 'B';
+};`;
+
 export const MultipleSubsectionsSection = () => {
+  const { t } = useTranslation('weekN');
+
   return (
     <SectionCard
-      badge={{ label: 'Pattern Category', color: 'purple' }}
-      title="Related Concepts"
-      description="Learn about multiple related concepts in this category"
+      badge={{ label: t('related.badge'), color: 'purple' }}
+      description={t('related.description')}
+      testId="related-section"
     >
       <div className="space-y-8">
-        {/* Concept A */}
-        <SubSection title="Concept A" icon iconColor="purple">
-          <div className="grid grid-cols-1 gap-6">
+        <SubSection title={t('related.conceptA.title')} icon iconColor="purple">
+          <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Description of Concept A. Explain what it is, how it works, and
-              why it matters. This should be a clear, concise overview.
+              <Trans
+                t={t}
+                i18nKey="related.conceptA.body"
+                components={{ code: <code /> }}
+              />
             </p>
-
             <DemoBox>
-              {/* <VisualizerA /> */}
-              <div className="p-8 bg-white rounded border border-gray-200">
-                <p className="text-center text-gray-500">Visualizer A</p>
-              </div>
+              <ConceptAVisualizer />
             </DemoBox>
-
-            <CodeBlock
-              code={`// Concept A implementation example
-const conceptA = () => {
-  // Your code here
-};`}
-              className="text-xs"
-            />
-
-            <InfoBox variant="purple" title="When to Use">
-              Use Concept A when you need to... (explain typical use cases)
+            <CodeBlock code={CONCEPT_A_CODE} language="ts" className="text-xs" />
+            <InfoBox variant="purple" title={t('related.conceptA.whenTitle')}>
+              {t('related.conceptA.when')}
             </InfoBox>
           </div>
         </SubSection>
 
-        <SectionDivider variant="line" />
+        <SectionDivider />
 
-        {/* Concept B */}
-        <SubSection title="Concept B" icon iconColor="blue">
-          <div className="grid grid-cols-1 gap-6">
-            <p className="text-sm text-gray-700">
-              Description of Concept B. Explain what it is, how it works, and
-              how it differs from Concept A.
-            </p>
-
+        <SubSection title={t('related.conceptB.title')} icon iconColor="blue">
+          <div className="space-y-4">
+            <p className="text-sm text-gray-700">{t('related.conceptB.body')}</p>
             <DemoBox>
-              {/* <VisualizerB /> */}
-              <div className="p-8 bg-white rounded border border-gray-200">
-                <p className="text-center text-gray-500">Visualizer B</p>
-              </div>
+              <ConceptBVisualizer />
             </DemoBox>
-
-            <CodeBlock
-              code={`// Concept B implementation example
-const conceptB = () => {
-  // Your code here
-};`}
-              className="text-xs"
-            />
-
-            <InfoBox variant="blue" title="When to Use">
-              Use Concept B when you need to... (explain typical use cases)
+            <CodeBlock code={CONCEPT_B_CODE} language="ts" className="text-xs" />
+            <InfoBox variant="blue" title={t('related.conceptB.whenTitle')}>
+              {t('related.conceptB.when')}
             </InfoBox>
           </div>
         </SubSection>
 
-        <SectionDivider variant="line" />
-
-        {/* Concept C */}
-        <SubSection title="Concept C" icon iconColor="pink">
-          <div className="grid grid-cols-1 gap-6">
-            <p className="text-sm text-gray-700">
-              Description of Concept C. Explain what it is, how it works, and
-              how it complements A and B.
-            </p>
-
-            <DemoBox>
-              {/* <VisualizerC /> */}
-              <div className="p-8 bg-white rounded border border-gray-200">
-                <p className="text-center text-gray-500">Visualizer C</p>
-              </div>
-            </DemoBox>
-
-            <CodeBlock
-              code={`// Concept C implementation example
-const conceptC = () => {
-  // Your code here
-};`}
-              className="text-xs"
-            />
-
-            <InfoBox variant="pink" title="When to Use">
-              Use Concept C when you need to... (explain typical use cases)
-            </InfoBox>
-          </div>
-        </SubSection>
-
-        {/* Summary */}
-        <InfoBox variant="gray" title="Comparison Summary">
-          <div className="space-y-2 text-sm">
-            <p>
-              <strong>Concept A:</strong> Best for situations X, Y. Strengths:
-              A1, A2.
-            </p>
-            <p>
-              <strong>Concept B:</strong> Best for situations Z. Strengths: B1,
-              B2.
-            </p>
-            <p>
-              <strong>Concept C:</strong> Advanced option. Strengths: C1, C2.
-            </p>
-          </div>
+        <InfoBox variant="gray" title={t('related.summary.title')}>
+          {t('related.summary.body')}
         </InfoBox>
       </div>
     </SectionCard>

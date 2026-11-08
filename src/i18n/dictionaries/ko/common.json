@@ -1,0 +1,17 @@
+{
+  "theme": {
+    "siteTitle": "프론트엔드 스터디",
+    "searchPlaceholder": "문서 검색…",
+    "searchEmpty": "검색 결과가 없습니다.",
+    "searchLoading": "불러오는 중…",
+    "searchError": "검색 인덱스를 불러오지 못했습니다.",
+    "tocTitle": "이 페이지에서",
+    "backToTop": "맨 위로",
+    "editLink": "GitHub에서 이 페이지 수정",
+    "lastUpdated": "마지막 업데이트",
+    "footer": "프론트엔드 주니어 스터디"
+  },
+  "ui": {
+    "interactiveDemo": "인터랙티브 데모"
+  }
+}

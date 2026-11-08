@@ -1,24 +1,48 @@
 import { afterEach, describe, expect, rs, test } from '@rstest/core';
 import { cleanup, render, screen, within } from '@testing-library/react';
-import type React from 'react';
-import type { ComponentProps } from 'react';
-import { EventLoopSection } from '../../../src/page/week1/components/event-loop-section';
+import { createElement, type ReactNode } from 'react';
+import { EventLoopSection } from '../../../src/weeks/week1/components/event-loop-section';
 
-// Mock framer-motion
-rs.mock('framer-motion', async () => {
-  const actual = await rs.importActual('framer-motion');
+rs.mock('motion/react', () => {
+  const motionOnlyProps = new Set([
+    'initial',
+    'animate',
+    'exit',
+    'transition',
+    'layout',
+    'layoutId',
+    'variants',
+    'whileHover',
+    'whileTap',
+    'whileInView',
+    'viewport',
+    'style',
+  ]);
+  const motion = new Proxy(
+    {},
+    {
+      get:
+        (_target, tag: string) =>
+        ({
+          children,
+          ...props
+        }: { children?: ReactNode } & Record<string, unknown>) =>
+          createElement(
+            tag,
+            Object.fromEntries(
+              Object.entries(props).filter(
+                ([key]) => !motionOnlyProps.has(key),
+              ),
+            ),
+            children,
+          ),
+    },
+  );
   return {
-    ...actual,
-    AnimatePresence: ({ children }: { children: React.ReactNode }) => (
+    motion,
+    AnimatePresence: ({ children }: { children?: ReactNode }) => (
       <>{children}</>
     ),
-    motion: {
-      div: ({ children, ...props }: ComponentProps<'div'>) => {
-        // biome-ignore lint: exclude style from props
-        const { style, ...divProps } = props;
-        return <div {...divProps}>{children}</div>;
-      },
-    },
   };
 });
 
@@ -26,14 +50,14 @@ describe('EventLoopSection', () => {
   afterEach(() => {
     cleanup();
   });
-  test('renders section with badge and title', () => {
+  test('renders the badge but leaves the title to the MDX heading', () => {
     render(<EventLoopSection />);
 
     const section = screen.getByTestId('event-loop-section');
-    expect(
-      within(section).getByText('Event Loop Visualizer'),
-    ).toBeInTheDocument();
     expect(within(section).getByText('Runtime')).toBeInTheDocument();
+    expect(
+      within(section).queryByText('Event Loop Visualizer'),
+    ).not.toBeInTheDocument();
   });
 
   test('renders description', () => {

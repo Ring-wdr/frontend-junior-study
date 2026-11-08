@@ -1,299 +1,147 @@
 # Components Guide
 
-Complete reference for all shared components used in weekly pages.
+Shared components for week sections. Import from `'../../../components'` (barrel `src/components/index.ts`) inside `src/weeks/weekN/components/`, or with the `@/components/...` alias.
 
-## Table of Contents
-1. [PageLayout](#pagelayout)
-2. [SectionCard](#sectioncard)
-3. [InfoBox](#infobox)
-4. [DemoBox](#demobox)
-5. [SubSection](#subsection)
-6. [ContentGrid](#contentgrid)
-7. [SectionDivider](#sectiondivider)
-8. [CodeBlock](#codeblock)
+| Component | File | Renders |
+|-----------|------|---------|
+| SectionCard | `src/components/section-card.tsx` | section wrapper (badge + description + body) |
+| SubSection | `src/components/sub-section.tsx` | `h3` + content |
+| InfoBox | `src/components/info-box.tsx` | colored callout, `h4` title |
+| DemoBox | `src/components/demo-box.tsx` | labeled container for interactive demos |
+| ContentGrid | `src/components/content-grid.tsx` | title/description grid |
+| SectionDivider | `src/components/section-divider.tsx` | line or spacer |
+| CodeBlock | `src/components/ui/code-block.tsx` | syntax-highlighted code |
+| Badge | `src/components/ui/badge.tsx` | colored pill (used by SectionCard) |
+| WeekCard / WeekGrid | `src/components/week-card.tsx` | home page week links (MDX only) |
 
----
-
-## PageLayout
-
-**Purpose:** Main page wrapper that provides consistent header, tab navigation, and section rendering for all weekly pages.
-
-**Location:** `src/components/page-layout.tsx`
-
-**Props:**
-- `title` (string, required) - Page title (e.g., "Week 2: Design Patterns")
-- `description` (string, required) - Brief page description
-- `tabs` (string[], required) - Array of tab IDs. Use `'all'` to show all sections without filtering
-- `sections` (Section[], required) - Array of section objects with `id` and `component` properties
-- `tabLabelMap?` (Record<string, string>, optional) - Custom labels for tabs (if not provided, uses tab ID capitalized)
-
-**Usage:**
-```typescript
-<PageLayout
-  title="Week 2: Design Patterns"
-  description="Learn about common design patterns in software"
-  tabs={['all', 'creational', 'structural', 'behavioral']}
-  sections={[
-    { id: 'creational', component: <CreationPatternsSection /> },
-    { id: 'structural', component: <StructuralPatternsSection /> },
-    { id: 'behavioral', component: <BehavioralPatternsSection /> },
-  ]}
-  tabLabelMap={{ creational: 'Creation', structural: 'Structural', behavioral: 'Behavioral' }}
-/>
-```
-
-**Features:**
-- Sticky tab navigation
-- Animated section transitions
-- Responsive design
-- Back to Dashboard link
-
----
+Page title, sidebar, TOC, and section `h2` headings come from Nextra and the MDX file, not from components.
 
 ## SectionCard
 
-**Purpose:** Container for a major section within a page, with badge, title, and description.
+Wrapper for the body of one `## Heading [#slug]` in the MDX.
 
-**Location:** `src/components/section-card.tsx`
+```ts
+interface SectionCardProps {
+  badge?: { label: string; color?: BadgeColor; className?: string };
+  description?: string;
+  children: ReactNode;
+  testId?: string; // set on the root as data-testid
+}
+```
 
-**Props:**
-- `badge?` (object, optional)
-  - `label` (string) - Badge text
-  - `color?` (BadgeColor) - Badge color: `'blue'`, `'purple'`, `'green'`, `'orange'`, `'pink'`, `'indigo'`, `'teal'`
-  - `className?` (string) - Additional CSS classes
-- `title` (string, required) - Section title
-- `description` (string, required) - Brief section description
-- `children` (ReactNode, required) - Section content
-- `testId?` (string, optional) - Test ID for testing
+- No `title` prop. The MDX heading directly above `<XxxSection />` is the title.
+- `BadgeColor`: `blue`, `purple`, `green`, `orange`, `pink`, `indigo`, `teal`, `red`, `gray`.
+- It is a plain block (`mt-4`), not a bordered card; the docs column supplies the page frame.
 
-**Usage:**
-```typescript
+```tsx
 <SectionCard
-  badge={{ label: 'Design Patterns', color: 'purple' }}
-  title="Creation Patterns"
-  description="Patterns focused on object creation mechanisms"
+  badge={{ label: t('patterns.badge'), color: 'purple' }}
+  description={t('patterns.description')}
+  testId="patterns-section"
 >
-  {/* Section content here */}
+  {/* body */}
 </SectionCard>
 ```
-
-**Styling Notes:**
-- Uses Card component from ui/card.tsx for consistent styling
-- 6px padding, white background, subtle border and shadow
-- Badge appears above title with 2px bottom margin
-
----
-
-## InfoBox
-
-**Purpose:** Highlighted box for important concepts, key takeaways, or additional information.
-
-**Location:** `src/components/info-box.tsx`
-
-**Props:**
-- `variant?` (InfoBoxVariant, optional) - Color theme: `'blue'`, `'green'`, `'orange'`, `'red'`, `'purple'`, `'gray'` (default: `'blue'`)
-- `title?` (string, optional) - Box title
-- `children` (ReactNode, required) - Box content
-- `className?` (string, optional) - Additional CSS classes
-
-**Available Variants:**
-- `blue` - Information/concepts
-- `green` - Tips/best practices
-- `orange` - Important notes/warnings
-- `red` - Errors/pitfalls to avoid
-- `purple` - Theory/advanced concepts
-- `gray` - General information/neutral
-
-**Usage:**
-```typescript
-<InfoBox variant="orange" title="Core Concepts">
-  <ul className="list-disc pl-5 space-y-1 text-sm">
-    <li><strong>Single Responsibility:</strong> A class should have one reason to change</li>
-    <li><strong>Open-Closed:</strong> Open for extension, closed for modification</li>
-  </ul>
-</InfoBox>
-```
-
-**Styling Notes:**
-- Rounded corners (xl), 4px padding, left border
-- Background, border, text colors match variant
-- Title is bold if provided
-
----
-
-## DemoBox
-
-**Purpose:** Container indicating an interactive demonstration or visualizer component.
-
-**Location:** `src/components/demo-box.tsx`
-
-**Props:**
-- `children` (ReactNode, required) - Interactive component to display
-- `label?` (string, optional) - Custom label text (default: `'Interactive Demo'`)
-
-**Usage:**
-```typescript
-<DemoBox>
-  <YourVisualizerComponent />
-</DemoBox>
-```
-
-**Styling Notes:**
-- Light gray background (bg-gray-50)
-- 4px padding, rounded corners (xl), subtle border
-- Label in uppercase, small text, gray color
-- Always use for interactive/animated components
-
----
 
 ## SubSection
 
-**Purpose:** Subsection within a larger section, with optional icon indicator.
-
-**Location:** `src/components/sub-section.tsx`
-
-**Props:**
-- `title` (string, required) - Subsection title
-- `icon?` (boolean, optional) - Show colored dot indicator (default: `false`)
-- `iconColor?` (string, optional) - Icon color: `'purple'`, `'blue'`, `'pink'`, `'green'`, `'orange'`, `'red'` (default: `'purple'`)
-- `children` (ReactNode, required) - Subsection content
-- `className?` (string, optional) - Additional CSS classes
-- `divider?` (boolean, optional) - Show divider above section (default: `false`)
-
-**Usage:**
-```typescript
-<SubSection title="Singleton Pattern" icon iconColor="purple">
-  <div className="grid grid-cols-1 gap-6">
-    <div>
-      <p className="text-sm text-gray-700">Description here</p>
-    </div>
-  </div>
-</SubSection>
+```ts
+interface SubSectionProps {
+  title: string;
+  icon?: boolean;          // colored dot before the title
+  iconColor?: 'purple' | 'blue' | 'pink' | 'green' | 'orange' | 'red'; // default purple
+  children: ReactNode;
+  className?: string;
+  divider?: boolean;       // <hr> above the section
+}
 ```
 
-**Styling Notes:**
-- Title is bold, medium size
-- Icon is small (1.5x1.5) rounded dot
-- When used with divider, includes top border
+Renders `<section><h3>title</h3>{children}</section>`. Use it for subtopics inside a SectionCard so the heading order is h2 (MDX) then h3.
 
----
+## InfoBox
+
+```ts
+interface InfoBoxProps {
+  variant?: 'blue' | 'green' | 'orange' | 'red' | 'purple' | 'gray'; // default blue
+  title?: string;   // rendered as h4
+  children: ReactNode;
+  className?: string;
+}
+```
+
+Variant meaning: blue = information, green = tips/best practice, orange = important note, red = pitfall, purple = theory/advanced, gray = neutral.
+
+## DemoBox
+
+```ts
+interface DemoBoxProps {
+  children: ReactNode;
+  label?: string; // default 'Interactive Demo'
+}
+```
+
+Wrap every interactive or animated component in a DemoBox. It has `overflow-hidden`, so content wider than the column is clipped rather than scrolling the page.
 
 ## ContentGrid
 
-**Purpose:** Grid layout for displaying items with title and description.
-
-**Location:** `src/components/content-grid.tsx`
-
-**Props:**
-- `items` (ContentItem[], required) - Array of `{ title: string, description: string }` objects
-- `columns?` (`'auto'` | `1` | `2`, optional) - Grid columns (default: `'auto'`)
-  - `'auto'`: Responsive (1 column on mobile, 2 on desktop)
-  - `1`: Always single column
-  - `2`: Always two columns
-- `className?` (string, optional) - Additional CSS classes
-
-**Usage:**
-```typescript
-<ContentGrid
-  items={[
-    { title: 'Concept 1', description: 'Description of first concept' },
-    { title: 'Concept 2', description: 'Description of second concept' },
-  ]}
-  columns="auto"
-/>
+```ts
+interface ContentGridProps {
+  items: { title: string; description: string }[];
+  columns?: 'auto' | 1 | 2; // 'auto' and 2: 1 column on mobile, 2 from md
+  className?: string;
+}
 ```
 
-**Styling Notes:**
-- 4px gap between items
-- Each item has 3px padding, left-aligned
-- Title is bold, small, gray-900
-- Description is xs text, gray-500
-
----
+Pair with `raw('topic.items')` when the items come from the dictionary.
 
 ## SectionDivider
 
-**Purpose:** Visual separator between sections.
-
-**Location:** `src/components/section-divider.tsx`
-
-**Props:**
-- `variant?` (`'line'` | `'spacing'`, optional) - Divider style (default: `'line'`)
-  - `'line'`: 1px border
-  - `'spacing'`: 4px gap (spacing only, no visible line)
-- `className?` (string, optional) - Additional CSS classes
-
-**Usage:**
-```typescript
-<SectionDivider variant="line" />
-```
-
-**Styling Notes:**
-- Light gray color (bg-gray-100 or border-gray-100)
-- Subtle visual separation
-- Use between SubSections in a SectionCard
-
----
+`variant?: 'line' | 'spacing'` (default `line`), `className?`. Use between SubSections when `space-y-*` alone is not enough.
 
 ## CodeBlock
 
-**Purpose:** Display formatted code snippets with syntax highlighting.
-
-**Location:** `src/components/ui/code-block.tsx`
-
-**Props:**
-- `code` (string, required) - Code content to display
-- `className?` (string, optional) - Additional CSS classes for sizing
-
-**Usage:**
-```typescript
-<CodeBlock
-  code={`const example = () => {
-  console.log('Hello, World!');
-};`}
-  className="text-xs"
-/>
+```ts
+interface CodeBlockProps {
+  code: string;
+  language?: string;        // default 'javascript'
+  className?: string;
+  showLineNumbers?: boolean;
+}
 ```
 
-**Styling Notes:**
-- Dark background (bg-gray-900)
-- Syntax highlighting with color-coded elements
-- Monospace font
-- Can be sized with `className="text-xs"` or `text-sm`
-- Responsive with horizontal scroll on small screens
+Uses react-syntax-highlighter (Prism, vscDarkPlus). It is `not-prose` and scrolls horizontally, so long lines do not widen the column. Do not translate code.
 
----
+## WeekCard / WeekGrid
 
-## Component Combinations
+Used only in `src/content/{ko,en}/index.mdx`:
 
-### Typical Section Structure
-```typescript
-<SectionCard badge={{ label: 'Topic', color: 'blue' }} title="Title" description="Description">
+```mdx
+<WeekGrid>
+  <WeekCard week={N} href="/en/week-N" badge="Week N" title="Topic" description="Summary." />
+</WeekGrid>
+```
+
+`href` includes the locale prefix.
+
+## Typical Composition
+
+```tsx
+<SectionCard badge={{ label: t('x.badge'), color: 'blue' }} description={t('x.description')} testId="x-section">
   <div className="space-y-8">
-    <SubSection title="Concept 1" icon iconColor="blue">
-      <p>Content</p>
-      <DemoBox><Component /></DemoBox>
+    <SubSection title={t('x.concept.title')} icon iconColor="blue">
+      <p className="text-sm text-gray-700">{t('x.concept.body')}</p>
     </SubSection>
-
-    <SectionDivider variant="line" />
-
-    <SubSection title="Concept 2" icon iconColor="blue">
-      <InfoBox variant="blue" title="Key Point">
-        Content
-      </InfoBox>
+    <SubSection title={t('x.demo.title')} icon iconColor="blue">
+      <DemoBox>
+        <XVisualizer />
+      </DemoBox>
     </SubSection>
-  </div>
-</SectionCard>
-```
-
-### Content with Code Examples
-```typescript
-<SectionCard badge={{ label: 'Code', color: 'green' }} title="Implementation" description="How to code this">
-  <div className="space-y-6">
-    <InfoBox title="Pattern">
-      Pattern explanation
+    <SubSection title={t('x.code.title')} icon iconColor="purple">
+      <CodeBlock code={X_CODE} language="tsx" className="text-xs" />
+    </SubSection>
+    <InfoBox variant="green" title={t('x.tip.title')}>
+      {t('x.tip.body')}
     </InfoBox>
-    <CodeBlock code={`// code example`} className="text-xs" />
   </div>
 </SectionCard>
 ```

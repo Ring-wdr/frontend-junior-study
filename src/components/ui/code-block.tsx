@@ -16,15 +16,20 @@ export const CodeBlock = ({
   showLineNumbers = false,
 }: CodeBlockProps) => {
   return (
-    <div className={cn('rounded-lg overflow-hidden bg-[#1e1e1e]', className)}>
+    <div
+      className={cn(
+        'not-prose max-w-full overflow-x-auto rounded-lg bg-[#1e1e1e]',
+        className,
+      )}
+    >
       <SyntaxHighlighter
         language={language}
         style={vscDarkPlus}
         showLineNumbers={showLineNumbers}
         customStyle={{
           margin: 0,
-          padding: '1.5rem',
-          fontSize: '0.85rem',
+          padding: '0.875rem 1rem',
+          fontSize: '0.8125rem',
           lineHeight: '1.5',
           background: 'transparent',
         }}

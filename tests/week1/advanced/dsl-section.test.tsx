@@ -1,19 +1,19 @@
 import { afterEach, describe, expect, test } from '@rstest/core';
 import { cleanup, render, screen, within } from '@testing-library/react';
-import { DslSection } from '../../../src/page/week1/components/dsl-section';
+import { DslSection } from '../../../src/weeks/week1/components/dsl-section';
 
 describe('DslSection', () => {
   afterEach(() => {
     cleanup();
   });
-  test('renders section with badge and title', () => {
+  test('renders the badge but leaves the title to the MDX heading', () => {
     render(<DslSection />);
 
     const section = screen.getByTestId('dsl-section');
-    expect(
-      within(section).getByText('Domain-Specific Language'),
-    ).toBeInTheDocument();
     expect(within(section).getByText('DSL')).toBeInTheDocument();
+    expect(
+      within(section).queryByText('Domain-Specific Language'),
+    ).not.toBeInTheDocument();
   });
 
   test('renders description', () => {
@@ -43,8 +43,8 @@ describe('DslSection', () => {
     render(<DslSection />);
 
     const section = screen.getByTestId('dsl-section');
-    expect(within(section).getByText('Internal DSL:')).toBeInTheDocument();
-    expect(within(section).getByText('External DSL:')).toBeInTheDocument();
+    expect(within(section).getByText(/^Internal DSL:/)).toBeInTheDocument();
+    expect(within(section).getByText(/^External DSL:/)).toBeInTheDocument();
   });
 
   test('displays JSX as Internal DSL example', () => {

@@ -22,7 +22,8 @@
   },
   "css": {
     "parser": {
-      "cssModules": true
+      "cssModules": true,
+      "tailwindDirectives": true
     }
   },
   "linter": {
@@ -33,5 +34,26 @@
         "noSvgWithoutTitle": "off"
       }
     }
-  }
+  },
+  "files": {
+    "includes": [
+      "**",
+      "!**/.next",
+      "!**/out"
+    ]
+  },
+  "overrides": [
+    {
+      "includes": [
+        "src/app/globals.css"
+      ],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "noImportantStyles": "off"
+          }
+        }
+      }
+    }
+  ]
 }

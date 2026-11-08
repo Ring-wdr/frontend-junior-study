@@ -1,0 +1,35 @@
+---
+title: "Frontend Study Dashboard"
+description: "Select a week to view the curriculum and interactive examples."
+---
+
+import { WeekCard, WeekGrid } from '@/components/week-card';
+
+# Frontend Study Dashboard
+
+Select a week to view the curriculum and interactive examples.
+
+<WeekGrid>
+  <WeekCard week={1} href="/en/week-1" badge="Week 1" title="JS Deep Dive" description="Event Loop, `this`, Closures, and Async patterns." />
+  <WeekCard week={2} href="/en/week-2" badge="Week 2" title="OOP & SOLID" description="Object-Oriented Programming and SOLID principles." />
+  <WeekCard week={3} href="/en/week-3" badge="Week 3" title="Component Patterns" description="Container vs Presentational, and more." />
+  <WeekCard week={4} href="/en/week-4" badge="Week 4" title="State Management" description="Deep Dive into Redux, Middleware, Modern Libraries (MobX/Recoil/Zustand), and more." />
+  <WeekCard week={5} href="/en/week-5" badge="Week 5" title="React & Next.js Advanced" description="Concurrency, React 19, App Router, and Data Strategies." />
+  <WeekCard week={6} href="/en/week-6" badge="Week 6" title="Modern Styling Strategies" description="CSS-in-JS, Tailwind, and more." />
+  <WeekCard week={7} href="/en/week-7" badge="Week 7" title="Forms & Validation" description="React Hook Form, Zod, async validation, security, and UX." />
+  <WeekCard week={8} href="/en/week-8" badge="Week 8" title="Frontend Testing" description="Unit, Integration, and E2E testing with Jest, Vitest, RTL, MSW." />
+  <WeekCard week={9} href="/en/week-9" badge="Week 9" title="Framer Motion" description="Gestures, drag, layout animations, transitions, and performance." />
+  <WeekCard week={10} href="/en/week-10" badge="Week 10" title="GSAP Animation" description="GSAP basics, ScrollTrigger, SVG animations, and performance." />
+  <WeekCard week={11} href="/en/week-11" badge="Week 11" title="Web Performance" description="Core Web Vitals, LCP, INP, CLS, and optimization strategies." />
+  <WeekCard week={12} href="/en/week-12" badge="Week 12" title="Auth & Security" description="OAuth 2.0, OIDC, NextAuth.js, JWT, XSS, CSRF protection." />
+  <WeekCard week={13} href="/en/week-13" badge="Week 13" title="Workers & PWA" description="Web Workers, Service Workers, PWA, IndexedDB, offline-first." />
+  <WeekCard week={14} href="/en/week-14" badge="Week 14" title="Accessibility & i18n" description="WCAG, Semantic HTML, ARIA, Focus Management, i18n, RTL support." />
+  <WeekCard week={15} href="/en/week-15" badge="Week 15" title="DevTools & Bundling" description="Chrome DevTools, Webpack/Vite, Bundle Optimization, Sentry, Web Vitals." />
+  <WeekCard week={16} href="/en/week-16" badge="Week 16" title="TypeScript" description="Master basics to generics, utility types, and conditional types." />
+  <WeekCard week={17} href="/en/week-17" badge="Week 17" title="AI-Powered Dev Tools" description="AI code agents, MCP, Skills, Hooks for workflow automation." />
+  <WeekCard week={18} href="/en/week-18" badge="Week 18" title="WebAssembly" description="Near-native performance, Rust development, SIMD, image/video processing." />
+  <WeekCard week={19} href="/en/week-19" badge="Week 19" title="React Three Fiber" description="3D scenes, rendering pipeline, interaction, and performance optimization." />
+  <WeekCard week={20} href="/en/week-20" badge="Week 20" title="MFE & Monorepo" description="Micro frontend architecture and monorepo tooling strategy." />
+  <WeekCard week={21} href="/en/week-21" badge="Week 21" title="CI/CD & DevOps" description="Build delivery pipelines, automate releases, and set operational guardrails." />
+  <WeekCard week={22} href="/en/week-22" badge="Week 22" title="Error Tracking & Production Monitoring" description="Build production observability with Sentry, Session Replay, RUM, and GA4." />
+</WeekGrid>

@@ -1,165 +1,126 @@
 ---
 name: react-testing-troubleshooting
-description: Comprehensive guide for fixing React Testing Library issues in component tests. Use when tests are failing due to DOM query problems, syntax highlighting code splitting, animation/motion library conflicts, async state issues, or test pollution. Covers patterns for handling split text from syntax highlighting, framer-motion mocking, scope-limited queries with within(), and data-testid setup.
+description: Guide for fixing React Testing Library failures in this project's Rstest (jsdom) component tests for week sections and visualizers. Use when tests fail due to DOM query problems, text split by syntax highlighting, motion/react animation styles, i18n text or missing namespaces, async timers, or test pollution. Covers rs.mock for motion/react, English fallback i18n, scoped within() queries, and data-testid setup.
 ---
 
 # React Testing Troubleshooting
 
-## Overview
+## Setup in This Project
 
-This skill helps diagnose and fix common React Testing Library issues that arise when testing components with syntax highlighting, animations, complex DOM structures, and async operations. Based on real patterns from component test development, it provides concrete solutions for the most frequent testing failures.
+- Runner: Rstest (`rstest.config.ts`, `testEnvironment: 'jsdom'`, alias `@` -> `./src`).
+- Run: `bun run test` (all), `bun run test tests/week1` (a path), `bun run test:watch`.
+- Imports: `import { afterEach, describe, expect, it, rs, test } from '@rstest/core';` (not `jest` / `vi`).
+- Tests live in `tests/weekN/**/*.test.tsx` or next to the component (`src/weeks/weekN/components/*.test.tsx`).
+- `rstest.setup.ts` extends jest-dom matchers and calls `setFallbackI18n({ locale: 'en', messages: enMessages })` from `tests/en-messages.ts`. Components render **English** text without an `I18nProvider`.
+- Week components are `'use client'` React components; render them directly. The MDX page, Nextra layout, and section `h2` headings are not part of a component test.
 
-## Common Issues & Solutions
+## Common Issues
 
-### 1. Syntax-Highlighted Code Text Split Across DOM Nodes
+### 1. Section title not found
 
-**Problem:** Components using react-syntax-highlighter split text into multiple `<span>` elements, causing text queries to fail.
-
-```javascript
-// FAILS
-screen.getByText('const foo = "bar"')
-
-// The actual DOM is:
-// <span><span className="token">const</span> <span className="punctuation">foo</span> = <span className="string">"bar"</span></span>
-```
-
-**Solution:** Use function matchers with keyword-based checks:
-
-```javascript
-// PASS - Check for key parts of text
-screen.getByText((content, element) =>
-  content.includes('const') &&
-  content.includes('foo') &&
-  element.textContent.includes('"bar"')
-)
-
-// Or use getAllByText for multiple elements
-const elements = screen.getAllByText((content) =>
-  content.includes('keyword')
-)
-```
-
-### 2. Framer-Motion Animation Styles in Tests
-
-**Problem:** Framer-motion adds opacity, transform styles that interfere with test queries and component rendering.
-
-**Solution:** Mock animation styles in `setupTests.ts`:
-
-```javascript
-jest.mock('framer-motion', () => ({
-  ...jest.requireActual('framer-motion'),
-  motion: {
-    ...jest.requireActual('framer-motion').motion,
-    div: ({children, ...props}) => {
-      // Remove animation-related props to avoid style conflicts
-      const {initial, animate, exit, transition, ...cleanProps} = props
-      return <div {...cleanProps}>{children}</div>
-    }
-  }
-}))
-```
-
-### 3. Unscoped DOM Queries Causing False Positives
-
-**Problem:** Queries match unexpected elements in the DOM, or fail due to multiple matches.
-
-**Solution:** Use `within()` pattern to scope queries to specific containers:
-
-```javascript
-const sectionElement = screen.getByTestId('async-section')
-const content = within(sectionElement).getByText('Promise')
-const buttons = within(sectionElement).getAllByRole('button')
-```
-
-### 4. Test Pollution from Previous Tests
-
-**Problem:** Cleanup hooks missing, causing state to leak between tests.
-
-**Solution:** Add cleanup in `afterEach()`:
-
-```javascript
-afterEach(() => {
-  cleanup()
-  jest.clearAllMocks()
-})
-```
-
-### 5. Missing data-testid Attributes
-
-**Problem:** Cannot reliably query elements by role or text when multiple similar elements exist.
-
-**Solution:** Add `data-testid` to components:
+`SectionCard` has no `title` prop: the title is the `##` heading in the MDX file. A test like `getByText('V8 Hidden Classes')` against a section component fails unless the component itself renders that text. Assert on the badge, description, `SubSection` titles (`h3`), or content instead:
 
 ```tsx
-export function Card({children, ...props}: CardProps) {
-  return (
-    <div data-testid={props['data-testid']} {...props}>
-      {children}
-    </div>
-  )
-}
-
-// Use in tests
-const card = screen.getByTestId('feature-card')
+const section = screen.getByTestId('optimization-section');
+expect(within(section).getByText('Advanced')).toBeInTheDocument();
+expect(within(section).getByRole('heading', { level: 3, name: /Key Takeaway/i })).toBeInTheDocument();
 ```
 
-### 6. Async State & Event Loop Tests Timing Out
+### 2. i18n errors or Korean/key text
 
-**Problem:** Tests for animation steps or async behavior timeout.
+- `i18n namespace "weekN" is not loaded.` - the namespace is missing from `tests/en-messages.ts`. Import `src/i18n/dictionaries/en/weekN.json` there and add it to `enMessages`.
+- The rendered text is a raw key (`topic.badge`) - the key is missing in `en/weekN.json`. `t()` returns the key for unknown paths.
+- `Missing i18n key "weekN:..."` - `raw()` path does not exist in the English dictionary.
+- Expected strings come from `src/i18n/dictionaries/en/weekN.json`, not ko.
 
-**Solution:** Increase timeout and use proper async patterns:
+### 3. Syntax-highlighted code split across nodes
 
-```javascript
-it('should handle animation steps', async () => {
-  render(<EventLoopVisualizer />)
-  const button = screen.getByRole('button', {name: /step/i})
+`CodeBlock` (react-syntax-highlighter) splits code into many `<span>`s, so `getByText('const foo = "bar"')` fails. Match on the container's text:
 
-  fireEvent.click(button)
-
-  // Wait for async updates
-  await waitFor(() => {
-    expect(screen.getByText(/processing/i)).toBeInTheDocument()
-  }, {timeout: 3000})
-})
+```tsx
+const section = screen.getByTestId('topic-section');
+expect(section.textContent).toContain('const foo');
 ```
 
-### 7. Button/Element Queries with Split Text
+or a function matcher: `getByText((_, el) => el?.tagName === 'CODE' && !!el.textContent?.includes('foo'))`.
 
-**Problem:** Button text is split by elements like `<strong>`, `<code>`, etc.
+### 4. motion/react styles or exit animations
 
-**Solution:** Query by text content or use getAllByText with length checks:
+Components import `motion/react`, which re-exports `framer-motion`. Usually no mock is needed. If inline animation styles (`opacity: 0`, transforms) or `AnimatePresence` exits get in the way, mock the module the component imports:
 
-```javascript
-// FAILS - text is split
-screen.getByRole('button', {name: 'Click me'})
+```tsx
+import type { ComponentProps, ReactNode } from 'react';
 
-// PASS - Match any button containing both parts
-const buttons = screen.getAllByRole('button')
-const myButton = buttons.find(btn =>
-  btn.textContent.includes('Click') &&
-  btn.textContent.includes('me')
-)
-
-// Or use getAllByText
-const matches = screen.getAllByText((content, element) =>
-  element?.tagName === 'BUTTON' &&
-  content.includes('Click')
-)
+rs.mock('motion/react', async () => {
+  const actual = await rs.importActual<typeof import('motion/react')>('motion/react');
+  return {
+    ...actual,
+    AnimatePresence: ({ children }: { children: ReactNode }) => <>{children}</>,
+    motion: {
+      ...actual.motion,
+      div: ({ children, ...props }: ComponentProps<'div'>) => {
+        // biome-ignore lint: drop animation styles
+        const { style, ...divProps } = props;
+        return <div {...divProps}>{children}</div>;
+      },
+    },
+  };
+});
 ```
 
-## Testing Patterns
+Older tests mock `'framer-motion'` with the same shape; prefer `'motion/react'` for new tests. Elements using `whileInView` stay at their `initial` state in jsdom (nothing scrolls into view); assert on presence and text, not on visibility styles.
 
-See [PATTERNS.md](references/patterns.md) for detailed testing patterns and complete examples for:
-- Tab component testing
-- Code block rendering verification
-- Component state reset assertions
-- Multi-step async workflows
+### 5. Unscoped queries matching too much
 
-## Setup Checklist
+Scope to the section's `testId`:
 
-1. **Component Setup:** Add `data-testid` props to all components needing test identification
-2. **Mock Setup:** Configure framer-motion and animation library mocks in `setupTests.ts`
-3. **Test File:** Import `{render, screen, within, cleanup, fireEvent, waitFor}` from testing library
-4. **Cleanup:** Add `afterEach(() => cleanup())` to prevent test pollution
-5. **Query Patterns:** Use within() for scoped queries, function matchers for split text
+```tsx
+const section = screen.getByTestId('async-section');
+within(section).getAllByRole('button');
+```
 
+Give every `SectionCard` a `testId`, and add `data-testid` to visualizer controls that have no unique accessible name.
+
+### 6. Test pollution
+
+```tsx
+afterEach(() => {
+  cleanup();
+  rs.clearAllMocks();
+});
+```
+
+Restore real timers in `afterEach` if a test used fake timers (`rs.useRealTimers()`).
+
+### 7. Timers and async steps
+
+For `setTimeout`/`setInterval`-driven visualizers use fake timers, or `waitFor` with a longer timeout:
+
+```tsx
+rs.useFakeTimers();
+fireEvent.click(screen.getByRole('button', { name: /run/i }));
+act(() => {
+  rs.advanceTimersByTime(2000);
+});
+expect(screen.getByText(/done/i)).toBeInTheDocument();
+```
+
+### 8. Button names split by markup
+
+`<button><Play /> Run</button>` still has the accessible name `Run`; prefer `getByRole('button', { name: /run/i })`. For names built from several nodes, fall back to `getAllByRole('button').find((b) => b.textContent?.includes('...'))`.
+
+### 9. Browser APIs missing in jsdom
+
+`matchMedia`, `ResizeObserver`, `IntersectionObserver`, canvas, and WebGL are absent or partial. Stub them in the test file (`rs.stubGlobal('ResizeObserver', class { observe() {} unobserve() {} disconnect() {} })`) rather than changing the component. Components must not touch these during render anyway (pages are statically prerendered).
+
+## More Patterns
+
+See [references/patterns.md](references/patterns.md) for full examples: section rendering, tabs/toggles, state reset, timer-driven flows, and the project's test setup files.
+
+## Checklist
+
+1. Import test APIs from `@rstest/core`; use `rs.*` for mocks and timers.
+2. New namespace added to `tests/en-messages.ts`; expectations use English strings.
+3. Query inside `within(screen.getByTestId('...-section'))`.
+4. Do not assert the MDX section title from a component test.
+5. `cleanup()` in `afterEach`.

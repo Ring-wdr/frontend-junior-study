@@ -24,9 +24,11 @@ export function ContentGrid({
         : 'grid-cols-1 md:grid-cols-2';
 
   return (
-    <div className={cn(`grid ${gridClass} gap-4 text-left`, className)}>
-      {items.map((item, idx) => (
-        <div key={idx} className="p-3">
+    <div
+      className={cn(`grid ${gridClass} gap-2 text-left sm:gap-4`, className)}
+    >
+      {items.map((item) => (
+        <div key={item.title} className="py-2 sm:p-3">
           <h4 className="font-bold text-gray-900 text-sm mb-1">{item.title}</h4>
           <p className="text-xs text-gray-500">{item.description}</p>
         </div>

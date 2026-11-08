@@ -1,24 +1,54 @@
 import { afterEach, describe, expect, rs, test } from '@rstest/core';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import type React from 'react';
-import type { ComponentProps } from 'react';
-import { V8HiddenClassDemo } from '../../../src/page/week1/components/v8-hidden-class-demo';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
+import { createElement, type ReactNode } from 'react';
+import { V8HiddenClassDemo } from '../../../src/weeks/week1/components/v8-hidden-class-demo';
 
-// Mock framer-motion
-rs.mock('framer-motion', async () => {
-  const actual = await rs.importActual('framer-motion');
+rs.mock('motion/react', () => {
+  const motionOnlyProps = new Set([
+    'initial',
+    'animate',
+    'exit',
+    'transition',
+    'layout',
+    'layoutId',
+    'variants',
+    'whileHover',
+    'whileTap',
+    'whileInView',
+    'viewport',
+    'style',
+  ]);
+  const motion = new Proxy(
+    {},
+    {
+      get:
+        (_target, tag: string) =>
+        ({
+          children,
+          ...props
+        }: { children?: ReactNode } & Record<string, unknown>) =>
+          createElement(
+            tag,
+            Object.fromEntries(
+              Object.entries(props).filter(
+                ([key]) => !motionOnlyProps.has(key),
+              ),
+            ),
+            children,
+          ),
+    },
+  );
   return {
-    ...actual,
-    AnimatePresence: ({ children }: { children: React.ReactNode }) => (
+    motion,
+    AnimatePresence: ({ children }: { children?: ReactNode }) => (
       <>{children}</>
     ),
-    motion: {
-      div: ({ children, ...props }: ComponentProps<'div'>) => {
-        // biome-ignore lint: exclude style from props
-        const { style, ...divProps } = props;
-        return <div {...divProps}>{children}</div>;
-      },
-    },
   };
 });
 
@@ -63,7 +93,7 @@ describe('V8HiddenClassDemo', () => {
     expect(screen.getByText('HC3')).toBeInTheDocument();
   });
 
-  test('Reset button clears objects', () => {
+  test('Reset button clears objects', async () => {
     render(<V8HiddenClassDemo />);
     const goodButton = screen.getByTestId('v8-good-pattern');
     fireEvent.click(goodButton);
@@ -73,6 +103,8 @@ describe('V8HiddenClassDemo', () => {
     const resetButton = screen.getByTestId('v8-reset');
     fireEvent.click(resetButton);
 
-    expect(screen.queryAllByText('HC1')).toHaveLength(0);
+    await waitFor(() => {
+      expect(screen.queryAllByText('HC1')).toHaveLength(0);
+    });
   });
 });

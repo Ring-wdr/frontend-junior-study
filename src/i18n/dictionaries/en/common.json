@@ -1,0 +1,17 @@
+{
+  "theme": {
+    "siteTitle": "Frontend Study",
+    "searchPlaceholder": "Search documentation…",
+    "searchEmpty": "No results found.",
+    "searchLoading": "Loading…",
+    "searchError": "Failed to load search index.",
+    "tocTitle": "On This Page",
+    "backToTop": "Scroll to top",
+    "editLink": "Edit this page on GitHub",
+    "lastUpdated": "Last updated on",
+    "footer": "Frontend Junior Study"
+  },
+  "ui": {
+    "interactiveDemo": "Interactive Demo"
+  }
+}

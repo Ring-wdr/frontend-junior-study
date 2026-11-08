@@ -1,0 +1,247 @@
+'use client';
+
+import { CheckCircle2, Play, RefreshCw, XCircle } from 'lucide-react';
+import { motion } from 'motion/react';
+import { useState } from 'react';
+import { cn } from '../../../lib/utils';
+
+type PromiseStatus = 'idle' | 'pending' | 'resolved' | 'rejected';
+type CombinatorType = 'all' | 'allSettled' | 'race' | 'any';
+
+interface PromiseItem {
+  id: number;
+  status: PromiseStatus;
+  duration: number;
+}
+
+function evaluateCombinator(
+  currentPromises: PromiseItem[],
+  type: CombinatorType,
+): { status: PromiseStatus; message: string } {
+  const statuses = currentPromises.map((p) => p.status);
+
+  if (statuses.every((s) => s === 'idle')) {
+    return { status: 'idle', message: 'Ready to start' };
+  }
+
+  switch (type) {
+    case 'all':
+      if (statuses.some((s) => s === 'rejected')) {
+        return { status: 'rejected', message: 'Rejected (One failed)' };
+      }
+      if (statuses.every((s) => s === 'resolved')) {
+        return { status: 'resolved', message: 'Resolved (All succeeded)' };
+      }
+      break;
+    case 'allSettled':
+      if (statuses.every((s) => s === 'resolved' || s === 'rejected')) {
+        return { status: 'resolved', message: 'Resolved (All settled)' };
+      }
+      break;
+    case 'race': {
+      const firstSettled = statuses.find(
+        (s) => s === 'resolved' || s === 'rejected',
+      );
+      if (firstSettled) {
+        return {
+          status: firstSettled,
+          message: `Settled as ${firstSettled} (First one wins)`,
+        };
+      }
+      break;
+    }
+    case 'any':
+      if (statuses.some((s) => s === 'resolved')) {
+        return { status: 'resolved', message: 'Resolved (One succeeded)' };
+      }
+      if (statuses.every((s) => s === 'rejected')) {
+        return { status: 'rejected', message: 'Rejected (All failed)' };
+      }
+      break;
+  }
+
+  return { status: 'pending', message: 'Waiting...' };
+}
+
+export const PromiseVisualizer = () => {
+  const [combinator, setCombinator] = useState<CombinatorType>('all');
+  const [promises, setPromises] = useState<PromiseItem[]>([
+    { id: 1, status: 'idle', duration: 0 },
+    { id: 2, status: 'idle', duration: 0 },
+    { id: 3, status: 'idle', duration: 0 },
+  ]);
+  const { status: globalStatus, message: globalResult } = evaluateCombinator(
+    promises,
+    combinator,
+  );
+
+  const reset = () => {
+    setPromises((p) => p.map((item) => ({ ...item, status: 'idle' })));
+  };
+
+  const updatePromise = (id: number, status: PromiseStatus) => {
+    setPromises((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, status } : p)),
+    );
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-wrap gap-2 justify-center bg-gray-50 p-2 rounded-xl border border-gray-100">
+        {(['all', 'allSettled', 'race', 'any'] as const).map((type) => (
+          <button
+            type="button"
+            key={type}
+            onClick={() => {
+              setCombinator(type);
+              reset();
+            }}
+            className={cn(
+              'px-3 py-1.5 rounded-lg text-sm font-medium transition-all',
+              combinator === type
+                ? 'bg-white text-orange-600 shadow-sm border border-orange-100 ring-2 ring-orange-50'
+                : 'text-gray-500 hover:bg-gray-200',
+            )}
+          >
+            Promise.{type}
+          </button>
+        ))}
+      </div>
+
+      {/* Global Status Display */}
+      <div
+        className={cn(
+          'p-3 sm:p-4 rounded-xl border-2 transition-colors flex flex-wrap items-center justify-between gap-2 mx-auto max-w-sm',
+          globalStatus === 'resolved' && 'border-green-100 bg-green-50',
+          globalStatus === 'rejected' && 'border-red-100 bg-red-50',
+          globalStatus === 'pending' && 'border-orange-100 bg-orange-50',
+          globalStatus === 'idle' && 'border-gray-100 bg-gray-50',
+        )}
+      >
+        <span className="font-semibold text-gray-700">Result:</span>
+        <div className="flex items-center gap-2">
+          {globalStatus === 'resolved' && (
+            <CheckCircle2 className="w-5 h-5 text-green-600" />
+          )}
+          {globalStatus === 'rejected' && (
+            <XCircle className="w-5 h-5 text-red-600" />
+          )}
+          {globalStatus === 'pending' && (
+            <RefreshCw className="w-5 h-5 text-orange-600 animate-spin" />
+          )}
+          <span
+            className={cn(
+              'font-bold',
+              globalStatus === 'resolved' && 'text-green-700',
+              globalStatus === 'rejected' && 'text-red-700',
+              globalStatus === 'pending' && 'text-orange-700',
+              globalStatus === 'idle' && 'text-gray-500',
+            )}
+          >
+            {globalResult || 'Idle'}
+          </span>
+        </div>
+      </div>
+      <div className="grid gap-3">
+        {promises.map((p) => (
+          <div
+            key={p.id}
+            className="relative bg-white border border-gray-200 rounded-xl p-3 flex items-center justify-between shadow-sm overflow-hidden group"
+          >
+            <div
+              className={cn(
+                'absolute left-0 top-0 bottom-0 w-1',
+                p.status === 'resolved' && 'bg-green-500',
+                p.status === 'rejected' && 'bg-red-500',
+                p.status === 'pending' && 'bg-orange-400',
+                p.status === 'idle' && 'bg-gray-200',
+              )}
+            />
+
+            <div className="relative flex items-center gap-3 z-10 pl-2">
+              <div
+                className={cn(
+                  'w-8 h-8 rounded-full flex items-center justify-center font-mono font-bold text-sm',
+                  p.status === 'resolved' && 'bg-green-100 text-green-700',
+                  p.status === 'rejected' && 'bg-red-100 text-red-700',
+                  p.status === 'pending' && 'bg-orange-100 text-orange-700',
+                  p.status === 'idle' && 'bg-gray-100 text-gray-500',
+                )}
+              >
+                P{p.id}
+              </div>
+              <div className="text-sm text-gray-600 font-medium">
+                {p.status === 'idle' && 'Idle'}
+                {p.status === 'pending' && 'Pending...'}
+                {p.status === 'resolved' && 'Resolved'}
+                {p.status === 'rejected' && 'Rejected'}
+              </div>
+            </div>
+
+            <div className="relative flex gap-2 z-10">
+              {p.status === 'idle' && (
+                <button
+                  type="button"
+                  onClick={() => updatePromise(p.id, 'pending')}
+                  className="p-2 hover:bg-gray-100 rounded-lg text-gray-500 hover:text-blue-600 transition-colors"
+                  title="Start"
+                >
+                  <Play className="w-4 h-4" />
+                </button>
+              )}
+              {p.status === 'pending' && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => updatePromise(p.id, 'resolved')}
+                    className="px-3 py-1 bg-green-50 hover:bg-green-100 text-green-700 text-xs rounded-md font-medium transition-colors border border-green-200"
+                  >
+                    Resolve
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => updatePromise(p.id, 'rejected')}
+                    className="px-3 py-1 bg-red-50 hover:bg-red-100 text-red-700 text-xs rounded-md font-medium transition-colors border border-red-200"
+                  >
+                    Reject
+                  </button>
+                </>
+              )}
+              {(p.status === 'resolved' || p.status === 'rejected') && (
+                <button
+                  type="button"
+                  onClick={() => updatePromise(p.id, 'idle')}
+                  className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-gray-600 transition-colors"
+                  title="Reset"
+                >
+                  <RefreshCw className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+
+            {/* Animations */}
+            {p.status === 'pending' && (
+              <motion.div
+                className="pointer-events-none absolute inset-0 bg-orange-50/30"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2 }}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+
+      <div className="flex justify-center pt-2">
+        <button
+          type="button"
+          onClick={reset}
+          className="flex items-center gap-2 text-xs text-gray-400 hover:text-gray-600 transition-colors"
+        >
+          <RefreshCw className="w-3 h-3" />
+          Reset All
+        </button>
+      </div>
+    </div>
+  );
+};

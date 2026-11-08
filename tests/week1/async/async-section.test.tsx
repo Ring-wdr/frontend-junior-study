@@ -1,23 +1,48 @@
 import { afterEach, describe, expect, rs, test } from '@rstest/core';
 import { cleanup, render, screen, within } from '@testing-library/react';
-import type React from 'react';
-import { AsyncSection } from '../../../src/page/week1/components/async-section';
+import { createElement, type ReactNode } from 'react';
+import { AsyncSection } from '../../../src/weeks/week1/components/async-section';
 
-// Mock framer-motion
-rs.mock('framer-motion', async () => {
-  const actual = await rs.importActual('framer-motion');
+rs.mock('motion/react', () => {
+  const motionOnlyProps = new Set([
+    'initial',
+    'animate',
+    'exit',
+    'transition',
+    'layout',
+    'layoutId',
+    'variants',
+    'whileHover',
+    'whileTap',
+    'whileInView',
+    'viewport',
+    'style',
+  ]);
+  const motion = new Proxy(
+    {},
+    {
+      get:
+        (_target, tag: string) =>
+        ({
+          children,
+          ...props
+        }: { children?: ReactNode } & Record<string, unknown>) =>
+          createElement(
+            tag,
+            Object.fromEntries(
+              Object.entries(props).filter(
+                ([key]) => !motionOnlyProps.has(key),
+              ),
+            ),
+            children,
+          ),
+    },
+  );
   return {
-    ...actual,
-    AnimatePresence: ({ children }: { children: React.ReactNode }) => (
+    motion,
+    AnimatePresence: ({ children }: { children?: ReactNode }) => (
       <>{children}</>
     ),
-    motion: {
-      div: ({ children, ...props }: Record<string, unknown>) => {
-        // biome-ignore lint: exclude style from props
-        const { style, ...divProps } = props;
-        return <div {...divProps}>{children}</div>;
-      },
-    },
   };
 });
 
@@ -25,12 +50,14 @@ describe('AsyncSection', () => {
   afterEach(() => {
     cleanup();
   });
-  test('renders section with badge and title', () => {
+  test('renders the badge but leaves the title to the MDX heading', () => {
     render(<AsyncSection />);
 
     const section = screen.getByTestId('async-section');
-    expect(within(section).getByText('Promise Visualizer')).toBeInTheDocument();
     expect(within(section).getByText('Async')).toBeInTheDocument();
+    expect(
+      within(section).queryByText('Promise Visualizer'),
+    ).not.toBeInTheDocument();
   });
 
   test('renders description', () => {
