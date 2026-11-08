@@ -97,41 +97,13 @@
       "tryIt": "직접 입력해보세요"
     },
     "primitiveTypes": [
-      {
-        "type": "string",
-        "example": "\"hello\"",
-        "desc": "문자열"
-      },
-      {
-        "type": "number",
-        "example": "42",
-        "desc": "숫자 (정수, 실수 모두)"
-      },
-      {
-        "type": "boolean",
-        "example": "true",
-        "desc": "참/거짓"
-      },
-      {
-        "type": "null",
-        "example": "null",
-        "desc": "의도적 빈 값"
-      },
-      {
-        "type": "undefined",
-        "example": "undefined",
-        "desc": "정의되지 않음"
-      },
-      {
-        "type": "symbol",
-        "example": "Symbol(\"id\")",
-        "desc": "고유 식별자"
-      },
-      {
-        "type": "bigint",
-        "example": "9007199254740991n",
-        "desc": "큰 정수"
-      }
+      { "type": "string", "example": "\"hello\"", "desc": "문자열" },
+      { "type": "number", "example": "42", "desc": "숫자 (정수, 실수 모두)" },
+      { "type": "boolean", "example": "true", "desc": "참/거짓" },
+      { "type": "null", "example": "null", "desc": "의도적 빈 값" },
+      { "type": "undefined", "example": "undefined", "desc": "정의되지 않음" },
+      { "type": "symbol", "example": "Symbol(\"id\")", "desc": "고유 식별자" },
+      { "type": "bigint", "example": "9007199254740991n", "desc": "큰 정수" }
     ],
     "comparison": [
       {
@@ -139,16 +111,8 @@
         "interface": "extends 키워드",
         "type": "& (intersection)"
       },
-      {
-        "feature": "선언 병합",
-        "interface": "가능",
-        "type": "불가능"
-      },
-      {
-        "feature": "유니온/튜플",
-        "interface": "불가능",
-        "type": "가능"
-      },
+      { "feature": "선언 병합", "interface": "가능", "type": "불가능" },
+      { "feature": "유니온/튜플", "interface": "불가능", "type": "가능" },
       {
         "feature": "권장 용도",
         "interface": "객체 구조, API 계약",
@@ -254,16 +218,8 @@
         "desc": "모든 속성을 읽기 전용으로",
         "category": "object"
       },
-      {
-        "name": "Pick<T, K>",
-        "desc": "특정 속성만 선택",
-        "category": "pick"
-      },
-      {
-        "name": "Omit<T, K>",
-        "desc": "특정 속성 제외",
-        "category": "pick"
-      },
+      { "name": "Pick<T, K>", "desc": "특정 속성만 선택", "category": "pick" },
+      { "name": "Omit<T, K>", "desc": "특정 속성 제외", "category": "pick" },
       {
         "name": "Record<K, V>",
         "desc": "키-값 매핑 생성",
