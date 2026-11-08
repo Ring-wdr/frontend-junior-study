@@ -3,8 +3,9 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { Circle, Plus, Square, Triangle } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { Trans, useTranslation } from '@/i18n/client';
 
-type ShapeType = 'circle' | 'square' | 'triangle';
+type ShapeType = (typeof SHAPE_TYPES)[number];
 
 interface Shape {
   id: number;
@@ -12,7 +13,10 @@ interface Shape {
   color: string;
 }
 
+const SHAPE_TYPES = ['circle', 'square', 'triangle'] as const;
+
 export const FactoryVisualizer = () => {
+  const { t } = useTranslation('week2');
   const [shapes, setShapes] = useState<Shape[]>([]);
   const [selectedType, setSelectedType] = useState<ShapeType>('circle');
   const nextId = useRef(0);
@@ -40,15 +44,19 @@ export const FactoryVisualizer = () => {
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3 bg-gray-50 p-3 rounded-xl border border-gray-200 sm:p-4">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-gray-700">Type:</span>
+          <span className="text-sm font-medium text-gray-700">
+            {t('creation.factory.visualizer.type')}
+          </span>
           <select
             value={selectedType}
             onChange={(e) => setSelectedType(e.target.value as ShapeType)}
             className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2"
           >
-            <option value="circle">Circle</option>
-            <option value="square">Square</option>
-            <option value="triangle">Triangle</option>
+            {SHAPE_TYPES.map((shapeType) => (
+              <option key={shapeType} value={shapeType}>
+                {t(`creation.factory.visualizer.shapes.${shapeType}`)}
+              </option>
+            ))}
           </select>
         </div>
         <button
@@ -57,7 +65,7 @@ export const FactoryVisualizer = () => {
           className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium flex items-center gap-2"
         >
           <Plus className="w-4 h-4" />
-          Create
+          {t('creation.factory.visualizer.create')}
         </button>
       </div>
 
@@ -94,14 +102,13 @@ export const FactoryVisualizer = () => {
         </AnimatePresence>
         {shapes.length === 0 && (
           <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm italic py-10">
-            Factory storage is empty. Create some shapes!
+            {t('creation.factory.visualizer.empty')}
           </div>
         )}
       </div>
 
       <div className="text-xs text-gray-500">
-        The client (buttons) doesn't need to know <em>how</em> the shapes are
-        created, just requests them.
+        <Trans t={t} i18nKey="creation.factory.visualizer.note" />
       </div>
     </div>
   );

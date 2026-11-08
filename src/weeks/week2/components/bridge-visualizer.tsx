@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { Power, Radio, Tv, Volume1, Volume2 } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
@@ -13,6 +14,7 @@ type DeviceType = 'tv' | 'radio';
 type RemoteType = 'basic' | 'advanced';
 
 export const BridgeVisualizer = () => {
+  const { t } = useTranslation('week2');
   const [device, setDevice] = useState<DeviceType>('tv');
   const [remote, setRemote] = useState<RemoteType>('basic');
 
@@ -42,7 +44,7 @@ ${remote === 'advanced' ? 'remote.mute(); // Advanced feature' : '// Basic remot
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="space-y-2">
           <span className="block text-xs font-semibold text-gray-500 uppercase tracking-wider">
-            Abstraction (Remote)
+            {t('structural.bridge.visualizer.abstraction')}
           </span>
           <div className="flex gap-2">
             <button
@@ -55,7 +57,7 @@ ${remote === 'advanced' ? 'remote.mute(); // Advanced feature' : '// Basic remot
                   : 'bg-white border-gray-200 hover:bg-gray-50',
               )}
             >
-              Basic Remote
+              {t('structural.bridge.visualizer.basicRemote')}
             </button>
             <button
               type="button"
@@ -67,13 +69,13 @@ ${remote === 'advanced' ? 'remote.mute(); // Advanced feature' : '// Basic remot
                   : 'bg-white border-gray-200 hover:bg-gray-50',
               )}
             >
-              Advanced Remote
+              {t('structural.bridge.visualizer.advancedRemote')}
             </button>
           </div>
         </div>
         <div className="space-y-2">
           <span className="block text-xs font-semibold text-gray-500 uppercase tracking-wider">
-            Implementation (Device)
+            {t('structural.bridge.visualizer.implementation')}
           </span>
           <div className="flex gap-2">
             <button
@@ -98,7 +100,7 @@ ${remote === 'advanced' ? 'remote.mute(); // Advanced feature' : '// Basic remot
                   : 'bg-white border-gray-200 hover:bg-gray-50',
               )}
             >
-              Radio
+              {t('structural.bridge.visualizer.radio')}
             </button>
           </div>
         </div>
@@ -109,7 +111,7 @@ ${remote === 'advanced' ? 'remote.mute(); // Advanced feature' : '// Basic remot
         {/* Remote Control (Abstraction) */}
         <div className="w-32 shrink-0 bg-gray-800 rounded-2xl p-4 shadow-xl flex flex-col gap-4 items-center border border-gray-700">
           <div className="text-[10px] text-gray-400 font-mono tracking-widest text-center mb-2">
-            REMOTE
+            {t('structural.bridge.visualizer.remote')}
           </div>
           <button
             type="button"
@@ -147,7 +149,7 @@ ${remote === 'advanced' ? 'remote.mute(); // Advanced feature' : '// Basic remot
                 onClick={mute}
                 className="w-full py-2 bg-yellow-600 text-[10px] font-bold text-white rounded uppercase tracking-wider overflow-hidden"
               >
-                Mute
+                {t('structural.bridge.visualizer.mute')}
               </motion.button>
             )}
           </AnimatePresence>
@@ -156,7 +158,7 @@ ${remote === 'advanced' ? 'remote.mute(); // Advanced feature' : '// Basic remot
         {/* Connection Line with Animated Signal */}
         <div className="flex-1 h-1 bg-gray-300 relative rounded-full hidden md:block">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-200 px-2 text-[10px] text-gray-500 whitespace-nowrap">
-            Bridge Pattern
+            {t('structural.bridge.title')}
           </div>
         </div>
 

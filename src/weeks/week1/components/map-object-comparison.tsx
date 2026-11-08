@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { AlertTriangle, CheckCircle, Plus } from 'lucide-react';
 import { useState } from 'react';
+import { Trans, useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 type Entry = {
@@ -12,6 +13,7 @@ type Entry = {
 };
 
 export const MapObjectComparison = () => {
+  const { t } = useTranslation('week1');
   const [objEntries, setObjEntries] = useState<Entry[]>([]);
   const [mapEntries, setMapEntries] = useState<Entry[]>([]);
   const [step, setStep] = useState(0);
@@ -52,9 +54,13 @@ export const MapObjectComparison = () => {
     <div className="space-y-6">
       <div className="flex flex-wrap justify-between items-center gap-3 bg-gray-50 p-3 rounded-lg border border-gray-200 sm:p-4">
         <div className="min-w-0 text-sm text-gray-600">
-          <span className="font-bold text-gray-900">Scenario:</span> Adding
-          distinct object keys <code>{`{id:1}`}</code>, <code>{`{id:2}`}</code>
-          ...
+          <Trans
+            t={t}
+            i18nKey="advancedDataStructure.mapComparison.scenario"
+            components={{
+              strong: <span className="font-bold text-gray-900" />,
+            }}
+          />
         </div>
         <div className="flex gap-2">
           <button
@@ -62,14 +68,15 @@ export const MapObjectComparison = () => {
             onClick={addEntry}
             className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md text-sm font-medium flex items-center gap-2 transition-colors"
           >
-            <Plus className="w-4 h-4" /> Add Key
+            <Plus className="w-4 h-4" />{' '}
+            {t('advancedDataStructure.mapComparison.addKey')}
           </button>
           <button
             type="button"
             onClick={reset}
             className="text-gray-500 hover:text-gray-900 px-3 py-1.5 text-sm font-medium"
           >
-            Reset
+            {t('advancedDataStructure.mapComparison.reset')}
           </button>
         </div>
       </div>
@@ -78,9 +85,11 @@ export const MapObjectComparison = () => {
         {/* Object Side */}
         <div className="min-w-0 border-2 border-dashed border-red-200 bg-red-50/50 rounded-xl p-3 sm:p-4">
           <div className="flex items-center gap-2 mb-4">
-            <h4 className="font-bold text-red-900">Plain Object</h4>
+            <h4 className="font-bold text-red-900">
+              {t('advancedDataStructure.mapComparison.plainObject')}
+            </h4>
             <span className="text-xs bg-red-200 text-red-800 px-2 py-0.5 rounded-full">
-              String Keys Only
+              {t('advancedDataStructure.mapComparison.stringKeysOnly')}
             </span>
           </div>
 
@@ -88,7 +97,7 @@ export const MapObjectComparison = () => {
             <AnimatePresence mode="popLayout">
               {objEntries.length === 0 && (
                 <div className="text-sm text-gray-400 italic text-center py-8">
-                  Empty Object
+                  {t('advancedDataStructure.mapComparison.emptyObject')}
                 </div>
               )}
               {objEntries.map((entry) => (
@@ -106,7 +115,8 @@ export const MapObjectComparison = () => {
                   <span className="text-sm text-gray-700">{entry.value}</span>
                   {entry.isCollision && (
                     <div className="flex items-center gap-1 text-xs text-red-600 font-bold animate-pulse">
-                      <AlertTriangle className="w-3 h-3" /> Overwritten!
+                      <AlertTriangle className="w-3 h-3" />{' '}
+                      {t('advancedDataStructure.mapComparison.overwritten')}
                     </div>
                   )}
                 </motion.div>
@@ -114,9 +124,7 @@ export const MapObjectComparison = () => {
             </AnimatePresence>
           </div>
           <div className="mt-4 text-xs text-red-700">
-            <strong>Issue:</strong> Objects stringify keys. <br />
-            <code>{`{id:1}.toString()`}</code> is <code>"[object Object]"</code>
-            .
+            <Trans t={t} i18nKey="advancedDataStructure.mapComparison.issue" />
           </div>
         </div>
 
@@ -125,7 +133,7 @@ export const MapObjectComparison = () => {
           <div className="flex items-center gap-2 mb-4">
             <h4 className="font-bold text-blue-900">Map</h4>
             <span className="text-xs bg-blue-200 text-blue-800 px-2 py-0.5 rounded-full">
-              Any Key Type
+              {t('advancedDataStructure.mapComparison.anyKeyType')}
             </span>
           </div>
 
@@ -133,7 +141,7 @@ export const MapObjectComparison = () => {
             <AnimatePresence initial={false}>
               {mapEntries.length === 0 && (
                 <div className="text-sm text-gray-400 italic text-center py-8">
-                  Empty Map
+                  {t('advancedDataStructure.mapComparison.emptyMap')}
                 </div>
               )}
               {mapEntries.map((entry) => (
@@ -157,7 +165,7 @@ export const MapObjectComparison = () => {
             </AnimatePresence>
           </div>
           <div className="mt-4 text-xs text-blue-700">
-            <strong>Solved:</strong> Map keeps object references distinct.
+            <Trans t={t} i18nKey="advancedDataStructure.mapComparison.solved" />
             <br />
             <code>keyObj1 !== keyObj2</code>
           </div>

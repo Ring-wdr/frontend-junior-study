@@ -53,10 +53,7 @@ const getRating = (name: VitalName, value: number): Rating => {
   return 'poor';
 };
 
-const RATING_COLORS: Record<
-  Rating,
-  { stroke: string; badge: string }
-> = {
+const RATING_COLORS: Record<Rating, { stroke: string; badge: string }> = {
   good: {
     stroke: '#22c55e',
     badge: 'bg-green-100 text-green-700',

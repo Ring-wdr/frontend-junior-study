@@ -212,7 +212,9 @@ export const SessionReplayVisualizer = () => {
                   event.type === 'error' && 'w-3.5 h-3.5 ring-2 ring-red-200',
                 )}
                 style={{ left: `${leftPct}%`, top: '2px' }}
-                title={t(`sessionReplay.replayVisualizer.events.${event.label}`)}
+                title={t(
+                  `sessionReplay.replayVisualizer.events.${event.label}`,
+                )}
               />
             );
           })}

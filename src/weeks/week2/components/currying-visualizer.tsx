@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
@@ -9,6 +10,7 @@ type Step = 'bread' | 'filling' | 'sauce' | 'complete';
 type Ingredient = string;
 
 export const CurryingVisualizer = () => {
+  const { t } = useTranslation('week2');
   const [step, setStep] = useState<Step>('bread');
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
@@ -186,7 +188,7 @@ export const CurryingVisualizer = () => {
                   onClick={reset}
                   className="text-sm text-blue-600 hover:underline"
                 >
-                  Make another
+                  {t('fp.currying.visualizer.makeAnother')}
                 </button>
               </motion.div>
             )}

@@ -3,26 +3,27 @@
 import { motion } from 'motion/react';
 import { Play } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
-type BindingType = 'default' | 'implicit' | 'explicit' | 'new' | 'arrow';
+const bindingTypes = [
+  'default',
+  'implicit',
+  'explicit',
+  'new',
+  'arrow',
+] as const;
 
-const examples = {
-  default: {
-    title: 'Default Binding',
-    desc: 'Standalone function call → global object (or undefined in strict mode)',
-    code: `function showThis() {
+type BindingType = (typeof bindingTypes)[number];
+
+const exampleCode: Record<BindingType, string> = {
+  default: `function showThis() {
   console.log(this);
 }
 
 showThis(); // window (or undefined in strict mode)`,
-    result: 'window (or undefined in strict mode)',
-  },
-  implicit: {
-    title: 'Implicit Binding',
-    desc: "Object method call → 'this' is the object",
-    code: `const obj = {
+  implicit: `const obj = {
   name: 'JavaScript',
   greet() {
     console.log(this.name);
@@ -30,35 +31,20 @@ showThis(); // window (or undefined in strict mode)`,
 };
 
 obj.greet(); // 'JavaScript'`,
-    result: "'JavaScript'",
-  },
-  explicit: {
-    title: 'Explicit Binding',
-    desc: "call/apply/bind → manually specify 'this'",
-    code: `function greet() {
+  explicit: `function greet() {
   console.log(this.name);
 }
 
 const person = { name: 'Alice' };
 
 greet.call(person); // 'Alice'`,
-    result: "'Alice'",
-  },
-  new: {
-    title: 'new Binding',
-    desc: "Constructor call → 'this' is the new instance",
-    code: `function Person(name) {
+  new: `function Person(name) {
   this.name = name;
 }
 
 const alice = new Person('Alice');
 console.log(alice.name); // 'Alice'`,
-    result: "'Alice'",
-  },
-  arrow: {
-    title: 'Lexical Binding (Arrow)',
-    desc: "Arrow functions inherit 'this' from parent scope",
-    code: `const obj = {
+  arrow: `const obj = {
   name: 'JavaScript',
   greet: () => {
     console.log(this.name);
@@ -66,11 +52,10 @@ console.log(alice.name); // 'Alice'`,
 };
 
 obj.greet(); // undefined (inherits from outer scope)`,
-    result: 'undefined (lexical scope)',
-  },
 };
 
 export const ThisBindingDemo = () => {
+  const { t } = useTranslation('week1');
   const [activeType, setActiveType] = useState<BindingType>('implicit');
   const [showResult, setShowResult] = useState(false);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -88,12 +73,10 @@ export const ThisBindingDemo = () => {
     hideTimerRef.current = setTimeout(() => setShowResult(false), 3000);
   };
 
-  const example = examples[activeType];
-
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap gap-2">
-        {(Object.keys(examples) as BindingType[]).map((type) => (
+        {bindingTypes.map((type) => (
           <button
             key={type}
             type="button"
@@ -109,24 +92,26 @@ export const ThisBindingDemo = () => {
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200',
             )}
           >
-            {examples[type].title}
+            {t(`thisBinding.demo.examples.${type}.title`)}
           </button>
         ))}
       </div>
 
       <div className="bg-purple-50 p-4 rounded-xl border border-purple-100">
-        <p className="text-sm text-purple-900">{example.desc}</p>
+        <p className="text-sm text-purple-900">
+          {t(`thisBinding.demo.examples.${activeType}.desc`)}
+        </p>
       </div>
 
       <div className="space-y-2">
-        <CodeBlock code={example.code} />
+        <CodeBlock code={exampleCode[activeType]} />
         <button
           type="button"
           onClick={handleRun}
           className="ml-auto flex items-center gap-2 px-3 py-1.5 bg-green-500 text-white rounded-lg text-sm font-medium hover:bg-green-600 transition-all shadow-md"
         >
           <Play className="w-3 h-3" />
-          Run
+          {t('thisBinding.demo.run')}
         </button>
       </div>
 
@@ -137,8 +122,10 @@ export const ThisBindingDemo = () => {
           transition={{ duration: 0.2 }}
           className="bg-gray-900 text-green-400 p-4 rounded-xl font-mono text-sm"
         >
-          <div className="text-gray-500 mb-1">Output:</div>
-          {example.result}
+          <div className="text-gray-500 mb-1">
+            {t('thisBinding.demo.output')}
+          </div>
+          {t(`thisBinding.demo.examples.${activeType}.result`)}
         </motion.div>
       )}
     </div>

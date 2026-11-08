@@ -102,7 +102,8 @@
       "badMode": "Bad (Shift)",
       "layoutView": "Layout View",
       "targetContent": "Target Content",
-      "targetContentDesc": "This is the content the user is trying to read."
+      "targetContentDesc": "This is the content the user is trying to read.",
+      "triggerContentLoad": "Trigger Content Load"
     },
     "metrics": {
       "good": "Good",
@@ -492,10 +493,14 @@
     "reset": "Reset",
     "runTreeShaking": "Run Tree Shaking",
     "avoidPatterns": {
-      "title": "Patterns to Avoid"
+      "title": "Patterns to Avoid",
+      "lodashFull": "Importing all of <code>lodash</code>",
+      "iconLibrary": "Importing an entire icon library you don't use",
+      "polyfill": "Indiscriminately including polyfills"
     },
     "recommendedPatterns": {
-      "title": "Recommended Patterns"
+      "title": "Recommended Patterns",
+      "browserslist": "Automatic polyfills based on browserslist"
     },
     "bundleAnalyzer": {
       "title": "Bundle Analyzer",
@@ -511,6 +516,13 @@
         ]
       }
     },
-    "sideEffectsInfo": "sideEffects: Declaring \"sideEffects\": false in package.json allows bundlers to safely remove unused exports. If CSS imports exist, specify \"sideEffects\": [\"*.css\"]."
+    "sideEffectsInfo": "sideEffects: Declaring \"sideEffects\": false in package.json allows bundlers to safely remove unused exports. If CSS imports exist, specify \"sideEffects\": [\"*.css\"].",
+    "treeShakingExample": "Tree Shaking Example",
+    "targets": {
+      "initialJs": "Initial JS (gzip)",
+      "parseTime": "JS parse time",
+      "esm": "Tree-shakeable",
+      "sideEffects": "Declare false"
+    }
   }
 }

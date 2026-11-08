@@ -3,12 +3,14 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { Plug, Zap } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 const PLUG_TRAVEL_OFFSET = 248;
 const PLUG_TRAVEL_FALLBACK = 152;
 
 export const AdapterVisualizer = () => {
+  const { t } = useTranslation('week2');
   const [useAdapter, setUseAdapter] = useState(false);
   const [plugState, setPlugState] = useState<'idle' | 'plugged' | 'failed'>(
     'idle',
@@ -84,7 +86,9 @@ squareHole.fits(adapter); // Works!`;
             }}
             className="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500"
           />
-          <span className="text-sm font-medium text-gray-700">Use Adapter</span>
+          <span className="text-sm font-medium text-gray-700">
+            {t('structural.adapter.visualizer.useAdapter')}
+          </span>
         </label>
       </div>
 
@@ -148,7 +152,7 @@ squareHole.fits(adapter); // Works!`;
                 transition={{ duration: 0.2 }}
                 className="absolute bottom-4 left-1/2 -translate-x-1/2 text-red-600 text-xs font-bold bg-red-50 border border-red-200 px-3 py-1 rounded-full shadow-sm whitespace-nowrap"
               >
-                ⚠️ INCOMPATIBLE INTERFACE
+                {t('structural.adapter.visualizer.incompatible')}
               </motion.div>
             )}
           </AnimatePresence>
@@ -162,7 +166,9 @@ squareHole.fits(adapter); // Works!`;
           disabled={plugState === 'plugged'}
           className="px-5 py-2 bg-indigo-600 text-white rounded-lg font-bold shadow-md hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95"
         >
-          {useAdapter ? 'Connect with Adapter' : 'Try connecting directly'}
+          {useAdapter
+            ? t('structural.adapter.visualizer.connectWithAdapter')
+            : t('structural.adapter.visualizer.connectDirectly')}
         </button>
       </div>
 

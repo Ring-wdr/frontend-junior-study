@@ -3,12 +3,14 @@
 import { motion } from 'motion/react';
 import { Film, Lightbulb, Moon, Thermometer, Volume2 } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
 const BAR_TRANSITION = { duration: 0.5, ease: 'easeOut' } as const;
 
 export const FacadeVisualizer = () => {
+  const { t } = useTranslation('week2');
   const [lights, setLights] = useState(100);
   const [temp, setTemp] = useState(24);
   const [volume, setVolume] = useState(0);
@@ -43,14 +45,16 @@ smartHome.movieMode();
           onClick={activateMovieMode}
           className="flex-1 p-3 bg-indigo-600 text-white rounded-lg flex items-center justify-center gap-2 text-sm font-medium hover:bg-indigo-700 active:scale-95 transition-all"
         >
-          <Film className="w-4 h-4" /> Movie Mode
+          <Film className="w-4 h-4" />{' '}
+          {t('structural.facade.visualizer.movieMode')}
         </button>
         <button
           type="button"
           onClick={activateSleepMode}
           className="flex-1 p-3 bg-gray-800 text-white rounded-lg flex items-center justify-center gap-2 text-sm font-medium hover:bg-gray-900 active:scale-95 transition-all"
         >
-          <Moon className="w-4 h-4" /> Sleep Mode
+          <Moon className="w-4 h-4" />{' '}
+          {t('structural.facade.visualizer.sleepMode')}
         </button>
       </div>
 
@@ -73,7 +77,7 @@ smartHome.movieMode();
             />
           </div>
           <div className="text-xs font-semibold text-gray-600">
-            Lights: {lights}%
+            {t('structural.facade.visualizer.lights', { value: lights })}
           </div>
           <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
             <motion.div
@@ -91,7 +95,7 @@ smartHome.movieMode();
             <Thermometer className="w-6 h-6" />
           </div>
           <div className="text-xs font-semibold text-gray-600">
-            AC: {temp}°C
+            {t('structural.facade.visualizer.ac', { value: temp })}
           </div>
           <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
             <motion.div
@@ -109,7 +113,7 @@ smartHome.movieMode();
             <Volume2 className="w-6 h-6" />
           </div>
           <div className="text-xs font-semibold text-gray-600">
-            Vol: {volume}%
+            {t('structural.facade.visualizer.volume', { value: volume })}
           </div>
           <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
             <motion.div

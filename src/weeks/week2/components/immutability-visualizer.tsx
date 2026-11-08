@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { Copy, Trash2 } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 interface DataItem {
@@ -28,6 +29,7 @@ const INITIAL_HISTORY: Version[] = [
 ];
 
 export const ImmutabilityVisualizer = () => {
+  const { t } = useTranslation('week2');
   const [history, setHistory] = useState<Version[]>(INITIAL_HISTORY);
   const [nextValue, setNextValue] = useState(4);
 
@@ -65,7 +67,7 @@ export const ImmutabilityVisualizer = () => {
           className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors text-sm font-medium flex items-center gap-2"
         >
           <Copy className="w-4 h-4" />
-          Push (Immutable)
+          {t('fp.immutability.visualizer.push')}
         </button>
         <button
           type="button"
@@ -73,7 +75,7 @@ export const ImmutabilityVisualizer = () => {
           className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors text-sm font-medium flex items-center gap-2"
         >
           <Trash2 className="w-4 h-4" />
-          Reset
+          {t('fp.immutability.visualizer.reset')}
         </button>
       </div>
 
@@ -92,7 +94,9 @@ export const ImmutabilityVisualizer = () => {
               <div className="text-xs font-mono font-bold text-gray-400 w-16 shrink-0">
                 v{version}
                 {versionIndex === history.length - 1 && (
-                  <span className="ml-1 text-green-500">(Latest)</span>
+                  <span className="ml-1 text-green-500">
+                    {t('fp.immutability.visualizer.latest')}
+                  </span>
                 )}
               </div>
               <div className="flex min-w-0 flex-wrap gap-2">

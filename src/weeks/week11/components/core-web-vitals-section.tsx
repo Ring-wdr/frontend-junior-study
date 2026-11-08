@@ -385,7 +385,7 @@ export function CoreWebVitalsSection() {
                     type="button"
                     onClick={runClsSim}
                     className="p-2 bg-orange-100 text-orange-600 rounded-full hover:bg-orange-200 transition-colors shadow-sm"
-                    title="Trigger Content Load"
+                    title={t('coreWebVitals.cls.triggerContentLoad')}
                   >
                     <Move size={16} />
                   </button>

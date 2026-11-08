@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { Check, Hammer, RotateCcw } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
@@ -18,6 +19,7 @@ interface RobotState {
 const PART_SPRING = { type: 'spring', stiffness: 350, damping: 30 } as const;
 
 export const BuilderVisualizer = () => {
+  const { t } = useTranslation('week2');
   const [robot, setRobot] = useState<RobotState>({
     parts: new Set(),
     color: 'gray',
@@ -74,7 +76,8 @@ export const BuilderVisualizer = () => {
               disabled={robot.isBuilt || robot.parts.has('head')}
               className="flex items-center justify-center gap-2 p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
             >
-              <div className="w-4 h-4 rounded-full bg-gray-400" /> Add Head
+              <div className="w-4 h-4 rounded-full bg-gray-400" />{' '}
+              {t('creation.builder.visualizer.addHead')}
             </button>
             <button
               type="button"
@@ -82,7 +85,8 @@ export const BuilderVisualizer = () => {
               disabled={robot.isBuilt || robot.parts.has('arms')}
               className="flex items-center justify-center gap-2 p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
             >
-              <div className="w-8 h-1 bg-gray-400 rounded" /> Add Arms
+              <div className="w-8 h-1 bg-gray-400 rounded" />{' '}
+              {t('creation.builder.visualizer.addArms')}
             </button>
             <button
               type="button"
@@ -95,7 +99,8 @@ export const BuilderVisualizer = () => {
               className="flex items-center justify-center gap-2 p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
             >
               <div className="w-1 h-6 bg-gray-400 rounded mx-1" />
-              <div className="w-1 h-6 bg-gray-400 rounded mx-1" /> Legs
+              <div className="w-1 h-6 bg-gray-400 rounded mx-1" />{' '}
+              {t('creation.builder.visualizer.legs')}
             </button>
             <button
               type="button"
@@ -108,7 +113,7 @@ export const BuilderVisualizer = () => {
               className="flex items-center justify-center gap-2 p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
             >
               <div className="w-4 h-4 rounded-full border-2 border-gray-400" />{' '}
-              Wheels
+              {t('creation.builder.visualizer.wheels')}
             </button>
           </div>
 
@@ -155,7 +160,8 @@ export const BuilderVisualizer = () => {
               disabled={robot.isBuilt || robot.parts.size === 0}
               className="flex-1 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 disabled:opacity-50 transition-colors flex items-center justify-center gap-2"
             >
-              <Hammer className="w-4 h-4" /> Build
+              <Hammer className="w-4 h-4" />{' '}
+              {t('creation.builder.visualizer.build')}
             </button>
             <button
               type="button"
@@ -189,7 +195,8 @@ export const BuilderVisualizer = () => {
                 transition={{ duration: 0.2 }}
                 className="absolute top-3 right-3 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-sm flex items-center gap-1"
               >
-                <Check className="w-3 h-3" /> BUILT
+                <Check className="w-3 h-3" />{' '}
+                {t('creation.builder.visualizer.built')}
               </motion.div>
             )}
           </AnimatePresence>
@@ -206,7 +213,9 @@ export const BuilderVisualizer = () => {
                     : 'bg-gray-300',
               )}
             >
-              <div className="text-[10px] font-mono opacity-50">CHASSIS</div>
+              <div className="text-[10px] font-mono opacity-50">
+                {t('creation.builder.visualizer.chassis')}
+              </div>
             </div>
 
             {/* Head */}

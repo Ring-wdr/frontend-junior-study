@@ -3,9 +3,11 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { Box, XCircle } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const MonadVisualizer = () => {
+  const { t } = useTranslation('week2');
   const [value, setValue] = useState<number | null>(5);
   const [history, setHistory] = useState<(number | null)[]>([]);
 
@@ -69,14 +71,14 @@ ${history
           disabled={value === null}
           className="px-3 py-2 bg-red-100 text-red-700 rounded hover:bg-red-200 disabled:opacity-50 text-xs font-medium"
         >
-          Make Null
+          {t('fp.monads.visualizer.makeNull')}
         </button>
         <button
           type="button"
           onClick={reset}
           className="px-3 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 text-xs font-medium"
         >
-          Reset
+          {t('fp.monads.visualizer.reset')}
         </button>
       </div>
 
@@ -113,7 +115,7 @@ ${history
 
         {value === null && (
           <div className="absolute bottom-2 text-[10px] text-red-500 font-bold bg-red-50 px-2 py-1 rounded">
-            SAFE MODE: Operations ignored
+            {t('fp.monads.visualizer.safeMode')}
           </div>
         )}
       </div>

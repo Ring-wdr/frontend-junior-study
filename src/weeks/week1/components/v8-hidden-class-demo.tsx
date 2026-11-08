@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { AlertCircle, CheckCircle } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
@@ -14,6 +15,7 @@ interface ObjectShape {
 }
 
 export const V8HiddenClassDemo = () => {
+  const { t } = useTranslation('week1');
   const [objects, setObjects] = useState<ObjectShape[]>([]);
   const [mode, setMode] = useState<'good' | 'bad'>('good');
 
@@ -87,7 +89,7 @@ export const V8HiddenClassDemo = () => {
           )}
         >
           <CheckCircle className="w-4 h-4" />
-          Good Pattern
+          {t('optimization.demo.goodPattern')}
         </button>
         <button
           type="button"
@@ -104,7 +106,7 @@ export const V8HiddenClassDemo = () => {
           )}
         >
           <AlertCircle className="w-4 h-4" />
-          Bad Pattern
+          {t('optimization.demo.badPattern')}
         </button>
         <button
           type="button"
@@ -112,7 +114,7 @@ export const V8HiddenClassDemo = () => {
           data-testid="v8-reset"
           className="px-4 py-2 bg-gray-500 text-white rounded-lg font-medium text-sm hover:bg-gray-600 transition-all"
         >
-          Reset
+          {t('optimization.demo.reset')}
         </button>
       </div>
 
@@ -120,11 +122,10 @@ export const V8HiddenClassDemo = () => {
         <div className="bg-green-50 p-4 rounded-xl border border-green-200">
           <h4 className="font-semibold text-green-900 mb-2 flex items-center gap-2">
             <CheckCircle className="w-4 h-4" />
-            Monomorphic (Optimized)
+            {t('optimization.demo.monomorphic.title')}
           </h4>
           <p className="text-sm text-green-800">
-            All objects share the same hidden class. V8 can optimize property
-            access.
+            {t('optimization.demo.monomorphic.description')}
           </p>
           <CodeBlock
             code={`class Point {
@@ -142,11 +143,10 @@ export const V8HiddenClassDemo = () => {
         <div className="bg-red-50 p-4 rounded-xl border border-red-200">
           <h4 className="font-semibold text-red-900 mb-2 flex items-center gap-2">
             <AlertCircle className="w-4 h-4" />
-            Polymorphic (Slow)
+            {t('optimization.demo.polymorphic.title')}
           </h4>
           <p className="text-sm text-red-800">
-            Different property orders create different hidden classes. V8 cannot
-            optimize.
+            {t('optimization.demo.polymorphic.description')}
           </p>
           <CodeBlock
             code={`const p1 = { x: 1, y: 2 };
@@ -209,8 +209,8 @@ const p3 = { x: 1 }; // Missing property!`}
           )}
         >
           {sharedHiddenClass
-            ? '✓ All objects share the same Hidden Class (Fast!)'
-            : '✗ Different Hidden Classes (Slow!)'}
+            ? t('optimization.demo.shared')
+            : t('optimization.demo.different')}
         </div>
       )}
     </div>

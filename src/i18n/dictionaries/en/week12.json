@@ -51,12 +51,9 @@
       "actorBrowser": "Browser",
       "actorAuth": "Auth Server",
       "actorApi": "API",
-      "labelClient": "Client App",
-      "labelBrowser": "Browser",
-      "labelAuth": "Auth Server",
-      "labelApi": "API",
       "prevButton": "← Previous Step",
-      "nextButton": "Next Step →"
+      "nextButton": "Next Step →",
+      "stepHeading": "Step {{step}}: {{actor}}"
     },
     "authUrl": {
       "title": "Authorization URL Example"
@@ -64,7 +61,7 @@
     "tokenExchange": {
       "title": "Token Exchange",
       "securityNote": "Security Note",
-      "securityDescription": "The client_secret must never be exposed to the frontend. Token exchange should always happen on a secure backend server."
+      "securityDescription": "The <code>client_secret</code> must never be exposed to the frontend. Token exchange should always happen on a secure backend server."
     }
   },
   "oidc": {

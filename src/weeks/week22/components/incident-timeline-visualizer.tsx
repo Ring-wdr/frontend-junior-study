@@ -231,7 +231,9 @@ export const IncidentTimelineVisualizer = () => {
                     isReached ? 'text-gray-800' : 'text-gray-400',
                   )}
                 >
-                  {t(`monitoringIntro.incidentTimeline.milestones.${milestone.id}`)}
+                  {t(
+                    `monitoringIntro.incidentTimeline.milestones.${milestone.id}`,
+                  )}
                 </span>
               </div>
             );

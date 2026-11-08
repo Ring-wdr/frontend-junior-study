@@ -42,7 +42,9 @@ export const EventLoopVisualizer = () => {
 
   const steps = [
     {
-      desc: t('eventLoop.visualizer.steps.execute', { code: 'console.log("Start")' }),
+      desc: t('eventLoop.visualizer.steps.execute', {
+        code: 'console.log("Start")',
+      }),
       action: () => {
         setCallStack(['console.log']);
         setOutput(['Start']);
@@ -67,7 +69,9 @@ export const EventLoopVisualizer = () => {
       },
     },
     {
-      desc: t('eventLoop.visualizer.steps.execute', { code: 'console.log("End")' }),
+      desc: t('eventLoop.visualizer.steps.execute', {
+        code: 'console.log("End")',
+      }),
       action: () => {
         setCallStack(['console.log']);
         setOutput((prev) => [...prev, 'End']);
@@ -87,7 +91,9 @@ export const EventLoopVisualizer = () => {
       },
     },
     {
-      desc: t('eventLoop.visualizer.steps.execute', { code: 'console.log("Promise")' }),
+      desc: t('eventLoop.visualizer.steps.execute', {
+        code: 'console.log("Promise")',
+      }),
       action: () => {
         setOutput((prev) => [...prev, 'Promise']);
       },
@@ -106,7 +112,9 @@ export const EventLoopVisualizer = () => {
       },
     },
     {
-      desc: t('eventLoop.visualizer.steps.execute', { code: 'console.log("Timeout")' }),
+      desc: t('eventLoop.visualizer.steps.execute', {
+        code: 'console.log("Timeout")',
+      }),
       action: () => {
         setOutput((prev) => [...prev, 'Timeout']);
       },
@@ -271,7 +279,9 @@ export const EventLoopVisualizer = () => {
       </div>
 
       <div className="bg-gray-900 text-green-400 p-4 rounded-xl font-mono text-sm min-h-[120px]">
-        <div className="text-gray-500 mb-2">{t('eventLoop.visualizer.consoleOutput')}</div>
+        <div className="text-gray-500 mb-2">
+          {t('eventLoop.visualizer.consoleOutput')}
+        </div>
         {output.map((line) => (
           <motion.div
             key={line}

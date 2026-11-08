@@ -80,10 +80,12 @@ export const BestPracticesSection = () => {
                   <span className="text-sm font-semibold">{c.description}</span>
                 </div>
                 <p className="text-xs mb-1">
-                  <strong>Examples:</strong> {c.examples}
+                  <strong>{t('bestPractices.examplesLabel')}</strong>{' '}
+                  {c.examples}
                 </p>
                 <p className="text-xs">
-                  <strong>Handling:</strong> {c.handling}
+                  <strong>{t('bestPractices.handlingLabel')}</strong>{' '}
+                  {c.handling}
                 </p>
               </div>
             ))}
@@ -99,11 +101,7 @@ export const BestPracticesSection = () => {
           </div>
         </SubSection>
 
-        <SubSection
-          title={t('bestPractices.demoTitle')}
-          icon
-          iconColor="green"
-        >
+        <SubSection title={t('bestPractices.demoTitle')} icon iconColor="green">
           <DemoBox label={t('interactiveDemo')}>
             <ErrorClassificationVisualizer />
           </DemoBox>

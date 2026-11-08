@@ -39,10 +39,10 @@ export const AlertsSection = () => {
                     {t('alerts.rulesTitle')}
                   </th>
                   <th className="text-left py-2 px-3 font-semibold text-gray-700">
-                    Threshold
+                    {t('alerts.tableHeaders.threshold')}
                   </th>
                   <th className="text-left py-2 px-3 font-semibold text-gray-700">
-                    Action
+                    {t('alerts.tableHeaders.action')}
                   </th>
                 </tr>
               </thead>

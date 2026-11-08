@@ -3,12 +3,14 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { AlertCircle, Ban, CheckCircle, Loader2, Play } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
 type Status = 'idle' | 'loading' | 'completed' | 'aborted';
 
 export const AbortControllerDemo = () => {
+  const { t } = useTranslation('week1');
   const [status, setStatus] = useState<Status>('idle');
   const [progress, setProgress] = useState(0);
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -80,7 +82,7 @@ export const AbortControllerDemo = () => {
             <Loader2
               className={cn('w-4 h-4', status === 'loading' && 'animate-spin')}
             />
-            Network Request Simulator
+            {t('async.abortController.demo.title')}
           </h4>
 
           {/* Progress Bar */}
@@ -111,7 +113,7 @@ export const AbortControllerDemo = () => {
                   transition={{ duration: 0.15 }}
                   className="text-gray-400 text-sm"
                 >
-                  Ready to start...
+                  {t('async.abortController.demo.ready')}
                 </motion.p>
               )}
               {status === 'loading' && (
@@ -124,7 +126,9 @@ export const AbortControllerDemo = () => {
                   className="flex flex-col items-center text-blue-600"
                 >
                   <span className="font-bold text-lg">{progress}%</span>
-                  <span className="text-xs">Fetching data...</span>
+                  <span className="text-xs">
+                    {t('async.abortController.demo.fetching')}
+                  </span>
                 </motion.div>
               )}
               {status === 'completed' && (
@@ -136,7 +140,8 @@ export const AbortControllerDemo = () => {
                   transition={{ duration: 0.2 }}
                   className="flex items-center gap-2 text-green-600 font-bold"
                 >
-                  <CheckCircle className="w-6 h-6" /> Success!
+                  <CheckCircle className="w-6 h-6" />{' '}
+                  {t('async.abortController.demo.success')}
                 </motion.div>
               )}
               {status === 'aborted' && (
@@ -148,7 +153,8 @@ export const AbortControllerDemo = () => {
                   transition={{ duration: 0.2 }}
                   className="flex items-center gap-2 text-red-500 font-bold"
                 >
-                  <AlertCircle className="w-6 h-6" /> Request Aborted
+                  <AlertCircle className="w-6 h-6" />{' '}
+                  {t('async.abortController.demo.aborted')}
                 </motion.div>
               )}
             </AnimatePresence>
@@ -162,7 +168,8 @@ export const AbortControllerDemo = () => {
               disabled={status === 'loading'}
               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              <Play className="w-4 h-4" /> Start Request
+              <Play className="w-4 h-4" />{' '}
+              {t('async.abortController.demo.start')}
             </button>
             <button
               type="button"
@@ -170,7 +177,8 @@ export const AbortControllerDemo = () => {
               disabled={status !== 'loading'}
               className="bg-red-100 hover:bg-red-200 text-red-700 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              <Ban className="w-4 h-4" /> Abort
+              <Ban className="w-4 h-4" />{' '}
+              {t('async.abortController.demo.abort')}
             </button>
           </div>
         </div>

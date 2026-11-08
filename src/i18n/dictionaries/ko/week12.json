@@ -47,16 +47,13 @@
       "step5": "코드를 토큰으로 교환",
       "step6": "액세스 토큰 수신",
       "step7": "토큰을 사용하여 리소스 접근",
-      "actorClient": "Client App",
-      "actorBrowser": "Browser",
-      "actorAuth": "Auth Server",
+      "actorClient": "클라이언트 앱",
+      "actorBrowser": "브라우저",
+      "actorAuth": "인증 서버",
       "actorApi": "API",
-      "labelClient": "Client App",
-      "labelBrowser": "Browser",
-      "labelAuth": "Auth Server",
-      "labelApi": "API",
       "prevButton": "← 이전 단계",
-      "nextButton": "다음 단계 →"
+      "nextButton": "다음 단계 →",
+      "stepHeading": "{{step}}단계: {{actor}}"
     },
     "authUrl": {
       "title": "인증 URL 예제"
@@ -64,7 +61,7 @@
     "tokenExchange": {
       "title": "토큰 교환",
       "securityNote": "보안 참고사항",
-      "securityDescription": "client_secret은 절대 프론트엔드에 노출되어서는 안 됩니다. 토큰 교환은 항상 안전한 백엔드 서버에서 이루어져야 합니다."
+      "securityDescription": "<code>client_secret</code>은 절대 프론트엔드에 노출되어서는 안 됩니다. 토큰 교환은 항상 안전한 백엔드 서버에서 이루어져야 합니다."
     }
   },
   "oidc": {

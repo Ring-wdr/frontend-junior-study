@@ -39,7 +39,11 @@ export const SessionReplaySection = () => {
           </div>
         </SubSection>
 
-        <SubSection title={t('sessionReplay.demoTitle')} icon iconColor="purple">
+        <SubSection
+          title={t('sessionReplay.demoTitle')}
+          icon
+          iconColor="purple"
+        >
           <DemoBox label={t('interactiveDemo')}>
             <SessionReplayVisualizer />
           </DemoBox>

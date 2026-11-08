@@ -42,13 +42,13 @@ export const AnalyticsSection = () => {
               <thead>
                 <tr className="border-b border-gray-200">
                   <th className="text-left py-2 px-3 font-semibold text-gray-700">
-                    Event
+                    {t('analytics.tableHeaders.event')}
                   </th>
                   <th className="text-left py-2 px-3 font-semibold text-gray-700">
-                    Description
+                    {t('analytics.tableHeaders.description')}
                   </th>
                   <th className="text-left py-2 px-3 font-semibold text-gray-700">
-                    Parameters
+                    {t('analytics.tableHeaders.parameters')}
                   </th>
                 </tr>
               </thead>

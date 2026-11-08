@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { Box, Key, RefreshCw, Trash2 } from 'lucide-react';
 import { useEffect, useReducer, useRef } from 'react';
+import { useTranslation } from '@/i18n/client';
 import { Badge } from '../../../components/ui/badge';
 import { cn } from '../../../lib/utils';
 
@@ -58,6 +59,7 @@ function reducer(state: State, action: Action): State {
 }
 
 export const GcDemo = () => {
+  const { t } = useTranslation('week1');
   const [state, dispatch] = useReducer(reducer, initialState);
   const { mode, hasReference, gcRunning, entryExists } = state;
 
@@ -91,7 +93,7 @@ export const GcDemo = () => {
               : 'bg-gray-100 text-gray-500 hover:bg-gray-200',
           )}
         >
-          Map (Strong)
+          {t('advancedDataStructure.weak.gcDemo.mapStrong')}
         </button>
         <button
           type="button"
@@ -103,7 +105,7 @@ export const GcDemo = () => {
               : 'bg-gray-100 text-gray-500 hover:bg-gray-200',
           )}
         >
-          WeakMap (Weak)
+          {t('advancedDataStructure.weak.gcDemo.weakMapWeak')}
         </button>
       </div>
 
@@ -138,7 +140,7 @@ export const GcDemo = () => {
           <div className="w-16 h-16 bg-yellow-100 border-2 border-yellow-400 rounded-lg flex items-center justify-center shadow-md relative z-20">
             <Key className="w-8 h-8 text-yellow-600" />
             <span className="absolute -bottom-6 text-xs font-bold text-gray-500">
-              Key Object
+              {t('advancedDataStructure.weak.gcDemo.keyObject')}
             </span>
           </div>
         </motion.div>
@@ -159,11 +161,15 @@ export const GcDemo = () => {
                 <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
                 <div className="h-0.5 w-4 bg-gray-300"></div>
                 <Box className="w-4 h-4 text-purple-500" />
-                <span className="text-xs text-gray-500">Value</span>
+                <span className="text-xs text-gray-500">
+                  {t('advancedDataStructure.weak.gcDemo.value')}
+                </span>
 
                 {/* Connection Line from Map to Key */}
                 <svg className="absolute -left-20 top-1/2 -translate-y-1/2 w-20 h-10 pointer-events-none overflow-visible">
-                  <title>Connection Line</title>
+                  <title>
+                    {t('advancedDataStructure.weak.gcDemo.connectionLine')}
+                  </title>
                   <path
                     d="M 80 5 L 0 5"
                     stroke={mode === 'Map' ? '#3b82f6' : '#f97316'}
@@ -199,7 +205,7 @@ export const GcDemo = () => {
               transition={{ duration: 0.3, delay: 0.2 }}
               className="mt-10 text-xs text-gray-400 text-center"
             >
-              Entry Collected
+              {t('advancedDataStructure.weak.gcDemo.entryCollected')}
             </motion.div>
           )}
         </div>
@@ -221,7 +227,7 @@ export const GcDemo = () => {
                 <RefreshCw className="w-12 h-12 text-green-600 sm:w-16 sm:h-16" />
               </motion.div>
               <div className="absolute mt-24 text-sm font-bold text-green-700 bg-white/80 px-3 py-1 rounded-full">
-                Garbage Collector Running...
+                {t('advancedDataStructure.weak.gcDemo.gcRunning')}
               </div>
             </motion.div>
           )}
@@ -247,7 +253,9 @@ export const GcDemo = () => {
           ) : (
             <RefreshCw className="w-4 h-4" />
           )}
-          {hasReference ? 'Remove Reference (key = null)' : 'Restore Reference'}
+          {hasReference
+            ? t('advancedDataStructure.weak.gcDemo.removeReference')
+            : t('advancedDataStructure.weak.gcDemo.restoreReference')}
         </button>
 
         <button
@@ -260,7 +268,7 @@ export const GcDemo = () => {
           )}
         >
           <RefreshCw className={cn('w-4 h-4', gcRunning && 'animate-spin')} />
-          Run Garbage Collector
+          {t('advancedDataStructure.weak.gcDemo.runGc')}
         </button>
       </div>
 
@@ -274,12 +282,14 @@ export const GcDemo = () => {
         )}
       >
         <h4 className="font-bold mb-2 flex items-center gap-2">
-          {mode === 'Map' ? 'Strong Reference' : 'Weak Reference'}
+          {mode === 'Map'
+            ? t('advancedDataStructure.weak.gcDemo.strongReference')
+            : t('advancedDataStructure.weak.gcDemo.weakReference')}
         </h4>
         <p>
           {mode === 'Map'
-            ? 'Map holds a STRONG reference to its keys. Even if you remove the external reference (key = null), the Map still prevents the object from being garbage collected. Potentially causing memory leaks if not careful.'
-            : 'WeakMap holds a WEAK reference. If the key object has no other STRONG references (i.e., key = null), the Garbage Collector sees it as unreachable and removes both the key and the value from the WeakMap automatically.'}
+            ? t('advancedDataStructure.weak.gcDemo.mapExplanation')
+            : t('advancedDataStructure.weak.gcDemo.weakMapExplanation')}
         </p>
       </div>
     </div>

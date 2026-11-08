@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { Bell, Radio, User, UserCheck, UserMinus } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { Trans, useTranslation } from '@/i18n/client';
 
 interface Observer {
   id: number;
@@ -11,6 +12,7 @@ interface Observer {
 }
 
 export const ObserverVisualizer = () => {
+  const { t } = useTranslation('week2');
   const [observers, setObservers] = useState<Observer[]>([
     { id: 1, name: 'User A', notified: false },
     { id: 2, name: 'User B', notified: false },
@@ -85,7 +87,9 @@ export const ObserverVisualizer = () => {
               className={`w-8 h-8 mb-2 ${isBroadcasting ? 'animate-pulse' : ''}`}
             />
             <span className="text-xs font-bold">Subject</span>
-            <span className="text-[10px] opacity-80">Broadcast</span>
+            <span className="text-[10px] opacity-80">
+              {t('behavioral.observer.visualizer.broadcast')}
+            </span>
           </motion.button>
 
           {/* Signal Waves */}
@@ -170,8 +174,7 @@ export const ObserverVisualizer = () => {
       </div>
 
       <div className="bg-gray-50 p-3 rounded-lg text-xs text-gray-600 text-center">
-        The <strong>Subject</strong> maintains a list of observers and notifies
-        them automatically of any state changes.
+        <Trans t={t} i18nKey="behavioral.observer.visualizer.note" />
       </div>
     </div>
   );
