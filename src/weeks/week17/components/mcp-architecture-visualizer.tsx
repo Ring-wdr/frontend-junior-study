@@ -11,77 +11,101 @@ import {
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 
+type ServerId = 'database' | 'browser' | 'github';
+
+const servers = [
+  {
+    id: 'database',
+    icon: Database,
+    label: 'Database',
+    activeClass: 'bg-blue-100 border-blue-300',
+    activeIconClass: 'text-blue-600',
+    activeTextClass: 'text-blue-700',
+  },
+  {
+    id: 'browser',
+    icon: Globe,
+    label: 'Browser',
+    activeClass: 'bg-green-100 border-green-300',
+    activeIconClass: 'text-green-600',
+    activeTextClass: 'text-green-700',
+  },
+  {
+    id: 'github',
+    icon: GitBranch,
+    label: 'GitHub',
+    activeClass: 'bg-purple-100 border-purple-300',
+    activeIconClass: 'text-purple-600',
+    activeTextClass: 'text-purple-700',
+  },
+] as const satisfies readonly { id: ServerId; label: string }[];
+
 export const McpArchitectureVisualizer = () => {
   const { t } = useTranslation('week17');
-  const [activeServer, setActiveServer] = useState<string | null>(null);
+  const [activeServer, setActiveServer] = useState<ServerId | null>(null);
 
-  const servers = [
-    { id: 'database', icon: Database, label: 'Database', color: 'blue' },
-    { id: 'browser', icon: Globe, label: 'Browser', color: 'green' },
-    { id: 'github', icon: GitBranch, label: 'GitHub', color: 'purple' },
-  ];
+  const arrowClass = `w-6 h-6 sm:w-8 sm:h-8 rotate-90 sm:rotate-0 transition-colors duration-200 ${
+    activeServer ? 'text-blue-500' : 'text-gray-400'
+  }`;
 
   return (
-    <div className="p-6 bg-white rounded-lg">
-      <div className="flex items-center justify-center gap-4 flex-wrap">
-        {/* AI Agent */}
+    <div>
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
         <div className="flex flex-col items-center">
-          <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
-            <Bot className="w-10 h-10 text-white" />
+          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-md">
+            <Bot className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
           </div>
           <span className="mt-2 text-sm font-medium text-gray-700">
             AI Agent
           </span>
         </div>
 
-        {/* Arrow */}
-        <div className="flex flex-col items-center gap-1">
-          <ArrowRight className="w-8 h-8 text-gray-400" />
+        <div className="flex sm:flex-col items-center gap-1">
+          <ArrowRight className={arrowClass} aria-hidden="true" />
           <span className="text-xs text-gray-500">MCP</span>
         </div>
 
-        {/* MCP Server */}
         <div className="flex flex-col items-center">
-          <div
-            className={`w-20 h-20 rounded-xl flex items-center justify-center shadow-lg transition-all cursor-pointer ${
+          <button
+            type="button"
+            aria-pressed={activeServer !== null}
+            className={`w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center shadow-md transition-colors duration-200 ${
               activeServer
                 ? 'bg-gradient-to-br from-blue-500 to-cyan-600'
                 : 'bg-gradient-to-br from-gray-400 to-gray-500'
             }`}
             onClick={() => setActiveServer(activeServer ? null : 'database')}
           >
-            <Server className="w-10 h-10 text-white" />
-          </div>
+            <Server className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+          </button>
           <span className="mt-2 text-sm font-medium text-gray-700">
             MCP Server
           </span>
         </div>
 
-        {/* Arrow */}
-        <div className="flex flex-col items-center gap-1">
-          <ArrowRight className="w-8 h-8 text-gray-400" />
-        </div>
+        <ArrowRight className={arrowClass} aria-hidden="true" />
 
-        {/* External Services */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-row flex-wrap justify-center sm:flex-col gap-2">
           {servers.map((server) => {
             const Icon = server.icon;
             const isActive = activeServer === server.id;
             return (
               <button
                 key={server.id}
+                type="button"
+                aria-pressed={isActive}
                 onClick={() => setActiveServer(isActive ? null : server.id)}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg border transition-all ${
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg border transition-colors duration-200 ${
                   isActive
-                    ? `bg-${server.color}-100 border-${server.color}-300`
+                    ? server.activeClass
                     : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
                 }`}
               >
                 <Icon
-                  className={`w-4 h-4 ${isActive ? `text-${server.color}-600` : 'text-gray-500'}`}
+                  className={`w-4 h-4 ${isActive ? server.activeIconClass : 'text-gray-500'}`}
                 />
                 <span
-                  className={`text-xs font-medium ${isActive ? `text-${server.color}-700` : 'text-gray-600'}`}
+                  className={`text-xs font-medium ${isActive ? server.activeTextClass : 'text-gray-600'}`}
                 >
                   {server.label}
                 </span>
@@ -91,8 +115,7 @@ export const McpArchitectureVisualizer = () => {
         </div>
       </div>
 
-      {/* Description */}
-      <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+      <div className="mt-4 p-3 sm:p-4 bg-white rounded-lg border border-gray-100">
         <p className="text-sm text-gray-600 text-center">
           {t('mcp.visualizer.description')}
         </p>

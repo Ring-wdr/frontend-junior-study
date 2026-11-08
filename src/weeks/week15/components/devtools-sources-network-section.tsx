@@ -11,7 +11,7 @@ export const DevToolsSourcesNetworkSection = () => {
   const { t, raw } = useTranslation('week15');
   const [selectedBreakpoint, setSelectedBreakpoint] = useState(0);
 
-  const bpTypes = raw('devtoolsSources.breakpointTypes') as any[];
+  const bpTypes = raw('devtoolsSources.breakpointTypes');
   const breakpointTypes = [
     { ...bpTypes[0], icon: '🔴' },
     { ...bpTypes[1], icon: '🟡' },
@@ -97,10 +97,10 @@ export const DevToolsSourcesNetworkSection = () => {
           icon
           iconColor="blue"
         >
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {(
-              raw('devtoolsSources.debugControls') as any[]
-            ).map((control: any, idx: number) => (
+              raw('devtoolsSources.debugControls')
+            ).map((control, idx) => (
               <div
                 key={control.name}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200 text-center"
@@ -131,8 +131,8 @@ export const DevToolsSourcesNetworkSection = () => {
                 </h5>
                 <ul className="text-sm text-gray-600 space-y-1">
                   {(
-                    raw('devtoolsSources.scopeItems') as any[]
-                  ).map((item: any) => (
+                    raw('devtoolsSources.scopeItems')
+                  ).map((item) => (
                     <li key={item.label}>
                       • <strong>{item.label}</strong> {item.desc}
                     </li>
@@ -145,7 +145,7 @@ export const DevToolsSourcesNetworkSection = () => {
                 </h5>
                 <ul className="text-sm text-gray-600 space-y-1">
                   {(
-                    raw('devtoolsSources.watchItems') as string[]
+                    raw('devtoolsSources.watchItems')
                   ).map((item: string, idx: number) => (
                     <li key={idx}>• {item}</li>
                   ))}
@@ -167,10 +167,10 @@ export const DevToolsSourcesNetworkSection = () => {
             <p className="text-sm">{t('devtoolsSources.networkInfoDesc')}</p>
           </InfoBox>
 
-          <div className="mt-4 grid grid-cols-2 gap-3">
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
             {(
-              raw('devtoolsSources.networkFeatures') as any[]
-            ).map((item: any) => (
+              raw('devtoolsSources.networkFeatures')
+            ).map((item) => (
               <div
                 key={item.label}
                 className="bg-white p-3 rounded-lg border border-gray-200"
@@ -180,7 +180,7 @@ export const DevToolsSourcesNetworkSection = () => {
                 </h5>
                 <p className="text-xs text-gray-500 mb-2">{item.desc}</p>
                 <div className="flex flex-wrap gap-1">
-                  {item.check.map((c: string) => (
+                  {item.check.map((c) => (
                     <span
                       key={c}
                       className="text-[10px] bg-orange-50 text-orange-700 px-1.5 py-0.5 rounded"

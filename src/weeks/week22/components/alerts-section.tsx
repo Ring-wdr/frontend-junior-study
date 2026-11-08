@@ -8,9 +8,6 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { AlertRuleVisualizer } from './alert-rule-visualizer';
 
-type Rule = { condition: string; threshold: string; action: string };
-type DashboardCategory = { category: string; items: string[] };
-
 export const AlertsSection = () => {
   const { t, raw } = useTranslation('week22');
   const rules = raw('alerts.rules');
@@ -74,7 +71,7 @@ export const AlertsSection = () => {
         </SubSection>
 
         <SubSection title={t('alerts.dashboardTitle')} icon iconColor="blue">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
             {dashboardMetrics.map((dm) => (
               <div
                 key={dm.category}

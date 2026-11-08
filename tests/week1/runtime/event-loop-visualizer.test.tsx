@@ -18,9 +18,9 @@ import type React from 'react';
 import type { ComponentProps } from 'react';
 import { EventLoopVisualizer } from '../../../src/weeks/week1/components/event-loop-visualizer';
 
-// Mock framer-motion to avoid animation issues in tests
-rs.mock('framer-motion', async () => {
-  const actual = await rs.importActual('framer-motion');
+// Mock motion/react to avoid animation issues in tests
+rs.mock('motion/react', async () => {
+  const actual = await rs.importActual('motion/react');
   return {
     ...actual,
     AnimatePresence: ({ children }: { children: React.ReactNode }) => (

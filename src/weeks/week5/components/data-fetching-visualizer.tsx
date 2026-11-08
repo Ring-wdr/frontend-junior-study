@@ -1,7 +1,8 @@
 'use client';
 
 import { Database, RefreshCw, Server } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { motion, useInView } from 'motion/react';
+import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from '@/i18n/client';
 import { cn } from '../../../lib/utils';
 
@@ -10,7 +11,9 @@ type Library = 'native' | 'swr' | 'react-query';
 export const DataFetchingVisualizer = () => {
   const { t } = useTranslation('week5');
   const [library, setLibrary] = useState<Library>('native');
-  const [serverTime, setServerTime] = useState(Date.now());
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef);
+  const [serverTime, setServerTime] = useState<number | null>(null);
   const [clientData, setClientData] = useState<{
     time: number;
     source: string;
@@ -21,28 +24,27 @@ export const DataFetchingVisualizer = () => {
   const [revalidateTime, setRevalidateTime] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Simulate Server Time Ticking
   useEffect(() => {
+    if (!isInView) return;
+    setServerTime(Date.now());
     const interval = setInterval(() => {
       setServerTime(Date.now());
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isInView]);
 
-  // Reset state when library changes
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Reset state on library change
-  useEffect(() => {
+  const selectLibrary = (lib: Library) => {
+    setLibrary(lib);
     setClientData(null);
     setCachedTime(null);
     setRevalidateTime(null);
-  }, [library]);
+  };
 
   const fetchData = async (action: string) => {
     setLoading(true);
-    // Simulate network delay
     await new Promise((r) => setTimeout(r, library === 'native' ? 600 : 300));
 
-    const now = serverTime;
+    const now = serverTime ?? Date.now();
 
     if (library === 'native') {
       if (action === 'force-cache') {
@@ -79,23 +81,12 @@ export const DataFetchingVisualizer = () => {
         }
       }
     } else if (library === 'swr' || library === 'react-query') {
-      // SWR / React Query Simulation
-      // In this simplified demo, we assume they act similarly:
-      // Stale-While-Revalidate: Return cached immediately (re-render), then fetch fresh.
-
       if (action === 'focus' || action === 'mount') {
-        // Simulate SWR/RQ behavior:
-        // 1. If cache exists, serve it (optimistic/stale)
-        // 2. Fetch background (loading)
-        // 3. Update data
-
         if (cachedTime) {
-          // Immediate stale return
           setClientData({
             time: cachedTime,
             source: `${t('dataFetching.visualizer.stale')} (Cache)`,
           });
-          // Then fetch
           setTimeout(() => {
             setCachedTime(now);
             setClientData({
@@ -105,7 +96,6 @@ export const DataFetchingVisualizer = () => {
             setLastFetchTime(Date.now());
           }, 500);
         } else {
-          // First load
           setCachedTime(now);
           setClientData({
             time: now,
@@ -128,9 +118,12 @@ export const DataFetchingVisualizer = () => {
     });
 
   return (
-    <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm my-6 space-y-6">
-      <div className="flex items-center justify-between border-b pb-4">
-        <div>
+    <div
+      ref={containerRef}
+      className="bg-white p-4 sm:p-6 rounded-xl border border-gray-200 my-6 space-y-4 sm:space-y-6"
+    >
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b pb-4">
+        <div className="min-w-0">
           <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
             <Database className="w-5 h-5 text-indigo-500" />
             {t('dataFetching.visualizer.title')}
@@ -146,20 +139,20 @@ export const DataFetchingVisualizer = () => {
         <div className="flex items-center gap-2 text-xs font-mono bg-gray-900 text-green-400 px-3 py-1.5 rounded-md">
           <Server className="w-3 h-3" />
           <span>
-            {t('dataFetching.visualizer.serverTime')} {formatTime(serverTime)}
+            {t('dataFetching.visualizer.serverTime')}{' '}
+            {serverTime === null ? '--:--:--' : formatTime(serverTime)}
           </span>
         </div>
       </div>
 
-      {/* Library Toggles */}
-      <div className="flex gap-2 p-1 bg-gray-100/50 rounded-lg w-fit">
+      <div className="flex flex-wrap gap-2 p-1 bg-gray-100/50 rounded-lg w-fit max-w-full">
         {(['native', 'swr', 'react-query'] as const).map((lib) => (
           <button
             type="button"
             key={lib}
-            onClick={() => setLibrary(lib)}
+            onClick={() => selectLibrary(lib)}
             className={cn(
-              'text-xs font-bold px-3 py-1.5 rounded transition-all shadow-sm',
+              'text-xs font-bold px-3 py-1.5 rounded transition-colors shadow-sm',
               library === lib
                 ? 'bg-white text-indigo-600 ring-1 ring-gray-200'
                 : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50',
@@ -175,8 +168,7 @@ export const DataFetchingVisualizer = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* Controls */}
-        <div className="space-y-3">
+        <div className="space-y-3 min-w-0">
           <div className="text-xs font-semibold uppercase text-gray-500">
             {t('dataFetching.visualizer.triggers')}
           </div>
@@ -244,8 +236,7 @@ export const DataFetchingVisualizer = () => {
           )}
         </div>
 
-        {/* Network / Middle */}
-        <div className="flex flex-col items-center justify-center p-4 border-x border-gray-100 relative">
+        <div className="flex flex-col items-center justify-center p-4 min-h-28 border-y md:border-y-0 md:border-x border-gray-100 relative min-w-0">
           {loading && (
             <div className="absolute inset-0 flex items-center justify-center bg-white/50 z-10">
               <div className="flex flex-col items-center">
@@ -259,16 +250,20 @@ export const DataFetchingVisualizer = () => {
           <div className="w-full h-1 bg-gray-100 my-4 relative">
             <div
               className={cn(
-                'absolute left-0 top-0 bottom-0 bg-indigo-500 transition-all duration-500',
+                'absolute left-0 top-0 bottom-0 bg-indigo-500 transition-[width] duration-500 ease-out',
                 loading ? 'w-full' : 'w-0',
               )}
             />
           </div>
 
           {clientData && (
-            <div
+            <motion.div
+              key={`${clientData.source}-${clientData.time}`}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.2 }}
               className={cn(
-                'px-3 py-1 rounded-full text-xs font-bold animate-in zoom-in',
+                'px-3 py-1 rounded-full text-xs font-bold text-center',
                 clientData.source.includes(t('dataFetching.visualizer.hit'))
                   ? 'bg-green-100 text-green-700'
                   : clientData.source.includes(
@@ -279,10 +274,9 @@ export const DataFetchingVisualizer = () => {
               )}
             >
               {clientData.source}
-            </div>
+            </motion.div>
           )}
 
-          {/* Library Icon Badge */}
           <div className="absolute bottom-2 right-2">
             {library === 'native' && (
               <span className="text-[10px] bg-gray-100 text-gray-500 px-1 rounded">
@@ -297,7 +291,6 @@ export const DataFetchingVisualizer = () => {
           </div>
         </div>
 
-        {/* Result */}
         <div className="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center text-center space-y-2 border border-gray-200">
           <div className="text-xs font-semibold uppercase text-gray-500">
             {t('dataFetching.visualizer.clientData')}
@@ -320,7 +313,6 @@ export const DataFetchingVisualizer = () => {
         </div>
       </div>
 
-      {/* Explanation */}
       <div className="bg-gray-50 p-3 rounded-lg text-xs text-gray-600">
         {library === 'native' ? (
           <div className="space-y-3">
@@ -348,8 +340,14 @@ export const DataFetchingVisualizer = () => {
               </div>
               <div className="mt-2 space-y-1 text-xs text-indigo-900">
                 <p>{t('dataFetching.visualizer.cacheComponentsCard.shell')}</p>
-                <p>{t('dataFetching.visualizer.cacheComponentsCard.cachedUnit')}</p>
-                <p>{t('dataFetching.visualizer.cacheComponentsCard.revalidation')}</p>
+                <p>
+                  {t('dataFetching.visualizer.cacheComponentsCard.cachedUnit')}
+                </p>
+                <p>
+                  {t(
+                    'dataFetching.visualizer.cacheComponentsCard.revalidation',
+                  )}
+                </p>
               </div>
             </div>
           </div>

@@ -7,6 +7,8 @@ import { useTranslation } from '@/i18n/client';
 
 type Scenario = 'isString' | 'isArray' | 'extractPromise';
 
+const boxTransition = { duration: 0.25, ease: 'easeOut' } as const;
+
 const scenarios: { id: Scenario; label: string }[] = [
   { id: 'isString', label: 'IsString<T>' },
   { id: 'isArray', label: 'IsArray<T>' },
@@ -72,16 +74,17 @@ export const ConditionalTypeFlowchart = () => {
       <div className="flex flex-col items-center">
         <motion.div
           key={`input-${scenario}-${branch}`}
-          initial={{ scale: 0.9, opacity: 0 }}
+          initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="px-6 py-3 bg-purple-100 text-purple-700 rounded-xl border-2 border-purple-300 font-mono text-sm"
+          transition={boxTransition}
+          className="max-w-full px-4 sm:px-6 py-3 bg-purple-100 text-purple-700 rounded-xl border-2 border-purple-300 font-mono text-sm"
         >
           T = {result.input}
         </motion.div>
 
         <ArrowDown className="w-5 h-5 text-gray-400 my-2" />
 
-        <div className="px-6 py-3 bg-gray-100 rounded-xl border-2 border-gray-300 font-mono text-sm text-center">
+        <div className="max-w-full px-4 sm:px-6 py-3 bg-gray-100 rounded-xl border-2 border-gray-300 font-mono text-sm text-center break-words">
           <span className="text-purple-600">{data.condition}</span>
         </div>
 
@@ -89,7 +92,7 @@ export const ConditionalTypeFlowchart = () => {
           <button
             type="button"
             onClick={() => setBranch('true')}
-            className={`flex flex-col items-center transition-all ${
+            className={`flex flex-col items-center transition duration-200 ${
               branch === 'true' ? 'scale-110' : 'opacity-50'
             }`}
           >
@@ -103,7 +106,7 @@ export const ConditionalTypeFlowchart = () => {
           <button
             type="button"
             onClick={() => setBranch('false')}
-            className={`flex flex-col items-center transition-all ${
+            className={`flex flex-col items-center transition duration-200 ${
               branch === 'false' ? 'scale-110' : 'opacity-50'
             }`}
           >
@@ -117,9 +120,10 @@ export const ConditionalTypeFlowchart = () => {
 
         <motion.div
           key={`result-${scenario}-${branch}`}
-          initial={{ scale: 0.9, opacity: 0 }}
+          initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className={`mt-4 px-6 py-3 rounded-xl border-2 font-mono text-sm ${
+          transition={{ ...boxTransition, delay: 0.1 }}
+          className={`mt-4 max-w-full px-4 sm:px-6 py-3 rounded-xl border-2 font-mono text-sm ${
             branch === 'true'
               ? 'bg-green-100 text-green-700 border-green-300'
               : 'bg-red-100 text-red-700 border-red-300'
@@ -133,9 +137,10 @@ export const ConditionalTypeFlowchart = () => {
         key={scenario}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="bg-gray-900 rounded-lg p-3 text-center"
+        transition={boxTransition}
+        className="bg-gray-900 rounded-lg p-3 text-center overflow-x-auto"
       >
-        <code className="text-xs text-gray-300">{data.code}</code>
+        <code className="text-xs text-gray-300 break-words">{data.code}</code>
       </motion.div>
     </div>
   );

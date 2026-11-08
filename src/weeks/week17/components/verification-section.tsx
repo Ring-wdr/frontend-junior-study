@@ -9,8 +9,8 @@ import { CodeBlock } from '../../../components/ui/code-block';
 
 export const VerificationSection = () => {
   const { t, raw } = useTranslation('week17');
-  const checklist = raw('verification.checklist') as string[];
-  const guidelines = raw('verification.teamGuidelines') as any;
+  const checklist = raw('verification.checklist');
+  const guidelines = raw('verification.teamGuidelines');
 
   return (
     <SectionCard
@@ -59,7 +59,7 @@ export const VerificationSection = () => {
               {t('verification.checklistTitle')}
             </h4>
             <ul className="space-y-2">
-              {checklist.map((item: string) => (
+              {checklist.map((item) => (
                 <li
                   key={item}
                   className="flex items-start gap-2 text-sm text-orange-800"
@@ -119,7 +119,7 @@ export const VerificationSection = () => {
                 {guidelines.allowed.title}
               </h4>
               <ul className="space-y-1">
-                {guidelines.allowed.items.map((item: string) => (
+                {guidelines.allowed.items.map((item) => (
                   <li
                     key={item}
                     className="flex items-center gap-2 text-xs text-green-700"
@@ -136,7 +136,7 @@ export const VerificationSection = () => {
                 {guidelines.required.title}
               </h4>
               <ul className="space-y-1">
-                {guidelines.required.items.map((item: string) => (
+                {guidelines.required.items.map((item) => (
                   <li
                     key={item}
                     className="flex items-center gap-2 text-xs text-orange-700"
@@ -153,7 +153,7 @@ export const VerificationSection = () => {
                 {guidelines.prohibited.title}
               </h4>
               <ul className="space-y-1">
-                {guidelines.prohibited.items.map((item: string) => (
+                {guidelines.prohibited.items.map((item) => (
                   <li
                     key={item}
                     className="flex items-center gap-2 text-xs text-red-700"

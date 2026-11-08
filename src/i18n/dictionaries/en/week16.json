@@ -66,7 +66,11 @@
       "noError": "No Error",
       "runtimeError": "Runtime Error!",
       "compileError": "Compile Error!",
-      "compileSuccess": "Compile Success!"
+      "compileSuccess": "Compile Success!",
+      "running": "Running...",
+      "compiling": "Compiling...",
+      "legendJs": "JS: runtime error",
+      "legendTs": "TS: compile error"
     }
   },
   "typeBasics": {
@@ -321,7 +325,10 @@
       "switch": "switch statement",
       "case": "case",
       "selectShape": "Select Shape",
-      "seeNarrowing": "See Type Narrowing"
+      "seeNarrowing": "See Type Narrowing",
+      "properties": "Properties",
+      "switchComment": "// Narrowing types with switch",
+      "formulaTitle": "Formula available in case \"{{selected}}\":"
     }
   }
 }

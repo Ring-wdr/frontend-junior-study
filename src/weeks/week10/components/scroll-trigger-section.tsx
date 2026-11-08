@@ -4,136 +4,155 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLayoutEffect, useRef } from 'react';
 import { useTranslation } from '@/i18n/client';
+import { SectionCard } from '../../../components/section-card';
 
 gsap.registerPlugin(ScrollTrigger);
+
+const NAVBAR_FALLBACK_HEIGHT = 64;
+
+function getNavbarHeight() {
+  const value = getComputedStyle(document.documentElement)
+    .getPropertyValue('--nextra-navbar-height')
+    .trim();
+  const parsed = Number.parseFloat(value);
+  if (Number.isNaN(parsed)) return NAVBAR_FALLBACK_HEIGHT;
+  if (value.endsWith('rem')) {
+    return (
+      parsed *
+      Number.parseFloat(getComputedStyle(document.documentElement).fontSize)
+    );
+  }
+  return parsed;
+}
 
 export function ScrollTriggerSection() {
   const { t } = useTranslation('week10');
   const containerRef = useRef<HTMLDivElement>(null);
-  const scrollerRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      // 1. Fade in on enter
-      gsap.from('.fade-item', {
-        opacity: 0,
-        y: 50,
-        stagger: 0.2,
-        duration: 1,
-        scrollTrigger: {
-          trigger: '.fade-section',
-          scroller: scrollerRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse',
-        },
-      });
+    const container = containerRef.current;
+    if (!container) return;
 
-      // 2. Scrub animation (Box moves with scroll)
-      gsap.to('.scrub-box', {
-        x: 250,
-        rotation: 360,
-        scrollTrigger: {
-          trigger: '.scrub-section',
-          scroller: scrollerRef.current,
-          start: 'top center',
-          end: 'bottom center',
-          scrub: 1, // smooth scrubbing
-        },
-      });
+    const mm = gsap.matchMedia();
+    mm.add(
+      '(prefers-reduced-motion: no-preference)',
+      () => {
+        gsap.from('.fade-item', {
+          opacity: 0,
+          y: 30,
+          stagger: 0.15,
+          duration: 0.6,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.fade-section',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse',
+          },
+        });
 
-      // 3. Pinning section
-      ScrollTrigger.create({
-        trigger: '.pin-section',
-        scroller: scrollerRef.current,
-        start: 'top top',
-        end: '+=300', // pin for 300px
-        pin: true,
-        pinSpacing: true,
-      });
-    }, containerRef);
+        gsap.to('.scrub-box', {
+          x: () => {
+            const track = container.querySelector<HTMLElement>('.scrub-track');
+            const box = container.querySelector<HTMLElement>('.scrub-box');
+            if (!track || !box) return 0;
+            return Math.max(0, track.clientWidth - box.offsetWidth);
+          },
+          rotation: 360,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.scrub-section',
+            start: 'top center',
+            end: 'bottom center',
+            scrub: 1,
+            invalidateOnRefresh: true,
+          },
+        });
 
-    return () => ctx.revert();
+        ScrollTrigger.create({
+          trigger: '.pin-section',
+          start: () => `top top+=${getNavbarHeight()}`,
+          end: '+=300',
+          pin: true,
+          pinSpacing: true,
+          invalidateOnRefresh: true,
+        });
+      },
+      container,
+    );
+
+    let frame = 0;
+    const observer = new ResizeObserver(() => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => ScrollTrigger.refresh());
+    });
+    observer.observe(document.body);
+
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+      mm.revert();
+    };
   }, []);
 
   return (
-    <div className="space-y-6" ref={containerRef}>
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-6">
-        <h2 className="text-2xl font-bold text-gray-900">
-          {t('scrollTrigger.title')}
-        </h2>
-        <p className="text-gray-600">{t('scrollTrigger.description')}</p>
+    <SectionCard description={t('scrollTrigger.description')}>
+      <div ref={containerRef} className="space-y-4">
+        <div className="rounded-xl border border-gray-200 bg-gray-50">
+          <div className="flex items-center justify-center gap-2 rounded-t-xl bg-linear-to-br from-blue-500 to-cyan-400 py-4 text-sm font-medium text-white">
+            <span className="opacity-90">{t('scrollTrigger.scrollDown')}</span>
+            <span aria-hidden="true">↓</span>
+          </div>
 
-        {/* Mock Window/Phone Frame */}
-        <div className="mx-auto max-w-md border-8 border-gray-800 rounded-4xl overflow-hidden shadow-2xl bg-white relative">
-          {/* Camera bump */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-gray-800 rounded-b-xl z-20"></div>
-
-          {/* Scrollable Screen */}
-          <div
-            ref={scrollerRef}
-            className="h-[400px] overflow-y-auto bg-gray-50 scrollbar-hide scroll-smooth relative"
-            style={{ scrollBehavior: 'smooth' }}
-          >
-            {/* Hero */}
-            <div className="h-[300px] flex items-center justify-center bg-linear-to-br from-blue-500 to-cyan-400 text-white flex-col gap-2">
-              <span className="text-sm font-medium opacity-80">
-                {t('scrollTrigger.scrollDown')}
-              </span>
-              <div className="animate-bounce">↓</div>
+          <div className="fade-section space-y-3 p-3 sm:p-4">
+            <h3 className="text-base font-bold text-gray-800">
+              {t('scrollTrigger.triggerAnimation')}
+            </h3>
+            <div className="fade-item p-3 bg-white rounded-xl shadow-sm border border-gray-100">
+              Item 1
             </div>
-
-            {/* Section 1: Fade In */}
-            <div className="fade-section py-20 px-6 space-y-4">
-              <h3 className="text-xl font-bold text-gray-800 mb-6">
-                {t('scrollTrigger.triggerAnimation')}
-              </h3>
-              <div className="fade-item p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-                Item 1
-              </div>
-              <div className="fade-item p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-                Item 2
-              </div>
-              <div className="fade-item p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-                Item 3
-              </div>
+            <div className="fade-item p-3 bg-white rounded-xl shadow-sm border border-gray-100">
+              Item 2
             </div>
+            <div className="fade-item p-3 bg-white rounded-xl shadow-sm border border-gray-100">
+              Item 3
+            </div>
+          </div>
 
-            {/* Section 2: Scrub */}
-            <div className="scrub-section py-20 px-6 bg-gray-100 overflow-hidden">
-              <h3 className="text-xl font-bold text-gray-800 mb-12">
-                {t('scrollTrigger.scrubAnimation')}
-              </h3>
-              <div className="scrub-box w-16 h-16 bg-orange-500 rounded-lg shadow-md flex items-center justify-center text-white font-bold text-xs">
+          <div className="scrub-section overflow-hidden bg-gray-100 p-3 py-10 sm:p-4 sm:py-12">
+            <h3 className="mb-6 text-base font-bold text-gray-800">
+              {t('scrollTrigger.scrubAnimation')}
+            </h3>
+            <div className="scrub-track">
+              <div className="scrub-box w-14 h-14 bg-orange-500 rounded-lg shadow-md flex items-center justify-center text-white font-bold text-xs">
                 SCRUB
               </div>
-              <p className="text-xs text-gray-500 mt-4">
-                {t('scrollTrigger.scrubDescription')}
+            </div>
+            <p className="text-xs text-gray-500 mt-4">
+              {t('scrollTrigger.scrubDescription')}
+            </p>
+          </div>
+
+          <div className="pin-section flex h-64 items-center justify-center bg-indigo-600 text-white">
+            <div className="text-center p-4">
+              <h3 className="text-xl font-bold mb-2">
+                {t('scrollTrigger.pinnedSection')}
+              </h3>
+              <p className="text-sm opacity-80">
+                {t('scrollTrigger.pinnedDescription')}
               </p>
             </div>
+          </div>
 
-            {/* Section 3: Pin */}
-            <div className="pin-section h-[400px] bg-indigo-600 flex items-center justify-center text-white">
-              <div className="text-center p-6">
-                <h3 className="text-2xl font-bold mb-2">
-                  {t('scrollTrigger.pinnedSection')}
-                </h3>
-                <p className="opacity-80">
-                  {t('scrollTrigger.pinnedDescription')}
-                </p>
-              </div>
-            </div>
-
-            <div className="h-[300px] bg-white flex items-center justify-center text-gray-400">
-              {t('scrollTrigger.endOfContent')}
-            </div>
+          <div className="flex h-24 items-center justify-center rounded-b-xl bg-white text-sm text-gray-400">
+            {t('scrollTrigger.endOfContent')}
           </div>
         </div>
 
-        <div className="mt-4 p-4 bg-gray-50 rounded-lg text-sm text-gray-500">
+        <div className="p-3 sm:p-4 bg-gray-50 rounded-lg text-sm text-gray-500">
           <h4 className="font-semibold text-gray-900 mb-2">
             {t('scrollTrigger.codeSnippet')}
           </h4>
-          <pre className="bg-gray-900 text-gray-100 p-3 rounded-lg overflow-x-auto whitespace-pre-wrap">
+          <pre className="bg-gray-900 text-gray-100 p-3 rounded-lg text-xs overflow-x-auto">
             {`gsap.to(".box", {
   scrollTrigger: {
     trigger: ".section", // 애니메이션 시작 기준 요소
@@ -147,6 +166,6 @@ export function ScrollTriggerSection() {
           </pre>
         </div>
       </div>
-    </div>
+    </SectionCard>
   );
 }

@@ -1,7 +1,8 @@
 'use client';
 
 import { AlertTriangle, Image as ImageIcon, Zap } from 'lucide-react';
-import { useState } from 'react';
+import { motion } from 'motion/react';
+import { useEffect, useRef, useState } from 'react';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
@@ -11,37 +12,50 @@ export const OptimizationVisualizer = () => {
   const [contentVisible, setContentVisible] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [clsScore, setClsScore] = useState(0);
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  const clearTimers = () => {
+    for (const id of timers.current) clearTimeout(id);
+    timers.current = [];
+  };
+
+  useEffect(() => {
+    const pending = timers.current;
+    return () => {
+      for (const id of pending) clearTimeout(id);
+    };
+  }, []);
 
   const reset = () => {
+    clearTimers();
     setLoading(false);
     setContentVisible(false);
     setImageLoaded(false);
     setClsScore(0);
   };
 
-  const startDemo = async () => {
+  const startDemo = () => {
     reset();
     setLoading(true);
 
-    // Step 1: Text Content Loads
-    setTimeout(() => {
-      setContentVisible(true);
-    }, 500);
-
-    // Step 2: Image Loads (causing shift in bad mode)
-    setTimeout(() => {
-      setImageLoaded(true);
-      setLoading(false);
-      if (mode === 'bad') {
-        setClsScore(0.25); // Simulate CLS impact
-      }
-    }, 1500);
+    timers.current.push(
+      setTimeout(() => {
+        setContentVisible(true);
+      }, 500),
+      setTimeout(() => {
+        setImageLoaded(true);
+        setLoading(false);
+        if (mode === 'bad') {
+          setClsScore(0.25);
+        }
+      }, 1500),
+    );
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm my-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
+    <div className="bg-white p-4 sm:p-6 rounded-xl border border-gray-200 my-6 space-y-4 sm:space-y-6">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="min-w-0">
           <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
             <Zap className="w-5 h-5 text-yellow-500 fill-yellow-500" />
             Image Optimization & CLS
@@ -50,7 +64,7 @@ export const OptimizationVisualizer = () => {
             See how reserving space prevents Cumulative Layout Shift (CLS).
           </p>
         </div>
-        <div className="flex bg-gray-100 p-1 rounded-lg">
+        <div className="flex flex-wrap bg-gray-100 p-1 rounded-lg">
           <button
             type="button"
             onClick={() => {
@@ -58,7 +72,7 @@ export const OptimizationVisualizer = () => {
               reset();
             }}
             className={cn(
-              'px-3 py-1.5 text-xs font-medium rounded-md transition-all',
+              'px-3 py-1.5 text-xs font-medium rounded-md transition-colors',
               mode === 'bad'
                 ? 'bg-white text-red-600 shadow-sm'
                 : 'text-gray-500 hover:text-gray-900',
@@ -73,7 +87,7 @@ export const OptimizationVisualizer = () => {
               reset();
             }}
             className={cn(
-              'px-3 py-1.5 text-xs font-medium rounded-md transition-all',
+              'px-3 py-1.5 text-xs font-medium rounded-md transition-colors',
               mode === 'good'
                 ? 'bg-white text-green-600 shadow-sm'
                 : 'text-gray-500 hover:text-gray-900',
@@ -84,7 +98,7 @@ export const OptimizationVisualizer = () => {
         </div>
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex flex-wrap items-center gap-3">
         <button
           type="button"
           onClick={startDemo}
@@ -98,73 +112,76 @@ export const OptimizationVisualizer = () => {
               : 'Load Content'}
         </button>
         {clsScore > 0 && (
-          <div className="flex items-center gap-2 text-red-600 font-bold animate-in zoom-in">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.2 }}
+            className="flex items-center gap-2 text-sm text-red-600 font-bold"
+          >
             <AlertTriangle className="w-5 h-5" />
             CLS Detected! (Score: {clsScore})
-          </div>
+          </motion.div>
         )}
         {mode === 'good' && imageLoaded && (
-          <div className="flex items-center gap-2 text-green-600 font-bold animate-in zoom-in">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.2 }}
+            className="flex items-center gap-2 text-sm text-green-600 font-bold"
+          >
             <Zap className="w-5 h-5" />
             Stable Layout (CLS: 0)
-          </div>
+          </motion.div>
         )}
       </div>
 
-      {/* VIEWPORT SIMULATION */}
-      <div className="border-4 border-gray-800 rounded-xl overflow-hidden bg-gray-50 relative h-[400px] shadow-2xl">
-        {/* Header */}
-        <div className="bg-white border-b p-4 shadow-sm z-10 relative">
+      <div className="border-4 border-gray-800 rounded-xl overflow-hidden bg-gray-50 relative h-[360px] sm:h-[400px] shadow-md">
+        <div className="bg-white border-b p-3 sm:p-4 shadow-sm z-10 relative">
           <div className="h-4 w-1/3 bg-gray-200 rounded animate-pulse" />
         </div>
 
-        <div className="p-4 space-y-4 max-w-lg mx-auto">
-          {/* Text Content */}
+        <div className="p-3 sm:p-4 space-y-3 sm:space-y-4 max-w-lg mx-auto">
           {contentVisible && (
-            <div className="space-y-2 animate-in fade-in slide-in-from-bottom-2">
-              <h1 className="text-2xl font-bold text-gray-900">
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              className="space-y-2"
+            >
+              <div className="text-xl sm:text-2xl font-bold text-gray-900">
                 Beautiful Landscapes
-              </h1>
-              <p className="text-gray-600 leading-relaxed">
+              </div>
+              <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                 Discover the most breathtaking views from around the world. From
                 mountain peaks to serene lakes, nature offers endless
                 inspiration.
               </p>
-            </div>
+            </motion.div>
           )}
 
-          {/* The Image */}
           {contentVisible && (
-            <div
-              className={cn(
-                'transition-all duration-500',
-                mode === 'good' && 'relative',
-              )}
-            >
+            <div className={cn(mode === 'good' && 'relative')}>
               {mode === 'good' ? (
-                // OPTIMIZED: Aspect Ratio Box
                 <div className="aspect-video w-full bg-gray-200 rounded-lg relative overflow-hidden">
                   {!imageLoaded && (
                     <div className="absolute inset-0 flex items-center justify-center text-gray-400">
                       <ImageIcon className="w-8 h-8 animate-pulse" />
                     </div>
                   )}
-                  {/* Image fades in over placeholder */}
                   <img
                     src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2670&auto=format&fit=crop"
                     className={cn(
-                      'absolute inset-0 w-full h-full object-cover transition-opacity duration-700',
+                      'absolute inset-0 w-full h-full object-cover transition-opacity duration-500',
                       imageLoaded ? 'opacity-100' : 'opacity-0',
                     )}
                     alt="Landscape"
                   />
                 </div>
               ) : (
-                // UNOPTIMIZED: No height, snaps in
                 imageLoaded && (
                   <img
                     src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2670&auto=format&fit=crop"
-                    className="w-full rounded-lg shadow-md animate-in fade-in duration-300"
+                    className="w-full rounded-lg shadow-md"
                     alt="Landscape"
                   />
                 )
@@ -172,12 +189,16 @@ export const OptimizationVisualizer = () => {
             </div>
           )}
 
-          {/* More Text Content (Pushed down in bad mode) */}
           {contentVisible && (
-            <p className="text-gray-600 leading-relaxed animate-in fade-in slide-in-from-bottom-2 delay-100">
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, ease: 'easeOut', delay: 0.1 }}
+              className="text-sm sm:text-base text-gray-600 leading-relaxed"
+            >
               Photography allows us to capture these moments forever. It's not
               just about the gear, but about the perspective.
-            </p>
+            </motion.p>
           )}
         </div>
       </div>

@@ -8,9 +8,6 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { WebVitalsVisualizer } from './web-vitals-visualizer';
 
-type ComparisonItem = { aspect: string; synthetic: string; rum: string };
-type Vital = { metric: string; threshold: string; description: string };
-
 export const RumSection = () => {
   const { t, raw } = useTranslation('week22');
   const comparisonItems = raw('rum.comparisonItems');

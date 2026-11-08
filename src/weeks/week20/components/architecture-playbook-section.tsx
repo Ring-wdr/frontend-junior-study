@@ -8,11 +8,6 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { ArchitectureGenerator } from './architecture-generator';
 
-type ChecklistItem = {
-  title: string;
-  desc: string;
-};
-
 export const ArchitecturePlaybookSection = () => {
   const { t, raw } = useTranslation('week20');
   const checklist = raw('playbook.checklist');

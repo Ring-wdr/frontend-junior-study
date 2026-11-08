@@ -6,16 +6,6 @@ import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 
-type Pillar = {
-  title: string;
-  desc: string;
-};
-
-type Metric = {
-  title: string;
-  value: string;
-};
-
 export const CiCdFoundationSection = () => {
   const { t, raw } = useTranslation('week21');
   const pillars = raw('foundations.pillars');

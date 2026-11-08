@@ -64,12 +64,12 @@ export const GestureSection = () => {
           />
 
           <DemoBox label={t('gesture.hoverTap.demoLabel')}>
-            <div className="flex gap-4 justify-center">
+            <div className="flex flex-wrap gap-3 justify-center">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-                className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium shadow-md"
+                transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                className="px-4 py-2.5 sm:px-6 sm:py-3 bg-blue-600 text-white rounded-lg font-medium shadow-md"
               >
                 {t('gesture.hoverTap.hoverMe')}
               </motion.button>
@@ -77,8 +77,8 @@ export const GestureSection = () => {
               <motion.button
                 whileHover={{ scale: 1.05, backgroundColor: '#7C3AED' }}
                 whileTap={{ scale: 0.95 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-                className="px-6 py-3 bg-purple-600 text-white rounded-lg font-medium shadow-md"
+                transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                className="px-4 py-2.5 sm:px-6 sm:py-3 bg-purple-600 text-white rounded-lg font-medium shadow-md"
               >
                 {t('gesture.hoverTap.colorChange')}
               </motion.button>
@@ -86,7 +86,8 @@ export const GestureSection = () => {
               <motion.button
                 whileHover={{ y: -3, boxShadow: '0 10px 25px rgba(0,0,0,0.2)' }}
                 whileTap={{ y: 0, boxShadow: '0 5px 15px rgba(0,0,0,0.1)' }}
-                className="px-6 py-3 bg-gray-800 text-white rounded-lg font-medium shadow-md"
+                transition={{ duration: 0.2 }}
+                className="px-4 py-2.5 sm:px-6 sm:py-3 bg-gray-800 text-white rounded-lg font-medium shadow-md"
               >
                 {t('gesture.hoverTap.liftEffect')}
               </motion.button>
@@ -127,7 +128,7 @@ export const GestureSection = () => {
                   key={text}
                   initial={{ opacity: 0, x: -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: false }}
+                  viewport={{ once: true, amount: 0.3 }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
                   className="p-4 bg-gradient-to-r from-purple-100 to-pink-100 rounded-lg border border-purple-200"
                 >
@@ -161,7 +162,7 @@ export const GestureSection = () => {
                   boxShadow: '0 0 0 3px rgba(59, 130, 246, 0.3)',
                 }}
                 transition={{ duration: 0.2 }}
-                className="border-2 border-gray-300 px-4 py-3 rounded-lg w-64 outline-none"
+                className="border-2 border-gray-300 px-4 py-3 rounded-lg w-full max-w-64 outline-none"
                 placeholder={t('gesture.focusStates.placeholder')}
               />
             </div>

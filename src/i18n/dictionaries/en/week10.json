@@ -61,7 +61,7 @@
   },
   "scrollTrigger": {
     "title": "ScrollTrigger",
-    "description": "Control animations based on scroll position. Try scrolling inside the box below.",
+    "description": "Control animations based on scroll position. Scroll the page down to see the demos below react to your scroll position.",
     "scrollDown": "Scroll Down",
     "triggerAnimation": "Trigger Animation",
     "scrubAnimation": "Scrub Animation",

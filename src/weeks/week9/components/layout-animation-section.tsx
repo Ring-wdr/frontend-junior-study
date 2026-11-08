@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 import { Trans, useTranslation } from '@/i18n/client';
 import { DemoBox } from '../../../components/demo-box';
@@ -8,6 +8,12 @@ import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
+
+const layoutTransition = {
+  type: 'spring',
+  stiffness: 350,
+  damping: 30,
+} as const;
 
 export const LayoutAnimationSection = () => {
   const { t } = useTranslation('week9');
@@ -57,16 +63,22 @@ export const LayoutAnimationSection = () => {
             <motion.div
               layout
               onClick={() => setIsExpanded(!isExpanded)}
+              transition={layoutTransition}
               className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl p-4 cursor-pointer text-white"
               style={{ borderRadius: 16 }}
             >
-              <motion.h4 layout="position" className="font-bold">
+              <motion.h4
+                layout="position"
+                transition={layoutTransition}
+                className="font-bold"
+              >
                 {t('layout.accordion.clickMe')}
               </motion.h4>
               {isExpanded && (
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
+                  transition={{ duration: 0.2, delay: 0.1 }}
                   className="mt-3 text-sm text-blue-100"
                 >
                   {t('layout.accordion.content')}
@@ -100,22 +112,25 @@ export const LayoutAnimationSection = () => {
 
           <DemoBox label={t('layout.listReordering.demoLabel')}>
             <div className="space-y-3">
-              <div className="flex gap-2 flex-wrap">
-                {items.map((item) => (
-                  <motion.div
-                    key={item}
-                    layout
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    onClick={() => removeItem(item)}
-                    className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-md cursor-pointer flex items-center justify-center text-white font-bold hover:scale-105 transition-transform"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {item}
-                  </motion.div>
-                ))}
+              <div className="relative flex gap-2 flex-wrap min-h-16">
+                <AnimatePresence initial={false} mode="popLayout">
+                  {items.map((item) => (
+                    <motion.div
+                      key={item}
+                      layout
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      transition={layoutTransition}
+                      onClick={() => removeItem(item)}
+                      className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-md cursor-pointer flex items-center justify-center text-white font-bold"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {item}
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
               </div>
               {items.length === 0 && (
                 <p className="text-gray-500 text-sm text-center py-4">
@@ -153,12 +168,14 @@ export const LayoutAnimationSection = () => {
 
               <motion.div
                 layout
-                className={`${isGrid ? 'grid grid-cols-4 gap-2' : 'flex flex-col gap-2'}`}
+                transition={layoutTransition}
+                className={`${isGrid ? 'grid grid-cols-2 sm:grid-cols-4 gap-2' : 'flex flex-col gap-2'}`}
               >
                 {[1, 2, 3, 4].map((num) => (
                   <motion.div
                     key={num}
                     layout
+                    transition={layoutTransition}
                     className={`bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg shadow-md flex items-center justify-center text-white font-bold ${
                       isGrid ? 'h-16' : 'h-12 px-4'
                     }`}

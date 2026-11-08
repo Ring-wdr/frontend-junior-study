@@ -8,8 +8,6 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { ErrorTrackerVisualizer } from './error-tracker-visualizer';
 
-type Feature = { title: string; desc: string };
-
 export const SentrySection = () => {
   const { t, raw } = useTranslation('week22');
   const features = raw('sentry.features');

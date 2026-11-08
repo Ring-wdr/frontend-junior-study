@@ -6,13 +6,6 @@ import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
-type Tooling = {
-  name: string;
-  strength: string;
-  complexity: string;
-  fit: string;
-};
-
 export const MonorepoToolingSection = () => {
   const { t, raw } = useTranslation('week20');
   const toolings = raw('monorepoTooling.tools');

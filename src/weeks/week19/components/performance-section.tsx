@@ -209,8 +209,8 @@ function PerformanceMonitor() {
 
         <InfoBox variant="green" title={t('performance.checklistTitle')}>
           <ul className="space-y-2">
-            {checklist.map((item, idx) => (
-              <li key={idx} className="flex items-center gap-2 text-sm">
+            {checklist.map((item) => (
+              <li key={item} className="flex items-center gap-2 text-sm">
                 <Check className="w-4 h-4 text-green-600 flex-shrink-0" />
                 <span>{item}</span>
               </li>

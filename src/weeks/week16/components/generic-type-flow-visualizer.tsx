@@ -9,6 +9,9 @@ type InputType = 'string' | 'number' | 'boolean' | 'User';
 
 const inputTypes: InputType[] = ['string', 'number', 'boolean', 'User'];
 
+const boxTransition = { duration: 0.3, ease: 'easeOut' } as const;
+const nudgeTransition = { duration: 0.5, ease: 'easeInOut' } as const;
+
 const typeColors: Record<InputType, string> = {
   string: 'bg-green-100 text-green-700 border-green-300',
   number: 'bg-blue-100 text-blue-700 border-blue-300',
@@ -24,8 +27,15 @@ export const GenericTypeFlowVisualizer = () => {
   const handleTypeSelect = (type: InputType) => {
     setIsAnimating(true);
     setSelectedType(type);
-    setTimeout(() => setIsAnimating(false), 500);
   };
+
+  const arrowProps = {
+    animate: { x: isAnimating ? [0, 8, 0] : 0 },
+    transition: nudgeTransition,
+    onAnimationComplete: () => setIsAnimating(false),
+    className: 'flex items-center gap-1 rotate-90 sm:rotate-0',
+    'aria-hidden': true,
+  } as const;
 
   return (
     <div className="space-y-6">
@@ -50,63 +60,57 @@ export const GenericTypeFlowVisualizer = () => {
         ))}
       </div>
 
-      <div className="flex items-center justify-center gap-4 py-6">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-2 py-4">
         <motion.div
           key={`input-${selectedType}`}
-          initial={{ scale: 0.8, opacity: 0 }}
+          initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className={`px-6 py-4 rounded-xl border-2 ${typeColors[selectedType]}`}
+          transition={boxTransition}
+          className={`px-4 py-3 rounded-xl border-2 text-center ${typeColors[selectedType]}`}
         >
           <div className="text-xs text-gray-500 mb-1">
             {t('generics.visualizer.inputType')}
           </div>
-          <code className="text-lg font-bold">{selectedType}</code>
+          <code className="text-base sm:text-lg font-bold">{selectedType}</code>
         </motion.div>
 
-        <motion.div
-          animate={{ x: isAnimating ? [0, 10, 0] : 0 }}
-          className="flex items-center gap-1"
-        >
-          <ArrowRight className="w-6 h-6 text-gray-400" />
-          <ArrowRight className="w-6 h-6 text-gray-400" />
+        <motion.div {...arrowProps}>
+          <ArrowRight className="w-5 h-5 text-gray-400" />
         </motion.div>
 
-        <div className="px-6 py-4 bg-gray-100 rounded-xl border-2 border-gray-300">
+        <div className="px-4 py-3 bg-gray-100 rounded-xl border-2 border-gray-300 text-center">
           <div className="text-xs text-gray-500 mb-1">
             {t('generics.visualizer.genericFunction')}
           </div>
-          <code className="text-lg font-bold text-gray-700">
+          <code className="text-base sm:text-lg font-bold text-gray-700">
             identity&lt;T&gt;
           </code>
         </div>
 
-        <motion.div
-          animate={{ x: isAnimating ? [0, 10, 0] : 0 }}
-          className="flex items-center gap-1"
-        >
-          <ArrowRight className="w-6 h-6 text-gray-400" />
-          <ArrowRight className="w-6 h-6 text-gray-400" />
+        <motion.div {...arrowProps}>
+          <ArrowRight className="w-5 h-5 text-gray-400" />
         </motion.div>
 
         <motion.div
           key={`output-${selectedType}`}
-          initial={{ scale: 0.8, opacity: 0 }}
+          initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className={`px-6 py-4 rounded-xl border-2 ${typeColors[selectedType]}`}
+          transition={{ ...boxTransition, delay: 0.2 }}
+          className={`px-4 py-3 rounded-xl border-2 text-center ${typeColors[selectedType]}`}
         >
           <div className="text-xs text-gray-500 mb-1">
             {t('generics.visualizer.outputType')}
           </div>
-          <code className="text-lg font-bold">{selectedType}</code>
+          <code className="text-base sm:text-lg font-bold">{selectedType}</code>
         </motion.div>
       </div>
 
       <motion.div
         key={selectedType}
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gray-900 rounded-lg p-4 text-sm"
+        transition={boxTransition}
+        className="bg-gray-900 rounded-lg p-3 sm:p-4 text-xs sm:text-sm overflow-x-auto"
       >
         <code className="text-gray-300">
           <span className="text-purple-400">function</span>{' '}

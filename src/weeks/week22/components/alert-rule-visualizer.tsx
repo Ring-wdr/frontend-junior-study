@@ -14,34 +14,53 @@ type AlertNotification = {
   channel: string;
 };
 
-const ALERT_RULES = [
+const MAX_RATE = 15;
+
+const SCALE_TICKS = [
+  { value: 0, className: '' },
+  { value: 1, className: 'text-green-500' },
+  { value: 3, className: 'text-yellow-500' },
+  { value: 5, className: 'text-orange-500' },
+  { value: 10, className: 'text-red-500' },
+  { value: 15, className: '' },
+];
+
+const ALERT_RULES: {
+  threshold: number;
+  level: AlertLevel;
+  message: string;
+  channel: string;
+}[] = [
   {
     threshold: 1,
-    level: 'info' as AlertLevel,
+    level: 'info',
     message: 'Error rate above baseline',
     channel: '#monitoring',
   },
   {
     threshold: 3,
-    level: 'warning' as AlertLevel,
+    level: 'warning',
     message: 'Error rate elevated - investigate',
     channel: '#alerts',
   },
   {
     threshold: 5,
-    level: 'critical' as AlertLevel,
+    level: 'critical',
     message: 'Error rate critical - immediate action',
     channel: '#incidents',
   },
   {
     threshold: 10,
-    level: 'critical' as AlertLevel,
+    level: 'critical',
     message: 'Service degradation - page on-call',
     channel: '#emergency',
   },
 ];
 
-const LEVEL_STYLES: Record<AlertLevel, { border: string; bg: string; dot: string; badge: string }> = {
+const LEVEL_STYLES: Record<
+  AlertLevel,
+  { border: string; bg: string; dot: string; badge: string }
+> = {
   info: {
     border: 'border-l-green-500',
     bg: 'bg-green-50',
@@ -97,7 +116,6 @@ export const AlertRuleVisualizer = () => {
 
   return (
     <div className="space-y-5">
-      {/* Error Rate Slider */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <span className="text-sm font-semibold text-gray-700">
@@ -105,10 +123,11 @@ export const AlertRuleVisualizer = () => {
           </span>
           <motion.span
             key={errorRate}
-            initial={{ scale: 1.2 }}
+            initial={{ scale: 1.1 }}
             animate={{ scale: 1 }}
+            transition={{ duration: 0.15 }}
             className={cn(
-              'text-lg font-bold font-mono',
+              'inline-block text-lg font-bold font-mono tabular-nums',
               errorRate < 1
                 ? 'text-green-600'
                 : errorRate < 5
@@ -122,23 +141,39 @@ export const AlertRuleVisualizer = () => {
         <input
           type="range"
           min={0}
-          max={15}
+          max={MAX_RATE}
           step={0.5}
           value={errorRate}
           onChange={(e) => setErrorRate(Number(e.target.value))}
-          className={cn('w-full h-2 rounded-lg cursor-pointer', getSliderColor())}
+          className={cn(
+            'w-full h-2 rounded-lg cursor-pointer',
+            getSliderColor(),
+          )}
         />
-        <div className="flex justify-between text-[10px] text-gray-400 font-mono px-1">
-          <span>0%</span>
-          <span className="text-green-500">1%</span>
-          <span className="text-yellow-500">3%</span>
-          <span className="text-orange-500">5%</span>
-          <span className="text-red-500">10%</span>
-          <span>15%</span>
+        <div className="relative h-3 text-[10px] text-gray-400 font-mono">
+          {SCALE_TICKS.map((tick) => {
+            const pct = (tick.value / MAX_RATE) * 100;
+            return (
+              <span
+                key={tick.value}
+                className={cn(
+                  'absolute top-0',
+                  tick.value === 0
+                    ? ''
+                    : tick.value === MAX_RATE
+                      ? '-translate-x-full'
+                      : '-translate-x-1/2',
+                  tick.className,
+                )}
+                style={{ left: `${pct}%` }}
+              >
+                {tick.value}%
+              </span>
+            );
+          })}
         </div>
       </div>
 
-      {/* Controls */}
       <div className="flex gap-2 justify-center">
         <button
           type="button"
@@ -158,7 +193,6 @@ export const AlertRuleVisualizer = () => {
         </button>
       </div>
 
-      {/* Alert Rules */}
       <div className="space-y-2">
         <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
           Alert Rules
@@ -170,16 +204,17 @@ export const AlertRuleVisualizer = () => {
             <motion.div
               key={rule.threshold}
               animate={{ opacity: isActive ? 1 : 0.35 }}
+              transition={{ duration: 0.2 }}
               className={cn(
-                'border-l-4 rounded-r-lg p-3 flex items-center justify-between transition-all',
+                'border-l-4 rounded-r-lg p-3 flex items-center justify-between gap-2 transition-colors',
                 isActive ? style.border : 'border-l-gray-200',
                 isActive ? style.bg : 'bg-gray-50',
               )}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 min-w-0">
                 <Bell
                   className={cn(
-                    'w-3.5 h-3.5',
+                    'w-3.5 h-3.5 shrink-0',
                     isActive ? 'text-gray-700' : 'text-gray-300',
                   )}
                 />
@@ -192,14 +227,14 @@ export const AlertRuleVisualizer = () => {
                   {rule.message}
                 </span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono text-gray-400 flex items-center gap-0.5">
+              <div className="flex items-center gap-2 shrink-0">
+                <span className="hidden sm:flex text-[10px] font-mono text-gray-400 items-center gap-0.5">
                   <Hash className="w-2.5 h-2.5" />
                   {rule.channel.slice(1)}
                 </span>
                 <span
                   className={cn(
-                    'text-[10px] font-semibold px-2 py-0.5 rounded-full',
+                    'text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap',
                     isActive ? style.badge : 'bg-gray-100 text-gray-400',
                   )}
                 >
@@ -211,7 +246,6 @@ export const AlertRuleVisualizer = () => {
         })}
       </div>
 
-      {/* Notification Feed */}
       {notifications.length > 0 && (
         <div className="space-y-2">
           <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
@@ -223,17 +257,19 @@ export const AlertRuleVisualizer = () => {
               return (
                 <motion.div
                   key={notif.id}
-                  initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ delay: index * 0.15 }}
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.25, delay: index * 0.1 }}
                   className={cn(
                     'border-l-4 rounded-r-lg p-3 flex items-center gap-3',
                     style.border,
                     style.bg,
                   )}
                 >
-                  <span className={cn('w-2 h-2 rounded-full shrink-0', style.dot)} />
-                  <div className="flex-1">
+                  <span
+                    className={cn('w-2 h-2 rounded-full shrink-0', style.dot)}
+                  />
+                  <div className="flex-1 min-w-0">
                     <p className="text-xs font-medium text-gray-800">
                       {notif.message}
                     </p>
@@ -248,20 +284,20 @@ export const AlertRuleVisualizer = () => {
         </div>
       )}
 
-      {/* Alert Fatigue Warning */}
       <AnimatePresence>
         {errorRate > 8 && notifications.length > 0 && (
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.25 }}
             className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-lg p-3"
           >
             <AlertTriangle className="w-4 h-4 text-red-500 shrink-0" />
             <p className="text-xs text-red-700">
               <strong>Alert Fatigue Warning:</strong> Too many alerts firing
-              simultaneously can desensitize the team. Consider tuning thresholds
-              and using escalation policies.
+              simultaneously can desensitize the team. Consider tuning
+              thresholds and using escalation policies.
             </p>
           </motion.div>
         )}

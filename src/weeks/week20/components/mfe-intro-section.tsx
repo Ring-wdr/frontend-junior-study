@@ -6,16 +6,6 @@ import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 
-type Principle = {
-  title: string;
-  desc: string;
-};
-
-type AdoptionCase = {
-  yes: string[];
-  no: string[];
-};
-
 const iconMap = [Users, Puzzle, ShieldCheck];
 
 export const MfeIntroSection = () => {

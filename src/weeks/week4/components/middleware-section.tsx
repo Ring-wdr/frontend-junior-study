@@ -24,7 +24,7 @@ export const MiddlewareSection = () => {
               {t('middleware.understanding.description')}
             </p>
 
-            <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
+            <div className="bg-purple-50 p-2 sm:p-4 rounded-lg border border-purple-200">
               <MiddlewareVisualizer />
             </div>
 

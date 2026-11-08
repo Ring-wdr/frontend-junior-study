@@ -66,7 +66,11 @@
       "noError": "에러 없음",
       "runtimeError": "런타임 에러!",
       "compileError": "컴파일 에러!",
-      "compileSuccess": "컴파일 성공!"
+      "compileSuccess": "컴파일 성공!",
+      "running": "실행 중...",
+      "compiling": "컴파일 중...",
+      "legendJs": "JS: 런타임 에러",
+      "legendTs": "TS: 컴파일 에러"
     }
   },
   "typeBasics": {
@@ -293,7 +297,10 @@
       "switch": "switch 문",
       "case": "case",
       "selectShape": "도형 선택",
-      "seeNarrowing": "타입 좁히기 확인"
+      "seeNarrowing": "타입 좁히기 확인",
+      "properties": "속성",
+      "switchComment": "// switch문으로 타입 좁히기",
+      "formulaTitle": "case \"{{selected}}\": 에서 사용 가능한 공식"
     }
   }
 }

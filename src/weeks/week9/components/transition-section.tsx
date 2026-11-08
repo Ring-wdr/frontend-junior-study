@@ -1,7 +1,7 @@
 'use client';
 
-import { motion } from 'motion/react';
-import { useState } from 'react';
+import { motion, useInView } from 'motion/react';
+import { useRef, useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
@@ -15,6 +15,8 @@ export const TransitionSection = () => {
     'spring' | 'tween' | 'keyframes'
   >('spring');
   const [trigger, setTrigger] = useState(0);
+  const keyframesRef = useRef<HTMLDivElement>(null);
+  const isKeyframesInView = useInView(keyframesRef, { amount: 0.3 });
 
   return (
     <SectionCard
@@ -122,11 +124,15 @@ transition={{ type: "spring", bounce: 0.25 }}`}
                 </button>
               </div>
 
-              <div className="h-24 flex items-center justify-center">
+              <div className="h-24 flex items-center justify-center overflow-hidden">
                 <motion.div
                   key={trigger}
-                  initial={{ x: -100, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
+                  initial={trigger === 0 ? false : { x: -100, opacity: 0 }}
+                  animate={
+                    animationType === 'keyframes'
+                      ? { x: [-100, 20, -10, 5, 0], opacity: [0, 1, 1, 1, 1] }
+                      : { x: 0, opacity: 1 }
+                  }
                   transition={
                     animationType === 'spring'
                       ? { type: 'spring', stiffness: 200, damping: 15 }
@@ -184,19 +190,28 @@ transition={{ type: "spring", bounce: 0.25 }}`}
           />
 
           <DemoBox label={t('transition.keyframes.demoLabel')}>
-            <div className="flex justify-center">
+            <div ref={keyframesRef} className="flex justify-center py-2">
               <motion.div
-                animate={{
-                  scale: [1, 1.2, 1.2, 1, 1],
-                  rotate: [0, 0, 180, 180, 0],
-                  borderRadius: ['10%', '10%', '50%', '50%', '10%'],
-                }}
-                transition={{
-                  duration: 2,
-                  times: [0, 0.2, 0.5, 0.8, 1],
-                  repeat: Infinity,
-                  repeatDelay: 1,
-                }}
+                animate={
+                  isKeyframesInView
+                    ? {
+                        scale: [1, 1.2, 1.2, 1, 1],
+                        rotate: [0, 0, 180, 180, 0],
+                        borderRadius: ['10%', '10%', '50%', '50%', '10%'],
+                      }
+                    : { scale: 1, rotate: 0, borderRadius: '10%' }
+                }
+                transition={
+                  isKeyframesInView
+                    ? {
+                        duration: 2,
+                        times: [0, 0.2, 0.5, 0.8, 1],
+                        repeat: Infinity,
+                        repeatDelay: 1,
+                      }
+                    : { duration: 0.3 }
+                }
+                style={{ borderRadius: '10%' }}
                 className="w-20 h-20 bg-gradient-to-br from-pink-500 to-red-600 shadow-lg"
               />
             </div>

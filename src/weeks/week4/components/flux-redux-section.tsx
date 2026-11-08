@@ -24,7 +24,7 @@ export const FluxReduxSection = () => {
               {t('fluxRedux.fluxArchitecture.description')}
             </p>
 
-            <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+            <div className="bg-blue-50 p-2 sm:p-4 rounded-lg border border-blue-200">
               <FluxFlowVisualizer />
             </div>
 

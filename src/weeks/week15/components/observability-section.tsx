@@ -12,7 +12,7 @@ export const ObservabilitySection = () => {
   const { t, raw } = useTranslation('week15');
   const [activeFeature, setActiveFeature] = useState(0);
 
-  const features = raw('observability.sentryFeatures') as any[];
+  const features = raw('observability.sentryFeatures');
   const sentryFeatures = [
     { ...features[0], icon: '🐛' },
     { ...features[1], icon: '🍞' },
@@ -74,7 +74,7 @@ export const ObservabilitySection = () => {
                 </div>
                 <ul className="space-y-2">
                   {sentryFeatures[activeFeature].details.map(
-                    (detail: string) => (
+                    (detail) => (
                       <li
                         key={detail}
                         className="flex items-start gap-2 text-sm text-gray-700"
@@ -232,10 +232,10 @@ api.interceptors.response.use(
           icon
           iconColor="purple"
         >
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {(
-              raw('observability.bestPractices') as any[]
-            ).map((item: any, idx: number) => (
+              raw('observability.bestPractices')
+            ).map((item, idx) => (
               <div
                 key={item.title}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200"

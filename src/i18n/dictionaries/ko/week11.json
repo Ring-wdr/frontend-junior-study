@@ -244,6 +244,7 @@
     "loaded": "✓ Loaded",
     "readyToInteract": "Ready to interact",
     "loadApp": "Load App",
+    "loading": "로딩 중...",
     "dashboard": "Dashboard",
     "lazyChunk": "Lazy chunk",
     "userRequested": "User requested",

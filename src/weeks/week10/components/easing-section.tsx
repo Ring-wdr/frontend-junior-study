@@ -2,9 +2,11 @@
 
 import gsap from 'gsap';
 import { Play } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from '@/i18n/client';
+import { SectionCard } from '../../../components/section-card';
 import { cn } from '../../../lib/utils';
+import { prefersReducedMotion } from '../utils/reduced-motion';
 
 const easings = [
   'none',
@@ -18,116 +20,125 @@ const easings = [
   'steps(5)',
 ] as const;
 
+type Easing = (typeof easings)[number];
+
 export function EasingSection() {
   const { t } = useTranslation('week10');
+  const trackRef = useRef<HTMLDivElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
-  const [selectedEasing, setSelectedEasing] = useState<string>('power2.out');
+  const tweenRef = useRef<gsap.core.Tween | null>(null);
+  const [selectedEasing, setSelectedEasing] = useState<Easing>('power2.out');
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // We don't rely on state for animation here to avoid re-renders during animation
-  // but we use state to trigger the effect if we wanted to change easing dynamically mid-flight (not needed here)
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const observer = new ResizeObserver(() => {
+      const tween = tweenRef.current;
+      if (!tween) return;
+      const progress = tween.progress();
+      tween.invalidate().progress(progress);
+    });
+    observer.observe(track);
+
+    return () => {
+      observer.disconnect();
+      tweenRef.current?.kill();
+      tweenRef.current = null;
+    };
+  }, []);
 
   const runAnimation = () => {
-    if (isPlaying) return;
+    const track = trackRef.current;
+    const box = boxRef.current;
+    if (isPlaying || !track || !box) return;
     setIsPlaying(true);
 
-    // Reset first
-    gsap.set(boxRef.current, { x: 0 });
-
-    gsap.to(boxRef.current, {
-      x: '300%', // simplistic relative movement
-      duration: 1.5,
-      ease: selectedEasing,
-      onComplete: () => setIsPlaying(false),
-    });
+    tweenRef.current?.kill();
+    tweenRef.current = gsap.fromTo(
+      box,
+      { x: 0 },
+      {
+        x: () => track.clientWidth - box.offsetWidth,
+        duration: prefersReducedMotion() ? 0 : 1.5,
+        ease: selectedEasing,
+        onComplete: () => setIsPlaying(false),
+      },
+    );
   };
 
   return (
-    <div className="space-y-6">
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-6">
-        <h2 className="text-2xl font-bold text-gray-900">
-          {t('easing.title')}
-        </h2>
-        <p className="text-gray-600">{t('easing.description')}</p>
+    <SectionCard description={t('easing.description')}>
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <h3 className="font-semibold text-gray-700">
+            {t('easing.selectEasing')}
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {easings.map((ease) => (
+              <button
+                type="button"
+                key={ease}
+                onClick={() => setSelectedEasing(ease)}
+                aria-pressed={selectedEasing === ease}
+                className={cn(
+                  'px-2.5 py-1 text-xs sm:text-sm rounded-lg border transition-colors duration-150',
+                  selectedEasing === ease
+                    ? 'bg-gray-900 text-white border-gray-900'
+                    : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50',
+                )}
+              >
+                {ease}
+              </button>
+            ))}
+          </div>
+        </div>
 
-        <div className="flex flex-col md:flex-row gap-8 items-start">
-          {/* Controls */}
-          <div className="w-full md:w-1/3 space-y-2">
-            <h3 className="font-semibold text-gray-700 mb-2">
-              {t('easing.selectEasing')}
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {easings.map((ease) => (
-                <button
-                  type="button"
-                  key={ease}
-                  onClick={() => setSelectedEasing(ease)}
-                  className={cn(
-                    'px-3 py-1.5 text-sm rounded-lg border transition-all',
-                    selectedEasing === ease
-                      ? 'bg-gray-900 text-white border-gray-900 shadow-md'
-                      : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50',
-                  )}
-                >
-                  {ease}
-                </button>
-              ))}
+        <div className="relative overflow-hidden rounded-xl border border-gray-100 bg-gray-50 p-3 sm:p-4">
+          <div className="mb-6 flex justify-end">
+            <button
+              type="button"
+              onClick={runAnimation}
+              disabled={isPlaying}
+              className="flex items-center gap-2 px-4 py-1.5 bg-blue-600 text-white text-sm rounded-full font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150 active:scale-95"
+            >
+              <Play size={16} fill="currentColor" />
+              {isPlaying ? t('easing.animating') : t('easing.runAnimation')}
+            </button>
+          </div>
+
+          <div
+            ref={trackRef}
+            className="relative mr-[25%] border-r-2 border-dashed border-gray-300"
+            style={{
+              backgroundImage:
+                'linear-gradient(to right, rgb(0 0 0 / 0.08) 1px, transparent 1px)',
+              backgroundSize: '20% 100%',
+            }}
+          >
+            <div
+              ref={boxRef}
+              className="w-14 h-14 bg-linear-to-br from-indigo-500 to-violet-600 rounded-xl shadow-md flex items-center justify-center text-white font-bold text-xs"
+            >
+              BOX
             </div>
-            <div className="mt-6">
-              <pre className="bg-gray-900 text-gray-100 p-4 rounded-xl text-sm overflow-x-auto">
-                {`gsap.to(".box", {
+          </div>
+
+          <div className="mt-4 mr-[25%] flex justify-between text-xs text-gray-400 font-mono">
+            <span>{t('easing.start')}</span>
+            <span>{t('easing.end')}</span>
+          </div>
+        </div>
+
+        <pre className="bg-gray-900 text-gray-100 p-3 sm:p-4 rounded-xl text-xs sm:text-sm overflow-x-auto">
+          {`gsap.to(".box", {
   x: 300,
   duration: 1.5,
   ease: "${selectedEasing}"
 });`}
-              </pre>
-            </div>
-          </div>
-
-          {/* Visualizer */}
-          <div className="w-full md:w-2/3 bg-gray-50 rounded-xl p-6 h-80 flex flex-col justify-center border border-gray-100 relative overflow-hidden">
-            <div className="absolute top-4 right-4 z-10">
-              <button
-                type="button"
-                onClick={runAnimation}
-                disabled={isPlaying}
-                className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md active:scale-95"
-              >
-                <Play size={18} fill="currentColor" />
-                {isPlaying ? t('easing.animating') : t('easing.runAnimation')}
-              </button>
-            </div>
-
-            {/* Grid/Ruler effect */}
-            <div className="absolute inset-0 pointer-events-none opacity-10">
-              <div
-                className="h-full w-full"
-                style={{
-                  backgroundImage:
-                    'linear-gradient(to right, #000 1px, transparent 1px)',
-                  backgroundSize: '20% 100%',
-                }}
-              ></div>
-            </div>
-
-            <div className="relative w-full pr-16">
-              {' '}
-              {/* heavy right padding for destination */}
-              <div
-                ref={boxRef}
-                className="w-16 h-16 bg-linear-to-br from-indigo-500 to-violet-600 rounded-xl shadow-lg flex items-center justify-center text-white font-bold text-xs"
-              >
-                BOX
-              </div>
-            </div>
-
-            <div className="mt-8 flex justify-between text-xs text-gray-400 font-mono w-full pr-16">
-              <span>{t('easing.start')}</span>
-              <span>{t('easing.end')}</span>
-            </div>
-          </div>
-        </div>
+        </pre>
       </div>
-    </div>
+    </SectionCard>
   );
 }

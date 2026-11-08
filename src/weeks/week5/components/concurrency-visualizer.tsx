@@ -1,20 +1,17 @@
 'use client';
 
 import { RefreshCw, Zap } from 'lucide-react';
+import { useInView } from 'motion/react';
 import type React from 'react';
-import { memo, useState, useTransition } from 'react';
-import { CodeBlock } from '../../../components/ui/code-block'; // Adjust path if needed
-import { cn } from '../../../lib/utils'; // Adjust path if needed
+import { memo, useEffect, useRef, useState, useTransition } from 'react';
+import { CodeBlock } from '../../../components/ui/code-block';
+import { cn } from '../../../lib/utils';
 
-// --- 1. Heavy Component Simulation ---
-// Simulates a slow-rendering component by blocking the thread artificially per item
 const SlowItem = ({ text }: { text: string }) => {
   const startTime = performance.now();
-  while (performance.now() - startTime < 1) {
-    // Artificial delay of 1ms per item
-  }
+  while (performance.now() - startTime < 1) {}
   return (
-    <div className="p-2 mb-1 text-sm bg-white rounded border border-gray-100 shadow-sm animate-in fade-in slide-in-from-bottom-1">
+    <div className="p-2 mb-1 text-sm bg-white rounded border border-gray-100 shadow-sm">
       Item: {text}
     </div>
   );
@@ -39,31 +36,59 @@ const SlowList = memo(
 );
 SlowList.displayName = 'SlowList';
 
-const FastSpinner = () => (
-  <div className="flex items-center justify-center p-4 bg-gray-100 rounded-lg mb-4">
-    <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
-    <span className="ml-3 text-sm font-medium text-gray-600">
-      UI Responsiveness Indicator (Spinning = Good)
-    </span>
-  </div>
-);
+const MainThreadSpinner = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const spinnerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef);
+
+  useEffect(() => {
+    if (!isInView) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let frame = 0;
+    let angle = 0;
+    let last = performance.now();
+    const tick = (now: number) => {
+      angle = (angle + (now - last) * 0.36) % 360;
+      last = now;
+      if (spinnerRef.current) {
+        spinnerRef.current.style.transform = `rotate(${angle}deg)`;
+      }
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [isInView]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="flex items-center justify-center gap-3 p-3 sm:p-4 bg-gray-100 rounded-lg"
+    >
+      <div
+        ref={spinnerRef}
+        className="w-8 h-8 shrink-0 border-4 border-blue-500 border-t-transparent rounded-full"
+      />
+      <span className="text-sm font-medium text-gray-600">
+        UI Responsiveness Indicator (Spinning = Good)
+      </span>
+    </div>
+  );
+};
 
 export const ConcurrencyVisualizer = () => {
   const [inputVal, setInputVal] = useState('');
   const [mode, setMode] = useState<'blocking' | 'concurrent'>('blocking');
   const [isPending, startTransition] = useTransition();
-  // We'll use a separate state for the list to demonstrate the lag/transition difference
   const [listText, setListText] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newVal = e.target.value;
-    setInputVal(newVal); // Always update input immediately for controlled component patterns
+    setInputVal(newVal);
 
     if (mode === 'blocking') {
-      // Blocking: Update list state strictly immediately
       setListText(newVal);
     } else {
-      // Concurrent: Wrap list update in transition
       startTransition(() => {
         setListText(newVal);
       });
@@ -71,9 +96,9 @@ export const ConcurrencyVisualizer = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm my-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
+    <div className="bg-white p-4 sm:p-6 rounded-xl border border-gray-200 my-6 space-y-4 sm:space-y-6">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="min-w-0">
           <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
             <Zap className="w-5 h-5 text-yellow-500 fill-yellow-500" />
             Blocking vs Concurrent Rendering
@@ -82,7 +107,7 @@ export const ConcurrencyVisualizer = () => {
             Type quickly below to see how React 18 keeps the UI responsive.
           </p>
         </div>
-        <div className="flex bg-gray-100 p-1 rounded-lg">
+        <div className="flex flex-wrap bg-gray-100 p-1 rounded-lg">
           <button
             type="button"
             onClick={() => {
@@ -91,7 +116,7 @@ export const ConcurrencyVisualizer = () => {
               setListText('');
             }}
             className={cn(
-              'px-3 py-1.5 text-xs font-medium rounded-md transition-all',
+              'px-3 py-1.5 text-xs font-medium rounded-md transition-colors',
               mode === 'blocking'
                 ? 'bg-white text-red-600 shadow-sm'
                 : 'text-gray-500 hover:text-gray-900',
@@ -107,7 +132,7 @@ export const ConcurrencyVisualizer = () => {
               setListText('');
             }}
             className={cn(
-              'px-3 py-1.5 text-xs font-medium rounded-md transition-all',
+              'px-3 py-1.5 text-xs font-medium rounded-md transition-colors',
               mode === 'concurrent'
                 ? 'bg-white text-blue-600 shadow-sm'
                 : 'text-gray-500 hover:text-gray-900',
@@ -118,12 +143,10 @@ export const ConcurrencyVisualizer = () => {
         </div>
       </div>
 
-      {/* Visual Indicator */}
-      <FastSpinner />
+      <MainThreadSpinner />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Interaction Area */}
-        <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <div className="space-y-4 min-w-0">
           <div className="relative">
             <input
               type="text"
@@ -177,8 +200,7 @@ export const ConcurrencyVisualizer = () => {
           </p>
         </div>
 
-        {/* Render Output */}
-        <div className="space-y-2">
+        <div className="space-y-2 min-w-0">
           <h4 className="text-xs font-semibold uppercase text-gray-400">
             Heavy Render Output (50 items x 1ms)
           </h4>
@@ -186,8 +208,7 @@ export const ConcurrencyVisualizer = () => {
         </div>
       </div>
 
-      {/* Code Snippet */}
-      <div className="mt-4 pt-4 border-t border-gray-100">
+      <div className="pt-4 border-t border-gray-100">
         <h4 className="text-sm font-semibold mb-2">Code Pattern</h4>
         <CodeBlock
           code={

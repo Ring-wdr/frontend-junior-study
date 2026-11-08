@@ -2,7 +2,7 @@
 
 import { AlertCircle, Play, RotateCcw, XCircle } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 
 type ExecutionState =
@@ -12,6 +12,8 @@ type ExecutionState =
   | 'ts-compiling'
   | 'ts-error'
   | 'ts-success';
+
+const feedbackTransition = { duration: 0.25, ease: 'easeOut' } as const;
 
 export const TypeErrorDiscoveryVisualizer = () => {
   const { t } = useTranslation('week16');
@@ -31,27 +33,38 @@ greet(123);`;
 // Call with wrong type
 greet(123);`;
 
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    },
+    [],
+  );
+
+  const schedule = (next: ExecutionState, delay: number) => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setState(next), delay);
+  };
+
   const runJavaScript = () => {
     setState('js-running');
-    setTimeout(() => {
-      setState('js-error');
-    }, 1000);
+    schedule('js-error', 1000);
   };
 
   const runTypeScript = () => {
     setState('ts-compiling');
-    setTimeout(() => {
-      setState('ts-error');
-    }, 500);
+    schedule('ts-error', 500);
   };
 
   const reset = () => {
+    if (timerRef.current) clearTimeout(timerRef.current);
     setState('idle');
   };
 
   return (
     <div className="space-y-4">
-      <div className="flex gap-2 justify-center">
+      <div className="flex flex-wrap gap-2 justify-center">
         <button
           type="button"
           onClick={runJavaScript}
@@ -80,7 +93,7 @@ greet(123);`;
         </button>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div
           className={`relative ${state.startsWith('js') ? 'ring-2 ring-yellow-400 rounded-lg' : ''}`}
         >
@@ -91,7 +104,7 @@ greet(123);`;
               </span>
               {state === 'js-running' && (
                 <span className="text-xs text-gray-400 animate-pulse">
-                  Running...
+                  {t('whyTypescript.visualizer.running')}
                 </span>
               )}
             </div>
@@ -102,16 +115,17 @@ greet(123);`;
           <AnimatePresence>
             {state === 'js-error' && (
               <motion.div
-                initial={{ opacity: 0, y: -10 }}
+                initial={{ opacity: 0, y: -6 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
+                transition={feedbackTransition}
                 className="mt-2 p-3 bg-red-50 border border-red-200 rounded-lg"
               >
                 <div className="flex items-center gap-2 text-red-700 text-sm font-medium">
                   <XCircle className="w-4 h-4" />
                   {t('whyTypescript.visualizer.runtimeError')}
                 </div>
-                <p className="mt-1 text-xs text-red-600 font-mono">
+                <p className="mt-1 text-xs text-red-600 font-mono break-words">
                   TypeError: name.toUpperCase is not a function
                 </p>
               </motion.div>
@@ -129,7 +143,7 @@ greet(123);`;
               </span>
               {state === 'ts-compiling' && (
                 <span className="text-xs text-gray-400 animate-pulse">
-                  Compiling...
+                  {t('whyTypescript.visualizer.compiling')}
                 </span>
               )}
             </div>
@@ -139,6 +153,7 @@ greet(123);`;
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
+                  transition={feedbackTransition}
                   className="absolute bottom-3 left-3 right-3"
                 >
                   <div className="bg-red-500/20 border-l-2 border-red-500 px-2 py-1">
@@ -151,16 +166,17 @@ greet(123);`;
           <AnimatePresence>
             {state === 'ts-error' && (
               <motion.div
-                initial={{ opacity: 0, y: -10 }}
+                initial={{ opacity: 0, y: -6 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
+                transition={feedbackTransition}
                 className="mt-2 p-3 bg-orange-50 border border-orange-200 rounded-lg"
               >
                 <div className="flex items-center gap-2 text-orange-700 text-sm font-medium">
                   <AlertCircle className="w-4 h-4" />
                   {t('whyTypescript.visualizer.compileError')}
                 </div>
-                <p className="mt-1 text-xs text-orange-600 font-mono">
+                <p className="mt-1 text-xs text-orange-600 font-mono break-words">
                   Argument of type 'number' is not assignable to parameter of
                   type 'string'
                 </p>
@@ -171,14 +187,18 @@ greet(123);`;
       </div>
 
       <div className="flex justify-center">
-        <div className="inline-flex items-center gap-4 px-4 py-2 bg-gray-100 rounded-full text-sm">
+        <div className="inline-flex flex-wrap items-center justify-center gap-x-4 gap-y-1 px-4 py-2 bg-gray-100 rounded-2xl sm:rounded-full text-sm">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-yellow-500 rounded-full" />
-            <span className="text-gray-600">JS: 런타임 에러</span>
+            <span className="text-gray-600">
+              {t('whyTypescript.visualizer.legendJs')}
+            </span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-blue-500 rounded-full" />
-            <span className="text-gray-600">TS: 컴파일 에러</span>
+            <span className="text-gray-600">
+              {t('whyTypescript.visualizer.legendTs')}
+            </span>
           </div>
         </div>
       </div>

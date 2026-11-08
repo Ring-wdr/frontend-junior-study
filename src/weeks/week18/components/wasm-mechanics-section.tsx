@@ -9,7 +9,7 @@ import { CodeBlock } from '../../../components/ui/code-block';
 
 export const WasmMechanicsSection = () => {
   const { t, raw } = useTranslation('week18');
-  const moduleStructure = raw('wasmMechanics.moduleStructure') as any[];
+  const moduleStructure = raw('wasmMechanics.moduleStructure');
 
   return (
     <SectionCard
@@ -68,7 +68,7 @@ export const WasmMechanicsSection = () => {
         >
           <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
             <div className="space-y-2">
-              {moduleStructure.map((item: any) => (
+              {moduleStructure.map((item) => (
                 <div
                   key={item.name}
                   className="flex items-center gap-3 bg-white p-2 rounded border border-purple-100"

@@ -9,7 +9,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { cn } from '../../../lib/utils';
 
 type Severity = 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
@@ -58,11 +58,15 @@ const SEVERITY_BTN_COLORS: Record<Severity, string> = {
   CRITICAL: 'bg-red-100 text-red-700 hover:bg-red-200 border-red-200',
 };
 
-const PIPELINE_NODES = [
-  { label: 'Error In', icon: AlertCircle, phase: 'incoming' as FlowPhase },
-  { label: 'Analysis', icon: Search, phase: 'analyzing' as FlowPhase },
-  { label: 'Severity', icon: Shield, phase: 'classified' as FlowPhase },
-  { label: 'Action', icon: Zap, phase: 'action' as FlowPhase },
+const PIPELINE_NODES: {
+  label: string;
+  icon: typeof AlertCircle;
+  phase: FlowPhase;
+}[] = [
+  { label: 'Error In', icon: AlertCircle, phase: 'incoming' },
+  { label: 'Analysis', icon: Search, phase: 'analyzing' },
+  { label: 'Severity', icon: Shield, phase: 'classified' },
+  { label: 'Action', icon: Zap, phase: 'action' },
 ];
 
 const PHASE_ORDER: FlowPhase[] = [
@@ -82,6 +86,8 @@ export const ErrorClassificationVisualizer = () => {
     for (const t of timeoutsRef.current) clearTimeout(t);
     timeoutsRef.current = [];
   }, []);
+
+  useEffect(() => clearTimeouts, [clearTimeouts]);
 
   const runFlow = useCallback(
     (errorIndex: number) => {
@@ -124,7 +130,6 @@ export const ErrorClassificationVisualizer = () => {
 
   return (
     <div className="space-y-5">
-      {/* Error Selector */}
       <div className="flex flex-wrap gap-2 justify-center">
         {ERROR_CASES.map((err, i) => (
           <button
@@ -150,22 +155,21 @@ export const ErrorClassificationVisualizer = () => {
         </button>
       </div>
 
-      {/* Pipeline */}
-      <div className="flex items-center justify-between px-2">
+      <div className="flex items-center justify-between sm:px-2">
         {PIPELINE_NODES.map((node, i) => {
           const isReached = currentPhaseIndex >= i;
           const isCurrent = phase === node.phase;
           const Icon = node.icon;
           return (
-            <div key={node.label} className="flex items-center">
+            <div key={node.label} className="flex items-center min-w-0">
               <div className="flex flex-col items-center">
                 <motion.div
                   animate={{
                     scale: isCurrent ? 1.15 : 1,
                     backgroundColor: isReached ? '#3b82f6' : '#e5e7eb',
                   }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                  className="w-12 h-12 rounded-full flex items-center justify-center"
+                  transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center"
                 >
                   <Icon
                     className={cn(
@@ -186,7 +190,7 @@ export const ErrorClassificationVisualizer = () => {
               {i < PIPELINE_NODES.length - 1 && (
                 <ArrowRight
                   className={cn(
-                    'w-5 h-5 mx-1',
+                    'w-4 h-4 sm:w-5 sm:h-5 mx-0.5 sm:mx-1 shrink-0 transition-colors',
                     currentPhaseIndex > i ? 'text-blue-400' : 'text-gray-200',
                   )}
                 />
@@ -196,84 +200,87 @@ export const ErrorClassificationVisualizer = () => {
         })}
       </div>
 
-      {/* Detail Card */}
-      <AnimatePresence mode="wait">
-        {phase !== 'idle' && currentError && (
-          <motion.div
-            key={phase}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="rounded-xl border border-gray-200 bg-white p-4"
-          >
-            {phase === 'incoming' && (
-              <div className="text-center">
-                <span className="text-xs font-semibold text-red-500 uppercase tracking-wide">
-                  Error Received
-                </span>
-                <p className="text-sm text-gray-800 mt-1 font-mono">
-                  {currentError.message}
-                </p>
-              </div>
-            )}
-            {phase === 'analyzing' && (
-              <div className="text-center">
-                <span className="text-xs font-semibold text-blue-500 uppercase tracking-wide">
-                  Analyzing Error...
-                </span>
-                <div className="flex justify-center gap-1 mt-2">
-                  {[0, 1, 2].map((i) => (
-                    <motion.span
-                      key={i}
-                      animate={{ opacity: [0.3, 1, 0.3] }}
-                      transition={{
-                        repeat: Number.POSITIVE_INFINITY,
-                        duration: 1,
-                        delay: i * 0.2,
-                      }}
-                      className="w-2 h-2 rounded-full bg-blue-500"
-                    />
-                  ))}
+      <div className="min-h-[112px]">
+        <AnimatePresence mode="wait">
+          {phase !== 'idle' && currentError && (
+            <motion.div
+              key={phase}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.2 }}
+              className="rounded-xl border border-gray-200 bg-white p-3 sm:p-4"
+            >
+              {phase === 'incoming' && (
+                <div className="text-center">
+                  <span className="text-xs font-semibold text-red-500 uppercase tracking-wide">
+                    Error Received
+                  </span>
+                  <p className="text-xs sm:text-sm text-gray-800 mt-1 font-mono break-words">
+                    {currentError.message}
+                  </p>
                 </div>
-              </div>
-            )}
-            {phase === 'classified' && (
-              <div className="text-center">
-                <span className="text-xs font-semibold text-purple-500 uppercase tracking-wide">
-                  Classified
-                </span>
-                <motion.div
-                  initial={{ scale: 0.8 }}
-                  animate={{ scale: 1 }}
-                  className={cn(
-                    'inline-block mt-2 px-4 py-1.5 rounded-full border text-sm font-bold',
-                    SEVERITY_COLORS[currentError.severity],
-                  )}
-                >
-                  {currentError.severity}
-                </motion.div>
-              </div>
-            )}
-            {phase === 'action' && (
-              <div className="text-center">
-                <span className="text-xs font-semibold text-green-500 uppercase tracking-wide">
-                  Action Taken
-                </span>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-sm font-semibold text-gray-800 mt-1"
-                >
-                  {currentError.action}
-                </motion.p>
-                <p className="text-xs text-gray-500 mt-1">
-                  Error: {currentError.message}
-                </p>
-              </div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+              )}
+              {phase === 'analyzing' && (
+                <div className="text-center">
+                  <span className="text-xs font-semibold text-blue-500 uppercase tracking-wide">
+                    Analyzing Error...
+                  </span>
+                  <div className="flex justify-center gap-1 mt-2">
+                    {[0, 1, 2].map((i) => (
+                      <motion.span
+                        key={i}
+                        animate={{ opacity: [0.3, 1, 0.3] }}
+                        transition={{
+                          repeat: Number.POSITIVE_INFINITY,
+                          duration: 1,
+                          delay: i * 0.2,
+                        }}
+                        className="w-2 h-2 rounded-full bg-blue-500"
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+              {phase === 'classified' && (
+                <div className="text-center">
+                  <span className="text-xs font-semibold text-purple-500 uppercase tracking-wide">
+                    Classified
+                  </span>
+                  <motion.div
+                    initial={{ scale: 0.9 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.25 }}
+                    className={cn(
+                      'inline-block mt-2 px-4 py-1.5 rounded-full border text-sm font-bold',
+                      SEVERITY_COLORS[currentError.severity],
+                    )}
+                  >
+                    {currentError.severity}
+                  </motion.div>
+                </div>
+              )}
+              {phase === 'action' && (
+                <div className="text-center">
+                  <span className="text-xs font-semibold text-green-500 uppercase tracking-wide">
+                    Action Taken
+                  </span>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-sm font-semibold text-gray-800 mt-1"
+                  >
+                    {currentError.action}
+                  </motion.p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Error: {currentError.message}
+                  </p>
+                </div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 };

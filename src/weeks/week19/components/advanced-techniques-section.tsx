@@ -204,10 +204,10 @@ function VRScene() {
           <p className="text-sm text-gray-700 mb-3">
             {t('advancedTechniques.postDesc')}
           </p>
-          <div className="grid grid-cols-3 md:grid-cols-5 gap-2 mb-4">
-            {effects.map((effect, idx) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-2 mb-4">
+            {effects.map((effect) => (
               <div
-                key={idx}
+                key={effect}
                 className="bg-purple-100 px-2 py-1 rounded text-center"
               >
                 <span className="text-xs font-medium text-purple-800">

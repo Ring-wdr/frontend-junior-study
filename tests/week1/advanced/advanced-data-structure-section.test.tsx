@@ -10,9 +10,9 @@ import type React from 'react';
 import type { ComponentProps } from 'react';
 import { AdvancedDataStructureSection } from '../../../src/weeks/week1/components/advanced-data-structure-section';
 
-// Mock framer-motion
-rs.mock('framer-motion', async () => {
-  const actual = await rs.importActual('framer-motion');
+// Mock motion/react
+rs.mock('motion/react', async () => {
+  const actual = await rs.importActual('motion/react');
   return {
     ...actual,
     AnimatePresence: ({ children }: { children: React.ReactNode }) => (

@@ -8,8 +8,8 @@ import { CodeBlock } from '../../../components/ui/code-block';
 
 export const TokenOptimizationSection = () => {
   const { t, raw } = useTranslation('week17');
-  const mcpVsCdpRows = raw('tokenOptimization.mcpVsCdpRows') as Array<{ dimension: string; mcp: string; cdp: string; note: string }>;
-  const checklist = raw('tokenOptimization.contextOptimizationChecklist') as string[];
+  const mcpVsCdpRows = raw('tokenOptimization.mcpVsCdpRows');
+  const checklist = raw('tokenOptimization.contextOptimizationChecklist');
 
   return (
     <SectionCard

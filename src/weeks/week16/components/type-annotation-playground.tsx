@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 
 const examples = [
@@ -161,16 +161,21 @@ const inferType = (value: string): string => {
 export const TypeAnnotationPlayground = () => {
   const { t } = useTranslation('week16');
   const [input, setInput] = useState('');
+  const inputId = useId();
   const inferredType = inferType(input);
 
   return (
     <div className="space-y-4">
       <div className="flex flex-col gap-3">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label
+            htmlFor={inputId}
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
             {t('typeBasics.visualizer.inputLabel')}
           </label>
           <input
+            id={inputId}
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -181,14 +186,15 @@ export const TypeAnnotationPlayground = () => {
 
         <motion.div
           key={inferredType}
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.2, ease: 'easeOut' }}
           className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200"
         >
           <div className="text-sm text-gray-600 mb-1">
             {t('typeBasics.visualizer.inferredType')}
           </div>
-          <code className="text-xl font-bold text-blue-600">
+          <code className="text-lg sm:text-xl font-bold text-blue-600 break-words">
             {inferredType}
           </code>
         </motion.div>

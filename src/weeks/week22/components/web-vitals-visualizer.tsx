@@ -1,11 +1,12 @@
 'use client';
 
-import { motion } from 'motion/react';
-import { useState } from 'react';
+import { motion, useInView } from 'motion/react';
+import { useRef, useState } from 'react';
 import { RotateCcw } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 type Rating = 'good' | 'needs-improvement' | 'poor';
+type VitalName = keyof typeof VITALS_CONFIG;
 
 const VITALS_CONFIG = {
   LCP: { unit: 's', good: 2.5, poor: 4.0, max: 6, decimals: 1 },
@@ -44,17 +45,17 @@ const SCENARIOS = [
   },
 ];
 
-const getRating = (
-  name: keyof typeof VITALS_CONFIG,
-  value: number,
-): Rating => {
+const getRating = (name: VitalName, value: number): Rating => {
   const config = VITALS_CONFIG[name];
   if (value <= config.good) return 'good';
   if (value <= config.poor) return 'needs-improvement';
   return 'poor';
 };
 
-const RATING_COLORS: Record<Rating, { stroke: string; badge: string; text: string }> = {
+const RATING_COLORS: Record<
+  Rating,
+  { stroke: string; badge: string; text: string }
+> = {
   good: {
     stroke: '#22c55e',
     badge: 'bg-green-100 text-green-700',
@@ -75,23 +76,24 @@ const RATING_COLORS: Record<Rating, { stroke: string; badge: string; text: strin
 const GaugeMeter = ({
   name,
   value,
-  config,
+  isActive,
 }: {
-  name: string;
+  name: VitalName;
   value: number;
-  config: (typeof VITALS_CONFIG)[keyof typeof VITALS_CONFIG];
+  isActive: boolean;
 }) => {
-  const rating = getRating(name as keyof typeof VITALS_CONFIG, value);
+  const config = VITALS_CONFIG[name];
+  const rating = getRating(name, value);
   const ratingStyle = RATING_COLORS[rating];
-  const radius = 55;
-  const circumference = Math.PI * radius;
   const percentage = Math.min(value / config.max, 1);
-  const offset = circumference * (1 - percentage);
 
   return (
-    <div className="flex flex-col items-center">
-      <svg width="140" height="80" viewBox="0 0 140 80">
-        {/* Background arc */}
+    <div className="flex flex-col items-center min-w-0">
+      <svg
+        viewBox="0 0 140 80"
+        className="w-full max-w-[140px] h-auto"
+        aria-hidden="true"
+      >
         <path
           d="M 15 75 A 55 55 0 0 1 125 75"
           fill="none"
@@ -99,7 +101,6 @@ const GaugeMeter = ({
           strokeWidth="10"
           strokeLinecap="round"
         />
-        {/* Foreground arc */}
         <motion.path
           d="M 15 75 A 55 55 0 0 1 125 75"
           fill="none"
@@ -107,32 +108,32 @@ const GaugeMeter = ({
           strokeWidth="10"
           strokeLinecap="round"
           initial={{ pathLength: 0 }}
-          animate={{ pathLength: percentage }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          style={{
-            strokeDasharray: circumference,
-            strokeDashoffset: offset,
-          }}
+          animate={{ pathLength: isActive ? percentage : 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
         />
       </svg>
       <div className="text-center -mt-2">
         <motion.span
           key={value}
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="text-2xl font-bold text-gray-900"
+          transition={{ duration: 0.2 }}
+          className="inline-block text-lg sm:text-2xl font-bold text-gray-900 tabular-nums"
         >
           {value.toFixed(config.decimals)}
         </motion.span>
-        <span className="text-sm text-gray-500 ml-1">{config.unit}</span>
+        <span className="text-xs sm:text-sm text-gray-500 ml-0.5">
+          {config.unit}
+        </span>
       </div>
       <span className="text-sm font-semibold text-gray-700 mt-1">{name}</span>
       <motion.span
         key={rating}
-        initial={{ opacity: 0, y: 5 }}
+        initial={{ opacity: 0, y: 4 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.2 }}
         className={cn(
-          'text-[10px] font-semibold px-2 py-0.5 rounded-full mt-1',
+          'text-[10px] font-semibold px-2 py-0.5 rounded-full mt-1 text-center leading-tight',
           ratingStyle.badge,
         )}
       >
@@ -143,6 +144,8 @@ const GaugeMeter = ({
 };
 
 export const WebVitalsVisualizer = () => {
+  const gaugesRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(gaugesRef, { once: true, amount: 0.3 });
   const [lcp, setLcp] = useState(1.8);
   const [inp, setInp] = useState(120);
   const [cls, setCls] = useState(0.05);
@@ -179,13 +182,13 @@ export const WebVitalsVisualizer = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
-        <GaugeMeter name="LCP" value={lcp} config={VITALS_CONFIG.LCP} />
-        <GaugeMeter name="INP" value={inp} config={VITALS_CONFIG.INP} />
-        <GaugeMeter name="CLS" value={cls} config={VITALS_CONFIG.CLS} />
+      <div ref={gaugesRef} className="grid grid-cols-3 gap-2 sm:gap-4">
+        <GaugeMeter name="LCP" value={lcp} isActive={isInView} />
+        <GaugeMeter name="INP" value={inp} isActive={isInView} />
+        <GaugeMeter name="CLS" value={cls} isActive={isInView} />
       </div>
 
-      <div className="grid grid-cols-3 gap-3 text-center">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 text-center">
         {Object.entries(VITALS_CONFIG).map(([name, config]) => (
           <div
             key={name}
@@ -194,7 +197,7 @@ export const WebVitalsVisualizer = () => {
             <span className="text-[10px] font-semibold text-gray-500 block">
               {name} Thresholds
             </span>
-            <div className="flex justify-center gap-2 mt-1">
+            <div className="flex flex-wrap justify-center gap-x-2 mt-1">
               <span className="text-[10px] text-green-600">
                 &le; {config.good}
                 {config.unit}

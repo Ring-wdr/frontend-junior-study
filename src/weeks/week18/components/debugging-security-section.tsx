@@ -17,7 +17,7 @@ import { CodeBlock } from '../../../components/ui/code-block';
 
 export const DebuggingSecuritySection = () => {
   const { t, raw } = useTranslation('week18');
-  const securityPoints = raw('debuggingSecurity.securityPoints') as string[];
+  const securityPoints = raw('debuggingSecurity.securityPoints');
 
   return (
     <SectionCard

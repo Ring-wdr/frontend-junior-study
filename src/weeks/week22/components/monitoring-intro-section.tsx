@@ -7,11 +7,6 @@ import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { IncidentTimelineVisualizer } from './incident-timeline-visualizer';
 
-type Principle = { title: string; desc: string };
-type Comparison = { aspect: string; local: string; production: string };
-type Problem = { problem: string; result: string };
-type Framework = { term: string; definition: string; example: string };
-
 export const MonitoringIntroSection = () => {
   const { t, raw } = useTranslation('week22');
   const principles = raw('monitoringIntro.principles');

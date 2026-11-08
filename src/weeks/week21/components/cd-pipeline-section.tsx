@@ -6,11 +6,6 @@ import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 
-type Mode = {
-  title: string;
-  detail: string;
-};
-
 export const CdDeploymentSection = () => {
   const { t, raw } = useTranslation('week21');
   const modes = raw('cdPipeline.modes');

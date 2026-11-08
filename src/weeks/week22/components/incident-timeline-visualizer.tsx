@@ -1,7 +1,7 @@
 'use client';
 
 import { AnimatePresence, motion } from 'motion/react';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   AlertTriangle,
   Bell,
@@ -21,12 +21,33 @@ type Phase =
   | 'resolving'
   | 'resolved';
 
-const MILESTONES = [
-  { phase: 'error-occurs' as Phase, label: 'Error Occurs', icon: AlertTriangle, color: 'red' },
-  { phase: 'detected' as Phase, label: 'Alert Fires', icon: Bell, color: 'orange' },
-  { phase: 'resolving' as Phase, label: 'Team Responds', icon: Users, color: 'blue' },
-  { phase: 'resolved' as Phase, label: 'Resolved', icon: CheckCircle, color: 'green' },
+type Milestone = {
+  phase: Phase;
+  label: string;
+  icon: typeof AlertTriangle;
+  color: 'red' | 'orange' | 'blue' | 'green';
+};
+
+const MILESTONES: Milestone[] = [
+  {
+    phase: 'error-occurs',
+    label: 'Error Occurs',
+    icon: AlertTriangle,
+    color: 'red',
+  },
+  { phase: 'detected', label: 'Alert Fires', icon: Bell, color: 'orange' },
+  { phase: 'resolving', label: 'Team Responds', icon: Users, color: 'blue' },
+  { phase: 'resolved', label: 'Resolved', icon: CheckCircle, color: 'green' },
 ];
+
+const TRACK_PROGRESS: Record<Phase, number> = {
+  idle: 0,
+  'error-occurs': 0,
+  detecting: 100 / 6,
+  detected: 100 / 3,
+  resolving: 200 / 3,
+  resolved: 100,
+};
 
 const TIMINGS = {
   'with-monitoring': {
@@ -73,10 +94,12 @@ export const IncidentTimelineVisualizer = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const timeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
-  const clearTimeouts = () => {
+  const clearTimeouts = useCallback(() => {
     for (const t of timeoutsRef.current) clearTimeout(t);
     timeoutsRef.current = [];
-  };
+  }, []);
+
+  useEffect(() => clearTimeouts, [clearTimeouts]);
 
   const triggerError = useCallback(() => {
     clearTimeouts();
@@ -94,7 +117,7 @@ export const IncidentTimelineVisualizer = () => {
     }, timing.resolve);
 
     timeoutsRef.current = [t1, t2, t3, t4];
-  }, [mode]);
+  }, [mode, clearTimeouts]);
 
   const reset = () => {
     clearTimeouts();
@@ -112,7 +135,6 @@ export const IncidentTimelineVisualizer = () => {
 
   return (
     <div className="space-y-5">
-      {/* Mode Toggle */}
       <div className="flex justify-center">
         <div className="bg-gray-100 p-1 rounded-lg flex">
           <button
@@ -120,7 +142,7 @@ export const IncidentTimelineVisualizer = () => {
             onClick={() => handleModeChange('with-monitoring')}
             disabled={isAnimating}
             className={cn(
-              'px-4 py-1.5 rounded-md text-sm font-medium transition-all disabled:cursor-not-allowed',
+              'px-3 sm:px-4 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-colors disabled:cursor-not-allowed',
               mode === 'with-monitoring'
                 ? 'bg-white text-blue-600 shadow-sm'
                 : 'text-gray-500 hover:text-gray-900',
@@ -133,7 +155,7 @@ export const IncidentTimelineVisualizer = () => {
             onClick={() => handleModeChange('without-monitoring')}
             disabled={isAnimating}
             className={cn(
-              'px-4 py-1.5 rounded-md text-sm font-medium transition-all disabled:cursor-not-allowed',
+              'px-3 sm:px-4 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-colors disabled:cursor-not-allowed',
               mode === 'without-monitoring'
                 ? 'bg-white text-red-600 shadow-sm'
                 : 'text-gray-500 hover:text-gray-900',
@@ -144,7 +166,6 @@ export const IncidentTimelineVisualizer = () => {
         </div>
       </div>
 
-      {/* Controls */}
       <div className="flex gap-2 justify-center">
         <button
           type="button"
@@ -165,42 +186,34 @@ export const IncidentTimelineVisualizer = () => {
         </button>
       </div>
 
-      {/* Timeline */}
-      <div className="relative px-4">
-        {/* Track */}
-        <div className="absolute top-5 left-[calc(12.5%+8px)] right-[calc(12.5%+8px)] h-1 bg-gray-200 rounded-full">
+      <div className="relative">
+        <div className="absolute top-5 left-[12.5%] right-[12.5%] h-1 -translate-y-1/2 bg-gray-200 rounded-full overflow-hidden">
           <motion.div
             className={cn(
               'h-full rounded-full',
               mode === 'with-monitoring' ? 'bg-blue-400' : 'bg-red-400',
             )}
             initial={{ width: '0%' }}
-            animate={{
-              width:
-                phase === 'idle'
-                  ? '0%'
-                  : `${Math.min(((currentPhaseIndex + 1) / 4) * 100, 100)}%`,
-            }}
-            transition={{ duration: 0.5 }}
+            animate={{ width: `${TRACK_PROGRESS[phase]}%` }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
           />
         </div>
 
-        {/* Milestone Nodes */}
         <div className="flex justify-between relative">
-          {MILESTONES.map((milestone, i) => {
+          {MILESTONES.map((milestone) => {
             const isReached =
-              phase !== 'idle' && currentPhaseIndex >= PHASE_ORDER.indexOf(milestone.phase);
+              phase !== 'idle' &&
+              currentPhaseIndex >= PHASE_ORDER.indexOf(milestone.phase);
             const isCurrent = phase === milestone.phase;
             const Icon = milestone.icon;
             return (
               <div
                 key={milestone.label}
-                className="flex flex-col items-center w-1/4"
+                className="flex flex-col items-center w-1/4 min-w-0"
               >
                 <motion.div
-                  animate={{
-                    scale: isCurrent ? 1.2 : 1,
-                  }}
+                  animate={{ scale: isCurrent ? 1.15 : 1 }}
+                  transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                   className={cn(
                     'w-10 h-10 rounded-full flex items-center justify-center z-10 transition-colors',
                     isReached
@@ -217,7 +230,7 @@ export const IncidentTimelineVisualizer = () => {
                 </motion.div>
                 <span
                   className={cn(
-                    'text-[10px] font-semibold mt-2 text-center',
+                    'text-[10px] font-semibold mt-2 text-center leading-tight',
                     isReached ? 'text-gray-800' : 'text-gray-400',
                   )}
                 >
@@ -229,71 +242,76 @@ export const IncidentTimelineVisualizer = () => {
         </div>
       </div>
 
-      {/* MTTD / MTTR Cards */}
-      <AnimatePresence>
-        {phase === 'resolved' && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="grid grid-cols-2 gap-3"
-          >
-            <div
-              className={cn(
-                'rounded-xl border p-4 text-center',
-                mode === 'with-monitoring'
-                  ? 'border-blue-200 bg-blue-50'
-                  : 'border-red-200 bg-red-50',
-              )}
+      <div className="min-h-[108px]">
+        <AnimatePresence>
+          {phase === 'resolved' && (
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="grid grid-cols-2 gap-3"
             >
-              <span className="text-xs font-semibold text-gray-500 uppercase">
-                MTTD
-              </span>
-              <motion.p
-                initial={{ scale: 0.8 }}
-                animate={{ scale: 1 }}
+              <div
                 className={cn(
-                  'text-xl font-bold mt-1',
+                  'rounded-xl border p-3 sm:p-4 text-center',
                   mode === 'with-monitoring'
-                    ? 'text-blue-700'
-                    : 'text-red-700',
+                    ? 'border-blue-200 bg-blue-50'
+                    : 'border-red-200 bg-red-50',
                 )}
               >
-                {timing.mttd}
-              </motion.p>
-              <span className="text-[10px] text-gray-500">
-                Mean Time to Detect
-              </span>
-            </div>
-            <div
-              className={cn(
-                'rounded-xl border p-4 text-center',
-                mode === 'with-monitoring'
-                  ? 'border-green-200 bg-green-50'
-                  : 'border-orange-200 bg-orange-50',
-              )}
-            >
-              <span className="text-xs font-semibold text-gray-500 uppercase">
-                MTTR
-              </span>
-              <motion.p
-                initial={{ scale: 0.8 }}
-                animate={{ scale: 1 }}
+                <span className="text-xs font-semibold text-gray-500 uppercase">
+                  MTTD
+                </span>
+                <motion.p
+                  initial={{ scale: 0.9 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.3 }}
+                  className={cn(
+                    'text-xl font-bold mt-1',
+                    mode === 'with-monitoring'
+                      ? 'text-blue-700'
+                      : 'text-red-700',
+                  )}
+                >
+                  {timing.mttd}
+                </motion.p>
+                <span className="text-[10px] text-gray-500">
+                  Mean Time to Detect
+                </span>
+              </div>
+              <div
                 className={cn(
-                  'text-xl font-bold mt-1',
+                  'rounded-xl border p-3 sm:p-4 text-center',
                   mode === 'with-monitoring'
-                    ? 'text-green-700'
-                    : 'text-orange-700',
+                    ? 'border-green-200 bg-green-50'
+                    : 'border-orange-200 bg-orange-50',
                 )}
               >
-                {timing.mttr}
-              </motion.p>
-              <span className="text-[10px] text-gray-500">
-                Mean Time to Resolve
-              </span>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                <span className="text-xs font-semibold text-gray-500 uppercase">
+                  MTTR
+                </span>
+                <motion.p
+                  initial={{ scale: 0.9 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.3 }}
+                  className={cn(
+                    'text-xl font-bold mt-1',
+                    mode === 'with-monitoring'
+                      ? 'text-green-700'
+                      : 'text-orange-700',
+                  )}
+                >
+                  {timing.mttr}
+                </motion.p>
+                <span className="text-[10px] text-gray-500">
+                  Mean Time to Resolve
+                </span>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 };

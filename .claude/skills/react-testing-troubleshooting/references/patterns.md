@@ -1,292 +1,181 @@
 # React Testing Patterns & Examples
 
-Complete testing patterns derived from real component test implementations. Use these as templates for your own tests.
+Patterns for Rstest + React Testing Library tests of week section components and visualizers. Components render English via the fallback i18n set in `rstest.setup.ts`.
 
 ## Table of Contents
 
-1. [Tab Component Testing](#tab-component-testing)
-2. [Code Block Rendering](#code-block-rendering)
-3. [Component State Reset](#component-state-reset)
-4. [Multi-Step Async Workflows](#multi-step-async-workflows)
-5. [Setup Configuration](#setup-configuration)
+1. [Section Rendering](#section-rendering)
+2. [Toggle and Tab Interactions](#toggle-and-tab-interactions)
+3. [Code Block Content](#code-block-content)
+4. [Component State Reset](#component-state-reset)
+5. [Timer-Driven Flows](#timer-driven-flows)
+6. [Project Setup Files](#project-setup-files)
 
-## Tab Component Testing
+## Section Rendering
 
-Testing tabbed interfaces with role-based queries and content verification.
+```tsx
+import { afterEach, describe, expect, it } from '@rstest/core';
+import { cleanup, render, screen, within } from '@testing-library/react';
+import { OptimizationSection } from '@/weeks/week1/components/optimization-section';
 
-```javascript
-import {render, screen, within} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import {AdvancedDataStructureSection} from '@/components/advanced-data-structure-section'
+describe('OptimizationSection', () => {
+  afterEach(() => {
+    cleanup();
+  });
 
-describe('AdvancedDataStructureSection', () => {
-  it('should render tabs and switch content on click', async () => {
-    const user = userEvent.setup()
-    render(<AdvancedDataStructureSection />)
+  it('renders badge and description from the en dictionary', () => {
+    render(<OptimizationSection />);
 
-    // Get the section container
-    const section = screen.getByTestId('advanced-data-structure-section')
+    const section = screen.getByTestId('optimization-section');
+    expect(within(section).getByText('Advanced')).toBeInTheDocument();
+    expect(
+      within(section).getByText(
+        'Visualize how V8 optimizes objects with consistent shapes.',
+      ),
+    ).toBeInTheDocument();
+  });
 
-    // Query tabs within the section only
-    const tabs = within(section).getAllByRole('button')
-    expect(tabs.length).toBeGreaterThan(0)
+  it('renders the embedded demo', () => {
+    render(<OptimizationSection />);
 
-    // Click first tab and verify content
-    const firstTab = tabs[0]
-    await user.click(firstTab)
-
-    // Content should be visible after click
-    const content = within(section).getByText((text) =>
-      text.includes('Array')
-    )
-    expect(content).toBeInTheDocument()
-  })
-
-  it('should handle multiple tab switches', async () => {
-    const user = userEvent.setup()
-    render(<AdvancedDataStructureSection />)
-
-    const section = screen.getByTestId('advanced-data-structure-section')
-    const tabs = within(section).getAllByRole('button')
-
-    // Switch between tabs
-    for (const tab of tabs) {
-      await user.click(tab)
-      // Verify some content is visible for each tab
-      const content = within(section).queryAllByRole('article')
-      expect(content.length).toBeGreaterThanOrEqual(0)
-    }
-  })
-})
+    const section = screen.getByTestId('optimization-section');
+    expect(within(section).getByTestId('v8-good-pattern')).toBeInTheDocument();
+  });
+});
 ```
 
-## Code Block Rendering
+The section title ("V8 Hidden Classes") is the MDX `##` heading and is not rendered by the component; do not assert it here.
 
-Testing components that display syntax-highlighted code.
+Reading expectations from the dictionary keeps tests in sync with copy changes:
 
-```javascript
-import {render, screen, within} from '@testing-library/react'
-import {CodeBlock} from '@/components/code-block'
+```tsx
+import week1 from '@/i18n/dictionaries/en/week1.json';
 
-describe('CodeBlock', () => {
-  it('should render code with syntax highlighting', () => {
-    const code = 'const x = 42'
-    render(<CodeBlock code={code} language="javascript" />)
+expect(within(section).getByText(week1.optimization.badge)).toBeInTheDocument();
+```
 
-    const codeBlock = screen.getByTestId('code-block')
+## Toggle and Tab Interactions
 
-    // Use function matchers for split text from highlighting
-    const renderedCode = within(codeBlock).getByText((content, element) =>
-      content.includes('const') &&
-      element.textContent.includes('42')
-    )
+```tsx
+import userEvent from '@testing-library/user-event';
+import week1 from '@/i18n/dictionaries/en/week1.json';
 
-    expect(renderedCode).toBeInTheDocument()
-  })
+it('switches content on click', async () => {
+  const user = userEvent.setup();
+  render(<AdvancedDataStructureSection />);
 
-  it('should render multiple code blocks independently', () => {
-    render(
-      <>
-        <CodeBlock code="const a = 1" language="javascript" />
-        <CodeBlock code="let b = 2" language="javascript" />
-      </>
-    )
+  const section = screen.getByTestId('advanced-data-structure-section');
+  await user.click(
+    within(section).getByRole('button', {
+      name: week1.advancedDataStructure.tabs.weak,
+    }),
+  );
 
-    // Get all code blocks
-    const codeBlocks = screen.getAllByTestId('code-block')
-    expect(codeBlocks).toHaveLength(2)
+  expect(section.textContent).toContain('WeakMap');
+});
+```
 
-    // Verify each has content
-    codeBlocks.forEach((block) => {
-      const content = within(block).getByText((text) =>
-        text.includes('const') || text.includes('let')
-      )
-      expect(content).toBeInTheDocument()
-    })
-  })
-})
+## Code Block Content
+
+`CodeBlock` splits code into highlighted spans. Check text on a container:
+
+```tsx
+const section = screen.getByTestId('scope-closure-section');
+expect(section.textContent).toContain('function createCounter');
 ```
 
 ## Component State Reset
 
-Testing that components properly reset their state.
+```tsx
+it('resets to the initial state', () => {
+  render(<V8HiddenClassDemo />);
 
-```javascript
-import {render, screen} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import {V8HiddenClassDemo} from '@/components/v8-hidden-class-demo'
+  fireEvent.click(screen.getByTestId('v8-good-pattern'));
+  expect(screen.getAllByText('HC1')).toHaveLength(3);
 
-describe('V8HiddenClassDemo', () => {
-  it('should reset objects when reset button is clicked', async () => {
-    const user = userEvent.setup()
-    render(<V8HiddenClassDemo />)
-
-    const demoSection = screen.getByTestId('v8-hidden-class-demo')
-
-    // Get initial state
-    const initialObjects = within(demoSection).getAllByTestId('object-display')
-    initialObjects.forEach((obj) => {
-      expect(obj.textContent).toBeTruthy()
-    })
-
-    // Click reset button
-    const resetButton = within(demoSection).getByRole('button', {
-      name: /reset/i
-    })
-    await user.click(resetButton)
-
-    // Verify state is reset (objects should be cleared or to initial state)
-    const resetObjects = within(demoSection).getAllByTestId('object-display')
-    resetObjects.forEach((obj) => {
-      expect(obj.textContent).toMatch(/^{}$|^initial/i)
-    })
-  })
-})
+  fireEvent.click(screen.getByTestId('v8-reset'));
+  expect(screen.queryByText('HC1')).not.toBeInTheDocument();
+});
 ```
 
-## Multi-Step Async Workflows
+## Timer-Driven Flows
 
-Testing async operations with step progression and state updates.
+```tsx
+import { afterEach, expect, it, rs } from '@rstest/core';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 
-```javascript
-import {render, screen, within, waitFor} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import {EventLoopSection} from '@/components/event-loop-section'
-
-describe('EventLoopSection', () => {
-  it('should handle step progression in event loop', async () => {
-    const user = userEvent.setup()
-    render(<EventLoopSection />)
-
-    const section = screen.getByTestId('event-loop-section')
-
-    // Get step button using text matching
-    const buttons = within(section).getAllByRole('button')
-    const stepButton = buttons.find((btn) =>
-      btn.textContent.includes('Step') || btn.textContent.includes('Next')
-    )
-
-    expect(stepButton).toBeInTheDocument()
-
-    // Click step button and wait for update
-    await user.click(stepButton)
-
-    // Wait for async state to update
-    await waitFor(
-      () => {
-        const state = within(section).getByText((content) =>
-          content.includes('Processing') ||
-          content.includes('Complete')
-        )
-        expect(state).toBeInTheDocument()
-      },
-      {timeout: 3000}
-    )
-  })
-
-  it('should display proper Promise resolution states', async () => {
-    const user = userEvent.setup()
-    render(<EventLoopSection />)
-
-    const section = screen.getByTestId('event-loop-section')
-
-    // Check for Promise states
-    const states = [
-      'pending',
-      'resolved',
-      'rejected'
-    ]
-
-    for (const state of states) {
-      const stateElement = within(section).queryByText((content) =>
-        content.includes(state)
-      )
-      // At least some Promise state should be visible
-      if (stateElement) {
-        expect(stateElement).toBeInTheDocument()
-      }
-    }
-  })
-})
-```
-
-## Setup Configuration
-
-Essential test setup files and configurations.
-
-### setupTests.ts
-
-```typescript
-import '@testing-library/jest-dom'
-import {cleanup} from '@testing-library/react'
-
-// Mock framer-motion
-jest.mock('framer-motion', () => ({
-  ...jest.requireActual('framer-motion'),
-  motion: {
-    ...jest.requireActual('framer-motion').motion,
-    div: ({children, ...props}: any) => {
-      // Exclude animation props to prevent style conflicts
-      const {initial, animate, exit, transition, ...cleanProps} = props
-      return <div {...cleanProps}>{children}</div>
-    }
-  }
-}))
-
-// Cleanup after each test
 afterEach(() => {
-  cleanup()
-  jest.clearAllMocks()
-})
+  rs.useRealTimers();
+});
 
-// Suppress console errors in tests if needed
-const originalError = console.error
-beforeAll(() => {
-  console.error = (...args: any[]) => {
-    if (
-      typeof args[0] === 'string' &&
-      args[0].includes('Not implemented: HTMLFormElement.prototype.submit')
-    ) {
-      return
-    }
-    originalError.call(console, ...args)
-  }
-})
+it('advances through phases', () => {
+  rs.useFakeTimers();
+  render(<ErrorClassificationVisualizer />);
 
-afterAll(() => {
-  console.error = originalError
-})
+  fireEvent.click(screen.getAllByRole('button')[0]);
+  act(() => {
+    rs.advanceTimersByTime(2500);
+  });
+
+  expect(screen.getByRole('button', { name: /reset/i })).toBeEnabled();
+});
 ```
 
-### jest.config.ts (relevant sections)
+Without fake timers, use `await waitFor(() => ..., { timeout: 3000 })`.
 
-```typescript
-module.exports = {
-  preset: 'ts-jest',
+## Project Setup Files
+
+### rstest.config.ts
+
+```ts
+import { pluginReact } from '@rsbuild/plugin-react';
+import { defineConfig } from '@rstest/core';
+
+export default defineConfig({
+  plugins: [pluginReact()],
   testEnvironment: 'jsdom',
-  setupFilesAfterEnv: ['<rootDir>/tests/setupTests.ts'],
-  moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1'
-  },
-  testMatch: ['**/*.test.ts', '**/*.test.tsx'],
-  transform: {
-    '^.+\\.tsx?$': ['ts-jest', {
-      tsconfig: {
-        jsx: 'react',
-        esModuleInterop: true,
-        allowSyntheticDefaultImports: true
-      }
-    }]
-  }
-}
+  setupFiles: ['./rstest.setup.ts'],
+  resolve: { alias: { '@': './src' } },
+});
 ```
 
-## Common Query Patterns Reference
+### rstest.setup.ts
 
-| Problem | Query Pattern | Example |
-|---------|--------------|---------|
-| Split text from syntax highlighting | Function matcher with includes() | `getByText((c) => c.includes('keyword'))` |
-| Multiple similar elements | within() scope + getAllByRole/Text | `within(container).getAllByText(...)` |
-| Button with nested elements | Text content check | `btn.textContent.includes('text')` |
-| Reliable element ID | data-testid | `getByTestId('unique-id')` |
-| Async state updates | waitFor with timeout | `await waitFor(() => {...}, {timeout: 3000})` |
+```ts
+import { expect } from '@rstest/core';
+import * as jestDomMatchers from '@testing-library/jest-dom/matchers';
+import { setFallbackI18n } from './src/i18n/client';
+import { enMessages } from './tests/en-messages';
+
+expect.extend(jestDomMatchers);
+
+setFallbackI18n({ locale: 'en', messages: enMessages });
+```
+
+### tests/en-messages.ts
+
+Maps every namespace to its English JSON. When adding `weekN`, import `../src/i18n/dictionaries/en/weekN.json` and add `weekN` to `enMessages`; otherwise `useTranslation('weekN')` throws in tests.
+
+To test Korean output for one case, wrap the component in a provider:
+
+```tsx
+import { I18nProvider } from '@/i18n/client';
+import week1Ko from '@/i18n/dictionaries/ko/week1.json';
+
+render(
+  <I18nProvider locale="ko" messages={{ week1: week1Ko }}>
+    <OptimizationSection />
+  </I18nProvider>,
+);
+```
+
+## Query Patterns Reference
+
+| Problem | Pattern |
+|---------|---------|
+| Text split by syntax highlighting | `container.textContent` contains, or function matcher |
+| Many similar elements | `within(screen.getByTestId('x-section'))` |
+| Button with icon + text | `getByRole('button', { name: /text/i })` |
+| No unique accessible name | `data-testid` on the element |
+| Timer-driven state | `rs.useFakeTimers()` + `act(() => rs.advanceTimersByTime(ms))` |
+| Missing namespace in tests | add it to `tests/en-messages.ts` |

@@ -143,7 +143,9 @@ export default async function PostsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <InfoBox
                 variant="orange"
-                title={t('dataFetching.cacheComponents.comparison.oldModel.title')}
+                title={t(
+                  'dataFetching.cacheComponents.comparison.oldModel.title',
+                )}
               >
                 <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
                   <li>
@@ -172,7 +174,9 @@ export default async function PostsPage() {
 
               <InfoBox
                 variant="blue"
-                title={t('dataFetching.cacheComponents.comparison.newModel.title')}
+                title={t(
+                  'dataFetching.cacheComponents.comparison.newModel.title',
+                )}
               >
                 <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
                   <li>

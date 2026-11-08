@@ -9,8 +9,8 @@ import { CodeBlock } from '../../../components/ui/code-block';
 
 export const SkillsHooksSection = () => {
   const { t, raw } = useTranslation('week17');
-  const hooks = raw('skillsHooks.hookTypes') as any[];
-  const skills = raw('skillsHooks.skillExamples') as any[];
+  const hooks = raw('skillsHooks.hookTypes');
+  const skills = raw('skillsHooks.skillExamples');
 
   return (
     <SectionCard
@@ -25,8 +25,8 @@ export const SkillsHooksSection = () => {
             </p>
           </InfoBox>
 
-          <div className="mt-4 grid grid-cols-2 gap-3">
-            {skills.map((skill: any) => (
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {skills.map((skill) => (
               <div
                 key={skill.name}
                 className="bg-gradient-to-br from-green-50 to-emerald-50 p-3 rounded-lg border border-green-200"
@@ -86,7 +86,7 @@ export const SkillsHooksSection = () => {
                 </tr>
               </thead>
               <tbody>
-                {hooks.map((hook: any, idx: number) => (
+                {hooks.map((hook, idx) => (
                   <tr
                     key={hook.name}
                     className={idx % 2 === 0 ? 'bg-white' : 'bg-orange-50/50'}

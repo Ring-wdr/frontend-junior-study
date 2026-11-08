@@ -6,12 +6,6 @@ import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
-type Outcome = {
-  day: string;
-  title: string;
-  detail: string;
-};
-
 export const CiCdCapstoneSection = () => {
   const { t, raw } = useTranslation('week21');
   const outcomes = raw('capstone.outcomes');

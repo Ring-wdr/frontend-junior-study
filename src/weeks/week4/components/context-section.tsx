@@ -20,7 +20,7 @@ export const ContextSection = () => {
               {t('context.what.description')}
             </p>
 
-            <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+            <div className="bg-blue-50 p-2 sm:p-4 rounded-lg border border-blue-200">
               <ContextVisualizer />
             </div>
 

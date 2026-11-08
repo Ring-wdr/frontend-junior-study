@@ -12,7 +12,7 @@ export const DevToolsElementsConsoleSection = () => {
   const { t, raw } = useTranslation('week15');
   const [activeTab, setActiveTab] = useState(0);
 
-  const features = raw('devtoolsElements.features') as any;
+  const features = raw('devtoolsElements.features');
   const elementFeatures = [
     {
       title: features.domInspection.title,
@@ -85,7 +85,7 @@ export const DevToolsElementsConsoleSection = () => {
                   </div>
                 </div>
                 <ul className="space-y-2">
-                  {elementFeatures[activeTab].items.map((item: string) => (
+                  {elementFeatures[activeTab].items.map((item) => (
                     <li
                       key={item}
                       className="flex items-start gap-2 text-sm text-gray-700"
@@ -155,10 +155,10 @@ console.groupEnd();`}
           iconColor="purple"
         >
           <DemoBox label={t('devtoolsElements.consoleCommandsLabel')}>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {(
-                raw('devtoolsElements.consoleCommands') as any[]
-              ).map((item: any) => (
+                raw('devtoolsElements.consoleCommands')
+              ).map((item) => (
                 <div
                   key={item.cmd}
                   className="bg-white p-3 rounded-lg border border-gray-200"
@@ -167,7 +167,7 @@ console.groupEnd();`}
                     {item.cmd}
                   </code>
                   <p className="text-xs text-gray-500 mt-1">{item.desc}</p>
-                  <code className="text-[10px] text-gray-400 mt-1 block font-mono">
+                  <code className="text-[10px] text-gray-400 mt-1 block font-mono break-words">
                     {item.example}
                   </code>
                 </div>
@@ -182,10 +182,10 @@ console.groupEnd();`}
           iconColor="orange"
         >
           <div className="bg-gradient-to-r from-orange-50 to-yellow-50 p-4 rounded-lg border border-orange-200">
-            <div className="grid grid-cols-2 gap-2 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
               {(
-                raw('devtoolsElements.shortcuts') as any[]
-              ).map((shortcut: any) => (
+                raw('devtoolsElements.shortcuts')
+              ).map((shortcut) => (
                 <div key={shortcut.key} className="flex items-center gap-2">
                   <kbd className="px-2 py-1 bg-white text-xs font-mono rounded border border-gray-300 shadow-sm">
                     {shortcut.key}

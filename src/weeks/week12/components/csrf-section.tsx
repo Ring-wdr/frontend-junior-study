@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
@@ -14,46 +14,34 @@ export const CsrfSection = () => {
     'Lax',
   );
   const [bankBalance, setBankBalance] = useState(1000);
-  const [lastTransaction, setLastTransaction] = useState<string | null>(null);
+  const [lastTransaction, setLastTransaction] = useState<
+    'blocked' | 'unauthorized' | null
+  >(null);
+  const clearTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (clearTimer.current) clearTimeout(clearTimer.current);
+    },
+    [],
+  );
 
   const handleAttack = () => {
-    // Attack simulation logic based on SameSite policy
-    // Strict: Blocks all cross-site
-    // Lax: Blocks cross-site POST (which this simulates)
-    // None: Allows it
     if (sameSiteValue === 'None') {
       setBankBalance((prev) => prev - 100);
-      setLastTransaction(t('csrf.simulator.transactionUnauthorized'));
+      setLastTransaction('unauthorized');
     } else {
-      setLastTransaction(t('csrf.simulator.transactionBlocked'));
+      setLastTransaction('blocked');
     }
 
-    // Auto clear message
-    setTimeout(() => setLastTransaction(null), 2000);
+    if (clearTimer.current) clearTimeout(clearTimer.current);
+    clearTimer.current = setTimeout(() => setLastTransaction(null), 2000);
   };
 
   const sameSiteExplanations = {
-    Strict: {
-      desc: t('csrf.simulator.strictDesc'),
-      example: 'User clicks link from email to your site - NO cookie sent',
-      protection:
-        'Maximum protection but may break legitimate cross-site navigation',
-      color: 'green',
-    },
-    Lax: {
-      desc: t('csrf.simulator.laxDesc'),
-      example:
-        'Link from other site works, but form POST from other site blocked',
-      protection:
-        'Good balance of security and usability (default in modern browsers)',
-      color: 'blue',
-    },
-    None: {
-      desc: t('csrf.simulator.noneDesc'),
-      example: 'Used for cross-site widgets, embedded content, OAuth callbacks',
-      protection: 'No CSRF protection - requires other measures',
-      color: 'red',
-    },
+    Strict: t('csrf.simulator.strictDesc'),
+    Lax: t('csrf.simulator.laxDesc'),
+    None: t('csrf.simulator.noneDesc'),
   };
 
   return (
@@ -102,20 +90,20 @@ export const CsrfSection = () => {
           <DemoBox label={t('csrf.simulator.demoLabel')}>
             <div className="space-y-6">
               {/* Configuration */}
-              <div className="flex justify-center p-4 bg-gray-50 rounded-lg">
-                <div className="flex gap-2">
+              <div className="flex justify-center p-3 sm:p-4 bg-gray-50 rounded-lg">
+                <div className="flex flex-wrap justify-center gap-2">
                   {(['Strict', 'Lax', 'None'] as const).map((value) => (
                     <button
                       key={value}
                       type="button"
                       onClick={() => setSameSiteValue(value)}
-                      className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${
+                      className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-colors duration-200 ${
                         sameSiteValue === value
                           ? value === 'Strict'
-                            ? 'bg-green-600 text-white shadow-lg scale-105'
+                            ? 'bg-green-600 text-white shadow-md'
                             : value === 'Lax'
-                              ? 'bg-blue-600 text-white shadow-lg scale-105'
-                              : 'bg-red-600 text-white shadow-lg scale-105'
+                              ? 'bg-blue-600 text-white shadow-md'
+                              : 'bg-red-600 text-white shadow-md'
                           : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
                       }`}
                     >
@@ -125,7 +113,7 @@ export const CsrfSection = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 {/* Victim Website */}
                 <div className="border-4 border-blue-100 rounded-xl overflow-hidden shadow-sm relative">
                   <div className="bg-blue-600 text-white px-4 py-2 text-sm font-bold flex justify-between items-center">
@@ -134,7 +122,7 @@ export const CsrfSection = () => {
                       {t('csrf.simulator.bankAuth')}
                     </span>
                   </div>
-                  <div className="p-6 space-y-4 bg-white h-full">
+                  <div className="p-4 sm:p-6 space-y-4 bg-white h-full">
                     <div className="text-center">
                       <p className="text-gray-500 text-sm">
                         {t('csrf.simulator.bankBalance')}
@@ -146,9 +134,12 @@ export const CsrfSection = () => {
 
                     {lastTransaction && (
                       <div
-                        className={`p-3 rounded text-sm text-center font-bold animate-pulse ${lastTransaction.includes('Blocked') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}
+                        role="status"
+                        className={`p-3 rounded text-sm text-center font-bold animate-in fade-in duration-200 ${lastTransaction === 'blocked' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}
                       >
-                        {lastTransaction}
+                        {lastTransaction === 'blocked'
+                          ? t('csrf.simulator.transactionBlocked')
+                          : t('csrf.simulator.transactionUnauthorized')}
                       </div>
                     )}
                   </div>
@@ -159,7 +150,7 @@ export const CsrfSection = () => {
                   <div className="bg-gray-800 text-white px-4 py-2 text-sm font-bold flex justify-between items-center">
                     <span>💀 {t('csrf.simulator.evilTitle')}</span>
                   </div>
-                  <div className="p-6 space-y-4 bg-gray-50 h-full flex flex-col justify-center items-center">
+                  <div className="p-4 sm:p-6 space-y-4 bg-gray-50 h-full flex flex-col justify-center items-center">
                     <p className="text-center font-bold text-gray-800 text-lg">
                       {t('csrf.simulator.evilCongrats')}
                     </p>
@@ -170,7 +161,7 @@ export const CsrfSection = () => {
                     <button
                       type="button"
                       onClick={handleAttack}
-                      className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg shadow-md hover:scale-105 transition-transform w-full animate-bounce"
+                      className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg shadow-md transition-colors duration-200 w-full"
                     >
                       🎁 {t('csrf.simulator.evilButton')}
                     </button>
@@ -184,7 +175,7 @@ export const CsrfSection = () => {
               <div className="bg-gray-100 p-4 rounded-lg text-sm text-gray-700">
                 <p>
                   <strong>{t('csrf.simulator.protectionLabel')}</strong>{' '}
-                  {sameSiteExplanations[sameSiteValue].desc}
+                  {sameSiteExplanations[sameSiteValue]}
                   {sameSiteValue !== 'None' ? (
                     <span className="text-green-600 font-bold ml-2">
                       {t('csrf.simulator.blocked')}

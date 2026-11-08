@@ -19,7 +19,7 @@ const serverIconMap = {
 
 export const McpSection = () => {
   const { t, raw } = useTranslation('week17');
-  const servers = raw('mcp.servers') as any[];
+  const servers = raw('mcp.servers');
 
   return (
     <SectionCard
@@ -39,7 +39,7 @@ export const McpSection = () => {
 
         <SubSection title={t('mcp.serversTitle')} icon iconColor="purple">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {servers.map((server: any) => {
+            {servers.map((server) => {
               const IconComponent =
                 serverIconMap[server.icon as keyof typeof serverIconMap] ||
                 Server;

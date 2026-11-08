@@ -8,13 +8,6 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { ErrorClassificationVisualizer } from './error-classification-visualizer';
 
-type Classification = {
-  severity: string;
-  description: string;
-  examples: string;
-  handling: string;
-};
-
 const severityColors: Record<string, string> = {
   LOW: 'border-gray-200 bg-gray-50 text-gray-700',
   MEDIUM: 'border-yellow-200 bg-yellow-50 text-yellow-800',
@@ -106,7 +99,11 @@ export const BestPracticesSection = () => {
           </div>
         </SubSection>
 
-        <SubSection title="Classification Flow Simulator" icon iconColor="green">
+        <SubSection
+          title="Classification Flow Simulator"
+          icon
+          iconColor="green"
+        >
           <DemoBox label="Interactive Demo">
             <ErrorClassificationVisualizer />
           </DemoBox>

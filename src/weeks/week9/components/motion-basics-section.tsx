@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 import { Trans, useTranslation } from '@/i18n/client';
 import { DemoBox } from '../../../components/demo-box';
@@ -92,16 +92,19 @@ export const MotionBasicsSection = () => {
               </button>
 
               <div className="h-24 flex items-center justify-center">
-                {isVisible && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4 }}
-                    className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl shadow-lg flex items-center justify-center text-white font-bold"
-                  >
-                    {t('motionBasics.demo.hello')}
-                  </motion.div>
-                )}
+                <AnimatePresence initial={false}>
+                  {isVisible && (
+                    <motion.div
+                      key="hello"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4 }}
+                      className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl shadow-lg flex items-center justify-center text-white font-bold"
+                    >
+                      {t('motionBasics.demo.hello')}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
           </DemoBox>
@@ -123,7 +126,7 @@ export const MotionBasicsSection = () => {
           icon
           iconColor="orange"
         >
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
               <p className="text-sm font-semibold text-orange-900">
                 {t('motionBasics.animatableProps.transform')}

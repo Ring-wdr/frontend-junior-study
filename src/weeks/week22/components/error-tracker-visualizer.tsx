@@ -118,7 +118,7 @@ export const ErrorTrackerVisualizer = () => {
         </button>
       </div>
 
-      <div className="rounded-xl bg-gray-900 p-4 min-h-[180px]">
+      <div className="rounded-xl bg-gray-900 p-3 sm:p-4 min-h-[180px]">
         <div className="flex items-center justify-between mb-3">
           <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
             Error Dashboard
@@ -135,8 +135,8 @@ export const ErrorTrackerVisualizer = () => {
             Trigger errors to see them grouped here
           </div>
         ) : (
-          <AnimatePresence>
-            <div className="space-y-2">
+          <div className="space-y-2">
+            <AnimatePresence initial={false}>
               {errors.map((error) => {
                 const template = ERROR_TEMPLATES.find(
                   (t) => t.type === error.type,
@@ -144,9 +144,11 @@ export const ErrorTrackerVisualizer = () => {
                 return (
                   <motion.div
                     key={error.type}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="flex items-center gap-3 bg-gray-800 rounded-lg p-3"
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="flex items-center gap-2 sm:gap-3 bg-gray-800 rounded-lg p-2.5 sm:p-3"
                   >
                     <span
                       className={cn(
@@ -156,20 +158,21 @@ export const ErrorTrackerVisualizer = () => {
                     >
                       {error.type}
                     </span>
-                    <span className="text-xs text-gray-300 truncate flex-1">
+                    <span className="text-xs text-gray-300 truncate flex-1 min-w-0">
                       {error.message}
                     </span>
                     <div className="flex items-center gap-2 shrink-0">
-                      <span className="text-[10px] text-gray-500 font-mono">
+                      <span className="hidden sm:inline text-[10px] text-gray-500 font-mono">
                         {error.browser}
                       </span>
-                      <span className="text-[10px] text-gray-600 font-mono">
+                      <span className="hidden sm:inline text-[10px] text-gray-600 font-mono">
                         {error.release}
                       </span>
                       <motion.span
                         key={error.count}
-                        initial={{ scale: 1.4 }}
+                        initial={{ scale: 1.2 }}
                         animate={{ scale: 1 }}
+                        transition={{ duration: 0.2 }}
                         className="bg-gray-700 text-gray-200 text-xs font-bold px-2 py-0.5 rounded-full min-w-[28px] text-center"
                       >
                         {error.count}
@@ -178,8 +181,8 @@ export const ErrorTrackerVisualizer = () => {
                   </motion.div>
                 );
               })}
-            </div>
-          </AnimatePresence>
+            </AnimatePresence>
+          </div>
         )}
       </div>
 
@@ -189,24 +192,22 @@ export const ErrorTrackerVisualizer = () => {
             Error Distribution
           </span>
           {errors.map((error) => {
-            const template = ERROR_TEMPLATES.find(
-              (t) => t.type === error.type,
-            );
+            const template = ERROR_TEMPLATES.find((t) => t.type === error.type);
             const pct = (error.count / maxCount) * 100;
             return (
               <div key={error.type} className="flex items-center gap-3">
-                <span className="text-xs text-gray-600 font-mono w-28 shrink-0">
+                <span className="text-xs text-gray-600 font-mono w-28 shrink-0 truncate">
                   {error.type}
                 </span>
                 <div className="flex-1 bg-gray-100 rounded-full h-4 overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${pct}%` }}
-                    transition={{ type: 'spring', stiffness: 100, damping: 15 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                     className={cn('h-full rounded-full', template?.color)}
                   />
                 </div>
-                <span className="text-xs text-gray-500 font-mono w-8 text-right">
+                <span className="text-xs text-gray-500 font-mono w-8 shrink-0 text-right">
                   {error.count}
                 </span>
               </div>

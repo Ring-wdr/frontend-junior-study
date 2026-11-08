@@ -7,28 +7,32 @@ import { useTranslation } from '@/i18n/client';
 
 type ShapeType = 'circle' | 'rectangle' | 'triangle';
 
+const activeButtonClass: Record<ShapeType, string> = {
+  circle: 'bg-blue-500 text-white',
+  rectangle: 'bg-green-500 text-white',
+  triangle: 'bg-purple-500 text-white',
+};
+
+const feedbackTransition = { duration: 0.25, ease: 'easeOut' } as const;
+
 const shapes: {
   type: ShapeType;
   icon: typeof Circle;
-  color: string;
   properties: string[];
 }[] = [
   {
     type: 'circle',
     icon: Circle,
-    color: 'blue',
     properties: ['radius: number'],
   },
   {
     type: 'rectangle',
     icon: Square,
-    color: 'green',
     properties: ['width: number', 'height: number'],
   },
   {
     type: 'triangle',
     icon: Triangle,
-    color: 'purple',
     properties: ['base: number', 'height: number'],
   },
 ];
@@ -53,7 +57,7 @@ export const DiscriminatedUnionVisualizer = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex gap-3 justify-center">
+      <div className="flex flex-wrap gap-2 justify-center">
         {shapes.map((shape) => {
           const ShapeIcon = shape.icon;
           return (
@@ -63,15 +67,9 @@ export const DiscriminatedUnionVisualizer = () => {
               onClick={() => setSelected(shape.type)}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all ${
                 selected === shape.type
-                  ? `bg-${shape.color}-500 text-white`
+                  ? activeButtonClass[shape.type]
                   : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'
               }`}
-              style={{
-                backgroundColor:
-                  selected === shape.type
-                    ? `var(--${shape.color}-500, #6366f1)`
-                    : undefined,
-              }}
             >
               <ShapeIcon className="w-4 h-4" />
               {shape.type}
@@ -80,16 +78,17 @@ export const DiscriminatedUnionVisualizer = () => {
         })}
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <div className="text-center">
           <div className="text-xs font-medium text-gray-500 mb-2">
             {t('practicalPatterns.visualizer.discriminant')}
           </div>
           <motion.div
             key={selected}
-            initial={{ scale: 0.9, opacity: 0 }}
+            initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="bg-pink-100 text-pink-700 px-4 py-3 rounded-lg font-mono text-sm"
+            transition={feedbackTransition}
+            className="bg-pink-100 text-pink-700 px-3 py-3 rounded-lg font-mono text-sm break-words"
           >
             type: "{selected}"
           </motion.div>
@@ -101,9 +100,10 @@ export const DiscriminatedUnionVisualizer = () => {
           </div>
           <motion.div
             key={selected}
-            initial={{ scale: 0.9, opacity: 0 }}
+            initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="bg-indigo-100 text-indigo-700 px-4 py-3 rounded-lg"
+            transition={feedbackTransition}
+            className="bg-indigo-100 text-indigo-700 px-3 py-3 rounded-lg"
           >
             <div className="flex items-center justify-center gap-2">
               <Icon className="w-5 h-5" />
@@ -114,13 +114,14 @@ export const DiscriminatedUnionVisualizer = () => {
 
         <div className="text-center">
           <div className="text-xs font-medium text-gray-500 mb-2">
-            Properties
+            {t('practicalPatterns.visualizer.properties')}
           </div>
           <motion.div
             key={selected}
-            initial={{ scale: 0.9, opacity: 0 }}
+            initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="bg-gray-100 px-4 py-2 rounded-lg"
+            transition={feedbackTransition}
+            className="bg-gray-100 px-3 py-2 rounded-lg"
           >
             {selectedShape.properties.map((prop) => (
               <div key={prop} className="font-mono text-xs text-gray-700">
@@ -133,11 +134,14 @@ export const DiscriminatedUnionVisualizer = () => {
 
       <motion.div
         key={selected}
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gray-900 rounded-lg p-4 text-sm font-mono"
+        transition={feedbackTransition}
+        className="bg-gray-900 rounded-lg p-3 sm:p-4 text-xs sm:text-sm font-mono overflow-x-auto"
       >
-        <div className="text-gray-500 mb-2">// switch문으로 타입 좁히기</div>
+        <div className="text-gray-500 mb-2">
+          {t('practicalPatterns.visualizer.switchComment')}
+        </div>
         <div className="text-gray-300">
           <span className="text-purple-400">switch</span> (shape.
           <span className="text-yellow-300">type</span>) {'{'}
@@ -145,7 +149,7 @@ export const DiscriminatedUnionVisualizer = () => {
         {shapes.map((shape) => (
           <div
             key={shape.type}
-            className={`pl-4 py-1 ${selected === shape.type ? 'bg-indigo-900/50 -mx-4 px-8' : ''}`}
+            className={`pl-4 py-1 whitespace-nowrap ${selected === shape.type ? 'bg-indigo-900/50 -mx-3 sm:-mx-4 px-7 sm:px-8' : ''}`}
           >
             <span className="text-purple-400">case</span>{' '}
             <span className="text-green-400">"{shape.type}"</span>:
@@ -162,7 +166,7 @@ export const DiscriminatedUnionVisualizer = () => {
 
       <div className="bg-gradient-to-r from-pink-50 to-purple-50 p-4 rounded-lg border border-pink-200">
         <div className="text-sm font-medium text-gray-700 mb-2">
-          case "{selected}": 에서 사용 가능한 공식
+          {t('practicalPatterns.visualizer.formulaTitle', { selected })}
         </div>
         <code className="text-sm text-purple-700">{getFormula()}</code>
       </div>

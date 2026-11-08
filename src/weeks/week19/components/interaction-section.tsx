@@ -117,7 +117,7 @@ function RaycastExample() {
           iconColor="green"
         >
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
-            {events.map((event: any) => (
+            {events.map((event) => (
               <div
                 key={event.name}
                 className="bg-green-50 p-3 rounded-lg border border-green-200"

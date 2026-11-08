@@ -7,11 +7,6 @@ import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
-type Trigger = {
-  label: string;
-  detail: string;
-};
-
 export const GitHubActionsSection = () => {
   const { t, raw } = useTranslation('week21');
   const triggers = raw('githubActions.triggers');

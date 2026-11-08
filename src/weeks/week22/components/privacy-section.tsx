@@ -8,8 +8,6 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { DataMaskingVisualizer } from './data-masking-visualizer';
 
-type GdprRequirement = { requirement: string; implementation: string };
-
 export const PrivacySection = () => {
   const { t, raw } = useTranslation('week22');
   const gdprRequirements = raw('privacy.gdprRequirements');

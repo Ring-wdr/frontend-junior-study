@@ -6,17 +6,6 @@ import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 
-type Benefit = {
-  title: string;
-  desc: string;
-};
-
-type Comparison = {
-  item: string;
-  polyrepo: string;
-  monorepo: string;
-};
-
 const icons = [GitBranch, Package, Repeat];
 
 export const MonorepoBasicsSection = () => {

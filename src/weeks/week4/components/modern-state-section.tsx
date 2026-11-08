@@ -20,7 +20,7 @@ export const ModernStateSection = () => {
               {t('modern.evolution.description')}
             </p>
 
-            <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
+            <div className="bg-purple-50 p-2 sm:p-4 rounded-lg border border-purple-200">
               <ModernStateVisualizer />
             </div>
 

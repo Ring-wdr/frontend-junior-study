@@ -12,10 +12,11 @@ Comprehensive reference for creating interactive visualizer components that brin
 7. [Interactive Controls](#interactive-controls)
 8. [Visual Feedback](#visual-feedback)
 9. [Layout Patterns](#layout-patterns)
-10. [Integration with Section Components](#integration-with-section-components)
-11. [Visualizer Categories](#visualizer-categories)
-12. [Complete Examples](#complete-examples)
-13. [Best Practices](#best-practices)
+10. [Entrances, GSAP, and Static Rendering](#entrances-gsap-and-static-rendering)
+11. [Integration with Section Components](#integration-with-section-components)
+12. [Visualizer Categories](#visualizer-categories)
+13. [Complete Examples](#complete-examples)
+14. [Best Practices](#best-practices)
 
 ---
 
@@ -27,7 +28,9 @@ Generative UI (interactive visualizers) are self-contained React components that
 - One visualizer per section (embedded in its section component)
 - Self-contained: all state is local (no external state management)
 - No new dependencies: use existing `motion/react`, `lucide-react`, `cn()`, Tailwind
-- No i18n: visualizer labels are hardcoded in English (matching project convention)
+- Client component: the file starts with `'use client'`
+- Labels are usually hardcoded English; if you translate them, use `useTranslation('weekN')` (see i18n-guide.md)
+- Static-export safe: no `window`/`document` access during render
 - Typically 100-300 lines of code
 
 **Tech Stack:**
@@ -42,7 +45,7 @@ Generative UI (interactive visualizers) are self-contained React components that
 ## File Organization
 
 ```
-src/page/weekN/components/
+src/weeks/weekN/components/
 ├── topic-section.tsx              # Section component (uses visualizer)
 ├── topic-visualizer.tsx           # Visualizer component (new file)
 ├── another-section.tsx
@@ -58,6 +61,8 @@ src/page/weekN/components/
 Every visualizer follows this structure:
 
 ```typescript
+'use client';
+
 // 1. Imports
 import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
@@ -113,7 +118,7 @@ import { Play, Pause, RotateCcw, AlertCircle, CheckCircle } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 ```
 
-**Important:** Always use `motion/react` (not `framer-motion`) for new visualizers.
+**Important:** Always use `motion/react` (not `framer-motion`). Every visualizer file starts with `'use client'`.
 
 ---
 
@@ -462,17 +467,58 @@ const SEVERITY_COLORS: Record<string, string> = {
 
 ### Grid Gauge/Metric Display
 ```typescript
-<div className="grid grid-cols-3 gap-4">
+<div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
   {metrics.map((m) => <GaugeMeter key={m.name} {...m} />)}
 </div>
 ```
 
 ---
 
+## Entrances, GSAP, and Static Rendering
+
+### Reduced motion
+`src/components/motion-provider.tsx` wraps the app in `<MotionConfig reducedMotion="user">`. motion/react animations already respect the OS setting; do not add per-component `useReducedMotion` checks for that purpose.
+
+### Entrance animations
+Animate on scroll into view, once:
+
+```typescript
+<motion.div
+  initial={{ opacity: 0, y: 12 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, amount: 0.3 }}
+  transition={{ duration: 0.4 }}
+/>
+```
+
+Use `animate` for state-driven changes (after a click), not for first paint.
+
+### Narrow column distances
+The docs column is about 343px on phones. Slide with relative values (`x: '-100%'`, ``width: `${pct}%` ``) or small offsets (`y: 8-16`). Never move elements by fixed distances like `x: 400`.
+
+### GSAP
+```typescript
+const scopeRef = useRef<HTMLDivElement>(null);
+
+useEffect(() => {
+  const ctx = gsap.context(() => {
+    gsap.from('.item', { opacity: 0, y: 20, stagger: 0.1 });
+  }, scopeRef);
+  return () => ctx.revert();
+}, []);
+```
+
+Scope selectors to the component's ref and always revert the context on unmount. Register plugins (`gsap.registerPlugin(ScrollTrigger)`) at module level in a `'use client'` file.
+
+### Static prerender
+Pages are prerendered at build time (`output: 'export'`). During render there is no `window`, `document`, `localStorage`, `matchMedia`, or `ResizeObserver`. Read them in `useEffect` or event handlers, and initialize state with a deterministic value (no `Math.random()`/`Date.now()` in initial state, which causes hydration mismatches).
+
+---
+
 ## Integration with Section Components
 
 ### Step 1: Create the Visualizer File
-Create `src/page/weekN/components/concept-visualizer.tsx`
+Create `src/weeks/weekN/components/concept-visualizer.tsx`
 
 ### Step 2: Import in Section Component
 ```typescript
@@ -482,7 +528,7 @@ import { ConceptVisualizer } from './concept-visualizer';
 
 ### Step 3: Add DemoBox Import (if not already imported)
 ```typescript
-import { DemoBox } from '../../../components/demo-box';
+import { DemoBox, SubSection } from '../../../components';
 ```
 
 ### Step 4: Embed in Section
@@ -559,14 +605,14 @@ Insert a `<SubSection>` with `<DemoBox>` containing the visualizer at a logical 
 ## Complete Examples
 
 ### Minimal: Toggle Visualizer (~110 lines)
-See `src/page/week22/components/data-masking-visualizer.tsx`
+See `src/weeks/week22/components/data-masking-visualizer.tsx`
 - Single `useState<boolean>`
 - `AnimatePresence mode="wait"` for swap transitions
 - Blur filter animation for masking effect
 - Staggered delays per item
 
 ### Medium: Pipeline Flow (~270 lines)
-See `src/page/week22/components/error-classification-visualizer.tsx`
+See `src/weeks/week22/components/error-classification-visualizer.tsx`
 - `useState` for phase (FSM) + selected item
 - `useRef` for timeout cleanup
 - `useCallback` for flow runner
@@ -574,14 +620,14 @@ See `src/page/week22/components/error-classification-visualizer.tsx`
 - Phase-specific detail cards with `AnimatePresence`
 
 ### Complex: SVG Gauges (~215 lines)
-See `src/page/week22/components/web-vitals-visualizer.tsx`
+See `src/weeks/week22/components/web-vitals-visualizer.tsx`
 - Multiple `useState` for numeric values
 - Subcomponent `GaugeMeter` with SVG arc animation
 - `motion.path` for animated gauge fill
 - Threshold-based color rating system
 
 ### Observer Pattern (~155 lines)
-See `src/page/week2/components/observer-visualizer.tsx`
+See `src/weeks/week2/components/observer-visualizer.tsx`
 - Dynamic list (add/remove observers)
 - `AnimatePresence` for enter/exit
 - `motion.button` with `whileTap`/`whileHover`
@@ -605,7 +651,8 @@ See `src/page/week2/components/observer-visualizer.tsx`
 
 ### Don'ts
 - **Don't use external state management** (no Redux, Zustand, Context)
-- **Don't add i18n** to visualizer labels (hardcoded English is the convention)
+- **Don't use a namespace other than the week's own** - the page only loads `weekN`
+- **Don't touch `window`/`document` during render** - use effects
 - **Don't add new npm dependencies** - use only existing: `motion/react`, `lucide-react`, `cn()`
 - **Don't make API calls** - all data is local/mocked
 - **Don't use `framer-motion`** directly - use `motion/react` (Framer Motion 12+)
@@ -632,7 +679,7 @@ Choose icons from `lucide-react` that semantically match the concept:
 - Always use `flex-wrap` on button groups
 - Use `grid-cols-1 md:grid-cols-2` or `grid-cols-1 md:grid-cols-3` for responsive grids
 - Keep minimum touch target size: `px-3 py-2` for buttons
-- Test on mobile widths (< 400px)
+- Test at the docs column width on phones (~343px); pipelines with many nodes need `flex-wrap` or a vertical layout on mobile
 
 ### Performance
 - Avoid creating new objects/arrays in render - extract to constants or `useMemo`

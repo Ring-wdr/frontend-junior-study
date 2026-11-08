@@ -61,7 +61,7 @@
   },
   "scrollTrigger": {
     "title": "ScrollTrigger",
-    "description": "스크롤 위치에 따라 애니메이션을 제어합니다. 아래 박스 내부를 스크롤해보세요.",
+    "description": "스크롤 위치에 따라 애니메이션을 제어합니다. 페이지를 아래로 스크롤하면서 아래 데모가 스크롤 위치에 반응하는 모습을 확인해보세요.",
     "scrollDown": "Scroll Down",
     "triggerAnimation": "Trigger Animation",
     "scrubAnimation": "Scrub Animation",

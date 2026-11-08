@@ -16,7 +16,7 @@ const useCaseIconMap = {
 
 export const UseCasesSection = () => {
   const { t, raw } = useTranslation('week18');
-  const useCases = raw('useCases.cases') as any[];
+  const useCases = raw('useCases.cases');
 
   return (
     <SectionCard
@@ -165,7 +165,7 @@ pub fn moving_average(data: &[f32], window: usize) -> Vec<f32> {
             {t('useCases.realWorldTitle')}
           </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {useCases.map((uc: any) => {
+            {useCases.map((uc) => {
               const IconComponent =
                 useCaseIconMap[uc.icon as keyof typeof useCaseIconMap] || Image;
               return (

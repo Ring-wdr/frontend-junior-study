@@ -8,8 +8,6 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { EventStreamVisualizer } from './event-stream-visualizer';
 
-type EventType = { type: string; desc: string; params: string };
-
 export const AnalyticsSection = () => {
   const { t, raw } = useTranslation('week22');
   const eventTypes = raw('analytics.eventTypes');

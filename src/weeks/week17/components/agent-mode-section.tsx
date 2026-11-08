@@ -22,11 +22,11 @@ import { CodeBlock } from '../../../components/ui/code-block';
 
 export const AgentModeSection = () => {
   const { t, raw } = useTranslation('week17');
-  const subAgents = raw('agentMode.subAgents') as any[];
-  const withGenerative = raw('agentMode.teamsWithGenerative') as string[];
-  const withoutGenerative = raw('agentMode.teamsWithoutGenerative') as string[];
-  const teamsVsSubAgentsParallelItems = raw('agentMode.teamsVsSubAgentsParallelItems') as string[];
-  const teamsVsSubAgentsTeamsItems = raw('agentMode.teamsVsSubAgentsTeamsItems') as string[];
+  const subAgents = raw('agentMode.subAgents');
+  const withGenerative = raw('agentMode.teamsWithGenerative');
+  const withoutGenerative = raw('agentMode.teamsWithoutGenerative');
+  const teamsVsSubAgentsParallelItems = raw('agentMode.teamsVsSubAgentsParallelItems');
+  const teamsVsSubAgentsTeamsItems = raw('agentMode.teamsVsSubAgentsTeamsItems');
   const scenarioMaxStep = Math.max(
     teamsVsSubAgentsParallelItems.length,
     teamsVsSubAgentsTeamsItems.length,
@@ -135,7 +135,7 @@ claude --interview "로그인 플로우를 리팩토링했어. 아래 항목을 
 
           <DemoBox label={t('agentMode.teamsCompareTitle')}>
             <div className="space-y-4">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-wrap items-center justify-between gap-2">
                 <p className="text-sm font-semibold text-gray-700">
                   {t('agentMode.teamsSharedPrompt')}
                 </p>
@@ -169,10 +169,10 @@ claude --interview "로그인 플로우를 리팩토링했어. 아래 항목을 
                 {t('agentMode.teamsSharedPromptText')}
               </div>
 
-              <div className="rounded-xl border border-indigo-200 bg-white p-4">
-                <div className="flex items-center gap-2 mb-3">
-                  <LayoutGrid className="w-4 h-4 text-indigo-700" />
-                  <h5 className="font-bold text-sm text-indigo-900">
+              <div className="rounded-xl border border-indigo-200 bg-white p-3 sm:p-4">
+                <div className="flex flex-wrap items-center gap-2 mb-3">
+                  <LayoutGrid className="w-4 h-4 shrink-0 text-indigo-700" />
+                  <h5 className="min-w-0 font-bold text-sm text-indigo-900">
                     {teamsEnabled
                       ? t('agentMode.teamsWithGenerativeTitle')
                       : t('agentMode.teamsWithoutGenerativeTitle')}
@@ -196,7 +196,7 @@ claude --interview "로그인 플로우를 리팩토링했어. 아래 항목을 
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.2, ease: 'easeOut' }}
                     className="space-y-2"
                   >
                     <p className="text-[11px] font-semibold text-indigo-700 uppercase tracking-wide">
@@ -269,8 +269,8 @@ claude --interview "로그인 플로우를 리팩토링했어. 아래 항목을 
         </SubSection>
 
         <SubSection title={t('agentMode.subAgentsTitle')} icon iconColor="blue">
-          <div className="grid grid-cols-2 gap-3">
-            {subAgents.map((agent: any) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {subAgents.map((agent) => (
               <div
                 key={agent.name}
                 className="bg-gradient-to-br from-blue-50 to-indigo-50 p-3 rounded-lg border border-blue-100"
@@ -317,7 +317,7 @@ claude --interview "로그인 플로우를 리팩토링했어. 아래 항목을 
           </InfoBox>
 
           <DemoBox label={t('agentMode.teamsVsSubAgentsCompareTitle')}>
-            <div className="rounded-xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-blue-50 p-4">
+            <div className="rounded-xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-blue-50 p-3 sm:p-4">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="text-sm font-semibold text-indigo-900">
@@ -355,13 +355,13 @@ claude --interview "로그인 플로우를 리팩토링했어. 아래 항목을 
                 <motion.div
                   initial={false}
                   animate={{ width: `${progressWidth}%` }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
                   className="h-full bg-gradient-to-r from-indigo-500 to-blue-500"
                 />
               </div>
 
               <div className="mt-4 grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-3">
-                <div className="rounded-xl border border-indigo-200 bg-white p-4">
+                <div className="min-w-0 rounded-xl border border-indigo-200 bg-white p-3 sm:p-4">
                   <div className="flex items-center gap-2 mb-3">
                     <MessageSquare className="w-4 h-4 text-indigo-700" />
                     <h5 className="font-semibold text-sm text-indigo-800">
@@ -376,10 +376,15 @@ claude --interview "로그인 플로우를 리팩토링했어. 아래 항목을 
                       return (
                         <motion.li
                           key={`parallel-${item}`}
-                          initial={{ opacity: 0.5, y: 6 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.03 }}
-                          className={`rounded-lg border p-2.5 text-xs leading-relaxed ${
+                          initial={{ opacity: 0, y: 6 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true, amount: 0.3 }}
+                          transition={{
+                            duration: 0.4,
+                            ease: 'easeOut',
+                            delay: index * 0.05,
+                          }}
+                          className={`rounded-lg border p-2.5 text-xs leading-relaxed transition-colors duration-200 ${
                             isActive
                               ? 'border-indigo-300 bg-indigo-50 text-indigo-900'
                               : isDone
@@ -415,7 +420,7 @@ claude --interview "로그인 플로우를 리팩토링했어. 아래 항목을 
                   </span>
                 </div>
 
-                <div className="rounded-xl border border-purple-200 bg-white p-4">
+                <div className="min-w-0 rounded-xl border border-purple-200 bg-white p-3 sm:p-4">
                   <div className="flex items-center gap-2 mb-3">
                     <Send className="w-4 h-4 text-purple-700" />
                     <h5 className="font-semibold text-sm text-purple-800">
@@ -430,10 +435,15 @@ claude --interview "로그인 플로우를 리팩토링했어. 아래 항목을 
                       return (
                         <motion.li
                           key={`teams-${item}`}
-                          initial={{ opacity: 0.5, y: 6 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.03 }}
-                          className={`rounded-lg border p-2.5 text-xs leading-relaxed ${
+                          initial={{ opacity: 0, y: 6 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true, amount: 0.3 }}
+                          transition={{
+                            duration: 0.4,
+                            ease: 'easeOut',
+                            delay: index * 0.05,
+                          }}
+                          className={`rounded-lg border p-2.5 text-xs leading-relaxed transition-colors duration-200 ${
                             isActive
                               ? 'border-purple-300 bg-purple-50 text-purple-900'
                               : isDone

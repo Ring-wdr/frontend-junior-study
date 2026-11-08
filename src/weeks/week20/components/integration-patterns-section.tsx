@@ -6,12 +6,6 @@ import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
-type Pattern = {
-  name: string;
-  pros: string;
-  cons: string;
-};
-
 export const IntegrationPatternsSection = () => {
   const { t, raw } = useTranslation('week20');
   const patterns = raw('integration.patterns');

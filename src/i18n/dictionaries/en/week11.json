@@ -244,6 +244,7 @@
     "loaded": "✓ Loaded",
     "readyToInteract": "Ready to interact",
     "loadApp": "Load App",
+    "loading": "Loading...",
     "dashboard": "Dashboard",
     "lazyChunk": "Lazy chunk",
     "userRequested": "User requested",

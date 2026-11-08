@@ -143,24 +143,30 @@ export const AnimatePresenceSection = () => {
                 {t('presence.toast.addNotification')}
               </button>
 
-              <div className="space-y-2 min-h-[100px]">
+              <div className="relative space-y-2 min-h-[100px]">
                 <AnimatePresence mode="popLayout">
                   {notifications.map((notification) => (
                     <motion.div
                       key={notification.id}
                       layout
-                      initial={{ opacity: 0, x: 50, scale: 0.9 }}
+                      initial={{ opacity: 0, x: 24, scale: 0.95 }}
                       animate={{ opacity: 1, x: 0, scale: 1 }}
-                      exit={{ opacity: 0, x: -50, scale: 0.9 }}
-                      className="flex items-center justify-between p-3 bg-green-100 border border-green-200 rounded-lg"
+                      exit={{ opacity: 0, x: -24, scale: 0.95 }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 350,
+                        damping: 30,
+                      }}
+                      className="flex w-full items-center justify-between gap-2 p-3 bg-green-100 border border-green-200 rounded-lg"
                     >
-                      <span className="text-sm text-green-800">
+                      <span className="min-w-0 truncate text-sm text-green-800">
                         {notification.text}
                       </span>
                       <button
                         type="button"
                         onClick={() => removeNotification(notification.id)}
-                        className="text-green-600 hover:text-green-800 font-bold"
+                        aria-label={t('presence.modal.close')}
+                        className="shrink-0 text-green-600 hover:text-green-800 font-bold"
                       >
                         ×
                       </button>

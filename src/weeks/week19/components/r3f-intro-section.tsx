@@ -1,13 +1,13 @@
 'use client';
 
-import { Box, Layers, Palette, RefreshCw } from 'lucide-react';
+import { Box, Layers, type LucideIcon, Palette, RefreshCw } from 'lucide-react';
 import { useTranslation } from '@/i18n/client';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
-const featureIconMap = {
+const featureIconMap: Record<string, LucideIcon> = {
   box: Box,
   layers: Layers,
   refresh: RefreshCw,
@@ -77,10 +77,8 @@ function App() {
       <div className="space-y-8">
         <SubSection title={t('r3fIntro.featuresTitle')} icon iconColor="pink">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {features.map((feature: any) => {
-              const IconComponent =
-                featureIconMap[feature.icon as keyof typeof featureIconMap] ||
-                Box;
+            {features.map((feature) => {
+              const IconComponent = featureIconMap[feature.icon] ?? Box;
               return (
                 <div
                   key={feature.title}
@@ -145,7 +143,7 @@ function App() {
               <tbody>
                 {advantages.map((adv, idx) => (
                   <tr
-                    key={idx}
+                    key={adv.feature}
                     className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
                   >
                     <td className="p-2 font-medium">{adv.feature}</td>

@@ -8,9 +8,6 @@ import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { SessionReplayVisualizer } from './session-replay-visualizer';
 
-type WhatIsItem = { label: string; desc: string };
-type PrivacyItem = { concern: string; solution: string };
-
 export const SessionReplaySection = () => {
   const { t, raw } = useTranslation('week22');
   const whatIsItems = raw('sessionReplay.whatIsItems');

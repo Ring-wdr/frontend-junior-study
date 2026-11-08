@@ -17,14 +17,14 @@ export const JwtSessionSection = () => {
   const comparisons = {
     jwt: {
       title: t('jwt.comparison.jwtTitle'),
-      pros: raw('jwt.comparison.jwtPros') as string[],
-      cons: raw('jwt.comparison.jwtCons') as string[],
+      pros: raw('jwt.comparison.jwtPros'),
+      cons: raw('jwt.comparison.jwtCons'),
       color: 'blue',
     },
     session: {
       title: t('jwt.comparison.sessionTitle'),
-      pros: raw('jwt.comparison.sessionPros') as string[],
-      cons: raw('jwt.comparison.sessionCons') as string[],
+      pros: raw('jwt.comparison.sessionPros'),
+      cons: raw('jwt.comparison.sessionCons'),
       color: 'green',
     },
   };
@@ -47,7 +47,7 @@ export const JwtSessionSection = () => {
               <p className="text-xs font-semibold text-red-800">
                 {t('jwt.structure.header')}
               </p>
-              <code className="text-xs text-red-700">
+              <code className="text-xs text-red-700 break-all">
                 {`{"alg": "HS256", "typ": "JWT"}`}
               </code>
             </div>
@@ -55,7 +55,7 @@ export const JwtSessionSection = () => {
               <p className="text-xs font-semibold text-purple-800">
                 {t('jwt.structure.payload')}
               </p>
-              <code className="text-xs text-purple-700">
+              <code className="text-xs text-purple-700 break-all">
                 {`{"sub": "123", "name": "John", "exp": 1700000000}`}
               </code>
             </div>
@@ -63,7 +63,7 @@ export const JwtSessionSection = () => {
               <p className="text-xs font-semibold text-blue-800">
                 {t('jwt.structure.signature')}
               </p>
-              <code className="text-xs text-blue-700">
+              <code className="text-xs text-blue-700 break-all">
                 HMACSHA256(base64(header) + "." + base64(payload), secret)
               </code>
             </div>
@@ -77,7 +77,7 @@ export const JwtSessionSection = () => {
                 <button
                   type="button"
                   onClick={() => setActiveComparison('jwt')}
-                  className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${
+                  className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
                     activeComparison === 'jwt'
                       ? 'bg-blue-600 text-white'
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -88,7 +88,7 @@ export const JwtSessionSection = () => {
                 <button
                   type="button"
                   onClick={() => setActiveComparison('session')}
-                  className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${
+                  className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
                     activeComparison === 'session'
                       ? 'bg-green-600 text-white'
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -107,7 +107,7 @@ export const JwtSessionSection = () => {
                   {comparisons[activeComparison].title}
                 </h4>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <p className="text-xs font-semibold text-green-700 mb-2">
                       {t('jwt.comparison.prosLabel')}

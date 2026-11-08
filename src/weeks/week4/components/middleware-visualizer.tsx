@@ -40,9 +40,8 @@ export const MiddlewareVisualizer = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Controls */}
+    <div className="bg-white p-4 sm:p-6 rounded-xl border border-gray-200 space-y-4 sm:space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         <div className="space-y-4">
           <h4 className="font-semibold text-gray-900 border-b pb-2">
             Action Types
@@ -75,8 +74,7 @@ export const MiddlewareVisualizer = () => {
           </button>
         </div>
 
-        {/* Console / Timeline */}
-        <div className="bg-gray-900 rounded-lg p-4 font-mono text-xs text-green-400 min-h-[200px] flex flex-col">
+        <div className="bg-gray-900 rounded-lg p-4 font-mono text-xs text-green-400 min-h-[200px] flex flex-col min-w-0">
           <div className="text-gray-500 border-b border-gray-700 pb-2 mb-2 uppercase tracking-wide">
             Redux DevTools Log
           </div>
@@ -89,28 +87,24 @@ export const MiddlewareVisualizer = () => {
             {log.map((item) => (
               <motion.div
                 key={item.id}
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
                 className={cn(
-                  'flex gap-2',
+                  'flex gap-2 min-w-0',
                   item.type === 'async' ? 'text-purple-400' : 'text-blue-400',
                 )}
               >
-                <span className="opacity-50">
+                <span className="opacity-50 shrink-0">
                   [{new Date(item.id).toLocaleTimeString().split(' ')[0]}]
                 </span>
-                <span>{item.msg}</span>
+                <span className="min-w-0 break-words">{item.msg}</span>
               </motion.div>
             ))}
             {isProcessing && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ repeat: Infinity, duration: 1 }}
-                className="text-gray-500 animate-pulse"
-              >
+              <div className="text-gray-500 animate-pulse">
                 ... processing ...
-              </motion.div>
+              </div>
             )}
           </div>
         </div>

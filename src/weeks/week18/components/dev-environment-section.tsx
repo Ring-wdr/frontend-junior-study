@@ -9,7 +9,7 @@ import { CodeBlock } from '../../../components/ui/code-block';
 
 export const DevEnvironmentSection = () => {
   const { t, raw } = useTranslation('week18');
-  const toolchains = raw('devEnvironment.toolchains') as any[];
+  const toolchains = raw('devEnvironment.toolchains');
 
   return (
     <SectionCard
@@ -38,7 +38,7 @@ export const DevEnvironmentSection = () => {
                 </tr>
               </thead>
               <tbody>
-                {toolchains.map((tc: any) => (
+                {toolchains.map((tc) => (
                   <tr key={tc.language} className="border-b border-gray-100">
                     <td className="p-2 font-medium text-gray-800">
                       {tc.language}

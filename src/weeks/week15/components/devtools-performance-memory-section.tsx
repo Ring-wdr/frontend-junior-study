@@ -11,7 +11,7 @@ export const DevToolsPerformanceMemorySection = () => {
   const { t, raw } = useTranslation('week15');
   const [activeMetric, setActiveMetric] = useState(0);
 
-  const metrics = raw('devtoolsPerformance.metrics') as any[];
+  const metrics = raw('devtoolsPerformance.metrics');
   const performanceMetrics = [
     { ...metrics[0], icon: '📊', color: 'green' },
     { ...metrics[1], icon: '⏱️', color: 'red' },
@@ -72,13 +72,17 @@ export const DevToolsPerformanceMemorySection = () => {
                     </p>
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-green-50 p-2 rounded">
-                    <span className="text-green-600 font-bold">Target: </span>
+                    <span className="text-green-600 font-bold">
+                      {t('devtoolsPerformance.targetLabel')}:{' '}
+                    </span>
                     {performanceMetrics[activeMetric].target}
                   </div>
                   <div className="bg-red-50 p-2 rounded">
-                    <span className="text-red-600 font-bold">Issue: </span>
+                    <span className="text-red-600 font-bold">
+                      {t('devtoolsPerformance.issueLabel')}:{' '}
+                    </span>
                     {performanceMetrics[activeMetric].issue}
                   </div>
                 </div>
@@ -94,8 +98,8 @@ export const DevToolsPerformanceMemorySection = () => {
         >
           <div className="space-y-3">
             {(
-              raw('devtoolsPerformance.recordingSteps') as any[]
-            ).map((item: any) => (
+              raw('devtoolsPerformance.recordingSteps')
+            ).map((item) => (
               <div
                 key={item.step}
                 className="flex items-start gap-3 bg-gray-50 p-3 rounded-lg"
@@ -129,10 +133,10 @@ export const DevToolsPerformanceMemorySection = () => {
             </p>
           </InfoBox>
 
-          <div className="mt-4 grid grid-cols-2 gap-3">
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
             {(
-              raw('devtoolsPerformance.memoryTools') as any[]
-            ).map((item: any, idx: number) => (
+              raw('devtoolsPerformance.memoryTools')
+            ).map((item, idx) => (
               <div
                 key={item.title}
                 className="bg-white p-3 rounded-lg border border-gray-200"
@@ -160,8 +164,8 @@ export const DevToolsPerformanceMemorySection = () => {
           <DemoBox label={t('devtoolsPerformance.leakPatternsLabel')}>
             <div className="space-y-3">
               {(
-                raw('devtoolsPerformance.leakPatterns') as any[]
-              ).map((item: any) => (
+                raw('devtoolsPerformance.leakPatterns')
+              ).map((item) => (
                 <div
                   key={item.pattern}
                   className="bg-white p-3 rounded-lg border border-gray-200"
@@ -169,10 +173,10 @@ export const DevToolsPerformanceMemorySection = () => {
                   <h5 className="font-bold text-sm text-red-600 mb-1">
                     {item.pattern}
                   </h5>
-                  <code className="text-xs text-gray-600 block bg-gray-50 p-1.5 rounded mb-1">
+                  <code className="text-xs text-gray-600 block bg-gray-50 p-1.5 rounded mb-1 overflow-x-auto">
                     {item.code}
                   </code>
-                  <p className="text-xs text-green-600">✓ Fix: {item.fix}</p>
+                  <p className="text-xs text-green-600">✓ {t('devtoolsPerformance.fixLabel')}: {item.fix}</p>
                 </div>
               ))}
             </div>

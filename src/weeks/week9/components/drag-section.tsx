@@ -12,6 +12,7 @@ import { CodeBlock } from '../../../components/ui/code-block';
 export const DragSection = () => {
   const { t } = useTranslation('week9');
   const constraintsRef = useRef<HTMLDivElement>(null);
+  const freeDragRef = useRef<HTMLDivElement>(null);
 
   return (
     <SectionCard
@@ -32,9 +33,13 @@ export const DragSection = () => {
           />
 
           <DemoBox label={t('drag.basicDrag.demoLabel')}>
-            <div className="h-32 flex items-center justify-center">
+            <div
+              ref={freeDragRef}
+              className="h-32 flex items-center justify-center"
+            >
               <motion.div
                 drag
+                dragConstraints={freeDragRef}
                 dragMomentum={false}
                 className="w-20 h-20 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl shadow-lg cursor-grab active:cursor-grabbing flex items-center justify-center text-white font-bold text-sm"
               >

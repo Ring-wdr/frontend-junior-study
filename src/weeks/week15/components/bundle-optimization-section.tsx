@@ -51,8 +51,8 @@ export const BundleOptimizationSection = () => {
                   </h5>
                   <div className="space-y-2">
                     {(
-                      raw('bundleOptimization.bundleItems') as any[]
-                    ).map((item: any) => (
+                      raw('bundleOptimization.bundleItems')
+                    ).map((item) => (
                       <div key={item.name} className="space-y-1">
                         <div className="flex justify-between text-xs">
                           <span
@@ -118,18 +118,18 @@ export default defineConfig({
         >
           <div className="space-y-3">
             {(
-              raw('bundleOptimization.libraryOptimizations') as any[]
-            ).map((item: any) => (
+              raw('bundleOptimization.libraryOptimizations')
+            ).map((item) => (
               <div
                 key={item.before}
                 className="bg-white p-3 rounded-lg border border-gray-200"
               >
-                <div className="grid grid-cols-2 gap-2 mb-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
                   <div className="bg-red-50 p-2 rounded">
                     <span className="text-[10px] text-red-500 font-bold">
                       {t('bundleOptimization.beforeLabel')}
                     </span>
-                    <code className="text-xs block mt-1 text-red-700">
+                    <code className="text-xs block mt-1 text-red-700 break-words">
                       {item.before}
                     </code>
                   </div>
@@ -137,12 +137,12 @@ export default defineConfig({
                     <span className="text-[10px] text-green-500 font-bold">
                       {t('bundleOptimization.afterLabel')}
                     </span>
-                    <code className="text-xs block mt-1 text-green-700">
+                    <code className="text-xs block mt-1 text-green-700 break-words">
                       {item.after}
                     </code>
                   </div>
                 </div>
-                <div className="flex justify-between text-xs">
+                <div className="flex flex-wrap justify-between gap-x-3 gap-y-1 text-xs">
                   <span className="text-blue-600">💾 {item.saving}</span>
                   <span className="text-gray-500">💡 {item.tip}</span>
                 </div>
@@ -247,8 +247,8 @@ import { map } from 'lodash-es';  // ✅ ES Module`}
           <div className="bg-gradient-to-r from-red-50 to-orange-50 p-4 rounded-lg border border-red-200">
             <div className="space-y-2">
               {(
-                raw('bundleOptimization.checklistItems') as string[]
-              ).map((item: string) => (
+                raw('bundleOptimization.checklistItems')
+              ).map((item) => (
                 <label key={item} className="flex items-center gap-2 text-sm">
                   <input type="checkbox" className="rounded" />
                   <span className="text-gray-700">{item}</span>

@@ -9,9 +9,9 @@ import {
 import type React from 'react';
 import { ThisBindingSection } from '../../../src/weeks/week1/components/this-binding-section';
 
-// Mock framer-motion
-rs.mock('framer-motion', async () => {
-  const actual = await rs.importActual('framer-motion');
+// Mock motion/react
+rs.mock('motion/react', async () => {
+  const actual = await rs.importActual('motion/react');
   return {
     ...actual,
     motion: {

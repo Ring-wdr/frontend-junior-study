@@ -1,7 +1,7 @@
 'use client';
 
-import { AnimatePresence, motion } from 'motion/react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion, useInView } from 'motion/react';
+import { useEffect, useRef, useState } from 'react';
 import {
   AlertCircle,
   ArrowDown,
@@ -65,7 +65,10 @@ const EVENT_ICONS: Record<EventType, typeof MousePointer> = {
   input: Type,
 };
 
-const EVENT_COLORS: Record<EventType, { dot: string; bg: string; text: string }> = {
+const EVENT_COLORS: Record<
+  EventType,
+  { dot: string; bg: string; text: string }
+> = {
   click: { dot: 'bg-blue-500', bg: 'bg-blue-50', text: 'text-blue-700' },
   scroll: { dot: 'bg-gray-400', bg: 'bg-gray-50', text: 'text-gray-700' },
   navigation: {
@@ -78,63 +81,41 @@ const EVENT_COLORS: Record<EventType, { dot: string; bg: string; text: string }>
 };
 
 export const SessionReplayVisualizer = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { amount: 0.2 });
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [playbackSpeed, setPlaybackSpeed] = useState<1 | 2>(1);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const stopPlayback = useCallback(() => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-    setIsPlaying(false);
-  }, []);
+  const isRunning = isPlaying && currentTime < TOTAL_DURATION;
 
-  const startPlayback = useCallback(() => {
-    setIsPlaying(true);
-    intervalRef.current = setInterval(() => {
-      setCurrentTime((prev) => {
-        const next = prev + 0.1 * playbackSpeed;
-        if (next >= TOTAL_DURATION) {
-          stopPlayback();
-          return TOTAL_DURATION;
-        }
-        return next;
-      });
+  useEffect(() => {
+    if (!isRunning || !isInView) return;
+    const id = setInterval(() => {
+      setCurrentTime((prev) =>
+        Math.min(prev + 0.1 * playbackSpeed, TOTAL_DURATION),
+      );
     }, 100);
-  }, [playbackSpeed, stopPlayback]);
+    return () => clearInterval(id);
+  }, [isRunning, isInView, playbackSpeed]);
 
   const togglePlayback = () => {
-    if (isPlaying) {
-      stopPlayback();
-    } else {
-      if (currentTime >= TOTAL_DURATION) {
-        setCurrentTime(0);
-      }
-      startPlayback();
+    if (isRunning) {
+      setIsPlaying(false);
+      return;
     }
+    if (currentTime >= TOTAL_DURATION) {
+      setCurrentTime(0);
+    }
+    setIsPlaying(true);
   };
 
-  const reset = () => {
-    stopPlayback();
-    setCurrentTime(0);
+  const seek = (time: number) => {
+    setIsPlaying(false);
+    setCurrentTime(time);
   };
 
-  // Restart interval when speed changes while playing
-  useEffect(() => {
-    if (isPlaying) {
-      stopPlayback();
-      startPlayback();
-    }
-  }, [playbackSpeed]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, []);
+  const reset = () => seek(0);
 
   const currentEventIndex = SESSION_EVENTS.reduce(
     (latest, event, i) => (event.time <= currentTime ? i : latest),
@@ -144,20 +125,19 @@ export const SessionReplayVisualizer = () => {
     currentEventIndex >= 0 ? SESSION_EVENTS[currentEventIndex] : null;
 
   return (
-    <div className="space-y-4">
-      {/* Controls */}
-      <div className="flex items-center gap-2 justify-center">
+    <div ref={containerRef} className="space-y-4">
+      <div className="flex flex-wrap items-center gap-2 justify-center">
         <button
           type="button"
           onClick={togglePlayback}
           className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold bg-purple-600 text-white hover:bg-purple-700 transition-all"
         >
-          {isPlaying ? (
+          {isRunning ? (
             <Pause className="w-4 h-4" />
           ) : (
             <Play className="w-4 h-4" />
           )}
-          {isPlaying ? 'Pause' : 'Play'}
+          {isRunning ? 'Pause' : 'Play'}
         </button>
         <button
           type="button"
@@ -192,21 +172,19 @@ export const SessionReplayVisualizer = () => {
             2x
           </button>
         </div>
-        <span className="text-xs font-mono text-gray-400 ml-2">
+        <span className="text-xs font-mono text-gray-400 tabular-nums">
           {currentTime.toFixed(1)}s / {TOTAL_DURATION}s
         </span>
       </div>
 
-      {/* Timeline Track */}
       <div className="relative px-2">
         <div className="h-2 bg-gray-200 rounded-full relative overflow-hidden">
-          <motion.div
+          <div
             className="h-full bg-purple-500 rounded-full"
             style={{ width: `${(currentTime / TOTAL_DURATION) * 100}%` }}
           />
         </div>
 
-        {/* Event Markers */}
         <div className="relative h-4 mt-1">
           {SESSION_EVENTS.map((event) => {
             const leftPct = (event.time / TOTAL_DURATION) * 100;
@@ -215,10 +193,7 @@ export const SessionReplayVisualizer = () => {
               <button
                 key={`${event.time}-${event.type}`}
                 type="button"
-                onClick={() => {
-                  stopPlayback();
-                  setCurrentTime(event.time);
-                }}
+                onClick={() => seek(event.time)}
                 className={cn(
                   'absolute w-3 h-3 rounded-full -translate-x-1/2 cursor-pointer transition-transform hover:scale-150',
                   colors.dot,
@@ -231,31 +206,27 @@ export const SessionReplayVisualizer = () => {
           })}
         </div>
 
-        {/* Scrubber */}
         <input
           type="range"
           min={0}
           max={TOTAL_DURATION}
           step={0.1}
           value={currentTime}
-          onChange={(e) => {
-            stopPlayback();
-            setCurrentTime(Number(e.target.value));
-          }}
+          onChange={(e) => seek(Number(e.target.value))}
           className="w-full h-1 mt-1 cursor-pointer accent-purple-500 opacity-0 hover:opacity-100 transition-opacity"
         />
       </div>
 
-      {/* Current Event Card */}
       <AnimatePresence mode="wait">
         {currentEvent && (
           <motion.div
             key={currentEventIndex}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2 }}
             className={cn(
-              'rounded-xl border p-4 flex items-center gap-3',
+              'rounded-xl border p-3 sm:p-4 flex items-center gap-3 min-h-[72px]',
               EVENT_COLORS[currentEvent.type].bg,
               currentEvent.type === 'error'
                 ? 'border-red-200'
@@ -273,7 +244,7 @@ export const SessionReplayVisualizer = () => {
                 />
               );
             })()}
-            <div>
+            <div className="min-w-0">
               <p
                 className={cn(
                   'text-sm font-semibold',
@@ -282,18 +253,17 @@ export const SessionReplayVisualizer = () => {
               >
                 {currentEvent.label}
               </p>
-              <p className="text-xs text-gray-600 font-mono">
+              <p className="text-xs text-gray-600 font-mono break-words">
                 {currentEvent.detail}
               </p>
             </div>
-            <span className="ml-auto text-xs font-mono text-gray-400">
+            <span className="ml-auto shrink-0 text-xs font-mono text-gray-400">
               {currentEvent.time.toFixed(1)}s
             </span>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Event Log */}
       <div className="space-y-1 max-h-[200px] overflow-y-auto">
         {SESSION_EVENTS.map((event, i) => {
           const isPast = i <= currentEventIndex;
@@ -303,25 +273,29 @@ export const SessionReplayVisualizer = () => {
             <div
               key={`${event.time}-${event.type}`}
               className={cn(
-                'flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs transition-all',
+                'flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs transition-opacity',
                 isCurrent && 'ring-2 ring-purple-300',
                 event.type === 'error' && isPast && 'bg-red-50',
                 !isPast && 'opacity-30',
               )}
             >
-              <span className={cn('w-1.5 h-1.5 rounded-full shrink-0', colors.dot)} />
+              <span
+                className={cn('w-1.5 h-1.5 rounded-full shrink-0', colors.dot)}
+              />
               <span className="font-mono text-gray-400 w-10 shrink-0">
                 {event.time.toFixed(1)}s
               </span>
               <span
                 className={cn(
-                  'font-medium',
+                  'font-medium shrink-0',
                   isPast ? 'text-gray-800' : 'text-gray-400',
                 )}
               >
                 {event.label}
               </span>
-              <span className="text-gray-400 truncate">{event.detail}</span>
+              <span className="text-gray-400 truncate min-w-0">
+                {event.detail}
+              </span>
             </div>
           );
         })}

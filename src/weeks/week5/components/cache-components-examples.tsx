@@ -13,10 +13,7 @@ import { cn } from '../../../lib/utils';
 type ExampleKey = 'cache-boundary' | 'dynamic-rendering' | 'revalidation';
 type ExampleMode = 'bad' | 'good';
 
-const exampleCode: Record<
-  ExampleKey,
-  { bad: string; good: string }
-> = {
+const exampleCode: Record<ExampleKey, { bad: string; good: string }> = {
   'cache-boundary': {
     bad: `// Bad: cache policy is scattered across the request
 async function getProduct(id: string) {
@@ -139,9 +136,9 @@ export const CacheComponentsExamples = () => {
   const isBad = activeMode === 'bad';
 
   return (
-    <div className="space-y-4 rounded-2xl border border-purple-200 bg-linear-to-br from-purple-50 via-white to-blue-50 p-5 shadow-sm">
-      <div className="flex items-start justify-between gap-4 flex-wrap">
-        <div>
+    <div className="space-y-4 rounded-2xl border border-purple-200 bg-linear-to-br from-purple-50 via-white to-blue-50 p-3 sm:p-5">
+      <div className="flex items-start justify-between gap-3 flex-wrap">
+        <div className="min-w-0">
           <h4 className="text-base font-bold text-gray-900">
             {t('dataFetching.cacheComponents.examples.title')}
           </h4>
@@ -173,7 +170,7 @@ export const CacheComponentsExamples = () => {
         ))}
       </div>
 
-      <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+      <div className="rounded-2xl border border-gray-200 bg-white p-3 sm:p-4 min-w-0">
         <div className="flex flex-col gap-3 border-b border-gray-100 pb-4 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-2">
             {isBad ? (
@@ -230,7 +227,9 @@ export const CacheComponentsExamples = () => {
         <div
           className={cn(
             'overflow-hidden rounded-xl border',
-            isBad ? 'border-red-200 bg-red-50/30' : 'border-green-200 bg-green-50/30',
+            isBad
+              ? 'border-red-200 bg-red-50/30'
+              : 'border-green-200 bg-green-50/30',
           )}
         >
           {highlighter ? (
@@ -239,8 +238,8 @@ export const CacheComponentsExamples = () => {
               theme="github-dark-default"
               highlighter={highlighter}
               code={activeCode}
-              className="text-sm px-4 py-3"
-              options={{ duration: 700, stagger: 0.35 }}
+              className="text-xs sm:text-sm px-3 sm:px-4 py-3 overflow-x-auto"
+              options={{ duration: 600, stagger: 0.35 }}
             />
           ) : (
             <CodeBlock code={activeCode} language="tsx" className="text-xs" />

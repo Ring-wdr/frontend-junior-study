@@ -6,6 +6,9 @@ import { useTranslation } from '@/i18n/client';
 
 type Operation = 'union' | 'intersection';
 
+const fadeTransition = { duration: 0.25, ease: 'easeOut' } as const;
+const entranceTransition = { duration: 0.5, ease: 'easeOut' } as const;
+
 const typeA = ['string', 'number'];
 const typeB = ['number', 'boolean'];
 
@@ -49,8 +52,17 @@ export const TypeSetVisualizer = () => {
         </button>
       </div>
 
-      <div className="relative h-48 flex items-center justify-center">
-        <svg viewBox="0 0 300 150" className="w-full max-w-md">
+      <div className="flex items-center justify-center">
+        <svg
+          viewBox="0 0 300 150"
+          className="w-full max-w-sm h-auto overflow-visible"
+          role="img"
+          aria-label={
+            operation === 'union'
+              ? t('advancedTypes.visualizer.union')
+              : t('advancedTypes.visualizer.intersection')
+          }
+        >
           <motion.circle
             cx="100"
             cy="75"
@@ -62,8 +74,11 @@ export const TypeSetVisualizer = () => {
             }
             stroke="rgb(147, 51, 234)"
             strokeWidth="2"
+            style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
             initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={entranceTransition}
           />
           <motion.circle
             cx="200"
@@ -76,8 +91,11 @@ export const TypeSetVisualizer = () => {
             }
             stroke="rgb(99, 102, 241)"
             strokeWidth="2"
+            style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
             initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={entranceTransition}
           />
           {operation === 'intersection' && (
             <motion.ellipse
@@ -86,9 +104,10 @@ export const TypeSetVisualizer = () => {
               rx="28"
               ry="45"
               fill="rgba(99, 102, 241, 0.5)"
+              style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.2 }}
+              transition={{ ...fadeTransition, delay: 0.1 }}
             />
           )}
           <text x="70" y="70" className="text-xs fill-purple-700 font-medium">
@@ -121,11 +140,12 @@ export const TypeSetVisualizer = () => {
 
       <motion.div
         key={operation}
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={fadeTransition}
         className="bg-gradient-to-r from-purple-50 to-indigo-50 p-4 rounded-lg border border-purple-200"
       >
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 mb-3">
           <span className="text-sm font-medium text-gray-700">
             {t('advancedTypes.visualizer.result')}
           </span>
@@ -136,11 +156,11 @@ export const TypeSetVisualizer = () => {
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <code className="text-lg font-bold text-purple-700">
+          <code className="text-base sm:text-lg font-bold text-purple-700 break-words">
             {result.join(' | ')}
           </code>
         </div>
-        <div className="mt-3 text-xs text-gray-600 font-mono bg-white p-2 rounded">
+        <div className="mt-3 text-xs text-gray-600 font-mono bg-white p-2 rounded overflow-x-auto">
           {operation === 'union'
             ? `type Result = string | number | boolean; // A 또는 B`
             : `type Result = number; // A와 B 모두 만족`}

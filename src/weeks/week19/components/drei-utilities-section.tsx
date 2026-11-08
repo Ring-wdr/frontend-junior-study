@@ -169,7 +169,7 @@ function MultipleRobots() {
       description={t('dreiUtilities.description')}
     >
       <div className="space-y-8">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-3">
           {categories.map((cat, idx) => {
             const icons = [Camera, Sun, Grid3x3, Type, Package];
             const IconComponent = icons[idx] || Package;

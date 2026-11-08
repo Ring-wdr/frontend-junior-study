@@ -12,7 +12,11 @@ export const BundlingSection = () => {
   const { t, raw } = useTranslation('week15');
   const [selectedTool, setSelectedTool] = useState(0);
 
-  const bundlers = raw('bundling.bundlers') as any[];
+  const bundlerIcons = ['📦', '⚡', '🍣'];
+  const bundlers = raw('bundling.bundlers').map((bundler, idx) => ({
+    ...bundler,
+    icon: bundlerIcons[idx],
+  }));
 
   return (
     <SectionCard
@@ -58,13 +62,13 @@ export const BundlingSection = () => {
                     {bundlers[selectedTool].status}
                   </span>
                 </div>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="bg-green-50 p-3 rounded">
                     <h5 className="font-bold text-green-700 text-sm mb-2">
                       {t('bundling.prosLabel')}
                     </h5>
                     <ul className="text-xs text-green-800 space-y-1">
-                      {bundlers[selectedTool].pros.map((pro: string) => (
+                      {bundlers[selectedTool].pros.map((pro) => (
                         <li key={pro}>✓ {pro}</li>
                       ))}
                     </ul>
@@ -74,7 +78,7 @@ export const BundlingSection = () => {
                       {t('bundling.consLabel')}
                     </h5>
                     <ul className="text-xs text-red-800 space-y-1">
-                      {bundlers[selectedTool].cons.map((con: string) => (
+                      {bundlers[selectedTool].cons.map((con) => (
                         <li key={con}>✗ {con}</li>
                       ))}
                     </ul>
@@ -86,10 +90,10 @@ export const BundlingSection = () => {
         </SubSection>
 
         <SubSection title={t('bundling.webpackTitle')} icon iconColor="blue">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {(
-              raw('bundling.webpackConcepts') as any[]
-            ).map((item: any) => (
+              raw('bundling.webpackConcepts')
+            ).map((item) => (
               <div
                 key={item.concept}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200"
@@ -143,7 +147,7 @@ module.exports = {
               <h5 className="font-bold text-sm text-gray-900 mb-3">
                 {t('bundling.viteDiffTitle')}
               </h5>
-              <div className="grid grid-cols-2 gap-4 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <h6 className="font-medium text-gray-700 mb-2">
                     {t('bundling.viteDiffWebpack')}
@@ -195,8 +199,8 @@ export default defineConfig({
         <SubSection title={t('bundling.conceptsTitle')} icon iconColor="purple">
           <div className="space-y-3">
             {(
-              raw('bundling.buildConcepts') as any[]
-            ).map((item: any) => (
+              raw('bundling.buildConcepts')
+            ).map((item) => (
               <div
                 key={item.term}
                 className="bg-gradient-to-r from-purple-50 to-blue-50 p-3 rounded-lg border border-purple-100"

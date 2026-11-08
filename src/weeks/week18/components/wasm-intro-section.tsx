@@ -16,10 +16,10 @@ const conceptIconMap = {
 
 export const WasmIntroSection = () => {
   const { t, raw } = useTranslation('week18');
-  const concepts = raw('wasmIntro.concepts') as any[];
-  const timeline = raw('wasmIntro.timeline') as any[];
-  const suitable = raw('wasmIntro.useCases.suitable') as string[];
-  const unsuitable = raw('wasmIntro.useCases.unsuitable') as string[];
+  const concepts = raw('wasmIntro.concepts');
+  const timeline = raw('wasmIntro.timeline');
+  const suitable = raw('wasmIntro.useCases.suitable');
+  const unsuitable = raw('wasmIntro.useCases.unsuitable');
 
   return (
     <SectionCard
@@ -33,7 +33,7 @@ export const WasmIntroSection = () => {
           iconColor="purple"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {concepts.map((concept: any) => {
+            {concepts.map((concept) => {
               const IconComponent =
                 conceptIconMap[concept.icon as keyof typeof conceptIconMap] ||
                 Cpu;
@@ -58,7 +58,7 @@ export const WasmIntroSection = () => {
         <SubSection title={t('wasmIntro.historyTitle')} icon iconColor="blue">
           <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
             <div className="space-y-3">
-              {timeline.map((item: any, idx: number) => (
+              {timeline.map((item, idx) => (
                 <div key={idx} className="flex items-start gap-3">
                   <div className="flex items-center gap-2 min-w-[80px]">
                     <Clock className="w-4 h-4 text-blue-500" />
@@ -127,7 +127,7 @@ console.timeEnd("JS"); // ~1000ms+`}
                 {t('wasmIntro.suitableTitle')}
               </h4>
               <ul className="space-y-1">
-                {suitable.map((item: string) => (
+                {suitable.map((item) => (
                   <li
                     key={item}
                     className="flex items-center gap-2 text-xs text-green-700"
@@ -144,7 +144,7 @@ console.timeEnd("JS"); // ~1000ms+`}
                 {t('wasmIntro.unsuitableTitle')}
               </h4>
               <ul className="space-y-1">
-                {unsuitable.map((item: string) => (
+                {unsuitable.map((item) => (
                   <li
                     key={item}
                     className="flex items-center gap-2 text-xs text-red-700"

@@ -133,14 +133,15 @@ const item = {
                 key={isVisible ? 'visible' : 'hidden'}
                 variants={containerVariants}
                 initial="hidden"
-                animate="show"
-                className="flex gap-3"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.3 }}
+                className="flex flex-wrap justify-center gap-2 sm:gap-3"
               >
                 {[1, 2, 3, 4, 5].map((num) => (
                   <motion.div
                     key={num}
                     variants={itemVariants}
-                    className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg shadow-md flex items-center justify-center text-white font-bold"
+                    className="w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg shadow-md flex items-center justify-center text-white font-bold"
                   >
                     {num}
                   </motion.div>

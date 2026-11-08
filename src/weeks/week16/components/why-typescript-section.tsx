@@ -18,8 +18,8 @@ const iconMap = {
 
 export const WhyTypescriptSection = () => {
   const { t, raw } = useTranslation('week16');
-  const benefits = raw('whyTypescript.benefits') as any[];
-  const whenItems = raw('whyTypescript.whenItems') as string[];
+  const benefits = raw('whyTypescript.benefits');
+  const whenItems = raw('whyTypescript.whenItems');
 
   return (
     <SectionCard
@@ -48,8 +48,8 @@ export const WhyTypescriptSection = () => {
             </p>
           </InfoBox>
 
-          <div className="mt-4 grid grid-cols-2 gap-3">
-            {benefits.map((benefit: any) => {
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {benefits.map((benefit) => {
               const IconComponent =
                 iconMap[benefit.icon as keyof typeof iconMap];
               return (
@@ -75,7 +75,7 @@ export const WhyTypescriptSection = () => {
         <SubSection title={t('whyTypescript.whenTitle')} icon iconColor="green">
           <div className="bg-green-50 p-4 rounded-lg border border-green-200">
             <ul className="space-y-2">
-              {whenItems.map((item: string) => (
+              {whenItems.map((item) => (
                 <li
                   key={item}
                   className="flex items-center gap-2 text-sm text-green-800"

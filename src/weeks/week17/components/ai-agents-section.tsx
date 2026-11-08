@@ -18,9 +18,9 @@ const toolIconMap = {
 
 export const AiAgentsSection = () => {
   const { t, raw } = useTranslation('week17');
-  const tools = raw('aiAgents.tools') as any[];
-  const strengths = raw('aiAgents.strengths') as string[];
-  const humanTasks = raw('aiAgents.humanTasks') as string[];
+  const tools = raw('aiAgents.tools');
+  const strengths = raw('aiAgents.strengths');
+  const humanTasks = raw('aiAgents.humanTasks');
 
   return (
     <SectionCard
@@ -65,7 +65,7 @@ export const AiAgentsSection = () => {
           iconColor="blue"
         >
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {tools.map((tool: any) => {
+            {tools.map((tool) => {
               const IconComponent =
                 toolIconMap[tool.icon as keyof typeof toolIconMap] || Bot;
               return (
@@ -98,7 +98,7 @@ export const AiAgentsSection = () => {
                 {t('aiAgents.aiGoodAt')}
               </h4>
               <ul className="space-y-1">
-                {strengths.map((item: string) => (
+                {strengths.map((item) => (
                   <li
                     key={item}
                     className="flex items-center gap-2 text-xs text-green-700"
@@ -115,7 +115,7 @@ export const AiAgentsSection = () => {
                 {t('aiAgents.humanRequired')}
               </h4>
               <ul className="space-y-1">
-                {humanTasks.map((item: string) => (
+                {humanTasks.map((item) => (
                   <li
                     key={item}
                     className="flex items-center gap-2 text-xs text-orange-700"

@@ -10,8 +10,8 @@ import { TypeAnnotationPlayground } from './type-annotation-playground';
 
 export const TypeBasicsSection = () => {
   const { t, raw } = useTranslation('week16');
-  const primitiveTypes = raw('typeBasics.primitiveTypes') as Record<string, string>[];
-  const comparison = raw('typeBasics.comparison') as Record<string, string>[];
+  const primitiveTypes = raw('typeBasics.primitiveTypes');
+  const comparison = raw('typeBasics.comparison');
 
   return (
     <SectionCard
@@ -27,11 +27,11 @@ export const TypeBasicsSection = () => {
           <p className="text-sm text-gray-600 mb-4">
             {t('typeBasics.primitiveDesc')}
           </p>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {primitiveTypes.map((item) => (
               <div
                 key={item.type}
-                className="bg-gray-50 p-3 rounded-lg border border-gray-200 flex items-center justify-between"
+                className="bg-gray-50 p-3 rounded-lg border border-gray-200 flex items-center justify-between gap-2"
               >
                 <div>
                   <code className="text-sm font-bold text-blue-600">

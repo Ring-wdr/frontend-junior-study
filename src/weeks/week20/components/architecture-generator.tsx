@@ -60,7 +60,7 @@ ${shared.join('\n')}
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <label className="rounded-lg border border-gray-200 bg-white p-3">
           <span className="text-xs font-medium text-gray-600">
             {t('playbook.generator.teamCount')}
@@ -136,17 +136,17 @@ ${shared.join('\n')}
           })}
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2">
           {teams.map((team) => (
             <div
               key={team.name}
               className="rounded-lg bg-white border border-indigo-100 p-3"
             >
               <p className="text-xs text-gray-500">{team.name}</p>
-              <p className="text-sm font-semibold text-gray-900">
+              <p className="text-sm font-semibold text-gray-900 break-all">
                 {team.domain}
               </p>
-              <p className="text-xs text-indigo-700 mt-1">
+              <p className="text-xs text-indigo-700 mt-1 break-all">
                 remote: {team.remote}
               </p>
             </div>

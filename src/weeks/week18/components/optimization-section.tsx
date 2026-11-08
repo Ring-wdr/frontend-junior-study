@@ -9,7 +9,7 @@ import { CodeBlock } from '../../../components/ui/code-block';
 
 export const OptimizationSection = () => {
   const { t, raw } = useTranslation('week18');
-  const checklist = raw('optimization.checklist') as string[];
+  const checklist = raw('optimization.checklist');
 
   return (
     <SectionCard
@@ -58,7 +58,7 @@ brotli output.wasm`}
                 {t('optimization.checklistTitle')}
               </h4>
               <ul className="space-y-1">
-                {checklist.map((item: string) => (
+                {checklist.map((item) => (
                   <li
                     key={item}
                     className="flex items-center gap-2 text-xs text-gray-700"

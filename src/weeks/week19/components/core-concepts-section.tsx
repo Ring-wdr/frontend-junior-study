@@ -178,9 +178,9 @@ function Geometries() {
           iconColor="orange"
         >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-            {lightTypes.map((light, idx) => (
+            {lightTypes.map((light) => (
               <div
-                key={idx}
+                key={light.name}
                 className="bg-orange-50 p-3 rounded-lg text-center border border-orange-200"
               >
                 {light.icon === 'sun' && (

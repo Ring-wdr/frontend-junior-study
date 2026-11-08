@@ -19,7 +19,7 @@ const ZustandDemo = () => {
         </button>
       </div>
       <div className="bg-gray-800 p-3 rounded-lg text-xs font-mono text-gray-200 overflow-x-auto">
-        <div className="text-gray-500 mb-1">// store.js</div>
+        <div className="text-gray-500 mb-1">{'// store.js'}</div>
         <div className="text-purple-400">
           const useStore = create((set) ={'>'} ({'{'}
         </div>
@@ -52,7 +52,7 @@ const RecoilDemo = () => {
         </button>
       </div>
       <div className="bg-gray-800 p-3 rounded-lg text-xs font-mono text-gray-200 overflow-x-auto">
-        <div className="text-gray-500 mb-1">// atoms.js</div>
+        <div className="text-gray-500 mb-1">{'// atoms.js'}</div>
         <div className="text-purple-400">const countState = atom({'{'}</div>
         <div className="pl-4">key: 'countState',</div>
         <div className="pl-4">
