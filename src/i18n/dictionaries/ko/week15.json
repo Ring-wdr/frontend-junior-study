@@ -231,40 +231,22 @@
       {
         "label": "Headers",
         "desc": "요청/응답 헤더 확인",
-        "check": [
-          "Cache-Control",
-          "Content-Type",
-          "Authorization"
-        ]
+        "check": ["Cache-Control", "Content-Type", "Authorization"]
       },
       {
         "label": "Timing",
         "desc": "요청 각 단계 시간 분석",
-        "check": [
-          "DNS Lookup",
-          "TTFB",
-          "Content Download"
-        ]
+        "check": ["DNS Lookup", "TTFB", "Content Download"]
       },
       {
         "label": "Throttling",
         "desc": "네트워크 속도 제한 테스트",
-        "check": [
-          "Slow 3G",
-          "Fast 3G",
-          "Offline"
-        ]
+        "check": ["Slow 3G", "Fast 3G", "Offline"]
       },
       {
         "label": "Filter",
         "desc": "리소스 타입별 필터링",
-        "check": [
-          "XHR",
-          "JS",
-          "CSS",
-          "Img",
-          "Font"
-        ]
+        "check": ["XHR", "JS", "CSS", "Img", "Font"]
       }
     ],
     "howLabel": "방법:",
@@ -409,42 +391,20 @@
       {
         "name": "Webpack",
         "status": "레거시 표준",
-        "pros": [
-          "풍부한 생태계",
-          "세밀한 설정",
-          "검증된 안정성"
-        ],
-        "cons": [
-          "느린 빌드",
-          "복잡한 설정",
-          "러닝 커브"
-        ]
+        "pros": ["풍부한 생태계", "세밀한 설정", "검증된 안정성"],
+        "cons": ["느린 빌드", "복잡한 설정", "러닝 커브"]
       },
       {
         "name": "Vite",
         "status": "현대 표준",
-        "pros": [
-          "빠른 dev 서버",
-          "ES Modules 기반",
-          "간단한 설정"
-        ],
-        "cons": [
-          "CommonJS 호환 이슈",
-          "상대적으로 새로움"
-        ]
+        "pros": ["빠른 dev 서버", "ES Modules 기반", "간단한 설정"],
+        "cons": ["CommonJS 호환 이슈", "상대적으로 새로움"]
       },
       {
         "name": "Rollup",
         "status": "라이브러리용",
-        "pros": [
-          "최적의 tree shaking",
-          "작은 번들",
-          "ES Module 출력"
-        ],
-        "cons": [
-          "앱 빌드에 부적합",
-          "플러그인 생태계 작음"
-        ]
+        "pros": ["최적의 tree shaking", "작은 번들", "ES Module 출력"],
+        "cons": ["앱 빌드에 부적합", "플러그인 생태계 작음"]
       }
     ],
     "webpackConcepts": [
@@ -736,11 +696,7 @@
         "desc": "첫 번째 콘텐츠가 그려지는 시간",
         "good": "1.8s 이하",
         "poor": "3.0s 초과",
-        "improve": [
-          "렌더 블로킹 리소스 제거",
-          "CSS/JS 최적화",
-          "CDN 활용"
-        ]
+        "improve": ["렌더 블로킹 리소스 제거", "CSS/JS 최적화", "CDN 활용"]
       },
       {
         "name": "TTFB",
@@ -748,11 +704,7 @@
         "desc": "서버 첫 응답까지 걸리는 시간",
         "good": "0.8s 이하",
         "poor": "1.8s 초과",
-        "improve": [
-          "서버 최적화",
-          "CDN 엣지 캐싱",
-          "데이터베이스 쿼리 최적화"
-        ]
+        "improve": ["서버 최적화", "CDN 엣지 캐싱", "데이터베이스 쿼리 최적화"]
       }
     ],
     "labDataItems": [

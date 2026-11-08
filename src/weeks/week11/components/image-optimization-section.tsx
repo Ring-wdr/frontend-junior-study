@@ -299,14 +299,16 @@ export function ImageOptimizationSection() {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {(['preload', 'preconnect', 'lazy', 'decoding'] as const).map((hint) => (
-          <div key={hint} className="bg-gray-50 rounded-lg p-3 text-center">
-            <code className="text-sm text-pink-600 font-medium">{hint}</code>
-            <p className="text-xs text-gray-500 mt-1">
-              {t(`imageOptimization.hints.${hint}`)}
-            </p>
-          </div>
-        ))}
+        {(['preload', 'preconnect', 'lazy', 'decoding'] as const).map(
+          (hint) => (
+            <div key={hint} className="bg-gray-50 rounded-lg p-3 text-center">
+              <code className="text-sm text-pink-600 font-medium">{hint}</code>
+              <p className="text-xs text-gray-500 mt-1">
+                {t(`imageOptimization.hints.${hint}`)}
+              </p>
+            </div>
+          ),
+        )}
       </div>
 
       <div className="bg-green-50 border border-green-200 rounded-lg p-4">

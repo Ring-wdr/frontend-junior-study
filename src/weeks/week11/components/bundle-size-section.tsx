@@ -275,7 +275,9 @@ export function BundleSizeSection() {
                 <Trans
                   t={t}
                   i18nKey="bundleSize.avoidPatterns.lodashFull"
-                  components={{ code: <code className="bg-white/70 px-1 rounded" /> }}
+                  components={{
+                    code: <code className="bg-white/70 px-1 rounded" />,
+                  }}
                 />
               </span>
             </li>

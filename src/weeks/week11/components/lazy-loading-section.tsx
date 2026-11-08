@@ -57,9 +57,7 @@ function LazyViewport() {
         <h4 className="font-bold text-gray-800">
           {t('lazyLoading.headingSection')}
         </h4>
-        <p className="text-xs text-gray-500">
-          {t('lazyLoading.aboveTheFold')}
-        </p>
+        <p className="text-xs text-gray-500">{t('lazyLoading.aboveTheFold')}</p>
       </div>
 
       {items.map((item) => (

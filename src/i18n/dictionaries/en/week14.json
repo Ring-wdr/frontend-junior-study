@@ -297,12 +297,7 @@
       "label": "Tab Through These Buttons",
       "historyLabel": "Focus History:",
       "placeholder": "Tab through buttons...",
-      "buttons": [
-        "Button A",
-        "Button B",
-        "Button C",
-        "Button D"
-      ]
+      "buttons": ["Button A", "Button B", "Button C", "Button D"]
     },
     "implementation": {
       "title": "Focus Trap Implementation"
@@ -374,7 +369,8 @@
         "en": "English",
         "ja": "日本語"
       },
-      "currentLocale": "Current locale:"
+      "currentLocale": "Current locale:",
+      "countLabel": "count"
     },
     "icuFormat": {
       "title": "ICU Message Format",

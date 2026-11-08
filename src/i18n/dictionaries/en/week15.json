@@ -231,40 +231,22 @@
       {
         "label": "Headers",
         "desc": "View request/response headers",
-        "check": [
-          "Cache-Control",
-          "Content-Type",
-          "Authorization"
-        ]
+        "check": ["Cache-Control", "Content-Type", "Authorization"]
       },
       {
         "label": "Timing",
         "desc": "Analyze timing for each request phase",
-        "check": [
-          "DNS Lookup",
-          "TTFB",
-          "Content Download"
-        ]
+        "check": ["DNS Lookup", "TTFB", "Content Download"]
       },
       {
         "label": "Throttling",
         "desc": "Test network speed limitations",
-        "check": [
-          "Slow 3G",
-          "Fast 3G",
-          "Offline"
-        ]
+        "check": ["Slow 3G", "Fast 3G", "Offline"]
       },
       {
         "label": "Filter",
         "desc": "Filter by resource type",
-        "check": [
-          "XHR",
-          "JS",
-          "CSS",
-          "Img",
-          "Font"
-        ]
+        "check": ["XHR", "JS", "CSS", "Img", "Font"]
       }
     ],
     "howLabel": "How:",
@@ -414,37 +396,19 @@
           "Fine-grained configuration",
           "Proven stability"
         ],
-        "cons": [
-          "Slow build",
-          "Complex configuration",
-          "Learning curve"
-        ]
+        "cons": ["Slow build", "Complex configuration", "Learning curve"]
       },
       {
         "name": "Vite",
         "status": "Modern Standard",
-        "pros": [
-          "Fast dev server",
-          "ES Modules based",
-          "Simple configuration"
-        ],
-        "cons": [
-          "CommonJS compatibility issues",
-          "Relatively new"
-        ]
+        "pros": ["Fast dev server", "ES Modules based", "Simple configuration"],
+        "cons": ["CommonJS compatibility issues", "Relatively new"]
       },
       {
         "name": "Rollup",
         "status": "For Libraries",
-        "pros": [
-          "Optimal tree shaking",
-          "Small bundles",
-          "ES Module output"
-        ],
-        "cons": [
-          "Not ideal for app builds",
-          "Smaller plugin ecosystem"
-        ]
+        "pros": ["Optimal tree shaking", "Small bundles", "ES Module output"],
+        "cons": ["Not ideal for app builds", "Smaller plugin ecosystem"]
       }
     ],
     "webpackConcepts": [
