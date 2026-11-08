@@ -2,7 +2,7 @@
 
 import { CheckCircle2, Play, RefreshCw, XCircle } from 'lucide-react';
 import { motion } from 'motion/react';
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { cn } from '../../../lib/utils';
 
 type PromiseStatus = 'idle' | 'pending' | 'resolved' | 'rejected';
@@ -14,6 +14,55 @@ interface PromiseItem {
   duration: number;
 }
 
+function evaluateCombinator(
+  currentPromises: PromiseItem[],
+  type: CombinatorType,
+): { status: PromiseStatus; message: string } {
+  const statuses = currentPromises.map((p) => p.status);
+
+  if (statuses.every((s) => s === 'idle')) {
+    return { status: 'idle', message: 'Ready to start' };
+  }
+
+  switch (type) {
+    case 'all':
+      if (statuses.some((s) => s === 'rejected')) {
+        return { status: 'rejected', message: 'Rejected (One failed)' };
+      }
+      if (statuses.every((s) => s === 'resolved')) {
+        return { status: 'resolved', message: 'Resolved (All succeeded)' };
+      }
+      break;
+    case 'allSettled':
+      if (statuses.every((s) => s === 'resolved' || s === 'rejected')) {
+        return { status: 'resolved', message: 'Resolved (All settled)' };
+      }
+      break;
+    case 'race': {
+      const firstSettled = statuses.find(
+        (s) => s === 'resolved' || s === 'rejected',
+      );
+      if (firstSettled) {
+        return {
+          status: firstSettled,
+          message: `Settled as ${firstSettled} (First one wins)`,
+        };
+      }
+      break;
+    }
+    case 'any':
+      if (statuses.some((s) => s === 'resolved')) {
+        return { status: 'resolved', message: 'Resolved (One succeeded)' };
+      }
+      if (statuses.every((s) => s === 'rejected')) {
+        return { status: 'rejected', message: 'Rejected (All failed)' };
+      }
+      break;
+  }
+
+  return { status: 'pending', message: 'Waiting...' };
+}
+
 export const PromiseVisualizer = () => {
   const [combinator, setCombinator] = useState<CombinatorType>('all');
   const [promises, setPromises] = useState<PromiseItem[]>([
@@ -21,90 +70,20 @@ export const PromiseVisualizer = () => {
     { id: 2, status: 'idle', duration: 0 },
     { id: 3, status: 'idle', duration: 0 },
   ]);
-  const [globalStatus, setGlobalStatus] = useState<PromiseStatus>('idle');
-  const [globalResult, setGlobalResult] = useState<string>('');
+  const { status: globalStatus, message: globalResult } = evaluateCombinator(
+    promises,
+    combinator,
+  );
 
   const reset = () => {
     setPromises((p) => p.map((item) => ({ ...item, status: 'idle' })));
-    setGlobalStatus('idle');
-    setGlobalResult('');
   };
 
   const updatePromise = (id: number, status: PromiseStatus) => {
-    setPromises((prev) => {
-      const newPromises = prev.map((p) => (p.id === id ? { ...p, status } : p));
-      checkCombinator(newPromises, combinator);
-      return newPromises;
-    });
+    setPromises((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, status } : p)),
+    );
   };
-
-  const checkCombinator = useCallback(
-    (currentPromises: PromiseItem[], type: CombinatorType) => {
-      const statuses = currentPromises.map((p) => p.status);
-
-      let result: PromiseStatus = 'pending';
-      let message = 'Waiting...';
-
-      if (statuses.every((s) => s === 'idle')) {
-        setGlobalStatus('idle');
-        setGlobalResult('Ready to start');
-        return;
-      }
-
-      switch (type) {
-        case 'all':
-          if (statuses.some((s) => s === 'rejected')) {
-            result = 'rejected';
-            message = 'Rejected (One failed)';
-          } else if (statuses.every((s) => s === 'resolved')) {
-            result = 'resolved';
-            message = 'Resolved (All succeeded)';
-          } else {
-            result = 'pending';
-          }
-          break;
-        case 'allSettled':
-          if (statuses.every((s) => s === 'resolved' || s === 'rejected')) {
-            result = 'resolved';
-            message = 'Resolved (All settled)';
-          } else {
-            result = 'pending';
-          }
-          break;
-        case 'race': {
-          const firstSettled = statuses.find(
-            (s) => s === 'resolved' || s === 'rejected',
-          );
-          if (firstSettled) {
-            result = firstSettled;
-            message = `Settled as ${firstSettled} (First one wins)`;
-          } else {
-            result = 'pending';
-          }
-          break;
-        }
-        case 'any':
-          if (statuses.some((s) => s === 'resolved')) {
-            result = 'resolved';
-            message = 'Resolved (One succeeded)';
-          } else if (statuses.every((s) => s === 'rejected')) {
-            result = 'rejected';
-            message = 'Rejected (All failed)';
-          } else {
-            result = 'pending';
-          }
-          break;
-      }
-
-      setGlobalStatus(result);
-      setGlobalResult(message);
-    },
-    [],
-  );
-
-  useEffect(() => {
-    checkCombinator(promises, combinator);
-  }, [combinator, checkCombinator, promises]);
 
   return (
     <div className="space-y-6">
@@ -118,7 +97,7 @@ export const PromiseVisualizer = () => {
               reset();
             }}
             className={cn(
-              'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+              'px-3 py-1.5 rounded-lg text-sm font-medium transition-all',
               combinator === type
                 ? 'bg-white text-orange-600 shadow-sm border border-orange-100 ring-2 ring-orange-50'
                 : 'text-gray-500 hover:bg-gray-200',
@@ -132,7 +111,7 @@ export const PromiseVisualizer = () => {
       {/* Global Status Display */}
       <div
         className={cn(
-          'p-4 rounded-xl border-2 transition-colors flex items-center justify-between mx-auto max-w-sm',
+          'p-3 sm:p-4 rounded-xl border-2 transition-colors flex flex-wrap items-center justify-between gap-2 mx-auto max-w-sm',
           globalStatus === 'resolved' && 'border-green-100 bg-green-50',
           globalStatus === 'rejected' && 'border-red-100 bg-red-50',
           globalStatus === 'pending' && 'border-orange-100 bg-orange-50',
@@ -243,10 +222,10 @@ export const PromiseVisualizer = () => {
             {/* Animations */}
             {p.status === 'pending' && (
               <motion.div
-                layoutId={`loading-${p.id}`}
-                className="absolute inset-0 bg-orange-50/30"
+                className="pointer-events-none absolute inset-0 bg-orange-50/30"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
+                transition={{ duration: 0.2 }}
               />
             )}
           </div>

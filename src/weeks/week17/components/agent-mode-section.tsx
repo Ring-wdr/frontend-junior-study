@@ -25,8 +25,12 @@ export const AgentModeSection = () => {
   const subAgents = raw('agentMode.subAgents');
   const withGenerative = raw('agentMode.teamsWithGenerative');
   const withoutGenerative = raw('agentMode.teamsWithoutGenerative');
-  const teamsVsSubAgentsParallelItems = raw('agentMode.teamsVsSubAgentsParallelItems');
-  const teamsVsSubAgentsTeamsItems = raw('agentMode.teamsVsSubAgentsTeamsItems');
+  const teamsVsSubAgentsParallelItems = raw(
+    'agentMode.teamsVsSubAgentsParallelItems',
+  );
+  const teamsVsSubAgentsTeamsItems = raw(
+    'agentMode.teamsVsSubAgentsTeamsItems',
+  );
   const scenarioMaxStep = Math.max(
     teamsVsSubAgentsParallelItems.length,
     teamsVsSubAgentsTeamsItems.length,

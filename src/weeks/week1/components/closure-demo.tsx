@@ -27,7 +27,7 @@ export const ClosureDemo = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-gray-900 text-gray-100 p-4 rounded-xl font-mono text-xs overflow-x-auto">
+      <div className="font-mono text-xs">
         <CodeBlock
           language="javascript"
           code={`function createCounter() {
@@ -48,7 +48,7 @@ counter2(); // 1 (separate closure!)`}
         />
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <button
           type="button"
           onClick={createCounter}
@@ -70,8 +70,9 @@ counter2(); // 1 (separate closure!)`}
 
       {showExplanation && (
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
+          initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.25 }}
           className="bg-purple-50 p-4 rounded-xl border border-purple-200"
         >
           <h4 className="font-semibold text-purple-900 mb-2">
@@ -86,16 +87,17 @@ counter2(); // 1 (separate closure!)`}
         </motion.div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <AnimatePresence>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <AnimatePresence mode="popLayout">
           {counters.map((value, index) => (
             <motion.div
               // biome-ignore lint/suspicious/noArrayIndexKey: value dont represent unique key
               key={index}
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              className="bg-linear-to-br from-purple-50 to-purple-100 p-6 rounded-xl border-2 border-purple-200"
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.25 }}
+              className="bg-linear-to-br from-purple-50 to-purple-100 p-4 rounded-xl border-2 border-purple-200"
             >
               <div className="text-center">
                 <div className="text-xs font-mono text-purple-600 mb-2">
@@ -127,7 +129,7 @@ counter2(); // 1 (separate closure!)`}
       </div>
 
       {counters.length === 0 && (
-        <div className="text-center text-gray-500 py-8">
+        <div className="text-center text-sm text-gray-500 py-6">
           Click "Create Counter" to see closures in action!
         </div>
       )}

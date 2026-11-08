@@ -8,35 +8,35 @@ import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
+type ActorId = 'client' | 'browser' | 'auth' | 'api';
+
+const actors: { id: ActorId; label: string; icon: string }[] = [
+  { id: 'client', label: 'Client App', icon: '💻' },
+  { id: 'browser', label: 'Browser', icon: '🌍' },
+  { id: 'auth', label: 'Auth Server', icon: '🛡️' },
+  { id: 'api', label: 'API', icon: '📦' },
+];
+
 export const OAuthSection = () => {
   const { t } = useTranslation('week12');
   const [flowStep, setFlowStep] = useState(0);
 
-  const flowSteps = [
-    {
-      step: 1,
-      title: t('oauth.flow.step1'),
-      actor: t('oauth.flow.actorClient'),
-    },
-    {
-      step: 2,
-      title: t('oauth.flow.step2'),
-      actor: t('oauth.flow.actorBrowser'),
-    },
-    { step: 3, title: t('oauth.flow.step3'), actor: t('oauth.flow.actorAuth') },
-    { step: 4, title: t('oauth.flow.step4'), actor: t('oauth.flow.actorAuth') },
-    {
-      step: 5,
-      title: t('oauth.flow.step5'),
-      actor: t('oauth.flow.actorClient'),
-    },
-    { step: 6, title: t('oauth.flow.step6'), actor: t('oauth.flow.actorAuth') },
-    {
-      step: 7,
-      title: t('oauth.flow.step7'),
-      actor: t('oauth.flow.actorApi'),
-    },
+  const flowSteps: { step: number; title: string; actorId: ActorId }[] = [
+    { step: 1, title: t('oauth.flow.step1'), actorId: 'client' },
+    { step: 2, title: t('oauth.flow.step2'), actorId: 'browser' },
+    { step: 3, title: t('oauth.flow.step3'), actorId: 'auth' },
+    { step: 4, title: t('oauth.flow.step4'), actorId: 'auth' },
+    { step: 5, title: t('oauth.flow.step5'), actorId: 'client' },
+    { step: 6, title: t('oauth.flow.step6'), actorId: 'auth' },
+    { step: 7, title: t('oauth.flow.step7'), actorId: 'api' },
   ];
+  const actorLabels: Record<ActorId, string> = {
+    client: t('oauth.flow.actorClient'),
+    browser: t('oauth.flow.actorBrowser'),
+    auth: t('oauth.flow.actorAuth'),
+    api: t('oauth.flow.actorApi'),
+  };
+  const current = flowSteps[flowStep];
 
   return (
     <SectionCard
@@ -64,7 +64,7 @@ export const OAuthSection = () => {
         </SubSection>
 
         <SubSection title="Key Roles in OAuth 2.0" icon iconColor="purple">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="bg-blue-50 p-3 rounded border border-blue-200">
               <p className="text-sm font-semibold text-blue-900">
                 Resource Owner
@@ -102,79 +102,69 @@ export const OAuthSection = () => {
           <DemoBox label="OAuth 2.0 Flow Interactive Map">
             <div className="space-y-6">
               {/* Visual Map */}
-              <div className="relative h-48 bg-gray-50 rounded-xl border border-gray-200 p-4 flex items-center justify-between px-8 md:px-16 overflow-hidden">
+              <div className="relative h-48 bg-gray-50 rounded-xl border border-gray-200 p-4 flex items-center justify-between px-3 sm:px-8 md:px-12 overflow-hidden">
                 {/* Connecting Line */}
                 <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-200 z-0" />
 
                 {/* Active Progress Line */}
                 <div
-                  className="absolute top-1/2 left-0 h-1 bg-green-500 transition-all duration-500 z-0"
+                  className="absolute top-1/2 left-0 h-1 bg-green-500 transition-[width] duration-500 ease-out z-0"
                   style={{
                     width: `${(flowStep / (flowSteps.length - 1)) * 100}%`,
                   }}
                 />
 
                 {/* Actors / Nodes */}
-                {[
-                  { id: 'client', label: 'Client App', icon: '💻' },
-                  { id: 'browser', label: 'Browser', icon: '🌍' },
-                  { id: 'auth', label: 'Auth Server', icon: '🛡️' },
-                  { id: 'api', label: 'API', icon: '📦' },
-                ].map((actor) => {
-                  // Calculate simplified "active" state based on step instructions
-                  // This is a rough mapping for visual effect
-                  // Calculate simplified "active" state based on step instructions
-                  // This is a rough mapping for visual effect
-
-                  return (
+                {actors.map((actor) => (
+                  <div
+                    key={actor.id}
+                    className="relative z-10 flex flex-col items-center gap-2"
+                  >
                     <div
-                      key={actor.id}
-                      className="relative z-10 flex flex-col items-center gap-2"
+                      className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-xl sm:text-2xl border-4 transition-all duration-300 ease-out bg-white ${
+                        current.actorId === actor.id
+                          ? 'border-green-500 scale-110 shadow-lg'
+                          : 'border-gray-200 grayscale opacity-70'
+                      }`}
                     >
-                      <div
-                        className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl border-4 transition-all duration-300 bg-white ${
-                          flowSteps[flowStep].actor.includes(actor.label) ||
-                          (actor.label === 'Browser' && flowStep === 1) // Highlight current actor
-                            ? 'border-green-500 scale-125 shadow-lg'
-                            : 'border-gray-200 grayscale opacity-70'
-                        }`}
-                      >
-                        {actor.icon}
-                      </div>
-                      <span className="text-xs font-bold text-gray-600">
-                        {actor.label}
-                      </span>
+                      {actor.icon}
                     </div>
-                  );
-                })}
+                    <span className="text-[10px] sm:text-xs font-bold text-gray-600 text-center">
+                      {actor.label}
+                    </span>
+                  </div>
+                ))}
               </div>
 
               {/* Step Description */}
-              <div className="bg-white p-6 rounded-xl border border-green-100 shadow-sm text-center relative overflow-hidden">
+              <div className="bg-white p-4 sm:p-6 rounded-xl border border-green-100 shadow-sm text-center relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-green-500" />
                 <h4 className="text-lg font-bold text-gray-800 mb-2">
-                  Step {flowSteps[flowStep].step}: {flowSteps[flowStep].actor}
+                  Step {current.step}: {actorLabels[current.actorId]}
                 </h4>
-                <p className="text-gray-600 text-lg transition-all key={flowStep} animate-in fade-in slide-in-from-bottom-2">
-                  {flowSteps[flowStep].title}
+                <p
+                  key={flowStep}
+                  className="text-gray-600 text-base sm:text-lg animate-in fade-in slide-in-from-bottom-2 duration-300"
+                >
+                  {current.title}
                 </p>
                 <div className="mt-4 flex gap-2 justify-center">
-                  {flowSteps.map((_, i) => (
+                  {flowSteps.map((s, i) => (
                     <div
-                      key={i}
-                      className={`w-2 h-2 rounded-full transition-colors ${i === flowStep ? 'bg-green-500' : 'bg-gray-200'}`}
+                      key={s.step}
+                      className={`w-2 h-2 rounded-full transition-colors duration-200 ${i === flowStep ? 'bg-green-500' : 'bg-gray-200'}`}
                     />
                   ))}
                 </div>
               </div>
 
               {/* Controls */}
-              <div className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
+              <div className="flex justify-between items-center gap-2 bg-gray-50 p-3 rounded-lg">
                 <button
                   type="button"
                   onClick={() => setFlowStep(Math.max(0, flowStep - 1))}
                   disabled={flowStep === 0}
-                  className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
+                  className="px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-gray-600 hover:text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
                 >
                   ← Previous Step
                 </button>
@@ -187,7 +177,7 @@ export const OAuthSection = () => {
                     setFlowStep(Math.min(flowSteps.length - 1, flowStep + 1))
                   }
                   disabled={flowStep === flowSteps.length - 1}
-                  className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
+                  className="px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
                 >
                   Next Step →
                 </button>

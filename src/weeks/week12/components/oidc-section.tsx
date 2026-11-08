@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Trans, useTranslation } from '@/i18n/client';
+import { useTranslation } from '@/i18n/client';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -37,7 +37,7 @@ export const OidcSection = () => {
             <p className="text-sm leading-relaxed mb-3">
               {t('oidc.difference.infoDescription')}
             </p>
-            <div className="grid grid-cols-2 gap-3 mt-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
               <div className="bg-white p-3 rounded border">
                 <p className="font-semibold text-purple-900 text-sm">
                   {t('oidc.difference.oauth')}
@@ -69,7 +69,7 @@ export const OidcSection = () => {
             <p className="text-sm font-medium">
               {t('oidc.idToken.claimsTitle')}
             </p>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {[
                 { claim: 'sub', desc: t('oidc.idToken.sub') },
                 { claim: 'email', desc: t('oidc.idToken.email') },

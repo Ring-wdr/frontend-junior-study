@@ -156,9 +156,7 @@ console.groupEnd();`}
         >
           <DemoBox label={t('devtoolsElements.consoleCommandsLabel')}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {(
-                raw('devtoolsElements.consoleCommands')
-              ).map((item) => (
+              {raw('devtoolsElements.consoleCommands').map((item) => (
                 <div
                   key={item.cmd}
                   className="bg-white p-3 rounded-lg border border-gray-200"
@@ -183,9 +181,7 @@ console.groupEnd();`}
         >
           <div className="bg-gradient-to-r from-orange-50 to-yellow-50 p-4 rounded-lg border border-orange-200">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-              {(
-                raw('devtoolsElements.shortcuts')
-              ).map((shortcut) => (
+              {raw('devtoolsElements.shortcuts').map((shortcut) => (
                 <div key={shortcut.key} className="flex items-center gap-2">
                   <kbd className="px-2 py-1 bg-white text-xs font-mono rounded border border-gray-300 shadow-sm">
                     {shortcut.key}

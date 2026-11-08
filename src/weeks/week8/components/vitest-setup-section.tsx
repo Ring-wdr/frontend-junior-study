@@ -275,7 +275,7 @@ const mockFn = vi.fn();`}
           iconColor="purple"
         >
           <div className="space-y-4">
-            <div className="bg-gradient-to-r from-purple-50 to-blue-50 p-6 rounded-lg border border-purple-200">
+            <div className="bg-gradient-to-r from-purple-50 to-blue-50 p-4 sm:p-6 rounded-lg border border-purple-200">
               <p className="text-sm text-gray-700 mb-4">
                 <strong>For new projects:</strong>{' '}
                 {t('vitest.recommendation.newProjects')}

@@ -212,6 +212,9 @@
     ]
   },
   "devtoolsPerformance": {
+    "targetLabel": "Target",
+    "issueLabel": "Issue",
+    "fixLabel": "Fix",
     "badge": "Perf",
     "title": "Performance & Memory Panel",
     "description": "Rendering bottleneck analysis and memory leak detection",

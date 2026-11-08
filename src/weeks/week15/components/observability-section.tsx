@@ -73,17 +73,15 @@ export const ObservabilitySection = () => {
                   </div>
                 </div>
                 <ul className="space-y-2">
-                  {sentryFeatures[activeFeature].details.map(
-                    (detail) => (
-                      <li
-                        key={detail}
-                        className="flex items-start gap-2 text-sm text-gray-700"
-                      >
-                        <span className="text-red-500 mt-0.5">→</span>
-                        {detail}
-                      </li>
-                    ),
-                  )}
+                  {sentryFeatures[activeFeature].details.map((detail) => (
+                    <li
+                      key={detail}
+                      className="flex items-start gap-2 text-sm text-gray-700"
+                    >
+                      <span className="text-red-500 mt-0.5">→</span>
+                      {detail}
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -233,9 +231,7 @@ api.interceptors.response.use(
           iconColor="purple"
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {(
-              raw('observability.bestPractices')
-            ).map((item, idx) => (
+            {raw('observability.bestPractices').map((item, idx) => (
               <div
                 key={item.title}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200"

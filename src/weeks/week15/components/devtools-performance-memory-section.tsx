@@ -97,9 +97,7 @@ export const DevToolsPerformanceMemorySection = () => {
           iconColor="blue"
         >
           <div className="space-y-3">
-            {(
-              raw('devtoolsPerformance.recordingSteps')
-            ).map((item) => (
+            {raw('devtoolsPerformance.recordingSteps').map((item) => (
               <div
                 key={item.step}
                 className="flex items-start gap-3 bg-gray-50 p-3 rounded-lg"
@@ -134,9 +132,7 @@ export const DevToolsPerformanceMemorySection = () => {
           </InfoBox>
 
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {(
-              raw('devtoolsPerformance.memoryTools')
-            ).map((item, idx) => (
+            {raw('devtoolsPerformance.memoryTools').map((item, idx) => (
               <div
                 key={item.title}
                 className="bg-white p-3 rounded-lg border border-gray-200"
@@ -163,9 +159,7 @@ export const DevToolsPerformanceMemorySection = () => {
         >
           <DemoBox label={t('devtoolsPerformance.leakPatternsLabel')}>
             <div className="space-y-3">
-              {(
-                raw('devtoolsPerformance.leakPatterns')
-              ).map((item) => (
+              {raw('devtoolsPerformance.leakPatterns').map((item) => (
                 <div
                   key={item.pattern}
                   className="bg-white p-3 rounded-lg border border-gray-200"
@@ -176,7 +170,9 @@ export const DevToolsPerformanceMemorySection = () => {
                   <code className="text-xs text-gray-600 block bg-gray-50 p-1.5 rounded mb-1 overflow-x-auto">
                     {item.code}
                   </code>
-                  <p className="text-xs text-green-600">✓ {t('devtoolsPerformance.fixLabel')}: {item.fix}</p>
+                  <p className="text-xs text-green-600">
+                    ✓ {t('devtoolsPerformance.fixLabel')}: {item.fix}
+                  </p>
                 </div>
               ))}
             </div>

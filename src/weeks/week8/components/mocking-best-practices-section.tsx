@@ -436,7 +436,7 @@ describe('TodoForm', () => {
           iconColor="orange"
         >
           <div className="space-y-4">
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg border border-purple-200">
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 sm:p-6 rounded-lg border border-purple-200">
               <p className="text-sm font-semibold text-gray-800 mb-3">
                 {t('bestPractices.strategy.yourStrategy')}
               </p>

@@ -23,11 +23,11 @@ export const TestingFundamentalsSection = () => {
               {t('fundamentals.pyramid.description')}
             </p>
 
-            <div className="bg-gradient-to-b from-green-50 to-blue-50 p-8 rounded-lg border border-blue-200 flex flex-col items-center">
+            <div className="bg-gradient-to-b from-green-50 to-blue-50 p-4 sm:p-8 rounded-lg border border-blue-200 flex flex-col items-center">
               <div className="w-full max-w-xs">
                 {/* E2E Test (Top) */}
                 <div className="text-center mb-1">
-                  <div className="bg-red-100 border border-red-300 p-3 rounded mx-auto w-20">
+                  <div className="bg-red-100 border border-red-300 p-3 rounded mx-auto w-1/3">
                     <p className="text-xs font-bold text-red-800">
                       {t('fundamentals.pyramid.e2e')}
                     </p>
@@ -36,7 +36,7 @@ export const TestingFundamentalsSection = () => {
 
                 {/* Integration Test (Middle) */}
                 <div className="text-center mb-1">
-                  <div className="bg-yellow-100 border border-yellow-300 p-4 rounded mx-auto w-40">
+                  <div className="bg-yellow-100 border border-yellow-300 p-4 rounded mx-auto w-2/3">
                     <p className="text-xs font-bold text-yellow-800">
                       {t('fundamentals.pyramid.integration')}
                     </p>
@@ -45,7 +45,7 @@ export const TestingFundamentalsSection = () => {
 
                 {/* Unit Test (Bottom) */}
                 <div className="text-center">
-                  <div className="bg-green-100 border border-green-300 p-6 rounded mx-auto w-64">
+                  <div className="bg-green-100 border border-green-300 p-4 sm:p-6 rounded mx-auto w-full">
                     <p className="text-xs font-bold text-green-800">
                       {t('fundamentals.pyramid.unit')}
                     </p>

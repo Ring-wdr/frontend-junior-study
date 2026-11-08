@@ -1,14 +1,6 @@
 'use client';
 
-import {
-  AlertTriangle,
-  Bug,
-  Check,
-  Lock,
-  Shield,
-  TestTube,
-  X,
-} from 'lucide-react';
+import { Bug, Check, Lock, Shield, TestTube, X } from 'lucide-react';
 import { useTranslation } from '@/i18n/client';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
@@ -221,7 +213,7 @@ if (!response.url.startsWith(
           </div>
 
           <InfoBox variant="gray" title={t('debuggingSecurity.cspTitle')}>
-            <p className="text-sm font-mono">
+            <p className="text-xs sm:text-sm font-mono break-words">
               Content-Security-Policy: script-src 'self' 'wasm-unsafe-eval'
             </p>
           </InfoBox>

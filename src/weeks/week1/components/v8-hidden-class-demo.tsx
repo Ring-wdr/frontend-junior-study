@@ -71,7 +71,7 @@ export const V8HiddenClassDemo = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <button
           type="button"
           onClick={() => {
@@ -157,17 +157,17 @@ const p3 = { x: 1 }; // Missing property!`}
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <AnimatePresence>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <AnimatePresence mode="popLayout">
           {objects.map((obj, idx) => (
             <motion.div
               key={obj.id}
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ delay: idx * 0.1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.25, delay: idx * 0.05 }}
               className={cn(
-                'p-4 rounded-xl border-2',
+                'p-3 rounded-xl border-2',
                 obj.color === 'green' && 'bg-green-50 border-green-300',
                 obj.color === 'red' && 'bg-red-50 border-red-300',
                 obj.color === 'orange' && 'bg-orange-50 border-orange-300',

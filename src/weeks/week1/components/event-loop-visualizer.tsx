@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'motion/react';
 import { Play, RotateCcw, SkipForward } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
@@ -24,6 +24,14 @@ export const EventLoopVisualizer = () => {
   const [callStack, setCallStack] = useState<string[]>([]);
   const [microtaskQueue, setMicrotaskQueue] = useState<string[]>([]);
   const [macrotaskQueue, setMacrotaskQueue] = useState<string[]>([]);
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  const clearTimers = () => {
+    for (const timer of timersRef.current) clearTimeout(timer);
+    timersRef.current = [];
+  };
+
+  useEffect(() => clearTimers, []);
 
   const steps = [
     {
@@ -105,6 +113,7 @@ export const EventLoopVisualizer = () => {
   ];
 
   const nextStep = () => {
+    clearTimers();
     if (step < steps.length) {
       steps[step].action();
       setStep(step + 1);
@@ -112,6 +121,7 @@ export const EventLoopVisualizer = () => {
   };
 
   const reset = () => {
+    clearTimers();
     setStep(0);
     setOutput([]);
     setCallStack([]);
@@ -121,14 +131,15 @@ export const EventLoopVisualizer = () => {
 
   const runAll = () => {
     reset();
-    setTimeout(() => {
-      for (let i = 0; i < steps.length; i++) {
-        setTimeout(() => {
-          steps[i].action();
+    timersRef.current = steps.map((current, i) =>
+      setTimeout(
+        () => {
+          current.action();
           setStep(i + 1);
-        }, i * 500);
-      }
-    }, 100);
+        },
+        100 + i * 500,
+      ),
+    );
   };
 
   return (
@@ -137,7 +148,7 @@ export const EventLoopVisualizer = () => {
         <CodeBlock code={sampleCode} showLineNumbers />
       </div>
 
-      <div className="flex gap-2 justify-center">
+      <div className="flex flex-wrap gap-2 justify-center">
         <button
           type="button"
           onClick={nextStep}
@@ -182,8 +193,8 @@ export const EventLoopVisualizer = () => {
         {step === 0 && <span>Click "Next Step" to begin</span>}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-linear-to-br from-blue-50 to-blue-100 p-4 rounded-xl border border-blue-200">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="bg-linear-to-br from-blue-50 to-blue-100 p-3 rounded-xl border border-blue-200 min-w-0">
           <h4 className="font-bold text-blue-900 mb-3 text-sm">Call Stack</h4>
           <div className="space-y-2 min-h-[100px]">
             <AnimatePresence>
@@ -193,7 +204,8 @@ export const EventLoopVisualizer = () => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
-                  className="bg-white p-2 rounded-lg shadow-sm text-xs font-mono text-blue-900"
+                  transition={{ duration: 0.2 }}
+                  className="bg-white p-2 rounded-lg shadow-sm text-xs font-mono break-all text-blue-900"
                 >
                   {task}
                 </motion.div>
@@ -202,7 +214,7 @@ export const EventLoopVisualizer = () => {
           </div>
         </div>
 
-        <div className="bg-linear-to-br from-purple-50 to-purple-100 p-4 rounded-xl border border-purple-200">
+        <div className="bg-linear-to-br from-purple-50 to-purple-100 p-3 rounded-xl border border-purple-200 min-w-0">
           <h4 className="font-bold text-purple-900 mb-3 text-sm">
             Microtask Queue
           </h4>
@@ -214,7 +226,8 @@ export const EventLoopVisualizer = () => {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 10 }}
-                  className="bg-white p-2 rounded-lg shadow-sm text-xs font-mono text-purple-900"
+                  transition={{ duration: 0.2 }}
+                  className="bg-white p-2 rounded-lg shadow-sm text-xs font-mono break-all text-purple-900"
                 >
                   {task}
                 </motion.div>
@@ -223,7 +236,7 @@ export const EventLoopVisualizer = () => {
           </div>
         </div>
 
-        <div className="bg-linear-to-br from-orange-50 to-orange-100 p-4 rounded-xl border border-orange-200">
+        <div className="bg-linear-to-br from-orange-50 to-orange-100 p-3 rounded-xl border border-orange-200 min-w-0">
           <h4 className="font-bold text-orange-900 mb-3 text-sm">
             Macrotask Queue
           </h4>
@@ -235,7 +248,8 @@ export const EventLoopVisualizer = () => {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 10 }}
-                  className="bg-white p-2 rounded-lg shadow-sm text-xs font-mono text-orange-900"
+                  transition={{ duration: 0.2 }}
+                  className="bg-white p-2 rounded-lg shadow-sm text-xs font-mono break-all text-orange-900"
                 >
                   {task}
                 </motion.div>
@@ -252,7 +266,7 @@ export const EventLoopVisualizer = () => {
             key={line}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
+            transition={{ duration: 0.2, delay: 0.1 }}
           >
             {line}
           </motion.div>

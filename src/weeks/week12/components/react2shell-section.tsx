@@ -7,7 +7,8 @@ import {
   ShieldCheck,
   Terminal,
 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { motion } from 'motion/react';
+import { useState } from 'react';
 import { Trans, useTranslation } from '@/i18n/client';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
@@ -115,13 +116,14 @@ export const React2ShellSection = () => {
           <DemoBox label={t('react2shell.simulator.demoLabel')}>
             <div className="space-y-6">
               {/* Controls */}
-              <div className="flex flex-col md:flex-row justify-between items-center gap-4 bg-gray-50 p-4 rounded-lg border">
-                <div className="flex items-center gap-4">
+              <div className="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4 bg-gray-50 p-3 sm:p-4 rounded-lg border">
+                <div className="flex flex-wrap items-center gap-4">
                   <div className="flex flex-col">
-                    <label className="text-xs font-bold text-gray-500 uppercase">
+                    <span className="text-xs font-bold text-gray-500 uppercase">
                       {t('react2shell.simulator.versionLabel')}
-                    </label>
+                    </span>
                     <button
+                      type="button"
                       onClick={() => setIsPatched(!isPatched)}
                       className={`mt-1 px-3 py-1 rounded text-sm font-bold flex items-center gap-2 transition-colors ${
                         isPatched
@@ -143,17 +145,19 @@ export const React2ShellSection = () => {
                   <div className="h-8 w-px bg-gray-300 mx-2 hidden md:block" />
 
                   <div className="flex flex-col w-full md:w-auto">
-                    <label className="text-xs font-bold text-gray-500 uppercase">
+                    <span className="text-xs font-bold text-gray-500 uppercase">
                       {t('react2shell.simulator.payloadLabel')}
-                    </label>
-                    <div className="flex gap-2 mt-1">
+                    </span>
+                    <div className="flex flex-wrap gap-2 mt-1">
                       <button
+                        type="button"
                         onClick={() => setPayloadType('legit')}
                         className={`px-3 py-1 rounded text-sm transition-colors ${payloadType === 'legit' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 border'}`}
                       >
                         {t('react2shell.simulator.normalData')}
                       </button>
                       <button
+                        type="button"
                         onClick={() => setPayloadType('malicious')}
                         className={`px-3 py-1 rounded text-sm transition-colors ${payloadType === 'malicious' ? 'bg-purple-600 text-white' : 'bg-white text-gray-600 border'}`}
                       >
@@ -164,9 +168,10 @@ export const React2ShellSection = () => {
                 </div>
 
                 <button
+                  type="button"
                   onClick={handleSendRequest}
                   disabled={serverStatus === 'processing'}
-                  className={`px-6 py-2 rounded-lg font-bold text-white shadow-md transition-all active:scale-95 ${
+                  className={`px-6 py-2 rounded-lg font-bold text-white shadow-md transition-all duration-150 active:scale-95 ${
                     serverStatus === 'processing'
                       ? 'bg-gray-400 cursor-not-allowed'
                       : payloadType === 'malicious'
@@ -198,10 +203,20 @@ export const React2ShellSection = () => {
                 {/* Connection Visual */}
                 <div className="hidden md:flex flex-col items-center justify-center text-gray-400">
                   <div
-                    className={`h-1 w-full relative ${serverStatus === 'processing' ? 'bg-blue-200' : 'bg-gray-200'}`}
+                    className={`h-1 w-full relative overflow-hidden ${serverStatus === 'processing' ? 'bg-blue-200' : 'bg-gray-200'}`}
                   >
                     {serverStatus === 'processing' && (
-                      <div className="absolute top-0 left-0 h-full w-1/3 bg-blue-600 animate-slide" />
+                      <motion.div
+                        className="absolute top-0 left-0 h-full w-1/3 bg-blue-600"
+                        initial={{ x: '0%' }}
+                        animate={{ x: '200%' }}
+                        transition={{
+                          duration: 0.8,
+                          ease: 'easeInOut',
+                          repeat: Number.POSITIVE_INFINITY,
+                          repeatType: 'reverse',
+                        }}
+                      />
                     )}
                   </div>
                   <ArrowRight className="mt-2" />

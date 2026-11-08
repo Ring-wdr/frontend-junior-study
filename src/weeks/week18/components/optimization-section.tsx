@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckCircle, HardDrive, Minimize2, Zap } from 'lucide-react';
+import { CheckCircle, HardDrive, Minimize2 } from 'lucide-react';
 import { useTranslation } from '@/i18n/client';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';

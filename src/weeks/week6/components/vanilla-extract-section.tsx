@@ -199,15 +199,14 @@ export const sprinkles = createSprinkles(responsiveProperties);
                 {t('vanillaExtract.features.typeSafetyDesc')}
               </li>
               <li>
+                <strong>{t('vanillaExtract.features.theming')}</strong>{' '}
                 <Trans
                   i18nKey="vanillaExtract.features.themingDesc"
                   t={t}
                   components={{
                     code: <code className="bg-gray-100 px-1 rounded" />,
                   }}
-                >
-                  <strong>{t('vanillaExtract.features.theming')}</strong>{' '}
-                </Trans>
+                />
               </li>
               <li>
                 <strong>{t('vanillaExtract.features.sprinkles')}</strong>{' '}

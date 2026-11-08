@@ -304,13 +304,15 @@ function SessionTimeoutWarning() {
           iconColor="purple"
         >
           <DemoBox label={t('privacy.twoFactor.demoLabel')}>
-            <div className="flex justify-center gap-2">
+            <div className="flex justify-center gap-1.5 sm:gap-2">
               {[0, 1, 2, 3, 4, 5].map((idx) => (
                 <input
                   key={idx}
                   type="text"
+                  inputMode="numeric"
                   maxLength={1}
-                  className="w-10 h-12 text-center text-xl font-mono border-2 rounded-lg focus:border-purple-500 focus:outline-none"
+                  aria-label={`2FA digit ${idx + 1}`}
+                  className="w-9 sm:w-10 h-12 text-center text-xl font-mono border-2 rounded-lg focus:border-purple-500 focus:outline-none"
                   placeholder="•"
                 />
               ))}

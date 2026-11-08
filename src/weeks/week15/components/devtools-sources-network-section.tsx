@@ -98,9 +98,7 @@ export const DevToolsSourcesNetworkSection = () => {
           iconColor="blue"
         >
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {(
-              raw('devtoolsSources.debugControls')
-            ).map((control, idx) => (
+            {raw('devtoolsSources.debugControls').map((control, idx) => (
               <div
                 key={control.name}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200 text-center"
@@ -130,9 +128,7 @@ export const DevToolsSourcesNetworkSection = () => {
                   {t('devtoolsSources.scopePanelTitle')}
                 </h5>
                 <ul className="text-sm text-gray-600 space-y-1">
-                  {(
-                    raw('devtoolsSources.scopeItems')
-                  ).map((item) => (
+                  {raw('devtoolsSources.scopeItems').map((item) => (
                     <li key={item.label}>
                       • <strong>{item.label}</strong> {item.desc}
                     </li>
@@ -144,11 +140,11 @@ export const DevToolsSourcesNetworkSection = () => {
                   {t('devtoolsSources.watchPanelTitle')}
                 </h5>
                 <ul className="text-sm text-gray-600 space-y-1">
-                  {(
-                    raw('devtoolsSources.watchItems')
-                  ).map((item: string, idx: number) => (
-                    <li key={idx}>• {item}</li>
-                  ))}
+                  {raw('devtoolsSources.watchItems').map(
+                    (item: string, idx: number) => (
+                      <li key={idx}>• {item}</li>
+                    ),
+                  )}
                 </ul>
               </div>
             </div>
@@ -168,9 +164,7 @@ export const DevToolsSourcesNetworkSection = () => {
           </InfoBox>
 
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {(
-              raw('devtoolsSources.networkFeatures')
-            ).map((item) => (
+            {raw('devtoolsSources.networkFeatures').map((item) => (
               <div
                 key={item.label}
                 className="bg-white p-3 rounded-lg border border-gray-200"

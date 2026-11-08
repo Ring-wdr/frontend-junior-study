@@ -11,7 +11,7 @@ import {
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 
-type ServerId = 'database' | 'browser' | 'github';
+type ServerId = (typeof servers)[number]['id'];
 
 const servers = [
   {
@@ -38,7 +38,7 @@ const servers = [
     activeIconClass: 'text-purple-600',
     activeTextClass: 'text-purple-700',
   },
-] as const satisfies readonly { id: ServerId; label: string }[];
+] as const;
 
 export const McpArchitectureVisualizer = () => {
   const { t } = useTranslation('week17');

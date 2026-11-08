@@ -179,11 +179,11 @@ onCLS(sendToSentry);`}
                 {t('webVitals.labDataTitle')}
               </h5>
               <ul className="text-xs text-blue-700 space-y-1">
-                {(
-                  raw('webVitals.labDataItems')
-                ).map((item: string, idx: number) => (
-                  <li key={idx}>• {item}</li>
-                ))}
+                {raw('webVitals.labDataItems').map(
+                  (item: string, idx: number) => (
+                    <li key={idx}>• {item}</li>
+                  ),
+                )}
               </ul>
             </div>
             <div className="bg-green-50 p-3 rounded-lg border border-green-200">
@@ -191,11 +191,11 @@ onCLS(sendToSentry);`}
                 {t('webVitals.fieldDataTitle')}
               </h5>
               <ul className="text-xs text-green-700 space-y-1">
-                {(
-                  raw('webVitals.fieldDataItems')
-                ).map((item: string, idx: number) => (
-                  <li key={idx}>• {item}</li>
-                ))}
+                {raw('webVitals.fieldDataItems').map(
+                  (item: string, idx: number) => (
+                    <li key={idx}>• {item}</li>
+                  ),
+                )}
               </ul>
             </div>
           </div>
@@ -203,22 +203,20 @@ onCLS(sendToSentry);`}
 
         <SubSection title={t('webVitals.dashboardTitle')} icon iconColor="red">
           <div className="space-y-3">
-            {(raw('webVitals.dashboards')).map(
-              (item) => (
-                <div
-                  key={item.tool}
-                  className="bg-white p-3 rounded-lg border border-gray-200 flex flex-wrap items-center justify-between gap-x-3 gap-y-1"
-                >
-                  <div className="min-w-0">
-                    <h5 className="font-bold text-sm text-gray-900">
-                      {item.tool}
-                    </h5>
-                    <p className="text-xs text-gray-500">{item.desc}</p>
-                  </div>
-                  <span className="text-xs text-blue-500">{item.link}</span>
+            {raw('webVitals.dashboards').map((item) => (
+              <div
+                key={item.tool}
+                className="bg-white p-3 rounded-lg border border-gray-200 flex flex-wrap items-center justify-between gap-x-3 gap-y-1"
+              >
+                <div className="min-w-0">
+                  <h5 className="font-bold text-sm text-gray-900">
+                    {item.tool}
+                  </h5>
+                  <p className="text-xs text-gray-500">{item.desc}</p>
                 </div>
-              ),
-            )}
+                <span className="text-xs text-blue-500">{item.link}</span>
+              </div>
+            ))}
           </div>
         </SubSection>
 
@@ -229,9 +227,7 @@ onCLS(sendToSentry);`}
         >
           <DemoBox label={t('webVitals.priorityLabel')}>
             <div className="space-y-2">
-              {(
-                raw('webVitals.priorities')
-              ).map((item) => (
+              {raw('webVitals.priorities').map((item) => (
                 <div
                   key={item.priority}
                   className="flex items-center gap-3 bg-gray-50 p-2 rounded"

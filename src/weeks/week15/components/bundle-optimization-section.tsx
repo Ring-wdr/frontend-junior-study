@@ -50,9 +50,7 @@ export const BundleOptimizationSection = () => {
                     {t('bundleOptimization.analyzerResultTitle')}
                   </h5>
                   <div className="space-y-2">
-                    {(
-                      raw('bundleOptimization.bundleItems')
-                    ).map((item) => (
+                    {raw('bundleOptimization.bundleItems').map((item) => (
                       <div key={item.name} className="space-y-1">
                         <div className="flex justify-between text-xs">
                           <span
@@ -117,9 +115,7 @@ export default defineConfig({
           iconColor="blue"
         >
           <div className="space-y-3">
-            {(
-              raw('bundleOptimization.libraryOptimizations')
-            ).map((item) => (
+            {raw('bundleOptimization.libraryOptimizations').map((item) => (
               <div
                 key={item.before}
                 className="bg-white p-3 rounded-lg border border-gray-200"
@@ -246,9 +242,7 @@ import { map } from 'lodash-es';  // ✅ ES Module`}
         >
           <div className="bg-gradient-to-r from-red-50 to-orange-50 p-4 rounded-lg border border-red-200">
             <div className="space-y-2">
-              {(
-                raw('bundleOptimization.checklistItems')
-              ).map((item) => (
+              {raw('bundleOptimization.checklistItems').map((item) => (
                 <label key={item} className="flex items-center gap-2 text-sm">
                   <input type="checkbox" className="rounded" />
                   <span className="text-gray-700">{item}</span>

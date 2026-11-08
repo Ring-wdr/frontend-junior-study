@@ -106,7 +106,7 @@ self.onmessage = async (e) => {
             </div>
 
             <InfoBox variant="blue" title={t('advancedFeatures.coopCoep')}>
-              <p className="text-sm font-mono">
+              <p className="text-xs sm:text-sm font-mono break-words">
                 Cross-Origin-Opener-Policy: same-origin
                 <br />
                 Cross-Origin-Embedder-Policy: require-corp

@@ -91,9 +91,7 @@ export const BundlingSection = () => {
 
         <SubSection title={t('bundling.webpackTitle')} icon iconColor="blue">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {(
-              raw('bundling.webpackConcepts')
-            ).map((item) => (
+            {raw('bundling.webpackConcepts').map((item) => (
               <div
                 key={item.concept}
                 className="bg-gray-50 p-3 rounded-lg border border-gray-200"
@@ -198,9 +196,7 @@ export default defineConfig({
 
         <SubSection title={t('bundling.conceptsTitle')} icon iconColor="purple">
           <div className="space-y-3">
-            {(
-              raw('bundling.buildConcepts')
-            ).map((item) => (
+            {raw('bundling.buildConcepts').map((item) => (
               <div
                 key={item.term}
                 className="bg-gradient-to-r from-purple-50 to-blue-50 p-3 rounded-lg border border-purple-100"

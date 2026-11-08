@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'motion/react';
 import { AlertCircle, Ban, CheckCircle, Loader2, Play } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
@@ -12,6 +12,20 @@ export const AbortControllerDemo = () => {
   const [status, setStatus] = useState<Status>('idle');
   const [progress, setProgress] = useState(0);
   const abortControllerRef = useRef<AbortController | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const stopInterval = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = null;
+  };
+
+  useEffect(
+    () => () => {
+      stopInterval();
+      abortControllerRef.current?.abort();
+    },
+    [],
+  );
 
   const startRequest = () => {
     if (status === 'loading') return;
@@ -27,9 +41,10 @@ export const AbortControllerDemo = () => {
 
     // Simulate a long request with progress
     let currentProgress = 0;
-    const interval = setInterval(() => {
+    stopInterval();
+    intervalRef.current = setInterval(() => {
       if (signal.aborted) {
-        clearInterval(interval);
+        stopInterval();
         return;
       }
 
@@ -37,7 +52,7 @@ export const AbortControllerDemo = () => {
       setProgress(currentProgress);
 
       if (currentProgress >= 100) {
-        clearInterval(interval);
+        stopInterval();
         setStatus('completed');
         abortControllerRef.current = null;
       }
@@ -51,15 +66,16 @@ export const AbortControllerDemo = () => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
+      stopInterval();
       setStatus('aborted');
     }
   };
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
         {/* Visualizer */}
-        <div className="bg-white p-6 rounded-xl border-2 border-gray-100 shadow-sm relative overflow-hidden">
+        <div className="bg-white p-4 rounded-xl border-2 border-gray-100 relative overflow-hidden min-w-0">
           <h4 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
             <Loader2
               className={cn('w-4 h-4', status === 'loading' && 'animate-spin')}
@@ -70,15 +86,17 @@ export const AbortControllerDemo = () => {
           {/* Progress Bar */}
           <div className="h-4 w-full bg-gray-100 rounded-full overflow-hidden mb-6 relative">
             <motion.div
+              initial={false}
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
               className={cn(
-                'h-full transition-all duration-300',
+                'h-full transition-colors duration-200',
                 status === 'aborted'
                   ? 'bg-red-400'
                   : status === 'completed'
                     ? 'bg-green-500'
                     : 'bg-blue-500',
               )}
-              style={{ width: `${progress}%` }}
             />
           </div>
 
@@ -89,6 +107,8 @@ export const AbortControllerDemo = () => {
                   key="idle"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.15 }}
                   className="text-gray-400 text-sm"
                 >
                   Ready to start...
@@ -99,6 +119,8 @@ export const AbortControllerDemo = () => {
                   key="loading"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.15 }}
                   className="flex flex-col items-center text-blue-600"
                 >
                   <span className="font-bold text-lg">{progress}%</span>
@@ -108,8 +130,10 @@ export const AbortControllerDemo = () => {
               {status === 'completed' && (
                 <motion.div
                   key="completed"
-                  initial={{ scale: 0.8, opacity: 0 }}
+                  initial={{ scale: 0.95, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
                   className="flex items-center gap-2 text-green-600 font-bold"
                 >
                   <CheckCircle className="w-6 h-6" /> Success!
@@ -118,8 +142,10 @@ export const AbortControllerDemo = () => {
               {status === 'aborted' && (
                 <motion.div
                   key="aborted"
-                  initial={{ scale: 0.8, opacity: 0 }}
+                  initial={{ scale: 0.95, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
                   className="flex items-center gap-2 text-red-500 font-bold"
                 >
                   <AlertCircle className="w-6 h-6" /> Request Aborted
@@ -129,7 +155,7 @@ export const AbortControllerDemo = () => {
           </div>
 
           {/* Controls */}
-          <div className="flex gap-2 mt-4 justify-center">
+          <div className="flex flex-wrap gap-2 mt-4 justify-center">
             <button
               type="button"
               onClick={startRequest}
@@ -150,7 +176,7 @@ export const AbortControllerDemo = () => {
         </div>
 
         {/* Code */}
-        <div>
+        <div className="min-w-0">
           <CodeBlock
             language="javascript"
             code={`const controller = new AbortController();

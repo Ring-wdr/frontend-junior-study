@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Code, Link as LinkIcon, MessageSquare } from 'lucide-react';
+import { Box, Code, Link as LinkIcon } from 'lucide-react';
 import { useTranslation } from '@/i18n/client';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';

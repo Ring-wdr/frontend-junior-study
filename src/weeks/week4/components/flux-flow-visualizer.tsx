@@ -57,7 +57,7 @@ export const FluxFlowVisualizer = () => {
         <div className="absolute top-12 left-[12.5%] right-[12.5%] h-1 -translate-y-1/2 bg-gray-100" />
         <motion.div
           aria-hidden
-          className="absolute top-12 -mt-2 -ml-2 w-4 h-4 bg-gray-900 rounded-full z-20"
+          className="absolute top-12 -mt-2 -ml-2 w-4 h-4 bg-gray-900 rounded-full z-[5]"
           initial={false}
           animate={{
             left: `${STEP_CENTERS[activeStep]}%`,
@@ -81,7 +81,7 @@ export const FluxFlowVisualizer = () => {
                 }}
                 transition={{ duration: 0.25 }}
                 className={cn(
-                  'w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-white shadow-sm z-10',
+                  'w-12 h-12 rounded-full flex items-center justify-center text-white shadow-sm z-10',
                   step.color,
                 )}
               >

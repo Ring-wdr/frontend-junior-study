@@ -2,7 +2,7 @@
 
 import { motion } from 'motion/react';
 import { Play } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
 
@@ -73,10 +73,19 @@ obj.greet(); // undefined (inherits from outer scope)`,
 export const ThisBindingDemo = () => {
   const [activeType, setActiveType] = useState<BindingType>('implicit');
   const [showResult, setShowResult] = useState(false);
+  const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+    },
+    [],
+  );
 
   const handleRun = () => {
+    if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
     setShowResult(true);
-    setTimeout(() => setShowResult(false), 3000);
+    hideTimerRef.current = setTimeout(() => setShowResult(false), 3000);
   };
 
   const example = examples[activeType];
@@ -109,12 +118,12 @@ export const ThisBindingDemo = () => {
         <p className="text-sm text-purple-900">{example.desc}</p>
       </div>
 
-      <div className="relative">
+      <div className="space-y-2">
         <CodeBlock code={example.code} />
         <button
           type="button"
           onClick={handleRun}
-          className="absolute top-4 right-4 flex items-center gap-2 px-3 py-1.5 bg-green-500 text-white rounded-lg text-sm font-medium hover:bg-green-600 transition-all shadow-md"
+          className="ml-auto flex items-center gap-2 px-3 py-1.5 bg-green-500 text-white rounded-lg text-sm font-medium hover:bg-green-600 transition-all shadow-md"
         >
           <Play className="w-3 h-3" />
           Run
@@ -123,8 +132,9 @@ export const ThisBindingDemo = () => {
 
       {showResult && (
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
+          initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
           className="bg-gray-900 text-green-400 p-4 rounded-xl font-mono text-sm"
         >
           <div className="text-gray-500 mb-1">Output:</div>

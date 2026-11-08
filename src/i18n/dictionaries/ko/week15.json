@@ -220,6 +220,9 @@
     ]
   },
   "devtoolsPerformance": {
+    "targetLabel": "목표",
+    "issueLabel": "문제",
+    "fixLabel": "해결",
     "badge": "Perf",
     "title": "Performance & Memory 패널",
     "description": "렌더링 병목 분석과 메모리 누수 탐지",

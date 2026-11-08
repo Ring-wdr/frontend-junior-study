@@ -26,7 +26,7 @@ export const CssModulesSection = () => {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
+            <div className="min-w-0">
               <h4 className="text-xs font-semibold mb-2">Button.module.css</h4>
               <CodeBlock
                 code={`.button {
@@ -42,7 +42,7 @@ export const CssModulesSection = () => {
                 className="text-xs"
               />
             </div>
-            <div>
+            <div className="min-w-0">
               <h4 className="text-xs font-semibold mb-2">Button.tsx</h4>
               <CodeBlock
                 code={`import styles from './Button.module.css';

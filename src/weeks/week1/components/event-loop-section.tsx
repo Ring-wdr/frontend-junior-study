@@ -15,11 +15,9 @@ export const EventLoopSection = () => {
     >
       <EventLoopVisualizer />
 
-      <div className="mt-8">
+      <div className="mt-6">
         <InfoBox variant="blue" title={t('eventLoop.keyRule.title')}>
-          {t('eventLoop.keyRule.content', {
-            interpolation: { escapeValue: false },
-          })}
+          {t('eventLoop.keyRule.content')}
         </InfoBox>
       </div>
     </SectionCard>
