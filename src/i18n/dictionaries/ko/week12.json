@@ -190,7 +190,7 @@
       "title": "토큰 저장 모범 사례",
       "localStorage": "localStorage",
       "localStorageDesc": "XSS 공격에 취약 - 중요한 토큰에는 사용 금지",
-      "httpOnly": "HttpOnly Cookie",
+      "httpOnly": "HttpOnly 쿠키",
       "httpOnlyDesc": "JavaScript로 접근 불가 - 토큰에 권장",
       "memory": "메모리 (인앱 상태)",
       "memoryDesc": "안전하지만 새로고침 시 손실 - 리프레시 토큰과 함께 사용"

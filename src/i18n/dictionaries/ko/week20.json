@@ -83,7 +83,7 @@
     "strategyTitle": "통신 방식",
     "strategies": [
       {
-        "name": "Custom Event",
+        "name": "커스텀 이벤트",
         "desc": "느슨한 결합이 가능해 도메인 간 의존도를 낮출 수 있습니다."
       },
       {
@@ -91,7 +91,7 @@
         "desc": "호스트가 데이터 흐름을 명확하게 제어할 수 있습니다."
       },
       {
-        "name": "Shared Store",
+        "name": "공유 스토어",
         "desc": "인증/사용자 정보처럼 공통 상태를 일관성 있게 공유합니다."
       }
     ],
@@ -202,7 +202,7 @@
       "에러율/배포시간/리드타임 지표를 기준으로 확장 여부 결정"
     ],
     "generatorTitle": "생성형 아키텍처 시뮬레이터",
-    "generatorLabel": "Interactive Generator",
+    "generatorLabel": "인터랙티브 생성기",
     "generator": {
       "teamCount": "팀 수",
       "domainPrefix": "도메인 Prefix",

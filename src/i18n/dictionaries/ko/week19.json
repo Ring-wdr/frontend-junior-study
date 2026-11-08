@@ -46,7 +46,11 @@
     "declarative": "선언적",
     "advantagesTitle": "R3F의 장점 비교",
     "advantages": [
-      { "feature": "코드 스타일", "threejs": "명령형", "r3f": "선언적" },
+      {
+        "feature": "코드 스타일",
+        "threejs": "명령형",
+        "r3f": "선언적"
+      },
       {
         "feature": "리소스 관리",
         "threejs": "수동 dispose",
@@ -101,10 +105,26 @@
     "geometryDesc": "Geometry는 3D 오브젝트의 형태를, Material은 표면의 색상과 질감을 정의합니다.",
     "lightingTitle": "조명 시스템",
     "lightTypes": [
-      { "name": "ambientLight", "desc": "환경광", "icon": "ambient" },
-      { "name": "directionalLight", "desc": "방향광", "icon": "sun" },
-      { "name": "pointLight", "desc": "점광원", "icon": "lightbulb" },
-      { "name": "spotLight", "desc": "스포트라이트", "icon": "spotlight" }
+      {
+        "name": "ambientLight",
+        "desc": "환경광",
+        "icon": "ambient"
+      },
+      {
+        "name": "directionalLight",
+        "desc": "방향광",
+        "icon": "sun"
+      },
+      {
+        "name": "pointLight",
+        "desc": "점광원",
+        "icon": "lightbulb"
+      },
+      {
+        "name": "spotLight",
+        "desc": "스포트라이트",
+        "icon": "spotlight"
+      }
     ],
     "shadowTitle": "그림자 설정",
     "shadowNote": "그림자 설정 포인트",
@@ -125,7 +145,10 @@
         "name": "useThree",
         "desc": "R3F 내부 상태(camera, gl, scene 등) 접근"
       },
-      { "name": "useLoader", "desc": "텍스처, 모델 등 에셋 비동기 로딩" }
+      {
+        "name": "useLoader",
+        "desc": "텍스처, 모델 등 에셋 비동기 로딩"
+      }
     ],
     "useFrameDesc": "useFrame은 매 프레임마다 실행되어 애니메이션을 구현합니다. delta 값으로 프레임 독립적인 애니메이션을 만들 수 있습니다.",
     "useThreeDesc": "useThree는 R3F의 내부 상태에 접근하여 카메라, 렌더러, 씬 등을 조작할 수 있게 해줍니다.",
@@ -144,11 +167,26 @@
     "title": "@react-three/drei 유틸리티",
     "description": "카메라 컨트롤, 환경, 텍스트, 모델 로딩 등 필수 유틸리티",
     "categories": [
-      { "name": "Controls", "desc": "카메라 컨트롤" },
-      { "name": "Environment", "desc": "환경 설정" },
-      { "name": "Helpers", "desc": "디버깅 도구" },
-      { "name": "Text", "desc": "텍스트 렌더링" },
-      { "name": "Loaders", "desc": "모델 로딩" }
+      {
+        "name": "Controls",
+        "desc": "카메라 컨트롤"
+      },
+      {
+        "name": "Environment",
+        "desc": "환경 설정"
+      },
+      {
+        "name": "Helpers",
+        "desc": "디버깅 도구"
+      },
+      {
+        "name": "Text",
+        "desc": "텍스트 렌더링"
+      },
+      {
+        "name": "Loaders",
+        "desc": "모델 로딩"
+      }
     ],
     "cameraTitle": "카메라 컨트롤",
     "environmentTitle": "환경과 조명",
@@ -166,12 +204,30 @@
     "description": "포인터 이벤트, 드래그 앤 드롭, 레이캐스팅",
     "pointerTitle": "포인터 이벤트",
     "events": [
-      { "name": "onClick", "desc": "클릭 이벤트" },
-      { "name": "onPointerOver", "desc": "호버 진입" },
-      { "name": "onPointerOut", "desc": "호버 이탈" },
-      { "name": "onPointerDown", "desc": "포인터 누름" },
-      { "name": "onPointerUp", "desc": "포인터 뗌" },
-      { "name": "onDoubleClick", "desc": "더블 클릭" }
+      {
+        "name": "onClick",
+        "desc": "클릭 이벤트"
+      },
+      {
+        "name": "onPointerOver",
+        "desc": "호버 진입"
+      },
+      {
+        "name": "onPointerOut",
+        "desc": "호버 이탈"
+      },
+      {
+        "name": "onPointerDown",
+        "desc": "포인터 누름"
+      },
+      {
+        "name": "onPointerUp",
+        "desc": "포인터 뗌"
+      },
+      {
+        "name": "onDoubleClick",
+        "desc": "더블 클릭"
+      }
     ],
     "dragTitle": "드래그 & 드롭",
     "dragDesc": "use-gesture와 react-spring을 조합하여 부드러운 드래그 상호작용을 구현합니다.",
@@ -191,10 +247,22 @@
     "title": "성능 최적화",
     "description": "인스턴싱, 프레임 제어, 메모리 관리, 모니터링",
     "techniques": [
-      { "name": "Instancing", "desc": "대량 오브젝트" },
-      { "name": "Frameloop", "desc": "프레임 제어" },
-      { "name": "Memory", "desc": "메모리 관리" },
-      { "name": "Monitoring", "desc": "성능 모니터링" }
+      {
+        "name": "Instancing",
+        "desc": "대량 오브젝트"
+      },
+      {
+        "name": "Frameloop",
+        "desc": "프레임 제어"
+      },
+      {
+        "name": "Memory",
+        "desc": "메모리 관리"
+      },
+      {
+        "name": "Monitoring",
+        "desc": "성능 모니터링"
+      }
     ],
     "instanceTitle": "인스턴싱 (InstancedMesh)",
     "instanceDesc": "동일한 geometry와 material을 가진 수천 개의 오브젝트를 단일 드로우 콜로 렌더링하여 성능을 크게 향상시킵니다.",
@@ -221,10 +289,22 @@
     "title": "고급 기법",
     "description": "포스트 프로세싱, 셰이더, 물리 엔진, VR/AR",
     "techniques": [
-      { "name": "Post Processing", "desc": "후처리 효과" },
-      { "name": "Shaders", "desc": "커스텀 셰이더" },
-      { "name": "Physics", "desc": "물리 엔진" },
-      { "name": "XR", "desc": "VR/AR 지원" }
+      {
+        "name": "포스트 프로세싱",
+        "desc": "후처리 효과"
+      },
+      {
+        "name": "Shaders",
+        "desc": "커스텀 셰이더"
+      },
+      {
+        "name": "Physics",
+        "desc": "물리 엔진"
+      },
+      {
+        "name": "XR",
+        "desc": "VR/AR 지원"
+      }
     ],
     "postTitle": "포스트 프로세싱",
     "postDesc": "@react-three/postprocessing으로 블룸, 색수차, 비네트 등 다양한 후처리 효과를 적용할 수 있습니다.",

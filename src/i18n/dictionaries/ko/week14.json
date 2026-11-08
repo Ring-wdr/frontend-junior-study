@@ -30,7 +30,7 @@
     },
     "principles": {
       "title": "WCAG 2.1 핵심 4대 원칙",
-      "label": "POUR Principles",
+      "label": "POUR 원칙",
       "perceivable": {
         "description": "모든 사용자가 콘텐츠를 인지할 수 있어야 함",
         "items": [
@@ -70,7 +70,7 @@
     },
     "contrastChecker": {
       "title": "명도 대비 체커",
-      "label": "Contrast Ratio Demo",
+      "label": "명도 대비 데모",
       "pass": "✓ 4.54:1 (WCAG AA)",
       "fail": "✗ 2.85:1 (Fail)",
       "guideline": "WCAG AA 기준: 일반 텍스트 4.5:1, 큰 텍스트(18px+) 3:1 이상"
@@ -107,7 +107,7 @@
     "description": "접근성의 80%는 HTML을 올바르게 사용하는 것만으로 해결됩니다",
     "importance": {
       "title": "시맨틱 태그의 중요성",
-      "infoTitle": "Why Semantic HTML?",
+      "infoTitle": "왜 시맨틱 HTML인가?",
       "infoText": "시맨틱 HTML은 스크린리더와 검색 엔진이 페이지 구조를 이해하는 기반입니다. <div>와 <span>만 사용하면 보조 기술이 콘텐츠의 의미를 파악할 수 없습니다."
     },
     "goodVsBad": {
@@ -163,7 +163,7 @@
     },
     "headingHierarchy": {
       "title": "Heading 계층 구조",
-      "label": "Document Outline",
+      "label": "문서 아웃라인",
       "warning": "⚠️ h1 → h3처럼 레벨을 건너뛰지 마세요. 스크린리더 사용자는 heading 목록으로 페이지를 탐색합니다."
     }
   },
@@ -173,7 +173,7 @@
     "description": "HTML을 먼저 쓰고, ARIA는 없는 기능을 보완하는 기술",
     "firstRule": {
       "title": "ARIA의 첫 번째 규칙",
-      "infoTitle": "First Rule of ARIA",
+      "infoTitle": "ARIA의 첫 번째 규칙",
       "quote": "\"ARIA를 사용하지 않아도 된다면, 사용하지 마세요.\"",
       "explanation": "네이티브 HTML 요소가 이미 접근성을 제공합니다. ARIA는 HTML로 표현할 수 없는 기능(예: 커스텀 컴포넌트)에만 사용하세요. ARIA를 남용하면 접근성이 악화됩니다."
     },
@@ -214,20 +214,20 @@
     },
     "ariaExpanded": {
       "title": "Interactive: aria-expanded",
-      "label": "Accordion Pattern",
+      "label": "아코디언 패턴",
       "buttonText": "What is aria-expanded?",
       "explanation": "aria-expanded는 스크린리더에게 현재 요소가 확장되었는지 축소되었는지 알려줍니다. 토글 버튼, 아코디언, 드롭다운 메뉴 등에 필수적입니다."
     },
     "ariaLive": {
       "title": "Interactive: aria-live",
-      "label": "Live Region Demo",
+      "label": "Live Region 데모",
       "instructions": "버튼을 클릭하면 스크린리더가 알림을 읽어줍니다:",
       "addToCart": "Add to Cart",
-      "submitForm": "Submit Form",
+      "submitForm": "폼 제출",
       "clear": "Clear",
-      "notification1": "Item added to cart!",
-      "notification2": "Form submitted successfully",
-      "placeholder": "Notifications will appear here..."
+      "notification1": "장바구니에 상품이 추가되었습니다!",
+      "notification2": "폼이 성공적으로 제출되었습니다",
+      "placeholder": "알림이 여기에 표시됩니다..."
     },
     "modalPattern": {
       "title": "모달 다이얼로그 패턴"
@@ -238,17 +238,17 @@
         {
           "bad": "<div role=\"button\">Click</div>",
           "good": "<button>Click</button>",
-          "reason": "Native element already has semantics"
+          "reason": "네이티브 요소에 이미 시맨틱이 있습니다"
         },
         {
           "bad": "aria-hidden=\"true\" on focusable element",
-          "good": "Remove element from tab order first",
-          "reason": "Creates invisible but focusable element"
+          "good": "먼저 요소를 탭 순서에서 제거합니다",
+          "reason": "보이지 않지만 포커스 가능한 요소가 만들어집니다"
         },
         {
           "bad": "aria-label on <div> without role",
-          "good": "Add appropriate role or use native element",
-          "reason": "aria-label only works with certain roles"
+          "good": "적절한 role을 추가하거나 네이티브 요소를 사용합니다",
+          "reason": "aria-label은 특정 role에서만 동작합니다"
         }
       ]
     }
@@ -259,7 +259,7 @@
     "description": "React SPA에서 가장 자주 깨지는 접근성 포인트",
     "whenToManage": {
       "title": "포커스 관리가 필요한 경우",
-      "infoTitle": "When to Manage Focus",
+      "infoTitle": "포커스를 관리해야 하는 경우",
       "cases": [
         {
           "title": "라우트 이동 시:",
@@ -281,22 +281,22 @@
     },
     "trapDemo": {
       "title": "Interactive: Focus Trap Modal",
-      "label": "Click to Open Modal",
-      "openButton": "Open Modal",
+      "label": "클릭하여 모달 열기",
+      "openButton": "모달 열기",
       "instructions": "모달이 열리면 Tab 키로 탐색해보세요. Focus가 모달 안에 갇힙니다(trap).",
-      "modalTitle": "Focus Trap Demo",
+      "modalTitle": "Focus Trap 데모",
       "modalDesc": "Tab 키를 눌러보세요. Focus가 이 모달 안에서만 순환합니다. ESC를 누르면 닫힙니다.",
-      "input1": "Input field 1",
-      "input2": "Input field 2",
+      "input1": "입력 필드 1",
+      "input2": "입력 필드 2",
       "cancel": "Cancel",
       "confirm": "Confirm",
       "closeModal": "모달 닫기"
     },
     "indicatorTracker": {
       "title": "Focus Indicator Tracker",
-      "label": "Tab Through These Buttons",
-      "historyLabel": "Focus History:",
-      "placeholder": "Tab through buttons...",
+      "label": "Tab 키로 버튼들을 이동해 보세요",
+      "historyLabel": "포커스 기록:",
+      "placeholder": "Tab 키로 버튼을 이동해 보세요...",
       "buttons": ["Button A", "Button B", "Button C", "Button D"]
     },
     "implementation": {
@@ -363,7 +363,7 @@
     },
     "liveDemo": {
       "title": "Interactive: 다국어 전환",
-      "label": "Live Translation Demo",
+      "label": "실시간 번역 데모",
       "locales": {
         "ko": "한국어",
         "en": "English",
@@ -374,7 +374,7 @@
     },
     "icuFormat": {
       "title": "ICU Message Format",
-      "infoTitle": "Industry Standard",
+      "infoTitle": "업계 표준",
       "infoText": "ICU Message Format은 복수형, 선택형 메시지 처리의 업계 표준입니다."
     },
     "nextjsStructure": {
@@ -423,7 +423,7 @@
     },
     "liveDemo": {
       "title": "Interactive: 로케일별 포맷팅",
-      "label": "Select Locale to See Differences",
+      "label": "로케일을 선택해 차이를 확인하세요",
       "locales": {
         "ko": "한국어",
         "en": "English (US)",
@@ -468,8 +468,8 @@
         },
         {
           "api": "Intl.Segmenter",
-          "example": "Segment text into words/sentences",
-          "result": "Text analysis"
+          "example": "텍스트를 단어/문장 단위로 분할",
+          "result": "텍스트 분석"
         }
       ]
     }
@@ -480,7 +480,7 @@
     "description": "아랍어, 히브리어 등 RTL 언어를 위한 필수 기능",
     "languages": {
       "title": "RTL이 필요한 언어",
-      "infoTitle": "RTL Languages",
+      "infoTitle": "RTL 언어",
       "infoText": "약 4억 명 이상의 사용자가 RTL 언어를 사용합니다. 글로벌 서비스라면 반드시 고려해야 합니다.",
       "list": [
         {
@@ -503,19 +503,19 @@
     },
     "liveDemo": {
       "title": "Interactive: LTR vs RTL",
-      "label": "Toggle Direction",
+      "label": "방향 전환",
       "ltr": "LTR (English)",
       "rtl": "RTL (العربية)",
       "name": {
-        "ltr": "John Doe",
+        "ltr": "홍길동",
         "rtl": "محمد أحمد"
       },
       "role": {
-        "ltr": "Frontend Developer",
+        "ltr": "프론트엔드 개발자",
         "rtl": "مطور واجهة أمامية"
       },
       "text": {
-        "ltr": "This is an example of text that reads from left to right.",
+        "ltr": "왼쪽에서 오른쪽으로 읽는 텍스트의 예시입니다.",
         "rtl": "هذا مثال على النص العربي الذي يُقرأ من اليمين إلى اليسار."
       },
       "submit": {
@@ -530,7 +530,7 @@
     },
     "logicalProperties": {
       "title": "CSS Logical Properties",
-      "infoTitle": "Direction-Agnostic CSS",
+      "infoTitle": "방향에 독립적인 CSS",
       "infoText": "CSS Logical Properties를 사용하면 LTR/RTL을 자동으로 처리합니다. left/right 대신 start/end를 사용하세요.",
       "physical": "✗ Physical (Avoid)",
       "logical": "✓ Logical (Use)"

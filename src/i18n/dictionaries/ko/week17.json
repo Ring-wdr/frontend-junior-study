@@ -40,15 +40,31 @@
         "desc": "CLI 기반 완전 자율 에이전트",
         "icon": "bot"
       },
-      { "name": "Cursor", "desc": "AI-네이티브 IDE, Composer", "icon": "zap" },
+      {
+        "name": "Cursor",
+        "desc": "AI-네이티브 IDE, Composer",
+        "icon": "zap"
+      },
       {
         "name": "GitHub Copilot",
         "desc": "VS Code 통합 에이전트",
         "icon": "git-branch"
       },
-      { "name": "Windsurf", "desc": "Cascade 에이전트 IDE", "icon": "brain" },
-      { "name": "Cline", "desc": "VS Code 자율 에이전트", "icon": "wrench" },
-      { "name": "Aider", "desc": "Git 통합 CLI 도구", "icon": "git-branch" }
+      {
+        "name": "Windsurf",
+        "desc": "Cascade 에이전트 IDE",
+        "icon": "brain"
+      },
+      {
+        "name": "Cline",
+        "desc": "VS Code 자율 에이전트",
+        "icon": "wrench"
+      },
+      {
+        "name": "Aider",
+        "desc": "Git 통합 CLI 도구",
+        "icon": "git-branch"
+      }
     ],
     "capabilitiesTitle": "AI 에이전트의 역량과 한계",
     "aiGoodAt": "AI 에이전트가 잘하는 것",
@@ -132,10 +148,22 @@
     "skillsInfoTitle": "Skill이란?",
     "skillsInfoDesc": "Skill은 자주 사용하는 복잡한 작업을 정의하고 슬래시 명령어로 재사용할 수 있게 해줍니다. /commit, /review-pr 등이 대표적인 예입니다.",
     "skillExamples": [
-      { "name": "/commit", "desc": "변경사항 분석 후 컨벤셔널 커밋" },
-      { "name": "/review-pr", "desc": "PR 코드 리뷰 및 개선 제안" },
-      { "name": "/component", "desc": "컴포넌트 + 테스트 + 스토리 생성" },
-      { "name": "/docs", "desc": "코드 분석 후 문서 자동 생성" }
+      {
+        "name": "/commit",
+        "desc": "변경사항 분석 후 컨벤셔널 커밋"
+      },
+      {
+        "name": "/review-pr",
+        "desc": "PR 코드 리뷰 및 개선 제안"
+      },
+      {
+        "name": "/component",
+        "desc": "컴포넌트 + 테스트 + 스토리 생성"
+      },
+      {
+        "name": "/docs",
+        "desc": "코드 분석 후 문서 자동 생성"
+      }
     ],
     "hooksTitle": "Hooks: 이벤트 기반 자동화",
     "hooksInfoTitle": "Hook이란?",
@@ -180,15 +208,27 @@
     "planModeInfoDesc": "대규모 리팩토링, 새로운 기능 추가 등 영향 범위가 큰 작업에서 Plan 모드를 사용하면 AI가 먼저 계획을 세우고 사용자 승인 후 실행합니다.",
     "subAgentsTitle": "서브에이전트 활용",
     "subAgents": [
-      { "name": "Explore", "desc": "코드베이스 탐색 및 분석" },
-      { "name": "Bash", "desc": "명령어 실행, 빌드, 테스트" },
-      { "name": "Plan", "desc": "구현 계획 수립" },
-      { "name": "Code", "desc": "코드 작성 및 수정" }
+      {
+        "name": "Explore",
+        "desc": "코드베이스 탐색 및 분석"
+      },
+      {
+        "name": "Bash",
+        "desc": "명령어 실행, 빌드, 테스트"
+      },
+      {
+        "name": "Plan",
+        "desc": "구현 계획 수립"
+      },
+      {
+        "name": "Code",
+        "desc": "코드 작성 및 수정"
+      }
     ],
-    "cursorTitle": "Cursor Agent Mode",
+    "cursorTitle": "Cursor 에이전트 모드",
     "cursorInfoTitle": "Cursor Rules 설정",
     "cursorInfoDesc": "Cursor의 .cursor/rules 파일로 AI의 코드 스타일, 자동 작업, 금지 사항 등을 정의할 수 있습니다.",
-    "interviewModeTitle": "Interview Mode",
+    "interviewModeTitle": "인터뷰 모드",
     "interviewModeInfoTitle": "Interview Mode 소개",
     "interviewModeInfoDesc": "인터뷰 모드는 한 번에 큰 결정을 내리기보다, 질문-확인-수정 루프를 통해 점진적으로 컨텍스트를 정교화하는 방식입니다.",
     "interviewModeTipTitle": "권장 사용 패턴",
@@ -218,7 +258,7 @@
     ],
     "teamsVsSubAgentsParallelToken": "예측 가능한 결과 경로로 토큰 사용량이 안정적",
     "teamsVsSubAgentsTeamsToken": "의사결정 메타 데이터가 추가되어 더 많은 컨텍스트가 필요할 수 있음",
-    "teamsTitle": "Claude Code Teams",
+    "teamsTitle": "Claude Code 팀 활용",
     "teamsCompareTitle": "Teams 사용 유무로 보기",
     "teamsDescription": "동일 작업에서 Teams 기능을 켰을 때와 끄고 작업했을 때 결과 형태가 다릅니다.",
     "teamsWithGenerativeTitle": "Teams 사용",
