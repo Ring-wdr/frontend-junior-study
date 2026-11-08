@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslation } from '@/i18n/client';
+import { Trans, useTranslation } from '@/i18n/client';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
@@ -22,16 +22,13 @@ export const VitestSetupSection = () => {
             <InfoBox variant="blue" title={t('vitest.jest.strengths.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Mature ecosystem:</strong>{' '}
-                  {t('vitest.jest.strengths.mature')}
+                  <Trans t={t} i18nKey="vitest.jest.strengths.mature" />
                 </li>
                 <li>
-                  <strong>Built-in tools:</strong>{' '}
-                  {t('vitest.jest.strengths.builtin')}
+                  <Trans t={t} i18nKey="vitest.jest.strengths.builtin" />
                 </li>
                 <li>
-                  <strong>Familiar syntax:</strong>{' '}
-                  {t('vitest.jest.strengths.familiar')}
+                  <Trans t={t} i18nKey="vitest.jest.strengths.familiar" />
                 </li>
               </ul>
             </InfoBox>
@@ -39,11 +36,10 @@ export const VitestSetupSection = () => {
             <InfoBox variant="red" title={t('vitest.jest.weaknesses.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Slower:</strong> {t('vitest.jest.weaknesses.slow')}
+                  <Trans t={t} i18nKey="vitest.jest.weaknesses.slow" />
                 </li>
                 <li>
-                  <strong>Complex configuration:</strong>{' '}
-                  {t('vitest.jest.weaknesses.complex')}
+                  <Trans t={t} i18nKey="vitest.jest.weaknesses.complex" />
                 </li>
               </ul>
             </InfoBox>
@@ -59,20 +55,16 @@ export const VitestSetupSection = () => {
             <InfoBox variant="green" title={t('vitest.vitest.strengths.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>⚡ Super fast:</strong>{' '}
-                  {t('vitest.vitest.strengths.fast')}
+                  <Trans t={t} i18nKey="vitest.vitest.strengths.fast" />
                 </li>
                 <li>
-                  <strong>Jest compatible:</strong>{' '}
-                  {t('vitest.vitest.strengths.compatible')}
+                  <Trans t={t} i18nKey="vitest.vitest.strengths.compatible" />
                 </li>
                 <li>
-                  <strong>Modern tooling:</strong>{' '}
-                  {t('vitest.vitest.strengths.modern')}
+                  <Trans t={t} i18nKey="vitest.vitest.strengths.modern" />
                 </li>
                 <li>
-                  <strong>Watch mode:</strong>{' '}
-                  {t('vitest.vitest.strengths.watch')}
+                  <Trans t={t} i18nKey="vitest.vitest.strengths.watch" />
                 </li>
               </ul>
             </InfoBox>
@@ -83,12 +75,13 @@ export const VitestSetupSection = () => {
             >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Newer:</strong>{' '}
-                  {t('vitest.vitest.considerations.newer')}
+                  <Trans t={t} i18nKey="vitest.vitest.considerations.newer" />
                 </li>
                 <li>
-                  <strong>Vite dependent:</strong>{' '}
-                  {t('vitest.vitest.considerations.viteDependent')}
+                  <Trans
+                    t={t}
+                    i18nKey="vitest.vitest.considerations.viteDependent"
+                  />
                 </li>
               </ul>
             </InfoBox>
@@ -238,20 +231,25 @@ afterEach(() => {
                   </code>
                 </li>
                 <li>
-                  <strong>Create vitest.config.ts:</strong>{' '}
-                  {t('vitest.migration.checklist.createConfig')}
+                  <Trans
+                    t={t}
+                    i18nKey="vitest.migration.checklist.createConfig"
+                  />
                 </li>
                 <li>
-                  <strong>Update package.json:</strong>{' '}
-                  {t('vitest.migration.checklist.updatePackage')}
+                  <Trans
+                    t={t}
+                    i18nKey="vitest.migration.checklist.updatePackage"
+                  />
                 </li>
                 <li>
-                  <strong>Replace jest.fn() with vi.fn():</strong>{' '}
-                  {t('vitest.migration.checklist.replaceJest')}
+                  <Trans
+                    t={t}
+                    i18nKey="vitest.migration.checklist.replaceJest"
+                  />
                 </li>
                 <li>
-                  <strong>Run tests:</strong>{' '}
-                  {t('vitest.migration.checklist.runTests')}
+                  <Trans t={t} i18nKey="vitest.migration.checklist.runTests" />
                 </li>
               </ol>
             </InfoBox>
@@ -277,12 +275,10 @@ const mockFn = vi.fn();`}
           <div className="space-y-4">
             <div className="bg-gradient-to-r from-purple-50 to-blue-50 p-4 sm:p-6 rounded-lg border border-purple-200">
               <p className="text-sm text-gray-700 mb-4">
-                <strong>For new projects:</strong>{' '}
-                {t('vitest.recommendation.newProjects')}
+                <Trans t={t} i18nKey="vitest.recommendation.newProjects" />
               </p>
               <p className="text-sm text-gray-700">
-                <strong>For existing Jest projects:</strong>{' '}
-                {t('vitest.recommendation.existingProjects')}
+                <Trans t={t} i18nKey="vitest.recommendation.existingProjects" />
               </p>
             </div>
           </div>

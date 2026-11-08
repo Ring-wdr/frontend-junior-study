@@ -22,11 +22,11 @@
       "definition": {
         "title": "Form Definition",
         "intro": "A form is a complex system that combines:",
-        "ui": "UI: Input elements, labels, buttons",
-        "state": "State: Current input values",
-        "validation": "Validation: Rules and error checking",
-        "errorHandling": "Error Handling: Displaying validation errors",
-        "submission": "Submission: Processing and API integration"
+        "ui": "<strong>UI:</strong> Input elements, labels, buttons",
+        "state": "<strong>State:</strong> Current input values",
+        "validation": "<strong>Validation:</strong> Rules and error checking",
+        "errorHandling": "<strong>Error Handling:</strong> Displaying validation errors",
+        "submission": "<strong>Submission:</strong> Processing and API integration"
       }
     },
     "controlledVsUncontrolled": {
@@ -44,11 +44,11 @@
     },
     "whyFormsAreComplex": {
       "title": "Why Forms Are Complex",
-      "performance": "Performance: Too many re-renders with fully controlled components",
-      "stateManagement": "State Management: Tracking multiple input states is tedious",
-      "validation": "Validation: Real-time + submit-time + async validation coordination",
-      "errorMessages": "Error Messages: Displaying and clearing errors appropriately",
-      "edgeCases": "Edge Cases: Emoji handling, Unicode normalization, XSS prevention"
+      "performance": "<strong>Performance:</strong> Too many re-renders with fully controlled components",
+      "stateManagement": "<strong>State Management:</strong> Tracking multiple input states is tedious",
+      "validation": "<strong>Validation:</strong> Real-time + submit-time + async validation coordination",
+      "errorMessages": "<strong>Error Messages:</strong> Displaying and clearing errors appropriately",
+      "edgeCases": "<strong>Edge Cases:</strong> Emoji handling, Unicode normalization, XSS prevention"
     },
     "commonRequirements": {
       "title": "Common Form Requirements"
@@ -62,13 +62,13 @@
       "title": "Why React Hook Form?",
       "keyAdvantages": {
         "title": "Key Advantages",
-        "uncontrolled": "Uncontrolled-based: Minimal re-renders (only on changes)",
-        "smallBundle": "Small bundle: ~9KB minified",
-        "typeSafe": "Type-safe: Excellent TypeScript support",
-        "registerAPI": "Register API: Simple input field registration",
-        "formState": "formState object: Tracks isDirty, isTouched, errors, etc.",
-        "watchSetValue": "Watch, setValue: Programmatic value access",
-        "controller": "Controller: Works with custom/3rd-party inputs"
+        "uncontrolled": "<strong>Uncontrolled-based:</strong> Minimal re-renders (only on changes)",
+        "smallBundle": "<strong>Small bundle:</strong> ~9KB minified",
+        "typeSafe": "<strong>Type-safe:</strong> Excellent TypeScript support",
+        "registerAPI": "<strong>Register API:</strong> Simple input field registration",
+        "formState": "<strong>formState object:</strong> Tracks isDirty, isTouched, errors, etc.",
+        "watchSetValue": "<strong>Watch, setValue:</strong> Programmatic value access",
+        "controller": "<strong>Controller:</strong> Works with custom/3rd-party inputs"
       }
     },
     "basicSetup": {
@@ -108,14 +108,14 @@
       "title": "formState Object",
       "importantProps": {
         "title": "Important formState Properties",
-        "isDirty": "isDirty: Has user modified any field?",
-        "isTouched": "isTouched: Has user interacted with this field?",
-        "errors": "errors: Object containing field validation errors",
-        "isSubmitting": "isSubmitting: Is form currently being submitted?",
-        "isValidating": "isValidating: Is async validation running?",
-        "isValid": "isValid: Is form valid according to rules?",
-        "dirtyFields": "dirtyFields: Which fields have been modified?",
-        "touchedFields": "touchedFields: Which fields have been interacted with?"
+        "isDirty": "<strong>isDirty:</strong> Has user modified any field?",
+        "isTouched": "<strong>isTouched:</strong> Has user interacted with this field?",
+        "errors": "<strong>errors:</strong> Object containing field validation errors",
+        "isSubmitting": "<strong>isSubmitting:</strong> Is form currently being submitted?",
+        "isValidating": "<strong>isValidating:</strong> Is async validation running?",
+        "isValid": "<strong>isValid:</strong> Is form valid according to rules?",
+        "dirtyFields": "<strong>dirtyFields:</strong> Which fields have been modified?",
+        "touchedFields": "<strong>touchedFields:</strong> Which fields have been interacted with?"
       }
     },
     "formStateTracking": {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslation } from '@/i18n/client';
+import { Trans, useTranslation } from '@/i18n/client';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
@@ -22,20 +22,22 @@ export const E2ETestingSection = () => {
             <InfoBox variant="red" title={t('e2e.whatIsE2E.useCases.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Critical user journeys:</strong>{' '}
-                  {t('e2e.whatIsE2E.useCases.criticalJourneys')}
+                  <Trans
+                    t={t}
+                    i18nKey="e2e.whatIsE2E.useCases.criticalJourneys"
+                  />
                 </li>
                 <li>
-                  <strong>Cross-browser compatibility:</strong>{' '}
-                  {t('e2e.whatIsE2E.useCases.crossBrowser')}
+                  <Trans t={t} i18nKey="e2e.whatIsE2E.useCases.crossBrowser" />
                 </li>
                 <li>
-                  <strong>Visual regression:</strong>{' '}
-                  {t('e2e.whatIsE2E.useCases.visualRegression')}
+                  <Trans
+                    t={t}
+                    i18nKey="e2e.whatIsE2E.useCases.visualRegression"
+                  />
                 </li>
                 <li>
-                  <strong>Real-world scenarios:</strong>{' '}
-                  {t('e2e.whatIsE2E.useCases.realWorld')}
+                  <Trans t={t} i18nKey="e2e.whatIsE2E.useCases.realWorld" />
                 </li>
               </ul>
             </InfoBox>
@@ -60,19 +62,19 @@ export const E2ETestingSection = () => {
             <InfoBox variant="blue" title={t('e2e.playwright.strengths.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>⚡ Fast:</strong> {t('e2e.playwright.strengths.fast')}
+                  <Trans t={t} i18nKey="e2e.playwright.strengths.fast" />
                 </li>
                 <li>
-                  <strong>🌐 Cross-browser:</strong>{' '}
-                  {t('e2e.playwright.strengths.crossBrowser')}
+                  <Trans
+                    t={t}
+                    i18nKey="e2e.playwright.strengths.crossBrowser"
+                  />
                 </li>
                 <li>
-                  <strong>CI-friendly:</strong>{' '}
-                  {t('e2e.playwright.strengths.ciFriendly')}
+                  <Trans t={t} i18nKey="e2e.playwright.strengths.ciFriendly" />
                 </li>
                 <li>
-                  <strong>Developer experience:</strong>{' '}
-                  {t('e2e.playwright.strengths.dx')}
+                  <Trans t={t} i18nKey="e2e.playwright.strengths.dx" />
                 </li>
               </ul>
             </InfoBox>
@@ -116,20 +118,16 @@ test('user can login and see dashboard', async ({ page }) => {
             <InfoBox variant="green" title={t('e2e.cypress.strengths.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>🎨 Best DX:</strong>{' '}
-                  {t('e2e.cypress.strengths.bestDX')}
+                  <Trans t={t} i18nKey="e2e.cypress.strengths.bestDX" />
                 </li>
                 <li>
-                  <strong>📹 Recording:</strong>{' '}
-                  {t('e2e.cypress.strengths.recording')}
+                  <Trans t={t} i18nKey="e2e.cypress.strengths.recording" />
                 </li>
                 <li>
-                  <strong>⏱️ Debugging:</strong>{' '}
-                  {t('e2e.cypress.strengths.debugging')}
+                  <Trans t={t} i18nKey="e2e.cypress.strengths.debugging" />
                 </li>
                 <li>
-                  <strong>📊 Dashboard:</strong>{' '}
-                  {t('e2e.cypress.strengths.dashboard')}
+                  <Trans t={t} i18nKey="e2e.cypress.strengths.dashboard" />
                 </li>
               </ul>
             </InfoBox>
@@ -137,12 +135,13 @@ test('user can login and see dashboard', async ({ page }) => {
             <InfoBox variant="red" title={t('e2e.cypress.limitations.title')}>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Single browser:</strong>{' '}
-                  {t('e2e.cypress.limitations.singleBrowser')}
+                  <Trans
+                    t={t}
+                    i18nKey="e2e.cypress.limitations.singleBrowser"
+                  />
                 </li>
                 <li>
-                  <strong>JavaScript only:</strong>{' '}
-                  {t('e2e.cypress.limitations.jsOnly')}
+                  <Trans t={t} i18nKey="e2e.cypress.limitations.jsOnly" />
                 </li>
               </ul>
             </InfoBox>
@@ -255,24 +254,34 @@ describe('Login Flow', () => {
             >
               <ol className="list-decimal pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Test critical user paths:</strong>{' '}
-                  {t('e2e.bestPractices.guidelines.criticalPaths')}
+                  <Trans
+                    t={t}
+                    i18nKey="e2e.bestPractices.guidelines.criticalPaths"
+                  />
                 </li>
                 <li>
-                  <strong>Avoid testing details:</strong>{' '}
-                  {t('e2e.bestPractices.guidelines.avoidDetails')}
+                  <Trans
+                    t={t}
+                    i18nKey="e2e.bestPractices.guidelines.avoidDetails"
+                  />
                 </li>
                 <li>
-                  <strong>Use meaningful waits:</strong>{' '}
-                  {t('e2e.bestPractices.guidelines.meaningfulWaits')}
+                  <Trans
+                    t={t}
+                    i18nKey="e2e.bestPractices.guidelines.meaningfulWaits"
+                  />
                 </li>
                 <li>
-                  <strong>Keep tests isolated:</strong>{' '}
-                  {t('e2e.bestPractices.guidelines.keepIsolated')}
+                  <Trans
+                    t={t}
+                    i18nKey="e2e.bestPractices.guidelines.keepIsolated"
+                  />
                 </li>
                 <li>
-                  <strong>Use test data carefully:</strong>{' '}
-                  {t('e2e.bestPractices.guidelines.testData')}
+                  <Trans
+                    t={t}
+                    i18nKey="e2e.bestPractices.guidelines.testData"
+                  />
                 </li>
               </ol>
             </InfoBox>

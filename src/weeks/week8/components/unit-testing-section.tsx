@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslation } from '@/i18n/client';
+import { Trans, useTranslation } from '@/i18n/client';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
@@ -29,24 +29,28 @@ export const UnitTestingSection = () => {
             >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Don't test state:</strong>{' '}
-                  {t('unitTesting.philosophy.corePhilosophy.dontTestState')}
+                  <Trans
+                    t={t}
+                    i18nKey="unitTesting.philosophy.corePhilosophy.dontTestState"
+                  />
                 </li>
                 <li>
-                  <strong>Don't test implementation:</strong>{' '}
-                  {t(
-                    'unitTesting.philosophy.corePhilosophy.dontTestImplementation',
-                  )}
+                  <Trans
+                    t={t}
+                    i18nKey="unitTesting.philosophy.corePhilosophy.dontTestImplementation"
+                  />
                 </li>
                 <li>
-                  <strong>Test what users see:</strong>{' '}
-                  {t('unitTesting.philosophy.corePhilosophy.testWhatUsersSee')}
+                  <Trans
+                    t={t}
+                    i18nKey="unitTesting.philosophy.corePhilosophy.testWhatUsersSee"
+                  />
                 </li>
                 <li>
-                  <strong>Simulate user interactions:</strong>{' '}
-                  {t(
-                    'unitTesting.philosophy.corePhilosophy.simulateUserInteractions',
-                  )}
+                  <Trans
+                    t={t}
+                    i18nKey="unitTesting.philosophy.corePhilosophy.simulateUserInteractions"
+                  />
                 </li>
               </ul>
             </InfoBox>
@@ -178,12 +182,16 @@ test('increments counter on button click', async () => {
             >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>userEvent:</strong>{' '}
-                  {t('unitTesting.userInteractions.comparison.userEvent')}
+                  <Trans
+                    t={t}
+                    i18nKey="unitTesting.userInteractions.comparison.userEvent"
+                  />
                 </li>
                 <li>
-                  <strong>fireEvent:</strong>{' '}
-                  {t('unitTesting.userInteractions.comparison.fireEvent')}
+                  <Trans
+                    t={t}
+                    i18nKey="unitTesting.userInteractions.comparison.fireEvent"
+                  />
                 </li>
               </ul>
             </InfoBox>
@@ -226,16 +234,22 @@ test('shows error message on failed request', async () => {
               </p>
               <ol className="list-decimal pl-5 space-y-1 text-sm text-gray-700">
                 <li>
-                  <strong>getBy*:</strong>{' '}
-                  {t('unitTesting.asyncTesting.queryPriority.getBy')}
+                  <Trans
+                    t={t}
+                    i18nKey="unitTesting.asyncTesting.queryPriority.getBy"
+                  />
                 </li>
                 <li>
-                  <strong>findBy*:</strong>{' '}
-                  {t('unitTesting.asyncTesting.queryPriority.findBy')}
+                  <Trans
+                    t={t}
+                    i18nKey="unitTesting.asyncTesting.queryPriority.findBy"
+                  />
                 </li>
                 <li>
-                  <strong>queryBy*:</strong>{' '}
-                  {t('unitTesting.asyncTesting.queryPriority.queryBy')}
+                  <Trans
+                    t={t}
+                    i18nKey="unitTesting.asyncTesting.queryPriority.queryBy"
+                  />
                 </li>
               </ol>
             </div>

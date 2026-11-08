@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslation } from '@/i18n/client';
+import { Trans, useTranslation } from '@/i18n/client';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
@@ -29,23 +29,31 @@ export const FormEssenceSection = () => {
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm mt-3">
               <li>
-                <strong>UI:</strong> {t('formEssence.whatIsForm.definition.ui')}
+                <Trans t={t} i18nKey="formEssence.whatIsForm.definition.ui" />
               </li>
               <li>
-                <strong>State:</strong>{' '}
-                {t('formEssence.whatIsForm.definition.state')}
+                <Trans
+                  t={t}
+                  i18nKey="formEssence.whatIsForm.definition.state"
+                />
               </li>
               <li>
-                <strong>Validation:</strong>{' '}
-                {t('formEssence.whatIsForm.definition.validation')}
+                <Trans
+                  t={t}
+                  i18nKey="formEssence.whatIsForm.definition.validation"
+                />
               </li>
               <li>
-                <strong>Error Handling:</strong>{' '}
-                {t('formEssence.whatIsForm.definition.errorHandling')}
+                <Trans
+                  t={t}
+                  i18nKey="formEssence.whatIsForm.definition.errorHandling"
+                />
               </li>
               <li>
-                <strong>Submission:</strong>{' '}
-                {t('formEssence.whatIsForm.definition.submission')}
+                <Trans
+                  t={t}
+                  i18nKey="formEssence.whatIsForm.definition.submission"
+                />
               </li>
             </ul>
           </InfoBox>
@@ -118,32 +126,42 @@ const email = emailRef.current.value;
           <div className="grid grid-cols-1 gap-3">
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
               <p className="text-sm">
-                <strong>Performance:</strong>{' '}
-                {t('formEssence.whyFormsAreComplex.performance')}
+                <Trans
+                  t={t}
+                  i18nKey="formEssence.whyFormsAreComplex.performance"
+                />
               </p>
             </div>
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
               <p className="text-sm">
-                <strong>State Management:</strong>{' '}
-                {t('formEssence.whyFormsAreComplex.stateManagement')}
+                <Trans
+                  t={t}
+                  i18nKey="formEssence.whyFormsAreComplex.stateManagement"
+                />
               </p>
             </div>
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
               <p className="text-sm">
-                <strong>Validation:</strong>{' '}
-                {t('formEssence.whyFormsAreComplex.validation')}
+                <Trans
+                  t={t}
+                  i18nKey="formEssence.whyFormsAreComplex.validation"
+                />
               </p>
             </div>
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
               <p className="text-sm">
-                <strong>Error Messages:</strong>{' '}
-                {t('formEssence.whyFormsAreComplex.errorMessages')}
+                <Trans
+                  t={t}
+                  i18nKey="formEssence.whyFormsAreComplex.errorMessages"
+                />
               </p>
             </div>
             <div className="bg-orange-50 p-3 rounded border border-orange-200">
               <p className="text-sm">
-                <strong>Edge Cases:</strong>{' '}
-                {t('formEssence.whyFormsAreComplex.edgeCases')}
+                <Trans
+                  t={t}
+                  i18nKey="formEssence.whyFormsAreComplex.edgeCases"
+                />
               </p>
             </div>
           </div>

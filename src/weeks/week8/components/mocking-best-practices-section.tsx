@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslation } from '@/i18n/client';
+import { Trans, useTranslation } from '@/i18n/client';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
@@ -59,20 +59,16 @@ spy.mockRestore();`}
             >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>vi.fn():</strong>{' '}
-                  {t('bestPractices.mockTypes.summary.fn')}
+                  <Trans t={t} i18nKey="bestPractices.mockTypes.summary.fn" />
                 </li>
                 <li>
-                  <strong>vi.mock():</strong>{' '}
-                  {t('bestPractices.mockTypes.summary.mock')}
+                  <Trans t={t} i18nKey="bestPractices.mockTypes.summary.mock" />
                 </li>
                 <li>
-                  <strong>vi.spyOn():</strong>{' '}
-                  {t('bestPractices.mockTypes.summary.spy')}
+                  <Trans t={t} i18nKey="bestPractices.mockTypes.summary.spy" />
                 </li>
                 <li>
-                  <strong>MSW:</strong>{' '}
-                  {t('bestPractices.mockTypes.summary.msw')}
+                  <Trans t={t} i18nKey="bestPractices.mockTypes.summary.msw" />
                 </li>
               </ul>
             </InfoBox>
@@ -242,30 +238,34 @@ test('updates after action', async () => {
             >
               <ol className="list-decimal pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>Mock at the boundary:</strong>{' '}
-                  {t('bestPractices.mockingBestPractices.goldenRules.boundary')}
+                  <Trans
+                    t={t}
+                    i18nKey="bestPractices.mockingBestPractices.goldenRules.boundary"
+                  />
                 </li>
                 <li>
-                  <strong>Keep mocks simple:</strong>{' '}
-                  {t(
-                    'bestPractices.mockingBestPractices.goldenRules.keepSimple',
-                  )}
+                  <Trans
+                    t={t}
+                    i18nKey="bestPractices.mockingBestPractices.goldenRules.keepSimple"
+                  />
                 </li>
                 <li>
-                  <strong>Use MSW for HTTP:</strong>{' '}
-                  {t('bestPractices.mockingBestPractices.goldenRules.useMSW')}
+                  <Trans
+                    t={t}
+                    i18nKey="bestPractices.mockingBestPractices.goldenRules.useMSW"
+                  />
                 </li>
                 <li>
-                  <strong>Test behavior, not implementation:</strong>{' '}
-                  {t(
-                    'bestPractices.mockingBestPractices.goldenRules.testBehavior',
-                  )}
+                  <Trans
+                    t={t}
+                    i18nKey="bestPractices.mockingBestPractices.goldenRules.testBehavior"
+                  />
                 </li>
                 <li>
-                  <strong>Reset mocks between tests:</strong>{' '}
-                  {t(
-                    'bestPractices.mockingBestPractices.goldenRules.resetMocks',
-                  )}
+                  <Trans
+                    t={t}
+                    i18nKey="bestPractices.mockingBestPractices.goldenRules.resetMocks"
+                  />
                 </li>
               </ol>
             </InfoBox>
@@ -375,34 +375,34 @@ test('shows notification after delay', async () => {
             >
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>One concept per test:</strong>{' '}
-                  {t(
-                    'bestPractices.testOrganization.keepMaintainable.oneConcept',
-                  )}
+                  <Trans
+                    t={t}
+                    i18nKey="bestPractices.testOrganization.keepMaintainable.oneConcept"
+                  />
                 </li>
                 <li>
-                  <strong>Clear test names:</strong>{' '}
-                  {t(
-                    'bestPractices.testOrganization.keepMaintainable.clearNames',
-                  )}
+                  <Trans
+                    t={t}
+                    i18nKey="bestPractices.testOrganization.keepMaintainable.clearNames"
+                  />
                 </li>
                 <li>
-                  <strong>Arrange-Act-Assert pattern:</strong>{' '}
-                  {t(
-                    'bestPractices.testOrganization.keepMaintainable.arrangeActAssert',
-                  )}
+                  <Trans
+                    t={t}
+                    i18nKey="bestPractices.testOrganization.keepMaintainable.arrangeActAssert"
+                  />
                 </li>
                 <li>
-                  <strong>Reusable test utilities:</strong>{' '}
-                  {t(
-                    'bestPractices.testOrganization.keepMaintainable.reusableUtils',
-                  )}
+                  <Trans
+                    t={t}
+                    i18nKey="bestPractices.testOrganization.keepMaintainable.reusableUtils"
+                  />
                 </li>
                 <li>
-                  <strong>Run tests frequently:</strong>{' '}
-                  {t(
-                    'bestPractices.testOrganization.keepMaintainable.runFrequently',
-                  )}
+                  <Trans
+                    t={t}
+                    i18nKey="bestPractices.testOrganization.keepMaintainable.runFrequently"
+                  />
                 </li>
               </ul>
             </InfoBox>
@@ -442,24 +442,25 @@ describe('TodoForm', () => {
               </p>
               <ul className="space-y-2 text-sm text-gray-700">
                 <li>
-                  <strong>60-70% Unit Tests:</strong>{' '}
-                  {t('bestPractices.strategy.unitTests')}
+                  <Trans t={t} i18nKey="bestPractices.strategy.unitTests" />
                 </li>
                 <li>
-                  <strong>20-30% Integration Tests:</strong>{' '}
-                  {t('bestPractices.strategy.integrationTests')}
+                  <Trans
+                    t={t}
+                    i18nKey="bestPractices.strategy.integrationTests"
+                  />
                 </li>
                 <li>
-                  <strong>5-10% E2E Tests:</strong>{' '}
-                  {t('bestPractices.strategy.e2eTests')}
+                  <Trans t={t} i18nKey="bestPractices.strategy.e2eTests" />
                 </li>
                 <li>
-                  <strong>Mock strategically:</strong>{' '}
-                  {t('bestPractices.strategy.mockStrategically')}
+                  <Trans
+                    t={t}
+                    i18nKey="bestPractices.strategy.mockStrategically"
+                  />
                 </li>
                 <li>
-                  <strong>Test behavior:</strong>{' '}
-                  {t('bestPractices.strategy.testBehavior')}
+                  <Trans t={t} i18nKey="bestPractices.strategy.testBehavior" />
                 </li>
               </ul>
             </div>

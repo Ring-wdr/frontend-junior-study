@@ -22,11 +22,11 @@
       "definition": {
         "title": "폼 정의",
         "intro": "폼은 다음을 결합한 복잡한 시스템입니다:",
-        "ui": "UI: 입력 요소, 레이블, 버튼",
-        "state": "상태: 현재 입력 값",
-        "validation": "검증: 규칙 및 오류 확인",
-        "errorHandling": "오류 처리: 검증 오류 표시",
-        "submission": "제출: 처리 및 API 통합"
+        "ui": "<strong>UI:</strong> 입력 요소, 레이블, 버튼",
+        "state": "<strong>상태:</strong> 현재 입력 값",
+        "validation": "<strong>검증:</strong> 규칙 및 오류 확인",
+        "errorHandling": "<strong>오류 처리:</strong> 검증 오류 표시",
+        "submission": "<strong>제출:</strong> 처리 및 API 통합"
       }
     },
     "controlledVsUncontrolled": {
@@ -44,11 +44,11 @@
     },
     "whyFormsAreComplex": {
       "title": "왜 폼이 복잡한가",
-      "performance": "성능: 완전히 제어되는 컴포넌트에서 너무 많은 리렌더링",
-      "stateManagement": "상태 관리: 여러 입력 상태 추적이 번거로움",
-      "validation": "검증: 실시간 + 제출 시 + 비동기 검증 조정",
-      "errorMessages": "오류 메시지: 적절하게 오류 표시 및 지우기",
-      "edgeCases": "엣지 케이스: 이모지 처리, 유니코드 정규화, XSS 방지"
+      "performance": "<strong>성능:</strong> 완전히 제어되는 컴포넌트에서 너무 많은 리렌더링",
+      "stateManagement": "<strong>상태 관리:</strong> 여러 입력 상태 추적이 번거로움",
+      "validation": "<strong>검증:</strong> 실시간 + 제출 시 + 비동기 검증 조정",
+      "errorMessages": "<strong>오류 메시지:</strong> 적절하게 오류 표시 및 지우기",
+      "edgeCases": "<strong>엣지 케이스:</strong> 이모지 처리, 유니코드 정규화, XSS 방지"
     },
     "commonRequirements": {
       "title": "일반적인 폼 요구사항"
@@ -62,13 +62,13 @@
       "title": "왜 React Hook Form인가?",
       "keyAdvantages": {
         "title": "주요 장점",
-        "uncontrolled": "비제어 기반: 최소한의 리렌더링 (변경 시에만)",
-        "smallBundle": "작은 번들: ~9KB 압축",
-        "typeSafe": "타입 안전: 뛰어난 TypeScript 지원",
-        "registerAPI": "등록 API: 간단한 입력 필드 등록",
-        "formState": "formState 객체: isDirty, isTouched, errors 등 추적",
-        "watchSetValue": "Watch, setValue: 프로그래밍 방식 값 액세스",
-        "controller": "Controller: 커스텀/서드파티 입력과 작동"
+        "uncontrolled": "<strong>비제어 기반:</strong> 최소한의 리렌더링 (변경 시에만)",
+        "smallBundle": "<strong>작은 번들:</strong> ~9KB 압축",
+        "typeSafe": "<strong>타입 안전:</strong> 뛰어난 TypeScript 지원",
+        "registerAPI": "<strong>등록 API:</strong> 간단한 입력 필드 등록",
+        "formState": "<strong>formState 객체:</strong> isDirty, isTouched, errors 등 추적",
+        "watchSetValue": "<strong>Watch, setValue:</strong> 프로그래밍 방식 값 액세스",
+        "controller": "<strong>Controller:</strong> 커스텀/서드파티 입력과 작동"
       }
     },
     "basicSetup": {
@@ -108,14 +108,14 @@
       "title": "formState 객체",
       "importantProps": {
         "title": "중요한 formState 속성",
-        "isDirty": "isDirty: 사용자가 필드를 수정했나요?",
-        "isTouched": "isTouched: 사용자가 이 필드와 상호작용했나요?",
-        "errors": "errors: 필드 검증 오류를 포함하는 객체",
-        "isSubmitting": "isSubmitting: 폼이 현재 제출 중인가요?",
-        "isValidating": "isValidating: 비동기 검증이 실행 중인가요?",
-        "isValid": "isValid: 규칙에 따라 폼이 유효한가요?",
-        "dirtyFields": "dirtyFields: 어떤 필드가 수정되었나요?",
-        "touchedFields": "touchedFields: 어떤 필드와 상호작용했나요?"
+        "isDirty": "<strong>isDirty:</strong> 사용자가 필드를 수정했나요?",
+        "isTouched": "<strong>isTouched:</strong> 사용자가 이 필드와 상호작용했나요?",
+        "errors": "<strong>errors:</strong> 필드 검증 오류를 포함하는 객체",
+        "isSubmitting": "<strong>isSubmitting:</strong> 폼이 현재 제출 중인가요?",
+        "isValidating": "<strong>isValidating:</strong> 비동기 검증이 실행 중인가요?",
+        "isValid": "<strong>isValid:</strong> 규칙에 따라 폼이 유효한가요?",
+        "dirtyFields": "<strong>dirtyFields:</strong> 어떤 필드가 수정되었나요?",
+        "touchedFields": "<strong>touchedFields:</strong> 어떤 필드와 상호작용했나요?"
       }
     },
     "formStateTracking": {

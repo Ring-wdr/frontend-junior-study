@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslation } from '@/i18n/client';
+import { Trans, useTranslation } from '@/i18n/client';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
@@ -26,32 +26,46 @@ export const ReactHookFormSection = () => {
           >
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>Uncontrolled-based:</strong>{' '}
-                {t('reactHookForm.whyRHF.keyAdvantages.uncontrolled')}
+                <Trans
+                  t={t}
+                  i18nKey="reactHookForm.whyRHF.keyAdvantages.uncontrolled"
+                />
               </li>
               <li>
-                <strong>Small bundle:</strong>{' '}
-                {t('reactHookForm.whyRHF.keyAdvantages.smallBundle')}
+                <Trans
+                  t={t}
+                  i18nKey="reactHookForm.whyRHF.keyAdvantages.smallBundle"
+                />
               </li>
               <li>
-                <strong>Type-safe:</strong>{' '}
-                {t('reactHookForm.whyRHF.keyAdvantages.typeSafe')}
+                <Trans
+                  t={t}
+                  i18nKey="reactHookForm.whyRHF.keyAdvantages.typeSafe"
+                />
               </li>
               <li>
-                <strong>Register API:</strong>{' '}
-                {t('reactHookForm.whyRHF.keyAdvantages.registerAPI')}
+                <Trans
+                  t={t}
+                  i18nKey="reactHookForm.whyRHF.keyAdvantages.registerAPI"
+                />
               </li>
               <li>
-                <strong>formState object:</strong>{' '}
-                {t('reactHookForm.whyRHF.keyAdvantages.formState')}
+                <Trans
+                  t={t}
+                  i18nKey="reactHookForm.whyRHF.keyAdvantages.formState"
+                />
               </li>
               <li>
-                <strong>Watch, setValue:</strong>{' '}
-                {t('reactHookForm.whyRHF.keyAdvantages.watchSetValue')}
+                <Trans
+                  t={t}
+                  i18nKey="reactHookForm.whyRHF.keyAdvantages.watchSetValue"
+                />
               </li>
               <li>
-                <strong>Controller:</strong>{' '}
-                {t('reactHookForm.whyRHF.keyAdvantages.controller')}
+                <Trans
+                  t={t}
+                  i18nKey="reactHookForm.whyRHF.keyAdvantages.controller"
+                />
               </li>
             </ul>
           </InfoBox>
@@ -224,38 +238,52 @@ const MyForm = () => {
           >
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
-                <strong>isDirty:</strong>{' '}
-                {t('reactHookForm.formStateObject.importantProps.isDirty')}
+                <Trans
+                  t={t}
+                  i18nKey="reactHookForm.formStateObject.importantProps.isDirty"
+                />
               </li>
               <li>
-                <strong>isTouched:</strong>{' '}
-                {t('reactHookForm.formStateObject.importantProps.isTouched')}
+                <Trans
+                  t={t}
+                  i18nKey="reactHookForm.formStateObject.importantProps.isTouched"
+                />
               </li>
               <li>
-                <strong>errors:</strong>{' '}
-                {t('reactHookForm.formStateObject.importantProps.errors')}
+                <Trans
+                  t={t}
+                  i18nKey="reactHookForm.formStateObject.importantProps.errors"
+                />
               </li>
               <li>
-                <strong>isSubmitting:</strong>{' '}
-                {t('reactHookForm.formStateObject.importantProps.isSubmitting')}
+                <Trans
+                  t={t}
+                  i18nKey="reactHookForm.formStateObject.importantProps.isSubmitting"
+                />
               </li>
               <li>
-                <strong>isValidating:</strong>{' '}
-                {t('reactHookForm.formStateObject.importantProps.isValidating')}
+                <Trans
+                  t={t}
+                  i18nKey="reactHookForm.formStateObject.importantProps.isValidating"
+                />
               </li>
               <li>
-                <strong>isValid:</strong>{' '}
-                {t('reactHookForm.formStateObject.importantProps.isValid')}
+                <Trans
+                  t={t}
+                  i18nKey="reactHookForm.formStateObject.importantProps.isValid"
+                />
               </li>
               <li>
-                <strong>dirtyFields:</strong>{' '}
-                {t('reactHookForm.formStateObject.importantProps.dirtyFields')}
+                <Trans
+                  t={t}
+                  i18nKey="reactHookForm.formStateObject.importantProps.dirtyFields"
+                />
               </li>
               <li>
-                <strong>touchedFields:</strong>{' '}
-                {t(
-                  'reactHookForm.formStateObject.importantProps.touchedFields',
-                )}
+                <Trans
+                  t={t}
+                  i18nKey="reactHookForm.formStateObject.importantProps.touchedFields"
+                />
               </li>
             </ul>
           </InfoBox>
