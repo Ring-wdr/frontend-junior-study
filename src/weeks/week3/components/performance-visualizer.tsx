@@ -8,31 +8,33 @@ import { cn } from '../../../lib/utils';
 const NonMemoizedItem = ({ count }: { count: number }) => {
   const { t } = useTranslation('week3');
   return (
-  <motion.div
-    key={count}
-    initial={{ backgroundColor: 'rgba(239, 68, 68, 0.2)' }}
-    animate={{ backgroundColor: 'rgba(255, 255, 255, 1)' }}
-    transition={{ duration: 0.6, ease: 'easeOut' }}
-    className="p-3 border rounded-lg flex justify-between gap-2 text-sm"
-  >
-    <span>{t('performance.visualizer.nonMemoized')}</span>
-    <span className="text-red-500 font-mono">{t('performance.visualizer.rendered')}</span>
-  </motion.div>
+    <motion.div
+      key={count}
+      initial={{ backgroundColor: 'rgba(239, 68, 68, 0.2)' }}
+      animate={{ backgroundColor: 'rgba(255, 255, 255, 1)' }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      className="p-3 border rounded-lg flex justify-between gap-2 text-sm"
+    >
+      <span>{t('performance.visualizer.nonMemoized')}</span>
+      <span className="text-red-500 font-mono">
+        {t('performance.visualizer.rendered')}
+      </span>
+    </motion.div>
   );
 };
 
 const MemoizedItem = memo(({ label }: { label: string }) => {
   const { t } = useTranslation('week3');
   return (
-  <motion.div
-    initial={{ backgroundColor: 'rgba(34, 197, 94, 0.2)' }}
-    animate={{ backgroundColor: 'rgba(255, 255, 255, 1)' }}
-    transition={{ duration: 0.6, ease: 'easeOut' }}
-    className="p-3 border rounded-lg flex justify-between gap-2 text-sm"
-  >
-    <span>{t('performance.visualizer.memoized')}</span>
-    <span className="text-green-600 font-mono">{label}</span>
-  </motion.div>
+    <motion.div
+      initial={{ backgroundColor: 'rgba(34, 197, 94, 0.2)' }}
+      animate={{ backgroundColor: 'rgba(255, 255, 255, 1)' }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      className="p-3 border rounded-lg flex justify-between gap-2 text-sm"
+    >
+      <span>{t('performance.visualizer.memoized')}</span>
+      <span className="text-green-600 font-mono">{label}</span>
+    </motion.div>
   );
 });
 

@@ -129,11 +129,7 @@
         "startLoading": "로딩 시작",
         "stopLoading": "로딩 중지",
         "passes": "HOC에 <code>isLoading={{value}}</code>를 전달합니다",
-        "messages": [
-          "메시지 1",
-          "메시지 2",
-          "메시지 3"
-        ],
+        "messages": ["메시지 1", "메시지 2", "메시지 3"],
         "characteristic": "컴포넌트를 받아 새로운 컴포넌트(\"Wrapper\")를 반환하는 함수로, 새로운 props나 동작(예: Spinner)을 주입합니다."
       }
     }

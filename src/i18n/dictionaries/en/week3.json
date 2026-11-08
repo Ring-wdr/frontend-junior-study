@@ -129,11 +129,7 @@
         "startLoading": "Start Loading",
         "stopLoading": "Stop Loading",
         "passes": "Passes <code>isLoading={{value}}</code> to HOC",
-        "messages": [
-          "Message 1",
-          "Message 2",
-          "Message 3"
-        ],
+        "messages": ["Message 1", "Message 2", "Message 3"],
         "characteristic": "A function that takes a component and returns a new component (\"Wrapper\"), injecting new props or behavior (like the Spinner)."
       }
     }

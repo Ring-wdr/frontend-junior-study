@@ -155,8 +155,12 @@ export const ComponentPatternsVisualizer = () => {
           {/* Interactive Demo */}
           <Tabs defaultValue="account">
             <TabList>
-              <Tab id="account">{t('patterns.visualizer.compound.tabs.account')}</Tab>
-              <Tab id="privacy">{t('patterns.visualizer.compound.tabs.privacy')}</Tab>
+              <Tab id="account">
+                {t('patterns.visualizer.compound.tabs.account')}
+              </Tab>
+              <Tab id="privacy">
+                {t('patterns.visualizer.compound.tabs.privacy')}
+              </Tab>
               <Tab id="settings">
                 {t('patterns.visualizer.compound.tabs.settings')}
               </Tab>
@@ -258,7 +262,10 @@ export const ComponentPatternsVisualizer = () => {
                 {t('patterns.visualizer.keyCharacteristic')}
               </p>
               <p className="text-sm">
-                <Trans t={t} i18nKey="patterns.visualizer.renderProps.characteristic" />
+                <Trans
+                  t={t}
+                  i18nKey="patterns.visualizer.renderProps.characteristic"
+                />
               </p>
             </div>
           </div>

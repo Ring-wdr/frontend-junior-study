@@ -87,41 +87,41 @@ const SearchFormMolecule = (theme: ThemeProps) => {
 const HeaderOrganism = (theme: ThemeProps) => {
   const { t } = useTranslation('week3');
   return (
-  <div
-    className={cn(
-      'w-full p-3 border bg-white shadow-sm flex items-center justify-between gap-3 transition-all duration-200 sm:p-4',
-      theme.radius === 'rounded-full' ? 'rounded-2xl' : theme.radius,
-    )}
-  >
-    <div className="font-bold text-gray-800 flex items-center gap-2">
-      <div
-        className={cn(
-          'w-8 h-8 flex items-center justify-center transition-all duration-200',
-          colors[theme.color],
-          theme.radius,
-        )}
-      >
-        <span className="text-xs">{t('atomic.visualizer.logo')}</span>
+    <div
+      className={cn(
+        'w-full p-3 border bg-white shadow-sm flex items-center justify-between gap-3 transition-all duration-200 sm:p-4',
+        theme.radius === 'rounded-full' ? 'rounded-2xl' : theme.radius,
+      )}
+    >
+      <div className="font-bold text-gray-800 flex items-center gap-2">
+        <div
+          className={cn(
+            'w-8 h-8 flex items-center justify-center transition-all duration-200',
+            colors[theme.color],
+            theme.radius,
+          )}
+        >
+          <span className="text-xs">{t('atomic.visualizer.logo')}</span>
+        </div>
+        <span>MyApp</span>
       </div>
-      <span>MyApp</span>
-    </div>
-    <div className="hidden lg:block flex-1 max-w-xs">
-      <SearchFormMolecule {...theme} />
-    </div>
-    <div className="flex items-center gap-2">
-      <ButtonAtom {...theme} className="text-xs px-3">
-        {t('atomic.visualizer.logIn')}
-      </ButtonAtom>
-      <div
-        className={cn(
-          'w-8 h-8 bg-gray-200 flex items-center justify-center transition-all duration-200',
-          theme.radius,
-        )}
-      >
-        <User className="w-4 h-4 text-gray-500" />
+      <div className="hidden lg:block flex-1 max-w-xs">
+        <SearchFormMolecule {...theme} />
+      </div>
+      <div className="flex items-center gap-2">
+        <ButtonAtom {...theme} className="text-xs px-3">
+          {t('atomic.visualizer.logIn')}
+        </ButtonAtom>
+        <div
+          className={cn(
+            'w-8 h-8 bg-gray-200 flex items-center justify-center transition-all duration-200',
+            theme.radius,
+          )}
+        >
+          <User className="w-4 h-4 text-gray-500" />
+        </div>
       </div>
     </div>
-  </div>
   );
 };
 
