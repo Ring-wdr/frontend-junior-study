@@ -13,7 +13,7 @@ export const DslSection = () => {
       description={t('dsl.description')}
       testId="dsl-section"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
         <div>
           <InfoBox variant="blue" className="bg-teal-50 border-teal-100 h-full">
             <div>
@@ -35,7 +35,7 @@ export const DslSection = () => {
           </InfoBox>
         </div>
 
-        <div className="space-y-4">
+        <div className="min-w-0 space-y-4">
           <div>
             <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
               {t('dsl.examples.reactJsx')}

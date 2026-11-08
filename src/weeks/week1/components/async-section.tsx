@@ -44,7 +44,7 @@ export const AsyncSection = () => {
         ]}
       />
 
-      <div className="mt-8">
+      <div className="mt-6">
         <h4 className="font-bold text-gray-900 mb-3">
           {t('async.withResolvers.title')}
         </h4>
@@ -62,7 +62,7 @@ promise.then(console.log); // 'Done!' after 1s`}
       </div>
 
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
+        <div className="min-w-0">
           <h4 className="font-bold text-gray-900 text-sm mb-2">
             {t('async.promiseResolve.title')}
           </h4>
@@ -75,7 +75,7 @@ promise.then(console.log); // 'Done!' after 1s`}
   .then(console.log); // 84`}
           />
         </div>
-        <div>
+        <div className="min-w-0">
           <h4 className="font-bold text-gray-900 text-sm mb-2">
             {t('async.promiseReject.title')}
           </h4>
@@ -92,7 +92,7 @@ promise.then(console.log); // 'Done!' after 1s`}
 
       <SectionDivider
         variant="line"
-        className="my-8 border-t border-gray-100"
+        className="my-6 border-t border-gray-100"
       />
 
       <div>

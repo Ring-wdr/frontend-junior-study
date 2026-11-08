@@ -50,8 +50,8 @@ export const MapObjectComparison = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg border border-gray-200">
-        <div className="text-sm text-gray-600">
+      <div className="flex flex-wrap justify-between items-center gap-3 bg-gray-50 p-3 rounded-lg border border-gray-200 sm:p-4">
+        <div className="min-w-0 text-sm text-gray-600">
           <span className="font-bold text-gray-900">Scenario:</span> Adding
           distinct object keys <code>{`{id:1}`}</code>, <code>{`{id:2}`}</code>
           ...
@@ -74,9 +74,9 @@ export const MapObjectComparison = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Object Side */}
-        <div className="border-2 border-dashed border-red-200 bg-red-50/50 rounded-xl p-4">
+        <div className="min-w-0 border-2 border-dashed border-red-200 bg-red-50/50 rounded-xl p-3 sm:p-4">
           <div className="flex items-center gap-2 mb-4">
             <h4 className="font-bold text-red-900">Plain Object</h4>
             <span className="text-xs bg-red-200 text-red-800 px-2 py-0.5 rounded-full">
@@ -94,9 +94,11 @@ export const MapObjectComparison = () => {
               {objEntries.map((entry) => (
                 <motion.div
                   key={step} // Force re-render on step to animate collision
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="bg-white border border-red-200 p-2 rounded shadow-sm flex items-center justify-between"
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="bg-white border border-red-200 p-2 rounded shadow-sm flex flex-wrap items-center justify-between gap-x-2 gap-y-1"
                 >
                   <code className="text-xs text-red-600 font-bold">
                     {entry.keyDisplay}:
@@ -119,7 +121,7 @@ export const MapObjectComparison = () => {
         </div>
 
         {/* Map Side */}
-        <div className="border-2 border-dashed border-blue-200 bg-blue-50/50 rounded-xl p-4">
+        <div className="min-w-0 border-2 border-dashed border-blue-200 bg-blue-50/50 rounded-xl p-3 sm:p-4">
           <div className="flex items-center gap-2 mb-4">
             <h4 className="font-bold text-blue-900">Map</h4>
             <span className="text-xs bg-blue-200 text-blue-800 px-2 py-0.5 rounded-full">
@@ -137,9 +139,10 @@ export const MapObjectComparison = () => {
               {mapEntries.map((entry) => (
                 <motion.div
                   key={entry.keyDisplay}
-                  initial={{ opacity: 0, x: -10 }}
+                  initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="bg-white border border-blue-200 p-2 rounded shadow-sm flex items-center justify-between"
+                  transition={{ duration: 0.25 }}
+                  className="bg-white border border-blue-200 p-2 rounded shadow-sm flex items-center justify-between gap-2"
                 >
                   <div className="flex items-center gap-2">
                     <code className="text-xs bg-blue-100 text-blue-700 px-1 rounded border border-blue-200">

@@ -20,14 +20,14 @@ export const AdvancedDataStructureSection = () => {
       description={t('advancedDataStructure.description')}
       testId="advanced-data-structure-section"
     >
-      <div className="flex space-x-2 mb-6 border-b border-gray-100 pb-2">
+      <div className="flex gap-2 mb-4 overflow-x-auto border-b border-gray-100 pb-2">
         {(['map', 'set', 'weak'] as const).map((tab) => (
           <button
             key={tab}
             type="button"
             onClick={() => setActiveTab(tab)}
             className={cn(
-              'px-4 py-2 text-sm font-medium rounded-lg transition-colors capitalize',
+              'shrink-0 px-3 py-2 text-sm font-medium rounded-lg transition-colors sm:px-4',
               activeTab === tab
                 ? 'bg-pink-100/50 text-pink-700'
                 : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50',
@@ -42,9 +42,10 @@ export const AdvancedDataStructureSection = () => {
         {activeTab === 'map' && (
           <motion.div
             key="map"
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2 }}
             className="space-y-4 text-left"
           >
             <InfoBox variant="blue" className="bg-pink-50 border-pink-100">
@@ -70,9 +71,10 @@ export const AdvancedDataStructureSection = () => {
         {activeTab === 'set' && (
           <motion.div
             key="set"
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2 }}
             className="space-y-4 text-left"
           >
             <InfoBox
@@ -103,9 +105,10 @@ set.delete(1);`}
         {activeTab === 'weak' && (
           <motion.div
             key="weak"
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2 }}
             className="space-y-4 text-left"
           >
             <InfoBox
@@ -130,7 +133,7 @@ set.delete(1);`}
               </p>
             </InfoBox>
 
-            <div className="mt-8">
+            <div className="mt-6">
               <h5 className="font-bold text-gray-800 mb-4 px-2 border-l-4 border-orange-400">
                 {t('advancedDataStructure.weak.gcTitle')}
               </h5>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { Trans, useTranslation } from '@/i18n/client';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
@@ -8,29 +8,38 @@ import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
 import { CodeBlock } from '../../../components/ui/code-block';
 
+const subscribeToNetwork = (callback: () => void) => {
+  window.addEventListener('online', callback);
+  window.addEventListener('offline', callback);
+  return () => {
+    window.removeEventListener('online', callback);
+    window.removeEventListener('offline', callback);
+  };
+};
+
 export const OfflineFirstSection = () => {
   const { t } = useTranslation('week13');
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const isOnline = useSyncExternalStore(
+    subscribeToNetwork,
+    () => navigator.onLine,
+    () => true,
+  );
   const [connectionHistory, setConnectionHistory] = useState<
-    { time: string; status: 'online' | 'offline' }[]
+    { id: number; time: string; status: 'online' | 'offline' }[]
   >([]);
+  const nextId = useRef(0);
 
   useEffect(() => {
-    const handleOnline = () => {
-      setIsOnline(true);
+    const record = (status: 'online' | 'offline') => {
+      nextId.current += 1;
+      const id = nextId.current;
       setConnectionHistory((prev) => [
         ...prev.slice(-4),
-        { time: new Date().toLocaleTimeString(), status: 'online' },
+        { id, time: new Date().toLocaleTimeString(), status },
       ]);
     };
-
-    const handleOffline = () => {
-      setIsOnline(false);
-      setConnectionHistory((prev) => [
-        ...prev.slice(-4),
-        { time: new Date().toLocaleTimeString(), status: 'offline' },
-      ]);
-    };
+    const handleOnline = () => record('online');
+    const handleOffline = () => record('offline');
 
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
@@ -94,7 +103,7 @@ export const OfflineFirstSection = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-center gap-4">
                 <div
-                  className={`w-20 h-20 rounded-full flex items-center justify-center text-3xl border-4 transition-all ${
+                  className={`w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-full flex items-center justify-center text-3xl border-4 transition-colors duration-300 ${
                     isOnline
                       ? 'bg-green-100 border-green-400'
                       : 'bg-red-100 border-red-400'
@@ -126,9 +135,9 @@ export const OfflineFirstSection = () => {
                   </p>
                 ) : (
                   <div className="space-y-1">
-                    {connectionHistory.map((event, idx) => (
+                    {connectionHistory.map((event) => (
                       <div
-                        key={idx}
+                        key={event.id}
                         className="flex items-center gap-2 text-xs"
                       >
                         <span className="text-gray-400">{event.time}</span>

@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'motion/react';
 import { Eye, ShieldAlert, Zap } from 'lucide-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { SectionCard } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
@@ -10,7 +10,14 @@ import { cn } from '../../../lib/utils';
 
 export const ProxyMetaSection = () => {
   const { t } = useTranslation('week1');
-  const [logs, setLogs] = useState<string[]>([]);
+  const [logs, setLogs] = useState<{ id: number; text: string }[]>([]);
+  const nextLogId = useRef(0);
+
+  const pushLog = (text: string) => {
+    nextLogId.current += 1;
+    const id = nextLogId.current;
+    setLogs((prev) => [{ id, text }, ...prev]);
+  };
   const [targetObj, setTargetObj] = useState({
     message: 'Hello',
     secret: '123',
@@ -21,26 +28,17 @@ export const ProxyMetaSection = () => {
     const timestamp = new Date().toLocaleTimeString();
 
     if (prop === 'secret') {
-      setLogs((prev) => [
-        `[${timestamp}] 🛑 Trap Triggered → Blocked access to 'secret'`,
-        ...prev,
-      ]);
+      pushLog(`[${timestamp}] 🛑 Trap Triggered → Blocked access to 'secret'`);
       return;
     }
 
-    setLogs((prev) => [
-      `[${timestamp}] 👁️ Trap Triggered → Reflect.get('${prop}')`,
-      ...prev,
-    ]);
+    pushLog(`[${timestamp}] 👁️ Trap Triggered → Reflect.get('${prop}')`);
   };
 
   const handleSet = () => {
     // Simulate Proxy Trap
     const timestamp = new Date().toLocaleTimeString();
-    setLogs((prev) => [
-      `[${timestamp}] 📝 Trap Triggered → Reflect.set('message', 'Hi!')`,
-      ...prev,
-    ]);
+    pushLog(`[${timestamp}] 📝 Trap Triggered → Reflect.set('message', 'Hi!')`);
     setTargetObj((prev) => ({ ...prev, message: 'Hi!' }));
   };
 
@@ -52,8 +50,8 @@ export const ProxyMetaSection = () => {
       description={t('proxyMeta.description')}
       testId="proxy-meta-section"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="min-w-0">
           <CodeBlock
             language="javascript"
             code={`const target = { 
@@ -107,7 +105,7 @@ const proxy = new Proxy(target, handler);`}
           </div>
         </div>
 
-        <div className="bg-gray-900 rounded-xl p-4 text-left border border-gray-800 flex flex-col h-full min-h-[200px]">
+        <div className="bg-gray-900 rounded-xl p-3 text-left border border-gray-800 flex flex-col h-full min-h-[200px] min-w-0 sm:p-4">
           <div className="flex justify-between items-center mb-2 border-b border-gray-800 pb-2">
             <span className="text-xs font-mono text-gray-400">
               {t('proxyMeta.logs.title')}
@@ -121,22 +119,20 @@ const proxy = new Proxy(target, handler);`}
             </button>
           </div>
           <div className="flex-1 overflow-y-auto space-y-1 font-mono text-xs max-h-[200px]">
+            {logs.length === 0 && (
+              <span className="text-gray-600 italic">
+                {t('proxyMeta.logs.placeholder')}
+              </span>
+            )}
             <AnimatePresence initial={false}>
-              {logs.length === 0 && (
-                <span className="text-gray-600 italic">
-                  {t('proxyMeta.logs.placeholder')}
-                </span>
-              )}
-              {logs.map((log, i) => (
+              {logs.map(({ id, text: log }) => (
                 <motion.div
-                  key={`${log}-${
-                    // biome-ignore lint/suspicious/noArrayIndexKey: specify log index
-                    i
-                  }`}
-                  initial={{ opacity: 0, x: -10 }}
+                  key={id}
+                  initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.2 }}
                   className={cn(
-                    'py-1 border-l-2 pl-2',
+                    'py-1 border-l-2 pl-2 break-words',
                     log.includes('Blocked')
                       ? 'text-red-400 border-red-500 bg-red-900/10'
                       : 'text-green-400 border-green-500 bg-green-900/10',
