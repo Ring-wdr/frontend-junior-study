@@ -98,13 +98,12 @@
     },
     "capabilities": {
       "title": "Capabilities and Limits of AI Agents",
-      "lead": "Tap each task to guess whether an AI agent does it well or a person must do it.",
+      "lead": "Is this something an AI agent does well, or something a person must do?",
       "aiShort": "AI does well",
       "humanShort": "Person must do",
       "correct": "Correct",
       "wrong": "Not quite. Answer",
       "score": "Correct answers",
-      "reveal": "Show all answers",
       "reset": "Try again",
       "tasks": [
         {
@@ -149,7 +148,10 @@
         }
       ],
       "importantNote": "Important: AI is a tool",
-      "importantNoteDesc": "AI agents don't replace developers. They are augmentation tools that let developers focus on higher-level problems. Even when an agent wrote the code, final responsibility always lies with the person who merged it."
+      "importantNoteDesc": "AI agents don't replace developers. They are augmentation tools that let developers focus on higher-level problems. Even when an agent wrote the code, final responsibility always lies with the person who merged it.",
+      "next": "Next question",
+      "seeResult": "See results",
+      "resultTitle": "Results"
     },
     "example": {
       "title": "Handing a Task to an Agent",
