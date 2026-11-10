@@ -1,9 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { SectionCard } from '../../../components/section-card';
+import { StablePanels } from '../../../components/ui/stable-panels';
 import { AgentModeBasics } from './agent-mode-section-basics';
 import { AgentModeCompare } from './agent-mode-section-compare';
 import { AgentModePermissions } from './agent-mode-section-permissions';
@@ -18,26 +18,16 @@ import { AgentModeTeams } from './agent-mode-section-teams';
 
 const ID_PREFIX = 'agent-mode-topic';
 
-const TopicPanel = ({ index }: { index: number }) => {
-  switch (index) {
-    case 0:
-      return <AgentModeBasics />;
-    case 1:
-      return <AgentModePermissions />;
-    case 2:
-      return <AgentModePlan />;
-    case 3:
-      return <AgentModeInterview />;
-    case 4:
-      return <AgentModeSubAgents />;
-    case 5:
-      return <AgentModeTeams />;
-    case 6:
-      return <AgentModeCompare />;
-    default:
-      return <AgentModeCursor />;
-  }
-};
+const topicPanels = [
+  <AgentModeBasics key="basics" />,
+  <AgentModePermissions key="permissions" />,
+  <AgentModePlan key="plan" />,
+  <AgentModeInterview key="interview" />,
+  <AgentModeSubAgents key="subagents" />,
+  <AgentModeTeams key="teams" />,
+  <AgentModeCompare key="compare" />,
+  <AgentModeCursor key="cursor" />,
+];
 
 export const AgentModeSection = () => {
   const { t, raw } = useTranslation('week17');
@@ -69,34 +59,30 @@ export const AgentModeSection = () => {
             idPrefix={ID_PREFIX}
           />
 
+          <Pager
+            index={topic}
+            total={tabs.length}
+            onChange={setTopic}
+            prevLabel={t('agentMode.ui.prev')}
+            nextLabel={t('agentMode.ui.next')}
+          />
+
           <div
             role="tabpanel"
             id={panelId(ID_PREFIX)}
             aria-labelledby={tabId(ID_PREFIX, topic)}
             className="min-w-0 rounded-xl border border-purple-200 bg-white p-3 sm:p-4"
           >
-            <h3 className="mb-3 text-base font-bold break-words text-purple-900">
-              {titles[topic]}
-            </h3>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={topic}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.15, ease: 'easeOut' }}
-              >
-                <TopicPanel index={topic} />
-              </motion.div>
-            </AnimatePresence>
-
-            <Pager
-              index={topic}
-              total={tabs.length}
-              onChange={setTopic}
-              prevLabel={t('agentMode.ui.prev')}
-              nextLabel={t('agentMode.ui.next')}
-            />
+            <StablePanels index={topic}>
+              {topicPanels.map((panel, index) => (
+                <div key={panel.key}>
+                  <h3 className="mb-3 text-base font-bold break-words text-purple-900">
+                    {titles[index]}
+                  </h3>
+                  {panel}
+                </div>
+              ))}
+            </StablePanels>
           </div>
         </div>
       </div>

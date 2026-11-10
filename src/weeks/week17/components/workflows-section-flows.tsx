@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { InfoBox } from '../../../components/info-box';
 import { CodeBlock } from '../../../components/ui/code-block';
-import { Chip, Panel, PrevNext } from './workflows-section-controls';
+import { StablePanels } from '../../../components/ui/stable-panels';
+import { Chip, PrevNext } from './workflows-section-controls';
 
 interface CodeItem {
   title: string;
@@ -19,11 +20,6 @@ interface CodeStepperProps {
 const CodeStepper = ({ label, items }: CodeStepperProps) => {
   const { t } = useTranslation('week17');
   const [index, setIndex] = useState(0);
-  const item = items[index] ?? items[0];
-
-  if (!item) {
-    return null;
-  }
 
   return (
     <div>
@@ -39,20 +35,28 @@ const CodeStepper = ({ label, items }: CodeStepperProps) => {
           </Chip>
         ))}
       </div>
-      <div className="mt-4 rounded-xl border border-teal-200 bg-white p-3 sm:p-4">
-        <Panel panelKey={item.title}>
-          <h4 className="mb-2 text-sm font-bold text-teal-900 break-words">
-            {item.title}
-          </h4>
-          <CodeBlock code={item.code} language="bash" className="text-xs" />
-        </Panel>
-        <PrevNext
-          index={index}
-          total={items.length}
-          onChange={setIndex}
-          prevLabel={t('workflows.prev')}
-          nextLabel={t('workflows.next')}
-        />
+      <PrevNext
+        index={index}
+        total={items.length}
+        onChange={setIndex}
+        prevLabel={t('workflows.prev')}
+        nextLabel={t('workflows.next')}
+      />
+      <div className="mt-3 rounded-xl border border-teal-200 bg-white p-3 sm:p-4">
+        <StablePanels index={index}>
+          {items.map((entry) => (
+            <div key={entry.title} className="min-w-0">
+              <h4 className="mb-2 text-sm font-bold text-teal-900 break-words">
+                {entry.title}
+              </h4>
+              <CodeBlock
+                code={entry.code}
+                language="bash"
+                className="text-xs"
+              />
+            </div>
+          ))}
+        </StablePanels>
       </div>
     </div>
   );
@@ -100,28 +104,6 @@ export const BugFixFlow = () => {
         <p className="text-sm font-semibold text-gray-700">
           {t('workflows.bugFix.agentLabel')}
         </p>
-        <ol className="mt-2 space-y-2">
-          {agentSteps.map((step, i) => (
-            <li key={step}>
-              <button
-                type="button"
-                aria-pressed={i === index}
-                aria-current={i === index ? 'step' : undefined}
-                onClick={() => setIndex(i)}
-                className={`flex w-full min-w-0 items-start gap-2 rounded-lg border px-3 py-2 text-left text-xs leading-snug break-words transition-colors ${
-                  i === index
-                    ? 'border-teal-600 bg-teal-600 font-semibold text-white'
-                    : i < index
-                      ? 'border-teal-200 bg-teal-50 text-teal-900'
-                      : 'border-gray-200 bg-white text-gray-500 hover:bg-teal-50'
-                }`}
-              >
-                <span aria-hidden="true">{i < index ? '✓' : `${i + 1}.`}</span>
-                <span className="min-w-0">{step}</span>
-              </button>
-            </li>
-          ))}
-        </ol>
         <PrevNext
           index={index}
           total={agentSteps.length}
@@ -129,6 +111,42 @@ export const BugFixFlow = () => {
           prevLabel={t('workflows.prev')}
           nextLabel={t('workflows.next')}
         />
+        <ol className="mt-3 space-y-2">
+          {agentSteps.map((step, i) => (
+            <li key={step}>
+              <button
+                type="button"
+                aria-pressed={i === index}
+                aria-current={i === index ? 'step' : undefined}
+                onClick={() => setIndex(i)}
+                className={`flex w-full min-w-0 items-start gap-2 rounded-lg border px-3 py-2 text-left text-xs font-semibold leading-snug break-words transition-colors ${
+                  i === index
+                    ? 'border-teal-600 bg-teal-600 text-white'
+                    : i < index
+                      ? 'border-teal-200 bg-teal-50 text-teal-900'
+                      : 'border-gray-200 bg-white text-gray-500 hover:bg-teal-50'
+                }`}
+              >
+                <span
+                  aria-hidden="true"
+                  className="grid shrink-0 justify-items-start tabular-nums"
+                >
+                  <span
+                    className={`col-start-1 row-start-1 ${i < index ? '' : 'invisible'}`}
+                  >
+                    {'✓'}
+                  </span>
+                  <span
+                    className={`col-start-1 row-start-1 ${i < index ? 'invisible' : ''}`}
+                  >
+                    {`${i + 1}.`}
+                  </span>
+                </span>
+                <span className="min-w-0">{step}</span>
+              </button>
+            </li>
+          ))}
+        </ol>
       </div>
     </div>
   );

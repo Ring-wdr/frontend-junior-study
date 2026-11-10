@@ -5,11 +5,12 @@ import { InfoBox } from '../../../components/info-box';
 import {
   Bullets,
   Checklist,
+  ChipPanels,
   Code,
   DataTable,
-  Disclosure,
   Label,
   Para,
+  Tabs,
 } from './usage-ladder-parts';
 import { UsageLadderTools } from './usage-ladder-tools';
 
@@ -64,23 +65,29 @@ const Does = ({ step }: { step: number }) => {
       );
     case 4:
       return (
-        <div>
-          <Disclosure title={s5.worktreeTitle} defaultOpen>
+        <ChipPanels
+          items={[
+            { id: 'worktree', label: s5.worktreeTitle },
+            { id: 'bg', label: s5.bgTitle },
+            { id: 'cloud', label: s5.cloudTitle },
+          ]}
+        >
+          <div key="worktree">
             <Para>{s5.worktreeLead}</Para>
             <div className="mt-3">
               <InfoBox variant="orange" title={s5.cautionTitle}>
                 <p className="text-sm leading-relaxed">{s5.caution}</p>
               </InfoBox>
             </div>
-          </Disclosure>
-          <Disclosure title={s5.bgTitle}>
+          </div>
+          <div key="bg">
             <Para>{s5.bgLead}</Para>
             <Para>{s5.bgStates}</Para>
-          </Disclosure>
-          <Disclosure title={s5.cloudTitle}>
+          </div>
+          <div key="cloud">
             <Bullets items={s5.cloud} />
-          </Disclosure>
-        </div>
+          </div>
+        </ChipPanels>
       );
     default:
       return (
@@ -143,17 +150,22 @@ const Command = ({ step }: { step: number }) => {
       );
     case 4:
       return (
-        <div>
-          <Disclosure title={s5.worktreeTitle} defaultOpen>
+        <ChipPanels
+          items={[
+            { id: 'worktree', label: s5.worktreeTitle },
+            { id: 'bg', label: s5.bgTitle },
+          ]}
+        >
+          <div key="worktree">
             <Code code={s5.worktreeCode} language="bash" />
             <Para>{s5.toolLead}</Para>
             <Code code={s5.toolCode} language="bash" />
             <Para>{s5.cursorNote}</Para>
-          </Disclosure>
-          <Disclosure title={s5.bgTitle}>
+          </div>
+          <div key="bg">
             <Code code={s5.bgCode} language="bash" />
-          </Disclosure>
-        </div>
+          </div>
+        </ChipPanels>
       );
     default:
       return <UsageLadderTools />;
@@ -219,12 +231,36 @@ const Mistakes = ({ step }: { step: number }) => {
 export const UsageLadderStepContent = ({
   step,
   tab,
+  onTabChange,
 }: {
   step: number;
   tab: string;
+  onTabChange: (id: string) => void;
 }) => {
-  if (tab === 'command') return <Command step={step} />;
-  if (tab === 'whenUp') return <WhenUp step={step} />;
-  if (tab === 'mistakes') return <Mistakes step={step} />;
-  return <Does step={step} />;
+  const { t, raw } = useTranslation('week17');
+  const labels = raw('usageLadder.labels');
+  const items = [
+    { id: 'does', label: labels.does },
+    {
+      id: 'command',
+      label: step === 5 ? t('usageLadder.ui.toolsTab') : labels.command,
+    },
+    { id: 'whenUp', label: labels.whenUp },
+    { id: 'mistakes', label: labels.mistakes },
+  ];
+
+  return (
+    <Tabs
+      items={items}
+      value={tab}
+      onChange={onTabChange}
+      label={t('usageLadder.ui.tabsLabel')}
+      idPrefix={`usage-ladder-step-${step}`}
+    >
+      <Does key="does" step={step} />
+      <Command key="command" step={step} />
+      <WhenUp key="whenUp" step={step} />
+      <Mistakes key="mistakes" step={step} />
+    </Tabs>
+  );
 };

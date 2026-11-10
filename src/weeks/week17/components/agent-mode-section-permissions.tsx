@@ -1,15 +1,14 @@
 'use client';
 
-import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { InfoBox } from '../../../components/info-box';
+import { StablePanels } from '../../../components/ui/stable-panels';
 
 export const AgentModePermissions = () => {
   const { t, raw } = useTranslation('week17');
   const modes = raw('agentMode.permissionModes');
   const [selected, setSelected] = useState(0);
-  const mode = modes[selected];
 
   return (
     <div className="space-y-4">
@@ -47,8 +46,8 @@ export const AgentModePermissions = () => {
                   {index + 1}/{modes.length}
                 </span>
                 <code
-                  className={`block text-xs break-all ${
-                    active ? 'font-bold text-orange-800' : 'text-gray-800'
+                  className={`block text-xs font-semibold break-all ${
+                    active ? 'text-orange-800' : 'text-gray-800'
                   }`}
                 >
                   {item.name}
@@ -59,21 +58,19 @@ export const AgentModePermissions = () => {
         </div>
       </div>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={mode.name}
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -6 }}
-          transition={{ duration: 0.15, ease: 'easeOut' }}
-          className="rounded-lg border border-orange-200 bg-orange-50 p-3"
-        >
-          <code className="text-sm font-bold break-all text-orange-800">
-            {mode.name}
-          </code>
-          <p className="mt-1 text-sm text-gray-700">{mode.desc}</p>
-        </motion.div>
-      </AnimatePresence>
+      <StablePanels index={selected}>
+        {modes.map((mode) => (
+          <div
+            key={mode.name}
+            className="rounded-lg border border-orange-200 bg-orange-50 p-3"
+          >
+            <code className="text-sm font-bold break-all text-orange-800">
+              {mode.name}
+            </code>
+            <p className="mt-1 text-sm text-gray-700">{mode.desc}</p>
+          </div>
+        ))}
+      </StablePanels>
     </div>
   );
 };

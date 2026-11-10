@@ -1,8 +1,8 @@
 'use client';
 
-import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
+import { StablePanels } from '../../../components/ui/stable-panels';
 import { Pager, panelId, TabList, tabId } from './verification-section-tabs';
 
 const ID_PREFIX = 'verification-guidelines';
@@ -29,8 +29,6 @@ export const VerificationGuidelines = () => {
   const { t, raw } = useTranslation('week17');
   const groups = raw('verification.guidelines.groups');
   const [selected, setSelected] = useState(0);
-  const group = groups[selected];
-  const style = STYLES[selected];
 
   return (
     <div>
@@ -45,39 +43,6 @@ export const VerificationGuidelines = () => {
         idPrefix={ID_PREFIX}
       />
 
-      <div
-        role="tabpanel"
-        id={panelId(ID_PREFIX)}
-        aria-labelledby={tabId(ID_PREFIX, selected)}
-      >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={selected}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.15, ease: 'easeOut' }}
-            className={`mt-4 rounded-lg border p-4 ${style.box}`}
-          >
-            <h4 className="mb-2 text-sm font-bold">{group.title}</h4>
-            <ul className="space-y-2">
-              {group.items.map((item) => (
-                <li
-                  key={item}
-                  className="flex min-w-0 items-start gap-2 text-sm leading-relaxed"
-                >
-                  <span
-                    className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${style.dot}`}
-                    aria-hidden="true"
-                  />
-                  <span className="min-w-0 break-words">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
       <Pager
         index={selected}
         total={groups.length}
@@ -85,6 +50,38 @@ export const VerificationGuidelines = () => {
         prevLabel={t('verification.guidelines.prev')}
         nextLabel={t('verification.guidelines.next')}
       />
+
+      <div
+        role="tabpanel"
+        id={panelId(ID_PREFIX)}
+        aria-labelledby={tabId(ID_PREFIX, selected)}
+        className="mt-3"
+      >
+        <StablePanels index={selected}>
+          {groups.map((group, idx) => (
+            <div
+              key={group.title}
+              className={`rounded-lg border p-4 ${STYLES[idx].box}`}
+            >
+              <h4 className="mb-2 text-sm font-bold">{group.title}</h4>
+              <ul className="space-y-2">
+                {group.items.map((item) => (
+                  <li
+                    key={item}
+                    className="flex min-w-0 items-start gap-2 text-sm leading-relaxed"
+                  >
+                    <span
+                      className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${STYLES[idx].dot}`}
+                      aria-hidden="true"
+                    />
+                    <span className="min-w-0 break-words">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </StablePanels>
+      </div>
     </div>
   );
 };

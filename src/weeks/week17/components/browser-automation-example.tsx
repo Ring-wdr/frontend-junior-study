@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { InfoBox } from '../../../components/info-box';
 import { CodeBlock } from '../../../components/ui/code-block';
-import { Panel } from './browser-automation-controls';
+import { StablePanels } from '../../../components/ui/stable-panels';
 
 type TabId = 'prompt' | 'ego' | 'habits';
 
@@ -50,47 +50,42 @@ export const BrowserAutomationExample = () => {
         aria-labelledby={`ba-example-tab-${tab}`}
         className="mt-3"
       >
-        <Panel panelKey={tab}>
-          {tab === 'prompt' && (
-            <>
-              <h4 className="font-bold text-sm text-green-800">
-                {t('browserAutomation.example.promptTitle')}
-              </h4>
-              <CodeBlock
-                code={t('browserAutomation.example.prompt')}
-                language="text"
-                className="mt-2 text-xs"
-              />
-            </>
-          )}
-          {tab === 'ego' && (
-            <>
-              <h4 className="font-bold text-sm text-green-800">
-                {t('browserAutomation.example.egoTitle')}
-              </h4>
-              <p className="mt-1 text-xs leading-relaxed text-gray-600">
-                {t('browserAutomation.example.egoNote')}
-              </p>
-              <CodeBlock
-                code={t('browserAutomation.example.egoCode')}
-                language="bash"
-                className="mt-2 text-xs"
-              />
-            </>
-          )}
-          {tab === 'habits' && (
-            <InfoBox
-              variant="green"
-              title={t('browserAutomation.example.habitsTitle')}
-            >
-              <ul className="list-disc pl-5 space-y-1 text-sm">
-                {habits.map((habit) => (
-                  <li key={habit}>{habit}</li>
-                ))}
-              </ul>
-            </InfoBox>
-          )}
-        </Panel>
+        <StablePanels index={tabIds.indexOf(tab)}>
+          <div key="prompt">
+            <h4 className="font-bold text-sm text-green-800">
+              {t('browserAutomation.example.promptTitle')}
+            </h4>
+            <CodeBlock
+              code={t('browserAutomation.example.prompt')}
+              language="text"
+              className="mt-2 text-xs"
+            />
+          </div>
+          <div key="ego">
+            <h4 className="font-bold text-sm text-green-800">
+              {t('browserAutomation.example.egoTitle')}
+            </h4>
+            <p className="mt-1 text-xs leading-relaxed text-gray-600">
+              {t('browserAutomation.example.egoNote')}
+            </p>
+            <CodeBlock
+              code={t('browserAutomation.example.egoCode')}
+              language="bash"
+              className="mt-2 text-xs"
+            />
+          </div>
+          <InfoBox
+            key="habits"
+            variant="green"
+            title={t('browserAutomation.example.habitsTitle')}
+          >
+            <ul className="list-disc pl-5 space-y-1 text-sm">
+              {habits.map((habit) => (
+                <li key={habit}>{habit}</li>
+              ))}
+            </ul>
+          </InfoBox>
+        </StablePanels>
       </div>
     </div>
   );

@@ -10,7 +10,8 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
-import { McpPanel, McpPrevNext } from './mcp-section-controls';
+import { StablePanels } from '../../../components/ui/stable-panels';
+import { McpPrevNext } from './mcp-section-controls';
 
 const serverParts = ['tools', 'resources', 'prompts'];
 const transports = ['stdio', 'http'];
@@ -156,22 +157,27 @@ export const McpArchitectureVisualizer = () => {
         </button>
       </div>
 
-      <div className="mt-4 rounded-xl border border-blue-200 bg-white p-3 sm:p-4">
-        <McpPanel panelKey={id} className="space-y-1">
-          <h4 className="font-bold text-sm text-blue-900 break-words">
-            {current.label}
-          </h4>
-          <p className="text-sm leading-relaxed text-gray-700">
-            {current.desc}
-          </p>
-        </McpPanel>
-        <McpPrevNext
-          index={index}
-          total={items.length}
-          onChange={setIndex}
-          prevLabel={t('mcp.visualizer.prev')}
-          nextLabel={t('mcp.visualizer.next')}
-        />
+      <McpPrevNext
+        index={index}
+        total={items.length}
+        onChange={setIndex}
+        prevLabel={t('mcp.visualizer.prev')}
+        nextLabel={t('mcp.visualizer.next')}
+      />
+
+      <div className="mt-3 rounded-xl border border-blue-200 bg-white p-3 sm:p-4">
+        <StablePanels index={index}>
+          {items.map((entry) => (
+            <div key={entry.id} className="space-y-1">
+              <h4 className="font-bold text-sm text-blue-900 break-words">
+                {entry.label}
+              </h4>
+              <p className="text-sm leading-relaxed text-gray-700">
+                {entry.desc}
+              </p>
+            </div>
+          ))}
+        </StablePanels>
       </div>
     </div>
   );

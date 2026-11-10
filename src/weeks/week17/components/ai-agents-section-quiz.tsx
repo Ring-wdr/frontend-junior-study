@@ -3,6 +3,7 @@
 import { Bot, User } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
+import { StablePanels } from '../../../components/ui/stable-panels';
 
 type Side = 'ai' | 'human';
 
@@ -71,23 +72,23 @@ export const AiAgentsSectionQuiz = () => {
                   </button>
                 ))}
               </div>
-              {picked && (
-                <p
-                  className={`mt-2 text-xs font-semibold ${
-                    isRight ? 'text-green-700' : 'text-orange-700'
-                  }`}
-                >
-                  {isRight
-                    ? `✓ ${t('aiAgents.capabilities.correct')}`
-                    : `✗ ${t('aiAgents.capabilities.wrong')}: ${labels[toSide(task.side)]}`}
+              <StablePanels index={picked ? (isRight ? 1 : 2) : 0}>
+                <p className="mt-2 text-xs font-semibold" aria-hidden="true">
+                  {'\u00a0'}
                 </p>
-              )}
+                <p className="mt-2 text-xs font-semibold text-green-700">
+                  {`✓ ${t('aiAgents.capabilities.correct')}`}
+                </p>
+                <p className="mt-2 text-xs font-semibold text-orange-700">
+                  {`✗ ${t('aiAgents.capabilities.wrong')}: ${labels[toSide(task.side)]}`}
+                </p>
+              </StablePanels>
             </li>
           );
         })}
       </ul>
       <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
-        <span className="text-xs font-semibold text-gray-600">
+        <span className="text-xs font-semibold tabular-nums text-gray-600">
           {`${t('aiAgents.capabilities.score')}: ${correctCount} / ${tasks.length}`}
         </span>
         <div className="flex gap-2">

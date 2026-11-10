@@ -42,30 +42,6 @@ export const AiAgentsSectionLoop = () => {
           ))}
         </div>
 
-        <div className="mt-3 overflow-x-auto rounded-lg bg-[#1e1e1e] p-3 font-mono text-xs text-gray-400">
-          <p className="mb-1 break-words">{t('aiAgents.example.loopHeader')}</p>
-          <ol className="space-y-1">
-            {steps.map((text, i) => {
-              const active = step === i + 1;
-              return (
-                <li
-                  key={text}
-                  aria-current={active ? 'step' : undefined}
-                  className={`rounded px-2 py-1 break-words transition-colors ${
-                    active
-                      ? 'bg-purple-600 font-semibold text-white'
-                      : step > i + 1
-                        ? 'text-gray-300'
-                        : 'text-gray-500'
-                  }`}
-                >
-                  {`# ${i + 1}. ${text}`}
-                </li>
-              );
-            })}
-          </ol>
-        </div>
-
         <div className="mt-3 flex items-center justify-between gap-2">
           <button
             type="button"
@@ -93,6 +69,29 @@ export const AiAgentsSectionLoop = () => {
             {t('aiAgents.example.next')}
             {' →'}
           </button>
+        </div>
+        <div className="mt-3 overflow-x-auto rounded-lg bg-[#1e1e1e] p-3 font-mono text-xs text-gray-400">
+          <p className="mb-1 break-words">{t('aiAgents.example.loopHeader')}</p>
+          <ol className="space-y-1">
+            {steps.map((text, i) => {
+              const active = step === i + 1;
+              return (
+                <li
+                  key={text}
+                  aria-current={active ? 'step' : undefined}
+                  className={`rounded px-2 py-1 break-words transition-colors ${
+                    active
+                      ? 'bg-purple-600 font-medium text-white'
+                      : step > i + 1
+                        ? 'text-gray-300'
+                        : 'text-gray-500'
+                  }`}
+                >
+                  {`# ${i + 1}. ${text}`}
+                </li>
+              );
+            })}
+          </ol>
         </div>
       </div>
     </div>

@@ -31,11 +31,14 @@ const Line = ({
       } ${dim ? 'opacity-40' : ''}`}
     >
       <span className="break-words">{`  - ${text}`}</span>
-      {lit && (
-        <span className="rounded bg-white px-1.5 text-[10px] font-bold">
-          {tag}
-        </span>
-      )}
+      <span
+        aria-hidden={!lit}
+        className={`rounded bg-white px-1.5 text-[10px] font-bold ${
+          lit ? '' : 'invisible'
+        }`}
+      >
+        {tag}
+      </span>
     </div>
   );
 };

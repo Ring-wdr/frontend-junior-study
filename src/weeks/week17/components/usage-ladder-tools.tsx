@@ -3,11 +3,12 @@
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { InfoBox } from '../../../components/info-box';
+import { StablePanels } from '../../../components/ui/stable-panels';
 import {
   Bullets,
+  ChipPanels,
   Code,
   DataTable,
-  Disclosure,
   Label,
   Para,
   Tabs,
@@ -17,7 +18,6 @@ const Compare = () => {
   const { t, raw } = useTranslation('week17');
   const compare = raw('usageLadder.compare');
   const [criterion, setCriterion] = useState(0);
-  const row = compare.table.rows[criterion];
 
   return (
     <div>
@@ -41,23 +41,32 @@ const Compare = () => {
           </button>
         ))}
       </div>
-      <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
-        <div className="min-w-0 rounded-lg border border-blue-200 bg-blue-50 p-3">
-          <h5 className="text-sm font-bold text-blue-800">
-            {compare.table.headers[1]}
-          </h5>
-          <p className="mt-1 text-sm leading-relaxed text-gray-700 break-words">
-            {row[1]}
-          </p>
-        </div>
-        <div className="min-w-0 rounded-lg border border-green-200 bg-green-50 p-3">
-          <h5 className="text-sm font-bold text-green-800">
-            {compare.table.headers[2]}
-          </h5>
-          <p className="mt-1 text-sm leading-relaxed text-gray-700 break-words">
-            {row[2]}
-          </p>
-        </div>
+      <div className="mt-3">
+        <StablePanels index={criterion}>
+          {compare.table.rows.map((item) => (
+            <div
+              key={item[0]}
+              className="grid grid-cols-1 gap-3 sm:grid-cols-2"
+            >
+              <div className="min-w-0 rounded-lg border border-blue-200 bg-blue-50 p-3">
+                <h5 className="text-sm font-bold text-blue-800">
+                  {compare.table.headers[1]}
+                </h5>
+                <p className="mt-1 text-sm leading-relaxed text-gray-700 break-words">
+                  {item[1]}
+                </p>
+              </div>
+              <div className="min-w-0 rounded-lg border border-green-200 bg-green-50 p-3">
+                <h5 className="text-sm font-bold text-green-800">
+                  {compare.table.headers[2]}
+                </h5>
+                <p className="mt-1 text-sm leading-relaxed text-gray-700 break-words">
+                  {item[2]}
+                </p>
+              </div>
+            </div>
+          ))}
+        </StablePanels>
       </div>
       <Para>{compare.note}</Para>
     </div>
@@ -80,57 +89,70 @@ const Teams = () => {
 const Herdr = () => {
   const { t, raw } = useTranslation('week17');
   const herdr = raw('usageLadder.herdr');
+  const items = [
+    { id: 'about', label: t('usageLadder.ui.aboutTitle') },
+    { id: 'install', label: herdr.installTitle },
+    { id: 'usage', label: herdr.usageTitle },
+    { id: 'cli', label: herdr.cliTitle },
+    { id: 'remote', label: herdr.remoteTitle },
+  ];
   return (
-    <div>
-      <Disclosure title={t('usageLadder.ui.aboutTitle')} defaultOpen>
+    <ChipPanels items={items}>
+      <div key="about">
         <Bullets items={herdr.about} />
-      </Disclosure>
-      <Disclosure title={herdr.installTitle}>
+      </div>
+      <div key="install">
         <Code code={herdr.installCode} language="bash" />
-      </Disclosure>
-      <Disclosure title={herdr.usageTitle}>
+      </div>
+      <div key="usage">
         <Para>{herdr.usage}</Para>
         <DataTable
           headers={herdr.keysTable.headers}
           rows={herdr.keysTable.rows}
         />
-      </Disclosure>
-      <Disclosure title={herdr.cliTitle}>
+      </div>
+      <div key="cli">
         <Para>{herdr.cliLead}</Para>
         <Code code={herdr.cliCode} language="bash" />
         <Para>{herdr.cliNote}</Para>
         <Code code={herdr.skillCode} language="bash" />
         <Para>{herdr.skillNote}</Para>
-      </Disclosure>
-      <Disclosure title={herdr.remoteTitle}>
+      </div>
+      <div key="remote">
         <Para>{herdr.remote}</Para>
-      </Disclosure>
-    </div>
+      </div>
+    </ChipPanels>
   );
 };
 
 const Orca = () => {
   const { t, raw } = useTranslation('week17');
   const orca = raw('usageLadder.orca');
+  const items = [
+    { id: 'about', label: t('usageLadder.ui.aboutTitle') },
+    { id: 'install', label: orca.installTitle },
+    { id: 'usage', label: orca.usageTitle },
+    { id: 'cli', label: orca.cliTitle },
+  ];
   return (
-    <div>
-      <Disclosure title={t('usageLadder.ui.aboutTitle')} defaultOpen>
+    <ChipPanels items={items}>
+      <div key="about">
         <Bullets items={orca.about} />
-      </Disclosure>
-      <Disclosure title={orca.installTitle}>
+      </div>
+      <div key="install">
         <Code code={orca.installCode} language="bash" />
         <Para>{orca.installWarn}</Para>
-      </Disclosure>
-      <Disclosure title={orca.usageTitle}>
+      </div>
+      <div key="usage">
         <Para>{orca.usage}</Para>
-      </Disclosure>
-      <Disclosure title={orca.cliTitle}>
+      </div>
+      <div key="cli">
         <Para>{orca.cliLead}</Para>
         <Code code={orca.cliCode} language="bash" />
         <Para>{orca.skillNote}</Para>
         <Code code={orca.skillCode} language="bash" />
-      </Disclosure>
-    </div>
+      </div>
+    </ChipPanels>
   );
 };
 
@@ -153,17 +175,15 @@ export const UsageLadderTools = () => {
       label={t('usageLadder.ui.toolsLabel')}
       idPrefix="usage-ladder-tool"
     >
-      {tool === 'teams' && <Teams />}
-      {tool === 'herdr' && <Herdr />}
-      {tool === 'orca' && <Orca />}
-      {tool === 'compare' && <Compare />}
-      {tool === 'google' && (
-        <InfoBox variant="gray">
-          <p className="text-sm leading-relaxed">
-            {t('usageLadder.google.body')}
-          </p>
-        </InfoBox>
-      )}
+      <Teams key="teams" />
+      <Herdr key="herdr" />
+      <Orca key="orca" />
+      <Compare key="compare" />
+      <InfoBox key="google" variant="gray">
+        <p className="text-sm leading-relaxed">
+          {t('usageLadder.google.body')}
+        </p>
+      </InfoBox>
     </Tabs>
   );
 };

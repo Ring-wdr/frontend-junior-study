@@ -1,16 +1,15 @@
 'use client';
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { StablePanels } from '../../../components/ui/stable-panels';
 
 export const TokenOptimizationCommands = () => {
   const { t, raw } = useTranslation('week17');
   const commands = raw('tokenOptimization.commands');
   const [index, setIndex] = useState(0);
-  const current = commands[index];
 
   return (
     <div className="space-y-3">
@@ -38,20 +37,7 @@ export const TokenOptimizationCommands = () => {
         })}
       </div>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -6 }}
-          transition={{ duration: 0.15 }}
-          className="min-w-0"
-        >
-          <CodeBlock code={current.code} language="bash" className="text-xs" />
-        </motion.div>
-      </AnimatePresence>
-
-      <div className="flex items-center justify-between gap-2 border-t border-gray-100 pt-3">
+      <div className="flex items-center justify-between gap-2">
         <button
           type="button"
           onClick={() => setIndex(index - 1)}
@@ -74,6 +60,17 @@ export const TokenOptimizationCommands = () => {
           <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
         </button>
       </div>
+
+      <StablePanels index={index}>
+        {commands.map((item) => (
+          <CodeBlock
+            key={item.goal}
+            code={item.code}
+            language="bash"
+            className="text-xs"
+          />
+        ))}
+      </StablePanels>
     </div>
   );
 };

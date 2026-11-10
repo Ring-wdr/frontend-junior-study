@@ -1,6 +1,5 @@
 'use client';
 
-import { AnimatePresence, motion } from 'motion/react';
 import type { ReactNode } from 'react';
 
 interface ChipProps {
@@ -26,7 +25,9 @@ export const Chip = ({
         : 'border-gray-200 bg-white text-gray-700 hover:bg-blue-50'
     } ${className ?? ''}`}
   >
-    {selected && <span aria-hidden="true">{'✓ '}</span>}
+    <span aria-hidden="true" className={selected ? '' : 'invisible'}>
+      {'✓ '}
+    </span>
     {children}
   </button>
 );
@@ -56,7 +57,7 @@ export const PrevNext = ({
       {'← '}
       {prevLabel}
     </button>
-    <span className="text-xs text-gray-500">{`${index + 1} / ${total}`}</span>
+    <span className="text-xs tabular-nums text-gray-500">{`${index + 1} / ${total}`}</span>
     <button
       type="button"
       onClick={() => onChange(index + 1)}
@@ -67,27 +68,4 @@ export const PrevNext = ({
       {' →'}
     </button>
   </div>
-);
-
-interface PanelProps {
-  panelKey: string;
-  children: ReactNode;
-  id?: string;
-  className?: string;
-}
-
-export const Panel = ({ panelKey, children, id, className }: PanelProps) => (
-  <AnimatePresence mode="wait" initial={false}>
-    <motion.div
-      key={panelKey}
-      id={id}
-      initial={{ opacity: 0, y: 6 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -6 }}
-      transition={{ duration: 0.15, ease: 'easeOut' }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  </AnimatePresence>
 );

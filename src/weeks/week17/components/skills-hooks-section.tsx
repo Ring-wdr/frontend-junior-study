@@ -1,9 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { SectionCard } from '../../../components/section-card';
+import { StablePanels } from '../../../components/ui/stable-panels';
 import { SkillsHooksChooser } from './skills-hooks-section-chooser';
 import { SkillsHooksClaudeMd } from './skills-hooks-section-claude-md';
 import { SkillsHooksHooks } from './skills-hooks-section-hooks';
@@ -17,11 +17,6 @@ export const SkillsHooksSection = () => {
   const { t, raw } = useTranslation('week17');
   const topics = raw('skillsHooks.topics');
   const [topic, setTopic] = useState(0);
-  const titles = [
-    t('skillsHooks.skills.title'),
-    t('skillsHooks.hooks.title'),
-    t('skillsHooks.claudeMd.title'),
-  ];
 
   return (
     <SectionCard
@@ -45,22 +40,26 @@ export const SkillsHooksSection = () => {
           aria-labelledby={tabId(ID_PREFIX, topic)}
           className="rounded-xl border border-gray-200 bg-white p-3 sm:p-4"
         >
-          <h3 className="mb-3 break-words font-bold text-base text-gray-900">
-            {titles[topic]}
-          </h3>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={topic}
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.15, ease: 'easeOut' }}
-            >
-              {topic === 0 && <SkillsHooksSkills />}
-              {topic === 1 && <SkillsHooksHooks />}
-              {topic === 2 && <SkillsHooksClaudeMd />}
-            </motion.div>
-          </AnimatePresence>
+          <StablePanels index={topic}>
+            <div key="skills">
+              <h3 className="mb-3 break-words font-bold text-base text-gray-900">
+                {t('skillsHooks.skills.title')}
+              </h3>
+              <SkillsHooksSkills />
+            </div>
+            <div key="hooks">
+              <h3 className="mb-3 break-words font-bold text-base text-gray-900">
+                {t('skillsHooks.hooks.title')}
+              </h3>
+              <SkillsHooksHooks />
+            </div>
+            <div key="claude-md">
+              <h3 className="mb-3 break-words font-bold text-base text-gray-900">
+                {t('skillsHooks.claudeMd.title')}
+              </h3>
+              <SkillsHooksClaudeMd />
+            </div>
+          </StablePanels>
         </div>
 
         <SkillsHooksChooser onGo={setTopic} />

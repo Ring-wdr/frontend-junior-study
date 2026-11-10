@@ -79,8 +79,12 @@ export const VerificationChecklist = () => {
       </ul>
 
       <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
-        <output className="text-xs font-semibold text-green-700">
-          {complete ? t('verification.checklist.done') : ''}
+        <output
+          className={`text-xs font-semibold text-green-700 ${
+            complete ? '' : 'invisible'
+          }`}
+        >
+          {t('verification.checklist.done')}
         </output>
         <button
           type="button"

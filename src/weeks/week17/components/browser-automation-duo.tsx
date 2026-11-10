@@ -4,11 +4,37 @@ import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { InfoBox } from '../../../components/info-box';
 import { CodeBlock } from '../../../components/ui/code-block';
-import { Chip, Panel, PrevNext } from './browser-automation-controls';
+import { StablePanels } from '../../../components/ui/stable-panels';
+import { Chip, PrevNext } from './browser-automation-controls';
 
 type ToolId = 'ego' | 'aside';
 
 const toolIds: ToolId[] = ['ego', 'aside'];
+
+interface CriterionLinesProps {
+  title: string;
+  criterion: string;
+  lines: string[];
+}
+
+const CriterionLines = ({ title, criterion, lines }: CriterionLinesProps) => (
+  <div className="min-w-0">
+    <h4 className="font-bold text-sm text-green-800">
+      {title}
+      <span className="font-normal text-gray-500">
+        {' / '}
+        {criterion}
+      </span>
+    </h4>
+    <ul className="mt-2 space-y-2 text-sm leading-relaxed text-gray-700">
+      {lines.map((line) => (
+        <li key={line} className="break-words">
+          {line}
+        </li>
+      ))}
+    </ul>
+  </div>
+);
 
 export const BrowserAutomationDuo = () => {
   const { t, raw } = useTranslation('week17');
@@ -19,8 +45,7 @@ export const BrowserAutomationDuo = () => {
   const [side, setSide] = useState(false);
   const [criterion, setCriterion] = useState(0);
 
-  const current = tools[tool];
-  const sectionOf = (id: ToolId) => tools[id].sections[criterion] ?? [];
+  const modeIndex = side ? toolIds.length : toolIds.indexOf(tool);
 
   return (
     <div>
@@ -59,7 +84,9 @@ export const BrowserAutomationDuo = () => {
               : 'border-green-300 bg-white text-green-800 hover:bg-green-50'
           }`}
         >
-          {side && <span aria-hidden="true">{'✓ '}</span>}
+          <span aria-hidden="true" className={side ? '' : 'invisible'}>
+            {'✓ '}
+          </span>
           {t('browserAutomation.duo.sideBySide')}
         </button>
       </div>
@@ -79,53 +106,63 @@ export const BrowserAutomationDuo = () => {
         ))}
       </div>
 
+      <PrevNext
+        index={criterion}
+        total={criteria.length}
+        onChange={setCriterion}
+        prevLabel={t('browserAutomation.duo.prev')}
+        nextLabel={t('browserAutomation.duo.next')}
+      />
+
       <div
         role="tabpanel"
         id="ba-duo-panel"
         aria-labelledby={`ba-duo-tab-${tool}`}
-        className="mt-4 rounded-xl border border-green-200 bg-white p-3 sm:p-4"
+        className="mt-3 rounded-xl border border-green-200 bg-white p-3 sm:p-4"
       >
-        <Panel
-          panelKey={`${side ? 'side' : tool}-${criterion}`}
-          className={
-            side ? 'grid grid-cols-1 gap-3 sm:grid-cols-2' : 'space-y-2'
-          }
-        >
-          {(side ? toolIds : [tool]).map((id) => (
-            <div key={id} className="min-w-0">
-              <h4 className="font-bold text-sm text-green-800">
-                {tools[id].title}
-                <span className="font-normal text-gray-500">
-                  {' / '}
-                  {criteria[criterion]}
-                </span>
-              </h4>
-              <ul className="mt-2 space-y-2 text-sm leading-relaxed text-gray-700">
-                {sectionOf(id).map((line) => (
-                  <li key={line} className="break-words">
-                    {line}
-                  </li>
+        <StablePanels index={criterion}>
+          {criteria.map((label, criterionIndex) => (
+            <StablePanels key={label} index={modeIndex}>
+              {toolIds.map((id) => (
+                <CriterionLines
+                  key={id}
+                  title={tools[id].title}
+                  criterion={label}
+                  lines={tools[id].sections[criterionIndex] ?? []}
+                />
+              ))}
+              <div key="side" className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {toolIds.map((id) => (
+                  <CriterionLines
+                    key={id}
+                    title={tools[id].title}
+                    criterion={label}
+                    lines={tools[id].sections[criterionIndex] ?? []}
+                  />
                 ))}
-              </ul>
-            </div>
+              </div>
+            </StablePanels>
           ))}
-        </Panel>
-
-        <PrevNext
-          index={criterion}
-          total={criteria.length}
-          onChange={setCriterion}
-          prevLabel={t('browserAutomation.duo.prev')}
-          nextLabel={t('browserAutomation.duo.next')}
-        />
+        </StablePanels>
       </div>
 
       <p className="mt-4 text-xs font-semibold text-gray-600">
         {t('browserAutomation.duo.codeLabel')}
-        {': '}
-        {current.title}
       </p>
-      <CodeBlock code={current.code} language="bash" className="mt-2 text-xs" />
+      <StablePanels index={toolIds.indexOf(tool)} className="mt-2">
+        {toolIds.map((id) => (
+          <div key={id} className="min-w-0">
+            <p className="text-xs font-semibold text-gray-600">
+              {tools[id].title}
+            </p>
+            <CodeBlock
+              code={tools[id].code}
+              language="bash"
+              className="mt-2 text-xs"
+            />
+          </div>
+        ))}
+      </StablePanels>
 
       <InfoBox variant="blue" title={t('browserAutomation.duo.compareTitle')}>
         <ul className="list-disc pl-5 space-y-1 text-sm">

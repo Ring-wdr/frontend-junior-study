@@ -1,14 +1,13 @@
 'use client';
 
-import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
+import { StablePanels } from '../../../components/ui/stable-panels';
 
 export const SkillsHooksSim = () => {
   const { t, raw } = useTranslation('week17');
   const results = raw('skillsHooks.hooks.sim.results');
   const [idx, setIdx] = useState(1);
-  const result = results[idx];
 
   return (
     <div className="mt-4 rounded-xl border border-orange-200 bg-orange-50/40 p-3 sm:p-4">
@@ -46,35 +45,33 @@ export const SkillsHooksSim = () => {
           );
         })}
       </fieldset>
-      <div aria-live="polite">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={idx}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.15, ease: 'easeOut' }}
-            className={`mt-3 rounded-lg border p-3 ${
-              result.blocked
-                ? 'border-red-300 bg-red-50'
-                : 'border-green-300 bg-green-50'
-            }`}
-          >
-            <p
-              className={`text-xs font-bold ${
-                result.blocked ? 'text-red-800' : 'text-green-800'
+      <div aria-live="polite" className="mt-3">
+        <StablePanels index={idx}>
+          {results.map((r) => (
+            <div
+              key={r.code}
+              className={`rounded-lg border p-3 ${
+                r.blocked
+                  ? 'border-red-300 bg-red-50'
+                  : 'border-green-300 bg-green-50'
               }`}
             >
-              {result.blocked ? '■ ' : '▶ '}
-              {t('skillsHooks.hooks.sim.codeWord')} {result.code}
-              {' — '}
-              {result.status}
-            </p>
-            <p className="mt-1 break-words text-xs leading-relaxed text-gray-700">
-              {result.text}
-            </p>
-          </motion.div>
-        </AnimatePresence>
+              <p
+                className={`text-xs font-bold ${
+                  r.blocked ? 'text-red-800' : 'text-green-800'
+                }`}
+              >
+                {r.blocked ? '■ ' : '▶ '}
+                {t('skillsHooks.hooks.sim.codeWord')} {r.code}
+                {' — '}
+                {r.status}
+              </p>
+              <p className="mt-1 break-words text-xs leading-relaxed text-gray-700">
+                {r.text}
+              </p>
+            </div>
+          ))}
+        </StablePanels>
       </div>
     </div>
   );

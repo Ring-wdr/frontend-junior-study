@@ -1,11 +1,11 @@
 'use client';
 
 import { Check } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { DemoBox } from '../../../components/demo-box';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { StablePanels } from '../../../components/ui/stable-panels';
 
 export const PromptEngineeringGoal = () => {
   const { t, raw } = useTranslation('week17');
@@ -18,10 +18,19 @@ export const PromptEngineeringGoal = () => {
     setOn((prev) => prev.map((value, i) => (i === index ? !value : value)));
   };
 
-  const active = pieces.filter((_, index) => on[index]);
-  const assembled = active.length
-    ? `"${active.map((piece) => piece.text).join('\n')}"`
-    : '';
+  const assembledFor = (mask: number) => {
+    const lines = pieces.filter(
+      (_, index) => Math.floor(mask / 2 ** index) % 2,
+    );
+    return lines.length
+      ? `"${lines.map((piece) => piece.text).join('\n')}"`
+      : '';
+  };
+  const mask = on.reduce(
+    (sum, value, index) => sum + (value ? 2 ** index : 0),
+    0,
+  );
+  const masks = Array.from({ length: 2 ** pieces.length }, (_, value) => value);
 
   return (
     <DemoBox label={t('promptEngineering.ui.assembleLabel')}>
@@ -53,83 +62,77 @@ export const PromptEngineeringGoal = () => {
           </button>
         </div>
 
-        <AnimatePresence mode="wait" initial={false}>
-          {good ? (
-            <motion.div
-              key="good"
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.15 }}
-              className="min-w-0 space-y-3 rounded-xl border border-green-200 bg-green-50 p-3 sm:p-4"
-            >
-              <p className="text-xs text-gray-600">
-                {t('promptEngineering.ui.piecesHint')}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {pieces.map((piece, index) => (
-                  <button
-                    key={piece.name}
-                    type="button"
-                    aria-pressed={on[index]}
-                    onClick={() => toggle(index)}
-                    className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
-                      on[index]
-                        ? 'border-green-600 bg-green-600 text-white'
-                        : 'border-gray-300 bg-white text-gray-600 hover:border-green-400'
-                    }`}
-                  >
-                    {on[index] && <Check className="h-3.5 w-3.5" />}
-                    {piece.name}
-                    <span className="sr-only">
-                      {on[index]
-                        ? t('promptEngineering.ui.pieceOn')
-                        : t('promptEngineering.ui.pieceOff')}
-                    </span>
-                  </button>
-                ))}
-              </div>
-              <div>
-                <h4 className="mb-1 text-xs font-bold text-green-800">
-                  {t('promptEngineering.ui.assembledLabel')}
+        <StablePanels index={good ? 1 : 0}>
+          <div className="h-full min-w-0 space-y-3 rounded-xl border border-red-200 bg-red-50 p-3 sm:p-4">
+            {badItems.map((item) => (
+              <div key={item.label}>
+                <h4 className="mb-1 text-xs font-bold text-red-700">
+                  {item.label}
                 </h4>
-                {assembled ? (
-                  <CodeBlock
-                    code={assembled}
-                    language="text"
-                    className="text-xs"
-                  />
-                ) : (
-                  <p className="rounded-md border border-dashed border-gray-300 bg-white p-3 text-xs text-gray-600">
-                    {t('promptEngineering.ui.emptyPrompt')}
-                  </p>
-                )}
+                <CodeBlock
+                  code={item.text}
+                  language="text"
+                  className="text-xs"
+                />
               </div>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="bad"
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.15 }}
-              className="min-w-0 space-y-3 rounded-xl border border-red-200 bg-red-50 p-3 sm:p-4"
-            >
-              {badItems.map((item) => (
-                <div key={item.label}>
-                  <h4 className="mb-1 text-xs font-bold text-red-700">
-                    {item.label}
-                  </h4>
-                  <CodeBlock
-                    code={item.text}
-                    language="text"
-                    className="text-xs"
+            ))}
+          </div>
+          <div className="h-full min-w-0 space-y-3 rounded-xl border border-green-200 bg-green-50 p-3 sm:p-4">
+            <p className="text-xs text-gray-600">
+              {t('promptEngineering.ui.piecesHint')}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {pieces.map((piece, index) => (
+                <button
+                  key={piece.name}
+                  type="button"
+                  aria-pressed={on[index]}
+                  onClick={() => toggle(index)}
+                  className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
+                    on[index]
+                      ? 'border-green-600 bg-green-600 text-white'
+                      : 'border-gray-300 bg-white text-gray-600 hover:border-green-400'
+                  }`}
+                >
+                  <Check
+                    className={`h-3.5 w-3.5 ${on[index] ? '' : 'invisible'}`}
+                    aria-hidden="true"
                   />
-                </div>
+                  {piece.name}
+                  <span className="sr-only">
+                    {on[index]
+                      ? t('promptEngineering.ui.pieceOn')
+                      : t('promptEngineering.ui.pieceOff')}
+                  </span>
+                </button>
               ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
+            <div>
+              <h4 className="mb-1 text-xs font-bold text-green-800">
+                {t('promptEngineering.ui.assembledLabel')}
+              </h4>
+              <StablePanels index={mask}>
+                {masks.map((value) =>
+                  value === 0 ? (
+                    <p
+                      key={value}
+                      className="rounded-md border border-dashed border-gray-300 bg-white p-3 text-xs text-gray-600"
+                    >
+                      {t('promptEngineering.ui.emptyPrompt')}
+                    </p>
+                  ) : (
+                    <CodeBlock
+                      key={value}
+                      code={assembledFor(value)}
+                      language="text"
+                      className="text-xs"
+                    />
+                  ),
+                )}
+              </StablePanels>
+            </div>
+          </div>
+        </StablePanels>
       </div>
     </DemoBox>
   );

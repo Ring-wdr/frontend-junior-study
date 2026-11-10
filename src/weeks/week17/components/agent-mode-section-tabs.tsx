@@ -92,7 +92,7 @@ export const Pager = ({
   prevLabel,
   nextLabel,
 }: PagerProps) => (
-  <div className="mt-5 flex items-center justify-between gap-2 border-t border-gray-100 pt-3">
+  <div className="flex items-center justify-between gap-2">
     <button
       type="button"
       onClick={() => onChange(index - 1)}

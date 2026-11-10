@@ -2,17 +2,31 @@
 
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
-import { Chip, Panel } from './ai-agents-section-controls';
+import { StablePanels } from '../../../components/ui/stable-panels';
+import { Chip } from './ai-agents-section-controls';
 
 export const AiAgentsSectionEra = () => {
   const { t, raw } = useTranslation('week17');
   const toolsFeatures = raw('aiAgents.era.toolsFeatures');
   const agentsFeatures = raw('aiAgents.era.agentsFeatures');
   const [agents, setAgents] = useState(false);
-  const features = agents ? agentsFeatures : toolsFeatures;
-  const label = agents
-    ? t('aiAgents.era.agentsEra')
-    : t('aiAgents.era.toolsEra');
+
+  const eras = [
+    {
+      id: 'tools',
+      label: t('aiAgents.era.toolsEra'),
+      features: toolsFeatures,
+      box: 'border-gray-200 bg-white',
+      title: 'text-gray-700',
+    },
+    {
+      id: 'agents',
+      label: t('aiAgents.era.agentsEra'),
+      features: agentsFeatures,
+      box: 'border-purple-200 bg-purple-50',
+      title: 'text-purple-800',
+    },
+  ];
 
   return (
     <div>
@@ -27,29 +41,26 @@ export const AiAgentsSectionEra = () => {
           {t('aiAgents.era.agentsEra')}
         </Chip>
       </div>
-      <div
-        className={`mt-4 rounded-xl border p-3 sm:p-4 ${
-          agents ? 'border-purple-200 bg-purple-50' : 'border-gray-200 bg-white'
-        }`}
-      >
-        <Panel panelKey={label}>
-          <h4
-            className={`text-sm font-bold break-words ${
-              agents ? 'text-purple-800' : 'text-gray-700'
-            }`}
+      <StablePanels index={agents ? 1 : 0} className="mt-4">
+        {eras.map((era) => (
+          <div
+            key={era.id}
+            className={`h-full rounded-xl border p-3 sm:p-4 ${era.box}`}
           >
-            {label}
-          </h4>
-          <ul className="mt-2 space-y-1.5 text-sm text-gray-700">
-            {features.map((item) => (
-              <li key={item} className="flex gap-2 break-words">
-                <span aria-hidden="true">•</span>
-                <span className="min-w-0">{item}</span>
-              </li>
-            ))}
-          </ul>
-        </Panel>
-      </div>
+            <h4 className={`text-sm font-bold break-words ${era.title}`}>
+              {era.label}
+            </h4>
+            <ul className="mt-2 space-y-1.5 text-sm text-gray-700">
+              {era.features.map((item) => (
+                <li key={item} className="flex gap-2 break-words">
+                  <span aria-hidden="true">•</span>
+                  <span className="min-w-0">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </StablePanels>
     </div>
   );
 };

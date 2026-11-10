@@ -1,9 +1,9 @@
 'use client';
 
-import { Check, ChevronDown } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { Check } from 'lucide-react';
 import { type KeyboardEvent, type ReactNode, useState } from 'react';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { StablePanels } from '../../../components/ui/stable-panels';
 
 export const Label = ({ children }: { children: string }) => (
   <h4 className="mt-4 first:mt-0 font-bold text-sm text-gray-800">
@@ -132,9 +132,9 @@ export const Tabs = ({
               tabIndex={selected ? 0 : -1}
               onClick={() => onChange(item.id)}
               onKeyDown={(event) => handleKeyDown(event, index)}
-              className={`shrink-0 whitespace-nowrap px-3 py-2 text-xs sm:text-sm border-b-2 -mb-px transition-colors ${
+              className={`shrink-0 whitespace-nowrap px-3 py-2 text-xs font-semibold sm:text-sm border-b-2 -mb-px transition-colors ${
                 selected
-                  ? 'border-indigo-600 font-bold text-indigo-700'
+                  ? 'border-indigo-600 text-indigo-700'
                   : 'border-transparent text-gray-600 hover:text-indigo-700'
               }`}
             >
@@ -149,52 +149,49 @@ export const Tabs = ({
         aria-labelledby={`${idPrefix}-tab-${value}`}
         className="pt-4 min-w-0"
       >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={value}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.15, ease: 'easeOut' }}
-          >
-            {children}
-          </motion.div>
-        </AnimatePresence>
+        <StablePanels
+          index={Math.max(
+            0,
+            items.findIndex((item) => item.id === value),
+          )}
+        >
+          {children}
+        </StablePanels>
       </div>
     </div>
   );
 };
 
-export const Disclosure = ({
-  title,
-  defaultOpen = false,
+export const ChipPanels = ({
+  items,
   children,
 }: {
-  title: string;
-  defaultOpen?: boolean;
+  items: TabItem[];
   children: ReactNode;
 }) => {
-  const [open, setOpen] = useState(defaultOpen);
+  const [active, setActive] = useState(0);
   return (
-    <div className="mt-3 first:mt-0 rounded-lg border border-gray-200 bg-white">
-      <button
-        type="button"
-        aria-expanded={open}
-        onClick={() => setOpen((prev) => !prev)}
-        className="flex w-full items-center justify-between gap-2 px-3 py-2 text-left text-sm font-semibold text-gray-800 hover:bg-gray-50"
-      >
-        <span className="min-w-0 break-words">{title}</span>
-        <ChevronDown
-          className={`h-4 w-4 shrink-0 transition-transform ${
-            open ? 'rotate-180' : ''
-          }`}
-        />
-      </button>
-      {open && (
-        <div className="border-t border-gray-100 px-3 pb-3 pt-3">
-          {children}
-        </div>
-      )}
+    <div className="min-w-0">
+      <div className="flex flex-wrap gap-2">
+        {items.map((item, index) => (
+          <button
+            key={item.id}
+            type="button"
+            aria-pressed={active === index}
+            onClick={() => setActive(index)}
+            className={`rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
+              active === index
+                ? 'border-indigo-600 bg-indigo-600 text-white'
+                : 'border-gray-300 bg-white text-gray-700 hover:border-indigo-300'
+            }`}
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+      <div className="mt-3 min-w-0 rounded-lg border border-gray-200 bg-white p-3">
+        <StablePanels index={active}>{children}</StablePanels>
+      </div>
     </div>
   );
 };
@@ -215,7 +212,7 @@ export const Checklist = ({
     <div>
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="min-w-0 text-xs text-gray-500">{hint}</p>
-        <span className="shrink-0 text-xs font-semibold text-indigo-700">
+        <span className="shrink-0 text-xs font-semibold tabular-nums text-indigo-700">
           {count}/{items.length} {doneLabel}
         </span>
       </div>
@@ -249,7 +246,9 @@ export const Checklist = ({
                       : 'border-gray-300 bg-white'
                   }`}
                 >
-                  {isChecked && <Check className="h-3.5 w-3.5" />}
+                  <Check
+                    className={`h-3.5 w-3.5 ${isChecked ? '' : 'invisible'}`}
+                  />
                 </span>
                 <span
                   className={`min-w-0 break-words ${isChecked ? 'line-through decoration-emerald-400' : ''}`}

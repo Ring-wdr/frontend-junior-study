@@ -1,12 +1,15 @@
 'use client';
 
 import { Sparkles } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { InfoBox } from '../../../components/info-box';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { StablePanels } from '../../../components/ui/stable-panels';
 import { Pager } from './skills-hooks-section-pager';
+import { panelId, TabList, tabId } from './skills-hooks-section-tabs';
+
+const SUB_PREFIX = 'skills-hooks-skills-sub';
 
 interface Item {
   name: string;
@@ -31,7 +34,6 @@ const Picker = ({
   nextLabel,
 }: PickerProps) => {
   const [idx, setIdx] = useState(0);
-  const item = items[idx];
 
   return (
     <div className="mt-4">
@@ -60,30 +62,30 @@ const Picker = ({
           );
         })}
       </fieldset>
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={idx}
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -6 }}
-          transition={{ duration: 0.15, ease: 'easeOut' }}
-          className="mt-3 rounded-lg border border-green-200 bg-green-50/50 p-3"
-        >
-          <code className="break-all text-sm font-bold text-green-700">
-            {item.name}
-          </code>
-          <p className="mt-1 break-words text-xs leading-relaxed text-gray-700">
-            {item.desc}
-          </p>
-          <Pager
-            index={idx}
-            total={items.length}
-            onChange={setIdx}
-            prevLabel={prevLabel}
-            nextLabel={nextLabel}
-          />
-        </motion.div>
-      </AnimatePresence>
+      <Pager
+        index={idx}
+        total={items.length}
+        onChange={setIdx}
+        prevLabel={prevLabel}
+        nextLabel={nextLabel}
+      />
+      <div className="mt-3">
+        <StablePanels index={idx}>
+          {items.map((it) => (
+            <div
+              key={it.name}
+              className="rounded-lg border border-green-200 bg-green-50/50 p-3"
+            >
+              <code className="break-all text-sm font-bold text-green-700">
+                {it.name}
+              </code>
+              <p className="mt-1 break-words text-xs leading-relaxed text-gray-700">
+                {it.desc}
+              </p>
+            </div>
+          ))}
+        </StablePanels>
+      </div>
     </div>
   );
 };
@@ -92,6 +94,7 @@ export const SkillsHooksSkills = () => {
   const { t, raw } = useTranslation('week17');
   const examples = raw('skillsHooks.skills.examples');
   const fields = raw('skillsHooks.skills.fields');
+  const [sub, setSub] = useState(0);
 
   return (
     <div>
@@ -100,30 +103,56 @@ export const SkillsHooksSkills = () => {
           {t('skillsHooks.skills.infoDesc')}
         </p>
       </InfoBox>
-      <Picker
-        title={t('skillsHooks.skills.examplesTitle')}
-        label={t('skillsHooks.ui.skillsLabel')}
-        items={examples}
-        icon
-        prevLabel={t('skillsHooks.ui.prev')}
-        nextLabel={t('skillsHooks.ui.next')}
-      />
-      <Picker
-        title={t('skillsHooks.skills.fieldsTitle')}
-        label={t('skillsHooks.ui.fieldsLabel')}
-        items={fields}
-        icon={false}
-        prevLabel={t('skillsHooks.ui.prev')}
-        nextLabel={t('skillsHooks.ui.next')}
-      />
-      <p className="mt-4 mb-2 font-mono text-[11px] font-semibold text-gray-500">
-        {t('skillsHooks.ui.codeSkill')}
-      </p>
-      <CodeBlock
-        code={t('skillsHooks.skills.code')}
-        language="markdown"
-        className="text-xs"
-      />
+      <div className="mt-4">
+        <TabList
+          idPrefix={SUB_PREFIX}
+          ariaLabel={t('skillsHooks.ui.topicsLabel')}
+          selected={sub}
+          onSelect={setSub}
+          tone="green"
+          items={[
+            t('skillsHooks.skills.examplesTitle'),
+            t('skillsHooks.skills.fieldsTitle'),
+            t('skillsHooks.ui.codeSkill'),
+          ]}
+        />
+      </div>
+      <div
+        role="tabpanel"
+        id={panelId(SUB_PREFIX)}
+        aria-labelledby={tabId(SUB_PREFIX, sub)}
+      >
+        <StablePanels index={sub}>
+          <Picker
+            key="examples"
+            title={t('skillsHooks.skills.examplesTitle')}
+            label={t('skillsHooks.ui.skillsLabel')}
+            items={examples}
+            icon
+            prevLabel={t('skillsHooks.ui.prev')}
+            nextLabel={t('skillsHooks.ui.next')}
+          />
+          <Picker
+            key="fields"
+            title={t('skillsHooks.skills.fieldsTitle')}
+            label={t('skillsHooks.ui.fieldsLabel')}
+            items={fields}
+            icon={false}
+            prevLabel={t('skillsHooks.ui.prev')}
+            nextLabel={t('skillsHooks.ui.next')}
+          />
+          <div key="code" className="mt-4">
+            <p className="mb-2 font-mono text-[11px] font-semibold text-gray-500">
+              {t('skillsHooks.ui.codeSkill')}
+            </p>
+            <CodeBlock
+              code={t('skillsHooks.skills.code')}
+              language="markdown"
+              className="text-xs"
+            />
+          </div>
+        </StablePanels>
+      </div>
     </div>
   );
 };

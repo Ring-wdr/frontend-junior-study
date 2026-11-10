@@ -1,17 +1,16 @@
 'use client';
 
 import { FileSearch } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { InfoBox } from '../../../components/info-box';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { StablePanels } from '../../../components/ui/stable-panels';
 
 export const AgentModeSubAgents = () => {
   const { t, raw } = useTranslation('week17');
   const agents = raw('agentMode.subAgents');
   const [selected, setSelected] = useState(0);
-  const agent = agents[selected];
   const isCustom = selected === agents.length - 1;
 
   return (
@@ -43,8 +42,8 @@ export const AgentModeSubAgents = () => {
                   aria-hidden="true"
                 />
                 <span
-                  className={`text-xs break-words ${
-                    active ? 'font-bold text-blue-800' : 'font-semibold'
+                  className={`text-xs font-semibold break-words ${
+                    active ? 'text-blue-800' : ''
                   }`}
                 >
                   {item.name}
@@ -58,28 +57,19 @@ export const AgentModeSubAgents = () => {
         })}
       </div>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={agent.name}
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -6 }}
-          transition={{ duration: 0.15, ease: 'easeOut' }}
-        >
-          {isCustom && (
-            <>
-              <p className="text-xs font-semibold text-gray-600">
-                {t('agentMode.ui.exampleLabel')}
-              </p>
-              <CodeBlock
-                code={t('agentMode.subAgentCode')}
-                language="markdown"
-                className="mt-2 text-xs"
-              />
-            </>
-          )}
-        </motion.div>
-      </AnimatePresence>
+      <StablePanels index={isCustom ? 1 : 0}>
+        <div key="empty" />
+        <div key="custom">
+          <p className="text-xs font-semibold text-gray-600">
+            {t('agentMode.ui.exampleLabel')}
+          </p>
+          <CodeBlock
+            code={t('agentMode.subAgentCode')}
+            language="markdown"
+            className="mt-2 text-xs"
+          />
+        </div>
+      </StablePanels>
     </div>
   );
 };

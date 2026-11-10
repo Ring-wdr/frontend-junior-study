@@ -3,6 +3,7 @@
 import { motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
+import { StablePanels } from '../../../components/ui/stable-panels';
 
 const SLOT_IDS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'];
 const SLOTS = SLOT_IDS.length;
@@ -103,16 +104,17 @@ export const TokenOptimizationGauge = () => {
       </div>
 
       <div aria-live="polite" className="space-y-1 text-sm text-gray-700">
-        <p>
-          {history === 0
-            ? t('tokenOptimization.ui.empty')
-            : t('tokenOptimization.ui.resend')}
+        <StablePanels index={history === 0 ? 0 : 1}>
+          <p key="empty">{t('tokenOptimization.ui.empty')}</p>
+          <p key="resend">{t('tokenOptimization.ui.resend')}</p>
+        </StablePanels>
+        <p
+          className={`text-xs text-gray-600 ${
+            history >= SLOTS - 1 ? '' : 'invisible'
+          }`}
+        >
+          {t('tokenOptimization.ui.full')}
         </p>
-        {history >= SLOTS - 1 && (
-          <p className="text-xs text-gray-600">
-            {t('tokenOptimization.ui.full')}
-          </p>
-        )}
         <p className="font-semibold text-teal-800">
           {t('tokenOptimization.ui.keepSmall')}
         </p>

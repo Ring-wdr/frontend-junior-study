@@ -1,10 +1,10 @@
 'use client';
 
 import { Check, ChevronRight, Minus, RotateCcw } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { StablePanels } from '../../../components/ui/stable-panels';
 
 const ORDER = ['deny', 'ask', 'allow'] as const;
 
@@ -44,7 +44,6 @@ export const VerificationPermissions = () => {
   );
   const shown = Math.min(step, matchIdx + 1);
   const done = shown >= matchIdx + 1;
-  const outcome = ORDER[matchIdx];
 
   const pick = (idx: number) => {
     setActionIdx(idx);
@@ -84,9 +83,16 @@ export const VerificationPermissions = () => {
           })}
         </div>
 
-        <p className="mt-3 break-all rounded-md bg-gray-100 px-2 py-1.5 font-mono text-xs text-gray-700">
-          {action.rule}
-        </p>
+        <StablePanels index={actionIdx} className="mt-3">
+          {actions.map((item) => (
+            <p
+              key={item.label}
+              className="break-all rounded-md bg-gray-100 px-2 py-1.5 font-mono text-xs text-gray-700"
+            >
+              {item.rule}
+            </p>
+          ))}
+        </StablePanels>
 
         <h4 className="mt-4 mb-2 text-sm font-bold text-gray-800">
           {t('verification.permissions.sim.stepsTitle')}
@@ -98,13 +104,7 @@ export const VerificationPermissions = () => {
             const hit = evaluated && idx === matchIdx;
             const skipped = done && idx > matchIdx;
             const current = evaluated && idx === shown - 1;
-            const label = hit
-              ? status.match
-              : evaluated
-                ? status.noMatch
-                : skipped
-                  ? status.skipped
-                  : status.pending;
+            const labelIdx = hit ? 0 : evaluated ? 1 : skipped ? 2 : 3;
             return (
               <li
                 key={group}
@@ -128,7 +128,12 @@ export const VerificationPermissions = () => {
                     ) : (
                       <Minus className="h-3.5 w-3.5" aria-hidden="true" />
                     )}
-                    <span className="min-w-0 break-words">{label}</span>
+                    <StablePanels index={labelIdx}>
+                      <span key="match">{status.match}</span>
+                      <span key="noMatch">{status.noMatch}</span>
+                      <span key="skipped">{status.skipped}</span>
+                      <span key="pending">{status.pending}</span>
+                    </StablePanels>
                   </span>
                 </div>
                 <ul className="mt-2 flex flex-wrap gap-1.5">
@@ -177,30 +182,33 @@ export const VerificationPermissions = () => {
         </div>
 
         <div aria-live="polite" className="mt-3 min-h-12">
-          <AnimatePresence mode="wait">
-            {done && (
-              <motion.div
-                key={`${actionIdx}-${outcome}`}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.15, ease: 'easeOut' }}
-                className={`flex flex-wrap items-center gap-2 rounded-lg border p-3 ${TONES[outcome].row}`}
-              >
-                <span className="text-xs font-semibold text-gray-700">
-                  {t('verification.permissions.sim.resultTitle')}
-                </span>
-                <span
-                  className={`rounded-full px-3 py-1 text-sm font-bold ${TONES[outcome].badge}`}
+          <StablePanels index={done ? actionIdx + 1 : 0}>
+            <div key="empty" />
+            {actions.map((item) => {
+              const itemOutcome =
+                ORDER[
+                  ORDER.findIndex((group) => rules[group].includes(item.rule))
+                ];
+              return (
+                <div
+                  key={item.label}
+                  className={`flex flex-wrap items-center gap-2 rounded-lg border p-3 ${TONES[itemOutcome].row}`}
                 >
-                  {results[outcome]}
-                </span>
-                <span className="min-w-0 break-all font-mono text-xs text-gray-700">
-                  {t('verification.permissions.sim.matchedRule')}: {action.rule}
-                </span>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                  <span className="text-xs font-semibold text-gray-700">
+                    {t('verification.permissions.sim.resultTitle')}
+                  </span>
+                  <span
+                    className={`rounded-full px-3 py-1 text-sm font-bold ${TONES[itemOutcome].badge}`}
+                  >
+                    {results[itemOutcome]}
+                  </span>
+                  <span className="min-w-0 break-all font-mono text-xs text-gray-700">
+                    {t('verification.permissions.sim.matchedRule')}: {item.rule}
+                  </span>
+                </div>
+              );
+            })}
+          </StablePanels>
         </div>
       </div>
     </div>

@@ -1,18 +1,18 @@
 'use client';
 
 import { Check, ChevronLeft, ChevronRight } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { StablePanels } from '../../../components/ui/stable-panels';
 
 export const PromptEngineeringIterative = () => {
   const { t, raw } = useTranslation('week17');
   const steps = raw('promptEngineering.iterative.steps');
   const [step, setStep] = useState(0);
-  const current = steps[step];
 
   return (
     <div className="space-y-4">
@@ -40,13 +40,16 @@ export const PromptEngineeringIterative = () => {
                   onClick={() => setStep(i)}
                   className={`inline-flex min-w-0 items-center gap-1 rounded-lg border px-3 py-1.5 text-xs break-words transition-colors ${
                     selected
-                      ? 'border-blue-600 bg-blue-50 font-bold text-blue-900 ring-1 ring-blue-600'
+                      ? 'border-blue-600 bg-blue-50 font-medium text-blue-900 ring-1 ring-blue-600'
                       : done
                         ? 'border-blue-200 bg-blue-50 font-medium text-blue-800'
                         : 'border-gray-200 bg-white font-medium text-gray-700 hover:border-blue-300'
                   }`}
                 >
-                  {done && <Check className="h-3.5 w-3.5" />}
+                  <Check
+                    className={`h-3.5 w-3.5 ${done ? '' : 'invisible'}`}
+                    aria-hidden="true"
+                  />
                   {item.name}
                 </button>
               );
@@ -58,7 +61,7 @@ export const PromptEngineeringIterative = () => {
               <span className="text-gray-600">
                 {t('promptEngineering.ui.progress')}
               </span>
-              <span className="font-bold text-blue-700">
+              <span className="font-bold tabular-nums text-blue-700">
                 {step + 1}/{steps.length}
               </span>
             </div>
@@ -73,26 +76,7 @@ export const PromptEngineeringIterative = () => {
           </div>
 
           <div className="min-w-0 rounded-xl border border-blue-200 bg-white p-3 sm:p-4">
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={step}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.15 }}
-              >
-                <h3 className="text-sm font-bold text-blue-900 break-words">
-                  {current.label}
-                </h3>
-                <CodeBlock
-                  code={current.code}
-                  language="bash"
-                  className="mt-3 text-xs"
-                />
-              </motion.div>
-            </AnimatePresence>
-
-            <div className="mt-4 flex items-center justify-between gap-2 border-t border-gray-100 pt-3">
+            <div className="mb-3 flex items-center justify-between gap-2 border-b border-gray-100 pb-3">
               <button
                 type="button"
                 onClick={() => setStep(step - 1)}
@@ -112,6 +96,21 @@ export const PromptEngineeringIterative = () => {
                 <ChevronRight className="h-4 w-4" />
               </button>
             </div>
+
+            <StablePanels index={step}>
+              {steps.map((item) => (
+                <div key={item.name}>
+                  <h3 className="text-sm font-bold text-blue-900 break-words">
+                    {item.label}
+                  </h3>
+                  <CodeBlock
+                    code={item.code}
+                    language="bash"
+                    className="mt-3 text-xs"
+                  />
+                </div>
+              ))}
+            </StablePanels>
           </div>
         </div>
       </DemoBox>

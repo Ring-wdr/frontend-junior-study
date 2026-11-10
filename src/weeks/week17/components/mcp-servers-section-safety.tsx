@@ -68,18 +68,19 @@ export const McpServersSafety = () => {
                   <span className="min-w-0 break-words">
                     <Rich text={practice} />
                   </span>
-                  {done && (
-                    <Check
-                      className="mt-1 h-4 w-4 shrink-0 text-green-600"
-                      aria-hidden="true"
-                    />
-                  )}
+                  <Check
+                    className={`mt-1 h-4 w-4 shrink-0 text-green-600 ${done ? '' : 'invisible'}`}
+                    aria-hidden="true"
+                  />
                 </label>
               </li>
             );
           })}
         </ul>
-        <p className="mt-2 text-xs font-semibold" aria-live="polite">
+        <p
+          className="mt-2 text-xs font-semibold tabular-nums"
+          aria-live="polite"
+        >
           {t('mcpServers.security.progressLabel')}: {checked.length} /{' '}
           {practices.length}
         </p>

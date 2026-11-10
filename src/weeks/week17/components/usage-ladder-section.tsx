@@ -8,13 +8,13 @@ import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
-import { Checklist, Tabs } from './usage-ladder-parts';
+import { StablePanels } from '../../../components/ui/stable-panels';
+import { Checklist } from './usage-ladder-parts';
 import { UsageLadderStepContent } from './usage-ladder-steps';
 
 export const UsageLadderSection = () => {
   const { t, raw } = useTranslation('week17');
   const steps = raw('usageLadder.steps');
-  const labels = raw('usageLadder.labels');
   const wrap = raw('usageLadder.wrap');
   const titles = [
     t('usageLadder.s1.title'),
@@ -26,21 +26,6 @@ export const UsageLadderSection = () => {
   ];
   const [step, setStep] = useState(0);
   const [tab, setTab] = useState('does');
-
-  const goTo = (next: number) => {
-    setStep(next);
-    setTab('does');
-  };
-
-  const tabItems = [
-    { id: 'does', label: labels.does },
-    {
-      id: 'command',
-      label: step === 5 ? t('usageLadder.ui.toolsTab') : labels.command,
-    },
-    { id: 'whenUp', label: labels.whenUp },
-    { id: 'mistakes', label: labels.mistakes },
-  ];
 
   return (
     <SectionCard
@@ -69,7 +54,7 @@ export const UsageLadderSection = () => {
                     type="button"
                     aria-pressed={selected}
                     aria-current={selected ? 'step' : undefined}
-                    onClick={() => goTo(index)}
+                    onClick={() => setStep(index)}
                     className={`min-w-0 shrink-0 basis-40 rounded-lg border p-2.5 text-left transition-colors sm:basis-auto ${
                       selected
                         ? 'border-indigo-600 bg-indigo-50 ring-1 ring-indigo-600'
@@ -77,10 +62,8 @@ export const UsageLadderSection = () => {
                     }`}
                   >
                     <span
-                      className={`block text-xs break-words ${
-                        selected
-                          ? 'font-bold text-indigo-800'
-                          : 'font-semibold text-gray-800'
+                      className={`block text-xs font-semibold break-words ${
+                        selected ? 'text-indigo-800' : 'text-gray-800'
                       }`}
                     >
                       {item.name}
@@ -98,7 +81,7 @@ export const UsageLadderSection = () => {
                 <span className="text-gray-600">
                   {t('usageLadder.ui.progress')}
                 </span>
-                <span className="font-bold text-indigo-700">
+                <span className="font-bold tabular-nums text-indigo-700">
                   {step + 1}/{steps.length}
                 </span>
               </div>
@@ -112,42 +95,44 @@ export const UsageLadderSection = () => {
               </div>
             </div>
 
-            <div className="min-w-0 rounded-xl border border-indigo-200 bg-white p-3 sm:p-4">
-              <h3 className="text-base font-bold text-indigo-900 break-words">
-                {titles[step]}
-              </h3>
-              <div className="mt-3">
-                <Tabs
-                  items={tabItems}
-                  value={tab}
-                  onChange={setTab}
-                  label={t('usageLadder.ui.tabsLabel')}
-                  idPrefix="usage-ladder-step"
-                >
-                  <UsageLadderStepContent step={step} tab={tab} />
-                </Tabs>
-              </div>
+            <div className="flex items-center justify-between gap-2">
+              <button
+                type="button"
+                onClick={() => setStep(step - 1)}
+                disabled={step === 0}
+                className="inline-flex items-center gap-1 rounded-md bg-indigo-100 px-3 py-1.5 text-xs font-medium text-indigo-700 hover:bg-indigo-200 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                <ChevronLeft className="h-4 w-4" />
+                {t('usageLadder.ui.prev')}
+              </button>
+              <button
+                type="button"
+                onClick={() => setStep(step + 1)}
+                disabled={step === steps.length - 1}
+                className="inline-flex items-center gap-1 rounded-md bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                {t('usageLadder.ui.next')}
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
 
-              <div className="mt-5 flex items-center justify-between gap-2 border-t border-gray-100 pt-3">
-                <button
-                  type="button"
-                  onClick={() => goTo(step - 1)}
-                  disabled={step === 0}
-                  className="inline-flex items-center gap-1 rounded-md bg-indigo-100 px-3 py-1.5 text-xs font-medium text-indigo-700 hover:bg-indigo-200 disabled:cursor-not-allowed disabled:opacity-40"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                  {t('usageLadder.ui.prev')}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => goTo(step + 1)}
-                  disabled={step === steps.length - 1}
-                  className="inline-flex items-center gap-1 rounded-md bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white disabled:cursor-not-allowed disabled:opacity-40"
-                >
-                  {t('usageLadder.ui.next')}
-                  <ChevronRight className="h-4 w-4" />
-                </button>
-              </div>
+            <div className="min-w-0 rounded-xl border border-indigo-200 bg-white p-3 sm:p-4">
+              <StablePanels index={step}>
+                {titles.map((title, index) => (
+                  <div key={title} className="min-w-0">
+                    <h3 className="text-base font-bold text-indigo-900 break-words">
+                      {title}
+                    </h3>
+                    <div className="mt-3">
+                      <UsageLadderStepContent
+                        step={index}
+                        tab={tab}
+                        onTabChange={setTab}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </StablePanels>
             </div>
           </div>
         </DemoBox>

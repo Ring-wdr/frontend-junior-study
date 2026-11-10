@@ -10,7 +10,8 @@ import {
   Zap,
 } from 'lucide-react';
 import { useState } from 'react';
-import { Chip, Panel, PrevNext } from './ai-agents-section-controls';
+import { StablePanels } from '../../../components/ui/stable-panels';
+import { Chip, PrevNext } from './ai-agents-section-controls';
 
 const iconMap: Record<string, LucideIcon> = {
   bot: Bot,
@@ -41,13 +42,6 @@ export const AiAgentsSectionPicker = ({
   nextLabel,
 }: AiAgentsSectionPickerProps) => {
   const [index, setIndex] = useState(0);
-  const item = items[index] ?? items[0];
-
-  if (!item) {
-    return null;
-  }
-
-  const Icon = item.icon ? iconMap[item.icon] : undefined;
 
   return (
     <div>
@@ -63,24 +57,34 @@ export const AiAgentsSectionPicker = ({
           </Chip>
         ))}
       </div>
-      <div className="mt-4 rounded-xl border border-purple-200 bg-white p-3 sm:p-4">
-        <Panel panelKey={item.name}>
-          <h4 className="flex items-center gap-2 text-sm font-bold text-purple-900 break-words">
-            {Icon && <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />}
-            {item.name}
-          </h4>
-          <p className="mt-2 text-sm leading-relaxed text-gray-700 break-words">
-            {item.desc}
-          </p>
-        </Panel>
-        <PrevNext
-          index={index}
-          total={items.length}
-          onChange={setIndex}
-          prevLabel={prevLabel}
-          nextLabel={nextLabel}
-        />
-      </div>
+      <PrevNext
+        index={index}
+        total={items.length}
+        onChange={setIndex}
+        prevLabel={prevLabel}
+        nextLabel={nextLabel}
+      />
+      <StablePanels index={index} className="mt-3">
+        {items.map((item) => {
+          const Icon = item.icon ? iconMap[item.icon] : undefined;
+          return (
+            <div
+              key={item.name}
+              className="h-full rounded-xl border border-purple-200 bg-white p-3 sm:p-4"
+            >
+              <h4 className="flex items-center gap-2 text-sm font-bold text-purple-900 break-words">
+                {Icon && (
+                  <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                )}
+                {item.name}
+              </h4>
+              <p className="mt-2 text-sm leading-relaxed text-gray-700 break-words">
+                {item.desc}
+              </p>
+            </div>
+          );
+        })}
+      </StablePanels>
     </div>
   );
 };

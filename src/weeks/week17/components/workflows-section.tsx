@@ -5,7 +5,7 @@ import { type KeyboardEvent, useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
-import { Panel } from './workflows-section-controls';
+import { StablePanels } from '../../../components/ui/stable-panels';
 import {
   AutomationFlow,
   BugFixFlow,
@@ -30,8 +30,6 @@ export const WorkflowsSection = () => {
     codeReview: t('workflows.codeReview.title'),
     automation: t('workflows.automation.title'),
   };
-  const flow = FLOWS[index] ?? FLOWS[0];
-  const Flow = flow.Flow;
 
   const onKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
     const last = FLOWS.length - 1;
@@ -55,8 +53,8 @@ export const WorkflowsSection = () => {
       testId="workflows-section"
     >
       <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
         className="space-y-4"
@@ -93,11 +91,13 @@ export const WorkflowsSection = () => {
           id="workflows-panel"
           aria-labelledby={`workflows-tab-${index}`}
         >
-          <Panel panelKey={flow.id}>
-            <SubSection title={titles[flow.id]} icon iconColor="blue">
-              <Flow />
-            </SubSection>
-          </Panel>
+          <StablePanels index={index}>
+            {FLOWS.map(({ id, Flow }) => (
+              <SubSection key={id} title={titles[id]} icon iconColor="blue">
+                <Flow />
+              </SubSection>
+            ))}
+          </StablePanels>
         </div>
       </motion.div>
     </SectionCard>

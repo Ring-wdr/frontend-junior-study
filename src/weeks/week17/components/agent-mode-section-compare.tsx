@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
+import { StablePanels } from '../../../components/ui/stable-panels';
 
 interface LaneProps {
   title: string;
@@ -96,102 +97,139 @@ export const AgentModeCompare = () => {
   const guide = raw('agentMode.teamsGuide');
   const maxStep = Math.max(parallelItems.length, teamsItems.length);
   const [step, setStep] = useState(0);
+  const [view, setView] = useState(0);
+  const views = [
+    t('agentMode.teamsGuideTitle'),
+    t('agentMode.teamsVsSubAgentsCompareTitle'),
+  ];
   const progress = maxStep > 0 ? (step / maxStep) * 100 : 0;
 
   return (
     <div className="space-y-4">
-      <InfoBox
-        variant="blue"
-        title={t('agentMode.teamsVsSubAgentsCompareTitle')}
-      >
-        <p className="text-sm leading-relaxed">
-          {t('agentMode.teamsVsSubAgentsIntro')}
-        </p>
-      </InfoBox>
+      <div className="flex flex-wrap gap-2">
+        {views.map((label, index) => (
+          <button
+            key={label}
+            type="button"
+            aria-pressed={index === view}
+            onClick={() => setView(index)}
+            className={`min-w-0 rounded-lg border px-3 py-1.5 text-left text-xs font-semibold break-words transition-colors ${
+              index === view
+                ? 'border-purple-600 bg-purple-50 text-purple-800 ring-1 ring-purple-600'
+                : 'border-gray-200 bg-white text-gray-700 hover:border-purple-300'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
 
-      <DemoBox label={t('agentMode.teamsVsSubAgentsCompareTitle')}>
-        <div className="rounded-xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-blue-50 p-3 sm:p-4">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="min-w-0">
-              <p className="text-sm font-semibold text-indigo-900">
-                {t('agentMode.teamsVsSubAgentsPrompt')}
-              </p>
-              <p className="mt-1 text-xs text-indigo-700" aria-live="polite">
-                {step === 0
-                  ? t('agentMode.teamsVsSubAgentsReadyHint')
-                  : `${t('agentMode.teamsVsSubAgentsStepLabel')} ${step}/${maxStep}`}
-              </p>
-            </div>
+      <StablePanels index={view}>
+        <div key="guide" className="space-y-4">
+          <InfoBox
+            variant="blue"
+            title={t('agentMode.teamsVsSubAgentsCompareTitle')}
+          >
+            <p className="text-sm leading-relaxed">
+              {t('agentMode.teamsVsSubAgentsIntro')}
+            </p>
+          </InfoBox>
 
-            <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
-              <button
-                type="button"
-                onClick={() => setStep((prev) => Math.max(prev - 1, 0))}
-                disabled={step <= 0}
-                className="inline-flex items-center gap-2 rounded-md bg-indigo-100 px-3 py-1.5 text-xs font-medium text-indigo-700 hover:bg-indigo-200 disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                {t('agentMode.ui.prevStep')}
-              </button>
-              <button
-                type="button"
-                onClick={() => setStep((prev) => Math.min(prev + 1, maxStep))}
-                disabled={step >= maxStep}
-                className="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                <Play className="h-3.5 w-3.5" />
-                {t('agentMode.teamsVsSubAgentsNextStep')}
-              </button>
-              <button
-                type="button"
-                onClick={() => setStep(0)}
-                className="inline-flex items-center gap-2 rounded-md bg-indigo-100 px-3 py-1.5 text-xs font-medium text-indigo-700 hover:bg-indigo-200"
-              >
-                <RotateCcw className="h-3.5 w-3.5" />
-                {t('agentMode.teamsVsSubAgentsReset')}
-              </button>
-            </div>
-          </div>
-
-          <div className="mt-3 h-1.5 overflow-hidden rounded-full border border-indigo-100 bg-white">
-            <motion.div
-              initial={false}
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="h-full bg-gradient-to-r from-indigo-500 to-blue-500"
-            />
-          </div>
-
-          <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-[1fr_auto_1fr]">
-            <Lane
-              title={t('agentMode.teamsVsSubAgentsParallelTitle')}
-              items={parallelItems}
-              token={t('agentMode.teamsVsSubAgentsParallelToken')}
-              step={step}
-              tone="indigo"
-            />
-            <div className="hidden items-center justify-center md:flex">
-              <span className="rounded-full bg-indigo-100 px-2.5 py-1 text-xs font-semibold text-indigo-700">
-                VS
-              </span>
-            </div>
-            <Lane
-              title={t('agentMode.teamsVsSubAgentsTeamsTitle')}
-              items={teamsItems}
-              token={t('agentMode.teamsVsSubAgentsTeamsToken')}
-              step={step}
-              tone="purple"
-            />
-          </div>
+          <InfoBox variant="green" title={t('agentMode.teamsGuideTitle')}>
+            <ul className="list-disc space-y-1 pl-5 text-sm">
+              {guide.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </InfoBox>
         </div>
-      </DemoBox>
+        <DemoBox key="demo" label={t('agentMode.teamsVsSubAgentsCompareTitle')}>
+          <div className="rounded-xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-blue-50 p-3 sm:p-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-indigo-900">
+                  {t('agentMode.teamsVsSubAgentsPrompt')}
+                </p>
+                <StablePanels index={step === 0 ? 0 : 1} className="mt-1">
+                  <p
+                    key="ready"
+                    className="text-xs text-indigo-700"
+                    aria-live="polite"
+                  >
+                    {t('agentMode.teamsVsSubAgentsReadyHint')}
+                  </p>
+                  <p
+                    key="step"
+                    className="text-xs text-indigo-700 tabular-nums"
+                    aria-live="polite"
+                  >
+                    {`${t('agentMode.teamsVsSubAgentsStepLabel')} ${step}/${maxStep}`}
+                  </p>
+                </StablePanels>
+              </div>
 
-      <InfoBox variant="green" title={t('agentMode.teamsGuideTitle')}>
-        <ul className="list-disc space-y-1 pl-5 text-sm">
-          {guide.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </InfoBox>
+              <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+                <button
+                  type="button"
+                  onClick={() => setStep((prev) => Math.max(prev - 1, 0))}
+                  disabled={step <= 0}
+                  className="inline-flex items-center gap-2 rounded-md bg-indigo-100 px-3 py-1.5 text-xs font-medium text-indigo-700 hover:bg-indigo-200 disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  {t('agentMode.ui.prevStep')}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setStep((prev) => Math.min(prev + 1, maxStep))}
+                  disabled={step >= maxStep}
+                  className="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  <Play className="h-3.5 w-3.5" />
+                  {t('agentMode.teamsVsSubAgentsNextStep')}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setStep(0)}
+                  className="inline-flex items-center gap-2 rounded-md bg-indigo-100 px-3 py-1.5 text-xs font-medium text-indigo-700 hover:bg-indigo-200"
+                >
+                  <RotateCcw className="h-3.5 w-3.5" />
+                  {t('agentMode.teamsVsSubAgentsReset')}
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-3 h-1.5 overflow-hidden rounded-full border border-indigo-100 bg-white">
+              <motion.div
+                initial={false}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+                className="h-full bg-gradient-to-r from-indigo-500 to-blue-500"
+              />
+            </div>
+
+            <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-[1fr_auto_1fr]">
+              <Lane
+                title={t('agentMode.teamsVsSubAgentsParallelTitle')}
+                items={parallelItems}
+                token={t('agentMode.teamsVsSubAgentsParallelToken')}
+                step={step}
+                tone="indigo"
+              />
+              <div className="hidden items-center justify-center md:flex">
+                <span className="rounded-full bg-indigo-100 px-2.5 py-1 text-xs font-semibold text-indigo-700">
+                  VS
+                </span>
+              </div>
+              <Lane
+                title={t('agentMode.teamsVsSubAgentsTeamsTitle')}
+                items={teamsItems}
+                token={t('agentMode.teamsVsSubAgentsTeamsToken')}
+                step={step}
+                tone="purple"
+              />
+            </div>
+          </div>
+        </DemoBox>
+      </StablePanels>
     </div>
   );
 };

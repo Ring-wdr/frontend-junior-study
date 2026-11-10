@@ -27,7 +27,10 @@ export const TokenOptimizationChecklist = () => {
         </span>
         <span className="font-bold text-green-700" aria-live="polite">
           {checked.length}/{items.length}
-          {complete ? ` ${t('tokenOptimization.ui.done')}` : ''}
+          <span className={complete ? '' : 'invisible'}>
+            {' '}
+            {t('tokenOptimization.ui.done')}
+          </span>
         </span>
       </div>
       <div className="mt-1 h-1.5 overflow-hidden rounded-full border border-green-100 bg-white">

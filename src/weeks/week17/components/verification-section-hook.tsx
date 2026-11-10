@@ -1,11 +1,11 @@
 'use client';
 
 import { AlertTriangle, CheckCircle } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { InfoBox } from '../../../components/info-box';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { StablePanels } from '../../../components/ui/stable-panels';
 import { panelId, TabList, tabId } from './verification-section-tabs';
 
 const ID_PREFIX = 'verification-hook';
@@ -17,17 +17,11 @@ export const VerificationHook = () => {
   const [failed, setFailed] = useState(false);
   const passSteps = raw('verification.hook.pass.steps');
   const failSteps = raw('verification.hook.fail.steps');
-  const steps = failed ? failSteps : passSteps;
 
   const tabs = [
     { label: t('verification.hook.tabConfig'), activeClass: ACTIVE },
     { label: t('verification.hook.tabScript'), activeClass: ACTIVE },
   ];
-  const code =
-    tab === 0
-      ? t('verification.hook.configCode')
-      : t('verification.hook.scriptCode');
-
   return (
     <div className="space-y-4">
       <InfoBox variant="blue" title={t('verification.hook.infoTitle')}>
@@ -50,7 +44,20 @@ export const VerificationHook = () => {
           aria-labelledby={tabId(ID_PREFIX, tab)}
           className="mt-3"
         >
-          <CodeBlock code={code} language="json" className="text-xs" />
+          <StablePanels index={tab}>
+            <CodeBlock
+              key="config"
+              code={t('verification.hook.configCode')}
+              language="json"
+              className="text-xs"
+            />
+            <CodeBlock
+              key="script"
+              code={t('verification.hook.scriptCode')}
+              language="json"
+              className="text-xs"
+            />
+          </StablePanels>
         </div>
       </div>
 
@@ -88,37 +95,35 @@ export const VerificationHook = () => {
           </fieldset>
         </div>
 
-        <AnimatePresence mode="wait">
-          <motion.ol
-            key={failed ? 'fail' : 'pass'}
-            aria-label={t('verification.hook.stepsLabel')}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.15, ease: 'easeOut' }}
-            className="mt-3 space-y-2"
-          >
-            {steps.map((step, idx) => {
-              const last = idx === steps.length - 1;
-              const tone = !last
-                ? 'border-gray-200 bg-gray-50 text-gray-800'
-                : failed
-                  ? 'border-red-300 bg-red-50 text-red-800'
-                  : 'border-green-300 bg-green-50 text-green-800';
-              return (
-                <li
-                  key={step}
-                  className={`flex min-w-0 items-start gap-2 rounded-lg border p-2 text-sm leading-relaxed ${tone}`}
-                >
-                  <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white text-xs font-bold tabular-nums border border-current">
-                    {idx + 1}
-                  </span>
-                  <span className="min-w-0 break-words">{step}</span>
-                </li>
-              );
-            })}
-          </motion.ol>
-        </AnimatePresence>
+        <StablePanels index={failed ? 1 : 0} className="mt-3">
+          {[passSteps, failSteps].map((steps, flowIdx) => (
+            <ol
+              key={flowIdx === 0 ? 'pass' : 'fail'}
+              aria-label={t('verification.hook.stepsLabel')}
+              className="space-y-2"
+            >
+              {steps.map((step, idx) => {
+                const last = idx === steps.length - 1;
+                const tone = !last
+                  ? 'border-gray-200 bg-gray-50 text-gray-800'
+                  : flowIdx === 1
+                    ? 'border-red-300 bg-red-50 text-red-800'
+                    : 'border-green-300 bg-green-50 text-green-800';
+                return (
+                  <li
+                    key={step}
+                    className={`flex min-w-0 items-start gap-2 rounded-lg border p-2 text-sm leading-relaxed ${tone}`}
+                  >
+                    <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-current bg-white text-xs font-bold tabular-nums">
+                      {idx + 1}
+                    </span>
+                    <span className="min-w-0 break-words">{step}</span>
+                  </li>
+                );
+              })}
+            </ol>
+          ))}
+        </StablePanels>
       </div>
     </div>
   );

@@ -16,6 +16,13 @@ export const McpServersStart = () => {
       <p className="text-sm text-gray-700 leading-relaxed">
         {t('mcpServers.start.hint')}
       </p>
+      <Pager
+        index={current}
+        total={steps.length}
+        onChange={setCurrent}
+        prevLabel={t('mcpServers.ui.prev')}
+        nextLabel={t('mcpServers.ui.next')}
+      />
       <ol aria-label={t('mcpServers.start.stepsLabel')} className="space-y-2">
         {steps.map((step, idx) => {
           const active = idx === current;
@@ -26,9 +33,9 @@ export const McpServersStart = () => {
                 type="button"
                 aria-current={active ? 'step' : undefined}
                 onClick={() => setCurrent(idx)}
-                className={`flex w-full min-w-0 items-start gap-3 rounded-lg border p-2.5 text-left text-xs leading-relaxed transition-colors ${
+                className={`flex w-full min-w-0 items-start gap-3 rounded-lg border p-2.5 text-left text-xs font-medium leading-relaxed transition-colors ${
                   active
-                    ? 'border-indigo-500 bg-indigo-50 text-indigo-900 font-semibold'
+                    ? 'border-indigo-500 bg-indigo-50 text-indigo-900'
                     : done
                       ? 'border-emerald-200 bg-emerald-50 text-emerald-900'
                       : 'border-gray-200 bg-white text-gray-700 hover:bg-gray-50'
@@ -57,13 +64,6 @@ export const McpServersStart = () => {
           );
         })}
       </ol>
-      <Pager
-        index={current}
-        total={steps.length}
-        onChange={setCurrent}
-        prevLabel={t('mcpServers.ui.prev')}
-        nextLabel={t('mcpServers.ui.next')}
-      />
     </div>
   );
 };
