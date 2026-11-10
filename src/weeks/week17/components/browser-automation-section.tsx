@@ -66,7 +66,6 @@ export const BrowserAutomationSection = () => {
   const guideHead = raw('browserAutomation.guide.head');
   const guideRows = raw('browserAutomation.guide.rows');
   const habits = raw('browserAutomation.example.habits');
-  const unverified = raw('browserAutomation.unverified.items');
 
   return (
     <SectionCard
@@ -290,17 +289,6 @@ export const BrowserAutomationSection = () => {
             </ul>
           </InfoBox>
         </SubSection>
-
-        <InfoBox
-          variant="orange"
-          title={t('browserAutomation.unverified.title')}
-        >
-          <ul className="list-disc pl-5 space-y-1 text-sm">
-            {unverified.map((line) => (
-              <li key={line}>{line}</li>
-            ))}
-          </ul>
-        </InfoBox>
       </div>
     </SectionCard>
   );

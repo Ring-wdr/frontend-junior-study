@@ -166,7 +166,7 @@ Claude Code에서는 `/summarize-changes`처럼 직접 호출하거나, 요청�
 claude --permission-mode plan
 ```
 
-세션 중에는 `Shift+Tab`을 눌러 plan mode로 바꿀 수 있습니다. 다른 도구에도 비슷한 계획 기능이 있을 수 있으나 이번에 1차 출처로 확인하지 못했으므로, 없다면 "코드를 수정하지 말고 단계별 계획만 먼저 써 줘"라고 요청하는 방식으로 대신합니다.
+세션 중에는 `Shift+Tab`을 눌러 plan mode로 바꿀 수 있습니다. Cursor도 채팅 입력창에서 `Shift+Tab`으로 Plan Mode로 전환하고, Antigravity CLI에는 `/plan` 명령이 있습니다. 계획 기능이 없는 도구라면 "코드를 수정하지 말고 단계별 계획만 먼저 써 줘"라고 요청하는 방식으로 대신합니다.
 
 **검증 루프.** 에이전트가 스스로 확인할 수단을 줍니다. 지침 파일에 다음을 명시합니다.
 
@@ -271,7 +271,7 @@ claude stop <id>
 - GitHub Copilot 클라우드 에이전트는 저장소를 조사하고, 계획하고, 클라우드 개발 환경에서 파일 수정과 테스트를 백그라운드로 실행합니다. 한 작업당 브랜치 하나, PR 하나로 동작합니다.
 - Claude Code는 클라우드 예약 작업(routines)을 제공합니다. 컴퓨터가 꺼져 있어도 실행되며 `claude.ai/code/routines`에서 설정합니다.
 - Cursor는 Cloud Agents에서도 서브에이전트를 쓸 수 있다고 문서에 적혀 있습니다.
-- Codex는 PR 코멘트에 `@codex ...`를 달아 클라우드 채팅에 작업을 위임하는 예가 문서에 있습니다. 그 외 Codex 클라우드 환경의 세부는 확인하지 못했습니다.
+- Codex는 PR 코멘트에 `@codex ...`를 달아 클라우드 채팅에 작업을 위임하는 예가 문서에 있습니다. Codex Cloud는 작업마다 별도 작업 공간을 주고 컴퓨터가 잠자기 상태여도 계속 실행되며, 웹·모바일·데스크톱 앱에서 변경 내용을 검토한 뒤 커밋하거나 PR을 열 수 있습니다. 새 작업을 시작하려면 환경을 먼저 게시(publish)해야 합니다.
 
 **언제 올라가나.** 세션이 서너 개를 넘어가서 "어느 세션이 입력을 기다리는지" 찾는 데 시간을 쓰기 시작하면 ⑥을 검토합니다.
 
@@ -360,7 +360,7 @@ orca terminal wait --for tui-idle --timeout-ms 30000 --json
 
 | | herdr | Orca |
 | --- | --- | --- |
-| 형태 | 터미널 런타임 (TUI, 단일 Rust 바이너리) | 데스크톱 앱 (Electron 여부는 2차 출처만) + 모바일 |
+| 형태 | 터미널 런타임 (TUI, 단일 Rust 바이너리) | 데스크톱 앱(Electron) + 모바일 |
 | 분리 방식 | 패널과 워크스페이스, worktree 메서드 제공 | 에이전트마다 worktree가 기본 |
 | 강점 | tmux 같은 지속성과 SSH, 에이전트 상태 대기 API | diff 리뷰, 이슈/PR 연동, 브라우저/에뮬레이터 제어 CLI |
 | 라이선스 | Apache-2.0 | MIT |
@@ -369,7 +369,7 @@ orca terminal wait --for tui-idle --timeout-ms 30000 --json
 
 #### Google 계열 참고
 
-Google은 2026-05-19에 Gemini CLI를 Antigravity CLI(`agy`)로 전환한다고 발표했습니다. Agent Skills, Hooks, Subagents, Extensions(Antigravity 플러그인)는 이어지고, 일대일 기능 동등성은 출시 시점에 없다고 밝혔습니다. 개인 계정(Google AI Pro, Ultra, 무료)에 대한 Gemini CLI 서비스는 2026-06-18에 중단됐습니다. 따라서 이 글의 Gemini CLI 서브에이전트 정보는 기존 사용자 참고용입니다.
+Google은 2026-05-19에 Gemini CLI를 Antigravity CLI(`agy`)로 전환한다고 발표했습니다. Agent Skills, Hooks, Subagents, Extensions(Antigravity 플러그인)는 이어지고, 일대일 기능 동등성은 출시 시점에 없다고 밝혔습니다. 개인 계정(Google AI Pro, Ultra, 무료)에 대한 Gemini CLI 서비스는 2026-06-18에 중단됐습니다. 따라서 이 글의 Gemini CLI 서브에이전트 정보는 기존 사용자 참고용입니다. Antigravity CLI는 macOS·Linux에서 `curl -fsSL https://antigravity.google/cli/install.sh | bash`로 설치하고 `agy --version`으로 확인합니다. `agy`로 실행하며, `agy -p "<프롬프트>"`는 비대화형 실행, `agy models`는 모델 목록, 세션 중 `/plan`은 계획 요청입니다.
 
 **언제 올라가나 (그리고 올라가지 말아야 할 때).**
 - 독립적인 작업이 여러 개이고, 각각에 자동 검증(테스트)이 있고, 리뷰할 시간이 있을 때 올라갑니다.
@@ -407,7 +407,7 @@ MCP 스펙의 최신 리비전은 2026-07-28입니다. 이전 리비전(2025-11-
 
 ## 2026년 11월의 MCP: 프론트엔드 개발자가 실제로 연결하는 서버와 사용법
 
-기준일은 2026-11-10입니다. 이 글의 서버 이름, 주소, 명령어, 설정 키는 각 제공 주체의 공식 문서나 공식 저장소에서 확인한 것만 적었습니다. 사용량 순위를 공식적으로 집계한 자료는 찾지 못했습니다. 그래서 "많이 쓴다"는 표현은 순위가 아니라 공식 문서가 주요 에이전트별 설치 방법을 따로 제공한다는 뜻으로 읽어 주십시오.
+기준일은 2026-11-10입니다. 이 글의 서버 이름, 주소, 명령어, 설정 키는 각 제공 주체의 공식 문서나 공식 저장소에서 확인한 것만 적었습니다. "많이 쓴다"는 표현은 순위가 아니라 공식 문서가 주요 에이전트별 설치 방법을 따로 제공한다는 뜻으로 읽어 주십시오.
 
 ### 1. MCP가 무엇이고, 왜 아직 쓰는가
 
@@ -474,10 +474,10 @@ Playwright 저장소는 코딩 에이전트에는 CLI를 스킬로 노출하는 
 | Puppeteer 서버 | 아카이브됨 | Playwright MCP, Chrome DevTools MCP |
 | GitHub 서버(참조 구현) | 아카이브됨 | GitHub이 직접 제공하는 GitHub MCP |
 | Sentry 서버(참조 구현) | 아카이브됨 | Sentry 공식 원격 서버 `https://mcp.sentry.dev/mcp` |
-| PostgreSQL, SQLite, Redis 서버 | 아카이브됨 | 사용하는 서비스의 공식 서버(예: Supabase MCP) 등. 대체 서버는 개별 확인 필요 |
+| PostgreSQL, SQLite, Redis 서버 | 아카이브됨 | 사용하는 서비스의 공식 서버(예: Supabase MCP) 등 |
 | Brave Search 서버 | 아카이브됨 | `@brave/brave-search-mcp-server` |
 | Slack 서버 | 아카이브됨 | Zencoder가 유지하는 `zencoderai/slack-mcp-server` |
-| GitLab, Google Drive, Google Maps, AWS KB Retrieval, EverArt | 아카이브됨 | 확인 못함 |
+| GitLab, Google Drive, Google Maps, AWS KB Retrieval, EverArt | 아카이브됨 | 아카이브 저장소는 후속 서버를 지정하지 않습니다. 현재 관리되는 서버는 `modelcontextprotocol/servers`에서 찾으세요 |
 | HTTP+SSE 전송 방식 | 스펙에서 Deprecated로 분류 | Streamable HTTP |
 
 "npm에 아직 있다"와 "관리되고 있다"는 다릅니다. 아카이브된 서버는 보안 패치를 기대할 수 없으므로 새로 설치하지 마십시오.
@@ -588,7 +588,7 @@ Figma, Vercel, Sentry, Supabase, Context7, GitHub, Svelte가 모두 원격 주�
 
 #### 4-4. 도구 지연 로드(도구 검색)
 
-도구 정의를 모두 컨텍스트에 미리 넣으면 토큰이 낭비됩니다. Claude Code는 도구 검색(Tool Search)이 기본으로 켜져 있어 MCP 도구 정의를 미뤄 두었다가 필요할 때 `ToolSearch`로 불러옵니다(`ENABLE_TOOL_SEARCH=false`로 끔). 따라서 서버를 여러 개 연결해도 예전만큼 컨텍스트 부담이 크지 않습니다. 다른 에이전트의 동작은 각 문서를 확인하십시오. GitHub MCP처럼 `--toolsets`, Supabase처럼 `features=`로 도구 수를 직접 줄이는 방법도 여전히 유효합니다.
+도구 정의를 모두 컨텍스트에 미리 넣으면 토큰이 낭비됩니다. Claude Code는 도구 검색(Tool Search)이 기본으로 켜져 있어 MCP 도구 정의를 미뤄 두었다가 필요할 때 `ToolSearch`로 불러옵니다(`ENABLE_TOOL_SEARCH=false`로 끔). 따라서 서버를 여러 개 연결해도 예전만큼 컨텍스트 부담이 크지 않습니다. GitHub MCP처럼 `--toolsets`, Supabase처럼 `features=`로 도구 수를 직접 줄이는 방법도 여전히 유효합니다.
 
 #### 4-5. MCP 대신 CLI + 스킬
 
@@ -610,7 +610,7 @@ MCP Apps는 서버가 도구 결과와 함께 대화 안에서 렌더링되는 �
 
 - 공식 스펙은 도구를 임의 코드 실행으로 보고, 도구 설명과 어노테이션은 신뢰할 수 있는 서버에서 온 것이 아니면 신뢰하지 말라고 합니다. 호스트는 도구 호출 전에 사용자 동의를 받아야 합니다.
 - 프롬프트 인젝션: 이슈, 로그, 지원 티켓 같은 외부 텍스트에 숨은 지시를 에이전트가 따를 수 있습니다. Supabase와 Vercel 문서도 같은 위험을 경고하며 사람의 확인을 켜 두라고 합니다.
-- 2026년 보고된 사례(2차 출처이므로 원 보고서 확인 필요): Anthropic의 참조 Git MCP 서버에서 프롬프트 인젝션을 통한 원격 코드 실행 연쇄가 보고되어 패치되었다고 합니다. 승인이 서버 이름에만 묶여 있어 설정이 바뀌어도 재승인이 없던 Cursor 사례, 승인된 도구의 설명만 바꿔 데이터 유출 경로를 만든 사례도 보고되었습니다.
+- 공개된 보안 사례: 2025년 12월 17일 GitHub 보안 권고로 공개된 Anthropic 참조 Git MCP 서버(`mcp-server-git`)의 취약점 세 건(CVE-2025-68143, CVE-2025-68144, CVE-2025-68145)이 있습니다. `git_init` 도구가 임의 경로에 저장소를 만들 수 있었고, `git_diff`와 `git_checkout`에는 인자 주입이, `--repository` 옵션에는 경로 검증 누락이 있었습니다. 각각 2025.9.25 또는 2025.12.18 버전에서 고쳐졌고 `git_init` 도구는 삭제되었습니다. Cursor에서는 CVE-2025-54136이 있었습니다. 1.2.4 이하 버전에서 이미 신뢰한 MCP 설정 파일을 바꾸면 재승인 없이 코드가 실행되었고 1.3에서 고쳐졌습니다.
 - 실천 수칙: (1) 공식 주소인지 확인하고 마켓플레이스의 원클릭 설치 링크의 도메인을 확인합니다. (2) 가능하면 읽기 전용, 프로젝트 범위로 제한합니다(`read_only=true`, `project_ref`, `--read-only`). (3) 운영 데이터는 필요한 때만 연결합니다. (4) 도구 호출 승인을 끄지 않습니다. (5) 저장소에 커밋하는 `.mcp.json`에는 토큰을 직접 쓰지 말고 환경 변수를 씁니다. (6) 리뷰 없이 남이 올린 `.mcp.json`을 받아 실행하지 않습니다.
 
 ### 5. 처음 시작하는 추천 순서
@@ -938,7 +938,7 @@ alwaysApply: false
 
 ## AI 에이전트의 브라우저 자동화: 2026년 11월 도구 지형과 사용법
 
-기준일은 2026-11-10입니다. 이 분야는 몇 달 만에 판도가 바뀌므로, 아래 내용은 공식 문서와 저장소를 직접 읽고 확인한 것을 중심으로 썼습니다. 확인하지 못한 부분은 본문에서 "확인 못함"으로 표시했고 맨 끝에 모아 두었습니다.
+기준일은 2026-11-10입니다. 이 분야는 몇 달 만에 판도가 바뀌므로, 아래 내용은 공식 문서와 저장소를 직접 읽고 확인한 것을 중심으로 썼습니다.
 
 ### 1. 큰 그림: 에이전트는 "어떤 브라우저"를 쓰는가
 
@@ -967,14 +967,14 @@ alwaysApply: false
 - **동작 방식**:
   - 에이전트가 `ego-browser nodejs`에 자바스크립트를 넘기면, 브라우저 쪽 내장 Node.js 런타임에서 실행됩니다. 이 스크립트는 페이지 안이 아니라 Node에서 도니, 페이지 안 코드는 `page.evaluate()`에 넣어야 합니다.
   - 에이전트 작업마다 **Space**라는 격리된 작업 공간이 생기고, 사용자의 기존 탭은 건드리지 않습니다. 사용자는 에이전트가 일하는 모습을 보다가 언제든 넘겨받을 수 있습니다(`task.handOff()`).
-  - 페이지 관찰은 `page.snapshot()`(구조와 ref, 기본 수단)과 `page.screenshot()`(시각 확인)이 있습니다. 공식 사이트에 따르면 스냅샷은 페이지에 스크립트를 주입하지 않고 Citro의 커스텀 Chromium 엔진 안에서 만듭니다. 스냅샷에서 나온 `@21` 같은 ref로 `page.click("@21")`처럼 조작합니다.
+  - 페이지 관찰은 `page.snapshot()`(구조와 ref, 기본 수단)과 `page.screenshot()`(시각 확인)이 있습니다. 스냅샷에서 나온 `@21` 같은 ref로 `page.click("@21")`처럼 조작합니다.
   - Playwright와 비슷해 보이지만 Playwright가 아닙니다. 스킬 문서는 `locator()`, `getByRole()` 같은 Playwright API를 추측해서 쓰지 말라고 명시합니다. 목록에 없는 동작은 `page.evaluate()`나 `page.cdp()`로 처리합니다.
-- **토큰 비용 특성**: 스킬 문서가 "스냅샷과 스크린샷 중 필요한 하나만, 여러 동작을 한 스크립트로 묶어 실행하고 마지막에 스냅샷 한 번"을 권합니다. 즉 왕복 횟수를 줄이는 설계입니다. 수치로 된 절감 효과는 확인하지 못했습니다.
+- **토큰 비용 특성**: 스킬 문서가 "스냅샷과 스크린샷 중 필요한 하나만, 여러 동작을 한 스크립트로 묶어 실행하고 마지막에 스냅샷 한 번"을 권합니다. 즉 왕복 횟수를 줄이는 설계입니다.
 - **주의점**: 에이전트가 작업하는 페이지의 내용은 사용자가 선택한 모델로 전송됩니다(공식 사이트). 실제 로그인 세션을 쓰므로 에이전트가 할 수 있는 일이 곧 내 계정이 할 수 있는 일입니다.
 
 #### aside
 
-- **정체**: Aside Computer Inc.(Y Combinator 소속)가 만든 "사람과 에이전트를 위해 다시 만든 브라우저"입니다. 로그인된 사이트에서 연동(integration) 없이 작업하는 것이 핵심 메시지입니다. macOS 15 이상, Windows 10 22H2 이상/Windows 11을 지원합니다. 바깥 에이전트가 쓰는 길은 두 가지입니다. aside exec은 브라우저 안의 Aside 에이전트에게 작업을 통째로 맡기는 방식으로, CLI 안내문은 서브에이전트를 띄우는 것처럼 쓰라고 권합니다. aside repl은 Playwright 스타일 JavaScript로 탭을 직접 다루는 방식으로, snapshot()이 페이지를 읽는 기본 수단이고 annotatedScreenshot()과 page.screenshot()은 시각 확인용입니다(CLI 1.26.1107의 aside guide 출력에서 확인).
+- **정체**: Aside Computer Inc.(Y Combinator 소속)가 만든 "사람과 에이전트를 위해 다시 만든 브라우저"입니다. 로그인된 사이트에서 연동(integration) 없이 작업하는 것이 핵심 메시지입니다. macOS 15 이상, Windows 10 22H2 이상/Windows 11을 지원합니다. 바깥 에이전트가 쓰는 길은 두 가지입니다. `aside exec`은 브라우저 안의 Aside 에이전트에게 작업을 통째로 맡기는 방식으로, CLI 안내문은 서브에이전트를 띄우는 것처럼 쓰라고 권합니다. `aside repl`은 Playwright 스타일 JavaScript로 탭을 직접 다루는 방식으로, `snapshot()`이 페이지를 읽는 기본 수단이고 `annotatedScreenshot()`과 `page.screenshot()`은 시각 확인용입니다.
 - **로그인 세션**: 온보딩에서 Chrome 등의 방문 기록, 쿠키, 북마크를 가져옵니다. 에이전트는 자동 입력(autofill)으로 로그인하며 자격 증명이 에이전트에게 노출되지 않는다고 공식 사이트는 설명합니다. 결제, 게시, 메시지 같은 민감한 동작은 사용자 확인을 기다립니다.
 - **코딩 에이전트 연동**: 개발자 문서(`aside.com/developers.md`)에 CLI, MCP, REPL 세 가지가 있습니다.
 
@@ -991,44 +991,46 @@ aside repl "const p = await openTab('https://example.com')"   # 결정적 단계
 aside mcp                                     # stdio MCP 서버
 ```
 
-  MCP 설정은 `mcp.json`의 `mcpServers`에서 `command`를 `aside`, `args`를 `["mcp"]`로 두면 됩니다. `aside mcp`를 직접 실행해 보면 도구는 네 개입니다: `exec`, `repl`, `memory_search`, `browser_profiles`.
+  MCP 설정은 `mcp.json`의 `mcpServers`에서 `command`를 `aside`, `args`를 `["mcp"]`로 두면 됩니다. `aside mcp`가 노출하는 도구는 네 개입니다: `exec`(로그인된 사이트에서 브라우저 에이전트 실행), `repl`(Playwright 스타일 JavaScript 실행), `memory_search`(Aside가 쌓은 사용자 메모리 검색), `browser_profiles`(브라우저 프로필 목록).
+
+  그 밖의 명령: `aside session resume <session-id> "Continue"`, `aside account list/status/use`. 인증 파일은 `ASIDE_CLI_AUTH_PATH`로 지정하며, 지정하지 않으면 `~/.aside/cli/auth.json`을 씁니다.
 - **주의점**: `curl | bash` 설치는 스크립트를 먼저 읽고 실행하는 편이 안전합니다. 인증 파일은 절대 커밋하지 마세요(공식 문서도 같은 경고).
 
 #### 두 도구의 공통점과 차이
 
 - 공통: 내 로그인 세션을 에이전트가 이어받는 "사람과 에이전트 공유 브라우저"입니다. 둘 다 Chrome 데이터를 가져옵니다.
-- 차이: ego는 바깥 에이전트가 직접 짜는 JS 스크립트(ego-browser nodejs)가 중심입니다. aside는 브라우저 안에 자체 에이전트가 있어 작업을 통째로 맡기는 exec이 기본이고, 직접 제어가 필요할 때만 repl을 씁니다. 실행 중인 작업은 aside session steer·queue·stop으로 방향을 바꾸거나 멈출 수 있고, --permission(ask, guard, full-access)으로 권한 범위를 정합니다. ego는 스킬 저장소가 공개(MIT)되어 있고, aside는 CLI의 aside guide가 같은 역할을 합니다.
+- 차이: ego는 바깥 에이전트가 직접 짜는 JS 스크립트(`ego-browser nodejs`)가 중심입니다. aside는 브라우저 안에 자체 에이전트가 있어 작업을 통째로 맡기는 `exec`이 기본이고, 직접 제어가 필요할 때만 `repl`을 씁니다. 실행 중인 작업은 `aside session steer`·`queue`·`stop`으로 방향을 바꾸거나 멈출 수 있고, `--permission`(`ask`, `guard`, `full-access`)으로 권한 범위를 정합니다. ego는 스킬 저장소가 공개(MIT)되어 있고, aside는 CLI의 `aside guide`가 같은 역할을 합니다.
 
 ### 3. 나머지 범주
 
 #### ① AI 회사의 브라우저·확장
 
-- **Claude in Chrome**: 2026-08-26에 유료 플랜 전체에 정식 출시됐습니다. Chrome Web Store에서 설치하며 Chrome 전용입니다(다른 Chromium과 모바일은 미지원). 동작마다 승인받지 않고 자율 실행할 수도 있습니다. 프롬프트 인젝션 방어로 학습, 웹 콘텐츠 탐지 프로브, 실행 전 분류기를 쓴다고 하는데, 이는 Anthropic 자체 평가이므로 참고용으로만 보세요.
-- **ChatGPT**: 별도 브라우저였던 Atlas는 은퇴하고 데스크톱 앱 내장 브라우저와 확장으로 옮겨 갔다는 보도가 많지만, OpenAI 도움말 원문은 열리지 않아 직접 확인하지 못했습니다. 내장 브라우저는 별도 프로필이라 기존 세션을 공유하지 않고, 로그인된 사이트가 필요하면 Chrome/Edge/Brave 등용 브라우저 확장을 쓰라고 OpenAI 문서가 안내합니다.
-- **Gemini in Chrome(auto browse)**: Google 블로그 검색 결과 기준으로 유료 구독자(AI Pro/Ultra) 대상이고 결제 같은 민감 단계에서 멈춥니다. 본문을 직접 열어 확인하지는 못했습니다.
+- **Claude in Chrome**: 2026-08-26에 유료 플랜 전체에 정식 출시됐습니다. Chrome Web Store에서 설치하며 Chrome 전용입니다(다른 Chromium과 모바일은 미지원). 동작마다 승인받지 않고 자율 실행할 수도 있습니다. 프롬프트 인젝션 방어로 학습, 웹 콘텐츠 탐지 프로브, 실행 전 분류기를 쓴다고 하는데, 이는 Anthropic 자체 평가이므로 참고용으로만 보세요. Claude Code에서는 `claude --chrome`으로 시작하거나 세션 안에서 `/chrome`으로 연결 상태를 확인하고 다시 연결합니다. 확장 1.0.36 이상과 `/login` 로그인이 필요하며, API 키나 setup-token 인증에서는 Chrome 연동이 꺼집니다.
+- **ChatGPT**: 별도 브라우저였던 Atlas는 OpenAI가 폐기하고, 브라우저 기반 에이전트 기능을 ChatGPT와 Codex로 옮긴다고 OpenAI 도움말이 안내합니다. Chrome에서는 ChatGPT Chrome 확장이나 사이드바를 쓰라고 합니다. 데스크톱 앱 내장 브라우저는 별도 프로필이라 기존 세션을 공유하지 않고, 로그인된 사이트가 필요하면 Chrome/Edge/Brave 등용 브라우저 확장을 쓰라고 OpenAI 문서가 안내합니다.
+- **Gemini in Chrome(auto browse)**: Google 블로그는 auto browse를 미국의 Google AI Pro/Ultra 구독자에게만 제공한다고 안내합니다. Gemini in Chrome은 이메일 전송이나 일정 추가 같은 민감한 동작 전에 확인을 요청합니다.
 
 #### ② CLI형
 
-- **playwright-cli**: `npm install -g @playwright/cli`. 코딩 에이전트용 CLI로, 공식 문서는 도구 스키마와 장황한 접근성 트리를 컨텍스트에 싣지 않아 토큰 비용이 낮다고 설명합니다. `open`, `snapshot`, `click`, `fill` 같은 명령과 `-s=<name>` 세션, 데몬 방식이 있습니다. 기존 브라우저에 붙는 `attach`/`detach` 명령이 있으나 절차는 확인 못함.
+- **playwright-cli**: `npm install -g @playwright/cli`. 코딩 에이전트용 CLI로, 공식 문서는 도구 스키마와 장황한 접근성 트리를 컨텍스트에 싣지 않아 토큰 비용이 낮다고 설명합니다. `open`, `snapshot`, `click`, `fill` 같은 명령과 `-s=<name>` 세션, 데몬 방식이 있습니다. 실행 중인 브라우저에는 `playwright-cli attach --extension=chrome`(Playwright 확장 필요, Chrome/Edge 전용), `attach --cdp=chrome`(실행 중인 Chrome/Edge), `attach --cdp=<url>`(CDP 엔드포인트) 중 하나로 붙고, `playwright-cli detach`로 연결만 끊으면 외부 브라우저는 그대로 남습니다.
 - **agent-browser**(vercel-labs, Apache-2.0): `npm install -g agent-browser` 후 `agent-browser install`. `agent-browser open example.com`, `agent-browser snapshot -i`(상호작용 요소에 `@e1` 같은 ref), `agent-browser click @e1`. 백그라운드 데몬이 CDP로 Chrome for Testing을 제어하며, 실행 중인 Chrome에는 `--cdp`/`--auto-connect`로 붙을 수 있다고 README에 있습니다.
 - **chrome-devtools CLI**: `npm i chrome-devtools-mcp@latest -g` 후 `chrome-devtools <tool> ...`. 기본은 헤드리스, 격리 모드입니다.
-- 공통 특성: 명령 한 번마다 짧은 텍스트가 돌아오므로 컨텍스트가 덜 쌓입니다. 다만 "MCP보다 몇 배 저렴"이라는 수치는 출처마다 다르고 측정 조건을 검증하지 못했습니다. 제3자 측정 중에는 차이가 거의 없다는 결과도 있다고 하므로(검색 결과 요약, 원문 미확인) 이 글에서는 배수를 쓰지 않습니다. 내 작업으로 직접 재 보는 것이 가장 정확합니다.
+- 공통 특성: 명령 한 번마다 짧은 텍스트가 돌아오므로 컨텍스트가 덜 쌓입니다.
 
 #### ③ MCP 서버형
 
-- **Playwright MCP**: `npx @playwright/mcp@latest`. 접근성 스냅샷이 기본이고 `--caps=vision`으로 좌표 기반 도구를 추가합니다. 기본은 작업공간별 영구 프로필이며 `--isolated`는 메모리 프로필입니다. `--extension`으로 기존 Chrome/Edge의 로그인 세션을 재사용할 수 있습니다. README는 CLI+스킬이 토큰 효율적이라 코딩 에이전트에 선호되고, MCP는 영속 상태, 풍부한 페이지 조사, 장시간 자율 작업에 맞는다고 정리합니다. 또 "보안 경계가 아니다"라고 명시합니다.
+- **Playwright MCP**: `npx @playwright/mcp@latest`. 접근성 스냅샷이 기본이고 `--caps=vision`으로 좌표 기반 도구를 추가합니다. 기본은 작업공간별 영구 프로필이며 `--isolated`는 메모리 프로필입니다. `--extension`으로 기존 Chrome/Edge의 로그인 세션을 재사용할 수 있습니다. Chrome Web Store에서 Playwright 확장을 설치하고 MCP 설정의 `args`에 `--extension`을 넣으면, LLM이 처음 브라우저를 쓸 때 제어할 탭을 고르는 페이지가 열립니다. 확장 상태 페이지의 `PLAYWRIGHT_MCP_EXTENSION_TOKEN`을 `env`에 넣으면 승인 절차를 건너뜁니다. README는 CLI+스킬이 토큰 효율적이라 코딩 에이전트에 선호되고, MCP는 영속 상태, 풍부한 페이지 조사, 장시간 자율 작업에 맞는다고 정리합니다. 또 "보안 경계가 아니다"라고 명시합니다.
 - **Chrome DevTools MCP**: `npx -y chrome-devtools-mcp@latest`. 성능 트레이스, 네트워크, 소스맵이 적용된 콘솔 스택트레이스 등 **디버깅**이 강점입니다. 공식 지원 브라우저는 Chrome과 Chrome for Testing뿐입니다. 실행 중인 Chrome 세션에는 `--autoConnect`로 붙을 수 있습니다(Chrome 144 이상, `chrome://inspect/#remote-debugging`에서 허용, 연결 때마다 허용 대화상자, 제어 중 배너 표시). 이는 Chrome 블로그 글 기준이라 현재 세부는 달라졌을 수 있습니다. 사용 통계 수집이 기본 켜져 있어 `--no-usage-statistics`로 끌 수 있습니다.
 - MCP는 도구 스키마가 컨텍스트에 상주하므로 도구가 많을수록 기본 비용이 큽니다(Playwright 문서의 비교표에서도 MCP 토큰 비용은 "Higher").
 
 #### ④ 코딩 에이전트·IDE 내장 브라우저
 
-- **Cursor**: 편집기 안 창으로 열리고 MCP 서버(확장)가 제어합니다. 이동, 클릭, 입력, 스크린샷, 콘솔, 네트워크 확인이 가능하고 세션 쿠키와 스토리지는 워크스페이스별로 격리됩니다. 기본적으로 승인이 필요하며 허용/차단 목록은 "최선 노력 보호"라고 문서가 말합니다. 낯선 사이트에서 자동 실행은 쓰지 말라고 합니다.
+- **Cursor**: 편집기 안 창으로 열리고 MCP 서버(확장)가 제어합니다. 이동, 클릭, 입력, 스크린샷, 콘솔, 네트워크 확인이 가능하고 쿠키와 스토리지는 에이전트 세션 사이에 유지되지만 워크스페이스별로 격리됩니다. 에이전트는 실행 중인 개발 서버를 감지해 맞는 포트를 쓰도록 안내받고, 관리자는 `http://localhost:3000` 같은 허용 origin 목록으로 자동 이동 범위를 제한할 수 있습니다. 기본적으로 승인이 필요하며 허용/차단 목록은 "최선 노력 보호"라고 문서가 말합니다. 낯선 사이트에서 자동 실행은 쓰지 말라고 합니다.
 - **ChatGPT 앱 내장 브라우저**: 사용자와 에이전트가 같은 화면을 보며 로컬 또는 공개 페이지를 미리 보고 시각적 코멘트를 남길 수 있습니다. 별도 프로필이라 로그인은 직접 해야 합니다. 개발자 모드(전체 CDP 접근)는 사이트별 명시 승인이 필요한 옵트인입니다.
 - 프런트엔드 개발자가 가장 자주 쓰는 범주입니다. 로그인이 필요 없는 로컬 개발 서버 확인에는 이것만으로 충분한 경우가 많습니다.
 
 #### ⑤ 클라우드 브라우저·computer use
 
-- **Browserbase / Stagehand**: Browserbase는 헤드리스 클라우드 브라우저와 세션 관찰(로그, 라이브 뷰, 리플레이)을 제공하고, Stagehand는 Playwright 수준 제어 위에 `act`/`extract`/`observe`를 얹은 SDK입니다. 서비스 운영(수집, 대규모 병렬)에 적합하고 개발 중 화면 확인에는 과합니다. 세션 연결 방식(CDP 등)과 로그인 유지 방식은 읽은 문서에서 확인 못함.
+- **Browserbase / Stagehand**: Browserbase는 헤드리스 클라우드 브라우저와 세션 관찰(로그, 라이브 뷰, 리플레이)을 제공하고, Stagehand는 Playwright 수준 제어 위에 `act`/`extract`/`observe`를 얹은 SDK입니다. 서비스 운영(수집, 대규모 병렬)에 적합하고 개발 중 화면 확인에는 과합니다. 세션을 만들면 받는 `connectUrl`을 Playwright의 `chromium.connectOverCDP(session.connectUrl)`로 연결합니다. Contexts는 쿠키, 세션 토큰, 로컬 스토리지를 저장해 두는 기능으로, 세션 생성 때 `browserSettings.context`에 `{ id, persist: true }`를 주면 같은 context ID의 세션이 로그인된 채 시작합니다.
 - **Claude computer use**: 스크린샷과 마우스, 키보드 좌표 방식입니다. API 문서는 `{"type": "computer_toolset_20260801"}` 한 줄로 켜고 17개 구성 도구가 있다고 하며, 웹페이지 안에서 끝나는 작업은 브라우저 도구가 더 낫다고 안내합니다. 스크린샷 한 장이 대략 1,000~1,800 입력 토큰이라고 문서가 밝힙니다. 보안 권고는 전용 VM/컨테이너, 민감 정보 미제공, 도메인 허용 목록, 중요 동작 전 사람 확인입니다.
 
 ### 4. 범주별 보안 주의점
@@ -1060,7 +1062,7 @@ http://localhost:3000/settings 를 열어서 모바일 폭(390px)과 데스크�
 콘솔에 에러가 있으면 함께 보고하고, 코드는 수정하지 말고 원인 후보만 적어줘.
 ```
 
-**ego-browser로 직접 실행하는 최소 예**(로컬 스킬 문서에 나온 API만 사용. 뷰포트 크기 변경 API는 확인하지 않았으므로 제외)
+**ego-browser로 직접 실행하는 최소 예**(로컬 스킬 문서에 나온 API만 사용했습니다. 뷰포트 크기를 바꾸는 전용 API는 없지만, `page.cdp("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true })`로 폰 너비를 흉내 낼 수 있습니다.)
 
 ```bash
 ego-browser nodejs <<'EOF'
