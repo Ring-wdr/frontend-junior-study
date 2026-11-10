@@ -1,14 +1,16 @@
 'use client';
 
 import { useTranslation } from '@/i18n/client';
+import { DemoBox } from '../../../components/demo-box';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
-import { CodeBlock } from '../../../components/ui/code-block';
+import { TokenOptimizationChecklist } from './token-optimization-section-checklist';
+import { TokenOptimizationCommands } from './token-optimization-section-commands';
+import { TokenOptimizationGauge } from './token-optimization-section-gauge';
 
 export const TokenOptimizationSection = () => {
-  const { t, raw } = useTranslation('week17');
-  const checklist = raw('tokenOptimization.contextOptimizationChecklist');
+  const { t } = useTranslation('week17');
 
   return (
     <SectionCard
@@ -30,20 +32,13 @@ export const TokenOptimizationSection = () => {
             </p>
           </InfoBox>
 
-          <CodeBlock
-            code={t('tokenOptimization.contextOptimizationCode')}
-            language="bash"
-            className="mt-4 text-xs"
-          />
-
-          <ul className="mt-4 space-y-2 text-sm text-gray-700">
-            {checklist.map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5" />
-                {item}
-              </li>
-            ))}
-          </ul>
+          <div className="mt-4 space-y-4">
+            <DemoBox label={t('tokenOptimization.ui.gaugeLabel')}>
+              <TokenOptimizationGauge />
+            </DemoBox>
+            <TokenOptimizationCommands />
+            <TokenOptimizationChecklist />
+          </div>
         </SubSection>
       </div>
     </SectionCard>

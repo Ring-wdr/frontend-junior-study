@@ -1,160 +1,82 @@
 'use client';
 
-import { CheckCircle } from 'lucide-react';
+import { motion } from 'motion/react';
 import { useTranslation } from '@/i18n/client';
 import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
-import { CodeBlock } from '../../../components/ui/code-block';
+import { VerificationChecklist } from './verification-section-checklist';
+import { VerificationGuidelines } from './verification-section-guidelines';
+import { VerificationHook } from './verification-section-hook';
+import { VerificationPermissions } from './verification-section-permissions';
 
 export const VerificationSection = () => {
-  const { t, raw } = useTranslation('week17');
-  const checklist = raw('verification.checklist');
-  const guidelines = raw('verification.teamGuidelines');
+  const { t } = useTranslation('week17');
 
   return (
     <SectionCard
       badge={{ label: t('verification.badge'), color: 'orange' }}
       description={t('verification.description')}
+      testId="verification-section"
     >
-      <div className="space-y-8">
-        <SubSection
-          title={t('verification.autoVerifyTitle')}
-          icon
-          iconColor="blue"
-        >
-          <InfoBox variant="blue" title={t('verification.autoVerifyInfoTitle')}>
-            <p className="text-sm leading-relaxed">
-              {t('verification.autoVerifyInfoDesc')}
-            </p>
-          </InfoBox>
-
-          <CodeBlock
-            code={t('verification.autoVerifyCode')}
-            language="json"
-            className="mt-4 text-xs"
-          />
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.3 }}
+        className="space-y-8"
+      >
+        <SubSection title={t('verification.hook.title')} icon iconColor="blue">
+          <VerificationHook />
         </SubSection>
 
         <SubSection
-          title={t('verification.manualCheckTitle')}
+          title={t('verification.checklist.title')}
           icon
           iconColor="orange"
         >
-          <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
-            <h4 className="font-bold text-sm text-orange-700 mb-3 flex items-center gap-2">
-              <CheckCircle className="w-4 h-4" />
-              {t('verification.checklistTitle')}
-            </h4>
-            <ul className="space-y-2">
-              {checklist.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-orange-800"
-                >
-                  <input
-                    type="checkbox"
-                    className="mt-0.5 rounded border-orange-300"
-                  />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <VerificationChecklist />
         </SubSection>
 
         <SubSection
-          title={t('verification.permissionsTitle')}
+          title={t('verification.permissions.title')}
           icon
           iconColor="red"
         >
           <InfoBox
             variant="blue"
-            title={t('verification.permissionsInfoTitle')}
+            title={t('verification.permissions.infoTitle')}
           >
             <p className="text-sm leading-relaxed">
-              {t('verification.permissionsInfoDesc')}
+              {t('verification.permissions.infoDesc')}
             </p>
           </InfoBox>
-
-          <CodeBlock
-            code={t('verification.permissionsCode')}
-            language="json"
-            className="mt-4 text-xs"
-          />
-
-          <InfoBox variant="red" title={t('verification.injectionTitle')}>
+          <div className="mt-4">
+            <VerificationPermissions />
+          </div>
+          <InfoBox variant="red" title={t('verification.injection.title')}>
             <p className="text-sm leading-relaxed">
-              {t('verification.injectionDesc')}
+              {t('verification.injection.desc')}
             </p>
           </InfoBox>
         </SubSection>
 
         <SubSection
-          title={t('verification.teamGuidelinesTitle')}
+          title={t('verification.guidelines.title')}
           icon
           iconColor="purple"
         >
-          <div className="space-y-3">
-            <div className="bg-green-50 p-4 rounded-lg border border-green-200">
-              <h4 className="font-bold text-sm text-green-700 mb-2">
-                {guidelines.allowed.title}
-              </h4>
-              <ul className="space-y-1">
-                {guidelines.allowed.items.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-center gap-2 text-xs text-green-700"
-                  >
-                    <span className="w-1.5 h-1.5 bg-green-500 rounded-full" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
-              <h4 className="font-bold text-sm text-orange-700 mb-2">
-                {guidelines.required.title}
-              </h4>
-              <ul className="space-y-1">
-                {guidelines.required.items.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-center gap-2 text-xs text-orange-700"
-                  >
-                    <span className="w-1.5 h-1.5 bg-orange-500 rounded-full" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="bg-red-50 p-4 rounded-lg border border-red-200">
-              <h4 className="font-bold text-sm text-red-700 mb-2">
-                {guidelines.prohibited.title}
-              </h4>
-              <ul className="space-y-1">
-                {guidelines.prohibited.items.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-center gap-2 text-xs text-red-700"
-                  >
-                    <span className="w-1.5 h-1.5 bg-red-500 rounded-full" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <InfoBox variant="orange" title={t('verification.importantNote')}>
+          <VerificationGuidelines />
+          <InfoBox
+            variant="orange"
+            title={t('verification.guidelines.noteTitle')}
+          >
             <p className="text-sm leading-relaxed">
-              {t('verification.importantNoteDesc')}
+              {t('verification.guidelines.noteDesc')}
             </p>
           </InfoBox>
         </SubSection>
-      </div>
+      </motion.div>
     </SectionCard>
   );
 };

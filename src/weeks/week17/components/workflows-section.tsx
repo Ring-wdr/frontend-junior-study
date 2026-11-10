@@ -1,91 +1,105 @@
 'use client';
 
+import { motion } from 'motion/react';
+import { type KeyboardEvent, useState } from 'react';
 import { useTranslation } from '@/i18n/client';
-import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
-import { CodeBlock } from '../../../components/ui/code-block';
+import { Panel } from './workflows-section-controls';
+import {
+  AutomationFlow,
+  BugFixFlow,
+  CodeReviewFlow,
+  FeatureDevFlow,
+} from './workflows-section-flows';
+
+const FLOWS = [
+  { id: 'featureDev', Flow: FeatureDevFlow },
+  { id: 'bugFix', Flow: BugFixFlow },
+  { id: 'codeReview', Flow: CodeReviewFlow },
+  { id: 'automation', Flow: AutomationFlow },
+] as const;
 
 export const WorkflowsSection = () => {
   const { t, raw } = useTranslation('week17');
-  const tips = raw('workflows.tips');
+  const tabs = raw('workflows.tabs');
+  const [index, setIndex] = useState(0);
+  const titles = {
+    featureDev: t('workflows.featureDev.title'),
+    bugFix: t('workflows.bugFix.title'),
+    codeReview: t('workflows.codeReview.title'),
+    automation: t('workflows.automation.title'),
+  };
+  const flow = FLOWS[index] ?? FLOWS[0];
+  const Flow = flow.Flow;
+
+  const onKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
+    const last = FLOWS.length - 1;
+    const next =
+      e.key === 'ArrowRight'
+        ? Math.min(index + 1, last)
+        : e.key === 'ArrowLeft'
+          ? Math.max(index - 1, 0)
+          : index;
+    if (next !== index) {
+      e.preventDefault();
+      setIndex(next);
+      document.getElementById(`workflows-tab-${next}`)?.focus();
+    }
+  };
 
   return (
     <SectionCard
       badge={{ label: t('workflows.badge'), color: 'teal' }}
       description={t('workflows.description')}
+      testId="workflows-section"
     >
-      <div className="space-y-8">
-        <SubSection
-          title={t('workflows.featureDevTitle')}
-          icon
-          iconColor="blue"
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
+        className="space-y-4"
+      >
+        <div
+          role="tablist"
+          aria-label={t('workflows.pickLabel')}
+          className="flex flex-wrap gap-2"
         >
-          <InfoBox variant="blue" title={t('workflows.featureDevInfoTitle')}>
-            <p className="text-sm leading-relaxed">
-              {t('workflows.featureDevInfoDesc')}
-            </p>
-          </InfoBox>
+          {tabs.map((label, i) => (
+            <button
+              key={label}
+              id={`workflows-tab-${i}`}
+              type="button"
+              role="tab"
+              aria-selected={i === index}
+              aria-controls="workflows-panel"
+              tabIndex={i === index ? 0 : -1}
+              onClick={() => setIndex(i)}
+              onKeyDown={onKeyDown}
+              className={`min-w-0 rounded-lg border px-3 py-2 text-xs font-semibold break-words transition-colors ${
+                i === index
+                  ? 'border-teal-600 bg-teal-600 text-white'
+                  : 'border-gray-200 bg-white text-gray-700 hover:bg-teal-50'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
 
-          <CodeBlock
-            code={t('workflows.featureDevCode')}
-            language="bash"
-            className="mt-4 text-xs"
-          />
-        </SubSection>
-
-        <SubSection title={t('workflows.bugFixTitle')} icon iconColor="orange">
-          <InfoBox variant="orange" title={t('workflows.bugFixInfoTitle')}>
-            <p className="text-sm leading-relaxed">
-              {t('workflows.bugFixInfoDesc')}
-            </p>
-          </InfoBox>
-
-          <CodeBlock
-            code={t('workflows.bugFixCode')}
-            language="bash"
-            className="mt-4 text-xs"
-          />
-        </SubSection>
-
-        <SubSection
-          title={t('workflows.codeReviewTitle')}
-          icon
-          iconColor="purple"
+        <div
+          role="tabpanel"
+          id="workflows-panel"
+          aria-labelledby={`workflows-tab-${index}`}
         >
-          <CodeBlock
-            code={t('workflows.codeReviewCode')}
-            language="bash"
-            className="text-xs"
-          />
-        </SubSection>
-
-        <SubSection
-          title={t('workflows.automationTitle')}
-          icon
-          iconColor="green"
-        >
-          <InfoBox variant="blue" title={t('workflows.automationInfoTitle')}>
-            <p className="text-sm leading-relaxed">
-              {t('workflows.automationInfoDesc')}
-            </p>
-          </InfoBox>
-
-          <CodeBlock
-            code={t('workflows.automationCode')}
-            language="bash"
-            className="mt-4 text-xs"
-          />
-
-          <InfoBox variant="green" title={t('workflows.automationTips')}>
-            <ul className="list-disc pl-5 space-y-1 text-sm">
-              {tips.map((tip) => (
-                <li key={tip}>{tip}</li>
-              ))}
-            </ul>
-          </InfoBox>
-        </SubSection>
-      </div>
+          <Panel panelKey={flow.id}>
+            <SubSection title={titles[flow.id]} icon iconColor="blue">
+              <Flow />
+            </SubSection>
+          </Panel>
+        </div>
+      </motion.div>
     </SectionCard>
   );
 };
