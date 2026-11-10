@@ -1,104 +1,105 @@
 'use client';
 
+import { motion } from 'motion/react';
+import { type KeyboardEvent, useState } from 'react';
 import { useTranslation } from '@/i18n/client';
-import { InfoBox } from '../../../components/info-box';
 import { SectionCard } from '../../../components/section-card';
 import { SubSection } from '../../../components/sub-section';
-import { CodeBlock } from '../../../components/ui/code-block';
+import { StablePanels } from '../../../components/ui/stable-panels';
+import {
+  AutomationFlow,
+  BugFixFlow,
+  CodeReviewFlow,
+  FeatureDevFlow,
+} from './workflows-section-flows';
+
+const FLOWS = [
+  { id: 'featureDev', Flow: FeatureDevFlow },
+  { id: 'bugFix', Flow: BugFixFlow },
+  { id: 'codeReview', Flow: CodeReviewFlow },
+  { id: 'automation', Flow: AutomationFlow },
+] as const;
 
 export const WorkflowsSection = () => {
-  const { t } = useTranslation('week17');
+  const { t, raw } = useTranslation('week17');
+  const tabs = raw('workflows.tabs');
+  const [index, setIndex] = useState(0);
+  const titles = {
+    featureDev: t('workflows.featureDev.title'),
+    bugFix: t('workflows.bugFix.title'),
+    codeReview: t('workflows.codeReview.title'),
+    automation: t('workflows.automation.title'),
+  };
+
+  const onKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
+    const last = FLOWS.length - 1;
+    const next =
+      e.key === 'ArrowRight'
+        ? Math.min(index + 1, last)
+        : e.key === 'ArrowLeft'
+          ? Math.max(index - 1, 0)
+          : index;
+    if (next !== index) {
+      e.preventDefault();
+      setIndex(next);
+      document.getElementById(`workflows-tab-${next}`)?.focus();
+    }
+  };
 
   return (
     <SectionCard
       badge={{ label: t('workflows.badge'), color: 'teal' }}
       description={t('workflows.description')}
+      testId="workflows-section"
     >
-      <div className="space-y-8">
-        <SubSection
-          title={t('workflows.featureDevTitle')}
-          icon
-          iconColor="blue"
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
+        className="space-y-4"
+      >
+        <div
+          role="tablist"
+          aria-label={t('workflows.pickLabel')}
+          className="flex flex-wrap gap-2"
         >
-          <InfoBox variant="blue" title={t('workflows.featureDevInfoTitle')}>
-            <p className="text-sm leading-relaxed">
-              {t('workflows.featureDevInfoDesc')}
-            </p>
-          </InfoBox>
+          {tabs.map((label, i) => (
+            <button
+              key={label}
+              id={`workflows-tab-${i}`}
+              type="button"
+              role="tab"
+              aria-selected={i === index}
+              aria-controls="workflows-panel"
+              tabIndex={i === index ? 0 : -1}
+              onClick={() => setIndex(i)}
+              onKeyDown={onKeyDown}
+              className={`min-w-0 rounded-lg border px-3 py-2 text-xs font-semibold break-words transition-colors ${
+                i === index
+                  ? 'border-teal-600 bg-teal-600 text-white'
+                  : 'border-gray-200 bg-white text-gray-700 hover:bg-teal-50'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
 
-          <CodeBlock
-            code={`# 1. 요구사항 분석
-claude "PRD.md를 읽고 필요한 기술적 작업 목록을 만들어줘"
-
-# 2. 설계
-claude "작업 목록을 바탕으로 구현 계획을 세워줘" --plan
-
-# 3. 구현
-claude "승인된 계획대로 구현해줘"
-
-# 4. 테스트
-claude "구현한 기능에 대한 테스트를 작성하고 실행해줘"
-
-# 5. 리뷰
-claude "변경사항을 리뷰하고 개선점을 제안해줘"
-
-# 6. 커밋
-claude "/commit"  # skill 사용`}
-            language="bash"
-            className="mt-4 text-xs"
-          />
-        </SubSection>
-
-        <SubSection title={t('workflows.bugFixTitle')} icon iconColor="orange">
-          <CodeBlock
-            code={`# 에러 정보와 함께 요청
-claude "이 에러를 수정해줘:
-
-       Error: Cannot read property 'user' of undefined
-       at AuthGuard (src/guards/auth.guard.ts:15)
-
-       재현 조건: 로그아웃 후 보호된 페이지 접근"
-
-# AI가 수행하는 작업:
-# 1. 에러 위치 파악
-# 2. 관련 코드 분석
-# 3. 원인 진단
-# 4. 수정 적용
-# 5. 테스트로 검증`}
-            language="bash"
-            className="text-xs"
-          />
-        </SubSection>
-
-        <SubSection
-          title={t('workflows.codeReviewTitle')}
-          icon
-          iconColor="purple"
+        <div
+          role="tabpanel"
+          id="workflows-panel"
+          aria-labelledby={`workflows-tab-${index}`}
         >
-          <CodeBlock
-            code={`# PR 리뷰 요청
-claude "현재 브랜치의 변경사항을 main과 비교해서 리뷰해줘.
-       특히 확인해줄 것:
-       - 보안 취약점
-       - 성능 이슈
-       - 타입 안정성
-       - 테스트 커버리지"
-
-# MCP로 GitHub 연동 시
-claude "PR #123을 리뷰하고 코멘트를 달아줘"`}
-            language="bash"
-            className="text-xs"
-          />
-
-          <InfoBox variant="green" title={t('workflows.automationTips')}>
-            <ul className="list-disc pl-5 space-y-1 text-sm">
-              <li>{t('workflows.tips.tip1')}</li>
-              <li>{t('workflows.tips.tip2')}</li>
-              <li>{t('workflows.tips.tip3')}</li>
-            </ul>
-          </InfoBox>
-        </SubSection>
-      </div>
+          <StablePanels index={index}>
+            {FLOWS.map(({ id, Flow }) => (
+              <SubSection key={id} title={titles[id]} icon iconColor="blue">
+                <Flow />
+              </SubSection>
+            ))}
+          </StablePanels>
+        </div>
+      </motion.div>
     </SectionCard>
   );
 };

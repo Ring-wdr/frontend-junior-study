@@ -1,7 +1,7 @@
 {
   "header": {
-    "title": "AI-Powered Development Tools",
-    "description": "Master modern development workflows with AI code agents, MCP, Skills, and Hooks"
+    "title": "AI-Powered Development Tools and Collaboration",
+    "description": "Master modern development workflows with AI coding agents, MCP, Skills, and Hooks"
   },
   "tabs": {
     "all": "All",
@@ -16,383 +16,2039 @@
   },
   "aiAgents": {
     "badge": "Core",
-    "title": "Understanding AI Code Agents",
-    "description": "Evolution from AI tools to autonomous agents and comparison of major tools",
-    "evolutionTitle": "From AI Tools to AI Agents",
-    "toolsEra": "AI Tools (2023-2024)",
-    "agentsEra": "AI Agents (2025-2026)",
-    "toolsFeatures": {
-      "autocomplete": "Code autocomplete",
-      "singleFile": "Single file suggestions",
-      "manualPrompt": "Manual prompting required",
-      "limitedContext": "Limited context"
+    "description": "From autocomplete tools to autonomous agents, plus the major tools and shared standards of 2026",
+    "era": {
+      "title": "From AI Tools to AI Agents",
+      "pickLabel": "Pick an era to compare",
+      "toolsEra": "AI Tools (2023-2024)",
+      "agentsEra": "AI Agents (2025-2026)",
+      "toolsFeatures": [
+        "Code autocomplete",
+        "Suggestions within a single file",
+        "A person prompts every time",
+        "Limited context"
+      ],
+      "agentsFeatures": [
+        "Takes a goal, then plans and executes on its own",
+        "Edits multiple files and runs shell commands",
+        "Connects to external tools and knowledge through MCP and Skills",
+        "Reads test and lint results and keeps fixing",
+        "Works in parallel with subagents and background sessions"
+      ]
     },
-    "agentsFeatures": {
-      "autonomous": "Autonomous task execution",
-      "multiFile": "Multi-file editing",
-      "toolIntegration": "External tool integration (MCP)",
-      "selfCorrection": "Iterative self-improvement"
+    "tools": {
+      "title": "Major AI Development Tools (as of 2026)",
+      "pickLabel": "Pick a tool",
+      "prev": "Prev",
+      "next": "Next",
+      "note": "There are also open-source agents such as Cline, Aider, and goose. Product names, pricing, and benchmark rankings change every few months, so check the official docs before adopting one.",
+      "items": [
+        {
+          "name": "Claude Code",
+          "desc": "Anthropic's coding agent. Centered on the terminal and also available in IDEs, desktop, and web, with subagents, Skills, Hooks, and plugins",
+          "icon": "bot"
+        },
+        {
+          "name": "Codex",
+          "desc": "OpenAI's coding agent. Offers a CLI, IDE extension, and cloud tasks, and uses AGENTS.md as its instruction file",
+          "icon": "wrench"
+        },
+        {
+          "name": "Cursor",
+          "desc": "AI-native IDE. Supports agent mode, .cursor/rules, and AGENTS.md",
+          "icon": "zap"
+        },
+        {
+          "name": "GitHub Copilot",
+          "desc": "Agent mode in VS Code plus a cloud coding agent that opens a PR when you hand it an issue. Agent HQ runs third-party agents on GitHub too",
+          "icon": "git-branch"
+        },
+        {
+          "name": "Antigravity",
+          "desc": "Google's agent development platform. Gemini CLI for individual users moved to Antigravity CLI in June 2026",
+          "icon": "brain"
+        },
+        {
+          "name": "Devin Desktop",
+          "desc": "Cognition's rebrand of Windsurf in June 2026. Reworked toward managing local and cloud agents from one screen",
+          "icon": "user"
+        }
+      ]
     },
-    "toolsComparisonTitle": "Major AI Development Tools",
-    "tools": [
+    "standards": {
+      "title": "Shared Standards Across Tools",
+      "pickLabel": "Pick a standard",
+      "intro": "In December 2025 the Agentic AI Foundation (AAIF) launched under the Linux Foundation, with MCP, AGENTS.md, and goose donated as founding projects. Learn the standards that aren't tied to one tool and you can carry your setup and knowledge with you when the tool changes.",
+      "prev": "Prev",
+      "next": "Next",
+      "items": [
+        {
+          "name": "MCP",
+          "desc": "The protocol agents use to connect to external tools and data. Created by Anthropic and donated to AAIF"
+        },
+        {
+          "name": "AGENTS.md",
+          "desc": "A Markdown file for project instructions. Donated by OpenAI and read by Codex, Cursor, Copilot, and others; Claude Code also reads it when there is no CLAUDE.md"
+        },
+        {
+          "name": "Agent Skills",
+          "desc": "An open standard (agentskills.io) that packages procedures and knowledge as SKILL.md folders. Reusable across tools"
+        }
+      ]
+    },
+    "capabilities": {
+      "title": "Capabilities and Limits of AI Agents",
+      "lead": "Is this something an AI agent does well, or something a person must do?",
+      "aiShort": "AI does well",
+      "humanShort": "Person must do",
+      "correct": "Correct",
+      "wrong": "Not quite. Answer",
+      "score": "Correct answers",
+      "reset": "Try again",
+      "tasks": [
+        {
+          "side": "ai",
+          "text": "Refactoring across many files"
+        },
+        {
+          "side": "human",
+          "text": "Architecture and technology decisions"
+        },
+        {
+          "side": "human",
+          "text": "Validating business requirements"
+        },
+        {
+          "side": "ai",
+          "text": "Library and framework migrations"
+        },
+        {
+          "side": "ai",
+          "text": "Generating boilerplate and test code"
+        },
+        {
+          "side": "human",
+          "text": "Final security review"
+        },
+        {
+          "side": "ai",
+          "text": "Tracing errors and debugging"
+        },
+        {
+          "side": "human",
+          "text": "Judging user experience"
+        },
+        {
+          "side": "human",
+          "text": "Final approval of merges and deploys"
+        },
+        {
+          "side": "ai",
+          "text": "Exploring and documenting a codebase"
+        }
+      ],
+      "importantNote": "Important: AI is a tool",
+      "importantNoteDesc": "AI agents don't replace developers. They are augmentation tools that let developers focus on higher-level problems. Even when an agent wrote the code, final responsibility always lies with the person who merged it.",
+      "next": "Next question",
+      "seeResult": "See results",
+      "resultTitle": "Results"
+    },
+    "example": {
+      "title": "Handing a Task to an Agent",
+      "promptLabel": "Prompt",
+      "promptCode": "# Start an interactive session with an initial prompt\nclaude \"Implement user authentication:\n       - JWT auth with refresh tokens\n       - Login/logout API\n       - Login form component\n       Done when: bun run typecheck and bun run test pass\"",
+      "loopHeader": "# The loop the agent runs:",
+      "pickLabel": "Agent loop steps",
+      "stepLabel": "Step",
+      "start": "Before start",
+      "prev": "Prev",
+      "next": "Next",
+      "reset": "Try again",
+      "steps": [
+        "Explore the project structure and existing patterns",
+        "Create/modify the files it needs",
+        "Run type checks and tests",
+        "On failure, read the cause and fix again",
+        "Report once the done criteria are met"
+      ]
+    }
+  },
+  "usageLadder": {
+    "badge": "Usage ladder",
+    "description": "Use each step well, and move up only when you can see its limit.",
+    "notice": "This is based on official docs and GitHub repositories checked on 2026-11-10. Tools change every few months, so re-check commands in each official doc before using them. Prices and benchmark rankings are not covered.",
+    "principleTitle": "The one idea",
+    "principleBody": "Use one step thoroughly, and move to the next only when you can see that step's limit. Running more agents does not give better results. When the checking work (review, tests) piles up on one person, things get slower.",
+    "ui": {
+      "stepsLabel": "Choose a step",
+      "progress": "Current position",
+      "prev": "Previous step",
+      "next": "Next step",
+      "tabsLabel": "Step details",
+      "toolsLabel": "Choose a tool",
+      "toolsTab": "Tools and commands",
+      "teamsTab": "Built-in teams",
+      "aboutTitle": "About",
+      "criterionLabel": "Pick a criterion",
+      "checklistHint": "Tap items to check them off. This resets when you reload.",
+      "done": "done"
+    },
+    "steps": [
       {
-        "name": "Claude Code",
-        "desc": "CLI-based fully autonomous agent",
-        "icon": "bot"
+        "name": "① Simple use",
+        "summary": "Ask in conversation and hand over one small task"
       },
       {
-        "name": "Cursor",
-        "desc": "AI-native IDE with Composer",
-        "icon": "zap"
+        "name": "② Instructions and procedures",
+        "summary": "Remove repeated explanations with rule files and skills"
       },
       {
-        "name": "GitHub Copilot",
-        "desc": "VS Code integrated agent",
-        "icon": "git-branch"
+        "name": "③ Plan and verify",
+        "summary": "Get a plan first, then check the result with tests"
       },
-      { "name": "Windsurf", "desc": "Cascade agent IDE", "icon": "brain" },
-      { "name": "Cline", "desc": "VS Code autonomous agent", "icon": "wrench" },
       {
-        "name": "Aider",
-        "desc": "Git-integrated CLI tool",
-        "icon": "git-branch"
+        "name": "④ Subagents",
+        "summary": "Delegate research or review inside one session"
+      },
+      {
+        "name": "⑤ Parallel sessions",
+        "summary": "Run several sessions with worktrees, background, or cloud"
+      },
+      {
+        "name": "⑥ Orchestration",
+        "summary": "Manage many agents on one screen with tools like herdr and Orca"
       }
     ],
-    "capabilitiesTitle": "AI Agent Capabilities and Limits",
-    "aiGoodAt": "What AI Agents Excel At",
-    "humanRequired": "What Humans Must Do",
-    "strengths": [
-      "Complex refactoring",
-      "Migration tasks",
-      "Boilerplate generation",
-      "Debugging and error tracing",
-      "Documentation"
-    ],
-    "humanTasks": [
-      "Architecture decisions",
-      "Business logic validation",
-      "Security final review",
-      "User experience judgment",
-      "Final approval"
-    ],
-    "importantNote": "Important: AI is a Tool",
-    "importantNoteDesc": "AI agents don't replace developers—they augment them, allowing focus on higher-level problems. Final responsibility always lies with humans."
+    "labels": {
+      "does": "What you do",
+      "command": "Commands and settings",
+      "habits": "Good habits",
+      "whenUp": "When to move up",
+      "mistakes": "Common mistakes"
+    },
+    "s1": {
+      "title": "① Simple use: conversational questions and single tasks",
+      "does": "Ask for an explanation of the codebase, paste an error message and ask for the cause, or have it fix one function. The Claude Code docs use questions like \"give me an overview of this codebase\" and \"how is authentication handled?\".",
+      "code": "cd /path/to/project\nclaude",
+      "habits": [
+        "Give the reproduction command together with the full error.",
+        "Point at files directly, like @src/utils/auth.js (the Claude Code @ reference).",
+        "Repeat small, verifiable requests instead of one big request."
+      ],
+      "when": "If you keep typing the same explanation (\"this project uses bun and kebab-case\") three or more times, go to ②.",
+      "mistakes": [
+        "Committing the result without reading it.",
+        "Piling unrelated tasks into one conversation and cluttering the context."
+      ]
+    },
+    "s2": {
+      "title": "② Project instruction files and reusable procedures (skills)",
+      "rulesLead": "A rule file holds \"facts that always apply\". The file name differs by tool.",
+      "rulesTable": {
+        "headers": ["Tool", "Instruction files checked"],
+        "rows": [
+          [
+            "Claude Code",
+            "CLAUDE.md (v2.1.277 and later also read AGENTS.md when CLAUDE.md is absent, see below)"
+          ],
+          [
+            "Codex",
+            "AGENTS.md (global: ~/.codex/AGENTS.md; in a repo: root or subdirectories; the file closest to the working directory wins)"
+          ],
+          [
+            "GitHub Copilot (cloud agent, CLI)",
+            ".github/copilot-instructions.md, .github/instructions/**/*.instructions.md, AGENTS.md, CLAUDE.md, GEMINI.md"
+          ],
+          [
+            "Gemini family",
+            "GEMINI.md (see \"Note on the Google family\" in step ⑥)"
+          ]
+        ]
+      },
+      "rulesNote": "If you mix tools, it is convenient to keep the shared rules in a single AGENTS.md. The official docs confirm that Copilot reads AGENTS.md, CLAUDE.md, and GEMINI.md, and that Codex reads AGENTS.md.",
+      "claudeAgentsTitle": "Claude Code and AGENTS.md",
+      "claudeAgentsBody": "According to the official Claude Code docs (code.claude.com/docs/en/memory), v2.1.277 and later read the repository's AGENTS.md as project instructions when there is no CLAUDE.md. If both exist, only CLAUDE.md is read. To use both, import AGENTS.md from CLAUDE.md with @AGENTS.md.",
+      "claudeImportCode": "# CLAUDE.md\n@AGENTS.md\n\n# Put only Claude Code specific instructions below this line.",
+      "skillsLead": "A skill holds a \"procedure loaded only when needed\". Write the description and step-by-step instructions in a SKILL.md file. Only the description is always in context; the body loads when the skill is invoked.",
+      "skillPathsCode": "# Claude Code\n.claude/skills/<skill-name>/SKILL.md      project (commit to the repo to share)\n~/.claude/skills/<skill-name>/SKILL.md    personal\n\n# Codex\n.agents/skills                            repository\n~/.agents/skills                          personal",
+      "skillFileCode": "---\nname: summarize-changes\ndescription: Summarizes uncommitted changes and flags anything risky. Use when the user asks what changed or wants a commit message.\n---",
+      "skillUse": "In Claude Code you can call a skill directly, like /summarize-changes, or Claude loads it automatically when your request matches the description. For procedures with side effects, such as deployment, use disable-model-invocation: true. The Claude Code docs advise moving a CLAUDE.md section into a skill once it has become a multi-step procedure rather than a fact.",
+      "when": "If the agent still \"fixes things right away without a plan and breaks them\" after you tidy the instructions, go to ③.",
+      "mistakes": [
+        "Growing the instruction file to hundreds of lines. The Codex docs also say to keep AGENTS.md small.",
+        "Leaving the instructions out of sync with the real repository (script names, directories).",
+        "Assuming the team can use a skill that exists only on your own PC. The Cursor docs explain that local skills that are not synced are not copied to cloud agents."
+      ]
+    },
+    "s3": {
+      "title": "③ Plan first, then execute, and the verification loop",
+      "planLead": "Plan first. In Claude Code plan mode, it reads files and only proposes a plan, and it does not edit anything before you approve.",
+      "planCode": "claude --permission-mode plan",
+      "planNote": "During a session you can press Shift+Tab to switch to plan mode. Cursor also switches to Plan Mode with Shift+Tab in the chat input, and Antigravity CLI has a /plan command. For a tool without a planning feature, ask \"do not edit code; write only a step-by-step plan first\" instead.",
+      "verifyLead": "The verification loop. Give the agent a way to check its own work. State the following in the instruction file.",
+      "verifyCode": "After every change, always run: bun run typecheck, bun run lint, bun run test\nIf anything fails, fix the cause and run again. Do not say the task is done before they pass.",
+      "headlessLead": "Non-interactive runs can also serve the verification loop. An example from the Claude Code docs:",
+      "headlessCode": "git log --oneline -20 | claude -p \"summarize these recent commits\"",
+      "hookNote": "Claude Code hooks (such as TaskCompleted) can also automate a rule that blocks marking a task complete before tests pass. This hook was confirmed in the agent teams docs.",
+      "when": "If planning and verification work well but research or review quickly fills the main context, go to ④.",
+      "mistakes": [
+        "Approving the plan without reading it.",
+        "Trusting the agent's \"verified\" claim in areas with no tests. An agent may also edit the tests to make them pass, so check test file changes in the diff."
+      ]
+    },
+    "s4": {
+      "title": "④ Delegation inside one session: subagents",
+      "lead": "A subagent is a helper with its own context window. You hand it the bulk file reading and get back only a summary, so the main conversation stays clean. An example from the Claude Code docs:",
+      "promptCode": "use a subagent to investigate how our auth system handles token refresh",
+      "locationsLead": "The definition file location differs by tool.",
+      "locationsTable": {
+        "headers": ["Tool", "Location and format"],
+        "rows": [
+          [
+            "Claude Code",
+            ".claude/agents/*.md, ~/.claude/agents/*.md (YAML frontmatter + body as the system prompt)"
+          ],
+          [
+            "Codex",
+            "Standalone TOML files in .codex/agents/ and ~/.codex/agents/ (name, description, developer_instructions required)"
+          ],
+          [
+            "Cursor",
+            ".cursor/agents/ (also reads .claude/agents/ and .codex/agents/)"
+          ],
+          [
+            "Gemini CLI",
+            ".gemini/agents, ~/.gemini/agents (announced 2026-04-15)"
+          ]
+        ]
+      },
+      "exampleLead": "A Claude Code example. Only name and description are required.",
+      "exampleCode": "---\nname: code-reviewer\ndescription: Reviews code for quality and best practices. Use proactively after code changes.\ntools: Read, Glob, Grep\nmodel: sonnet\n---\n\nYou are a code reviewer. Analyze the code and provide specific,\nactionable feedback on quality, security, and best practices.",
+      "notes": "Codex tells you to request subagents or parallel work explicitly (for example \"spawn two agents\"), and in the CLI you switch between active threads with /subagents. The number of concurrent threads is limited by agents.max_concurrent_threads_per_session. Cursor supports the readonly and is_background keys in frontmatter.",
+      "when": "A subagent is bound to the lifetime and context of one session. To work on different features at the same time for a long while, go to ⑤.",
+      "mistakes": [
+        "Letting several subagents edit the same file.",
+        "Granting write access even for read-only work (research, review). Block it with the tools allow list or readonly.",
+        "Leaving context out of the delegation prompt. Assume a subagent does not inherit the conversation history and write down what it needs."
+      ]
+    },
+    "s5": {
+      "title": "⑤ Parallel sessions: worktrees, background, cloud",
+      "worktreeTitle": "git worktree",
+      "worktreeLead": "A git feature that checks out several branches of one repository into separate directories at the same time. It is used to give each agent its own working directory.",
+      "worktreeCode": "git worktree add -b feature-a ../myapp-feature-a\ngit worktree list\ngit worktree remove ../myapp-feature-a",
+      "toolLead": "Tools can also do this for you.",
+      "toolCode": "# Claude Code: run it with another name in a second terminal for an isolated parallel session\nclaude --worktree feature-auth",
+      "cursorNote": "Cursor creates a separate checkout per agent in the Agents Window, and in the IDE you use the /worktree, /best-of-n, /apply-worktree, and /delete-worktree commands. Write the setup steps for a new worktree under the setup-worktree-unix, setup-worktree-windows, and setup-worktree keys in .cursor/worktrees.json. A Claude Code subagent runs in a temporary worktree if you put isolation: worktree in its frontmatter.",
+      "cautionTitle": "Limits of worktrees",
+      "caution": "A worktree separates only the working files. Dev server ports, databases, and dependency installs such as node_modules must be managed separately. (The Cursor docs do not recommend symlinking dependencies and recommend fast package managers such as bun, pnpm, and uv.)",
+      "bgTitle": "Background sessions",
+      "bgLead": "The docs say the Claude Code agent view is a research preview and its interface may change.",
+      "bgCode": "claude --bg \"investigate the flaky SettingsChangeDetector test\"\nclaude agents            # show all background sessions on one screen\nclaude attach <id>       # attach to a session\nclaude logs <id>\nclaude stop <id>",
+      "bgStates": "Session states are shown as Working, Needs input, Idle, Completed, Failed, and Stopped. You can send a running conversation to the background with /bg.",
+      "cloudTitle": "Cloud agents",
+      "cloud": [
+        "The GitHub Copilot cloud agent researches the repository, plans, and runs file edits and tests in the background in a cloud development environment. It works with one branch and one PR per task.",
+        "Claude Code offers cloud scheduled tasks (routines). They run even when your computer is off and are set up at claude.ai/code/routines.",
+        "The Cursor docs say subagents can also be used in Cloud Agents.",
+        "The Codex docs include an example of delegating work to a cloud chat by adding @codex ... to a PR comment. Codex Cloud gives each task its own workspace and keeps running while your computer is asleep; you review changes from the web, mobile, or desktop app, then commit or open a pull request. An environment must be published before you can start a new task."
+      ],
+      "when": "When you have more than three or four sessions and start spending time finding which session is waiting for input, consider ⑥.",
+      "mistakes": [
+        "Running tasks that touch the same files in parallel and causing merge conflicts. Split the work by file ownership.",
+        "Forgetting to clean up worktrees until the disk fills. Cursor uses 25 as the default machine-wide limit and can automatically clean up old worktrees (cursor.worktreeMaxCount).",
+        "Trying to review all parallel results at once and creating a bottleneck. The speed at which a person can review is the upper limit."
+      ]
+    },
+    "s6": {
+      "title": "⑥ Multi-agent orchestration",
+      "lead": "Here \"orchestration\" splits into two kinds.",
+      "kinds": [
+        "Built-in team features of an agent. A single agent product builds a team.",
+        "External tools that wrap agents. A terminal runtime (herdr) or a desktop app (Orca) runs and manages many kinds of agents in one place."
+      ],
+      "teamsTitle": "Built-in teams: Claude Code agent teams",
+      "teamsLead": "An experimental feature that is off by default. Turn it on with an environment variable.",
+      "teamsCode": "{\n  \"env\": {\n    \"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS\": \"1\"\n  }\n}",
+      "teamsNote": "A team lead session creates teammates (independent Claude Code sessions) and coordinates through a shared task list and messages between teammates. The docs recommend 3 to 5 teammates to start and suggest beginning with work that writes no code, such as review and research. The docs also list limits: one team per session, no nested teams, and far more token use than subagents. Split-pane mode needs tmux or iTerm2 (the --teammate-mode flag).",
+      "whenLabel": "When to move up (and when not to)",
+      "when": [
+        "Move up when you have several independent tasks, each with automatic verification (tests), and time to review.",
+        "If the tasks are sequential or touch the same files a lot, ④ or a single session is better. The Claude Code docs say the same."
+      ],
+      "mistakes": [
+        "Making \"run many agents\" the goal itself.",
+        "Leaving several agents unsupervised with all permissions allowed (such as --dangerously-skip-permissions). The docs say that in Claude Code teams, teammates inherit the lead's permission mode.",
+        "Treating messages between agents as human approval. The docs say Claude Code is designed not to trust an \"approved\" claim relayed by another agent."
+      ]
+    },
+    "herdr": {
+      "title": "herdr",
+      "about": [
+        "What it is. A terminal runtime built in Rust as a single binary. Its official description is \"the runtime your coding agents live on\"; it runs inside your existing terminal, and a background server keeps agent sessions alive. The GitHub organization is herdrdev, the site is herdr.dev, and the license is Apache-2.0.",
+        "It does not wrap agents; each runs as-is in its own terminal. Agents named in the docs are Claude Code, Codex, Cursor, OpenCode, and Grok."
+      ],
+      "installTitle": "Install",
+      "installCode": "curl -fsSL https://herdr.dev/install.sh | sh\n# or\nbrew install herdr\nmise use -g herdr",
+      "usageTitle": "Basic use",
+      "usage": "Start it with herdr; running it again reattaches to the existing session. The default prefix key is ctrl+b (tmux style). Work continues even after you detach with ctrl+b q.",
+      "keysTable": {
+        "headers": ["Action", "Keys"],
+        "rows": [
+          ["Detach", "ctrl+b q"],
+          ["New workspace", "prefix+shift+n"],
+          ["Split right", "prefix+v"],
+          ["Split down", "prefix+minus"],
+          ["Move between panes", "prefix+h/j/k/l"]
+        ]
+      },
+      "cliTitle": "CLI that agents use directly",
+      "cliLead": "An agent can create, read, and wait on other panes.",
+      "cliCode": "herdr workspace create --cwd ~/project --label api\nherdr pane split w1:p1 --direction right\nherdr pane run w1:p2 \"npm test\"\nherdr pane read w1:p2 --source recent --lines 50\nherdr agent wait w1:p1 --until done",
+      "cliNote": "agent wait also accepts --until blocked. The socket API also has methods such as worktree.create, agent.prompt, and agent.wait. A skill that teaches agents this usage is installed like this:",
+      "skillCode": "npx skills add herdrdev/herdr --skill herdr -g",
+      "skillNote": "The skill has a safety rule that it must work only inside a herdr pane where HERDR_ENV=1 is set. An example of starting an agent inside herdr is herdr claude.",
+      "remoteTitle": "Remote",
+      "remote": "You see saved SSH machines together with local work, and the server keeps the terminals alive even if the connection drops. If the server or machine restarts, the original processes do not survive; the saved layout is restored and supported agent sessions can be resumed."
+    },
+    "orca": {
+      "title": "Orca",
+      "about": [
+        "What it is. An open-source (MIT) desktop app made by Stably AI (the stablyai GitHub organization); the site is onorca.dev. It runs each agent in its own git worktree and says it is compatible with \"any CLI agent\".",
+        "Agents named include Claude Code, Codex, Grok, Cursor, GitHub Copilot, OpenCode, Amp, and Pi. There are desktop builds for macOS, Windows, and Linux, and mobile apps for iOS and Android."
+      ],
+      "installTitle": "Install (macOS)",
+      "installCode": "brew install --cask stablyai/orca/orca",
+      "installWarn": "The README warns you to use the full cask name. Using just orca points to an unrelated Plotly cask.",
+      "usageTitle": "Basic use",
+      "usage": "Give a big task to a coordinator agent and it starts worker agents, each in its own workspace. In the app you view diffs and leave notes on changed lines to send feedback to the agent. Agents, terminals, browsers, and diffs are arranged in split panels. You can also work on SSH hosts.",
+      "cliTitle": "CLI for agents",
+      "cliLead": "The app provides a CLI, which you register under Settings → General → Orca CLI.",
+      "cliCode": "orca status --json\norca worktree create --repo id:<repoId> --name my-task --issue 123 --json\norca worktree ps --json\norca terminal send --text \"continue\" --enter --json\norca terminal wait --for tui-idle --timeout-ms 30000 --json",
+      "skillNote": "A skill that teaches agents how to use the CLI is installed with this command:",
+      "skillCode": "npx skills add https://github.com/stablyai/orca --skill orca-cli"
+    },
+    "compare": {
+      "title": "herdr vs Orca",
+      "table": {
+        "headers": ["", "herdr", "Orca"],
+        "rows": [
+          [
+            "Form",
+            "Terminal runtime (TUI, single Rust binary)",
+            "Desktop app (Electron) + mobile"
+          ],
+          [
+            "Isolation",
+            "Panes and workspaces, with a worktree method",
+            "A worktree per agent by default"
+          ],
+          [
+            "Strengths",
+            "tmux-like persistence and SSH, an API to wait on agent state",
+            "Diff review, issue/PR integration, a CLI to control the browser and emulator"
+          ],
+          ["License", "Apache-2.0", "MIT"]
+        ]
+      },
+      "note": "What they share is that an agent can start other agents through the CLI, and that is the point where you pass from \"a person managing windows\" to \"agents managing agents\". This research has no basis for saying either is better. Try them on one project and judge for yourself whether herdr suits terminal-centered work and Orca suits review- and GUI-centered work."
+    },
+    "google": {
+      "title": "Note on the Google family",
+      "body": "On 2026-05-19 Google announced the transition from Gemini CLI to Antigravity CLI (agy). Agent Skills, Hooks, Subagents, and Extensions (Antigravity plugins) carry over, and Google said there is no one-to-one feature parity at launch. Gemini CLI service for personal accounts (Google AI Pro, Ultra, and free) ended on 2026-06-18. So the Gemini CLI subagent information here is for existing users only. Antigravity CLI installs on macOS and Linux with curl -fsSL https://antigravity.google/cli/install.sh | bash and is checked with agy --version. Run it with agy; agy -p \"<prompt>\" runs non-interactively, agy models lists models, and /plan inside a session asks for a plan first."
+    },
+    "wrap": {
+      "title": "Wrap-up: what to try this week",
+      "steps": [
+        "Step ②: create a small AGENTS.md (or a per-tool instruction file) in the repository and write three verification command lines.",
+        "Step ③: for your next feature, get a plan first, approve it, and then execute.",
+        "Step ⑤: split two independent tasks with git worktree and run them in two sessions.",
+        "When you feel friction up to this point, pick just one ⑥ tool and try it on one project."
+      ]
+    }
   },
   "mcp": {
     "badge": "Protocol",
-    "title": "MCP (Model Context Protocol)",
-    "description": "Standard protocol for AI agents to access external tools and data",
+    "description": "The standard protocol AI agents use to reach external tools and data",
     "whatIsTitle": "What is MCP?",
     "conceptTitle": "Core Concept",
-    "conceptDesc": "MCP is a standard protocol that allows AI agents to safely access databases, browsers, external APIs, and more. MCP servers provide specific capabilities that AI agents can invoke.",
+    "conceptDesc": "MCP is a standard protocol that connects AI agents to external systems such as databases, browsers, and external APIs. An MCP server provides tools (functions the agent can run), resources (data it can read), and prompts (reusable prompts), and the agent (the client) calls them. Local processes connect over stdio, and remote servers connect over Streamable HTTP.",
     "architectureLabel": "MCP Architecture",
     "visualizer": {
-      "description": "AI agents access various external services (databases, browsers, GitHub, etc.) through MCP servers.",
+      "pickLabel": "Tap a part to explore it",
+      "prev": "Previous",
+      "next": "Next",
+      "externalLabel": "External services",
+      "transportLabel": "Connection",
       "agent": "AI Agent",
       "server": "MCP Server",
       "servers": {
         "database": "Database",
         "browser": "Browser",
         "github": "GitHub"
-      }
+      },
+      "items": [
+        {
+          "id": "agent",
+          "label": "AI Agent",
+          "desc": "The agent (the client) calls the features an MCP server provides."
+        },
+        {
+          "id": "stdio",
+          "label": "stdio",
+          "desc": "Local processes connect over stdio."
+        },
+        {
+          "id": "http",
+          "label": "Streamable HTTP",
+          "desc": "Remote servers connect over Streamable HTTP."
+        },
+        {
+          "id": "server",
+          "label": "MCP Server",
+          "desc": "An MCP server provides tools (functions the agent can run), resources (data it can read), and prompts (reusable prompts), and the agent (the client) calls them."
+        },
+        {
+          "id": "tools",
+          "label": "tools",
+          "desc": "Functions the agent can run. The MCP server provides them and the agent (the client) calls them."
+        },
+        {
+          "id": "resources",
+          "label": "resources",
+          "desc": "Data the agent can read. The MCP server provides it and the agent (the client) calls it."
+        },
+        {
+          "id": "prompts",
+          "label": "prompts",
+          "desc": "Reusable prompts. The MCP server provides them and the agent (the client) calls them."
+        },
+        {
+          "id": "external",
+          "label": "External services",
+          "desc": "AI agents reach external services (databases, browsers, GitHub, and more) through MCP servers. MCP is a standard protocol that connects AI agents to external systems such as databases, browsers, and external APIs."
+        }
+      ]
     },
-    "serversTitle": "Popular MCP Servers",
-    "servers": [
-      {
-        "name": "PostgreSQL",
-        "desc": "Execute database queries",
-        "icon": "database",
-        "example": "@modelcontextprotocol/server-postgres"
+    "specTitle": "What Changed in the 2026-07-28 Spec",
+    "specIntro": "The latest revision of the MCP spec is 2026-07-28. Compared with the previous revision (2025-11-25), the basic structure of the protocol changed, so check the revision when you build a server or follow an older example.",
+    "spec": {
+      "pickLabel": "Pick a change",
+      "prev": "Previous",
+      "next": "Next",
+      "beforeLabel": "Previous revision (2025-11-25)",
+      "afterLabel": "2026-07-28",
+      "items": [
+        {
+          "title": "Stateless protocol",
+          "before": "The initialize handshake and the Mcp-Session-Id header were used.",
+          "after": "The initialize handshake and the Mcp-Session-Id header are gone, and every request carries its protocol version and client capabilities in _meta."
+        },
+        {
+          "title": "server/discover added",
+          "before": "There was no server/discover.",
+          "after": "An RPC that advertises the versions and capabilities a server supports, which servers must implement."
+        },
+        {
+          "title": "Tasks split out",
+          "before": "Tasks were part of the core protocol as an experimental feature.",
+          "after": "Tasks moved out of the core protocol into an official extension."
+        },
+        {
+          "title": "Roots, Sampling, Logging",
+          "before": "Roots, Sampling, and Logging were active features.",
+          "after": "They are deprecated. They keep working during the deprecation window, but new implementations should not use them."
+        },
+        {
+          "title": "HTTP+SSE transport",
+          "before": "The HTTP+SSE transport had already been deprecated since the 2025-03-26 revision, but was not classified under a lifecycle policy.",
+          "after": "The HTTP+SSE transport is deprecated and should be migrated to Streamable HTTP. stdio stays as is."
+        }
+      ]
+    }
+  },
+  "mcpServers": {
+    "badge": "MCP Servers",
+    "description": "As of 2026-11-10: the MCP servers frontend developers actually connect, how to add them per agent, how usage has changed, and security rules.",
+    "intro": {
+      "title": "Why MCP is still used",
+      "body": "MCP (Model Context Protocol) is an open protocol that lets coding agents call tools and data from external services in a uniform way. A server provides Tools, Resources, and Prompts. In frontend work you mostly connect it for things like \"reading Figma designs\", \"finding the latest library docs\", \"seeing errors from the running app\", and \"checking the screen in a browser\". See the previous section for the concept and architecture.",
+      "limitNote": "MCP is not a cure-all, though. Because of token cost, handling the same jobs with a CLI plus skills has also become established. It is not a choice of one or the other but a matter of mixing them to fit the situation.",
+      "basisTitle": "How to read this list",
+      "basisBody": "Server names, addresses, commands, and config keys are listed only where they were confirmed in each provider's official docs or official repository. \"Widely used\" here is not a ranking: it means the official docs provide separate install instructions for the major agents."
+    },
+    "ui": {
+      "prev": "Previous",
+      "next": "Next"
+    },
+    "catalog": {
+      "title": "Servers by category",
+      "hint": "Do not install every server. Starting with \"docs search + browser + the server for your framework\" is enough.",
+      "chipsLabel": "Choose a category",
+      "cardsLabel": "Choose a server",
+      "fields": {
+        "provider": "Provider",
+        "what": "What it does",
+        "address": "Address or package",
+        "when": "When to use",
+        "notes": "Additional notes"
       },
-      {
-        "name": "Playwright",
-        "desc": "Browser automation and testing",
-        "icon": "globe",
-        "example": "@anthropic/mcp-playwright"
+      "categories": [
+        {
+          "chip": "Design, docs, repos",
+          "title": "Design, docs, repositories",
+          "rows": [
+            {
+              "name": "Figma MCP (remote)",
+              "provider": "Figma",
+              "what": "Generates code from a selected frame, extracts design context such as variables, components, and layout, keeps consistency with Code Connect, writes to the canvas (remote only)",
+              "address": "`https://mcp.figma.com/mcp`",
+              "when": "When turning a mockup into code"
+            },
+            {
+              "name": "Context7",
+              "provider": "Upstash",
+              "what": "Resolves a library name to an ID (`resolve-library-id`) and fetches that library's docs (`query-docs`)",
+              "address": "Remote `https://mcp.context7.com/mcp`, package `@upstash/context7-mcp`",
+              "when": "When you want to stop the agent from using outdated APIs"
+            },
+            {
+              "name": "GitHub MCP",
+              "provider": "GitHub",
+              "what": "Provides toolsets for working with repositories, issues, pull requests, and more",
+              "address": "Remote `https://api.githubcopilot.com/mcp/`, local Docker image `ghcr.io/github/github-mcp-server`",
+              "when": "When handing issue reading and PR work to the agent"
+            }
+          ],
+          "notes": [
+            "Figma also has a desktop server that goes through the desktop app, but the official docs recommend the remote server. The desktop server is for specific organization and enterprise needs and requires a Dev or Full seat.",
+            "GitHub MCP has `--toolsets` to choose tool groups and `--read-only` to remove write tools. Start with read-only."
+          ]
+        },
+        {
+          "chip": "Deploy, errors, backend",
+          "title": "Deployment, error monitoring, backend",
+          "rows": [
+            {
+              "name": "Vercel MCP",
+              "provider": "Vercel",
+              "what": "Docs search, project and deployment management, deployment log analysis, Web Analytics queries. A remote server using OAuth",
+              "address": "`https://mcp.vercel.com`",
+              "when": "When investigating why a deployment failed together with the agent"
+            },
+            {
+              "name": "Sentry MCP",
+              "provider": "Sentry",
+              "what": "Error search, performance analysis, issue triage, reading docs, project management. All connections use OAuth",
+              "address": "`https://mcp.sentry.dev/mcp` (path to narrow to an organization and project: `/mcp/{organizationSlug}/{projectSlug}`)",
+              "when": "When tying production errors to code and fixing them"
+            },
+            {
+              "name": "Supabase MCP",
+              "provider": "Supabase",
+              "what": "Provides tool groups such as database and docs",
+              "address": "`https://mcp.supabase.com/mcp`",
+              "when": "Projects that use a Supabase backend"
+            }
+          ],
+          "notes": [
+            "For Supabase you can add `project_ref=<id>` (limit to one project), `read_only=true` (run as a read-only Postgres user), and `features=<group>` (limit the tool groups) to the address. Example: `https://mcp.supabase.com/mcp?project_ref=abc123&read_only=true`. The official docs treat this server as a tool that runs with developer privileges and warn you not to give it to customers or end users."
+          ]
+        },
+        {
+          "chip": "Browser, debugging",
+          "title": "Browser and debugging",
+          "rows": [
+            {
+              "name": "Chrome DevTools MCP",
+              "provider": "Chrome DevTools team (ChromeDevTools repository)",
+              "what": "Records performance traces with insights, analyzes network requests, takes screenshots, shows console messages with source-mapped stack traces, Puppeteer-based automation",
+              "address": "npm `chrome-devtools-mcp` (`npx -y chrome-devtools-mcp@latest`)",
+              "when": "When checking in a real Chrome why a page is slow or broken"
+            },
+            {
+              "name": "Playwright MCP",
+              "provider": "Microsoft",
+              "what": "Opens a browser, reads the page structure, and operates it",
+              "address": "npm `@playwright/mcp` (`npx @playwright/mcp@latest`)",
+              "when": "Exploratory automation, repeated checks that need persistent state"
+            }
+          ],
+          "notes": [
+            "Chrome DevTools MCP collects usage statistics by default, and its performance tools may send trace URLs to the Chrome UX Report API. You can turn these off with the `--no-usage-statistics` and `--no-performance-crux` options. Also, `--slim` is a reduced tool set for basic browser tasks.",
+            "The Playwright repository itself says that exposing the CLI as a skill is \"more token-efficient\" for coding agents, and describes MCP as suited to specialized loops that need persistent state and rich inspection. It is an example of one provider documenting both approaches."
+          ]
+        },
+        {
+          "chip": "Framework and UI official",
+          "title": "MCP servers provided directly by frameworks and UI libraries",
+          "rows": [
+            {
+              "name": "next-devtools-mcp",
+              "provider": "Next.js (Vercel)",
+              "what": "Connects to the `/_next/mcp` endpoint of a Next.js 16+ dev server. Queries current errors, routes, logs, and compile problems, and points to docs matching the installed version",
+              "address": "npm `next-devtools-mcp` (`npx add-mcp next-devtools-mcp@latest`)",
+              "when": "When fixing errors with your Next.js app running on the dev server"
+            },
+            {
+              "name": "shadcn MCP",
+              "provider": "shadcn/ui",
+              "what": "Searches and installs components from registries. Private and third-party registries can be connected",
+              "address": "`npx shadcn@latest mcp`",
+              "when": "shadcn/ui projects"
+            },
+            {
+              "name": "Storybook MCP",
+              "provider": "Storybook",
+              "what": "Lets the agent reuse existing components and docs, write stories, and run story tests including accessibility",
+              "address": "Addon `@storybook/addon-mcp` (preview stage)",
+              "when": "When you manage a design system with Storybook"
+            },
+            {
+              "name": "MUI MCP",
+              "provider": "MUI",
+              "what": "A server that helps with using MUI",
+              "address": "`npx -y @mui/mcp@latest`",
+              "when": "MUI projects"
+            },
+            {
+              "name": "Angular CLI MCP",
+              "provider": "Angular",
+              "what": "Starting and stopping the dev server, waiting for builds, best practices, docs search, and more",
+              "address": "`npx -y @angular/cli mcp`",
+              "when": "Angular projects"
+            },
+            {
+              "name": "Svelte MCP",
+              "provider": "Svelte",
+              "what": "Tools based on the official docs and static analysis to catch common mistakes of generative AI",
+              "address": "Remote `https://mcp.svelte.dev/mcp`",
+              "when": "Svelte projects"
+            }
+          ],
+          "notes": [
+            "The advantage of framework servers is that they see the state of \"my app running right now\", which a general docs search server cannot give you. Next.js `/_next/mcp` is on by default and can be turned off by setting `experimental.mcpServer` to `false` in `next.config`."
+          ]
+        }
+      ]
+    },
+    "retired": {
+      "chip": "No longer used",
+      "title": "Servers no longer to use (archived, moved, replaced)",
+      "tag": "Do not use",
+      "refServers": "The current reference servers in the official `modelcontextprotocol/servers` repository are Everything, Fetch, Filesystem, Git, Memory, Sequential Thinking, and Time. The servers below, which often appeared in older introductory articles, were moved to `servers-archived` in that repository.",
+      "fields": {
+        "status": "Current status",
+        "instead": "Look at instead"
       },
-      {
-        "name": "GitHub",
-        "desc": "Issues, PRs, comments management",
-        "icon": "git-branch",
-        "example": "@modelcontextprotocol/server-github"
-      },
-      {
-        "name": "Context7",
-        "desc": "Latest documentation search",
-        "icon": "file-search",
-        "example": "@context7/mcp-server"
-      }
-    ],
-    "configTitle": "MCP Configuration",
-    "usageTitle": "MCP Usage Examples",
-    "tipsTitle": "Usage Tips",
-    "tips": {
-      "tip1": "Only enable MCP servers needed for your project",
-      "tip2": "Set read-only mode for servers accessing sensitive data",
-      "tip3": "Add team-specific features with custom MCP servers"
+      "rows": [
+        {
+          "old": "Puppeteer server",
+          "status": "Archived",
+          "instead": "Playwright MCP, Chrome DevTools MCP"
+        },
+        {
+          "old": "GitHub server (reference implementation)",
+          "status": "Archived",
+          "instead": "GitHub MCP provided directly by GitHub"
+        },
+        {
+          "old": "Sentry server (reference implementation)",
+          "status": "Archived",
+          "instead": "Sentry's official remote server `https://mcp.sentry.dev/mcp`"
+        },
+        {
+          "old": "PostgreSQL, SQLite, Redis servers",
+          "status": "Archived",
+          "instead": "The official server of the service you use (e.g. Supabase MCP)"
+        },
+        {
+          "old": "Brave Search server",
+          "status": "Archived",
+          "instead": "`@brave/brave-search-mcp-server`"
+        },
+        {
+          "old": "Slack server",
+          "status": "Archived",
+          "instead": "`zencoderai/slack-mcp-server`, maintained by Zencoder"
+        },
+        {
+          "old": "GitLab, Google Drive, Google Maps, AWS KB Retrieval, EverArt",
+          "status": "Archived",
+          "instead": "The archive repository names no successor servers. Look for currently maintained servers in `modelcontextprotocol/servers`"
+        },
+        {
+          "old": "HTTP+SSE transport",
+          "status": "Classified as Deprecated in the spec",
+          "instead": "Streamable HTTP"
+        }
+      ],
+      "warnTitle": "Do not install archived servers anew",
+      "warnBody": "\"Still on npm\" is not the same as \"maintained\". You cannot expect security patches for an archived server."
+    },
+    "install": {
+      "title": "How to add a server per agent",
+      "hint": "We use one remote server (Vercel) and one local server (Playwright) as examples. These are the formats confirmed in each tool's official docs.",
+      "tabsLabel": "Choose an agent",
+      "items": [
+        {
+          "name": "Claude Code",
+          "intro": "",
+          "blocks": [
+            {
+              "note": "",
+              "language": "bash",
+              "code": "claude mcp add --transport http vercel https://mcp.vercel.com\nclaude mcp add --transport stdio airtable -- npx -y airtable-mcp-server\nclaude mcp list"
+            }
+          ],
+          "bullets": [
+            "Everything after `--` is the server launch command. Authenticate with `/mcp` inside a session, or `claude mcp login <name>` from the shell.",
+            "Scopes are local (default, `~/.claude.json`), project (`.mcp.json` in the repository, shared with the team), and user (`~/.claude.json`, all projects). Add settings you want to share with the team using `--scope project`.",
+            "A remote server entry in `.mcp.json` uses `\"type\": \"http\"` and `\"url\"`. An entry with only `url` and no `type` is treated as stdio and skipped.",
+            "Servers in `.mcp.json` ask for approval in interactive sessions. Environment variables can be inserted as `${VAR}` or `${VAR:-default}`."
+          ],
+          "outro": ""
+        },
+        {
+          "name": "Codex (OpenAI)",
+          "intro": "",
+          "blocks": [
+            {
+              "note": "",
+              "language": "bash",
+              "code": "codex mcp add vercel --url https://mcp.vercel.com\ncodex mcp add context7 -- npx -y @upstash/context7-mcp\ncodex mcp login <server-name>"
+            },
+            {
+              "note": "The config file is `~/.codex/config.toml` (`.codex/config.toml` for trusted projects), and servers go in a `[mcp_servers.<name>]` table. stdio uses `command` and `args`, remote uses `url`.",
+              "language": "toml",
+              "code": "[mcp_servers.playwright]\ncommand = \"npx\"\nargs = [\"@playwright/mcp@latest\"]"
+            }
+          ],
+          "bullets": [],
+          "outro": ""
+        },
+        {
+          "name": "Cursor",
+          "intro": "The config file is `.cursor/mcp.json` in the project or the global `~/.cursor/mcp.json`, and the top-level key is `mcpServers`.",
+          "blocks": [
+            {
+              "note": "",
+              "language": "json",
+              "code": "{\n  \"mcpServers\": {\n    \"vercel\": { \"url\": \"https://mcp.vercel.com\" },\n    \"playwright\": { \"command\": \"npx\", \"args\": [\"@playwright/mcp@latest\"] }\n  }\n}"
+            }
+          ],
+          "bullets": [],
+          "outro": "If the remote server supports OAuth, the login flow starts without extra configuration. If you need a fixed client ID, add an `auth` object. You can also install from the Cursor Marketplace with \"Add to Cursor\"."
+        },
+        {
+          "name": "GitHub Copilot / VS Code",
+          "intro": "Run `MCP: Add Server` from the command palette, choose HTTP or Command (stdio), and choose where to save it, global or workspace. Unlike other tools, the top-level key in `.vscode/mcp.json` is `servers`.",
+          "blocks": [
+            {
+              "note": "",
+              "language": "json",
+              "code": "{\n  \"servers\": {\n    \"context7\": { \"type\": \"http\", \"url\": \"https://mcp.context7.com/mcp\" },\n    \"playwright\": { \"type\": \"stdio\", \"command\": \"npx\", \"args\": [\"-y\", \"@playwright/mcp@latest\"] }\n  }\n}"
+            }
+          ],
+          "bullets": [],
+          "outro": "The VS Code docs describe `~/.copilot/mcp-config.json` (or `$COPILOT_HOME/mcp-config.json`) as the global setting for Copilot and `.mcp.json` at the workspace root (requires the experimental setting `chat.mcp.workspaceRootConfig.enabled`) for sharing with the team, and mark the `.vscode/mcp.json` approach as \"deprecated but still usable\". This may change by version, so check the docs for the VS Code version you use."
+        },
+        {
+          "name": "Google family: Gemini CLI and Antigravity",
+          "intro": "",
+          "blocks": [],
+          "bullets": [
+            "Gemini CLI: write under `mcpServers` in `~/.gemini/settings.json` (user) or `.gemini/settings.json` (project). The keys are `command` for stdio, `url` for SSE, and `httpUrl` for Streamable HTTP. The command is `gemini mcp add --transport http <name> <url>`. The Gemini CLI docs note that, from 2026-06-18, for free-tier and Google One users it has been replaced by the Antigravity CLI.",
+            "Antigravity (2.0, shared by IDE and CLI): global `~/.gemini/config/mcp_config.json`, workspace `.agents/mcp_config.json`. Remote entries use `serverUrl` (or `url`) and support Streamable HTTP only. The docs have no CLI \"add\" command; you open the manager screen with `/mcp` in the prompt or edit the file directly. MCP tools that are not configured default to Ask mode, which asks for approval before running."
+          ],
+          "outro": ""
+        },
+        {
+          "name": "Install to several agents at once",
+          "intro": "The Vercel and Next.js docs point to the `add-mcp` CLI. It detects the installed agents and adds the server to each one's config.",
+          "blocks": [
+            {
+              "note": "",
+              "language": "bash",
+              "code": "npx add-mcp https://mcp.vercel.com\nnpx add-mcp next-devtools-mcp@latest"
+            }
+          ],
+          "bullets": [],
+          "outro": ""
+        }
+      ]
+    },
+    "shifts": {
+      "title": "How usage has changed in 2026",
+      "pickLabel": "Choose a change",
+      "items": [
+        {
+          "title": "Remote (HTTP) servers and OAuth are the default",
+          "body": "Figma, Vercel, Sentry, Supabase, Context7, GitHub, and Svelte all provide remote addresses. Instead of downloading and running a package locally, registering an address and logging in from the browser has become common. The server then works with your account's permissions. The Vercel docs state that once connected, the AI system has \"the same access permissions as your Vercel account\".",
+          "bullets": []
+        },
+        {
+          "title": "Latest spec revision 2026-07-28",
+          "body": "The latest revision of the official spec is 2026-07-28, and the previous one is 2025-11-25. The previous section covered the changes: the protocol became stateless, and Roots, Sampling, Logging, and the HTTP+SSE transport became Deprecated. Among these, for OAuth client registration, Dynamic Client Registration (RFC 7591) became Deprecated and the Client ID Metadata Document is recommended; Vercel MCP also says it supports CIMD. Deprecated features get a deprecation grace period of at least 12 months. Also note that the spec versions that server docs refer to differ. For example, the Vercel docs say its implementation is based on the 2025-06-18 spec. Users usually need not care about this difference, but when you build a server yourself you must check which revision your SDK version supports.",
+          "bullets": []
+        },
+        {
+          "title": "Registry",
+          "body": "The official MCP Registry collects metadata (`server.json`) of public servers and is still a preview (\"breaking changes or data resets may occur\"). Server names use reverse-DNS format such as `io.github.user/server-name`, and go through GitHub account or domain ownership verification. The official docs explain that the registry is designed to be used by downstream aggregators such as marketplaces rather than directly by host apps. The registry does not do security checks; it leaves them to package registries such as npm and to aggregators. So \"it is in the registry\" does not mean \"it is safe\".",
+          "bullets": [
+            "There are also per-agent directories. The Claude Code docs point to the Anthropic Directory (`https://claude.ai/directory`), Cursor to the Cursor Marketplace, and VS Code to the Customization Marketplace (preview)."
+          ]
+        },
+        {
+          "title": "Deferred tool loading (tool search)",
+          "body": "Putting every tool definition into the context up front wastes tokens. In Claude Code, Tool Search is on by default: it defers MCP tool definitions and loads them with `ToolSearch` when needed (turn it off with `ENABLE_TOOL_SEARCH=false`). So connecting several servers no longer burdens the context as much as before. Cutting the number of tools yourself still works too, for example with `--toolsets` in GitHub MCP or `features=` in Supabase.",
+          "bullets": []
+        },
+        {
+          "title": "CLI + skills instead of MCP",
+          "body": "The Playwright repository itself says that using the CLI as a skill is more token-efficient for coding agents. Chrome DevTools MCP ships a `chrome-devtools` CLI and skills together, and Context7 lets you pick either a \"CLI + Skills\" mode or an \"MCP\" mode through the `ctx7` CLI. Next.js says that skills such as `next-dev-loop` call `/_next/mcp` directly. Blog benchmarks give varying figures, such as the CLI being 4 to 32 times cheaper, and many have a stake in the result, so it is better not to trust the numbers. Just remember these practical rules.",
+          "bullets": [
+            "For services that need authentication, multi-user permissions, or organizational controls (Figma, Sentry, GitHub, etc.), remote MCP is more convenient.",
+            "For stateless jobs that finish in one command, or jobs that already have a CLI, CLI + skills is lighter.",
+            "Many tools offer both, so follow the one the official docs recommend."
+          ]
+        },
+        {
+          "title": "Calling MCP through code execution",
+          "body": "Anthropic's engineering article (2025-11-04) proposes presenting MCP servers as code APIs such as TypeScript modules and having the agent write code to call them. Because intermediate results are filtered in the execution environment and only what is needed goes to the model, the article's example says 150,000 tokens dropped to 2,000 tokens (a figure for that one workflow). The trade-off is that you need infrastructure such as a sandbox and resource limits. Ordinary users rarely set this up themselves, but it helps you understand the direction of \"find and use tools when needed\".",
+          "bullets": []
+        },
+        {
+          "title": "MCP Apps and extensions",
+          "body": "MCP Apps is an extension where a server returns, along with the tool result, an interactive HTML UI (charts, forms, dashboards) that is rendered inside the conversation. `_meta.ui.resourceUri` in the tool description points to a `ui://` resource, and the host renders it in a sandboxed iframe and communicates via `postMessage`. The official docs list Claude, Claude Desktop, VS Code GitHub Copilot, Microsoft 365 Copilot, Goose, and others as supported clients. For frontend developers, what matters is that \"the results of an MCP server can be drawn with web technologies (React, Vue, Svelte, etc.)\". Extensions are optional features used only when both server and client support them. Tasks and Skills over MCP are also introduced as official extensions.",
+          "bullets": []
+        }
+      ]
+    },
+    "security": {
+      "title": "Security",
+      "items": [
+        "The official spec treats tools as arbitrary code execution and says not to trust tool descriptions and annotations unless they come from a trusted server. The host must obtain user consent before calling a tool.",
+        "Prompt injection: an agent may follow instructions hidden in external text such as issues, logs, and support tickets. The Supabase and Vercel docs warn of the same risk and tell you to keep human confirmation on."
+      ],
+      "incidentsTitle": "Disclosed security cases",
+      "incidentsBody": "On 2025-12-17, GitHub security advisories disclosed three vulnerabilities in Anthropic's reference Git MCP server (`mcp-server-git`): CVE-2025-68143, CVE-2025-68144, and CVE-2025-68145. The `git_init` tool could create a repository at any path, `git_diff` and `git_checkout` had argument injection, and the `--repository` option lacked path validation. They were fixed in versions 2025.9.25 or 2025.12.18, and the `git_init` tool was removed. In Cursor, CVE-2025-54136 let an already-trusted MCP configuration file be modified in versions 1.2.4 and below so that code ran without re-approval; it was fixed in 1.3.",
+      "practicesTitle": "Practical rules",
+      "practicesHint": "Tick each rule as you adopt it.",
+      "progressLabel": "Rules checked",
+      "practices": [
+        "Confirm the address is official, and check the domain of one-click install links on marketplaces.",
+        "Limit to read-only and project scope where possible (`read_only=true`, `project_ref`, `--read-only`).",
+        "Connect production data only when needed.",
+        "Do not turn off tool-call approval.",
+        "Do not write tokens directly in a `.mcp.json` committed to the repository; use environment variables.",
+        "Do not download and run a `.mcp.json` that someone else uploaded without reviewing it."
+      ]
+    },
+    "start": {
+      "title": "Recommended order to get started",
+      "hint": "Click a step to jump, or use Previous and Next.",
+      "stepsLabel": "Recommended order",
+      "steps": [
+        "Connect Context7 to reduce the outdated API problem.",
+        "Connect the official server of the framework you use (`next-devtools-mcp` for Next.js).",
+        "Pick just one of Chrome DevTools MCP or Playwright for verifying the screen.",
+        "If your team uses Figma, connect the Figma remote server.",
+        "When needed, add GitHub, Vercel, and Sentry, mostly for reading.",
+        "Check the connected servers periodically with a command like `claude mcp list` and remove the ones you do not use."
+      ]
     }
   },
   "skillsHooks": {
     "badge": "Automation",
-    "title": "Skills and Hooks",
-    "description": "Reusable workflows and event-driven automation",
-    "skillsTitle": "Skills: Reusable Workflows",
-    "skillsInfoTitle": "What are Skills?",
-    "skillsInfoDesc": "Skills let you define complex, frequently-used tasks and invoke them with slash commands. /commit and /review-pr are typical examples.",
-    "skillExamples": [
-      {
-        "name": "/commit",
-        "desc": "Analyze changes and create conventional commit"
-      },
-      { "name": "/review-pr", "desc": "PR code review with suggestions" },
-      { "name": "/component", "desc": "Generate component + test + story" },
-      { "name": "/docs", "desc": "Auto-generate docs from code" }
-    ],
-    "hooksTitle": "Hooks: Event-Driven Automation",
-    "hooksInfoTitle": "What are Hooks?",
-    "hooksInfoDesc": "Hooks are scripts that run automatically on specific events (file save, command execution, etc.). Used for auto-formatting, linting, blocking dangerous commands, and more.",
-    "table": {
-      "timing": "Trigger Time",
-      "usage": "Use Case"
+    "description": "Procedural knowledge that loads only when needed, and event automation that always runs",
+    "topics": ["Skills", "Hooks", "CLAUDE.md · AGENTS.md"],
+    "ui": {
+      "prev": "Previous",
+      "next": "Next",
+      "topicsLabel": "Choose a topic",
+      "codeTabsLabel": "Choose an example",
+      "eventsLabel": "Lifecycle events",
+      "skillsLabel": "Bundled skills",
+      "fieldsLabel": "Frontmatter fields",
+      "goTo": "Read more",
+      "codeConfig": "Settings JSON",
+      "codeScript": "Scripts",
+      "codeSkill": "SKILL.md",
+      "codeClaudeMd": "CLAUDE.md"
     },
-    "hookTypes": [
-      {
-        "name": "PreToolUse",
-        "timing": "Before tool execution",
-        "usage": "Block dangerous commands, logging"
+    "chooser": {
+      "title": "What to use when",
+      "hint": "Pick your situation to see where it belongs.",
+      "label": "Choose a situation",
+      "answer": "Use",
+      "situations": [
+        {
+          "label": "Reference knowledge the code alone does not show (build and test commands, conventions)",
+          "answer": "CLAUDE.md",
+          "reason": "CLAUDE.md is a project instruction file loaded at the start of every session. Put in it what can't be learned from the code alone: build and test commands, code conventions, and rules that must be followed.",
+          "topic": 2
+        },
+        {
+          "label": "A procedure needed only for specific tasks",
+          "answer": "Skill",
+          "reason": "The body enters context only when the skill is actually used, so long reference material costs almost nothing the rest of the time. CLAUDE.md always takes up context, so procedures needed only for specific tasks move into skills.",
+          "topic": 0
+        },
+        {
+          "label": "A rule that must be enforced with no exceptions",
+          "answer": "Hook",
+          "reason": "Instructions in CLAUDE.md are only context the agent consults, but a hook always runs when its condition matches, so hooks are how you enforce rules that can't have exceptions.",
+          "topic": 1
+        },
+        {
+          "label": "A rule that applies only to certain paths",
+          "answer": ".claude/rules/",
+          "reason": "CLAUDE.md always takes up context, so rules that apply only to certain paths move into .claude/rules/.",
+          "topic": 2
+        },
+        {
+          "label": "Instructions for a project that uses several tools",
+          "answer": "AGENTS.md",
+          "reason": "If you use several tools, keep the instructions in the standard AGENTS.md file. Claude Code (v2.1.277 or later) reads AGENTS.md when there is no CLAUDE.md, and reads only CLAUDE.md when both exist.",
+          "topic": 2
+        }
+      ]
+    },
+    "skills": {
+      "title": "Skills: Reusable Procedures and Knowledge",
+      "infoTitle": "What is a Skill?",
+      "infoDesc": "A skill is a folder containing a SKILL.md file that teaches the agent the procedure and knowledge for a specific kind of task. Claude reads each skill's description and loads the skill on its own when the task is relevant, and you can also invoke it directly with /skill-name. The body enters context only when the skill is actually used, so long reference material costs almost nothing the rest of the time. The older custom slash commands (.claude/commands) have been merged into skills, and the skill format follows the Agent Skills open standard, so skills can be reused in other tools.",
+      "examplesTitle": "Skills Bundled with Claude Code",
+      "examples": [
+        {
+          "name": "/code-review",
+          "desc": "Reviews the current diff or a PR for bugs"
+        },
+        {
+          "name": "/simplify",
+          "desc": "Cleans up duplication and complexity in changed code"
+        },
+        {
+          "name": "/loop",
+          "desc": "Runs a prompt or command repeatedly on an interval"
+        },
+        {
+          "name": "/run",
+          "desc": "Launches the app to confirm a change actually works"
+        }
+      ],
+      "fieldsTitle": "Key Frontmatter Fields",
+      "fields": [
+        {
+          "name": "description",
+          "desc": "What the skill does and when to use it. Claude uses this to decide whether to load it"
+        },
+        {
+          "name": "disable-model-invocation",
+          "desc": "When true, only you can invoke it. Use for tasks with side effects such as deploys"
+        },
+        {
+          "name": "allowed-tools",
+          "desc": "Tools pre-approved during the turn that invokes the skill"
+        },
+        {
+          "name": "context: fork",
+          "desc": "Runs the skill in a separate subagent to protect the main context"
+        }
+      ],
+      "code": "<!-- .claude/skills/create-component/SKILL.md -->\n---\nname: create-component\ndescription: Creates a React component that follows project conventions. Use when the user asks for a new component.\nargument-hint: [component-name]\n---\n\nCreate the $ARGUMENTS component.\n\n1. Find a similar component in src/components and check its pattern\n2. Create the component file (kebab-case) following that pattern\n3. Create a test file alongside it\n4. Update the barrel export (index.ts)\n5. Verify with bun run typecheck and bun run test"
+    },
+    "hooks": {
+      "title": "Hooks: Event-Driven Automation",
+      "infoTitle": "What is a Hook?",
+      "infoDesc": "A hook is a handler that runs automatically when a lifecycle event occurs in the agent. Instructions in CLAUDE.md are only context the agent consults, but a hook always runs when its condition matches, so hooks are how you enforce rules that can't have exceptions. A command hook receives the event data as JSON on stdin, and returning exit code 2 blocks the action. Note that any other error code, including 1, is treated as a non-blocking error and the action still proceeds.",
+      "labels": {
+        "timing": "When it fires",
+        "usage": "Use"
       },
-      {
-        "name": "PostToolUse",
-        "timing": "After tool execution",
-        "usage": "Auto-formatting, linting, testing"
+      "events": [
+        {
+          "name": "SessionStart",
+          "timing": "When a session starts or resumes",
+          "usage": "Environment setup, injecting initial context"
+        },
+        {
+          "name": "UserPromptSubmit",
+          "timing": "Right after a prompt is submitted, before processing",
+          "usage": "Checking prompts, adding context"
+        },
+        {
+          "name": "PreToolUse",
+          "timing": "Before a tool runs",
+          "usage": "Blocking dangerous commands, modifying input"
+        },
+        {
+          "name": "PostToolUse",
+          "timing": "After a tool succeeds",
+          "usage": "Auto-formatting, linting, tests"
+        },
+        {
+          "name": "Notification",
+          "timing": "When a notification is sent",
+          "usage": "Forwarding to desktop or chat notifications"
+        },
+        {
+          "name": "Stop",
+          "timing": "When the agent finishes responding",
+          "usage": "Checking done criteria, reports"
+        },
+        {
+          "name": "PreCompact",
+          "timing": "Before context compaction",
+          "usage": "Recording information to preserve"
+        }
+      ],
+      "note": "There are more than 30 events in total, including SubagentStop, SessionEnd, and PermissionRequest. Besides shell commands (command), hook types include http, mcp_tool, prompt, and the experimental agent.",
+      "sim": {
+        "title": "Exit Code Simulator",
+        "hint": "Pick the exit code a command hook script returns to see what happens to the action. The scenario is block-rm.sh from the script example meeting an rm -rf command.",
+        "label": "Choose an exit code",
+        "codeWord": "exit code",
+        "other": "Any error code other than 2 (e.g. 1)",
+        "results": [
+          {
+            "code": "0",
+            "blocked": false,
+            "status": "Proceeds",
+            "text": "Treated as a normal exit, so the action proceeds."
+          },
+          {
+            "code": "2",
+            "blocked": true,
+            "status": "Blocked",
+            "text": "The action is blocked. block-rm.sh prints \"rm -rf is blocked by a hook\" to stderr and returns exit 2."
+          },
+          {
+            "code": "1",
+            "blocked": false,
+            "status": "Proceeds",
+            "text": "Any other error code, including 1, is treated as a non-blocking error and the action still proceeds. exit 1 does not block."
+          }
+        ]
       },
-      {
-        "name": "Notification",
-        "timing": "Waiting for response",
-        "usage": "Slack/Discord notifications"
-      },
-      {
-        "name": "Stop",
-        "timing": "Agent termination",
-        "usage": "Cleanup, reporting"
-      }
-    ],
-    "claudeMdTitle": "CLAUDE.md: Project Context",
-    "claudeMdInfoTitle": "What is CLAUDE.md?",
-    "claudeMdInfoDesc": "CLAUDE.md informs AI agents about your project's tech stack, coding conventions, and important rules. It lives at the project root."
+      "configCode": "// .claude/settings.json\n{\n  \"hooks\": {\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"Write|Edit\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"${CLAUDE_PROJECT_DIR}/.claude/hooks/format.sh\"\n          }\n        ]\n      }\n    ],\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"${CLAUDE_PROJECT_DIR}/.claude/hooks/block-rm.sh\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+      "scriptCode": "#!/bin/bash\n# .claude/hooks/format.sh — input arrives as JSON on stdin\nFILE=$(jq -r '.tool_input.file_path')\nnpx prettier --write \"$FILE\"\n\n#!/bin/bash\n# .claude/hooks/block-rm.sh\nCOMMAND=$(jq -r '.tool_input.command')\nif echo \"$COMMAND\" | grep -q 'rm -rf'; then\n  echo \"rm -rf is blocked by a hook\" >&2\n  exit 2   # 2 = block. exit 1 does not block\nfi\nexit 0"
+    },
+    "claudeMd": {
+      "title": "CLAUDE.md and AGENTS.md: Project Context",
+      "infoTitle": "Project Instruction Files",
+      "infoDesc": "CLAUDE.md is a project instruction file loaded at the start of every session. Put in it what can't be learned from the code alone: build and test commands, code conventions, and rules that must be followed. It always takes up context, so keep it under 200 lines, move procedures needed only for specific tasks into skills, and move rules that apply only to certain paths into .claude/rules/. The /init command generates a first draft. If you use several tools, keep the instructions in the standard AGENTS.md file. Claude Code (v2.1.277 or later) reads AGENTS.md when there is no CLAUDE.md, and reads only CLAUDE.md when both exist.",
+      "code": "<!-- CLAUDE.md -->\n# E-commerce Platform\n\n## Commands\n- `bun run dev`: dev server\n- `bun run typecheck`: type check\n- `bun run test`: tests\n\n## Conventions\n- File names use kebab-case\n- Server components by default; mark client ones with 'use client'\n- Types live in src/types; prefer interface\n\n## Must follow\n- Make typecheck and test pass after every change\n- Never read or modify .env files\n\n<!-- If you already have an AGENTS.md, import it from CLAUDE.md -->\n@AGENTS.md"
+    }
   },
   "agentMode": {
     "badge": "Advanced",
-    "title": "Agent Mode in Practice",
-    "description": "Master agent modes in Claude Code and Cursor",
+    "description": "Using permission modes, plan mode, subagents, and agent teams where each one fits",
     "basicUsageTitle": "Basic Usage",
-    "planModeTitle": "Using Plan Mode",
-    "planModeInfoTitle": "When to Use Plan Mode?",
-    "planModeInfoDesc": "For large-scale refactoring or new features with wide impact, Plan mode lets AI create a plan first and execute only after user approval.",
-    "subAgentsTitle": "Using Sub-Agents",
-    "subAgents": [
-      { "name": "Explore", "desc": "Codebase exploration and analysis" },
-      { "name": "Bash", "desc": "Command execution, builds, tests" },
-      { "name": "Plan", "desc": "Implementation planning" },
-      { "name": "Code", "desc": "Code writing and modification" }
-    ],
-    "cursorTitle": "Cursor Agent Mode",
-    "cursorInfoTitle": "Cursor Rules Configuration",
-    "cursorInfoDesc": "Define AI coding style, automatic tasks, and prohibitions in Cursor's .cursor/rules file.",
-    "interviewModeTitle": "Interview Mode",
-    "interviewModeInfoTitle": "About Interview Mode",
-    "interviewModeInfoDesc": "Interview mode helps refine context by iterating through a question-confirm-revision loop instead of forcing one-shot large decisions.",
-    "interviewModeTipTitle": "Recommended Pattern",
-    "interviewModeTipDesc": "Start with clear goal + scope, then convert large tasks into validated chunks to reduce context drift and unnecessary output.",
-    "teamsVsSubAgentsTitle": "Sub-Agent vs Teams decision guide",
-    "teamsVsSubAgentsCompareTitle": "Choosing between parallel Sub-Agents and decision-based Teams",
-    "teamsVsSubAgentsSimulationTitle": "Compare Sub-Agent and Teams flows step by step",
-    "teamsVsSubAgentsStepLabel": "Step",
-    "teamsVsSubAgentsReadyHint": "Start by pressing Next step to see each strategy progress.",
-    "teamsVsSubAgentsNextStep": "Next step",
-    "teamsVsSubAgentsReset": "Reset",
-    "teamsVsSubAgentsIntro": "The same task can differ significantly in speed, quality, and context cost depending on the execution strategy.",
-    "teamsVsSubAgentsPrompt": "Same task: design fallback login recovery and compare three improvement options.",
-    "teamsVsSubAgentsParallelTitle": "Sub-Agents are best for simple parallel execution",
-    "teamsVsSubAgentsParallelItems": [
-      "Independent tasks like scanning, testing, and benchmarks can be handled at the same time.",
-      "Fast consolidation of outputs is the primary goal.",
-      "Expected outputs are deterministic and review-friendly.",
-      "Frequent short iteration loops are required."
-    ],
-    "teamsVsSubAgentsTeamsTitle": "Teams is best for multi-step decision work",
-    "teamsVsSubAgentsTeamsItems": [
-      "Requirements change frequently and design trade-offs need discussion.",
-      "Priority, UX, and risk need to be aligned across the team.",
-      "Work requires step-by-step scenario-to-implementation judgment.",
-      "Decision rationale should be shared as part of the result."
-    ],
-    "teamsVsSubAgentsParallelToken": "Token use stays stable because outputs are usually deterministic.",
-    "teamsVsSubAgentsTeamsToken": "More shared context and rationale can increase token usage.",
-    "teamsTitle": "Claude Code Teams",
-    "teamsCompareTitle": "Split by Teams enabled or not",
-    "teamsDescription": "The same request produces different outputs depending on whether Teams feature is enabled.",
-    "teamsWithGenerativeTitle": "Teams enabled",
-    "teamsWithoutGenerativeTitle": "Teams disabled",
-    "teamsWithGenerativeBadge": "ON",
-    "teamsWithoutGenerativeBadge": "OFF",
-    "teamsSharedPrompt": "Shared request (team workflow)",
-    "teamsSharedPromptText": "Reproduce login flow failure cases and propose improvements.",
-    "teamsVisualOutputTitle": "Shared visual flow",
-    "teamsTextOutputTitle": "Text workflow output",
-    "teamsTokenFlowTitle": "Estimated context usage pattern",
-    "teamsWithGenerative": [
-      "Faster ideation when tasks are design-oriented",
-      "Easy to share a single collaborative workflow with teammates",
-      "Good for planning interaction flow and direction",
-      "Output can be richer and therefore slightly heavier"
-    ],
-    "teamsWithoutGenerative": [
-      "More predictable for code/refactor automation tasks",
-      "Lower token usage in many text-based workflows",
-      "Clear diff-oriented review and deterministic output",
-      "Better for environments that require concise summaries"
-    ],
-    "teamsWithGenerativeToken": "Higher: includes richer artifacts such as visual outputs and context notes.",
-    "teamsWithoutGenerativeToken": "Lower: mostly text-based responses reduce verbosity."
-  },
-  "tokenOptimization": {
-    "badge": "Economy",
-    "title": "Token Savings and Context Optimization",
-    "description": "Practical patterns to reduce token usage by shifting Playwright usage and choosing MCP vs CDP appropriately",
-    "playwrightMigrationTitle": "Migrate from Playwright MCP to Playwright CLI",
-    "playwrightMigrationInfoTitle": "Why migrate?",
-    "playwrightMigrationInfoDesc": "Using MCP wrappers for browser tests adds an extra abstraction layer and can increase prompt context. Using CLI + test scripts improves reproducibility and typically reduces noise in requests.",
-    "playwrightBefore": "# 1) Before: Playwright MCP in Claude settings\n{\n  \"mcpServers\": {\n    \"playwright\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@anthropic/mcp-playwright\"]\n    }\n  }\n}",
-    "playwrightAfter": "# 2) After: Playwright CLI with focused test script\n# Install packages\nbun add -D @playwright/test\n\n# Install browsers\nbunx playwright install\n\n# Run targeted test (minimal output)\nbunx playwright test e2e/login.spec.ts --reporter=dot",
-    "playwrightTip1": "Prioritize script-driven scenarios over long UI-driven chat interactions.",
-    "playwrightTip2": "Reduce frequent MCP calls and execute verification through CLI.",
-    "playwrightTip3": "Capture screenshots/trace only when failures occur.",
-    "playwrightTip4": "Keep logs concise in prompts and save details to files.",
-    "playwrightTip5": "For failures, send only error summary and stack; request full DOM only if needed.",
-    "playwrightTipTitle": "CLI migration checklist",
-    "mcpVsCdpTitle": "Compare MCP and CDP to control cost and precision",
-    "mcpVsCdpIntroTitle": "When to choose which",
-    "mcpVsCdpIntro": "MCP is fast for orchestration and high-level control; CDP is better when low-level browser detail and determinism are required.",
-    "dimension": "Dimension",
-    "whenToUse": "Best Use",
-    "mcpVsCdpRows": [
+    "permissionModesTitle": "Permission Modes",
+    "permissionModesInfoTitle": "The switch for how much you delegate",
+    "permissionModesInfoDesc": "A permission mode decides which actions the agent can take without your approval. Switch modes during a session with Shift+Tab, or set one at startup with the --permission-mode option.",
+    "permissionModes": [
       {
-        "dimension": "Abstraction",
-        "mcp": "High-level tool orchestration",
-        "cdp": "Direct browser protocol control",
-        "note": "Use MCP for speed, CDP for precision."
+        "name": "plan",
+        "desc": "Reads and explores only; does not edit source files"
       },
       {
-        "dimension": "Context cost",
-        "mcp": "More request context in tool-driven commands",
-        "cdp": "Lower if scripts are reused",
-        "note": "Pair repeatable checks with reusable CLI scripts."
+        "name": "default (Manual)",
+        "desc": "Asks every time before file edits and shell commands"
       },
       {
-        "dimension": "Stability",
-        "mcp": "Can change across tool updates",
-        "cdp": "Depends on browser version support",
-        "note": "Pin versions to reduce drift."
+        "name": "acceptEdits",
+        "desc": "Auto-approves file edits, asks for everything else"
       },
       {
-        "dimension": "Team collaboration",
-        "mcp": "Clearer conversational handoff",
-        "cdp": "Better reproducibility in code reviews",
-        "note": "Use a hybrid approach for mixed teams."
+        "name": "dontAsk",
+        "desc": "Runs only pre-approved tools and denies the rest"
+      },
+      {
+        "name": "auto",
+        "desc": "A classifier reviews risky actions instead of you"
+      },
+      {
+        "name": "bypassPermissions",
+        "desc": "Skips all checks. Use only in isolated environments"
       }
     ],
-    "contextOptimizationTitle": "Context Optimization Playbook",
-    "contextOptimizationInfoTitle": "Baseline rules for saving tokens",
-    "contextOptimizationInfoDesc": "Keep each request constrained to objective + scope + acceptance criteria, and load full logs only on request.",
-    "contextOptimizationCode": "# 1. Keep request strict\nclaude \"Reproduce only login failure in e2e.\n- target: /login\n- failure condition: invalid token\n- output: top 3 causes + 2 patch locations\"\n\n# 2. Ask details only when needed\nclaude \"For the selected fix, provide only failing stack and minimal evidence\"",
-    "contextOptimizationChecklist": [
-      "Limit each run to 1-2 focused changes",
-      "Return concise failure summaries and classification before details",
-      "Merge related questions into one thread to reduce back-and-forth",
-      "Capture screenshot/trace only for failed scenarios",
-      "Defer deep dumps until after an initial pass"
+    "planModeTitle": "Using Plan Mode",
+    "planModeInfoTitle": "When to Use Plan Mode?",
+    "planModeInfoDesc": "Start in plan mode for work with a wide impact, such as large refactors or new features. The agent only reads code while it proposes an approach, and implements after you approve. This cuts the cost of redoing work that went ahead in the wrong direction.",
+    "subAgentsTitle": "Using Subagents",
+    "subAgentsInfoTitle": "Helpers that work in their own context",
+    "subAgentsInfoDesc": "A subagent works in a context separate from the main conversation and returns only a summarized result. Hand it tasks with long output, such as exploration or test runs, and the main context stays clean. Define roles you use often as Markdown files under .claude/agents/ and reuse them.",
+    "subAgents": [
+      {
+        "name": "Explore",
+        "desc": "Read-only. File discovery, code search, and codebase analysis"
+      },
+      {
+        "name": "Plan",
+        "desc": "Read-only. Does the research a plan needs during plan mode"
+      },
+      {
+        "name": "general-purpose",
+        "desc": "Complex tasks that need both exploration and changes"
+      },
+      {
+        "name": "Custom agents",
+        "desc": "Define tools, model, and prompt yourself in .claude/agents/*.md"
+      }
+    ],
+    "cursorTitle": "Configuring Cursor Rules",
+    "cursorInfoTitle": "Cursor Rules",
+    "cursorInfoDesc": "Cursor's project rules are defined as .mdc files in the .cursor/rules folder. Depending on the alwaysApply, description, and globs frontmatter, a rule works in one of four ways: always applied, applied when the agent judges it relevant, applied to specific files, or applied manually with an @-mention. Cursor also reads AGENTS.md at the project root and in subdirectories.",
+    "interviewModeTitle": "The Interview Pattern",
+    "interviewModeInfoTitle": "When requirements are fuzzy, let the agent ask",
+    "interviewModeInfoDesc": "Interviewing is a prompt pattern, not a separate mode or flag. If you haven't worked out what to build yet, ask the agent to interview you until it could write the spec. The agent asks multiple-choice questions about each undecided part, then writes up a spec document once the answers add up.",
+    "interviewModeTipTitle": "Recommended Usage",
+    "interviewModeTipDesc": "Once the spec document is done, start the build in a fresh session. You begin with a clean context and a written definition of done, without the long interview conversation, and the same document serves as the reference for review later.",
+    "teamsVsSubAgentsTitle": "Subagents or Agent Teams: Which and When",
+    "teamsVsSubAgentsCompareTitle": "Subagent Delegation vs Agent Team Collaboration",
+    "teamsVsSubAgentsStepLabel": "Step",
+    "teamsVsSubAgentsReadyHint": "Start: press Next step to see how each approach proceeds.",
+    "teamsVsSubAgentsNextStep": "Next step",
+    "teamsVsSubAgentsReset": "Reset",
+    "teamsVsSubAgentsIntro": "Both parallelize work, but they communicate differently. Subagents report results only to the main agent, while agent team teammates watch a shared task list and message each other directly.",
+    "teamsVsSubAgentsPrompt": "Same task: find the cause of an intermittently failing login bug",
+    "teamsVsSubAgentsParallelTitle": "Subagents: delegation that returns only results",
+    "teamsVsSubAgentsParallelItems": [
+      "The main agent splits the investigation into independent units",
+      "Subagents investigate in parallel, each in its own context",
+      "Each subagent returns only a summarized result to the main agent",
+      "The main agent combines the results and decides on the cause"
+    ],
+    "teamsVsSubAgentsTeamsTitle": "Agent teams: collaboration through debate",
+    "teamsVsSubAgentsTeamsItems": [
+      "The lead puts one task per hypothesis on the shared task list and spawns teammates",
+      "Teammates claim tasks and test hypotheses in their own independent sessions",
+      "Teammates message each other directly to challenge hypotheses and share findings",
+      "The lead synthesizes the surviving hypotheses and shuts the teammates down"
+    ],
+    "teamsVsSubAgentsParallelToken": "Lower token cost: only summarized results return to the main context",
+    "teamsVsSubAgentsTeamsToken": "Higher token cost: each teammate runs as a separate Claude instance",
+    "teamsTitle": "Claude Code Agent Teams",
+    "teamsCompareTitle": "With and Without an Agent Team",
+    "teamsDescription": "Agent teams are an experimental feature in which several Claude Code sessions collaborate as one team, and they are off by default. The lead session splits the work and hands it to teammates, and each teammate works in its own context and talks to the others directly. The same request proceeds differently with a team on or off.",
+    "teamsWithGenerativeTitle": "With an agent team",
+    "teamsWithoutGenerativeTitle": "Single session",
+    "teamsWithGenerativeBadge": "ON",
+    "teamsWithoutGenerativeBadge": "OFF",
+    "teamsSharedPrompt": "Same request",
+    "teamsSharedPromptText": "Review PR #142 for security, performance, and test coverage.",
+    "teamsVisualOutputTitle": "Team collaboration flow",
+    "teamsTextOutputTitle": "Single-session flow",
+    "teamsWithGenerative": [
+      "The lead registers one review task per perspective on the shared task list",
+      "Security, performance, and testing teammates review at the same time in independent sessions",
+      "Teammates exchange messages and examine each other's findings",
+      "The lead combines the three perspectives and reports"
+    ],
+    "teamsWithoutGenerative": [
+      "One session reads the whole PR",
+      "It reviews security, performance, and testing one after another",
+      "If needed, it hands part of the investigation to a subagent and gets a summary back",
+      "It organizes the results within a single context and reports"
+    ],
+    "teamsWithGenerativeToken": "High token usage: grows with the number of teammates, about 7x a standard session when teammates run in plan mode",
+    "teamsWithoutGenerativeToken": "Low token usage: the more efficient choice for sequential work or edits to the same file",
+    "teamsGuideTitle": "Agent Team Guidelines",
+    "teamsGuide": [
+      "A good fit for work teammates can do independently: research and review, building separate modules, debugging with competing hypotheses",
+      "For sequential work, edits to the same file, or work with many dependencies, a single session or subagents work better",
+      "Start with 3 to 5 teammates, and give each teammate different files to avoid conflicts",
+      "It is experimental and has limitations, such as in-process teammates not being restored when you resume a session"
+    ],
+    "planModeCode": "# Start in plan mode (switch during a session with Shift+Tab)\nclaude --permission-mode plan\n\n> I want to move the auth module from sessions to JWT. Make a plan\n\n# In plan mode the agent:\n# 1. Reads files and explores with read-only commands (no source edits)\n# 2. Proposes a plan: affected files, order of changes, risks\n# 3. Leaves plan mode and starts implementing once you approve",
+    "interviewCode": "# There is no dedicated flag — ask for it in the prompt\n> I want to add rate limiting to the public API but haven't thought it through yet.\n  Interview me until you could write the spec, then write it to SPEC.md.\n\n# The agent asks multiple-choice questions about what is undecided:\n# - Per-user limits or per-API-key limits?\n# - What happens to requests over the limit?\n# - What is out of scope?\n\n# Once SPEC.md exists, start the build in a fresh session\nclaude \"Read SPEC.md and implement it\"",
+    "subAgentCode": "<!-- .claude/agents/code-improver.md -->\n---\nname: code-improver\ndescription: Scans files and suggests readability and performance improvements. Use after writing or modifying code.\ntools: Read, Grep, Glob\nmodel: sonnet\n---\n\nYou are a code improvement specialist. For each issue you find, explain\nthe problem, show the current code, and provide an improved version.\n\n# Usage\n> Use the code-improver agent to suggest improvements in src/utils",
+    "teamsCode": "// settings.json — experimental, so you have to turn it on\n{\n  \"env\": {\n    \"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS\": \"1\"\n  }\n}\n\n# Describe the team in natural language\n> Spawn three teammates to review PR #142:\n  - One focused on security implications\n  - One checking performance impact\n  - One validating test coverage\n  Have them review, challenge each other's findings, and report back.",
+    "cursorCode": "<!-- .cursor/rules/typescript.mdc -->\n---\ndescription: TypeScript authoring rules\nglobs: src/**/*.ts, src/**/*.tsx\nalwaysApply: false\n---\n\n- Follow strict mode and never use any\n- Use function components only\n- Use named exports, not default exports\n- Do not leave console.log in production code",
+    "tabs": [
+      "Basic usage",
+      "Permission modes",
+      "Plan mode",
+      "Interview",
+      "Subagents",
+      "Agent teams",
+      "Subagents vs teams",
+      "Cursor rules"
+    ],
+    "ui": {
+      "tabsLabel": "Agent mode topics",
+      "prev": "Previous",
+      "next": "Next",
+      "taskLabel": "What do you want to do?",
+      "commandLabel": "Command",
+      "modeLabel": "How much you delegate",
+      "modeLow": "Delegate less",
+      "modeHigh": "Delegate more",
+      "exampleLabel": "Custom agent example",
+      "prevStep": "Previous step"
+    },
+    "basicTasks": [
+      {
+        "label": "Start an interactive session",
+        "code": "# Start an interactive session\nclaude"
+      },
+      {
+        "label": "Start with an initial prompt",
+        "code": "# Start with an initial prompt\nclaude \"Explain this project's structure\""
+      },
+      {
+        "label": "Run non-interactively (headless)",
+        "code": "# Non-interactive (headless) run — for scripts and CI\nclaude -p \"Find and fix the type errors\" --output-format json"
+      },
+      {
+        "label": "Continue / resume",
+        "code": "# Continue the latest conversation / resume a session by name\nclaude -c\nclaude -r \"auth-refactor\""
+      },
+      {
+        "label": "Start in a worktree",
+        "code": "# Start in an isolated git worktree\nclaude -w feature-auth"
+      },
+      {
+        "label": "Run in the background",
+        "code": "# Run as a background agent and monitor it in agent view\nclaude --bg \"Run the full test suite and fix any failures\"\nclaude agents"
+      }
     ]
+  },
+  "browserAutomation": {
+    "badge": "Browser Automation",
+    "description": "A map of the tools for handing a browser to an agent, grouped by category. The reference date is 2026-11-10, and the content centers on what was verified in official docs and repositories. For ego and aside it also includes what we confirmed by running them.",
+    "overview": {
+      "title": "The Big Picture: Which Browser Does the Agent Use?",
+      "lead": "When you hand a browser to an agent, the first questions are not about tool names. They are these two.",
+      "axes": [
+        "Does the agent use my real logged-in browser, or a clean separate browser?",
+        "Does the agent see the page as text (an accessibility snapshot) or as an image (screenshot + coordinates)?"
+      ],
+      "tableLead": "Along these two axes, the tools fall into roughly five categories."
+    },
+    "explorer": {
+      "pickLabel": "Pick a category",
+      "prev": "Previous",
+      "next": "Next",
+      "toolsLabel": "Representative tools",
+      "loginLabel": "How it handles login sessions",
+      "viewLabel": "How it reads the page",
+      "categories": [
+        {
+          "title": "(1) Browsers and extensions shared by human and agent",
+          "tools": "Aside, ego(lite), Claude in Chrome, ChatGPT browser extension",
+          "login": "Your real profile (including imports)",
+          "view": "Varies by tool",
+          "detailTitle": "(1) Browsers and extensions from AI companies",
+          "items": [
+            {
+              "name": "Claude in Chrome",
+              "desc": "Became generally available on all paid plans on 2026-08-26. You install it from the Chrome Web Store and it is Chrome only (other Chromium browsers and mobile are not supported). It can also run autonomously without approval for each action. It reportedly uses training, web-content detection probes, and a pre-execution classifier against prompt injection, but this is Anthropic's own evaluation, so treat it as reference only. In Claude Code, start with claude --chrome, or run /chrome inside a session to check the connection and reconnect. It needs extension 1.0.36 or later and a /login sign-in; with API key or setup-token authentication, the Chrome integration stays off."
+            },
+            {
+              "name": "ChatGPT",
+              "desc": "The standalone Atlas browser was deprecated; OpenAI's help page says it is moving browser-based agentic capabilities into ChatGPT and Codex, and points to the ChatGPT Chrome extension or sidebar for help in Chrome. The desktop app's built-in browser uses a separate profile and does not share existing sessions; OpenAI's docs say to use the browser extension for Chrome/Edge/Brave and others when you need logged-in sites."
+            },
+            {
+              "name": "Gemini in Chrome (auto browse)",
+              "desc": "Google's blog says auto browse is available only to Google AI Pro/Ultra subscribers in the U.S. Gemini in Chrome asks for confirmation before sensitive actions such as sending an email or adding a calendar event."
+            }
+          ],
+          "note": "",
+          "hint": "Aside and ego are covered in detail right below, in \"The Two Stars\".",
+          "security": [0, 1, 2]
+        },
+        {
+          "title": "(2) CLIs called from the shell",
+          "tools": "playwright-cli, agent-browser, chrome-devtools CLI",
+          "login": "A separate (isolated) browser by default",
+          "view": "Accessibility snapshot + ref",
+          "detailTitle": "(2) CLI type",
+          "items": [
+            {
+              "name": "playwright-cli",
+              "desc": "npm install -g @playwright/cli. A CLI for coding agents; the official docs say it keeps token cost low by not loading tool schemas and verbose accessibility trees into context. It has commands like open, snapshot, click, and fill, -s=<name> sessions, and a daemon model. To connect to a running browser, use one of playwright-cli attach --extension=chrome (needs the Playwright extension, Chrome/Edge only), attach --cdp=chrome (a running Chrome/Edge), or attach --cdp=<url> (a CDP endpoint); playwright-cli detach drops only the connection and leaves the external browser running."
+            },
+            {
+              "name": "agent-browser (vercel-labs, Apache-2.0)",
+              "desc": "npm install -g agent-browser, then agent-browser install. agent-browser open example.com, agent-browser snapshot -i (refs like @e1 on interactive elements), agent-browser click @e1. The README says a background daemon controls Chrome for Testing over CDP, and that you can attach to a running Chrome with --cdp/--auto-connect."
+            },
+            {
+              "name": "chrome-devtools CLI",
+              "desc": "npm i chrome-devtools-mcp@latest -g, then use it as chrome-devtools <tool> ... The default is headless, isolated mode."
+            }
+          ],
+          "note": "Shared traits: each command returns a short piece of text, so less context piles up.",
+          "hint": "",
+          "security": [0, 2]
+        },
+        {
+          "title": "(3) MCP servers",
+          "tools": "Playwright MCP, Chrome DevTools MCP, aside mcp",
+          "login": "A separate profile by default, with an option to connect to an existing Chrome",
+          "view": "Accessibility snapshot (default)",
+          "detailTitle": "(3) MCP server type",
+          "items": [
+            {
+              "name": "Playwright MCP",
+              "desc": "npx @playwright/mcp@latest. Accessibility snapshots are the default, and --caps=vision adds coordinate-based tools. The default is a persistent per-workspace profile, and --isolated uses an in-memory profile. --extension lets you reuse the logged-in session of an existing Chrome/Edge. Install the Playwright extension from the Chrome Web Store and add --extension to args in the MCP config; the first time the LLM uses the browser, a page opens where you choose which tab it can control. Putting PLAYWRIGHT_MCP_EXTENSION_TOKEN from the extension's status page into env skips the approval prompt. The README summarizes that CLI+skills are token-efficient and preferred for coding agents, while MCP suits persistent state, rich page inspection, and long-running autonomous work. It also states that it is 'not a security boundary'."
+            },
+            {
+              "name": "Chrome DevTools MCP",
+              "desc": "npx -y chrome-devtools-mcp@latest. Its strength is debugging: performance traces, network, and console stack traces with source maps applied. The only officially supported browsers are Chrome and Chrome for Testing. You can attach to a running Chrome session with --autoConnect (Chrome 144 or later, allow it at chrome://inspect/#remote-debugging, a permission dialog on every connection, and a banner while being controlled). This is based on a Chrome blog post, so current details may have changed. Usage statistics collection is on by default and can be turned off with --no-usage-statistics."
+            }
+          ],
+          "note": "MCP tool schemas stay resident in context, so the more tools there are, the higher the baseline cost (the comparison table in the Playwright docs also lists MCP token cost as \"Higher\").",
+          "hint": "",
+          "security": [0, 1, 2]
+        },
+        {
+          "title": "(4) Browsers built into coding agents and IDEs",
+          "tools": "Cursor browser, ChatGPT/Codex app built-in browser",
+          "login": "App-specific profile",
+          "view": "Screenshots, console and network logs, etc.",
+          "detailTitle": "(4) Browsers built into coding agents and IDEs",
+          "items": [
+            {
+              "name": "Cursor",
+              "desc": "Opens as a window inside the editor and is controlled by an MCP server (extension). It can navigate, click, type, take screenshots, and inspect the console and network, and cookies and storage persist between agent sessions but are isolated per workspace. The agent is prompted to detect running dev servers and use the right port, and admins can limit automatic navigation with an allowlist of origins such as http://localhost:3000. Approval is required by default, and the docs call the allow/block lists 'best-effort protection'. It advises against auto-run on unfamiliar sites."
+            },
+            {
+              "name": "ChatGPT app built-in browser",
+              "desc": "The user and the agent look at the same screen, can preview local or public pages, and can leave visual comments. It uses a separate profile, so you log in yourself. Developer mode (full CDP access) is an opt-in that requires explicit per-site approval."
+            }
+          ],
+          "note": "This is the category frontend developers use most often. For checking a local dev server that needs no login, this alone is often enough.",
+          "hint": "",
+          "security": [0, 2]
+        },
+        {
+          "title": "(5) Cloud browsers and computer use",
+          "tools": "Browserbase (+Stagehand), Claude computer use",
+          "login": "Remote/virtual environment",
+          "view": "CDP or screenshot + coordinates",
+          "detailTitle": "(5) Cloud browsers and computer use",
+          "items": [
+            {
+              "name": "Browserbase / Stagehand",
+              "desc": "Browserbase provides headless cloud browsers and session observation (logs, live view, replay), and Stagehand is an SDK that adds act/extract/observe on top of Playwright-level control. It suits service operation (collection, large-scale parallelism) and is overkill for checking screens during development. You connect the connectUrl returned when you create a session with Playwright's chromium.connectOverCDP(session.connectUrl). Contexts store cookies, session tokens, and local storage; pass { id, persist: true } as browserSettings.context when creating a session, and any session with the same context ID starts logged in."
+            },
+            {
+              "name": "Claude computer use",
+              "desc": "It works with screenshots and mouse/keyboard coordinates. The API docs say you enable it with the single line {\"type\": \"computer_toolset_20260801\"}, that it has 17 component tools, and that browser tools are better for tasks that stay inside a web page. The docs state that one screenshot costs roughly 1,000 to 1,800 input tokens. The security recommendations are a dedicated VM/container, not providing sensitive information, a domain allowlist, and human confirmation before important actions."
+            }
+          ],
+          "note": "",
+          "hint": "",
+          "security": [0, 2]
+        }
+      ]
+    },
+    "security": {
+      "title": "Security Cautions by Category",
+      "items": [
+        {
+          "name": "Prompt injection",
+          "desc": "Text on a web page can be read by the agent as a command. The OpenAI, Cursor, and Anthropic docs all say to treat page content as untrusted input. No defense metric is a guarantee that 'no incident will happen'."
+        },
+        {
+          "name": "Real account permissions",
+          "desc": "The extension/autoConnect approaches in (1) and (3) mean the agent can reach mail, payments, and admin screens through your session. Do not use a profile that mixes work and personal accounts as is; keep a separate profile for agent work."
+        },
+        {
+          "name": "Recommendations",
+          "desc": "Start with read-mostly tasks, have a human approve payments, deletions, posting, and permission changes, and keep auth files and tokens out of the repository. Do not let the agent bypass confirmation dialogs."
+        }
+      ]
+    },
+    "duo": {
+      "title": "The Two Stars: ego and aside",
+      "criterionLabel": "Criterion",
+      "toolLabel": "Tool",
+      "sideBySide": "Compare side by side",
+      "codeLabel": "Install and usage commands",
+      "criteria": [
+        "What it is",
+        "Install",
+        "Login session",
+        "How it works",
+        "Caution"
+      ],
+      "tools": {
+        "ego": {
+          "name": "ego",
+          "title": "ego (ego lite, ego-browser)",
+          "code": "# Install only the skill first\nnpx skills add citrolabs/ego-lite\n\n# Import your Chrome login state\nego-browser import list\nego-browser import --browser chrome --profile Default\n\n# Other commands\nego-browser skill      # print the skill guide\nego-browser upgrade",
+          "sections": [
+            [
+              "A free Chromium-based browser built by Citro Labs. It is designed so that a human and an AI agent can work in the same browser without fighting over control. The CLI is named ego-browser."
+            ],
+            [
+              "Per the official repository (citrolabs/ego-lite), download and run the installer for macOS (Apple Silicon/Intel) or Windows, and the ego-browser skill is installed into the agent's skills directory along with it. To add only the skill first, use npx skills add citrolabs/ego-lite; the agent's first browser task then walks you through installing the app. Linux is only on the roadmap. The repository contents are MIT-licensed, and the browser app is distributed separately for free."
+            ],
+            [
+              "On first launch it asks whether to import your Chrome logins, cookies, extensions, and bookmarks. You can also import from the CLI, and after importing, the agent inherits that logged-in state."
+            ],
+            [
+              "When the agent passes JavaScript to ego-browser nodejs, it runs in the browser's built-in Node.js runtime. The script runs in Node, not inside the page, so code that must run inside the page goes into page.evaluate().",
+              "Each agent task gets an isolated workspace called a Space, and the user's existing tabs are left alone. The user can watch the agent work and take over at any time (task.handOff()).",
+              "For observing the page there are page.snapshot() (structure and refs, the default tool) and page.screenshot() (visual check). You act on refs from the snapshot, such as @21, like page.click(\"@21\").",
+              "It looks like Playwright but is not Playwright. The skill document explicitly says not to guess at Playwright APIs such as locator() or getByRole(). Anything not in the list is handled with page.evaluate() or page.cdp().",
+              "Token cost profile: The skill document recommends using only the one of snapshot or screenshot you need, batching several actions into one script, and taking a single snapshot at the end. In other words, it is designed to cut round trips."
+            ],
+            [
+              "The content of the pages the agent works on is sent to the model the user selected (official site). Because it uses your real logged-in session, whatever the agent can do is whatever your account can do."
+            ]
+          ]
+        },
+        "aside": {
+          "name": "aside",
+          "title": "aside",
+          "code": "# macOS install (developer docs)\ncurl -fsSL https://releases.aside.com/install.sh | bash\n\n# Login: set the auth file path first, then approve the code in the browser under Settings > Account > Devices\nexport ASIDE_CLI_AUTH_PATH=\"/absolute/path/aside-auth.json\"\naside login --email \"you@example.com\"\n\naside \"smoke test localhost:3000\"   # natural-language task\naside repl \"const p = await openTab('https://example.com')\"   # deterministic step\naside mcp                                     # stdio MCP server",
+          "sections": [
+            [
+              "A 'browser rebuilt for humans and agents' made by Aside Computer Inc. (a Y Combinator company). Its core message is working on logged-in sites without integrations."
+            ],
+            [
+              "It supports macOS 15 or later and Windows 10 22H2 or later / Windows 11."
+            ],
+            [
+              "Onboarding imports browsing history, cookies, and bookmarks from Chrome and others. The official site says the agent logs in through autofill so credentials are not exposed to the agent, and that sensitive actions such as payments, posting, and messaging wait for user confirmation.",
+              "Other commands: aside session resume <session-id> \"Continue\", aside account list/status/use. The auth file is set with ASIDE_CLI_AUTH_PATH; if unset, ~/.aside/cli/auth.json is used."
+            ],
+            [
+              "An outside agent has two ways in. aside exec hands the whole task to the Aside agent inside the browser; the CLI guide recommends treating it like spawning a subagent.",
+              "aside repl drives tabs directly with Playwright-style JavaScript, where snapshot() is the primary way to read a page and annotatedScreenshot() and page.screenshot() are for visual checks.",
+              "Coding agent integration: The developer docs (aside.com/developers.md) list three options: CLI, MCP, and REPL.",
+              "For MCP, in mcp.json under mcpServers set command to aside and args to [\"mcp\"]. Running aside mcp directly shows four tools: exec (run the browser agent on logged-in sites), repl (run Playwright-style JavaScript), memory_search (search the user memory Aside has built), and browser_profiles (list browser profiles)."
+            ],
+            [
+              "With a curl | bash install, it is safer to read the script before running it. Never commit the auth file (the official docs give the same warning)."
+            ]
+          ]
+        }
+      },
+      "compareTitle": "What the Two Tools Share and Where They Differ",
+      "compareItems": [
+        "Shared: both are 'browsers shared by human and agent' where the agent inherits your logged-in session. Both import Chrome data.",
+        "Different: ego centers on JS scripts that the outside agent writes itself (ego-browser nodejs). aside has its own agent inside the browser, so handing over the whole task with exec is the default and repl is for when you need direct control. A running task can be redirected or stopped with aside session steer, queue, and stop, and --permission (ask, guard, full-access) sets the permission scope. ego's skill repository is public (MIT), and for aside the CLI's aside guide plays the same role."
+      ],
+      "prev": "Previous",
+      "next": "Next"
+    },
+    "guide": {
+      "title": "Choosing by Situation",
+      "pickLabel": "Pick your situation",
+      "pickHead": "Recommended",
+      "reasonHead": "Why",
+      "rows": [
+        {
+          "situation": "Checking the screen and layout of a local dev server",
+          "pick": "IDE/app built-in browser (Cursor, ChatGPT app) or playwright-cli",
+          "reason": "No login needed, screenshots and console available right away"
+        },
+        {
+          "situation": "Writing and verifying E2E tests",
+          "pick": "playwright-cli (if a shell is available) or Playwright MCP",
+          "reason": "Same model as the Playwright stack, reproducible commands"
+        },
+        {
+          "situation": "Debugging performance, network, and console",
+          "pick": "Chrome DevTools MCP / chrome-devtools CLI",
+          "reason": "Traces and source-mapped stack traces"
+        },
+        {
+          "situation": "Working on sites that require login (internal tools, admin screens)",
+          "pick": "Real-session-sharing tools such as ego, aside, Claude in Chrome",
+          "reason": "No need to log in every time. But account permission risk"
+        },
+        {
+          "situation": "Login needed but you want to protect your account",
+          "pick": "Separate profile + isolated browser (--isolated, etc.)",
+          "reason": "Limits the blast radius"
+        },
+        {
+          "situation": "A human watching and collaborating",
+          "pick": "ego (Space and handoff), Claude in Chrome",
+          "reason": "You can watch the agent work and step in"
+        },
+        {
+          "situation": "Large-scale parallelism, server environments",
+          "pick": "A cloud browser such as Browserbase",
+          "reason": "You don't run the infrastructure yourself"
+        },
+        {
+          "situation": "Canvas or desktop apps with little DOM information",
+          "pick": "computer use",
+          "reason": "Only when screenshot + coordinates is the sole option"
+        }
+      ]
+    },
+    "example": {
+      "title": "A Short Example: Delegating a Screen Check to the Agent",
+      "tabPrompt": "Prompt",
+      "tabEgo": "ego-browser code",
+      "tabHabits": "Key habits",
+      "promptTitle": "Prompt example (local dev server, no login needed)",
+      "prompt": "Open http://localhost:3000/settings, take a screenshot at mobile width (390px)\nand at desktop width, and tell me whether the card layout breaks or a horizontal scroll appears.\nIf there are console errors, report them too, and don't modify any code, just list likely causes.",
+      "egoTitle": "A minimal example run directly with ego-browser",
+      "egoNote": "It uses only APIs shown in the local skill document. There is no dedicated API for changing the viewport size, but page.cdp(\"Emulation.setDeviceMetricsOverride\", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true }) emulates a phone width.",
+      "egoCode": "ego-browser nodejs <<'EOF'\nconst task = await taskSpace(\"check settings page\");\nconst page = task.page(\"p1\");\nawait page.goto(\"http://localhost:3000/settings\");\nconsole.log(await page.snapshot());\nawait page.screenshot({ path: \"/absolute/path/settings.png\" });\nawait task.finish({ keep: [] });\nEOF",
+      "habitsTitle": "Three key habits",
+      "habits": [
+        "First look at the structure through the snapshot (text).",
+        "Take a screenshot only when you need a visual check.",
+        "When the work is done, clean up the windows and sessions you created."
+      ]
+    }
   },
   "promptEngineering": {
     "badge": "Skill",
-    "title": "Advanced Prompt Engineering",
-    "description": "Effective communication with AI agents",
-    "goalOrientedTitle": "Goal-Oriented Prompts",
-    "badExample": "Bad Example (Step-by-step)",
-    "goodExample": "Good Example (Goal-oriented)",
-    "contextTitle": "Context References",
-    "contextInfoTitle": "Effective Context Delivery",
-    "contextInfoDesc": "Using file paths, pattern references (@), and doc references helps AI generate more accurate results.",
-    "constraintsTitle": "Specifying Constraints",
-    "iterativeTitle": "Iterative Improvement Pattern",
-    "iterativeInfoTitle": "Gradual Refinement",
-    "iterativeInfoDesc": "For complex tasks, don't request perfection at once. Progress from big picture → detailed implementation → edge cases."
+    "description": "Telling the agent what it can't see, and giving it criteria to verify its own work",
+    "goal": {
+      "title": "Prompts Built on Goals and Done Criteria",
+      "desc": "The agent can find the procedure on its own. What you need to supply is the goal, the scope, and a way to tell when it's done.",
+      "badLabel": "Bad (vague, or only dictates steps)",
+      "goodLabel": "Good (goal, scope, done criteria)",
+      "badItems": [
+        {
+          "label": "Vague request",
+          "text": "\"Improve this code\""
+        },
+        {
+          "label": "Dictating every step",
+          "text": "\"1. First read the file\n 2. Then find the function\n 3. Add types\""
+        }
+      ],
+      "pieces": [
+        {
+          "name": "Goal",
+          "text": "Add parameter and return types to\nevery function in src/utils/date.ts."
+        },
+        {
+          "name": "Scope",
+          "text": "Don't change existing behavior."
+        },
+        {
+          "name": "Done criteria",
+          "text": "Done when bun run typecheck passes."
+        }
+      ]
+    },
+    "context": {
+      "title": "Referencing Context",
+      "infoTitle": "Tell the agent what it can't see",
+      "infoDesc": "The agent can read the code in the repository, but not the background knowledge in your head. Point at the relevant files with @, and pass along the existing pattern to follow, constraints that don't show in the code, and the full error message with how to reproduce it. Unnecessary exploration drops and results get more accurate.",
+      "techniques": [
+        {
+          "name": "@ file reference",
+          "label": "Reference a file directly with @",
+          "code": "> Refactor the functions in @src/utils/validation.ts"
+        },
+        {
+          "name": "Pattern to follow",
+          "label": "Point at an existing pattern to follow",
+          "code": "> Build an input component using the same pattern as @src/components/button.tsx"
+        },
+        {
+          "name": "What it can't see",
+          "label": "Tell the agent what it can't see",
+          "code": "> The payment API sometimes takes over 5 seconds on staging.\n  Use a 10 second timeout and don't retry."
+        },
+        {
+          "name": "Full error and repro",
+          "label": "Give the full error and how to reproduce it",
+          "code": "> Visiting /dashboard after logging out throws:\n  TypeError: Cannot read properties of undefined (reading 'user')"
+        }
+      ]
+    },
+    "constraints": {
+      "title": "Stating Constraints and Verification Criteria",
+      "infoTitle": "Give it a way to check itself",
+      "infoDesc": "Give the agent something it can run to verify its work, such as test cases, expected output, or screenshots, and it finds and fixes problems before you have to point them out. It is an effective way to raise the quality of the result.",
+      "task": "Implement the auth middleware.",
+      "constraintsLabel": "Constraints:",
+      "constraintsLines": [
+        "No new dependencies (only jose is allowed)",
+        "Reuse the existing User type",
+        "Throw errors as the custom AppError"
+      ],
+      "verifyLabel": "Verification:",
+      "verifyLines": [
+        "Add expired-token and tampered-token cases to src/middleware/auth.test.ts",
+        "bun run test passes"
+      ]
+    },
+    "iterative": {
+      "title": "Iterative Refinement",
+      "infoTitle": "Refine step by step, correct course early",
+      "infoDesc": "Refine complex work step by step: the big picture, then the implementation details, then the edge cases. When the agent starts heading the wrong way, stopping and going back right away costs less than waiting. Don't keep piling unrelated tasks into one session; clear the context when the task changes.",
+      "steps": [
+        {
+          "name": "Pass 1",
+          "label": "Pass 1: big picture (plan mode)",
+          "code": "> Design the payment module structure. Don't write code yet"
+        },
+        {
+          "name": "Pass 2",
+          "label": "Pass 2: implementation",
+          "code": "> Implement the approved design, starting with PaymentService"
+        },
+        {
+          "name": "Pass 3",
+          "label": "Pass 3: edge cases",
+          "code": "> Add retry on payment failure and the partial refund case"
+        },
+        {
+          "name": "Course correction",
+          "label": "Wrong direction? Press Esc to stop, then /rewind to go back",
+          "code": "Esc\n/rewind"
+        },
+        {
+          "name": "Switch task",
+          "label": "Moving to another task? Run /clear to empty the context",
+          "code": "/clear"
+        }
+      ]
+    },
+    "ui": {
+      "assembleLabel": "Prompt assembler",
+      "piecesHint": "Toggle the pieces to see how the prompt changes",
+      "emptyPrompt": "No pieces are on. Turn on at least one piece.",
+      "pieceOn": "on",
+      "pieceOff": "off",
+      "assembledLabel": "Assembled prompt",
+      "techniqueLabel": "Pick a technique",
+      "highlightLabel": "Highlight",
+      "highlightAll": "No highlight",
+      "highlightConstraints": "Constraint lines",
+      "highlightVerify": "Verification lines",
+      "constraintTag": "Constraint",
+      "verifyTag": "Verify",
+      "stepsLabel": "Step through",
+      "progress": "Progress",
+      "prev": "Previous",
+      "next": "Next"
+    }
   },
   "workflows": {
     "badge": "Workflow",
-    "title": "Practical Workflows",
-    "description": "Automated workflows for feature development, bug fixes, and code review",
-    "featureDevTitle": "Feature Development Workflow",
-    "featureDevInfoTitle": "Complete Flow",
-    "featureDevInfoDesc": "Execute the full cycle with AI: requirements analysis → design (Plan) → implementation → testing → review → commit.",
-    "bugFixTitle": "Bug Fix Workflow",
-    "codeReviewTitle": "Code Review Workflow",
-    "automationTips": "Automation Tips",
-    "tips": {
-      "tip1": "Automate PR creation and review with GitHub MCP",
-      "tip2": "Auto-generate conventional commits with /commit skill",
-      "tip3": "Integrate with CI/CD for deployment automation"
+    "description": "Feature development, bug fixes, code review, and automation that runs without you",
+    "pickLabel": "Pick a workflow",
+    "prev": "Previous",
+    "next": "Next",
+    "tabs": [
+      "Feature development",
+      "Bug fix",
+      "Code review",
+      "Parallel runs and automation"
+    ],
+    "stepsLabel": "Steps",
+    "casesLabel": "Situations",
+    "methodsLabel": "Methods",
+    "featureDev": {
+      "title": "Feature Development Workflow",
+      "infoTitle": "The Full Flow",
+      "infoDesc": "Work in this order: explore, plan, implement, verify, review, commit. Agree on the direction during planning, and have the agent verify with type checks and tests at each implementation step, so there is less to fix all at once at the end.",
+      "steps": [
+        {
+          "title": "Explore + plan",
+          "code": "# 1. Explore + plan (plan mode)\nclaude --permission-mode plan\n> Read PRD.md and write an implementation plan"
+        },
+        {
+          "title": "Implement",
+          "code": "# 2. Implement — after approving the plan\n> Implement the approved plan. Run typecheck after each step"
+        },
+        {
+          "title": "Verify",
+          "code": "# 3. Verify\n> Write tests and keep fixing until bun run test passes"
+        },
+        {
+          "title": "Review",
+          "code": "# 4. Review — bundled skill\n> /code-review"
+        },
+        {
+          "title": "Commit and PR",
+          "code": "# 5. Commit and PR\n> Commit the changes and open a PR"
+        }
+      ]
+    },
+    "bugFix": {
+      "title": "Bug Fix Workflow",
+      "infoTitle": "Reproduce first",
+      "infoDesc": "Give the full error message along with how to reproduce it, and have the agent reproduce the bug with a failing test first. The test turning green is the evidence of the fix.",
+      "inputLabel": "What you give",
+      "inputCode": "> Fix this error:\n\n  TypeError: Cannot read properties of undefined (reading 'user')\n      at AuthGuard (src/guards/auth.guard.ts:15)\n\n  Repro: visit a protected page after logging out\n  Reproduce it with a failing test first, then fix it.",
+      "agentLabel": "What the agent does",
+      "agentSteps": [
+        "Analyzes the error location and related code",
+        "Reproduces it with a failing test",
+        "Diagnoses the cause and fixes it",
+        "Verifies with the passing test"
+      ]
+    },
+    "codeReview": {
+      "title": "Code Review Workflow",
+      "methods": [
+        {
+          "title": "Bundled skill",
+          "code": "# Review the current diff (bundled skill)\n> /code-review"
+        },
+        {
+          "title": "Specific focus",
+          "code": "# Review with a specific focus\n> Review the current branch against main.\n  Check security issues, performance, type safety, and missing tests"
+        },
+        {
+          "title": "PR number",
+          "code": "# Review by PR number (needs the gh CLI or GitHub MCP)\n> Review PR #123 and leave comments"
+        }
+      ]
+    },
+    "automation": {
+      "title": "Parallel Runs and Automation",
+      "infoTitle": "Runs that don't need you watching",
+      "infoDesc": "claude -p is headless mode: it runs once without a conversation and exits, which suits CI and scripts. When several tasks run at once, use worktrees to give each session its own working directory so their changes don't mix. Send long-running work to a background session and check its progress in agent view.",
+      "cases": [
+        {
+          "title": "Headless run",
+          "code": "# Headless run — in CI and scripts\nclaude -p \"Fix lint errors in the changed files\" --max-turns 10"
+        },
+        {
+          "title": "Piped input",
+          "code": "# Piped input\ncat build-error.log | claude -p \"Summarize the cause of this build error\""
+        },
+        {
+          "title": "Parallel worktrees",
+          "code": "# Parallel sessions isolated by worktree\nclaude -w fix-login\nclaude -w refactor-cart"
+        },
+        {
+          "title": "Background",
+          "code": "# Start a background session and monitor it\nclaude --bg \"Update dependencies and get the tests passing\"\nclaude agents"
+        }
+      ],
+      "tipsTitle": "Automation Tips",
+      "tips": [
+        "Connect PR creation and review through the gh CLI or the GitHub MCP server",
+        "Turn recurring team procedures (commit rules, release checks) into project skills and share them",
+        "For unattended runs, narrow what is allowed ahead of time with permission rules"
+      ]
     }
   },
   "verification": {
     "badge": "Safety",
-    "title": "Verification and Safe Usage",
-    "description": "AI code verification, permission management, and team guidelines",
-    "autoVerifyTitle": "Automatic Verification Setup",
-    "autoVerifyInfoTitle": "Hook-Based Auto Verification",
-    "autoVerifyInfoDesc": "Use PostToolUse hooks to automatically run type checking, linting, and related tests after file saves.",
-    "manualCheckTitle": "Manual Verification Checklist",
-    "checklistTitle": "AI-Generated Code Review Checklist",
-    "checklist": [
-      "Does business logic match requirements?",
-      "Is it consistent with existing code patterns?",
-      "Are there security vulnerabilities? (input validation, auth)",
-      "Are there performance issues? (N+1, memory leaks)",
-      "Is error handling appropriate?",
-      "Is test coverage sufficient?"
-    ],
-    "permissionsTitle": "Permission Management",
-    "teamGuidelinesTitle": "Team Guidelines",
-    "teamGuidelines": {
-      "allowed": {
-        "title": "Allowed Usage",
-        "items": [
-          "Boilerplate code generation",
-          "Test code assistance",
-          "Documentation work",
-          "Code review assistance",
-          "Debugging support"
+    "description": "Verifying AI-generated code, managing permissions, handling prompt injection, and team guidelines",
+    "hook": {
+      "title": "Automatic Verification",
+      "infoTitle": "Hook-Based Verification",
+      "infoDesc": "A PostToolUse hook can run lint or type checks every time a file is modified. When a check fails, exit with code 2 and write the errors to stderr; they are passed to the agent, which fixes them itself. To force the full test suite when the agent finishes, use a Stop hook.",
+      "tabsLabel": "Choose a file",
+      "tabConfig": "settings.json",
+      "tabScript": "lint-file.sh",
+      "configCode": "// .claude/settings.json\n{\n  \"hooks\": {\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"Write|Edit\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"${CLAUDE_PROJECT_DIR}/.claude/hooks/lint-file.sh\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+      "scriptCode": "#!/bin/bash\n# .claude/hooks/lint-file.sh\nFILE=$(jq -r '.tool_input.file_path')\nif ! npx eslint \"$FILE\" >&2; then\n  exit 2   # the lint output (stderr) is passed back to the agent\nfi",
+      "flowTitle": "Flow by check result",
+      "flowLabel": "Check result",
+      "stepsLabel": "Steps",
+      "pass": {
+        "label": "Check passes",
+        "steps": [
+          "The agent modifies a file with Write or Edit",
+          "The PostToolUse hook runs lint-file.sh to check the modified file",
+          "If lint passes, the script ends without exit 2 and the agent carries on with its work"
         ]
       },
-      "required": {
-        "title": "Required Verification",
-        "items": [
-          "Manual review required for all AI-generated code",
-          "Senior developer approval for security-related code",
-          "All tests must pass before production deployment"
-        ]
-      },
-      "prohibited": {
-        "title": "Prohibited",
-        "items": [
-          "Including sensitive information in prompts",
-          "Committing AI code without review",
-          "Direct MCP connection to production DB"
+      "fail": {
+        "label": "Check fails",
+        "steps": [
+          "The agent modifies a file with Write or Edit",
+          "The PostToolUse hook runs lint-file.sh to check the modified file",
+          "If lint fails, the script ends with exit code 2",
+          "The lint output (stderr) is passed back to the agent",
+          "The agent reads it and tries to fix the problem itself"
         ]
       }
     },
-    "importantNote": "Final Responsibility",
-    "importantNoteDesc": "No matter how powerful AI agents are, final responsibility always lies with developers. Always review AI-generated code before committing."
+    "checklist": {
+      "title": "Manual Verification Checklist",
+      "boxTitle": "AI-Generated Code Review Checklist",
+      "items": [
+        "Does the business logic match the requirements?",
+        "Is it consistent with existing code patterns?",
+        "Are there security vulnerabilities? (input validation, authn/authz)",
+        "Does it use packages or APIs that don't exist?",
+        "Are there performance problems? (N+1, memory leaks)",
+        "Is error handling appropriate?",
+        "Do the tests verify real behavior? (not tests written only to pass)"
+      ],
+      "progress": "Items checked",
+      "done": "Every item is checked",
+      "reset": "Reset checks"
+    },
+    "permissions": {
+      "title": "Permission Management",
+      "infoTitle": "allow, ask, and deny rules",
+      "infoDesc": "Write per-tool rules under permissions in settings.json to set what is allowed. Rules are evaluated in the order deny, ask, allow, and the first match decides the outcome, so an allow rule can't carve an exception out of a deny rule. Commit them to the project's .claude/settings.json and the whole team uses the same rules.",
+      "code": "// .claude/settings.json\n{\n  \"permissions\": {\n    \"defaultMode\": \"acceptEdits\",\n    \"allow\": [\n      \"Bash(bun run test *)\",\n      \"Bash(git commit *)\",\n      \"mcp__github__get_*\"\n    ],\n    \"ask\": [\n      \"Bash(git push *)\"\n    ],\n    \"deny\": [\n      \"Read(./.env)\",\n      \"Read(./.env.*)\",\n      \"Read(./secrets/**)\",\n      \"Bash(rm -rf *)\"\n    ]\n  }\n}",
+      "rules": {
+        "deny": [
+          "Read(./.env)",
+          "Read(./.env.*)",
+          "Read(./secrets/**)",
+          "Bash(rm -rf *)"
+        ],
+        "ask": ["Bash(git push *)"],
+        "allow": [
+          "Bash(bun run test *)",
+          "Bash(git commit *)",
+          "mcp__github__get_*"
+        ]
+      },
+      "sim": {
+        "actionsLabel": "Choose an action",
+        "actions": [
+          {
+            "label": "bun run test",
+            "rule": "Bash(bun run test *)"
+          },
+          {
+            "label": "git commit",
+            "rule": "Bash(git commit *)"
+          },
+          {
+            "label": "git push",
+            "rule": "Bash(git push *)"
+          },
+          {
+            "label": "Read .env",
+            "rule": "Read(./.env)"
+          },
+          {
+            "label": "rm -rf",
+            "rule": "Bash(rm -rf *)"
+          }
+        ],
+        "stepsTitle": "Evaluation (deny, then ask, then allow)",
+        "status": {
+          "pending": "Not evaluated yet",
+          "noMatch": "No matching rule",
+          "match": "Match",
+          "skipped": "Skipped because an earlier rule already matched"
+        },
+        "matchedRule": "Matched rule",
+        "resultTitle": "Result",
+        "results": {
+          "allow": "Allowed",
+          "ask": "Asks for confirmation",
+          "deny": "Denied"
+        },
+        "nextStep": "Evaluate next step",
+        "showAll": "Show result now",
+        "replay": "Replay"
+      }
+    },
+    "injection": {
+      "title": "Guarding Against Prompt Injection",
+      "desc": "Web pages, issue bodies, and MCP tool responses that the agent reads can hide instructions meant to trick it. Content that comes from outside must be treated as data, not instructions, and you should not install MCP servers, skills, or plugins from unknown sources. Block files that hold secrets with deny rules, and use bypassPermissions mode, which skips all checks, only in isolated environments."
+    },
+    "guidelines": {
+      "title": "Team Guidelines",
+      "tabsLabel": "Team guideline categories",
+      "prev": "Previous",
+      "next": "Next",
+      "groups": [
+        {
+          "title": "Allowed Uses",
+          "items": [
+            "Generating boilerplate code",
+            "Helping write test code",
+            "Documentation work",
+            "Assisting code review",
+            "Debugging support"
+          ]
+        },
+        {
+          "title": "Required Checks",
+          "items": [
+            "A person reviews all AI-generated code before merge",
+            "Security-related code needs senior developer approval",
+            "Confirm the full test suite passes before production deploys"
+          ]
+        },
+        {
+          "title": "Prohibited",
+          "items": [
+            "Putting secret keys or personal data in prompts",
+            "Committing AI-generated code without review",
+            "Connecting MCP directly to a production DB",
+            "Installing MCP servers, skills, or plugins from unknown sources"
+          ]
+        }
+      ],
+      "noteTitle": "Final Responsibility",
+      "noteDesc": "However capable AI agents become, final responsibility always lies with the developer. Review all AI-generated code before you commit it."
+    }
+  },
+  "tokenOptimization": {
+    "badge": "Economy",
+    "description": "Habits that keep context small to manage cost and quality together",
+    "contextOptimizationTitle": "A Context Optimization Routine",
+    "contextOptimizationInfoTitle": "The basic principle for cutting cost",
+    "contextOptimizationInfoDesc": "Token cost scales with context size. The agent resends the whole conversation with every request, so in a session left open all day, even a one-line question is processed together with everything accumulated so far. Keeping context small is the most effective saving.",
+    "contextOptimizationChecklist": [
+      "Start fresh with /clear when you move to unrelated work",
+      "Keep CLAUDE.md under 200 lines, and move task-specific instructions into skills",
+      "Hand tasks with long output, such as test runs or log analysis, to subagents",
+      "For tools that have a CLI (gh, aws, and so on), use the CLI instead of MCP, and turn off unused MCP servers",
+      "Handle most work with a lighter model, and save the top model and high effort for complex design",
+      "Vague requests trigger broad exploration. Spell out the files, scope, and done criteria",
+      "If the direction is wrong, stop right away with Esc and go back with /rewind"
+    ],
+    "commands": [
+      {
+        "goal": "See what takes space",
+        "code": "# See what is taking up context\n> /context"
+      },
+      {
+        "goal": "Clear",
+        "code": "# Start fresh when moving to unrelated work\n> /clear"
+      },
+      {
+        "goal": "Compact with a focus",
+        "code": "# Compact while saying what to keep\n> /compact Keep code changes and test results"
+      },
+      {
+        "goal": "Usage, model, effort",
+        "code": "# Check usage, adjust model and effort\n> /usage\n> /model\n> /effort"
+      },
+      {
+        "goal": "Hand off to a subagent",
+        "code": "# Hand verbose output to a subagent\n> Use a subagent to run the full test suite and summarize only the failures"
+      }
+    ],
+    "ui": {
+      "gaugeLabel": "How context piles up",
+      "send": "Send a request",
+      "clear": "/clear",
+      "compact": "/compact",
+      "reset": "Start over",
+      "requests": "Requests sent",
+      "gaugeName": "Amount processed with this request",
+      "history": "Accumulated conversation",
+      "newRequest": "New request",
+      "empty": "The conversation is empty, so only the new request is processed",
+      "resend": "The agent resends the whole conversation with every request",
+      "keepSmall": "Keeping context small is the most effective saving",
+      "full": "Keep going and the bar fills up",
+      "relative": "A relative bar with no units",
+      "goalLabel": "What do you want to do",
+      "prev": "Previous",
+      "next": "Next",
+      "checklistHint": "Tap the items you have put into practice",
+      "progress": "Progress",
+      "done": "All done"
+    }
   }
 }
