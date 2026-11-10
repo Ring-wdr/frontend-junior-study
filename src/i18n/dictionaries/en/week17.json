@@ -106,6 +106,287 @@
     "exampleTitle": "Handing a Task to an Agent",
     "exampleCode": "# Start an interactive session with an initial prompt\nclaude \"Implement user authentication:\n       - JWT auth with refresh tokens\n       - Login/logout API\n       - Login form component\n       Done when: bun run typecheck and bun run test pass\"\n\n# The loop the agent runs:\n# 1. Explore the project structure and existing patterns\n# 2. Create/modify the files it needs\n# 3. Run type checks and tests\n# 4. On failure, read the cause and fix again\n# 5. Report once the done criteria are met"
   },
+  "usageLadder": {
+    "badge": "Usage ladder",
+    "description": "Use each step well, and move up only when you can see its limit.",
+    "notice": "This is based on official docs and GitHub repositories checked on 2026-11-10. Tools change every few months, so re-check commands in each official doc before using them. Prices and benchmark rankings are not covered.",
+    "principleTitle": "The one idea",
+    "principleBody": "Use one step thoroughly, and move to the next only when you can see that step's limit. Running more agents does not give better results. When the checking work (review, tests) piles up on one person, things get slower.",
+    "overviewTitle": "The six steps at a glance",
+    "overview": {
+      "headers": ["Step", "Summary"],
+      "rows": [
+        ["① Simple use", "Ask in conversation and hand over one small task"],
+        [
+          "② Instructions and procedures",
+          "Remove repeated explanations with rule files and skills"
+        ],
+        [
+          "③ Plan and verify",
+          "Get a plan first, then check the result with tests"
+        ],
+        ["④ Subagents", "Delegate research or review inside one session"],
+        [
+          "⑤ Parallel sessions",
+          "Run several sessions with worktrees, background, or cloud"
+        ],
+        [
+          "⑥ Orchestration",
+          "Manage many agents on one screen with tools like herdr and Orca"
+        ]
+      ]
+    },
+    "labels": {
+      "does": "What you do",
+      "command": "Commands and settings",
+      "habits": "Good habits",
+      "whenUp": "When to move up",
+      "mistakes": "Common mistakes"
+    },
+    "s1": {
+      "title": "① Simple use: conversational questions and single tasks",
+      "does": "Ask for an explanation of the codebase, paste an error message and ask for the cause, or have it fix one function. The Claude Code docs use questions like \"give me an overview of this codebase\" and \"how is authentication handled?\".",
+      "code": "cd /path/to/project\nclaude",
+      "habits": [
+        "Give the reproduction command together with the full error.",
+        "Point at files directly, like @src/utils/auth.js (the Claude Code @ reference).",
+        "Repeat small, verifiable requests instead of one big request."
+      ],
+      "when": "If you keep typing the same explanation (\"this project uses bun and kebab-case\") three or more times, go to ②.",
+      "mistakes": [
+        "Committing the result without reading it.",
+        "Piling unrelated tasks into one conversation and cluttering the context."
+      ]
+    },
+    "s2": {
+      "title": "② Project instruction files and reusable procedures (skills)",
+      "rulesLead": "A rule file holds \"facts that always apply\". The file name differs by tool.",
+      "rulesTable": {
+        "headers": ["Tool", "Instruction files checked"],
+        "rows": [
+          [
+            "Claude Code",
+            "CLAUDE.md (v2.1.277 and later also read AGENTS.md when CLAUDE.md is absent, see below)"
+          ],
+          [
+            "Codex",
+            "AGENTS.md (global: ~/.codex/AGENTS.md; in a repo: root or subdirectories; the file closest to the working directory wins)"
+          ],
+          [
+            "GitHub Copilot (cloud agent, CLI)",
+            ".github/copilot-instructions.md, .github/instructions/**/*.instructions.md, AGENTS.md, CLAUDE.md, GEMINI.md"
+          ],
+          [
+            "Gemini family",
+            "GEMINI.md (see \"Note on the Google family\" below)"
+          ]
+        ]
+      },
+      "rulesNote": "If you mix tools, it is convenient to keep the shared rules in a single AGENTS.md. The official docs confirm that Copilot reads AGENTS.md, CLAUDE.md, and GEMINI.md, and that Codex reads AGENTS.md.",
+      "claudeAgentsTitle": "Claude Code and AGENTS.md",
+      "claudeAgentsBody": "According to the official Claude Code docs (code.claude.com/docs/en/memory), v2.1.277 and later read the repository's AGENTS.md as project instructions when there is no CLAUDE.md. If both exist, only CLAUDE.md is read. To use both, import AGENTS.md from CLAUDE.md with @AGENTS.md.",
+      "claudeImportCode": "# CLAUDE.md\n@AGENTS.md\n\n# Put only Claude Code specific instructions below this line.",
+      "skillsLead": "A skill holds a \"procedure loaded only when needed\". Write the description and step-by-step instructions in a SKILL.md file. Only the description is always in context; the body loads when the skill is invoked.",
+      "skillPathsCode": "# Claude Code\n.claude/skills/<skill-name>/SKILL.md      project (commit to the repo to share)\n~/.claude/skills/<skill-name>/SKILL.md    personal\n\n# Codex\n.agents/skills                            repository\n~/.agents/skills                          personal",
+      "skillFileCode": "---\nname: summarize-changes\ndescription: Summarizes uncommitted changes and flags anything risky. Use when the user asks what changed or wants a commit message.\n---",
+      "skillUse": "In Claude Code you can call a skill directly, like /summarize-changes, or Claude loads it automatically when your request matches the description. For procedures with side effects, such as deployment, use disable-model-invocation: true. The Claude Code docs advise moving a CLAUDE.md section into a skill once it has become a multi-step procedure rather than a fact.",
+      "when": "If the agent still \"fixes things right away without a plan and breaks them\" after you tidy the instructions, go to ③.",
+      "mistakes": [
+        "Growing the instruction file to hundreds of lines. The Codex docs also say to keep AGENTS.md small.",
+        "Leaving the instructions out of sync with the real repository (script names, directories).",
+        "Assuming the team can use a skill that exists only on your own PC. The Cursor docs explain that local skills that are not synced are not copied to cloud agents."
+      ]
+    },
+    "s3": {
+      "title": "③ Plan first, then execute, and the verification loop",
+      "planLead": "Plan first. In Claude Code plan mode, it reads files and only proposes a plan, and it does not edit anything before you approve.",
+      "planCode": "claude --permission-mode plan",
+      "planNote": "During a session you can press Shift+Tab to switch to plan mode. Other tools may have a similar planning feature, but it was not confirmed from a primary source, so if there is none, ask \"do not edit code; write only a step-by-step plan first\" instead.",
+      "verifyLead": "The verification loop. Give the agent a way to check its own work. State the following in the instruction file.",
+      "verifyCode": "After every change, always run: bun run typecheck, bun run lint, bun run test\nIf anything fails, fix the cause and run again. Do not say the task is done before they pass.",
+      "headlessLead": "Non-interactive runs can also serve the verification loop. An example from the Claude Code docs:",
+      "headlessCode": "git log --oneline -20 | claude -p \"summarize these recent commits\"",
+      "hookNote": "Claude Code hooks (such as TaskCompleted) can also automate a rule that blocks marking a task complete before tests pass. This hook was confirmed in the agent teams docs.",
+      "when": "If planning and verification work well but research or review quickly fills the main context, go to ④.",
+      "mistakes": [
+        "Approving the plan without reading it.",
+        "Trusting the agent's \"verified\" claim in areas with no tests. An agent may also edit the tests to make them pass, so check test file changes in the diff."
+      ]
+    },
+    "s4": {
+      "title": "④ Delegation inside one session: subagents",
+      "lead": "A subagent is a helper with its own context window. You hand it the bulk file reading and get back only a summary, so the main conversation stays clean. An example from the Claude Code docs:",
+      "promptCode": "use a subagent to investigate how our auth system handles token refresh",
+      "locationsLead": "The definition file location differs by tool.",
+      "locationsTable": {
+        "headers": ["Tool", "Location and format"],
+        "rows": [
+          [
+            "Claude Code",
+            ".claude/agents/*.md, ~/.claude/agents/*.md (YAML frontmatter + body as the system prompt)"
+          ],
+          [
+            "Codex",
+            "Standalone TOML files in .codex/agents/ and ~/.codex/agents/ (name, description, developer_instructions required)"
+          ],
+          [
+            "Cursor",
+            ".cursor/agents/ (also reads .claude/agents/ and .codex/agents/)"
+          ],
+          [
+            "Gemini CLI",
+            ".gemini/agents, ~/.gemini/agents (announced 2026-04-15)"
+          ]
+        ]
+      },
+      "exampleLead": "A Claude Code example. Only name and description are required.",
+      "exampleCode": "---\nname: code-reviewer\ndescription: Reviews code for quality and best practices. Use proactively after code changes.\ntools: Read, Glob, Grep\nmodel: sonnet\n---\n\nYou are a code reviewer. Analyze the code and provide specific,\nactionable feedback on quality, security, and best practices.",
+      "notes": "Codex tells you to request subagents or parallel work explicitly (for example \"spawn two agents\"), and in the CLI you switch between active threads with /subagents. The number of concurrent threads is limited by agents.max_concurrent_threads_per_session. Cursor supports the readonly and is_background keys in frontmatter.",
+      "when": "A subagent is bound to the lifetime and context of one session. To work on different features at the same time for a long while, go to ⑤.",
+      "mistakes": [
+        "Letting several subagents edit the same file.",
+        "Granting write access even for read-only work (research, review). Block it with the tools allow list or readonly.",
+        "Leaving context out of the delegation prompt. Assume a subagent does not inherit the conversation history and write down what it needs."
+      ]
+    },
+    "s5": {
+      "title": "⑤ Parallel sessions: worktrees, background, cloud",
+      "worktreeTitle": "git worktree",
+      "worktreeLead": "A git feature that checks out several branches of one repository into separate directories at the same time. It is used to give each agent its own working directory.",
+      "worktreeCode": "git worktree add -b feature-a ../myapp-feature-a\ngit worktree list\ngit worktree remove ../myapp-feature-a",
+      "toolLead": "Tools can also do this for you.",
+      "toolCode": "# Claude Code: run it with another name in a second terminal for an isolated parallel session\nclaude --worktree feature-auth",
+      "cursorNote": "Cursor creates a separate checkout per agent in the Agents Window, and in the IDE you use the /worktree, /best-of-n, /apply-worktree, and /delete-worktree commands. Write the setup steps for a new worktree under the setup-worktree-unix, setup-worktree-windows, and setup-worktree keys in .cursor/worktrees.json. A Claude Code subagent runs in a temporary worktree if you put isolation: worktree in its frontmatter.",
+      "cautionTitle": "Limits of worktrees",
+      "caution": "A worktree separates only the working files. Dev server ports, databases, and dependency installs such as node_modules must be managed separately. (The Cursor docs do not recommend symlinking dependencies and recommend fast package managers such as bun, pnpm, and uv.)",
+      "bgTitle": "Background sessions",
+      "bgLead": "The docs say the Claude Code agent view is a research preview and its interface may change.",
+      "bgCode": "claude --bg \"investigate the flaky SettingsChangeDetector test\"\nclaude agents            # show all background sessions on one screen\nclaude attach <id>       # attach to a session\nclaude logs <id>\nclaude stop <id>",
+      "bgStates": "Session states are shown as Working, Needs input, Idle, Completed, Failed, and Stopped. You can send a running conversation to the background with /bg.",
+      "cloudTitle": "Cloud agents",
+      "cloud": [
+        "The GitHub Copilot cloud agent researches the repository, plans, and runs file edits and tests in the background in a cloud development environment. It works with one branch and one PR per task.",
+        "Claude Code offers cloud scheduled tasks (routines). They run even when your computer is off and are set up at claude.ai/code/routines.",
+        "The Cursor docs say subagents can also be used in Cloud Agents.",
+        "The Codex docs include an example of delegating work to a cloud chat by adding @codex ... to a PR comment. Other details of the Codex cloud environment were not confirmed."
+      ],
+      "when": "When you have more than three or four sessions and start spending time finding which session is waiting for input, consider ⑥.",
+      "mistakes": [
+        "Running tasks that touch the same files in parallel and causing merge conflicts. Split the work by file ownership.",
+        "Forgetting to clean up worktrees until the disk fills. Cursor uses 25 as the default machine-wide limit and can automatically clean up old worktrees (cursor.worktreeMaxCount).",
+        "Trying to review all parallel results at once and creating a bottleneck. The speed at which a person can review is the upper limit."
+      ]
+    },
+    "s6": {
+      "title": "⑥ Multi-agent orchestration",
+      "lead": "Here \"orchestration\" splits into two kinds.",
+      "kinds": [
+        "Built-in team features of an agent. A single agent product builds a team.",
+        "External tools that wrap agents. A terminal runtime (herdr) or a desktop app (Orca) runs and manages many kinds of agents in one place."
+      ],
+      "teamsTitle": "Built-in teams: Claude Code agent teams",
+      "teamsLead": "An experimental feature that is off by default. Turn it on with an environment variable.",
+      "teamsCode": "{\n  \"env\": {\n    \"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS\": \"1\"\n  }\n}",
+      "teamsNote": "A team lead session creates teammates (independent Claude Code sessions) and coordinates through a shared task list and messages between teammates. The docs recommend 3 to 5 teammates to start and suggest beginning with work that writes no code, such as review and research. The docs also list limits: one team per session, no nested teams, and far more token use than subagents. Split-pane mode needs tmux or iTerm2 (the --teammate-mode flag)."
+    },
+    "herdr": {
+      "title": "herdr",
+      "about": [
+        "What it is. A terminal runtime built in Rust as a single binary. Its official description is \"the runtime your coding agents live on\"; it runs inside your existing terminal, and a background server keeps agent sessions alive. The GitHub organization is herdrdev, the site is herdr.dev, and the license is Apache-2.0.",
+        "It does not wrap agents; each runs as-is in its own terminal. Agents named in the docs are Claude Code, Codex, Cursor, OpenCode, and Grok."
+      ],
+      "installTitle": "Install",
+      "installCode": "curl -fsSL https://herdr.dev/install.sh | sh\n# or\nbrew install herdr\nmise use -g herdr",
+      "usageTitle": "Basic use",
+      "usage": "Start it with herdr; running it again reattaches to the existing session. The default prefix key is ctrl+b (tmux style). Work continues even after you detach with ctrl+b q.",
+      "keysTable": {
+        "headers": ["Action", "Keys"],
+        "rows": [
+          ["Detach", "ctrl+b q"],
+          ["New workspace", "prefix+shift+n"],
+          ["Split right", "prefix+v"],
+          ["Split down", "prefix+minus"],
+          ["Move between panes", "prefix+h/j/k/l"]
+        ]
+      },
+      "cliTitle": "CLI that agents use directly",
+      "cliLead": "An agent can create, read, and wait on other panes.",
+      "cliCode": "herdr workspace create --cwd ~/project --label api\nherdr pane split w1:p1 --direction right\nherdr pane run w1:p2 \"npm test\"\nherdr pane read w1:p2 --source recent --lines 50\nherdr agent wait w1:p1 --until done",
+      "cliNote": "agent wait also accepts --until blocked. The socket API also has methods such as worktree.create, agent.prompt, and agent.wait. A skill that teaches agents this usage is installed like this:",
+      "skillCode": "npx skills add herdrdev/herdr --skill herdr -g",
+      "skillNote": "The skill has a safety rule that it must work only inside a herdr pane where HERDR_ENV=1 is set. An example of starting an agent inside herdr is herdr claude.",
+      "remoteTitle": "Remote",
+      "remote": "You see saved SSH machines together with local work, and the server keeps the terminals alive even if the connection drops. If the server or machine restarts, the original processes do not survive; the saved layout is restored and supported agent sessions can be resumed."
+    },
+    "orca": {
+      "title": "Orca",
+      "about": [
+        "What it is. An open-source (MIT) desktop app made by Stably AI (the stablyai GitHub organization); the site is onorca.dev. It runs each agent in its own git worktree and says it is compatible with \"any CLI agent\".",
+        "Agents named include Claude Code, Codex, Grok, Cursor, GitHub Copilot, OpenCode, Amp, and Pi. There are desktop builds for macOS, Windows, and Linux, and mobile apps for iOS and Android."
+      ],
+      "installTitle": "Install (macOS)",
+      "installCode": "brew install --cask stablyai/orca/orca",
+      "installWarn": "The README warns you to use the full cask name. Using just orca points to an unrelated Plotly cask.",
+      "usageTitle": "Basic use",
+      "usage": "Give a big task to a coordinator agent and it starts worker agents, each in its own workspace. In the app you view diffs and leave notes on changed lines to send feedback to the agent. Agents, terminals, browsers, and diffs are arranged in split panels. You can also work on SSH hosts.",
+      "cliTitle": "CLI for agents",
+      "cliLead": "The app provides a CLI, which you register under Settings → General → Orca CLI.",
+      "cliCode": "orca status --json\norca worktree create --repo id:<repoId> --name my-task --issue 123 --json\norca worktree ps --json\norca terminal send --text \"continue\" --enter --json\norca terminal wait --for tui-idle --timeout-ms 30000 --json",
+      "skillNote": "A skill that teaches agents how to use the CLI is installed with this command:",
+      "skillCode": "npx skills add https://github.com/stablyai/orca --skill orca-cli"
+    },
+    "compare": {
+      "title": "herdr vs Orca",
+      "table": {
+        "headers": ["", "herdr", "Orca"],
+        "rows": [
+          [
+            "Form",
+            "Terminal runtime (TUI, single Rust binary)",
+            "Desktop app + mobile (whether it is Electron appears only in secondary sources; unconfirmed)"
+          ],
+          [
+            "Isolation",
+            "Panes and workspaces, with a worktree method",
+            "A worktree per agent by default"
+          ],
+          [
+            "Strengths",
+            "tmux-like persistence and SSH, an API to wait on agent state",
+            "Diff review, issue/PR integration, a CLI to control the browser and emulator"
+          ],
+          ["License", "Apache-2.0", "MIT"]
+        ]
+      },
+      "note": "What they share is that an agent can start other agents through the CLI, and that is the point where you pass from \"a person managing windows\" to \"agents managing agents\". This research has no basis for saying either is better. Try them on one project and judge for yourself whether herdr suits terminal-centered work and Orca suits review- and GUI-centered work."
+    },
+    "google": {
+      "title": "Note on the Google family",
+      "body": "On 2026-05-19 Google announced the transition from Gemini CLI to Antigravity CLI (agy). Agent Skills, Hooks, Subagents, and Extensions (Antigravity plugins) carry over, and Google said there is no one-to-one feature parity at launch. Gemini CLI service for personal accounts (Google AI Pro, Ultra, and free) ended on 2026-06-18. So the Gemini CLI subagent information here is for existing users only. Installation and usage of Antigravity CLI were not confirmed."
+    },
+    "s6end": {
+      "title": "⑥ When to move up, and when not to",
+      "whenLabel": "When to move up (and when not to)",
+      "when": [
+        "Move up when you have several independent tasks, each with automatic verification (tests), and time to review.",
+        "If the tasks are sequential or touch the same files a lot, ④ or a single session is better. The Claude Code docs say the same."
+      ],
+      "mistakes": [
+        "Making \"run many agents\" the goal itself.",
+        "Leaving several agents unsupervised with all permissions allowed (such as --dangerously-skip-permissions). The docs say that in Claude Code teams, teammates inherit the lead's permission mode.",
+        "Treating messages between agents as human approval. The docs say Claude Code is designed not to trust an \"approved\" claim relayed by another agent."
+      ]
+    },
+    "wrap": {
+      "title": "Wrap-up: what to try this week",
+      "steps": [
+        "Step ②: create a small AGENTS.md (or a per-tool instruction file) in the repository and write three verification command lines.",
+        "Step ③: for your next feature, get a plan first, approve it, and then execute.",
+        "Step ⑤: split two independent tasks with git worktree and run them in two sessions.",
+        "When you feel friction up to this point, pick just one ⑥ tool and try it on one project."
+      ]
+    }
+  },
   "mcp": {
     "badge": "Protocol",
     "title": "MCP (Model Context Protocol)",
@@ -132,60 +413,382 @@
       "Tasks moved out of the core protocol into an official extension",
       "Roots, Sampling, and Logging are deprecated. They keep working during the deprecation window, but new implementations should not use them",
       "The HTTP+SSE transport is deprecated and should be migrated to Streamable HTTP. stdio stays as is"
-    ],
-    "serversTitle": "Commonly Used MCP Servers",
-    "servers": [
-      {
-        "name": "GitHub",
-        "desc": "Issues, PRs, and code search (GitHub's official remote server)",
-        "icon": "git-branch",
-        "example": "https://api.githubcopilot.com/mcp/"
+    ]
+  },
+  "mcpServers": {
+    "badge": "MCP Servers",
+    "description": "As of 2026-11-10: the MCP servers frontend developers actually connect, how to add them per agent, how usage has changed, and security rules.",
+    "intro": {
+      "title": "Why MCP is still used",
+      "body": "MCP (Model Context Protocol) is an open protocol that lets coding agents call tools and data from external services in a uniform way. A server provides Tools, Resources, and Prompts. In frontend work you mostly connect it for things like \"reading Figma designs\", \"finding the latest library docs\", \"seeing errors from the running app\", and \"checking the screen in a browser\". See the previous section for the concept and architecture.",
+      "limitNote": "MCP is not a cure-all, though. Because of token cost, handling the same jobs with a CLI plus skills has also become established. It is not a choice of one or the other but a matter of mixing them to fit the situation.",
+      "basisTitle": "How to read this list",
+      "basisBody": "Server names, addresses, commands, and config keys are listed only where they were confirmed in each provider's official docs or official repository. No officially aggregated usage ranking was found. So read \"widely used\" not as a ranking but as \"the official docs provide separate install instructions for the major agents\"."
+    },
+    "catalog": {
+      "title": "Servers by category",
+      "hint": "Do not install every server. Starting with \"docs search + browser + the server for your framework\" is enough.",
+      "headers": {
+        "name": "Name",
+        "provider": "Provider",
+        "what": "What it does",
+        "address": "Address or package",
+        "when": "When to use"
       },
-      {
-        "name": "Playwright",
-        "desc": "Browser automation (official, from Microsoft)",
-        "icon": "globe",
-        "example": "@playwright/mcp"
+      "categories": [
+        {
+          "title": "Design, docs, repositories",
+          "rows": [
+            {
+              "name": "Figma MCP (remote)",
+              "provider": "Figma",
+              "what": "Generates code from a selected frame, extracts design context such as variables, components, and layout, keeps consistency with Code Connect, writes to the canvas (remote only)",
+              "address": "`https://mcp.figma.com/mcp`",
+              "when": "When turning a mockup into code"
+            },
+            {
+              "name": "Context7",
+              "provider": "Upstash",
+              "what": "Resolves a library name to an ID (`resolve-library-id`) and fetches that library's docs (`query-docs`)",
+              "address": "Remote `https://mcp.context7.com/mcp`, package `@upstash/context7-mcp`",
+              "when": "When you want to stop the agent from using outdated APIs"
+            },
+            {
+              "name": "GitHub MCP",
+              "provider": "GitHub",
+              "what": "Provides toolsets for working with repositories, issues, pull requests, and more",
+              "address": "Remote `https://api.githubcopilot.com/mcp/`, local Docker image `ghcr.io/github/github-mcp-server`",
+              "when": "When handing issue reading and PR work to the agent"
+            }
+          ],
+          "notes": [
+            "Figma also has a desktop server that goes through the desktop app, but the official docs recommend the remote server. The desktop server is for specific organization and enterprise needs and requires a Dev or Full seat.",
+            "GitHub MCP has `--toolsets` to choose tool groups and `--read-only` to remove write tools. Start with read-only."
+          ]
+        },
+        {
+          "title": "Deployment, error monitoring, backend",
+          "rows": [
+            {
+              "name": "Vercel MCP",
+              "provider": "Vercel",
+              "what": "Docs search, project and deployment management, deployment log analysis, Web Analytics queries. A remote server using OAuth",
+              "address": "`https://mcp.vercel.com`",
+              "when": "When investigating why a deployment failed together with the agent"
+            },
+            {
+              "name": "Sentry MCP",
+              "provider": "Sentry",
+              "what": "Error search, performance analysis, issue triage, reading docs, project management. All connections use OAuth",
+              "address": "`https://mcp.sentry.dev/mcp` (path to narrow to an organization and project: `/mcp/{organizationSlug}/{projectSlug}`)",
+              "when": "When tying production errors to code and fixing them"
+            },
+            {
+              "name": "Supabase MCP",
+              "provider": "Supabase",
+              "what": "Provides tool groups such as database and docs",
+              "address": "`https://mcp.supabase.com/mcp`",
+              "when": "Projects that use a Supabase backend"
+            }
+          ],
+          "notes": [
+            "For Supabase you can add `project_ref=<id>` (limit to one project), `read_only=true` (run as a read-only Postgres user), and `features=<group>` (limit the tool groups) to the address. Example: `https://mcp.supabase.com/mcp?project_ref=abc123&read_only=true`. The official docs treat this server as a tool that runs with developer privileges and warn you not to give it to customers or end users."
+          ]
+        },
+        {
+          "title": "Browser and debugging",
+          "rows": [
+            {
+              "name": "Chrome DevTools MCP",
+              "provider": "Chrome DevTools team (ChromeDevTools repository)",
+              "what": "Records performance traces with insights, analyzes network requests, takes screenshots, shows console messages with source-mapped stack traces, Puppeteer-based automation",
+              "address": "npm `chrome-devtools-mcp` (`npx -y chrome-devtools-mcp@latest`)",
+              "when": "When checking in a real Chrome why a page is slow or broken"
+            },
+            {
+              "name": "Playwright MCP",
+              "provider": "Microsoft",
+              "what": "Opens a browser, reads the page structure, and operates it",
+              "address": "npm `@playwright/mcp` (`npx @playwright/mcp@latest`)",
+              "when": "Exploratory automation, repeated checks that need persistent state"
+            }
+          ],
+          "notes": [
+            "Chrome DevTools MCP collects usage statistics by default, and its performance tools may send trace URLs to the Chrome UX Report API. You can turn these off with the `--no-usage-statistics` and `--no-performance-crux` options. Also, `--slim` is a reduced tool set for basic browser tasks.",
+            "The Playwright repository itself says that exposing the CLI as a skill is \"more token-efficient\" for coding agents, and describes MCP as suited to specialized loops that need persistent state and rich inspection. It is an example of one provider documenting both approaches."
+          ]
+        },
+        {
+          "title": "MCP servers provided directly by frameworks and UI libraries",
+          "rows": [
+            {
+              "name": "next-devtools-mcp",
+              "provider": "Next.js (Vercel)",
+              "what": "Connects to the `/_next/mcp` endpoint of a Next.js 16+ dev server. Queries current errors, routes, logs, and compile problems, and points to docs matching the installed version",
+              "address": "npm `next-devtools-mcp` (`npx add-mcp next-devtools-mcp@latest`)",
+              "when": "When fixing errors with your Next.js app running on the dev server"
+            },
+            {
+              "name": "shadcn MCP",
+              "provider": "shadcn/ui",
+              "what": "Searches and installs components from registries. Private and third-party registries can be connected",
+              "address": "`npx shadcn@latest mcp`",
+              "when": "shadcn/ui projects"
+            },
+            {
+              "name": "Storybook MCP",
+              "provider": "Storybook",
+              "what": "Lets the agent reuse existing components and docs, write stories, and run story tests including accessibility",
+              "address": "Addon `@storybook/addon-mcp` (preview stage)",
+              "when": "When you manage a design system with Storybook"
+            },
+            {
+              "name": "MUI MCP",
+              "provider": "MUI",
+              "what": "A server that helps with using MUI",
+              "address": "`npx -y @mui/mcp@latest`",
+              "when": "MUI projects"
+            },
+            {
+              "name": "Angular CLI MCP",
+              "provider": "Angular",
+              "what": "Starting and stopping the dev server, waiting for builds, best practices, docs search, and more",
+              "address": "`npx -y @angular/cli mcp`",
+              "when": "Angular projects"
+            },
+            {
+              "name": "Svelte MCP",
+              "provider": "Svelte",
+              "what": "Tools based on the official docs and static analysis to catch common mistakes of generative AI",
+              "address": "Remote `https://mcp.svelte.dev/mcp`",
+              "when": "Svelte projects"
+            }
+          ],
+          "notes": [
+            "The advantage of framework servers is that they see the state of \"my app running right now\", which a general docs search server cannot give you. Next.js `/_next/mcp` is on by default and can be turned off by setting `experimental.mcpServer` to `false` in `next.config`."
+          ]
+        }
+      ]
+    },
+    "retired": {
+      "title": "Servers no longer to use (archived, moved, replaced)",
+      "refServers": "The current reference servers in the official `modelcontextprotocol/servers` repository are Everything, Fetch, Filesystem, Git, Memory, Sequential Thinking, and Time. The servers below, which often appeared in older introductory articles, were moved to `servers-archived` in that repository.",
+      "headers": {
+        "old": "Often seen before",
+        "status": "Current status",
+        "instead": "Look at instead"
       },
-      {
-        "name": "Chrome DevTools",
-        "desc": "Console, network, and performance trace debugging (Chromium only)",
-        "icon": "globe",
-        "example": "chrome-devtools-mcp"
-      },
-      {
-        "name": "Context7",
-        "desc": "Up-to-date library documentation lookup",
-        "icon": "file-search",
-        "example": "@upstash/context7-mcp"
-      },
-      {
-        "name": "DBHub",
-        "desc": "Querying PostgreSQL and other databases (use a read-only account)",
-        "icon": "database",
-        "example": "@bytebase/dbhub"
-      },
-      {
-        "name": "Sentry",
-        "desc": "Error issue lookup and analysis (remote server with OAuth)",
-        "icon": "server",
-        "example": "https://mcp.sentry.dev/mcp"
-      }
-    ],
-    "configTitle": "Configuring MCP",
-    "configInfoTitle": "Where a server is stored depends on its scope",
-    "configInfoDesc": "In Claude Code you add servers with the claude mcp add command. The default local scope is a private setting for the current project, stored in ~/.claude.json. The project scope is stored in .mcp.json at the project root and shared with your team through git. The user scope applies to all your projects. Servers from .mcp.json need approval the first time they are used, and tokens should be injected with ${VAR} environment variable expansion instead of being written into the file.",
-    "usageTitle": "MCP Usage Examples",
-    "tipsTitle": "Tips",
-    "tips": [
-      "Connect only the servers a project needs, and turn off unused ones in /mcp",
-      "MCP tool definitions are deferred by default, so only tool names and server instructions enter context, but for tools that have a CLI, such as gh, the CLI uses less context",
-      "Connect databases with a read-only account, and never connect directly to a production DB",
-      "Switch older configs that use the SSE transport to the HTTP transport"
-    ],
-    "addCode": "# Remote server (HTTP) — GitHub's official MCP server\nclaude mcp add --transport http github https://api.githubcopilot.com/mcp/\n\n# Local server (stdio) — everything after `--` is the server command\nclaude mcp add playwright -- npx -y @playwright/mcp@latest\n\n# Share with the team: project scope → saved to .mcp.json at the project root\nclaude mcp add --scope project context7 -- npx -y @upstash/context7-mcp\n\n# Manage\nclaude mcp list\nclaude mcp remove playwright\n# Inside a session, /mcp shows status, runs OAuth, and toggles servers",
-    "configCode": "// .mcp.json (project scope, shared via git)\n{\n  \"mcpServers\": {\n    \"github\": {\n      \"type\": \"http\",\n      \"url\": \"https://api.githubcopilot.com/mcp/\",\n      \"headers\": { \"Authorization\": \"Bearer ${GITHUB_PAT}\" }\n    },\n    \"db\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@bytebase/dbhub\", \"--dsn\", \"${READONLY_DATABASE_URL}\"]\n    },\n    \"playwright\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@playwright/mcp@latest\"]\n    }\n  }\n}",
-    "usageCode": "# Database query (read-only account)\n> Show signup stats for the last 7 days from the users table\n# → calls the DB MCP server's query tool\n\n# Browser check\n> Check the login flow on localhost:3000 and save a screenshot\n# → drives the browser through Playwright MCP\n\n# GitHub integration\n> Open a PR from this branch and comment on the related issue\n# → uses the GitHub MCP server (or the gh CLI)\n\n# Documentation lookup\n> Explain Next.js 16 caching behavior based on the official docs\n# → finds current docs through Context7, then answers"
+      "rows": [
+        {
+          "old": "Puppeteer server",
+          "status": "Archived",
+          "instead": "Playwright MCP, Chrome DevTools MCP"
+        },
+        {
+          "old": "GitHub server (reference implementation)",
+          "status": "Archived",
+          "instead": "GitHub MCP provided directly by GitHub"
+        },
+        {
+          "old": "Sentry server (reference implementation)",
+          "status": "Archived",
+          "instead": "Sentry's official remote server `https://mcp.sentry.dev/mcp`"
+        },
+        {
+          "old": "PostgreSQL, SQLite, Redis servers",
+          "status": "Archived",
+          "instead": "The official server of the service you use (e.g. Supabase MCP). Replacements need to be checked individually"
+        },
+        {
+          "old": "Brave Search server",
+          "status": "Archived",
+          "instead": "`@brave/brave-search-mcp-server`"
+        },
+        {
+          "old": "Slack server",
+          "status": "Archived",
+          "instead": "`zencoderai/slack-mcp-server`, maintained by Zencoder"
+        },
+        {
+          "old": "GitLab, Google Drive, Google Maps, AWS KB Retrieval, EverArt",
+          "status": "Archived",
+          "instead": "Not verified"
+        },
+        {
+          "old": "HTTP+SSE transport",
+          "status": "Classified as Deprecated in the spec",
+          "instead": "Streamable HTTP"
+        }
+      ],
+      "warnTitle": "Do not install archived servers anew",
+      "warnBody": "\"Still on npm\" is not the same as \"maintained\". You cannot expect security patches for an archived server."
+    },
+    "agents": {
+      "title": "How to add a server per agent",
+      "hint": "We use one remote server (Vercel) and one local server (Playwright) as examples. These are the formats confirmed in each tool's official docs.",
+      "items": [
+        {
+          "name": "Claude Code",
+          "intro": "",
+          "blocks": [
+            {
+              "note": "",
+              "language": "bash",
+              "code": "claude mcp add --transport http vercel https://mcp.vercel.com\nclaude mcp add --transport stdio airtable -- npx -y airtable-mcp-server\nclaude mcp list"
+            }
+          ],
+          "bullets": [
+            "Everything after `--` is the server launch command. Authenticate with `/mcp` inside a session, or `claude mcp login <name>` from the shell.",
+            "Scopes are local (default, `~/.claude.json`), project (`.mcp.json` in the repository, shared with the team), and user (`~/.claude.json`, all projects). Add settings you want to share with the team using `--scope project`.",
+            "A remote server entry in `.mcp.json` uses `\"type\": \"http\"` and `\"url\"`. An entry with only `url` and no `type` is treated as stdio and skipped.",
+            "Servers in `.mcp.json` ask for approval in interactive sessions. Environment variables can be inserted as `${VAR}` or `${VAR:-default}`."
+          ],
+          "outro": ""
+        },
+        {
+          "name": "Codex (OpenAI)",
+          "intro": "",
+          "blocks": [
+            {
+              "note": "",
+              "language": "bash",
+              "code": "codex mcp add vercel --url https://mcp.vercel.com\ncodex mcp add context7 -- npx -y @upstash/context7-mcp\ncodex mcp login <server-name>"
+            },
+            {
+              "note": "The config file is `~/.codex/config.toml` (`.codex/config.toml` for trusted projects), and servers go in a `[mcp_servers.<name>]` table. stdio uses `command` and `args`, remote uses `url`.",
+              "language": "toml",
+              "code": "[mcp_servers.playwright]\ncommand = \"npx\"\nargs = [\"@playwright/mcp@latest\"]"
+            }
+          ],
+          "bullets": [],
+          "outro": ""
+        },
+        {
+          "name": "Cursor",
+          "intro": "The config file is `.cursor/mcp.json` in the project or the global `~/.cursor/mcp.json`, and the top-level key is `mcpServers`.",
+          "blocks": [
+            {
+              "note": "",
+              "language": "json",
+              "code": "{\n  \"mcpServers\": {\n    \"vercel\": { \"url\": \"https://mcp.vercel.com\" },\n    \"playwright\": { \"command\": \"npx\", \"args\": [\"@playwright/mcp@latest\"] }\n  }\n}"
+            }
+          ],
+          "bullets": [],
+          "outro": "If the remote server supports OAuth, the login flow starts without extra configuration. If you need a fixed client ID, add an `auth` object. You can also install from the Cursor Marketplace with \"Add to Cursor\"."
+        },
+        {
+          "name": "GitHub Copilot / VS Code",
+          "intro": "Run `MCP: Add Server` from the command palette, choose HTTP or Command (stdio), and choose where to save it, global or workspace. Unlike other tools, the top-level key in `.vscode/mcp.json` is `servers`.",
+          "blocks": [
+            {
+              "note": "",
+              "language": "json",
+              "code": "{\n  \"servers\": {\n    \"context7\": { \"type\": \"http\", \"url\": \"https://mcp.context7.com/mcp\" },\n    \"playwright\": { \"type\": \"stdio\", \"command\": \"npx\", \"args\": [\"-y\", \"@playwright/mcp@latest\"] }\n  }\n}"
+            }
+          ],
+          "bullets": [],
+          "outro": "The VS Code docs describe `~/.copilot/mcp-config.json` (or `$COPILOT_HOME/mcp-config.json`) as the global setting for Copilot and `.mcp.json` at the workspace root (requires the experimental setting `chat.mcp.workspaceRootConfig.enabled`) for sharing with the team, and mark the `.vscode/mcp.json` approach as \"deprecated but still usable\". This may change by version, so check the docs for the VS Code version you use."
+        },
+        {
+          "name": "Google family: Gemini CLI and Antigravity",
+          "intro": "",
+          "blocks": [],
+          "bullets": [
+            "Gemini CLI: write under `mcpServers` in `~/.gemini/settings.json` (user) or `.gemini/settings.json` (project). The keys are `command` for stdio, `url` for SSE, and `httpUrl` for Streamable HTTP. The command is `gemini mcp add --transport http <name> <url>`. The Gemini CLI docs note that, from 2026-06-18, for free-tier and Google One users it has been replaced by the Antigravity CLI.",
+            "Antigravity (2.0, shared by IDE and CLI): global `~/.gemini/config/mcp_config.json`, workspace `.agents/mcp_config.json`. Remote entries use `serverUrl` (or `url`) and support Streamable HTTP only. The docs have no CLI \"add\" command; you open the manager screen with `/mcp` in the prompt or edit the file directly. MCP tools that are not configured default to Ask mode, which asks for approval before running."
+          ],
+          "outro": ""
+        },
+        {
+          "name": "Install to several agents at once",
+          "intro": "The Vercel and Next.js docs point to the `add-mcp` CLI. It detects the installed agents and adds the server to each one's config.",
+          "blocks": [
+            {
+              "note": "",
+              "language": "bash",
+              "code": "npx add-mcp https://mcp.vercel.com\nnpx add-mcp next-devtools-mcp@latest"
+            }
+          ],
+          "bullets": [],
+          "outro": ""
+        }
+      ]
+    },
+    "shifts": {
+      "title": "How usage has changed in 2026",
+      "items": [
+        {
+          "title": "Remote (HTTP) servers and OAuth are the default",
+          "body": "Figma, Vercel, Sentry, Supabase, Context7, GitHub, and Svelte all provide remote addresses. Instead of downloading and running a package locally, registering an address and logging in from the browser has become common. The server then works with your account's permissions. The Vercel docs state that once connected, the AI system has \"the same access permissions as your Vercel account\".",
+          "bullets": []
+        },
+        {
+          "title": "Latest spec revision 2026-07-28",
+          "body": "The latest revision of the official spec is 2026-07-28, and the previous one is 2025-11-25. The previous section covered the changes: the protocol became stateless, and Roots, Sampling, Logging, and the HTTP+SSE transport became Deprecated. Among these, for OAuth client registration, Dynamic Client Registration (RFC 7591) became Deprecated and the Client ID Metadata Document is recommended; Vercel MCP also says it supports CIMD. Deprecated features get a deprecation grace period of at least 12 months. Also note that the spec versions that server docs refer to differ. For example, the Vercel docs say its implementation is based on the 2025-06-18 spec. Users usually need not care about this difference, but when you build a server yourself you must check which revision your SDK version supports.",
+          "bullets": []
+        },
+        {
+          "title": "Registry",
+          "body": "The official MCP Registry collects metadata (`server.json`) of public servers and is still a preview (\"breaking changes or data resets may occur\"). Server names use reverse-DNS format such as `io.github.user/server-name`, and go through GitHub account or domain ownership verification. The official docs explain that the registry is designed to be used by downstream aggregators such as marketplaces rather than directly by host apps. The registry does not do security checks; it leaves them to package registries such as npm and to aggregators. So \"it is in the registry\" does not mean \"it is safe\".",
+          "bullets": [
+            "There are also per-agent directories. The Claude Code docs point to the Anthropic Directory (`https://claude.ai/directory`), Cursor to the Cursor Marketplace, and VS Code to the Customization Marketplace (preview)."
+          ]
+        },
+        {
+          "title": "Deferred tool loading (tool search)",
+          "body": "Putting every tool definition into the context up front wastes tokens. In Claude Code, Tool Search is on by default: it defers MCP tool definitions and loads them with `ToolSearch` when needed (turn it off with `ENABLE_TOOL_SEARCH=false`). So connecting several servers no longer burdens the context as much as before. For other agents, check their docs. Cutting the number of tools yourself still works too, for example with `--toolsets` in GitHub MCP or `features=` in Supabase.",
+          "bullets": []
+        },
+        {
+          "title": "CLI + skills instead of MCP",
+          "body": "The Playwright repository itself says that using the CLI as a skill is more token-efficient for coding agents. Chrome DevTools MCP ships a `chrome-devtools` CLI and skills together, and Context7 lets you pick either a \"CLI + Skills\" mode or an \"MCP\" mode through the `ctx7` CLI. Next.js says that skills such as `next-dev-loop` call `/_next/mcp` directly. Blog benchmarks give varying figures, such as the CLI being 4 to 32 times cheaper, and many have a stake in the result, so it is better not to trust the numbers. Just remember these practical rules.",
+          "bullets": [
+            "For services that need authentication, multi-user permissions, or organizational controls (Figma, Sentry, GitHub, etc.), remote MCP is more convenient.",
+            "For stateless jobs that finish in one command, or jobs that already have a CLI, CLI + skills is lighter.",
+            "Many tools offer both, so follow the one the official docs recommend."
+          ]
+        },
+        {
+          "title": "Calling MCP through code execution",
+          "body": "Anthropic's engineering article (2025-11-04) proposes presenting MCP servers as code APIs such as TypeScript modules and having the agent write code to call them. Because intermediate results are filtered in the execution environment and only what is needed goes to the model, the article's example says 150,000 tokens dropped to 2,000 tokens (a figure for that one workflow). The trade-off is that you need infrastructure such as a sandbox and resource limits. Ordinary users rarely set this up themselves, but it helps you understand the direction of \"find and use tools when needed\".",
+          "bullets": []
+        },
+        {
+          "title": "MCP Apps and extensions",
+          "body": "MCP Apps is an extension where a server returns, along with the tool result, an interactive HTML UI (charts, forms, dashboards) that is rendered inside the conversation. `_meta.ui.resourceUri` in the tool description points to a `ui://` resource, and the host renders it in a sandboxed iframe and communicates via `postMessage`. The official docs list Claude, Claude Desktop, VS Code GitHub Copilot, Microsoft 365 Copilot, Goose, and others as supported clients. For frontend developers, what matters is that \"the results of an MCP server can be drawn with web technologies (React, Vue, Svelte, etc.)\". Extensions are optional features used only when both server and client support them. Tasks and Skills over MCP are also introduced as official extensions.",
+          "bullets": []
+        }
+      ]
+    },
+    "security": {
+      "title": "Security",
+      "items": [
+        "The official spec treats tools as arbitrary code execution and says not to trust tool descriptions and annotations unless they come from a trusted server. The host must obtain user consent before calling a tool.",
+        "Prompt injection: an agent may follow instructions hidden in external text such as issues, logs, and support tickets. The Supabase and Vercel docs warn of the same risk and tell you to keep human confirmation on."
+      ],
+      "incidentsTitle": "Cases reported in 2026",
+      "incidentsBody": "These come from secondary sources, so the original reports need to be checked. A chain leading to remote code execution via prompt injection was reported in Anthropic's reference Git MCP server and is said to have been patched. A Cursor case was also reported where approval was tied only to the server name, so there was no re-approval even when the config changed, as was a case where only the description of an approved tool was changed to create a data exfiltration path.",
+      "practicesTitle": "Practical rules",
+      "practices": [
+        "Confirm the address is official, and check the domain of one-click install links on marketplaces.",
+        "Limit to read-only and project scope where possible (`read_only=true`, `project_ref`, `--read-only`).",
+        "Connect production data only when needed.",
+        "Do not turn off tool-call approval.",
+        "Do not write tokens directly in a `.mcp.json` committed to the repository; use environment variables.",
+        "Do not download and run a `.mcp.json` that someone else uploaded without reviewing it."
+      ]
+    },
+    "start": {
+      "title": "Recommended order to get started",
+      "steps": [
+        "Connect Context7 to reduce the outdated API problem.",
+        "Connect the official server of the framework you use (`next-devtools-mcp` for Next.js).",
+        "Pick just one of Chrome DevTools MCP or Playwright for verifying the screen.",
+        "If your team uses Figma, connect the Figma remote server.",
+        "When needed, add GitHub, Vercel, and Sentry, mostly for reading.",
+        "Check the connected servers periodically with a command like `claude mcp list` and remove the ones you do not use."
+      ]
+    }
   },
   "skillsHooks": {
     "badge": "Automation",
@@ -416,69 +1019,294 @@
     "teamsCode": "// settings.json — experimental, so you have to turn it on\n{\n  \"env\": {\n    \"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS\": \"1\"\n  }\n}\n\n# Describe the team in natural language\n> Spawn three teammates to review PR #142:\n  - One focused on security implications\n  - One checking performance impact\n  - One validating test coverage\n  Have them review, challenge each other's findings, and report back.",
     "cursorCode": "<!-- .cursor/rules/typescript.mdc -->\n---\ndescription: TypeScript authoring rules\nglobs: src/**/*.ts, src/**/*.tsx\nalwaysApply: false\n---\n\n- Follow strict mode and never use any\n- Use function components only\n- Use named exports, not default exports\n- Do not leave console.log in production code"
   },
-  "tokenOptimization": {
-    "badge": "Economy",
-    "title": "Saving Tokens and Optimizing Context",
-    "description": "Habits that keep context small, and how to pick browser automation tools by cost",
-    "playwrightMigrationTitle": "Moving from Playwright MCP to Playwright CLI",
-    "playwrightMigrationInfoTitle": "Why switch?",
-    "playwrightMigrationInfoDesc": "Playwright MCP returns the page's accessibility snapshot and screenshots in its responses, so that content piles up in context. The agent-oriented Playwright CLI (@playwright/cli) saves the same results to files and returns only the path, so the agent reads just the parts it needs. The Playwright team also says the CLI is the better fit for coding agents that can use a shell. The savings vary widely with how you measure, so check with /context yourself rather than trusting a specific multiplier.",
-    "playwrightMcpLabel": "When Playwright MCP still fits",
-    "playwrightCliLabel": "When Playwright CLI fits",
-    "playwrightTip1": "Exploratory automation, self-healing tests, and long-running workflows that need persistent browser state",
-    "playwrightTip2": "Everyday page checks and E2E verification by coding agents that have a shell and file system",
-    "playwrightTip3": "Keep screenshots and traces only at the point of failure",
-    "playwrightTip4": "Save long logs to a file and give the agent only a summary and the path",
-    "playwrightTip5": "Lock checked scenarios into test code, and verify with playwright test from then on",
-    "playwrightTipTitle": "CLI Migration Checklist",
-    "mcpVsCdpTitle": "Choosing a Browser Tool: Playwright and Chrome DevTools MCP",
-    "mcpVsCdpIntroTitle": "Which tool fits when",
-    "mcpVsCdpIntro": "Playwright is strong at reproducing and verifying user flows. Chrome DevTools MCP, built on CDP (Chrome DevTools Protocol), is strong at debugging that looks inside the browser: console, network, and performance traces.",
-    "dimension": "Dimension",
-    "playwrightColumn": "Playwright (CLI / MCP)",
-    "cdpColumn": "Chrome DevTools MCP (CDP)",
-    "whenToUse": "Recommended for",
-    "mcpVsCdpRows": [
-      {
-        "dimension": "Main use",
-        "mcp": "Automating user flows such as clicks and input, and E2E tests",
-        "cdp": "Analyzing console errors, network requests, and performance traces",
-        "note": "Playwright to verify features, DevTools to find causes"
+  "browserAutomation": {
+    "badge": "Browser Automation",
+    "description": "A map of the tools for handing a browser to an agent, grouped by category. The reference date is 2026-11-10, and the content centers on what was verified in official docs and repositories. Anything we could not verify is marked 'not verified'.",
+    "overview": {
+      "title": "The Big Picture: Which Browser Does the Agent Use?",
+      "lead": "When you hand a browser to an agent, the first questions are not about tool names. They are these two.",
+      "axes": [
+        "Does the agent use my real logged-in browser, or a clean separate browser?",
+        "Does the agent see the page as text (an accessibility snapshot) or as an image (screenshot + coordinates)?"
+      ],
+      "tableLead": "Along these two axes, the tools fall into roughly five categories.",
+      "head": {
+        "category": "Category",
+        "tools": "Representative tools",
+        "browser": "Default browser",
+        "view": "How it sees the page"
       },
-      {
-        "dimension": "Browsers",
-        "mcp": "Chromium, Firefox, WebKit",
-        "cdp": "Chromium-based only",
-        "note": "Playwright when you need cross-browser checks"
+      "rows": [
+        {
+          "category": "(1) Browsers and extensions shared by human and agent",
+          "tools": "Aside, ego(lite), Claude in Chrome, ChatGPT browser extension",
+          "browser": "Your real profile (including imports)",
+          "view": "Varies by tool"
+        },
+        {
+          "category": "(2) CLIs called from the shell",
+          "tools": "playwright-cli, agent-browser, chrome-devtools CLI",
+          "browser": "A separate (isolated) browser by default",
+          "view": "Accessibility snapshot + ref"
+        },
+        {
+          "category": "(3) MCP servers",
+          "tools": "Playwright MCP, Chrome DevTools MCP, aside mcp",
+          "browser": "A separate profile by default, with an option to connect to an existing Chrome",
+          "view": "Accessibility snapshot (default)"
+        },
+        {
+          "category": "(4) Browsers built into coding agents and IDEs",
+          "tools": "Cursor browser, ChatGPT/Codex app built-in browser",
+          "browser": "App-specific profile",
+          "view": "Screenshots, console and network logs, etc."
+        },
+        {
+          "category": "(5) Cloud browsers and computer use",
+          "tools": "Browserbase (+Stagehand), Claude computer use",
+          "browser": "Remote/virtual environment",
+          "view": "CDP or screenshot + coordinates"
+        }
+      ]
+    },
+    "duo": {
+      "title": "The Two Stars: ego and aside",
+      "egoTitle": "ego (ego lite, ego-browser)",
+      "egoItems": [
+        {
+          "label": "What it is",
+          "body": "A free Chromium-based browser built by Citro Labs. It is designed so that a human and an AI agent can work in the same browser without fighting over control. The CLI is named ego-browser."
+        },
+        {
+          "label": "Install",
+          "body": "Per the official repository (citrolabs/ego-lite), download and run the installer for macOS (Apple Silicon/Intel) or Windows, and the ego-browser skill is installed into the agent's skills directory along with it. To add only the skill first, use npx skills add citrolabs/ego-lite; the agent's first browser task then walks you through installing the app. Linux is only on the roadmap. The repository contents are MIT-licensed, and the browser app is distributed separately for free."
+        },
+        {
+          "label": "Login session",
+          "body": "On first launch it asks whether to import your Chrome logins, cookies, extensions, and bookmarks. You can also import from the CLI, and after importing, the agent inherits that logged-in state."
+        }
+      ],
+      "egoCode": "# Install only the skill first\nnpx skills add citrolabs/ego-lite\n\n# Import your Chrome login state\nego-browser import list\nego-browser import --browser chrome --profile Default\n\n# Other commands\nego-browser skill      # print the skill guide\nego-browser upgrade",
+      "egoHowTitle": "How it works",
+      "egoHow": [
+        "When the agent passes JavaScript to ego-browser nodejs, it runs in the browser's built-in Node.js runtime. The script runs in Node, not inside the page, so code that must run inside the page goes into page.evaluate().",
+        "Each agent task gets an isolated workspace called a Space, and the user's existing tabs are left alone. The user can watch the agent work and take over at any time (task.handOff()).",
+        "For observing the page there are page.snapshot() (structure and refs, the default tool) and page.screenshot() (visual check). According to the official site, the snapshot is built inside Citro's custom Chromium engine without injecting scripts into the page. You act on refs from the snapshot, such as @21, like page.click(\"@21\").",
+        "It looks like Playwright but is not Playwright. The skill document explicitly says not to guess at Playwright APIs such as locator() or getByRole(). Anything not in the list is handled with page.evaluate() or page.cdp()."
+      ],
+      "egoAfter": [
+        {
+          "label": "Token cost profile",
+          "body": "The skill document recommends using only the one of snapshot or screenshot you need, batching several actions into one script, and taking a single snapshot at the end. In other words, it is designed to cut round trips. We could not verify any numeric savings."
+        },
+        {
+          "label": "Caution",
+          "body": "The content of the pages the agent works on is sent to the model the user selected (official site). Because it uses your real logged-in session, whatever the agent can do is whatever your account can do."
+        }
+      ],
+      "asideTitle": "aside",
+      "asideItems": [
+        {
+          "label": "What it is",
+          "body": "A 'browser rebuilt for humans and agents' made by Aside Computer Inc. (a Y Combinator company). Its core message is working on logged-in sites without integrations. It supports macOS 15 or later and Windows 10 22H2 or later / Windows 11. How the agent works internally (CDP, DOM, or screenshots) is not stated in the official docs, so it is not verified."
+        },
+        {
+          "label": "Login session",
+          "body": "Onboarding imports browsing history, cookies, and bookmarks from Chrome and others. The official site says the agent logs in through autofill so credentials are not exposed to the agent, and that sensitive actions such as payments, posting, and messaging wait for user confirmation."
+        },
+        {
+          "label": "Coding agent integration",
+          "body": "The developer docs (aside.com/developers.md) list three options: CLI, MCP, and REPL."
+        }
+      ],
+      "asideCode": "# macOS install (developer docs)\ncurl -fsSL https://releases.aside.com/install.sh | bash\n\n# Login: set the auth file path first, then approve the code in the browser under Settings > Account > Devices\nexport ASIDE_CLI_AUTH_PATH=\"/absolute/path/aside-auth.json\"\naside login --email \"you@example.com\"\n\naside \"smoke test localhost:3000\"   # natural-language task\naside repl \"const p = await openTab('https://example.com')\"   # deterministic step\naside mcp                                     # stdio MCP server",
+      "asideMcp": "For MCP, in mcp.json under mcpServers set command to aside and args to [\"mcp\"]. The list of tools it exposes is not in the docs, so it is not verified.",
+      "asideExtra": "Other commands: aside session resume <session-id> \"Continue\", aside account list/status/use. The auth file is set with ASIDE_CLI_AUTH_PATH; if unset, ~/.aside/cli/auth.json is used.",
+      "asideCautionLabel": "Caution",
+      "asideCaution": "With a curl | bash install, it is safer to read the script before running it. Never commit the auth file (the official docs give the same warning).",
+      "compareTitle": "What the Two Tools Share and Where They Differ",
+      "compareItems": [
+        "Shared: both are 'browsers shared by human and agent' where the agent inherits your logged-in session. Both import Chrome data.",
+        "Different: ego centers on JS scripts that the outside agent writes itself (ego-browser nodejs). aside has its own agent inside the browser, and the outside agent calls it through CLI/MCP/REPL, as far as we can read it. ego's skill is public (MIT) so you can read its operating rules, while aside's internals are less public."
+      ]
+    },
+    "others": {
+      "title": "The Other Categories",
+      "categories": [
+        {
+          "title": "(1) Browsers and extensions from AI companies",
+          "items": [
+            {
+              "name": "Claude in Chrome",
+              "desc": "Became generally available on all paid plans on 2026-08-26. You install it from the Chrome Web Store and it is Chrome only (other Chromium browsers and mobile are not supported). It can also run autonomously without approval for each action. It reportedly uses training, web-content detection probes, and a pre-execution classifier against prompt injection, but this is Anthropic's own evaluation, so treat it as reference only."
+            },
+            {
+              "name": "ChatGPT",
+              "desc": "Many reports say the standalone Atlas browser was retired and moved to the desktop app's built-in browser and an extension, but the original OpenAI help page would not open, so we could not verify it directly. The built-in browser uses a separate profile and does not share existing sessions; OpenAI's docs say to use the browser extension for Chrome/Edge/Brave and others when you need logged-in sites."
+            },
+            {
+              "name": "Gemini in Chrome (auto browse)",
+              "desc": "Per Google blog search results, it targets paid subscribers (AI Pro/Ultra) and stops at sensitive steps such as payment. We did not open the article itself to verify."
+            }
+          ],
+          "note": ""
+        },
+        {
+          "title": "(2) CLI type",
+          "items": [
+            {
+              "name": "playwright-cli",
+              "desc": "npm install -g @playwright/cli. A CLI for coding agents; the official docs say it keeps token cost low by not loading tool schemas and verbose accessibility trees into context. It has commands like open, snapshot, click, and fill, -s=<name> sessions, and a daemon model. There are attach/detach commands for connecting to an existing browser, but the procedure is not verified."
+            },
+            {
+              "name": "agent-browser (vercel-labs, Apache-2.0)",
+              "desc": "npm install -g agent-browser, then agent-browser install. agent-browser open example.com, agent-browser snapshot -i (refs like @e1 on interactive elements), agent-browser click @e1. The README says a background daemon controls Chrome for Testing over CDP, and that you can attach to a running Chrome with --cdp/--auto-connect."
+            },
+            {
+              "name": "chrome-devtools CLI",
+              "desc": "npm i chrome-devtools-mcp@latest -g, then use it as chrome-devtools <tool> ... The default is headless, isolated mode."
+            }
+          ],
+          "note": "Shared traits: each command returns a short piece of text, so less context piles up. However, claims like 'several times cheaper than MCP' vary by source and their measurement conditions could not be verified. Some third-party measurements reportedly show almost no difference (from search result summaries, originals not checked), so this article gives no multiplier. Measuring on your own tasks is the most accurate."
+        },
+        {
+          "title": "(3) MCP server type",
+          "items": [
+            {
+              "name": "Playwright MCP",
+              "desc": "npx @playwright/mcp@latest. Accessibility snapshots are the default, and --caps=vision adds coordinate-based tools. The default is a persistent per-workspace profile, and --isolated uses an in-memory profile. --extension lets you reuse the logged-in session of an existing Chrome/Edge. The README summarizes that CLI+skills are token-efficient and preferred for coding agents, while MCP suits persistent state, rich page inspection, and long-running autonomous work. It also states that it is 'not a security boundary'."
+            },
+            {
+              "name": "Chrome DevTools MCP",
+              "desc": "npx -y chrome-devtools-mcp@latest. Its strength is debugging: performance traces, network, and console stack traces with source maps applied. The only officially supported browsers are Chrome and Chrome for Testing. You can attach to a running Chrome session with --autoConnect (Chrome 144 or later, allow it at chrome://inspect/#remote-debugging, a permission dialog on every connection, and a banner while being controlled). This is based on a Chrome blog post, so current details may have changed. Usage statistics collection is on by default and can be turned off with --no-usage-statistics."
+            }
+          ],
+          "note": "MCP tool schemas stay resident in context, so the more tools there are, the higher the baseline cost (the comparison table in the Playwright docs also lists MCP token cost as \"Higher\")."
+        },
+        {
+          "title": "(4) Browsers built into coding agents and IDEs",
+          "items": [
+            {
+              "name": "Cursor",
+              "desc": "Opens as a window inside the editor and is controlled by an MCP server (extension). It can navigate, click, type, take screenshots, and inspect the console and network, and session cookies and storage are isolated per workspace. Approval is required by default, and the docs call the allow/block lists 'best-effort protection'. It advises against auto-run on unfamiliar sites."
+            },
+            {
+              "name": "ChatGPT app built-in browser",
+              "desc": "The user and the agent look at the same screen, can preview local or public pages, and can leave visual comments. It uses a separate profile, so you log in yourself. Developer mode (full CDP access) is an opt-in that requires explicit per-site approval."
+            }
+          ],
+          "note": "This is the category frontend developers use most often. For checking a local dev server that needs no login, this alone is often enough."
+        },
+        {
+          "title": "(5) Cloud browsers and computer use",
+          "items": [
+            {
+              "name": "Browserbase / Stagehand",
+              "desc": "Browserbase provides headless cloud browsers and session observation (logs, live view, replay), and Stagehand is an SDK that adds act/extract/observe on top of Playwright-level control. It suits service operation (collection, large-scale parallelism) and is overkill for checking screens during development. How sessions connect (CDP, etc.) and how logins persist are not verified in the docs we read."
+            },
+            {
+              "name": "Claude computer use",
+              "desc": "It works with screenshots and mouse/keyboard coordinates. The API docs say you enable it with the single line {\"type\": \"computer_toolset_20260801\"}, that it has 17 component tools, and that browser tools are better for tasks that stay inside a web page. The docs state that one screenshot costs roughly 1,000 to 1,800 input tokens. The security recommendations are a dedicated VM/container, not providing sensitive information, a domain allowlist, and human confirmation before important actions."
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    "security": {
+      "title": "Security Cautions by Category",
+      "items": [
+        {
+          "name": "Prompt injection",
+          "desc": "Text on a web page can be read by the agent as a command. The OpenAI, Cursor, and Anthropic docs all say to treat page content as untrusted input. No defense metric is a guarantee that 'no incident will happen'."
+        },
+        {
+          "name": "Real account permissions",
+          "desc": "The extension/autoConnect approaches in (1) and (3) mean the agent can reach mail, payments, and admin screens through your session. Do not use a profile that mixes work and personal accounts as is; keep a separate profile for agent work."
+        },
+        {
+          "name": "Recommendations",
+          "desc": "Start with read-mostly tasks, have a human approve payments, deletions, posting, and permission changes, and keep auth files and tokens out of the repository. Do not let the agent bypass confirmation dialogs."
+        }
+      ]
+    },
+    "guide": {
+      "title": "Choosing by Situation",
+      "head": {
+        "situation": "Situation",
+        "pick": "Recommended",
+        "reason": "Why"
       },
-      {
-        "dimension": "Context cost",
-        "mcp": "MCP puts snapshots into context; the CLI saves them to files",
-        "cdp": "Many tools, so its tool list takes up more context while connected",
-        "note": "Connect only for the work that needs it"
-      },
-      {
-        "dimension": "Reproducibility",
-        "mcp": "Scenarios kept as test code and rerun in CI",
-        "cdp": "Centered on interactive debugging, so results are hard to keep as code",
-        "note": "Prevent regressions with test code"
-      }
-    ],
-    "contextOptimizationTitle": "A Context Optimization Routine",
-    "contextOptimizationInfoTitle": "The basic principle for cutting cost",
-    "contextOptimizationInfoDesc": "Token cost scales with context size. The agent resends the whole conversation with every request, so in a session left open all day, even a one-line question is processed together with everything accumulated so far. Keeping context small is the most effective saving.",
-    "contextOptimizationChecklist": [
-      "Start fresh with /clear when you move to unrelated work",
-      "Keep CLAUDE.md under 200 lines, and move task-specific instructions into skills",
-      "Hand tasks with long output, such as test runs or log analysis, to subagents",
-      "For tools that have a CLI (gh, aws, and so on), use the CLI instead of MCP, and turn off unused MCP servers",
-      "Handle most work with a lighter model, and save the top model and high effort for complex design",
-      "Vague requests trigger broad exploration. Spell out the files, scope, and done criteria",
-      "If the direction is wrong, stop right away with Esc and go back with /rewind"
-    ],
-    "playwrightBefore": "// Before: Playwright MCP in .mcp.json\n// Every action returns an accessibility snapshot into context\n{\n  \"mcpServers\": {\n    \"playwright\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@playwright/mcp@latest\"]\n    }\n  }\n}",
-    "playwrightAfter": "# 1) Install the agent-oriented Playwright CLI and its skills\nnpm install -g @playwright/cli@latest\nplaywright-cli install --skills\n\n# 2) The agent calls it from the shell — snapshots and screenshots are saved to files\nplaywright-cli open http://localhost:3000/login --headed\nplaywright-cli snapshot\nplaywright-cli click e15\nplaywright-cli screenshot\n\n# 3) Lock verified scenarios into test code for regression checks\nbunx playwright test e2e/login.spec.ts --reporter=dot",
-    "contextOptimizationCode": "# See what is taking up context\n> /context\n\n# Start fresh when moving to unrelated work\n> /clear\n\n# Compact while saying what to keep\n> /compact Keep code changes and test results\n\n# Check usage, adjust model and effort\n> /usage\n> /model\n> /effort\n\n# Hand verbose output to a subagent\n> Use a subagent to run the full test suite and summarize only the failures"
+      "rows": [
+        {
+          "situation": "Checking the screen and layout of a local dev server",
+          "pick": "IDE/app built-in browser (Cursor, ChatGPT app) or playwright-cli",
+          "reason": "No login needed, screenshots and console available right away"
+        },
+        {
+          "situation": "Writing and verifying E2E tests",
+          "pick": "playwright-cli (if a shell is available) or Playwright MCP",
+          "reason": "Same model as the Playwright stack, reproducible commands"
+        },
+        {
+          "situation": "Debugging performance, network, and console",
+          "pick": "Chrome DevTools MCP / chrome-devtools CLI",
+          "reason": "Traces and source-mapped stack traces"
+        },
+        {
+          "situation": "Working on sites that require login (internal tools, admin screens)",
+          "pick": "Real-session-sharing tools such as ego, aside, Claude in Chrome",
+          "reason": "No need to log in every time. But account permission risk"
+        },
+        {
+          "situation": "Login needed but you want to protect your account",
+          "pick": "Separate profile + isolated browser (--isolated, etc.)",
+          "reason": "Limits the blast radius"
+        },
+        {
+          "situation": "A human watching and collaborating",
+          "pick": "ego (Space and handoff), Claude in Chrome",
+          "reason": "You can watch the agent work and step in"
+        },
+        {
+          "situation": "Large-scale parallelism, server environments",
+          "pick": "A cloud browser such as Browserbase",
+          "reason": "You don't run the infrastructure yourself"
+        },
+        {
+          "situation": "Canvas or desktop apps with little DOM information",
+          "pick": "computer use",
+          "reason": "Only when screenshot + coordinates is the sole option"
+        }
+      ]
+    },
+    "example": {
+      "title": "A Short Example: Delegating a Screen Check to the Agent",
+      "promptTitle": "Prompt example (local dev server, no login needed)",
+      "prompt": "Open http://localhost:3000/settings, take a screenshot at mobile width (390px)\nand at desktop width, and tell me whether the card layout breaks or a horizontal scroll appears.\nIf there are console errors, report them too, and don't modify any code, just list likely causes.",
+      "egoTitle": "A minimal example run directly with ego-browser",
+      "egoNote": "It uses only APIs shown in the local skill document. The API for changing the viewport size was not verified, so it is left out.",
+      "egoCode": "ego-browser nodejs <<'EOF'\nconst task = await taskSpace(\"check settings page\");\nconst page = task.page(\"p1\");\nawait page.goto(\"http://localhost:3000/settings\");\nconsole.log(await page.snapshot());\nawait page.screenshot({ path: \"/absolute/path/settings.png\" });\nawait task.finish({ keep: [] });\nEOF",
+      "habitsTitle": "Three key habits",
+      "habits": [
+        "First look at the structure through the snapshot (text).",
+        "Take a screenshot only when you need a visual check.",
+        "When the work is done, clean up the windows and sessions you created."
+      ]
+    },
+    "unverified": {
+      "title": "What We Could Not Verify",
+      "items": [
+        "How the Aside agent reads and operates pages internally (CDP, DOM, or screenshots), the list of tools Aside MCP exposes, and Aside pricing. Its own claim of ranking first on benchmarks also lacks third-party verification.",
+        "ego's snapshot internals, security model details, agent isolation method, and token savings figures.",
+        "ChatGPT Atlas retirement (around 2026-08-09) and the move to the desktop app and extension: we only saw secondary reports and search summaries, and the original OpenAI help page would not open.",
+        "The current regions and plans for Gemini in Chrome auto browse, and the status of Perplexity Comet (Comet was not researched).",
+        "The playwright-cli attach procedure, the Playwright MCP --extension setup procedure, and Browserbase's CDP connection and login persistence (Contexts) method.",
+        "How to connect Claude Code with Claude in Chrome.",
+        "The CLI versus MCP token cost multiplier: it varies by source and its measurement conditions could not be verified, so no figure is given.",
+        "Details of how the Cursor browser handles localhost."
+      ]
+    }
   },
   "promptEngineering": {
     "badge": "Skill",
@@ -585,5 +1413,23 @@
     "importantNoteDesc": "However capable AI agents become, final responsibility always lies with the developer. Review all AI-generated code before you commit it.",
     "autoVerifyCode": "// .claude/settings.json\n{\n  \"hooks\": {\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"Write|Edit\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"${CLAUDE_PROJECT_DIR}/.claude/hooks/lint-file.sh\"\n          }\n        ]\n      }\n    ]\n  }\n}\n\n#!/bin/bash\n# .claude/hooks/lint-file.sh\nFILE=$(jq -r '.tool_input.file_path')\nif ! npx eslint \"$FILE\" >&2; then\n  exit 2   # the lint output (stderr) is passed back to the agent\nfi",
     "permissionsCode": "// .claude/settings.json\n{\n  \"permissions\": {\n    \"defaultMode\": \"acceptEdits\",\n    \"allow\": [\n      \"Bash(bun run test *)\",\n      \"Bash(git commit *)\",\n      \"mcp__github__get_*\"\n    ],\n    \"ask\": [\n      \"Bash(git push *)\"\n    ],\n    \"deny\": [\n      \"Read(./.env)\",\n      \"Read(./.env.*)\",\n      \"Read(./secrets/**)\",\n      \"Bash(rm -rf *)\"\n    ]\n  }\n}"
+  },
+  "tokenOptimization": {
+    "badge": "Economy",
+    "title": "Saving Tokens and Optimizing Context",
+    "description": "Habits that keep context small to manage cost and quality together",
+    "contextOptimizationTitle": "A Context Optimization Routine",
+    "contextOptimizationInfoTitle": "The basic principle for cutting cost",
+    "contextOptimizationInfoDesc": "Token cost scales with context size. The agent resends the whole conversation with every request, so in a session left open all day, even a one-line question is processed together with everything accumulated so far. Keeping context small is the most effective saving.",
+    "contextOptimizationChecklist": [
+      "Start fresh with /clear when you move to unrelated work",
+      "Keep CLAUDE.md under 200 lines, and move task-specific instructions into skills",
+      "Hand tasks with long output, such as test runs or log analysis, to subagents",
+      "For tools that have a CLI (gh, aws, and so on), use the CLI instead of MCP, and turn off unused MCP servers",
+      "Handle most work with a lighter model, and save the top model and high effort for complex design",
+      "Vague requests trigger broad exploration. Spell out the files, scope, and done criteria",
+      "If the direction is wrong, stop right away with Esc and go back with /rewind"
+    ],
+    "contextOptimizationCode": "# See what is taking up context\n> /context\n\n# Start fresh when moving to unrelated work\n> /clear\n\n# Compact while saying what to keep\n> /compact Keep code changes and test results\n\n# Check usage, adjust model and effort\n> /usage\n> /model\n> /effort\n\n# Hand verbose output to a subagent\n> Use a subagent to run the full test suite and summarize only the failures"
   }
 }
