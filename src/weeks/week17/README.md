@@ -82,7 +82,1001 @@ claude "사용자 인증 기능을 구현해줘:
 # 5. 완료 기준을 만족하면 결과 보고
 ```
 
-## AI 코딩 도구 사용 단계 사다리 (2026년 11월 기준)
+# 2. 프롬프트 엔지니어링 고급
+
+> 에이전트가 볼 수 없는 정보를 전달하고, 스스로 검증할 기준을 제시하는 방법
+
+## 목표와 완료 기준 중심 프롬프트
+
+에이전트는 절차를 스스로 찾을 수 있습니다. 사용자가 제공해야 하는 것은 목표, 작업 범위, 그리고 완료 여부를 판단할 기준입니다.
+
+### 나쁜 예 (모호하거나 절차만 지시)
+
+```text
+# 모호한 요청
+"이 코드 좀 개선해줘"
+
+# 절차를 하나하나 지시
+"1. 먼저 파일을 읽어
+ 2. 그 다음 함수를 찾아
+ 3. 타입을 추가해"
+```
+
+### 좋은 예 (목표·범위·완료 기준 제시)
+
+```text
+# 목표 + 범위 + 완료 기준
+"src/utils/date.ts 의 모든 함수에
+매개변수와 반환 타입을 추가해줘.
+기존 동작은 바꾸지 말고,
+bun run typecheck 가 통과하면 완료야."
+```
+
+## 컨텍스트 참조
+
+에이전트는 저장소의 코드를 읽을 수는 있지만, 사용자의 머릿속에 있는 배경 지식까지는 파악하지 못합니다. @로 관련 파일을 직접 지정하고, 따라야 할 기존 패턴, 코드에 드러나지 않는 제약, 에러 메시지 전문과 재현 조건을 함께 전달하면 불필요한 탐색이 줄고 결과가 정확해집니다.
+
+```bash
+# @ 로 파일을 직접 참조
+> @src/utils/validation.ts 의 함수들을 리팩토링해줘
+
+# 따라 할 기존 패턴을 지정
+> @src/components/button.tsx 와 같은 패턴으로 input 컴포넌트를 만들어줘
+
+# 에이전트가 볼 수 없는 정보를 알려주기
+> 결제 API 는 스테이징에서 5초 넘게 걸릴 때가 있어.
+  타임아웃은 10초로 잡고 재시도는 하지 마.
+
+# 에러는 전문과 재현 조건을 함께
+> 로그아웃 후 /dashboard 에 접근하면 아래 에러가 나:
+  TypeError: Cannot read properties of undefined (reading 'user')
+```
+
+## 제약 조건과 검증 기준 명시
+
+테스트 케이스, 기대 출력, 스크린샷처럼 에이전트가 직접 실행해 볼 수 있는 검증 수단을 제공하면, 사용자가 지적하기 전에 스스로 문제를 발견하고 수정합니다. 이는 결과물의 품질을 높이는 효과적인 방법입니다.
+
+```bash
+> 인증 미들웨어를 구현해줘.
+  제약:
+  - 새 의존성 추가 금지 (jose 만 허용)
+  - 기존 User 타입 재사용
+  - 에러는 커스텀 AppError 로 throw
+  검증:
+  - src/middleware/auth.test.ts 에 만료 토큰·변조 토큰 케이스 추가
+  - bun run test 통과
+```
+
+## 반복적 개선 패턴
+
+복잡한 작업은 큰 그림, 세부 구현, 엣지 케이스 순으로 점진적으로 구체화하는 것이 좋습니다. 에이전트가 잘못된 방향으로 진행하기 시작하면 지켜보지 말고 즉시 중단한 뒤 되돌리는 편이 비용을 줄일 수 있습니다. 서로 무관한 작업을 한 세션에 누적하지 말고, 작업 주제가 바뀌면 컨텍스트를 새로 초기화하세요.
+
+```bash
+# 1차: 큰 그림 (plan 모드)
+> 결제 모듈 구조를 설계해줘. 아직 코드는 쓰지 마
+
+# 2차: 세부 구현
+> 승인한 설계대로 PaymentService 부터 구현해줘
+
+# 3차: 엣지 케이스
+> 결제 실패 시 재시도와 부분 환불 케이스를 추가해줘
+
+# 방향이 틀렸다면: Esc 로 중단하고 /rewind 로 되돌린다
+# 다른 작업으로 넘어갈 때: /clear 로 컨텍스트를 비운다
+```
+
+# 3. Skills와 Hooks
+
+> 필요할 때만 로드되는 절차적 지식과, 특정 시점에 반드시 실행되는 이벤트 자동화
+
+## Skills: 재사용 가능한 절차와 지식
+
+Skill은 SKILL.md 파일을 포함한 폴더로, 에이전트에게 특정 작업의 수행 절차와 지식을 안내합니다. Claude는 각 skill의 description을 확인하여 관련 작업일 때 스스로 로드하며, 사용자가 /skill-name으로 직접 호출할 수도 있습니다. 본문은 실제로 호출될 때만 컨텍스트에 포함되므로 긴 참고 자료를 추가해도 평소에는 토큰 비용이 거의 들지 않습니다. 기존의 커스텀 슬래시 명령(.claude/commands)은 skill로 통합되었으며, skill 형식은 Agent Skills 오픈 표준을 따르므로 다른 도구에서도 재사용할 수 있습니다.
+
+### Claude Code 번들 스킬
+
+- `/code-review`: 현재 diff나 PR의 버그를 검토
+- `/simplify`: 변경된 코드의 중복과 복잡도를 개선
+- `/loop`: 프롬프트나 명령을 일정 간격으로 반복 실행
+- `/run`: 앱을 직접 실행하여 변경 사항이 정상 동작하는지 검증
+
+```markdown
+<!-- .claude/skills/create-component/SKILL.md -->
+---
+name: create-component
+description: 프로젝트 컨벤션에 맞는 React 컴포넌트를 생성한다. 사용자가 새 컴포넌트를 만들어 달라고 할 때 사용.
+argument-hint: [component-name]
+---
+
+$ARGUMENTS 컴포넌트를 생성한다.
+
+1. src/components 에서 비슷한 컴포넌트를 찾아 패턴을 확인한다
+2. 같은 패턴으로 컴포넌트 파일(kebab-case)을 만든다
+3. 테스트 파일을 함께 만든다
+4. barrel export(index.ts)를 갱신한다
+5. bun run typecheck 와 bun run test 로 검증한다
+```
+
+### 주요 frontmatter 필드
+
+- `description`: 수행 작업과 사용 시점 설명. Claude가 로드 여부를 판단하는 기준
+- `disable-model-invocation`: true 설정 시 사용자만 직접 호출 가능. 배포처럼 사이드 이펙트가 있는 작업에 사용
+- `allowed-tools`: skill이 실행되는 턴 동안 사전 승인할 도구 목록
+- `context: fork`: skill을 별도 서브에이전트에서 실행하여 메인 컨텍스트를 보호
+
+## Hooks: 이벤트 기반 자동화
+
+Hook은 에이전트의 수명주기 이벤트가 발생할 때 자동으로 실행되는 핸들러입니다. CLAUDE.md의 지침은 에이전트가 참고하는 컨텍스트일 뿐이지만, hook은 조건이 맞으면 반드시 실행되므로 예외가 있어서는 안 되는 규칙을 강제하는 데 씁니다. 명령(command) hook은 이벤트 정보를 stdin의 JSON으로 받고, 종료 코드 2를 반환하면 해당 동작을 차단합니다. 2가 아닌 오류 코드(1 포함)는 차단하지 않는 오류로 처리되어 동작이 그대로 진행된다는 점에 주의하세요.
+
+| Hook | 실행 시점 | 용도 |
+| --- | --- | --- |
+| `SessionStart` | 세션 시작 및 재개 시 | 실행 환경 준비, 초기 컨텍스트 주입 |
+| `UserPromptSubmit` | 프롬프트 제출 직후, 에이전트 처리 전 | 프롬프트 유효성 검사, 추가 컨텍스트 주입 |
+| `PreToolUse` | 도구 실행 전 | 위험한 명령 실행 차단, 입력값 보정 |
+| `PostToolUse` | 도구 실행 성공 후 | 코드 자동 포맷팅, 린팅, 테스트 수행 |
+| `Notification` | 알림 발생 시 | 데스크톱 및 메신저 알림 발송 |
+| `Stop` | 에이전트가 응답을 마쳤을 때 | 완료 기준 검사, 리포트 |
+| `PreCompact` | 컨텍스트 압축 전 | 보존할 정보 기록 |
+
+이 외에도 SubagentStop, SessionEnd, PermissionRequest 등 30개가 넘는 이벤트가 있습니다. hook 유형도 셸 명령(command) 외에 http, mcp_tool, prompt, 그리고 실험적인 agent가 있습니다.
+
+```jsonc
+// .claude/settings.json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/format.sh"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/block-rm.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+```bash
+#!/bin/bash
+# .claude/hooks/format.sh — 입력은 stdin 의 JSON
+FILE=$(jq -r '.tool_input.file_path')
+npx prettier --write "$FILE"
+
+#!/bin/bash
+# .claude/hooks/block-rm.sh
+COMMAND=$(jq -r '.tool_input.command')
+if echo "$COMMAND" | grep -q 'rm -rf'; then
+  echo "rm -rf 는 hook 으로 차단되었습니다" >&2
+  exit 2   # 2 = 차단. exit 1 은 차단이 아니다
+fi
+exit 0
+```
+
+## CLAUDE.md와 AGENTS.md: 프로젝트 컨텍스트
+
+CLAUDE.md는 매 세션이 시작될 때 로드되는 프로젝트 지침 파일입니다. 빌드·테스트 명령, 코드 컨벤션, 반드시 지킬 규칙처럼 코드만 봐서는 알 수 없는 내용을 적습니다. 항상 컨텍스트를 차지하므로 200줄 이하로 유지하고, 특정 작업에만 필요한 절차는 skill로, 특정 경로에만 적용되는 규칙은 .claude/rules/로 옮깁니다. /init 명령으로 초안을 만들 수 있습니다. 여러 도구를 함께 쓴다면 표준 파일인 AGENTS.md에 지침을 두면 됩니다. Claude Code(v2.1.277 이상)는 CLAUDE.md가 없을 때 AGENTS.md를 읽고, 둘 다 있으면 CLAUDE.md만 읽습니다.
+
+```markdown
+<!-- CLAUDE.md -->
+# E-commerce Platform
+
+## 명령어
+- `bun run dev`: 개발 서버
+- `bun run typecheck`: 타입 검사
+- `bun run test`: 테스트
+
+## 컨벤션
+- 파일명은 kebab-case
+- 서버 컴포넌트가 기본, 클라이언트는 'use client' 명시
+- 타입은 src/types, interface 선호
+
+## 반드시 지킬 것
+- 변경 후 typecheck 와 test 를 통과시킨다
+- .env 파일은 읽지도 수정하지도 않는다
+
+<!-- 이미 AGENTS.md 가 있다면 CLAUDE.md 에서 가져올 수 있다 -->
+@AGENTS.md
+```
+
+# 4. MCP (Model Context Protocol)
+
+> AI 에이전트가 외부 도구와 데이터에 접근할 수 있게 돕는 표준 프로토콜
+
+## MCP란 무엇인가요?
+
+MCP는 AI 에이전트가 데이터베이스, 브라우저, 외부 API 같은 시스템과 연결되도록 돕는 표준 프로토콜입니다. MCP 서버가 tools(실행 가능한 기능), resources(조회 가능한 데이터), prompts(재사용 프롬프트)를 제공하면, 에이전트(클라이언트)가 이를 호출해 사용합니다. 로컬 프로세스는 stdio로, 원격 서버는 Streamable HTTP로 연결합니다.
+
+## 2026-07-28 스펙에서 달라진 점
+
+MCP 스펙의 최신 리비전은 2026-07-28입니다. 이전 리비전(2025-11-25)과 비교해 프로토콜의 기본 구조가 변경되었으므로, 서버를 직접 구축하거나 기존 예제를 참고할 때는 리비전을 확인해야 합니다.
+
+- 무상태(stateless) 프로토콜 전환: initialize 핸드셰이크와 Mcp-Session-Id 헤더가 제거되었으며, 모든 요청의 _meta 필드에 프로토콜 버전과 클라이언트 capability를 포함합니다
+- server/discover 추가: 서버가 지원하는 버전과 capability를 알려 주는 RPC로, 서버는 반드시 구현해야 합니다
+- Tasks 사양 분리: 코어 스펙에서 제외되어 공식 확장(extension)으로 이동했습니다
+- Roots, Sampling, Logging은 deprecated 상태입니다. 유예 기간에는 동작하지만 새 구현에서는 쓰지 않습니다
+- HTTP+SSE 전송은 deprecated이며 Streamable HTTP로 옮겨야 합니다. stdio는 그대로 유지됩니다
+
+# 5. 2026년 11월의 MCP: 프론트엔드 개발자가 실제로 연결하는 서버와 사용법
+
+기준일은 2026-11-10입니다. 이 글의 서버 이름, 주소, 명령어, 설정 키는 각 제공 주체의 공식 문서나 공식 저장소에서 확인한 것만 적었습니다. "많이 쓴다"는 표현은 순위가 아니라 공식 문서가 주요 에이전트별 설치 방법을 따로 제공한다는 뜻으로 읽어 주십시오.
+
+### 1. MCP가 무엇이고, 왜 아직 쓰는가
+
+MCP(Model Context Protocol)는 코딩 에이전트가 외부 서비스의 도구와 데이터를 같은 방식으로 부르게 해 주는 개방형 프로토콜입니다. 서버는 도구(Tools), 리소스(Resources), 프롬프트(Prompts)를 제공합니다. 프론트엔드 작업에서는 "Figma 디자인 읽기", "라이브러리 최신 문서 찾기", "실행 중인 앱의 에러 보기", "브라우저로 화면 확인하기" 같은 일에 주로 연결합니다.
+
+다만 MCP가 만능은 아닙니다. 아래 4장에서 설명하듯, 토큰 비용 때문에 같은 일을 CLI와 스킬로 처리하는 흐름도 함께 자리 잡았습니다. 둘 중 하나를 고르는 문제가 아니라 상황에 맞게 섞어 쓰는 문제입니다.
+
+### 2. 범주별 서버 목록
+
+모든 서버를 다 설치하지 마십시오. 처음에는 "문서 검색 + 브라우저 + 사용하는 프레임워크 서버" 정도로 시작하면 충분합니다.
+
+#### 2-1. 디자인, 문서, 저장소
+
+| 이름 | 제공 주체 | 무엇을 하는가 | 연결 주소 또는 패키지 | 언제 쓰는가 |
+|---|---|---|---|---|
+| Figma MCP (remote) | Figma | 선택한 프레임에서 코드 생성, 변수·컴포넌트·레이아웃 같은 디자인 맥락 추출, Code Connect와 일관성 유지, 캔버스에 쓰기(remote만) | `https://mcp.figma.com/mcp` | 시안을 코드로 옮길 때 |
+| Context7 | Upstash | 라이브러리 이름을 ID로 바꾸고(`resolve-library-id`) 해당 라이브러리 문서를 조회(`query-docs`) | 원격 `https://mcp.context7.com/mcp`, 패키지 `@upstash/context7-mcp` | 에이전트가 낡은 API를 쓰는 것을 막고 싶을 때 |
+| GitHub MCP | GitHub | 저장소, 이슈, 풀 리퀘스트 등을 다루는 도구 묶음(toolset) 제공 | 원격 `https://api.githubcopilot.com/mcp/`, 로컬 Docker 이미지 `ghcr.io/github/github-mcp-server` | 이슈 읽기, PR 작업을 에이전트에 맡길 때 |
+
+Figma는 데스크톱 앱을 거치는 desktop 서버도 있지만, 공식 문서는 remote 서버를 권장합니다. desktop 서버는 특정 조직·엔터프라이즈 요구를 위한 것이고 Dev 또는 Full 시트가 필요하다고 안내합니다.
+
+GitHub MCP는 `--toolsets`로 도구 묶음을 고르고 `--read-only`로 쓰기 도구를 빼는 옵션이 있습니다. 처음에는 읽기 전용으로 쓰는 것을 권합니다.
+
+#### 2-2. 배포와 에러 모니터링, 백엔드
+
+| 이름 | 제공 주체 | 무엇을 하는가 | 연결 주소 또는 패키지 | 언제 쓰는가 |
+|---|---|---|---|---|
+| Vercel MCP | Vercel | 문서 검색, 프로젝트·배포 관리, 배포 로그 분석, Web Analytics 조회. OAuth 사용 원격 서버 | `https://mcp.vercel.com` | 배포 실패 원인을 에이전트와 함께 볼 때 |
+| Sentry MCP | Sentry | 에러 검색, 성능 분석, 이슈 분류, 문서 읽기, 프로젝트 관리. 모든 연결이 OAuth | `https://mcp.sentry.dev/mcp` (조직·프로젝트로 좁히는 경로 `/mcp/{organizationSlug}/{projectSlug}`) | 운영 에러를 코드와 연결해 고칠 때 |
+| Supabase MCP | Supabase | 데이터베이스, 문서 등 도구 그룹 제공 | `https://mcp.supabase.com/mcp` | Supabase 백엔드를 쓰는 프로젝트 |
+
+Supabase는 주소에 `project_ref=<id>`(한 프로젝트로 제한), `read_only=true`(읽기 전용 Postgres 사용자로 실행), `features=<그룹>`(쓸 도구 그룹 제한)을 붙일 수 있습니다. 예: `https://mcp.supabase.com/mcp?project_ref=abc123&read_only=true`. 공식 문서는 이 서버를 개발자 권한으로 실행되는 도구로 보고, 고객이나 최종 사용자에게 주지 말라고 경고합니다.
+
+#### 2-3. 브라우저와 디버깅
+
+| 이름 | 제공 주체 | 무엇을 하는가 | 연결 주소 또는 패키지 | 언제 쓰는가 |
+|---|---|---|---|---|
+| Chrome DevTools MCP | Chrome DevTools 팀(ChromeDevTools 저장소) | 성능 트레이스 기록과 인사이트, 네트워크 요청 분석, 스크린샷, 소스맵이 적용된 스택 트레이스가 있는 콘솔 메시지 확인, Puppeteer 기반 자동화 | npm `chrome-devtools-mcp` (`npx -y chrome-devtools-mcp@latest`) | 화면이 왜 느리거나 깨지는지 실제 Chrome에서 확인할 때 |
+| Playwright MCP | Microsoft | 브라우저를 열어 페이지 구조를 읽고 조작 | npm `@playwright/mcp` (`npx @playwright/mcp@latest`) | 탐색적 자동화, 지속 상태가 필요한 반복 점검 |
+
+Chrome DevTools MCP는 기본적으로 사용 통계를 수집하고 성능 도구가 추적 URL을 Chrome UX Report API로 보낼 수 있습니다. `--no-usage-statistics`, `--no-performance-crux` 옵션으로 끌 수 있습니다. 또한 `--slim`은 기본 브라우저 작업용 축소 도구 세트입니다.
+
+Playwright 저장소는 코딩 에이전트에는 CLI를 스킬로 노출하는 방식이 "더 토큰 효율적"이라고 직접 적고, MCP는 지속 상태와 풍부한 점검이 필요한 특수한 루프에 맞다고 설명합니다. 같은 제공자가 두 방식을 모두 안내하는 사례입니다.
+
+#### 2-4. 프레임워크와 UI 라이브러리가 직접 제공하는 MCP
+
+| 이름 | 제공 주체 | 무엇을 하는가 | 연결 주소 또는 패키지 | 언제 쓰는가 |
+|---|---|---|---|---|
+| next-devtools-mcp | Next.js (Vercel) | Next.js 16 이상 개발 서버의 `/_next/mcp` 엔드포인트에 연결. 현재 에러, 라우트, 로그, 컴파일 문제 조회, 설치된 버전에 맞는 문서 안내 | npm `next-devtools-mcp` (`npx add-mcp next-devtools-mcp@latest`) | Next.js 앱을 개발 서버로 띄워 놓고 에러를 고칠 때 |
+| shadcn MCP | shadcn/ui | 레지스트리에서 컴포넌트를 검색하고 설치. 비공개·서드파티 레지스트리 연결 가능 | `npx shadcn@latest mcp` | shadcn/ui 프로젝트 |
+| Storybook MCP | Storybook | 기존 컴포넌트와 문서를 에이전트가 재사용하게 하고 스토리 작성, 접근성 포함 스토리 테스트 실행 | 애드온 `@storybook/addon-mcp` (프리뷰 단계) | 디자인 시스템을 Storybook으로 관리할 때 |
+| MUI MCP | MUI | MUI 사용을 돕는 서버 | `npx -y @mui/mcp@latest` | MUI 프로젝트 |
+| Angular CLI MCP | Angular | 개발 서버 시작·중지, 빌드 대기, 모범 사례, 문서 검색 등 | `npx -y @angular/cli mcp` | Angular 프로젝트 |
+| Svelte MCP | Svelte | 공식 문서 기반 도구와 정적 분석으로 생성형 AI의 흔한 실수 점검 | 원격 `https://mcp.svelte.dev/mcp` | Svelte 프로젝트 |
+
+프레임워크 서버의 장점은 "지금 실행 중인 내 앱"의 상태를 본다는 점입니다. 일반 문서 검색 서버가 줄 수 없는 정보입니다. Next.js의 `/_next/mcp`는 기본으로 켜져 있고 `next.config`의 `experimental.mcpServer`를 `false`로 하면 끌 수 있습니다.
+
+#### 2-5. 더 이상 쓰지 않음(아카이브·이전·대체)
+
+공식 `modelcontextprotocol/servers` 저장소의 현재 참조 서버는 Everything, Fetch, Filesystem, Git, Memory, Sequential Thinking, Time입니다. 예전 입문 글에 자주 나오던 아래 서버는 이 저장소에서 `servers-archived`로 옮겨졌습니다.
+
+| 예전에 자주 보이던 것 | 현재 상태 | 대신 볼 것 |
+|---|---|---|
+| Puppeteer 서버 | 아카이브됨 | Playwright MCP, Chrome DevTools MCP |
+| GitHub 서버(참조 구현) | 아카이브됨 | GitHub이 직접 제공하는 GitHub MCP |
+| Sentry 서버(참조 구현) | 아카이브됨 | Sentry 공식 원격 서버 `https://mcp.sentry.dev/mcp` |
+| PostgreSQL, SQLite, Redis 서버 | 아카이브됨 | 사용하는 서비스의 공식 서버(예: Supabase MCP) 등 |
+| Brave Search 서버 | 아카이브됨 | `@brave/brave-search-mcp-server` |
+| Slack 서버 | 아카이브됨 | Zencoder가 유지하는 `zencoderai/slack-mcp-server` |
+| GitLab, Google Drive, Google Maps, AWS KB Retrieval, EverArt | 아카이브됨 | 아카이브 저장소는 후속 서버를 지정하지 않습니다. 현재 관리되는 서버는 `modelcontextprotocol/servers`에서 찾으세요 |
+| HTTP+SSE 전송 방식 | 스펙에서 Deprecated로 분류 | Streamable HTTP |
+
+"npm에 아직 있다"와 "관리되고 있다"는 다릅니다. 아카이브된 서버는 보안 패치를 기대할 수 없으므로 새로 설치하지 마십시오.
+
+### 3. 에이전트별로 서버 추가하는 방법
+
+원격 서버 하나(Vercel)와 로컬 서버 하나(Playwright)를 예로 듭니다. 각 도구의 공식 문서에서 확인한 형식입니다.
+
+#### Claude Code
+
+```bash
+claude mcp add --transport http vercel https://mcp.vercel.com
+claude mcp add --transport stdio airtable -- npx -y airtable-mcp-server
+claude mcp list
+```
+
+- `--` 뒤는 서버 실행 명령입니다. 인증은 세션 안에서 `/mcp`, 또는 셸에서 `claude mcp login <이름>`으로 합니다.
+- 범위(scope)는 local(기본, `~/.claude.json`), project(저장소의 `.mcp.json`, 팀 공유), user(`~/.claude.json`, 모든 프로젝트)입니다. 팀과 공유할 설정은 `--scope project`로 추가합니다.
+- `.mcp.json`의 원격 서버 항목은 `"type": "http"`와 `"url"`을 씁니다. `url`만 있고 `type`이 없으면 stdio로 취급되어 건너뜁니다.
+- `.mcp.json`의 서버는 대화형 세션에서 승인을 묻습니다. 환경 변수는 `${VAR}` 또는 `${VAR:-기본값}`으로 넣을 수 있습니다.
+
+#### Codex (OpenAI)
+
+```bash
+codex mcp add vercel --url https://mcp.vercel.com
+codex mcp add context7 -- npx -y @upstash/context7-mcp
+codex mcp login <서버이름>
+```
+
+설정 파일은 `~/.codex/config.toml`(신뢰하는 프로젝트는 `.codex/config.toml`)이고, 서버는 `[mcp_servers.<이름>]` 표에 적습니다. stdio는 `command`·`args`, 원격은 `url`을 씁니다.
+
+```toml
+[mcp_servers.playwright]
+command = "npx"
+args = ["@playwright/mcp@latest"]
+```
+
+#### Cursor
+
+설정 파일은 프로젝트의 `.cursor/mcp.json` 또는 전역 `~/.cursor/mcp.json`이고 최상위 키는 `mcpServers`입니다.
+
+```json
+{
+  "mcpServers": {
+    "vercel": { "url": "https://mcp.vercel.com" },
+    "playwright": { "command": "npx", "args": ["@playwright/mcp@latest"] }
+  }
+}
+```
+
+원격 서버가 OAuth를 지원하면 별도 설정 없이 로그인 흐름이 시작됩니다. 고정 클라이언트 ID가 필요하면 `auth` 객체를 추가합니다. Cursor Marketplace에서 "Add to Cursor"로 설치하는 방법도 있습니다.
+
+#### GitHub Copilot / VS Code
+
+명령 팔레트에서 **MCP: Add Server**를 실행해 HTTP 또는 Command(stdio)를 고르고 전역·워크스페이스 중 저장 위치를 고릅니다. `.vscode/mcp.json`은 최상위 키가 다른 도구와 달리 `servers`입니다.
+
+```json
+{
+  "servers": {
+    "context7": { "type": "http", "url": "https://mcp.context7.com/mcp" },
+    "playwright": { "type": "stdio", "command": "npx", "args": ["-y", "@playwright/mcp@latest"] }
+  }
+}
+```
+
+VS Code 공식 문서는 Copilot용 전역 설정으로 `~/.copilot/mcp-config.json`(또는 `$COPILOT_HOME/mcp-config.json`)을, 팀 공유용으로 워크스페이스 루트의 `.mcp.json`(실험 설정 `chat.mcp.workspaceRootConfig.enabled` 필요)을 안내하고, `.vscode/mcp.json` 방식은 "deprecated지만 아직 사용 가능"으로 표시합니다. 이 부분은 버전에 따라 바뀔 수 있으니 사용하는 VS Code 버전의 문서를 확인하십시오.
+
+#### Google 계열: Gemini CLI와 Antigravity
+
+- Gemini CLI: `~/.gemini/settings.json`(사용자) 또는 `.gemini/settings.json`(프로젝트)의 `mcpServers`에 적습니다. 키는 stdio `command`, SSE `url`, Streamable HTTP `httpUrl`입니다. 명령은 `gemini mcp add --transport http <이름> <주소>`입니다. Gemini CLI 문서에는 2026-06-18부터 무료 티어·Google One 사용자의 경우 Antigravity CLI로 대체되었다는 안내가 있습니다.
+- Antigravity(2.0, IDE, CLI 공통): 전역 `~/.gemini/config/mcp_config.json`, 워크스페이스 `.agents/mcp_config.json`. 원격 항목은 `serverUrl`(또는 `url`)을 쓰며 Streamable HTTP만 지원합니다. 문서에는 CLI의 "add" 명령이 없고, 프롬프트에서 `/mcp`로 관리자 화면을 열거나 파일을 직접 편집합니다. 설정되지 않은 MCP 도구는 기본적으로 실행 전에 승인을 묻는 Ask 모드입니다.
+
+#### 한 번에 여러 에이전트에 설치
+
+Vercel과 Next.js 문서는 `add-mcp` CLI를 안내합니다. 설치된 에이전트를 감지해 각 설정에 추가해 줍니다.
+
+```bash
+npx add-mcp https://mcp.vercel.com
+npx add-mcp next-devtools-mcp@latest
+```
+
+### 4. 2026년의 사용 방식 변화
+
+#### 4-1. 원격(HTTP) 서버와 OAuth가 기본
+
+Figma, Vercel, Sentry, Supabase, Context7, GitHub, Svelte가 모두 원격 주소를 제공합니다. 로컬에 패키지를 받아 실행하는 대신 주소를 등록하고 브라우저에서 로그인하는 흐름이 흔해졌습니다. 이때 서버는 내 계정 권한으로 일합니다. Vercel 문서는 연결하면 AI 시스템이 "내 Vercel 계정과 같은 접근 권한"을 갖는다고 명시합니다.
+
+#### 4-2. 최신 스펙 리비전 2026-07-28
+
+공식 스펙의 최신 리비전은 2026-07-28이며 직전은 2025-11-25입니다. 주니어가 알아 두면 좋은 핵심 변화는 다음과 같습니다.
+
+- 프로토콜이 stateless가 되었습니다. `initialize` 핸드셰이크와 `Mcp-Session-Id` 헤더가 사라지고, 각 요청이 프로토콜 버전과 클라이언트 능력을 `_meta`에 담습니다.
+- 서버는 `server/discover`로 자신이 지원하는 버전과 능력을 알립니다.
+- Tasks(장시간 작업)는 코어에서 빠져 공식 확장(`io.modelcontextprotocol/tasks`)이 되었습니다.
+- 서버가 클라이언트에 먼저 묻던 방식(elicitation 등)은 다중 왕복 요청(MRTR) 패턴으로 바뀌었습니다.
+- 목록 응답에 `ttlMs`, `cacheScope`가 필수가 되어 캐시가 쉬워졌습니다.
+- Roots, Sampling, Logging은 Deprecated로 분류되었고, HTTP+SSE 전송도 Deprecated입니다.
+- OAuth 클라이언트 등록은 Dynamic Client Registration(RFC 7591)이 Deprecated가 되고 Client ID Metadata Document가 권장됩니다. Vercel MCP도 CIMD를 지원한다고 밝힙니다.
+- Deprecated 기능은 최소 12개월의 폐기 유예 기간을 둔다는 수명 주기 정책이 생겼습니다.
+
+주의할 점은, 서버 문서가 가리키는 스펙 버전이 서로 다르다는 것입니다. 예컨대 Vercel 문서는 2025-06-18 스펙 기준 구현이라고 적습니다. 사용자는 보통 이 차이를 의식할 필요 없지만, 직접 서버를 만들 때는 SDK 버전이 어느 리비전을 지원하는지 확인해야 합니다.
+
+#### 4-3. 레지스트리
+
+공식 MCP Registry는 공개 서버의 메타데이터(`server.json`)를 모아 두는 곳이며 현재도 프리뷰입니다("breaking change나 데이터 초기화가 있을 수 있음"). 서버 이름은 `io.github.user/server-name`처럼 역방향 DNS 형식으로, GitHub 계정이나 도메인 소유 검증을 거칩니다. 공식 문서는 이 레지스트리를 호스트 앱이 직접 쓰기보다 마켓플레이스 같은 하위 집계자가 쓰도록 설계했다고 설명합니다. 보안 검사는 레지스트리가 하지 않고 npm 같은 패키지 레지스트리와 집계자에 맡깁니다. 즉 "레지스트리에 있다 = 안전하다"가 아닙니다.
+
+에이전트별 디렉터리도 있습니다. Claude Code 문서는 Anthropic Directory(`https://claude.ai/directory`)를, Cursor는 Cursor Marketplace를, VS Code는 Customization Marketplace(프리뷰)를 안내합니다.
+
+#### 4-4. 도구 지연 로드(도구 검색)
+
+도구 정의를 모두 컨텍스트에 미리 넣으면 토큰이 낭비됩니다. Claude Code는 도구 검색(Tool Search)이 기본으로 켜져 있어 MCP 도구 정의를 미뤄 두었다가 필요할 때 `ToolSearch`로 불러옵니다(`ENABLE_TOOL_SEARCH=false`로 끔). 따라서 서버를 여러 개 연결해도 예전만큼 컨텍스트 부담이 크지 않습니다. GitHub MCP처럼 `--toolsets`, Supabase처럼 `features=`로 도구 수를 직접 줄이는 방법도 여전히 유효합니다.
+
+#### 4-5. MCP 대신 CLI + 스킬
+
+Playwright 저장소는 코딩 에이전트에는 CLI를 스킬로 쓰는 편이 토큰 효율이 좋다고 직접 말합니다. Chrome DevTools MCP는 `chrome-devtools` CLI와 스킬을 같이 제공하고, Context7은 `ctx7` CLI로 "CLI + Skills" 모드와 "MCP" 모드 중 하나를 고르게 합니다. Next.js는 `next-dev-loop` 같은 스킬이 `/_next/mcp`를 직접 호출한다고 안내합니다. 블로그의 벤치마크는 CLI가 4~32배 저렴하다는 등 수치가 제각각이고 이해관계가 있는 곳이 많아 숫자는 믿지 않는 편이 낫습니다. 실무 기준만 기억하십시오.
+
+- 인증, 여러 사용자 권한, 조직 통제가 필요한 서비스(Figma, Sentry, GitHub 등)는 원격 MCP가 편합니다.
+- 상태 없이 명령 한 줄로 끝나는 일, 이미 CLI가 있는 일은 CLI+스킬이 가볍습니다.
+- 둘을 함께 제공하는 도구가 많으니 공식 문서가 권하는 쪽을 따르십시오.
+
+#### 4-6. 코드 실행으로 MCP 호출하기
+
+Anthropic의 엔지니어링 글(2025-11-04)은 MCP 서버를 TypeScript 모듈 같은 코드 API로 보여 주고, 에이전트가 코드를 써서 호출하게 하는 방식을 제안합니다. 중간 결과를 실행 환경에서 걸러 모델에는 필요한 것만 주므로, 글의 예시에서는 150,000 토큰이 2,000 토큰으로 줄었다고 합니다(해당 워크플로 한 건의 수치입니다). 대신 샌드박스와 자원 제한 같은 인프라가 필요합니다. 일반 사용자가 직접 설정할 일은 드물지만 "도구를 필요할 때 찾아 쓴다"는 방향을 이해하는 데 도움이 됩니다.
+
+#### 4-7. MCP Apps와 확장
+
+MCP Apps는 서버가 도구 결과와 함께 대화 안에서 렌더링되는 대화형 HTML UI(차트, 폼, 대시보드)를 돌려주는 확장입니다. 도구 설명의 `_meta.ui.resourceUri`가 `ui://` 리소스를 가리키고, 호스트가 샌드박스 iframe에서 렌더링하며 `postMessage`로 통신합니다. 공식 문서는 지원 클라이언트로 Claude, Claude Desktop, VS Code GitHub Copilot, Microsoft 365 Copilot, Goose 등을 나열합니다. 프론트엔드 개발자에게는 "MCP 서버의 결과를 웹 기술(React, Vue, Svelte 등)로 그릴 수 있다"는 점이 의미가 있습니다. 확장은 서버·클라이언트 양쪽이 지원할 때만 쓰이는 선택 기능입니다. Tasks와 Skills over MCP도 공식 확장으로 소개됩니다.
+
+#### 4-8. 보안
+
+- 공식 스펙은 도구를 임의 코드 실행으로 보고, 도구 설명과 어노테이션은 신뢰할 수 있는 서버에서 온 것이 아니면 신뢰하지 말라고 합니다. 호스트는 도구 호출 전에 사용자 동의를 받아야 합니다.
+- 프롬프트 인젝션: 이슈, 로그, 지원 티켓 같은 외부 텍스트에 숨은 지시를 에이전트가 따를 수 있습니다. Supabase와 Vercel 문서도 같은 위험을 경고하며 사람의 확인을 켜 두라고 합니다.
+- 공개된 보안 사례: 2025년 12월 17일 GitHub 보안 권고로 공개된 Anthropic 참조 Git MCP 서버(`mcp-server-git`)의 취약점 세 건(CVE-2025-68143, CVE-2025-68144, CVE-2025-68145)이 있습니다. `git_init` 도구가 임의 경로에 저장소를 만들 수 있었고, `git_diff`와 `git_checkout`에는 인자 주입이, `--repository` 옵션에는 경로 검증 누락이 있었습니다. 각각 2025.9.25 또는 2025.12.18 버전에서 고쳐졌고 `git_init` 도구는 삭제되었습니다. Cursor에서는 CVE-2025-54136이 있었습니다. 1.2.4 이하 버전에서 이미 신뢰한 MCP 설정 파일을 바꾸면 재승인 없이 코드가 실행되었고 1.3에서 고쳐졌습니다.
+- 실천 수칙: (1) 공식 주소인지 확인하고 마켓플레이스의 원클릭 설치 링크의 도메인을 확인합니다. (2) 가능하면 읽기 전용, 프로젝트 범위로 제한합니다(`read_only=true`, `project_ref`, `--read-only`). (3) 운영 데이터는 필요한 때만 연결합니다. (4) 도구 호출 승인을 끄지 않습니다. (5) 저장소에 커밋하는 `.mcp.json`에는 토큰을 직접 쓰지 말고 환경 변수를 씁니다. (6) 리뷰 없이 남이 올린 `.mcp.json`을 받아 실행하지 않습니다.
+
+### 5. 처음 시작하는 추천 순서
+
+1. Context7을 붙여 낡은 API 문제를 줄입니다.
+2. 쓰는 프레임워크의 공식 서버를 붙입니다(Next.js면 `next-devtools-mcp`).
+3. 화면 검증용으로 Chrome DevTools MCP 또는 Playwright를 하나만 고릅니다.
+4. 팀이 Figma를 쓴다면 Figma remote 서버를 붙입니다.
+5. 필요해지면 GitHub, Vercel, Sentry를 읽기 위주로 추가합니다.
+6. 연결한 서버는 `claude mcp list` 같은 명령으로 주기적으로 점검하고 안 쓰는 것은 제거합니다.
+
+---
+
+# 6. AI 에이전트의 브라우저 자동화: 2026년 11월 도구 지형과 사용법
+
+기준일은 2026-11-10입니다. 이 분야는 몇 달 만에 판도가 바뀌므로, 아래 내용은 공식 문서와 저장소를 직접 읽고 확인한 것을 중심으로 썼습니다.
+
+### 1. 큰 그림: 에이전트는 "어떤 브라우저"를 쓰는가
+
+에이전트에게 브라우저를 맡길 때 가장 먼저 갈리는 질문은 도구 이름이 아니라 아래 두 가지입니다.
+
+1. 에이전트가 **내 로그인된 실제 브라우저**를 쓰는가, **깨끗한 별도 브라우저**를 쓰는가
+2. 에이전트가 페이지를 **텍스트(접근성 스냅샷)** 로 보는가, **이미지(스크린샷+좌표)** 로 보는가
+
+이 두 축으로 보면 도구는 대략 다섯 범주로 나뉩니다.
+
+| 범주 | 대표 도구 | 기본 브라우저 | 페이지를 보는 방식 |
+| --- | --- | --- | --- |
+| ① 사람과 에이전트가 함께 쓰는 브라우저·확장 | Aside, ego(lite), Claude in Chrome, ChatGPT 브라우저 확장 | 내 실제 프로필(가져오기 포함) | 도구마다 다름 |
+| ② 셸에서 부르는 CLI | playwright-cli, agent-browser, chrome-devtools CLI | 별도(격리) 브라우저가 기본 | 접근성 스냅샷 + ref |
+| ③ MCP 서버 | Playwright MCP, Chrome DevTools MCP, `aside mcp` | 별도 프로필이 기본, 기존 Chrome 연결 옵션 있음 | 접근성 스냅샷(기본) |
+| ④ 코딩 에이전트·IDE 내장 브라우저 | Cursor 브라우저, ChatGPT/Codex 앱 내장 브라우저 | 앱 전용 프로필 | 스크린샷, 콘솔·네트워크 로그 등 |
+| ⑤ 클라우드 브라우저·computer use | Browserbase(+Stagehand), Claude computer use | 원격/가상 환경 | CDP 또는 스크린샷+좌표 |
+
+### 2. 이번 글의 주인공 두 가지: ego와 aside
+
+#### ego (ego lite, `ego-browser`)
+
+- **정체**: Citro Labs가 만든 Chromium 기반 무료 브라우저입니다. 사람과 AI 에이전트가 같은 브라우저에서 서로 제어권을 다투지 않고 일하도록 설계됐습니다. CLI 이름은 `ego-browser`입니다.
+- **설치**: 공식 저장소(citrolabs/ego-lite) 기준으로 macOS(Apple Silicon/Intel)와 Windows 설치 파일을 받아 실행하면 에이전트의 skills 디렉터리에 `ego-browser` 스킬이 함께 설치됩니다. 스킬만 먼저 넣으려면 `npx skills add citrolabs/ego-lite`를 쓰고, 에이전트의 첫 브라우저 작업 때 앱 설치 안내가 이어집니다. Linux는 로드맵에만 있습니다. 저장소 내용은 MIT 라이선스이고 브라우저 앱은 별도 무료 배포입니다.
+- **로그인 세션**: 첫 실행 때 Chrome의 로그인, 쿠키, 확장, 북마크를 가져올지 묻습니다. CLI로도 `ego-browser import list`, `ego-browser import --browser chrome --profile Default`처럼 가져올 수 있습니다. 가져온 뒤에는 에이전트가 그 로그인 상태를 이어받습니다.
+- **동작 방식**:
+  - 에이전트가 `ego-browser nodejs`에 자바스크립트를 넘기면, 브라우저 쪽 내장 Node.js 런타임에서 실행됩니다. 이 스크립트는 페이지 안이 아니라 Node에서 도니, 페이지 안 코드는 `page.evaluate()`에 넣어야 합니다.
+  - 에이전트 작업마다 **Space**라는 격리된 작업 공간이 생기고, 사용자의 기존 탭은 건드리지 않습니다. 사용자는 에이전트가 일하는 모습을 보다가 언제든 넘겨받을 수 있습니다(`task.handOff()`).
+  - 페이지 관찰은 `page.snapshot()`(구조와 ref, 기본 수단)과 `page.screenshot()`(시각 확인)이 있습니다. 스냅샷에서 나온 `@21` 같은 ref로 `page.click("@21")`처럼 조작합니다.
+  - Playwright와 비슷해 보이지만 Playwright가 아닙니다. 스킬 문서는 `locator()`, `getByRole()` 같은 Playwright API를 추측해서 쓰지 말라고 명시합니다. 목록에 없는 동작은 `page.evaluate()`나 `page.cdp()`로 처리합니다.
+- **토큰 비용 특성**: 스킬 문서가 "스냅샷과 스크린샷 중 필요한 하나만, 여러 동작을 한 스크립트로 묶어 실행하고 마지막에 스냅샷 한 번"을 권합니다. 즉 왕복 횟수를 줄이는 설계입니다.
+- **주의점**: 에이전트가 작업하는 페이지의 내용은 사용자가 선택한 모델로 전송됩니다(공식 사이트). 실제 로그인 세션을 쓰므로 에이전트가 할 수 있는 일이 곧 내 계정이 할 수 있는 일입니다.
+
+#### aside
+
+- **정체**: Aside Computer Inc.(Y Combinator 소속)가 만든 "사람과 에이전트를 위해 다시 만든 브라우저"입니다. 로그인된 사이트에서 연동(integration) 없이 작업하는 것이 핵심 메시지입니다. macOS 15 이상, Windows 10 22H2 이상/Windows 11을 지원합니다. 바깥 에이전트가 쓰는 길은 두 가지입니다. `aside exec`은 브라우저 안의 Aside 에이전트에게 작업을 통째로 맡기는 방식으로, CLI 안내문은 서브에이전트를 띄우는 것처럼 쓰라고 권합니다. `aside repl`은 Playwright 스타일 JavaScript로 탭을 직접 다루는 방식으로, `snapshot()`이 페이지를 읽는 기본 수단이고 `annotatedScreenshot()`과 `page.screenshot()`은 시각 확인용입니다.
+- **로그인 세션**: 온보딩에서 Chrome 등의 방문 기록, 쿠키, 북마크를 가져옵니다. 에이전트는 자동 입력(autofill)으로 로그인하며 자격 증명이 에이전트에게 노출되지 않는다고 공식 사이트는 설명합니다. 결제, 게시, 메시지 같은 민감한 동작은 사용자 확인을 기다립니다.
+- **코딩 에이전트 연동**: 개발자 문서(`aside.com/developers.md`)에 CLI, MCP, REPL 세 가지가 있습니다.
+
+```bash
+# macOS 설치 (개발자 문서)
+curl -fsSL https://releases.aside.com/install.sh | bash
+
+# 로그인: 인증 파일 경로를 먼저 지정하고, 브라우저의 Settings > Account > Devices에서 코드 승인
+export ASIDE_CLI_AUTH_PATH="/절대/경로/aside-auth.json"
+aside login --email "you@example.com"
+
+aside "localhost:3000을 스모크 테스트해줘"   # 자연어 작업
+aside repl "const p = await openTab('https://example.com')"   # 결정적 단계
+aside mcp                                     # stdio MCP 서버
+```
+
+  MCP 설정은 `mcp.json`의 `mcpServers`에서 `command`를 `aside`, `args`를 `["mcp"]`로 두면 됩니다. `aside mcp`가 노출하는 도구는 네 개입니다: `exec`(로그인된 사이트에서 브라우저 에이전트 실행), `repl`(Playwright 스타일 JavaScript 실행), `memory_search`(Aside가 쌓은 사용자 메모리 검색), `browser_profiles`(브라우저 프로필 목록).
+
+  그 밖의 명령: `aside session resume <session-id> "Continue"`, `aside account list/status/use`. 인증 파일은 `ASIDE_CLI_AUTH_PATH`로 지정하며, 지정하지 않으면 `~/.aside/cli/auth.json`을 씁니다.
+- **주의점**: `curl | bash` 설치는 스크립트를 먼저 읽고 실행하는 편이 안전합니다. 인증 파일은 절대 커밋하지 마세요(공식 문서도 같은 경고).
+
+#### 두 도구의 공통점과 차이
+
+- 공통: 내 로그인 세션을 에이전트가 이어받는 "사람과 에이전트 공유 브라우저"입니다. 둘 다 Chrome 데이터를 가져옵니다.
+- 차이: ego는 바깥 에이전트가 직접 짜는 JS 스크립트(`ego-browser nodejs`)가 중심입니다. aside는 브라우저 안에 자체 에이전트가 있어 작업을 통째로 맡기는 `exec`이 기본이고, 직접 제어가 필요할 때만 `repl`을 씁니다. 실행 중인 작업은 `aside session steer`·`queue`·`stop`으로 방향을 바꾸거나 멈출 수 있고, `--permission`(`ask`, `guard`, `full-access`)으로 권한 범위를 정합니다. ego는 스킬 저장소가 공개(MIT)되어 있고, aside는 CLI의 `aside guide`가 같은 역할을 합니다.
+
+### 3. 나머지 범주
+
+#### ① AI 회사의 브라우저·확장
+
+- **Claude in Chrome**: 2026-08-26에 유료 플랜 전체에 정식 출시됐습니다. Chrome Web Store에서 설치하며 Chrome 전용입니다(다른 Chromium과 모바일은 미지원). 동작마다 승인받지 않고 자율 실행할 수도 있습니다. 프롬프트 인젝션 방어로 학습, 웹 콘텐츠 탐지 프로브, 실행 전 분류기를 쓴다고 하는데, 이는 Anthropic 자체 평가이므로 참고용으로만 보세요. Claude Code에서는 `claude --chrome`으로 시작하거나 세션 안에서 `/chrome`으로 연결 상태를 확인하고 다시 연결합니다. 확장 1.0.36 이상과 `/login` 로그인이 필요하며, API 키나 setup-token 인증에서는 Chrome 연동이 꺼집니다.
+- **ChatGPT**: 별도 브라우저였던 Atlas는 OpenAI가 폐기하고, 브라우저 기반 에이전트 기능을 ChatGPT와 Codex로 옮긴다고 OpenAI 도움말이 안내합니다. Chrome에서는 ChatGPT Chrome 확장이나 사이드바를 쓰라고 합니다. 데스크톱 앱 내장 브라우저는 별도 프로필이라 기존 세션을 공유하지 않고, 로그인된 사이트가 필요하면 Chrome/Edge/Brave 등용 브라우저 확장을 쓰라고 OpenAI 문서가 안내합니다.
+- **Gemini in Chrome(auto browse)**: Google 블로그는 auto browse를 미국의 Google AI Pro/Ultra 구독자에게만 제공한다고 안내합니다. Gemini in Chrome은 이메일 전송이나 일정 추가 같은 민감한 동작 전에 확인을 요청합니다.
+
+#### ② CLI형
+
+- **playwright-cli**: `npm install -g @playwright/cli`. 코딩 에이전트용 CLI로, 공식 문서는 도구 스키마와 장황한 접근성 트리를 컨텍스트에 싣지 않아 토큰 비용이 낮다고 설명합니다. `open`, `snapshot`, `click`, `fill` 같은 명령과 `-s=<name>` 세션, 데몬 방식이 있습니다. 실행 중인 브라우저에는 `playwright-cli attach --extension=chrome`(Playwright 확장 필요, Chrome/Edge 전용), `attach --cdp=chrome`(실행 중인 Chrome/Edge), `attach --cdp=<url>`(CDP 엔드포인트) 중 하나로 붙고, `playwright-cli detach`로 연결만 끊으면 외부 브라우저는 그대로 남습니다.
+- **agent-browser**(vercel-labs, Apache-2.0): `npm install -g agent-browser` 후 `agent-browser install`. `agent-browser open example.com`, `agent-browser snapshot -i`(상호작용 요소에 `@e1` 같은 ref), `agent-browser click @e1`. 백그라운드 데몬이 CDP로 Chrome for Testing을 제어하며, 실행 중인 Chrome에는 `--cdp`/`--auto-connect`로 붙을 수 있다고 README에 있습니다.
+- **chrome-devtools CLI**: `npm i chrome-devtools-mcp@latest -g` 후 `chrome-devtools <tool> ...`. 기본은 헤드리스, 격리 모드입니다.
+- 공통 특성: 명령 한 번마다 짧은 텍스트가 돌아오므로 컨텍스트가 덜 쌓입니다.
+
+#### ③ MCP 서버형
+
+- **Playwright MCP**: `npx @playwright/mcp@latest`. 접근성 스냅샷이 기본이고 `--caps=vision`으로 좌표 기반 도구를 추가합니다. 기본은 작업공간별 영구 프로필이며 `--isolated`는 메모리 프로필입니다. `--extension`으로 기존 Chrome/Edge의 로그인 세션을 재사용할 수 있습니다. Chrome Web Store에서 Playwright 확장을 설치하고 MCP 설정의 `args`에 `--extension`을 넣으면, LLM이 처음 브라우저를 쓸 때 제어할 탭을 고르는 페이지가 열립니다. 확장 상태 페이지의 `PLAYWRIGHT_MCP_EXTENSION_TOKEN`을 `env`에 넣으면 승인 절차를 건너뜁니다. README는 CLI+스킬이 토큰 효율적이라 코딩 에이전트에 선호되고, MCP는 영속 상태, 풍부한 페이지 조사, 장시간 자율 작업에 맞는다고 정리합니다. 또 "보안 경계가 아니다"라고 명시합니다.
+- **Chrome DevTools MCP**: `npx -y chrome-devtools-mcp@latest`. 성능 트레이스, 네트워크, 소스맵이 적용된 콘솔 스택트레이스 등 **디버깅**이 강점입니다. 공식 지원 브라우저는 Chrome과 Chrome for Testing뿐입니다. 실행 중인 Chrome 세션에는 `--autoConnect`로 붙을 수 있습니다(Chrome 144 이상, `chrome://inspect/#remote-debugging`에서 허용, 연결 때마다 허용 대화상자, 제어 중 배너 표시). 이는 Chrome 블로그 글 기준이라 현재 세부는 달라졌을 수 있습니다. 사용 통계 수집이 기본 켜져 있어 `--no-usage-statistics`로 끌 수 있습니다.
+- MCP는 도구 스키마가 컨텍스트에 상주하므로 도구가 많을수록 기본 비용이 큽니다(Playwright 문서의 비교표에서도 MCP 토큰 비용은 "Higher").
+
+#### ④ 코딩 에이전트·IDE 내장 브라우저
+
+- **Cursor**: 편집기 안 창으로 열리고 MCP 서버(확장)가 제어합니다. 이동, 클릭, 입력, 스크린샷, 콘솔, 네트워크 확인이 가능하고 쿠키와 스토리지는 에이전트 세션 사이에 유지되지만 워크스페이스별로 격리됩니다. 에이전트는 실행 중인 개발 서버를 감지해 맞는 포트를 쓰도록 안내받고, 관리자는 `http://localhost:3000` 같은 허용 origin 목록으로 자동 이동 범위를 제한할 수 있습니다. 기본적으로 승인이 필요하며 허용/차단 목록은 "최선 노력 보호"라고 문서가 말합니다. 낯선 사이트에서 자동 실행은 쓰지 말라고 합니다.
+- **ChatGPT 앱 내장 브라우저**: 사용자와 에이전트가 같은 화면을 보며 로컬 또는 공개 페이지를 미리 보고 시각적 코멘트를 남길 수 있습니다. 별도 프로필이라 로그인은 직접 해야 합니다. 개발자 모드(전체 CDP 접근)는 사이트별 명시 승인이 필요한 옵트인입니다.
+- 프런트엔드 개발자가 가장 자주 쓰는 범주입니다. 로그인이 필요 없는 로컬 개발 서버 확인에는 이것만으로 충분한 경우가 많습니다.
+
+#### ⑤ 클라우드 브라우저·computer use
+
+- **Browserbase / Stagehand**: Browserbase는 헤드리스 클라우드 브라우저와 세션 관찰(로그, 라이브 뷰, 리플레이)을 제공하고, Stagehand는 Playwright 수준 제어 위에 `act`/`extract`/`observe`를 얹은 SDK입니다. 서비스 운영(수집, 대규모 병렬)에 적합하고 개발 중 화면 확인에는 과합니다. 세션을 만들면 받는 `connectUrl`을 Playwright의 `chromium.connectOverCDP(session.connectUrl)`로 연결합니다. Contexts는 쿠키, 세션 토큰, 로컬 스토리지를 저장해 두는 기능으로, 세션 생성 때 `browserSettings.context`에 `{ id, persist: true }`를 주면 같은 context ID의 세션이 로그인된 채 시작합니다.
+- **Claude computer use**: 스크린샷과 마우스, 키보드 좌표 방식입니다. API 문서는 `{"type": "computer_toolset_20260801"}` 한 줄로 켜고 17개 구성 도구가 있다고 하며, 웹페이지 안에서 끝나는 작업은 브라우저 도구가 더 낫다고 안내합니다. 스크린샷 한 장이 대략 1,000~1,800 입력 토큰이라고 문서가 밝힙니다. 보안 권고는 전용 VM/컨테이너, 민감 정보 미제공, 도메인 허용 목록, 중요 동작 전 사람 확인입니다.
+
+### 4. 범주별 보안 주의점
+
+- **프롬프트 인젝션**: 웹페이지의 텍스트가 에이전트에게 명령처럼 읽힐 수 있습니다. OpenAI, Cursor, Anthropic 문서 모두 페이지 내용을 신뢰할 수 없는 입력으로 취급하라고 합니다. 어떤 방어 수치도 "사고가 없다"는 보증이 아닙니다.
+- **실제 계정 권한**: ①과 ③의 확장/autoConnect 방식은 에이전트가 내 세션으로 메일, 결제, 관리자 화면까지 갈 수 있다는 뜻입니다. 업무와 개인 계정이 섞인 프로필을 그대로 쓰지 말고, 작업용 프로필을 따로 두세요.
+- **권고**: 읽기 위주 작업부터 시작하고, 결제, 삭제, 게시, 권한 변경은 사람이 승인하며, 인증 파일과 토큰은 저장소에 두지 않습니다. 확인 대화상자를 에이전트가 우회하게 두지 마세요.
+
+### 5. 상황별 선택 가이드
+
+| 상황 | 추천 | 이유 |
+| --- | --- | --- |
+| 로컬 개발 서버 화면, 레이아웃 확인 | IDE/앱 내장 브라우저(Cursor, ChatGPT 앱) 또는 playwright-cli | 로그인 불필요, 스크린샷과 콘솔을 바로 확인 |
+| E2E 테스트 작성, 검증 | playwright-cli(셸 가능 시) 또는 Playwright MCP | Playwright 스택과 같은 모델, 재현 가능한 명령 |
+| 성능, 네트워크, 콘솔 디버깅 | Chrome DevTools MCP / chrome-devtools CLI | 트레이스와 소스맵 스택트레이스 |
+| 로그인이 필요한 사이트(사내 도구, 관리자 화면) 작업 | ego, aside, Claude in Chrome 등 실제 세션 공유형 | 매번 로그인하지 않아도 됨. 단 계정 권한 위험 |
+| 로그인은 필요하지만 계정은 보호하고 싶음 | 별도 프로필 + 격리 브라우저(`--isolated` 등) | 피해 범위 제한 |
+| 사람이 지켜보며 협업 | ego(Space와 인계), Claude in Chrome | 에이전트 작업을 보며 개입 가능 |
+| 대규모 병렬, 서버 환경 | Browserbase 같은 클라우드 브라우저 | 인프라를 직접 운영하지 않음 |
+| DOM 정보가 빈약한 캔버스, 데스크톱 앱 | computer use | 스크린샷+좌표가 유일한 수단일 때만 |
+
+### 6. 짧은 사용 예: 에이전트에게 화면 확인 맡기기
+
+**프롬프트 예(로컬 개발 서버, 로그인 불필요)**
+
+```text
+http://localhost:3000/settings 를 열어서 모바일 폭(390px)과 데스크톱 폭에서
+각각 스크린샷을 찍고, 카드 레이아웃이 깨지거나 가로 스크롤이 생기는지 알려줘.
+콘솔에 에러가 있으면 함께 보고하고, 코드는 수정하지 말고 원인 후보만 적어줘.
+```
+
+**ego-browser로 직접 실행하는 최소 예**(로컬 스킬 문서에 나온 API만 사용했습니다. 뷰포트 크기를 바꾸는 전용 API는 없지만, `page.cdp("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true })`로 폰 너비를 흉내 낼 수 있습니다.)
+
+```bash
+ego-browser nodejs <<'EOF'
+const task = await taskSpace("check settings page");
+const page = task.page("p1");
+await page.goto("http://localhost:3000/settings");
+console.log(await page.snapshot());
+await page.screenshot({ path: "/absolute/path/settings.png" });
+await task.finish({ keep: [] });
+EOF
+```
+
+핵심 습관은 세 가지입니다. 먼저 스냅샷(텍스트)으로 구조를 보고, 시각 확인이 필요할 때만 스크린샷을 찍고, 작업이 끝나면 만든 창과 세션을 정리하는 것입니다.
+
+# 7. 에이전트 모드 실전 활용
+
+> 권한 모드, plan 모드, 서브에이전트, 에이전트 팀을 상황에 맞게 쓰기
+
+## 기본 사용법
+
+```bash
+# 대화형 세션 시작
+claude
+
+# 초기 프롬프트와 함께 시작
+claude "이 프로젝트 구조를 설명해줘"
+
+# 비대화형(headless) 실행 — 스크립트·CI 용
+claude -p "타입 에러를 찾아 수정해줘" --output-format json
+
+# 최근 대화 이어가기 / 이름으로 세션 재개
+claude -c
+claude -r "auth-refactor"
+
+# 격리된 git worktree 에서 시작
+claude -w feature-auth
+
+# 백그라운드 에이전트로 실행하고 agent view 에서 모니터링
+claude --bg "테스트 전체를 실행하고 실패하면 수정해줘"
+claude agents
+```
+
+## 권한 모드
+
+권한 모드는 에이전트가 어떤 동작을 사용자의 승인 없이 수행할 수 있는지 결정합니다. 세션 진행 중에는 Shift+Tab으로 전환하고, 세션을 시작할 때는 --permission-mode 옵션으로 지정합니다.
+
+- `default (Manual)`: 파일 수정과 셸 명령 실행 전에 매번 확인
+- `acceptEdits`: 파일 편집은 자동 승인, 그 외에는 확인
+- `plan`: 읽기와 탐색만 수행하고 소스코드는 수정하지 않음
+- `auto`: 사용자 대신 분류기가 위험한 동작을 검토
+- `dontAsk`: 미리 허용한 도구만 실행하고 나머지는 거부
+- `bypassPermissions`: 모든 검사를 생략. 격리된 환경에서만 사용
+
+## Plan 모드 활용
+
+대규모 리팩토링이나 새 기능 추가처럼 영향 범위가 큰 작업에서는 plan 모드로 시작하세요. 에이전트가 코드를 읽기만 하면서 접근 방법을 제안하고, 사용자가 승인한 뒤에 구현합니다. 방향이 틀린 채로 구현이 진행되어 다시 작업하는 비용을 줄여 줍니다.
+
+```bash
+# plan 모드로 시작 (세션 중에는 Shift+Tab 으로 전환)
+claude --permission-mode plan
+
+> 인증 모듈을 세션 방식에서 JWT 로 바꾸려고 해. 계획을 세워줘
+
+# plan 모드에서 에이전트는:
+# 1. 파일을 읽고 읽기 전용 명령으로 탐색만 한다 (소스 수정 없음)
+# 2. 영향받는 파일, 변경 순서, 위험 요소를 계획으로 제시한다
+# 3. 사용자가 승인하면 plan 모드를 벗어나 구현을 시작한다
+```
+
+## 인터뷰 패턴
+
+인터뷰는 별도의 모드나 플래그가 아니라 프롬프트 패턴입니다. 무엇을 만들지 아직 구체화되지 않았다면, 에이전트에게 스펙을 작성할 수 있을 때까지 본인을 인터뷰해 달라고 요청하세요. 에이전트가 결정되지 않은 부분을 객관식 질문으로 하나씩 묻고, 답변이 모이면 스펙 문서로 정리해 줍니다.
+
+```bash
+# 전용 플래그는 없다 — 프롬프트로 요청한다
+> 공개 API 에 rate limiting 을 추가하고 싶은데 아직 정리가 안 됐어.
+  스펙을 쓸 수 있을 때까지 나를 인터뷰하고, 끝나면 SPEC.md 로 정리해줘.
+
+# 에이전트가 객관식 질문으로 미정 사항을 묻는다:
+# - 사용자별 제한인가, API 키별 제한인가?
+# - 한도를 넘은 요청은 어떻게 처리하는가?
+# - 이번 범위에서 제외할 것은?
+
+# SPEC.md 가 생기면 새 세션에서 구현을 시작한다
+claude "SPEC.md 를 읽고 구현해줘"
+```
+
+스펙 문서가 완성되면 새 세션에서 구현을 시작하세요. 인터뷰 과정의 긴 대화 없이 깨끗한 컨텍스트와 명문화된 완료 기준으로 출발할 수 있으며, 나중에 결과물을 검토할 때도 같은 문서를 기준으로 삼을 수 있습니다.
+
+## 서브에이전트 활용
+
+서브에이전트는 메인 대화와 분리된 컨텍스트에서 작업하고 요약된 결과만 돌려줍니다. 탐색이나 테스트 실행처럼 출력이 긴 작업을 맡기면 메인 컨텍스트가 깨끗하게 유지됩니다. 자주 쓰는 역할은 .claude/agents/ 아래 마크다운 파일로 정의해 재사용합니다.
+
+- `Explore`: 읽기 전용. 파일 탐색과 코드 검색, 코드베이스 분석
+- `Plan`: 읽기 전용. plan 모드에서 계획 수립에 필요한 조사 수행
+- `general-purpose`: 탐색과 수정이 모두 필요한 복합 작업
+- `커스텀 에이전트`: .claude/agents/*.md로 도구·모델·프롬프트를 직접 정의
+
+```markdown
+<!-- .claude/agents/code-improver.md -->
+---
+name: code-improver
+description: 파일을 훑어 가독성·성능 개선점을 제안한다. 코드를 작성하거나 수정한 뒤 사용.
+tools: Read, Grep, Glob
+model: sonnet
+---
+
+너는 코드 개선 전문가다. 발견한 문제마다 원인을 설명하고,
+현재 코드와 개선된 코드를 함께 제시한다.
+
+# 사용 예
+> code-improver 에이전트로 src/utils 의 개선점을 찾아줘
+```
+
+## Claude Code 에이전트 팀
+
+에이전트 팀은 여러 Claude Code 세션이 한 팀으로 협업하는 실험적 기능으로, 기본값은 꺼져 있습니다. 리드 세션이 작업을 나누어 팀원에게 맡기고, 팀원은 각자 독립된 컨텍스트에서 일하며 서로 직접 대화합니다. 같은 요청이라도 팀을 켰을 때와 껐을 때 진행 방식이 달라집니다.
+
+### 에이전트 팀 사용
+
+- 리드가 관점별 리뷰 작업을 공유 작업 목록에 등록합니다
+- 보안·성능·테스트 담당 팀원이 각자 독립된 세션에서 동시에 리뷰합니다
+- 팀원끼리 메시지를 주고받으며 서로가 발견한 사항을 검토합니다
+- 리드가 세 관점의 결과를 종합해 보고합니다
+
+토큰 사용량 많음: 팀원 수에 비례해 증가하며, 팀원이 plan 모드로 동작하면 표준 세션의 약 7배
+
+### 단일 세션
+
+- 하나의 세션이 PR 전체를 읽습니다
+- 보안, 성능, 테스트 관점을 순서대로 검토합니다
+- 필요한 경우 서브에이전트에게 일부 조사를 맡기고 요약을 전달받습니다
+- 하나의 컨텍스트 안에서 결과를 정리해 보고합니다
+
+토큰 사용량 작음: 순차 작업이나 같은 파일을 고치는 작업에는 이쪽이 효율적
+
+## 서브에이전트와 에이전트 팀, 언제 무엇을 쓸까
+
+두 방식 모두 작업을 병렬화하지만 소통 구조가 다릅니다. 서브에이전트는 결과를 메인 에이전트에게만 보고하고, 에이전트 팀의 팀원은 공유 작업 목록을 확인하며 서로 직접 메시지를 주고받습니다.
+
+### 서브에이전트: 결과만 돌려받는 위임
+
+- 메인 에이전트가 조사할 영역을 독립된 단위로 나눕니다
+- 서브에이전트가 각자의 컨텍스트에서 병렬로 조사합니다
+- 각 서브에이전트는 요약된 결과만 메인 에이전트에게 보고합니다
+- 메인 에이전트가 결과를 종합해 원인을 판단합니다
+
+토큰 비용 낮음: 요약된 결과만 메인 컨텍스트로 전달됨
+
+### 에이전트 팀: 서로 토론하는 협업
+
+- 리드가 가설별 작업을 공유 작업 목록에 등록하고 팀원을 생성합니다
+- 팀원이 작업을 맡아 각자 독립된 세션에서 가설을 검증합니다
+- 팀원끼리 직접 메시지를 보내 서로의 가설을 반박하고 발견을 공유합니다
+- 리드가 살아남은 가설을 종합하고 팀원을 종료합니다
+
+토큰 비용 높음: 팀원마다 별도의 Claude 인스턴스가 실행됨
+
+```bash
+// settings.json — 실험적 기능이라 직접 켜야 한다
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  }
+}
+
+# 팀 구성은 자연어로 요청한다
+> PR #142 를 리뷰할 팀원 3명을 만들어줘:
+  - 보안 영향 담당
+  - 성능 영향 담당
+  - 테스트 커버리지 담당
+  각자 리뷰한 뒤 서로의 발견을 검토하고 결과를 보고해줘.
+```
+
+### 에이전트 팀 사용 가이드
+
+- 리서치와 리뷰, 서로 다른 모듈 개발, 경쟁 가설 디버깅처럼 팀원이 독립적으로 일할 수 있는 작업에 적합합니다
+- 순차적인 작업, 동일한 파일을 편집하는 작업, 의존성이 높은 작업은 단일 세션이나 서브에이전트를 쓰는 편이 낫습니다
+- 팀원은 3~5명 규모로 시작하고, 팀원마다 서로 다른 파일을 담당하게 하여 충돌을 방지하세요
+- 실험적 기능이라 세션을 재개하면 in-process 팀원이 복원되지 않는 등의 제약이 있습니다
+
+## Cursor 규칙 설정
+
+Cursor의 프로젝트 규칙은 .cursor/rules 폴더의 .mdc 파일로 정의합니다. frontmatter의 alwaysApply, description, globs 설정에 따라 항상 적용, 에이전트 판단에 따른 적용, 특정 파일 한정 적용, @멘션을 통한 수동 적용의 네 가지 방식으로 동작합니다. 프로젝트 루트나 하위 디렉터리의 AGENTS.md도 함께 읽습니다.
+
+```markdown
+<!-- .cursor/rules/typescript.mdc -->
+---
+description: TypeScript 작성 규칙
+globs: src/**/*.ts, src/**/*.tsx
+alwaysApply: false
+---
+
+- strict 모드를 준수하고 any 를 쓰지 않는다
+- 함수형 컴포넌트만 사용한다
+- default export 대신 named export 를 쓴다
+- 프로덕션 코드에 console.log 를 남기지 않는다
+```
+
+# 8. 실전 워크플로우
+
+> 기능 개발, 버그 수정, 코드 리뷰, 그리고 무인 자동화
+
+## 기능 개발 워크플로우
+
+탐색, 계획, 구현, 검증, 리뷰, 커밋의 순서로 진행합니다. 계획 단계에서 방향을 합의하고, 구현 단계마다 타입 체크와 테스트로 검증하게 하면 마지막에 한꺼번에 고치는 일이 줄어듭니다.
+
+```bash
+# 1. 탐색 + 계획 (plan 모드)
+claude --permission-mode plan
+> PRD.md 를 읽고 구현 계획을 세워줘
+
+# 2. 구현 — 계획 승인 후
+> 승인한 계획대로 구현해줘. 단계마다 typecheck 를 돌려줘
+
+# 3. 검증
+> 테스트를 작성하고 bun run test 가 통과할 때까지 수정해줘
+
+# 4. 리뷰 — 번들 스킬
+> /code-review
+
+# 5. 커밋과 PR
+> 변경사항을 커밋하고 PR 을 만들어줘
+```
+
+## 버그 수정 워크플로우
+
+에러 메시지 전문과 재현 조건을 함께 주고, 먼저 실패하는 테스트로 버그를 재현하게 하세요. 테스트가 통과로 바뀌는 것이 곧 수정의 증거가 됩니다.
+
+```bash
+> 이 에러를 수정해줘:
+
+  TypeError: Cannot read properties of undefined (reading 'user')
+      at AuthGuard (src/guards/auth.guard.ts:15)
+
+  재현 조건: 로그아웃 후 보호된 페이지 접근
+  먼저 실패하는 테스트로 재현한 다음 고쳐줘.
+
+# 에이전트가 수행하는 작업:
+# 1. 에러 위치와 관련 코드 분석
+# 2. 실패하는 테스트로 재현
+# 3. 원인 진단 후 수정
+# 4. 테스트 통과로 검증
+```
+
+## 코드 리뷰 워크플로우
+
+```bash
+# 현재 diff 리뷰 (번들 스킬)
+> /code-review
+
+# 관점을 지정한 리뷰
+> 현재 브랜치를 main 과 비교해서 리뷰해줘.
+  특히 보안 취약점, 성능, 타입 안정성, 테스트 누락을 확인해줘
+
+# PR 번호로 리뷰 (gh CLI 또는 GitHub MCP 필요)
+> PR #123 을 리뷰하고 코멘트를 달아줘
+```
+
+## 병렬 실행과 자동화
+
+claude -p는 대화 없이 한 번 실행하고 종료되는 headless 모드로, CI나 스크립트에 연동하기에 적합합니다. 여러 작업을 동시에 진행할 때는 worktree로 세션별 작업 디렉터리를 분리해 변경 사항이 서로 섞이지 않도록 방지합니다. 오래 걸리는 작업은 백그라운드 세션으로 실행한 뒤 agent view에서 진행 상황을 확인합니다.
+
+```bash
+# headless 실행 — CI·스크립트에서
+claude -p "변경된 파일의 린트 에러를 수정해줘" --max-turns 10
+
+# 파이프 입력
+cat build-error.log | claude -p "이 빌드 에러의 원인을 요약해줘"
+
+# worktree 로 격리된 병렬 세션
+claude -w fix-login
+claude -w refactor-cart
+
+# 백그라운드 세션 실행과 모니터링
+claude --bg "의존성을 업데이트하고 테스트를 통과시켜줘"
+claude agents
+```
+
+### 자동화 팁
+
+- PR 생성과 리뷰는 gh CLI나 GitHub MCP 서버로 연결하세요
+- 반복되는 팀 절차(커밋 규칙, 릴리스 체크)는 프로젝트 skill로 만들어 공유하세요
+- 자동 실행 시에는 권한 규칙으로 허용 범위를 미리 좁혀 두세요
+
+# 9. 검증과 안전한 사용
+
+> AI 생성 코드의 검증, 권한 관리, 프롬프트 인젝션 대응, 팀 가이드라인
+
+## 자동 검증 설정
+
+PostToolUse hook을 활용하면 파일이 수정될 때마다 린트나 타입 검사를 실행할 수 있습니다. 검사에 실패했을 때 종료 코드 2와 함께 오류를 stderr로 출력하면 에이전트에게 해당 내용이 전달되어 스스로 수정을 시도합니다. 작업 완료 시점에 전체 테스트를 강제하고 싶다면 Stop hook을 사용합니다.
+
+```jsonc
+// .claude/settings.json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/lint-file.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+#!/bin/bash
+# .claude/hooks/lint-file.sh
+FILE=$(jq -r '.tool_input.file_path')
+if ! npx eslint "$FILE" >&2; then
+  exit 2   # 린트 결과(stderr)가 에이전트에게 전달된다
+fi
+```
+
+## 수동 검증 체크리스트
+
+- [ ] 비즈니스 로직이 요구사항과 일치하는가?
+- [ ] 기존 코드 패턴과 일관성을 유지하고 있는가?
+- [ ] 보안 취약점은 없는가? (입력 검증, 인증/인가)
+- [ ] 존재하지 않는 패키지나 API를 사용하지 않았는가?
+- [ ] 성능 문제는 없는가? (N+1, 메모리 누수)
+- [ ] 에러 처리가 적절하게 이루어졌는가?
+- [ ] 테스트가 실제 동작을 검증하는가? (단순 통과만을 위한 테스트가 아닌가)
+
+## 권한 관리
+
+settings.json의 permissions에 도구별 규칙을 지정하여 허용 범위를 설정합니다. 규칙은 deny, ask, allow 순서로 평가되며 먼저 일치한 규칙이 결과를 결정하므로, allow 규칙으로 deny 규칙에 예외를 둘 수는 없습니다. 프로젝트의 .claude/settings.json에 커밋하면 팀 전체가 동일한 규칙을 공유하여 사용하게 됩니다.
+
+```jsonc
+// .claude/settings.json
+{
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Bash(bun run test *)",
+      "Bash(git commit *)",
+      "mcp__github__get_*"
+    ],
+    "ask": [
+      "Bash(git push *)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Bash(rm -rf *)"
+    ]
+  }
+}
+```
+
+### 프롬프트 인젝션에 대비하기
+
+에이전트가 읽는 웹 페이지, 이슈 본문, MCP 도구의 응답에는 에이전트를 속이려는 지시문이 숨어 있을 수 있습니다. 외부에서 유입된 내용은 지시가 아닌 데이터로 취급해야 하며, 출처를 모르는 MCP 서버·skill·플러그인은 설치하지 않습니다. 비밀 값이 포함된 파일은 deny 규칙으로 차단하고, 모든 검사를 생략하는 bypassPermissions 모드는 격리된 환경에서만 사용합니다.
+
+## 팀 가이드라인
+
+### 허용되는 사용
+
+- 보일러플레이트 코드 생성
+- 테스트 코드 작성 보조
+- 문서화 작업 지원
+- 코드 리뷰 보조
+- 디버깅 지원
+
+### 필수 검증 사항
+
+- 모든 AI 생성 코드는 사람의 리뷰를 거친 뒤 머지
+- 보안 관련 코드는 시니어 개발자의 승인 필요
+- 프로덕션 배포 전 전체 테스트 통과 여부 확인
+
+### 금지 사항
+
+- 비밀 키나 개인정보를 프롬프트에 포함
+- AI 생성 코드를 검토 없이 커밋
+- 프로덕션 DB에 MCP로 직접 연결
+- 출처를 모르는 MCP 서버·skill·플러그인 설치
+
+> **최종 책임** AI 에이전트가 아무리 강력해도 최종 책임은 항상 개발자에게 있습니다. 모든 AI 생성 코드는 반드시 검토를 거친 후 커밋하세요.
+
+# 10. 토큰 절약과 컨텍스트 최적화
+
+> 컨텍스트를 작게 유지해 비용과 품질을 함께 관리하는 습관
+
+## 컨텍스트 최적화 루틴
+
+토큰 비용은 컨텍스트 크기에 비례합니다. 에이전트는 요청마다 이전 대화 전체를 다시 전송하므로, 온종일 켜 둔 세션에서는 단순한 한 줄 질문에도 그동안 누적된 대화 전체가 함께 처리됩니다. 따라서 컨텍스트 크기를 작게 유지하는 것이 가장 효과적인 절약 방법입니다.
+
+```bash
+# 무엇이 컨텍스트를 차지하는지 확인
+> /context
+
+# 관련 없는 작업으로 넘어갈 때 비우기
+> /clear
+
+# 남길 내용을 지정해서 압축
+> /compact 코드 변경 내역과 테스트 결과 위주로 남겨줘
+
+# 사용량 확인, 모델·추론 강도 조절
+> /usage
+> /model
+> /effort
+
+# 장황한 출력은 서브에이전트에 맡기기
+> 서브에이전트로 전체 테스트를 실행하고 실패한 케이스만 요약해줘
+```
+
+- 관련 없는 작업으로 넘어갈 때는 /clear로 세션을 새로 시작하세요
+- CLAUDE.md는 200줄 이하로 유지하고, 특정 작업용 지침은 skill로 옮기세요
+- 테스트 실행이나 로그 분석처럼 출력량이 많은 작업은 서브에이전트에 위임하세요
+- 전용 CLI가 제공되는 도구(gh, aws 등)는 MCP 대신 CLI를 쓰고, 사용하지 않는 MCP 서버는 비활성화하세요
+- 대부분의 작업은 가벼운 모델로 처리하고, 복잡한 설계 단계에만 상위 모델과 높은 effort를 적용하세요
+- 모호한 요청은 불필요하게 넓은 탐색을 유발하므로 대상 파일, 작업 범위, 완료 기준을 구체적으로 명시하세요
+- 에이전트의 진행 방향이 잘못되었다면 Esc로 즉시 중단하고 /rewind로 되돌리세요
+
+# 11. AI 코딩 도구 사용 단계 사다리 (2026년 11월 기준)
 
 이 글은 2026-11-10에 확인한 공식 문서와 GitHub 저장소를 바탕으로 작성했습니다. 도구는 몇 달 단위로 바뀌므로, 명령어는 쓰기 전에 각 공식 문서에서 다시 확인하시기 바랍니다. 가격과 벤치마크 순위는 다루지 않습니다.
 
@@ -386,1000 +1380,6 @@ Google은 2026-05-19에 Gemini CLI를 Antigravity CLI(`agy`)로 전환한다고 
 2. ③ 단계: 다음 기능 작업을 계획 먼저 받아 승인한 뒤 실행합니다.
 3. ⑤ 단계: 독립적인 작업 두 개를 `git worktree`로 나눠 두 세션에서 돌려 봅니다.
 4. 여기까지 불편함이 느껴질 때 ⑥의 도구를 하나만 골라 한 프로젝트에 시험합니다.
-
-# 2. MCP (Model Context Protocol)
-
-> AI 에이전트가 외부 도구와 데이터에 접근할 수 있게 돕는 표준 프로토콜
-
-## MCP란 무엇인가요?
-
-MCP는 AI 에이전트가 데이터베이스, 브라우저, 외부 API 같은 시스템과 연결되도록 돕는 표준 프로토콜입니다. MCP 서버가 tools(실행 가능한 기능), resources(조회 가능한 데이터), prompts(재사용 프롬프트)를 제공하면, 에이전트(클라이언트)가 이를 호출해 사용합니다. 로컬 프로세스는 stdio로, 원격 서버는 Streamable HTTP로 연결합니다.
-
-## 2026-07-28 스펙에서 달라진 점
-
-MCP 스펙의 최신 리비전은 2026-07-28입니다. 이전 리비전(2025-11-25)과 비교해 프로토콜의 기본 구조가 변경되었으므로, 서버를 직접 구축하거나 기존 예제를 참고할 때는 리비전을 확인해야 합니다.
-
-- 무상태(stateless) 프로토콜 전환: initialize 핸드셰이크와 Mcp-Session-Id 헤더가 제거되었으며, 모든 요청의 _meta 필드에 프로토콜 버전과 클라이언트 capability를 포함합니다
-- server/discover 추가: 서버가 지원하는 버전과 capability를 알려 주는 RPC로, 서버는 반드시 구현해야 합니다
-- Tasks 사양 분리: 코어 스펙에서 제외되어 공식 확장(extension)으로 이동했습니다
-- Roots, Sampling, Logging은 deprecated 상태입니다. 유예 기간에는 동작하지만 새 구현에서는 쓰지 않습니다
-- HTTP+SSE 전송은 deprecated이며 Streamable HTTP로 옮겨야 합니다. stdio는 그대로 유지됩니다
-
-## 2026년 11월의 MCP: 프론트엔드 개발자가 실제로 연결하는 서버와 사용법
-
-기준일은 2026-11-10입니다. 이 글의 서버 이름, 주소, 명령어, 설정 키는 각 제공 주체의 공식 문서나 공식 저장소에서 확인한 것만 적었습니다. "많이 쓴다"는 표현은 순위가 아니라 공식 문서가 주요 에이전트별 설치 방법을 따로 제공한다는 뜻으로 읽어 주십시오.
-
-### 1. MCP가 무엇이고, 왜 아직 쓰는가
-
-MCP(Model Context Protocol)는 코딩 에이전트가 외부 서비스의 도구와 데이터를 같은 방식으로 부르게 해 주는 개방형 프로토콜입니다. 서버는 도구(Tools), 리소스(Resources), 프롬프트(Prompts)를 제공합니다. 프론트엔드 작업에서는 "Figma 디자인 읽기", "라이브러리 최신 문서 찾기", "실행 중인 앱의 에러 보기", "브라우저로 화면 확인하기" 같은 일에 주로 연결합니다.
-
-다만 MCP가 만능은 아닙니다. 아래 4장에서 설명하듯, 토큰 비용 때문에 같은 일을 CLI와 스킬로 처리하는 흐름도 함께 자리 잡았습니다. 둘 중 하나를 고르는 문제가 아니라 상황에 맞게 섞어 쓰는 문제입니다.
-
-### 2. 범주별 서버 목록
-
-모든 서버를 다 설치하지 마십시오. 처음에는 "문서 검색 + 브라우저 + 사용하는 프레임워크 서버" 정도로 시작하면 충분합니다.
-
-#### 2-1. 디자인, 문서, 저장소
-
-| 이름 | 제공 주체 | 무엇을 하는가 | 연결 주소 또는 패키지 | 언제 쓰는가 |
-|---|---|---|---|---|
-| Figma MCP (remote) | Figma | 선택한 프레임에서 코드 생성, 변수·컴포넌트·레이아웃 같은 디자인 맥락 추출, Code Connect와 일관성 유지, 캔버스에 쓰기(remote만) | `https://mcp.figma.com/mcp` | 시안을 코드로 옮길 때 |
-| Context7 | Upstash | 라이브러리 이름을 ID로 바꾸고(`resolve-library-id`) 해당 라이브러리 문서를 조회(`query-docs`) | 원격 `https://mcp.context7.com/mcp`, 패키지 `@upstash/context7-mcp` | 에이전트가 낡은 API를 쓰는 것을 막고 싶을 때 |
-| GitHub MCP | GitHub | 저장소, 이슈, 풀 리퀘스트 등을 다루는 도구 묶음(toolset) 제공 | 원격 `https://api.githubcopilot.com/mcp/`, 로컬 Docker 이미지 `ghcr.io/github/github-mcp-server` | 이슈 읽기, PR 작업을 에이전트에 맡길 때 |
-
-Figma는 데스크톱 앱을 거치는 desktop 서버도 있지만, 공식 문서는 remote 서버를 권장합니다. desktop 서버는 특정 조직·엔터프라이즈 요구를 위한 것이고 Dev 또는 Full 시트가 필요하다고 안내합니다.
-
-GitHub MCP는 `--toolsets`로 도구 묶음을 고르고 `--read-only`로 쓰기 도구를 빼는 옵션이 있습니다. 처음에는 읽기 전용으로 쓰는 것을 권합니다.
-
-#### 2-2. 배포와 에러 모니터링, 백엔드
-
-| 이름 | 제공 주체 | 무엇을 하는가 | 연결 주소 또는 패키지 | 언제 쓰는가 |
-|---|---|---|---|---|
-| Vercel MCP | Vercel | 문서 검색, 프로젝트·배포 관리, 배포 로그 분석, Web Analytics 조회. OAuth 사용 원격 서버 | `https://mcp.vercel.com` | 배포 실패 원인을 에이전트와 함께 볼 때 |
-| Sentry MCP | Sentry | 에러 검색, 성능 분석, 이슈 분류, 문서 읽기, 프로젝트 관리. 모든 연결이 OAuth | `https://mcp.sentry.dev/mcp` (조직·프로젝트로 좁히는 경로 `/mcp/{organizationSlug}/{projectSlug}`) | 운영 에러를 코드와 연결해 고칠 때 |
-| Supabase MCP | Supabase | 데이터베이스, 문서 등 도구 그룹 제공 | `https://mcp.supabase.com/mcp` | Supabase 백엔드를 쓰는 프로젝트 |
-
-Supabase는 주소에 `project_ref=<id>`(한 프로젝트로 제한), `read_only=true`(읽기 전용 Postgres 사용자로 실행), `features=<그룹>`(쓸 도구 그룹 제한)을 붙일 수 있습니다. 예: `https://mcp.supabase.com/mcp?project_ref=abc123&read_only=true`. 공식 문서는 이 서버를 개발자 권한으로 실행되는 도구로 보고, 고객이나 최종 사용자에게 주지 말라고 경고합니다.
-
-#### 2-3. 브라우저와 디버깅
-
-| 이름 | 제공 주체 | 무엇을 하는가 | 연결 주소 또는 패키지 | 언제 쓰는가 |
-|---|---|---|---|---|
-| Chrome DevTools MCP | Chrome DevTools 팀(ChromeDevTools 저장소) | 성능 트레이스 기록과 인사이트, 네트워크 요청 분석, 스크린샷, 소스맵이 적용된 스택 트레이스가 있는 콘솔 메시지 확인, Puppeteer 기반 자동화 | npm `chrome-devtools-mcp` (`npx -y chrome-devtools-mcp@latest`) | 화면이 왜 느리거나 깨지는지 실제 Chrome에서 확인할 때 |
-| Playwright MCP | Microsoft | 브라우저를 열어 페이지 구조를 읽고 조작 | npm `@playwright/mcp` (`npx @playwright/mcp@latest`) | 탐색적 자동화, 지속 상태가 필요한 반복 점검 |
-
-Chrome DevTools MCP는 기본적으로 사용 통계를 수집하고 성능 도구가 추적 URL을 Chrome UX Report API로 보낼 수 있습니다. `--no-usage-statistics`, `--no-performance-crux` 옵션으로 끌 수 있습니다. 또한 `--slim`은 기본 브라우저 작업용 축소 도구 세트입니다.
-
-Playwright 저장소는 코딩 에이전트에는 CLI를 스킬로 노출하는 방식이 "더 토큰 효율적"이라고 직접 적고, MCP는 지속 상태와 풍부한 점검이 필요한 특수한 루프에 맞다고 설명합니다. 같은 제공자가 두 방식을 모두 안내하는 사례입니다.
-
-#### 2-4. 프레임워크와 UI 라이브러리가 직접 제공하는 MCP
-
-| 이름 | 제공 주체 | 무엇을 하는가 | 연결 주소 또는 패키지 | 언제 쓰는가 |
-|---|---|---|---|---|
-| next-devtools-mcp | Next.js (Vercel) | Next.js 16 이상 개발 서버의 `/_next/mcp` 엔드포인트에 연결. 현재 에러, 라우트, 로그, 컴파일 문제 조회, 설치된 버전에 맞는 문서 안내 | npm `next-devtools-mcp` (`npx add-mcp next-devtools-mcp@latest`) | Next.js 앱을 개발 서버로 띄워 놓고 에러를 고칠 때 |
-| shadcn MCP | shadcn/ui | 레지스트리에서 컴포넌트를 검색하고 설치. 비공개·서드파티 레지스트리 연결 가능 | `npx shadcn@latest mcp` | shadcn/ui 프로젝트 |
-| Storybook MCP | Storybook | 기존 컴포넌트와 문서를 에이전트가 재사용하게 하고 스토리 작성, 접근성 포함 스토리 테스트 실행 | 애드온 `@storybook/addon-mcp` (프리뷰 단계) | 디자인 시스템을 Storybook으로 관리할 때 |
-| MUI MCP | MUI | MUI 사용을 돕는 서버 | `npx -y @mui/mcp@latest` | MUI 프로젝트 |
-| Angular CLI MCP | Angular | 개발 서버 시작·중지, 빌드 대기, 모범 사례, 문서 검색 등 | `npx -y @angular/cli mcp` | Angular 프로젝트 |
-| Svelte MCP | Svelte | 공식 문서 기반 도구와 정적 분석으로 생성형 AI의 흔한 실수 점검 | 원격 `https://mcp.svelte.dev/mcp` | Svelte 프로젝트 |
-
-프레임워크 서버의 장점은 "지금 실행 중인 내 앱"의 상태를 본다는 점입니다. 일반 문서 검색 서버가 줄 수 없는 정보입니다. Next.js의 `/_next/mcp`는 기본으로 켜져 있고 `next.config`의 `experimental.mcpServer`를 `false`로 하면 끌 수 있습니다.
-
-#### 2-5. 더 이상 쓰지 않음(아카이브·이전·대체)
-
-공식 `modelcontextprotocol/servers` 저장소의 현재 참조 서버는 Everything, Fetch, Filesystem, Git, Memory, Sequential Thinking, Time입니다. 예전 입문 글에 자주 나오던 아래 서버는 이 저장소에서 `servers-archived`로 옮겨졌습니다.
-
-| 예전에 자주 보이던 것 | 현재 상태 | 대신 볼 것 |
-|---|---|---|
-| Puppeteer 서버 | 아카이브됨 | Playwright MCP, Chrome DevTools MCP |
-| GitHub 서버(참조 구현) | 아카이브됨 | GitHub이 직접 제공하는 GitHub MCP |
-| Sentry 서버(참조 구현) | 아카이브됨 | Sentry 공식 원격 서버 `https://mcp.sentry.dev/mcp` |
-| PostgreSQL, SQLite, Redis 서버 | 아카이브됨 | 사용하는 서비스의 공식 서버(예: Supabase MCP) 등 |
-| Brave Search 서버 | 아카이브됨 | `@brave/brave-search-mcp-server` |
-| Slack 서버 | 아카이브됨 | Zencoder가 유지하는 `zencoderai/slack-mcp-server` |
-| GitLab, Google Drive, Google Maps, AWS KB Retrieval, EverArt | 아카이브됨 | 아카이브 저장소는 후속 서버를 지정하지 않습니다. 현재 관리되는 서버는 `modelcontextprotocol/servers`에서 찾으세요 |
-| HTTP+SSE 전송 방식 | 스펙에서 Deprecated로 분류 | Streamable HTTP |
-
-"npm에 아직 있다"와 "관리되고 있다"는 다릅니다. 아카이브된 서버는 보안 패치를 기대할 수 없으므로 새로 설치하지 마십시오.
-
-### 3. 에이전트별로 서버 추가하는 방법
-
-원격 서버 하나(Vercel)와 로컬 서버 하나(Playwright)를 예로 듭니다. 각 도구의 공식 문서에서 확인한 형식입니다.
-
-#### Claude Code
-
-```bash
-claude mcp add --transport http vercel https://mcp.vercel.com
-claude mcp add --transport stdio airtable -- npx -y airtable-mcp-server
-claude mcp list
-```
-
-- `--` 뒤는 서버 실행 명령입니다. 인증은 세션 안에서 `/mcp`, 또는 셸에서 `claude mcp login <이름>`으로 합니다.
-- 범위(scope)는 local(기본, `~/.claude.json`), project(저장소의 `.mcp.json`, 팀 공유), user(`~/.claude.json`, 모든 프로젝트)입니다. 팀과 공유할 설정은 `--scope project`로 추가합니다.
-- `.mcp.json`의 원격 서버 항목은 `"type": "http"`와 `"url"`을 씁니다. `url`만 있고 `type`이 없으면 stdio로 취급되어 건너뜁니다.
-- `.mcp.json`의 서버는 대화형 세션에서 승인을 묻습니다. 환경 변수는 `${VAR}` 또는 `${VAR:-기본값}`으로 넣을 수 있습니다.
-
-#### Codex (OpenAI)
-
-```bash
-codex mcp add vercel --url https://mcp.vercel.com
-codex mcp add context7 -- npx -y @upstash/context7-mcp
-codex mcp login <서버이름>
-```
-
-설정 파일은 `~/.codex/config.toml`(신뢰하는 프로젝트는 `.codex/config.toml`)이고, 서버는 `[mcp_servers.<이름>]` 표에 적습니다. stdio는 `command`·`args`, 원격은 `url`을 씁니다.
-
-```toml
-[mcp_servers.playwright]
-command = "npx"
-args = ["@playwright/mcp@latest"]
-```
-
-#### Cursor
-
-설정 파일은 프로젝트의 `.cursor/mcp.json` 또는 전역 `~/.cursor/mcp.json`이고 최상위 키는 `mcpServers`입니다.
-
-```json
-{
-  "mcpServers": {
-    "vercel": { "url": "https://mcp.vercel.com" },
-    "playwright": { "command": "npx", "args": ["@playwright/mcp@latest"] }
-  }
-}
-```
-
-원격 서버가 OAuth를 지원하면 별도 설정 없이 로그인 흐름이 시작됩니다. 고정 클라이언트 ID가 필요하면 `auth` 객체를 추가합니다. Cursor Marketplace에서 "Add to Cursor"로 설치하는 방법도 있습니다.
-
-#### GitHub Copilot / VS Code
-
-명령 팔레트에서 **MCP: Add Server**를 실행해 HTTP 또는 Command(stdio)를 고르고 전역·워크스페이스 중 저장 위치를 고릅니다. `.vscode/mcp.json`은 최상위 키가 다른 도구와 달리 `servers`입니다.
-
-```json
-{
-  "servers": {
-    "context7": { "type": "http", "url": "https://mcp.context7.com/mcp" },
-    "playwright": { "type": "stdio", "command": "npx", "args": ["-y", "@playwright/mcp@latest"] }
-  }
-}
-```
-
-VS Code 공식 문서는 Copilot용 전역 설정으로 `~/.copilot/mcp-config.json`(또는 `$COPILOT_HOME/mcp-config.json`)을, 팀 공유용으로 워크스페이스 루트의 `.mcp.json`(실험 설정 `chat.mcp.workspaceRootConfig.enabled` 필요)을 안내하고, `.vscode/mcp.json` 방식은 "deprecated지만 아직 사용 가능"으로 표시합니다. 이 부분은 버전에 따라 바뀔 수 있으니 사용하는 VS Code 버전의 문서를 확인하십시오.
-
-#### Google 계열: Gemini CLI와 Antigravity
-
-- Gemini CLI: `~/.gemini/settings.json`(사용자) 또는 `.gemini/settings.json`(프로젝트)의 `mcpServers`에 적습니다. 키는 stdio `command`, SSE `url`, Streamable HTTP `httpUrl`입니다. 명령은 `gemini mcp add --transport http <이름> <주소>`입니다. Gemini CLI 문서에는 2026-06-18부터 무료 티어·Google One 사용자의 경우 Antigravity CLI로 대체되었다는 안내가 있습니다.
-- Antigravity(2.0, IDE, CLI 공통): 전역 `~/.gemini/config/mcp_config.json`, 워크스페이스 `.agents/mcp_config.json`. 원격 항목은 `serverUrl`(또는 `url`)을 쓰며 Streamable HTTP만 지원합니다. 문서에는 CLI의 "add" 명령이 없고, 프롬프트에서 `/mcp`로 관리자 화면을 열거나 파일을 직접 편집합니다. 설정되지 않은 MCP 도구는 기본적으로 실행 전에 승인을 묻는 Ask 모드입니다.
-
-#### 한 번에 여러 에이전트에 설치
-
-Vercel과 Next.js 문서는 `add-mcp` CLI를 안내합니다. 설치된 에이전트를 감지해 각 설정에 추가해 줍니다.
-
-```bash
-npx add-mcp https://mcp.vercel.com
-npx add-mcp next-devtools-mcp@latest
-```
-
-### 4. 2026년의 사용 방식 변화
-
-#### 4-1. 원격(HTTP) 서버와 OAuth가 기본
-
-Figma, Vercel, Sentry, Supabase, Context7, GitHub, Svelte가 모두 원격 주소를 제공합니다. 로컬에 패키지를 받아 실행하는 대신 주소를 등록하고 브라우저에서 로그인하는 흐름이 흔해졌습니다. 이때 서버는 내 계정 권한으로 일합니다. Vercel 문서는 연결하면 AI 시스템이 "내 Vercel 계정과 같은 접근 권한"을 갖는다고 명시합니다.
-
-#### 4-2. 최신 스펙 리비전 2026-07-28
-
-공식 스펙의 최신 리비전은 2026-07-28이며 직전은 2025-11-25입니다. 주니어가 알아 두면 좋은 핵심 변화는 다음과 같습니다.
-
-- 프로토콜이 stateless가 되었습니다. `initialize` 핸드셰이크와 `Mcp-Session-Id` 헤더가 사라지고, 각 요청이 프로토콜 버전과 클라이언트 능력을 `_meta`에 담습니다.
-- 서버는 `server/discover`로 자신이 지원하는 버전과 능력을 알립니다.
-- Tasks(장시간 작업)는 코어에서 빠져 공식 확장(`io.modelcontextprotocol/tasks`)이 되었습니다.
-- 서버가 클라이언트에 먼저 묻던 방식(elicitation 등)은 다중 왕복 요청(MRTR) 패턴으로 바뀌었습니다.
-- 목록 응답에 `ttlMs`, `cacheScope`가 필수가 되어 캐시가 쉬워졌습니다.
-- Roots, Sampling, Logging은 Deprecated로 분류되었고, HTTP+SSE 전송도 Deprecated입니다.
-- OAuth 클라이언트 등록은 Dynamic Client Registration(RFC 7591)이 Deprecated가 되고 Client ID Metadata Document가 권장됩니다. Vercel MCP도 CIMD를 지원한다고 밝힙니다.
-- Deprecated 기능은 최소 12개월의 폐기 유예 기간을 둔다는 수명 주기 정책이 생겼습니다.
-
-주의할 점은, 서버 문서가 가리키는 스펙 버전이 서로 다르다는 것입니다. 예컨대 Vercel 문서는 2025-06-18 스펙 기준 구현이라고 적습니다. 사용자는 보통 이 차이를 의식할 필요 없지만, 직접 서버를 만들 때는 SDK 버전이 어느 리비전을 지원하는지 확인해야 합니다.
-
-#### 4-3. 레지스트리
-
-공식 MCP Registry는 공개 서버의 메타데이터(`server.json`)를 모아 두는 곳이며 현재도 프리뷰입니다("breaking change나 데이터 초기화가 있을 수 있음"). 서버 이름은 `io.github.user/server-name`처럼 역방향 DNS 형식으로, GitHub 계정이나 도메인 소유 검증을 거칩니다. 공식 문서는 이 레지스트리를 호스트 앱이 직접 쓰기보다 마켓플레이스 같은 하위 집계자가 쓰도록 설계했다고 설명합니다. 보안 검사는 레지스트리가 하지 않고 npm 같은 패키지 레지스트리와 집계자에 맡깁니다. 즉 "레지스트리에 있다 = 안전하다"가 아닙니다.
-
-에이전트별 디렉터리도 있습니다. Claude Code 문서는 Anthropic Directory(`https://claude.ai/directory`)를, Cursor는 Cursor Marketplace를, VS Code는 Customization Marketplace(프리뷰)를 안내합니다.
-
-#### 4-4. 도구 지연 로드(도구 검색)
-
-도구 정의를 모두 컨텍스트에 미리 넣으면 토큰이 낭비됩니다. Claude Code는 도구 검색(Tool Search)이 기본으로 켜져 있어 MCP 도구 정의를 미뤄 두었다가 필요할 때 `ToolSearch`로 불러옵니다(`ENABLE_TOOL_SEARCH=false`로 끔). 따라서 서버를 여러 개 연결해도 예전만큼 컨텍스트 부담이 크지 않습니다. GitHub MCP처럼 `--toolsets`, Supabase처럼 `features=`로 도구 수를 직접 줄이는 방법도 여전히 유효합니다.
-
-#### 4-5. MCP 대신 CLI + 스킬
-
-Playwright 저장소는 코딩 에이전트에는 CLI를 스킬로 쓰는 편이 토큰 효율이 좋다고 직접 말합니다. Chrome DevTools MCP는 `chrome-devtools` CLI와 스킬을 같이 제공하고, Context7은 `ctx7` CLI로 "CLI + Skills" 모드와 "MCP" 모드 중 하나를 고르게 합니다. Next.js는 `next-dev-loop` 같은 스킬이 `/_next/mcp`를 직접 호출한다고 안내합니다. 블로그의 벤치마크는 CLI가 4~32배 저렴하다는 등 수치가 제각각이고 이해관계가 있는 곳이 많아 숫자는 믿지 않는 편이 낫습니다. 실무 기준만 기억하십시오.
-
-- 인증, 여러 사용자 권한, 조직 통제가 필요한 서비스(Figma, Sentry, GitHub 등)는 원격 MCP가 편합니다.
-- 상태 없이 명령 한 줄로 끝나는 일, 이미 CLI가 있는 일은 CLI+스킬이 가볍습니다.
-- 둘을 함께 제공하는 도구가 많으니 공식 문서가 권하는 쪽을 따르십시오.
-
-#### 4-6. 코드 실행으로 MCP 호출하기
-
-Anthropic의 엔지니어링 글(2025-11-04)은 MCP 서버를 TypeScript 모듈 같은 코드 API로 보여 주고, 에이전트가 코드를 써서 호출하게 하는 방식을 제안합니다. 중간 결과를 실행 환경에서 걸러 모델에는 필요한 것만 주므로, 글의 예시에서는 150,000 토큰이 2,000 토큰으로 줄었다고 합니다(해당 워크플로 한 건의 수치입니다). 대신 샌드박스와 자원 제한 같은 인프라가 필요합니다. 일반 사용자가 직접 설정할 일은 드물지만 "도구를 필요할 때 찾아 쓴다"는 방향을 이해하는 데 도움이 됩니다.
-
-#### 4-7. MCP Apps와 확장
-
-MCP Apps는 서버가 도구 결과와 함께 대화 안에서 렌더링되는 대화형 HTML UI(차트, 폼, 대시보드)를 돌려주는 확장입니다. 도구 설명의 `_meta.ui.resourceUri`가 `ui://` 리소스를 가리키고, 호스트가 샌드박스 iframe에서 렌더링하며 `postMessage`로 통신합니다. 공식 문서는 지원 클라이언트로 Claude, Claude Desktop, VS Code GitHub Copilot, Microsoft 365 Copilot, Goose 등을 나열합니다. 프론트엔드 개발자에게는 "MCP 서버의 결과를 웹 기술(React, Vue, Svelte 등)로 그릴 수 있다"는 점이 의미가 있습니다. 확장은 서버·클라이언트 양쪽이 지원할 때만 쓰이는 선택 기능입니다. Tasks와 Skills over MCP도 공식 확장으로 소개됩니다.
-
-#### 4-8. 보안
-
-- 공식 스펙은 도구를 임의 코드 실행으로 보고, 도구 설명과 어노테이션은 신뢰할 수 있는 서버에서 온 것이 아니면 신뢰하지 말라고 합니다. 호스트는 도구 호출 전에 사용자 동의를 받아야 합니다.
-- 프롬프트 인젝션: 이슈, 로그, 지원 티켓 같은 외부 텍스트에 숨은 지시를 에이전트가 따를 수 있습니다. Supabase와 Vercel 문서도 같은 위험을 경고하며 사람의 확인을 켜 두라고 합니다.
-- 공개된 보안 사례: 2025년 12월 17일 GitHub 보안 권고로 공개된 Anthropic 참조 Git MCP 서버(`mcp-server-git`)의 취약점 세 건(CVE-2025-68143, CVE-2025-68144, CVE-2025-68145)이 있습니다. `git_init` 도구가 임의 경로에 저장소를 만들 수 있었고, `git_diff`와 `git_checkout`에는 인자 주입이, `--repository` 옵션에는 경로 검증 누락이 있었습니다. 각각 2025.9.25 또는 2025.12.18 버전에서 고쳐졌고 `git_init` 도구는 삭제되었습니다. Cursor에서는 CVE-2025-54136이 있었습니다. 1.2.4 이하 버전에서 이미 신뢰한 MCP 설정 파일을 바꾸면 재승인 없이 코드가 실행되었고 1.3에서 고쳐졌습니다.
-- 실천 수칙: (1) 공식 주소인지 확인하고 마켓플레이스의 원클릭 설치 링크의 도메인을 확인합니다. (2) 가능하면 읽기 전용, 프로젝트 범위로 제한합니다(`read_only=true`, `project_ref`, `--read-only`). (3) 운영 데이터는 필요한 때만 연결합니다. (4) 도구 호출 승인을 끄지 않습니다. (5) 저장소에 커밋하는 `.mcp.json`에는 토큰을 직접 쓰지 말고 환경 변수를 씁니다. (6) 리뷰 없이 남이 올린 `.mcp.json`을 받아 실행하지 않습니다.
-
-### 5. 처음 시작하는 추천 순서
-
-1. Context7을 붙여 낡은 API 문제를 줄입니다.
-2. 쓰는 프레임워크의 공식 서버를 붙입니다(Next.js면 `next-devtools-mcp`).
-3. 화면 검증용으로 Chrome DevTools MCP 또는 Playwright를 하나만 고릅니다.
-4. 팀이 Figma를 쓴다면 Figma remote 서버를 붙입니다.
-5. 필요해지면 GitHub, Vercel, Sentry를 읽기 위주로 추가합니다.
-6. 연결한 서버는 `claude mcp list` 같은 명령으로 주기적으로 점검하고 안 쓰는 것은 제거합니다.
-
----
-
-# 3. Skills와 Hooks
-
-> 필요할 때만 로드되는 절차적 지식과, 특정 시점에 반드시 실행되는 이벤트 자동화
-
-## Skills: 재사용 가능한 절차와 지식
-
-Skill은 SKILL.md 파일을 포함한 폴더로, 에이전트에게 특정 작업의 수행 절차와 지식을 안내합니다. Claude는 각 skill의 description을 확인하여 관련 작업일 때 스스로 로드하며, 사용자가 /skill-name으로 직접 호출할 수도 있습니다. 본문은 실제로 호출될 때만 컨텍스트에 포함되므로 긴 참고 자료를 추가해도 평소에는 토큰 비용이 거의 들지 않습니다. 기존의 커스텀 슬래시 명령(.claude/commands)은 skill로 통합되었으며, skill 형식은 Agent Skills 오픈 표준을 따르므로 다른 도구에서도 재사용할 수 있습니다.
-
-### Claude Code 번들 스킬
-
-- `/code-review`: 현재 diff나 PR의 버그를 검토
-- `/simplify`: 변경된 코드의 중복과 복잡도를 개선
-- `/loop`: 프롬프트나 명령을 일정 간격으로 반복 실행
-- `/run`: 앱을 직접 실행하여 변경 사항이 정상 동작하는지 검증
-
-```markdown
-<!-- .claude/skills/create-component/SKILL.md -->
----
-name: create-component
-description: 프로젝트 컨벤션에 맞는 React 컴포넌트를 생성한다. 사용자가 새 컴포넌트를 만들어 달라고 할 때 사용.
-argument-hint: [component-name]
----
-
-$ARGUMENTS 컴포넌트를 생성한다.
-
-1. src/components 에서 비슷한 컴포넌트를 찾아 패턴을 확인한다
-2. 같은 패턴으로 컴포넌트 파일(kebab-case)을 만든다
-3. 테스트 파일을 함께 만든다
-4. barrel export(index.ts)를 갱신한다
-5. bun run typecheck 와 bun run test 로 검증한다
-```
-
-### 주요 frontmatter 필드
-
-- `description`: 수행 작업과 사용 시점 설명. Claude가 로드 여부를 판단하는 기준
-- `disable-model-invocation`: true 설정 시 사용자만 직접 호출 가능. 배포처럼 사이드 이펙트가 있는 작업에 사용
-- `allowed-tools`: skill이 실행되는 턴 동안 사전 승인할 도구 목록
-- `context: fork`: skill을 별도 서브에이전트에서 실행하여 메인 컨텍스트를 보호
-
-## Hooks: 이벤트 기반 자동화
-
-Hook은 에이전트의 수명주기 이벤트가 발생할 때 자동으로 실행되는 핸들러입니다. CLAUDE.md의 지침은 에이전트가 참고하는 컨텍스트일 뿐이지만, hook은 조건이 맞으면 반드시 실행되므로 예외가 있어서는 안 되는 규칙을 강제하는 데 씁니다. 명령(command) hook은 이벤트 정보를 stdin의 JSON으로 받고, 종료 코드 2를 반환하면 해당 동작을 차단합니다. 2가 아닌 오류 코드(1 포함)는 차단하지 않는 오류로 처리되어 동작이 그대로 진행된다는 점에 주의하세요.
-
-| Hook | 실행 시점 | 용도 |
-| --- | --- | --- |
-| `SessionStart` | 세션 시작 및 재개 시 | 실행 환경 준비, 초기 컨텍스트 주입 |
-| `UserPromptSubmit` | 프롬프트 제출 직후, 에이전트 처리 전 | 프롬프트 유효성 검사, 추가 컨텍스트 주입 |
-| `PreToolUse` | 도구 실행 전 | 위험한 명령 실행 차단, 입력값 보정 |
-| `PostToolUse` | 도구 실행 성공 후 | 코드 자동 포맷팅, 린팅, 테스트 수행 |
-| `Notification` | 알림 발생 시 | 데스크톱 및 메신저 알림 발송 |
-| `Stop` | 에이전트가 응답을 마쳤을 때 | 완료 기준 검사, 리포트 |
-| `PreCompact` | 컨텍스트 압축 전 | 보존할 정보 기록 |
-
-이 외에도 SubagentStop, SessionEnd, PermissionRequest 등 30개가 넘는 이벤트가 있습니다. hook 유형도 셸 명령(command) 외에 http, mcp_tool, prompt, 그리고 실험적인 agent가 있습니다.
-
-```jsonc
-// .claude/settings.json
-{
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/format.sh"
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/block-rm.sh"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
-
-```bash
-#!/bin/bash
-# .claude/hooks/format.sh — 입력은 stdin 의 JSON
-FILE=$(jq -r '.tool_input.file_path')
-npx prettier --write "$FILE"
-
-#!/bin/bash
-# .claude/hooks/block-rm.sh
-COMMAND=$(jq -r '.tool_input.command')
-if echo "$COMMAND" | grep -q 'rm -rf'; then
-  echo "rm -rf 는 hook 으로 차단되었습니다" >&2
-  exit 2   # 2 = 차단. exit 1 은 차단이 아니다
-fi
-exit 0
-```
-
-## CLAUDE.md와 AGENTS.md: 프로젝트 컨텍스트
-
-CLAUDE.md는 매 세션이 시작될 때 로드되는 프로젝트 지침 파일입니다. 빌드·테스트 명령, 코드 컨벤션, 반드시 지킬 규칙처럼 코드만 봐서는 알 수 없는 내용을 적습니다. 항상 컨텍스트를 차지하므로 200줄 이하로 유지하고, 특정 작업에만 필요한 절차는 skill로, 특정 경로에만 적용되는 규칙은 .claude/rules/로 옮깁니다. /init 명령으로 초안을 만들 수 있습니다. 여러 도구를 함께 쓴다면 표준 파일인 AGENTS.md에 지침을 두면 됩니다. Claude Code(v2.1.277 이상)는 CLAUDE.md가 없을 때 AGENTS.md를 읽고, 둘 다 있으면 CLAUDE.md만 읽습니다.
-
-```markdown
-<!-- CLAUDE.md -->
-# E-commerce Platform
-
-## 명령어
-- `bun run dev`: 개발 서버
-- `bun run typecheck`: 타입 검사
-- `bun run test`: 테스트
-
-## 컨벤션
-- 파일명은 kebab-case
-- 서버 컴포넌트가 기본, 클라이언트는 'use client' 명시
-- 타입은 src/types, interface 선호
-
-## 반드시 지킬 것
-- 변경 후 typecheck 와 test 를 통과시킨다
-- .env 파일은 읽지도 수정하지도 않는다
-
-<!-- 이미 AGENTS.md 가 있다면 CLAUDE.md 에서 가져올 수 있다 -->
-@AGENTS.md
-```
-
-# 4. 에이전트 모드 실전 활용
-
-> 권한 모드, plan 모드, 서브에이전트, 에이전트 팀을 상황에 맞게 쓰기
-
-## 기본 사용법
-
-```bash
-# 대화형 세션 시작
-claude
-
-# 초기 프롬프트와 함께 시작
-claude "이 프로젝트 구조를 설명해줘"
-
-# 비대화형(headless) 실행 — 스크립트·CI 용
-claude -p "타입 에러를 찾아 수정해줘" --output-format json
-
-# 최근 대화 이어가기 / 이름으로 세션 재개
-claude -c
-claude -r "auth-refactor"
-
-# 격리된 git worktree 에서 시작
-claude -w feature-auth
-
-# 백그라운드 에이전트로 실행하고 agent view 에서 모니터링
-claude --bg "테스트 전체를 실행하고 실패하면 수정해줘"
-claude agents
-```
-
-## 권한 모드
-
-권한 모드는 에이전트가 어떤 동작을 사용자의 승인 없이 수행할 수 있는지 결정합니다. 세션 진행 중에는 Shift+Tab으로 전환하고, 세션을 시작할 때는 --permission-mode 옵션으로 지정합니다.
-
-- `default (Manual)`: 파일 수정과 셸 명령 실행 전에 매번 확인
-- `acceptEdits`: 파일 편집은 자동 승인, 그 외에는 확인
-- `plan`: 읽기와 탐색만 수행하고 소스코드는 수정하지 않음
-- `auto`: 사용자 대신 분류기가 위험한 동작을 검토
-- `dontAsk`: 미리 허용한 도구만 실행하고 나머지는 거부
-- `bypassPermissions`: 모든 검사를 생략. 격리된 환경에서만 사용
-
-## Plan 모드 활용
-
-대규모 리팩토링이나 새 기능 추가처럼 영향 범위가 큰 작업에서는 plan 모드로 시작하세요. 에이전트가 코드를 읽기만 하면서 접근 방법을 제안하고, 사용자가 승인한 뒤에 구현합니다. 방향이 틀린 채로 구현이 진행되어 다시 작업하는 비용을 줄여 줍니다.
-
-```bash
-# plan 모드로 시작 (세션 중에는 Shift+Tab 으로 전환)
-claude --permission-mode plan
-
-> 인증 모듈을 세션 방식에서 JWT 로 바꾸려고 해. 계획을 세워줘
-
-# plan 모드에서 에이전트는:
-# 1. 파일을 읽고 읽기 전용 명령으로 탐색만 한다 (소스 수정 없음)
-# 2. 영향받는 파일, 변경 순서, 위험 요소를 계획으로 제시한다
-# 3. 사용자가 승인하면 plan 모드를 벗어나 구현을 시작한다
-```
-
-## 인터뷰 패턴
-
-인터뷰는 별도의 모드나 플래그가 아니라 프롬프트 패턴입니다. 무엇을 만들지 아직 구체화되지 않았다면, 에이전트에게 스펙을 작성할 수 있을 때까지 본인을 인터뷰해 달라고 요청하세요. 에이전트가 결정되지 않은 부분을 객관식 질문으로 하나씩 묻고, 답변이 모이면 스펙 문서로 정리해 줍니다.
-
-```bash
-# 전용 플래그는 없다 — 프롬프트로 요청한다
-> 공개 API 에 rate limiting 을 추가하고 싶은데 아직 정리가 안 됐어.
-  스펙을 쓸 수 있을 때까지 나를 인터뷰하고, 끝나면 SPEC.md 로 정리해줘.
-
-# 에이전트가 객관식 질문으로 미정 사항을 묻는다:
-# - 사용자별 제한인가, API 키별 제한인가?
-# - 한도를 넘은 요청은 어떻게 처리하는가?
-# - 이번 범위에서 제외할 것은?
-
-# SPEC.md 가 생기면 새 세션에서 구현을 시작한다
-claude "SPEC.md 를 읽고 구현해줘"
-```
-
-스펙 문서가 완성되면 새 세션에서 구현을 시작하세요. 인터뷰 과정의 긴 대화 없이 깨끗한 컨텍스트와 명문화된 완료 기준으로 출발할 수 있으며, 나중에 결과물을 검토할 때도 같은 문서를 기준으로 삼을 수 있습니다.
-
-## 서브에이전트 활용
-
-서브에이전트는 메인 대화와 분리된 컨텍스트에서 작업하고 요약된 결과만 돌려줍니다. 탐색이나 테스트 실행처럼 출력이 긴 작업을 맡기면 메인 컨텍스트가 깨끗하게 유지됩니다. 자주 쓰는 역할은 .claude/agents/ 아래 마크다운 파일로 정의해 재사용합니다.
-
-- `Explore`: 읽기 전용. 파일 탐색과 코드 검색, 코드베이스 분석
-- `Plan`: 읽기 전용. plan 모드에서 계획 수립에 필요한 조사 수행
-- `general-purpose`: 탐색과 수정이 모두 필요한 복합 작업
-- `커스텀 에이전트`: .claude/agents/*.md로 도구·모델·프롬프트를 직접 정의
-
-```markdown
-<!-- .claude/agents/code-improver.md -->
----
-name: code-improver
-description: 파일을 훑어 가독성·성능 개선점을 제안한다. 코드를 작성하거나 수정한 뒤 사용.
-tools: Read, Grep, Glob
-model: sonnet
----
-
-너는 코드 개선 전문가다. 발견한 문제마다 원인을 설명하고,
-현재 코드와 개선된 코드를 함께 제시한다.
-
-# 사용 예
-> code-improver 에이전트로 src/utils 의 개선점을 찾아줘
-```
-
-## Claude Code 에이전트 팀
-
-에이전트 팀은 여러 Claude Code 세션이 한 팀으로 협업하는 실험적 기능으로, 기본값은 꺼져 있습니다. 리드 세션이 작업을 나누어 팀원에게 맡기고, 팀원은 각자 독립된 컨텍스트에서 일하며 서로 직접 대화합니다. 같은 요청이라도 팀을 켰을 때와 껐을 때 진행 방식이 달라집니다.
-
-### 에이전트 팀 사용
-
-- 리드가 관점별 리뷰 작업을 공유 작업 목록에 등록합니다
-- 보안·성능·테스트 담당 팀원이 각자 독립된 세션에서 동시에 리뷰합니다
-- 팀원끼리 메시지를 주고받으며 서로가 발견한 사항을 검토합니다
-- 리드가 세 관점의 결과를 종합해 보고합니다
-
-토큰 사용량 많음: 팀원 수에 비례해 증가하며, 팀원이 plan 모드로 동작하면 표준 세션의 약 7배
-
-### 단일 세션
-
-- 하나의 세션이 PR 전체를 읽습니다
-- 보안, 성능, 테스트 관점을 순서대로 검토합니다
-- 필요한 경우 서브에이전트에게 일부 조사를 맡기고 요약을 전달받습니다
-- 하나의 컨텍스트 안에서 결과를 정리해 보고합니다
-
-토큰 사용량 작음: 순차 작업이나 같은 파일을 고치는 작업에는 이쪽이 효율적
-
-## 서브에이전트와 에이전트 팀, 언제 무엇을 쓸까
-
-두 방식 모두 작업을 병렬화하지만 소통 구조가 다릅니다. 서브에이전트는 결과를 메인 에이전트에게만 보고하고, 에이전트 팀의 팀원은 공유 작업 목록을 확인하며 서로 직접 메시지를 주고받습니다.
-
-### 서브에이전트: 결과만 돌려받는 위임
-
-- 메인 에이전트가 조사할 영역을 독립된 단위로 나눕니다
-- 서브에이전트가 각자의 컨텍스트에서 병렬로 조사합니다
-- 각 서브에이전트는 요약된 결과만 메인 에이전트에게 보고합니다
-- 메인 에이전트가 결과를 종합해 원인을 판단합니다
-
-토큰 비용 낮음: 요약된 결과만 메인 컨텍스트로 전달됨
-
-### 에이전트 팀: 서로 토론하는 협업
-
-- 리드가 가설별 작업을 공유 작업 목록에 등록하고 팀원을 생성합니다
-- 팀원이 작업을 맡아 각자 독립된 세션에서 가설을 검증합니다
-- 팀원끼리 직접 메시지를 보내 서로의 가설을 반박하고 발견을 공유합니다
-- 리드가 살아남은 가설을 종합하고 팀원을 종료합니다
-
-토큰 비용 높음: 팀원마다 별도의 Claude 인스턴스가 실행됨
-
-```bash
-// settings.json — 실험적 기능이라 직접 켜야 한다
-{
-  "env": {
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
-  }
-}
-
-# 팀 구성은 자연어로 요청한다
-> PR #142 를 리뷰할 팀원 3명을 만들어줘:
-  - 보안 영향 담당
-  - 성능 영향 담당
-  - 테스트 커버리지 담당
-  각자 리뷰한 뒤 서로의 발견을 검토하고 결과를 보고해줘.
-```
-
-### 에이전트 팀 사용 가이드
-
-- 리서치와 리뷰, 서로 다른 모듈 개발, 경쟁 가설 디버깅처럼 팀원이 독립적으로 일할 수 있는 작업에 적합합니다
-- 순차적인 작업, 동일한 파일을 편집하는 작업, 의존성이 높은 작업은 단일 세션이나 서브에이전트를 쓰는 편이 낫습니다
-- 팀원은 3~5명 규모로 시작하고, 팀원마다 서로 다른 파일을 담당하게 하여 충돌을 방지하세요
-- 실험적 기능이라 세션을 재개하면 in-process 팀원이 복원되지 않는 등의 제약이 있습니다
-
-## Cursor 규칙 설정
-
-Cursor의 프로젝트 규칙은 .cursor/rules 폴더의 .mdc 파일로 정의합니다. frontmatter의 alwaysApply, description, globs 설정에 따라 항상 적용, 에이전트 판단에 따른 적용, 특정 파일 한정 적용, @멘션을 통한 수동 적용의 네 가지 방식으로 동작합니다. 프로젝트 루트나 하위 디렉터리의 AGENTS.md도 함께 읽습니다.
-
-```markdown
-<!-- .cursor/rules/typescript.mdc -->
----
-description: TypeScript 작성 규칙
-globs: src/**/*.ts, src/**/*.tsx
-alwaysApply: false
----
-
-- strict 모드를 준수하고 any 를 쓰지 않는다
-- 함수형 컴포넌트만 사용한다
-- default export 대신 named export 를 쓴다
-- 프로덕션 코드에 console.log 를 남기지 않는다
-```
-
-## AI 에이전트의 브라우저 자동화: 2026년 11월 도구 지형과 사용법
-
-기준일은 2026-11-10입니다. 이 분야는 몇 달 만에 판도가 바뀌므로, 아래 내용은 공식 문서와 저장소를 직접 읽고 확인한 것을 중심으로 썼습니다.
-
-### 1. 큰 그림: 에이전트는 "어떤 브라우저"를 쓰는가
-
-에이전트에게 브라우저를 맡길 때 가장 먼저 갈리는 질문은 도구 이름이 아니라 아래 두 가지입니다.
-
-1. 에이전트가 **내 로그인된 실제 브라우저**를 쓰는가, **깨끗한 별도 브라우저**를 쓰는가
-2. 에이전트가 페이지를 **텍스트(접근성 스냅샷)** 로 보는가, **이미지(스크린샷+좌표)** 로 보는가
-
-이 두 축으로 보면 도구는 대략 다섯 범주로 나뉩니다.
-
-| 범주 | 대표 도구 | 기본 브라우저 | 페이지를 보는 방식 |
-| --- | --- | --- | --- |
-| ① 사람과 에이전트가 함께 쓰는 브라우저·확장 | Aside, ego(lite), Claude in Chrome, ChatGPT 브라우저 확장 | 내 실제 프로필(가져오기 포함) | 도구마다 다름 |
-| ② 셸에서 부르는 CLI | playwright-cli, agent-browser, chrome-devtools CLI | 별도(격리) 브라우저가 기본 | 접근성 스냅샷 + ref |
-| ③ MCP 서버 | Playwright MCP, Chrome DevTools MCP, `aside mcp` | 별도 프로필이 기본, 기존 Chrome 연결 옵션 있음 | 접근성 스냅샷(기본) |
-| ④ 코딩 에이전트·IDE 내장 브라우저 | Cursor 브라우저, ChatGPT/Codex 앱 내장 브라우저 | 앱 전용 프로필 | 스크린샷, 콘솔·네트워크 로그 등 |
-| ⑤ 클라우드 브라우저·computer use | Browserbase(+Stagehand), Claude computer use | 원격/가상 환경 | CDP 또는 스크린샷+좌표 |
-
-### 2. 이번 글의 주인공 두 가지: ego와 aside
-
-#### ego (ego lite, `ego-browser`)
-
-- **정체**: Citro Labs가 만든 Chromium 기반 무료 브라우저입니다. 사람과 AI 에이전트가 같은 브라우저에서 서로 제어권을 다투지 않고 일하도록 설계됐습니다. CLI 이름은 `ego-browser`입니다.
-- **설치**: 공식 저장소(citrolabs/ego-lite) 기준으로 macOS(Apple Silicon/Intel)와 Windows 설치 파일을 받아 실행하면 에이전트의 skills 디렉터리에 `ego-browser` 스킬이 함께 설치됩니다. 스킬만 먼저 넣으려면 `npx skills add citrolabs/ego-lite`를 쓰고, 에이전트의 첫 브라우저 작업 때 앱 설치 안내가 이어집니다. Linux는 로드맵에만 있습니다. 저장소 내용은 MIT 라이선스이고 브라우저 앱은 별도 무료 배포입니다.
-- **로그인 세션**: 첫 실행 때 Chrome의 로그인, 쿠키, 확장, 북마크를 가져올지 묻습니다. CLI로도 `ego-browser import list`, `ego-browser import --browser chrome --profile Default`처럼 가져올 수 있습니다. 가져온 뒤에는 에이전트가 그 로그인 상태를 이어받습니다.
-- **동작 방식**:
-  - 에이전트가 `ego-browser nodejs`에 자바스크립트를 넘기면, 브라우저 쪽 내장 Node.js 런타임에서 실행됩니다. 이 스크립트는 페이지 안이 아니라 Node에서 도니, 페이지 안 코드는 `page.evaluate()`에 넣어야 합니다.
-  - 에이전트 작업마다 **Space**라는 격리된 작업 공간이 생기고, 사용자의 기존 탭은 건드리지 않습니다. 사용자는 에이전트가 일하는 모습을 보다가 언제든 넘겨받을 수 있습니다(`task.handOff()`).
-  - 페이지 관찰은 `page.snapshot()`(구조와 ref, 기본 수단)과 `page.screenshot()`(시각 확인)이 있습니다. 스냅샷에서 나온 `@21` 같은 ref로 `page.click("@21")`처럼 조작합니다.
-  - Playwright와 비슷해 보이지만 Playwright가 아닙니다. 스킬 문서는 `locator()`, `getByRole()` 같은 Playwright API를 추측해서 쓰지 말라고 명시합니다. 목록에 없는 동작은 `page.evaluate()`나 `page.cdp()`로 처리합니다.
-- **토큰 비용 특성**: 스킬 문서가 "스냅샷과 스크린샷 중 필요한 하나만, 여러 동작을 한 스크립트로 묶어 실행하고 마지막에 스냅샷 한 번"을 권합니다. 즉 왕복 횟수를 줄이는 설계입니다.
-- **주의점**: 에이전트가 작업하는 페이지의 내용은 사용자가 선택한 모델로 전송됩니다(공식 사이트). 실제 로그인 세션을 쓰므로 에이전트가 할 수 있는 일이 곧 내 계정이 할 수 있는 일입니다.
-
-#### aside
-
-- **정체**: Aside Computer Inc.(Y Combinator 소속)가 만든 "사람과 에이전트를 위해 다시 만든 브라우저"입니다. 로그인된 사이트에서 연동(integration) 없이 작업하는 것이 핵심 메시지입니다. macOS 15 이상, Windows 10 22H2 이상/Windows 11을 지원합니다. 바깥 에이전트가 쓰는 길은 두 가지입니다. `aside exec`은 브라우저 안의 Aside 에이전트에게 작업을 통째로 맡기는 방식으로, CLI 안내문은 서브에이전트를 띄우는 것처럼 쓰라고 권합니다. `aside repl`은 Playwright 스타일 JavaScript로 탭을 직접 다루는 방식으로, `snapshot()`이 페이지를 읽는 기본 수단이고 `annotatedScreenshot()`과 `page.screenshot()`은 시각 확인용입니다.
-- **로그인 세션**: 온보딩에서 Chrome 등의 방문 기록, 쿠키, 북마크를 가져옵니다. 에이전트는 자동 입력(autofill)으로 로그인하며 자격 증명이 에이전트에게 노출되지 않는다고 공식 사이트는 설명합니다. 결제, 게시, 메시지 같은 민감한 동작은 사용자 확인을 기다립니다.
-- **코딩 에이전트 연동**: 개발자 문서(`aside.com/developers.md`)에 CLI, MCP, REPL 세 가지가 있습니다.
-
-```bash
-# macOS 설치 (개발자 문서)
-curl -fsSL https://releases.aside.com/install.sh | bash
-
-# 로그인: 인증 파일 경로를 먼저 지정하고, 브라우저의 Settings > Account > Devices에서 코드 승인
-export ASIDE_CLI_AUTH_PATH="/절대/경로/aside-auth.json"
-aside login --email "you@example.com"
-
-aside "localhost:3000을 스모크 테스트해줘"   # 자연어 작업
-aside repl "const p = await openTab('https://example.com')"   # 결정적 단계
-aside mcp                                     # stdio MCP 서버
-```
-
-  MCP 설정은 `mcp.json`의 `mcpServers`에서 `command`를 `aside`, `args`를 `["mcp"]`로 두면 됩니다. `aside mcp`가 노출하는 도구는 네 개입니다: `exec`(로그인된 사이트에서 브라우저 에이전트 실행), `repl`(Playwright 스타일 JavaScript 실행), `memory_search`(Aside가 쌓은 사용자 메모리 검색), `browser_profiles`(브라우저 프로필 목록).
-
-  그 밖의 명령: `aside session resume <session-id> "Continue"`, `aside account list/status/use`. 인증 파일은 `ASIDE_CLI_AUTH_PATH`로 지정하며, 지정하지 않으면 `~/.aside/cli/auth.json`을 씁니다.
-- **주의점**: `curl | bash` 설치는 스크립트를 먼저 읽고 실행하는 편이 안전합니다. 인증 파일은 절대 커밋하지 마세요(공식 문서도 같은 경고).
-
-#### 두 도구의 공통점과 차이
-
-- 공통: 내 로그인 세션을 에이전트가 이어받는 "사람과 에이전트 공유 브라우저"입니다. 둘 다 Chrome 데이터를 가져옵니다.
-- 차이: ego는 바깥 에이전트가 직접 짜는 JS 스크립트(`ego-browser nodejs`)가 중심입니다. aside는 브라우저 안에 자체 에이전트가 있어 작업을 통째로 맡기는 `exec`이 기본이고, 직접 제어가 필요할 때만 `repl`을 씁니다. 실행 중인 작업은 `aside session steer`·`queue`·`stop`으로 방향을 바꾸거나 멈출 수 있고, `--permission`(`ask`, `guard`, `full-access`)으로 권한 범위를 정합니다. ego는 스킬 저장소가 공개(MIT)되어 있고, aside는 CLI의 `aside guide`가 같은 역할을 합니다.
-
-### 3. 나머지 범주
-
-#### ① AI 회사의 브라우저·확장
-
-- **Claude in Chrome**: 2026-08-26에 유료 플랜 전체에 정식 출시됐습니다. Chrome Web Store에서 설치하며 Chrome 전용입니다(다른 Chromium과 모바일은 미지원). 동작마다 승인받지 않고 자율 실행할 수도 있습니다. 프롬프트 인젝션 방어로 학습, 웹 콘텐츠 탐지 프로브, 실행 전 분류기를 쓴다고 하는데, 이는 Anthropic 자체 평가이므로 참고용으로만 보세요. Claude Code에서는 `claude --chrome`으로 시작하거나 세션 안에서 `/chrome`으로 연결 상태를 확인하고 다시 연결합니다. 확장 1.0.36 이상과 `/login` 로그인이 필요하며, API 키나 setup-token 인증에서는 Chrome 연동이 꺼집니다.
-- **ChatGPT**: 별도 브라우저였던 Atlas는 OpenAI가 폐기하고, 브라우저 기반 에이전트 기능을 ChatGPT와 Codex로 옮긴다고 OpenAI 도움말이 안내합니다. Chrome에서는 ChatGPT Chrome 확장이나 사이드바를 쓰라고 합니다. 데스크톱 앱 내장 브라우저는 별도 프로필이라 기존 세션을 공유하지 않고, 로그인된 사이트가 필요하면 Chrome/Edge/Brave 등용 브라우저 확장을 쓰라고 OpenAI 문서가 안내합니다.
-- **Gemini in Chrome(auto browse)**: Google 블로그는 auto browse를 미국의 Google AI Pro/Ultra 구독자에게만 제공한다고 안내합니다. Gemini in Chrome은 이메일 전송이나 일정 추가 같은 민감한 동작 전에 확인을 요청합니다.
-
-#### ② CLI형
-
-- **playwright-cli**: `npm install -g @playwright/cli`. 코딩 에이전트용 CLI로, 공식 문서는 도구 스키마와 장황한 접근성 트리를 컨텍스트에 싣지 않아 토큰 비용이 낮다고 설명합니다. `open`, `snapshot`, `click`, `fill` 같은 명령과 `-s=<name>` 세션, 데몬 방식이 있습니다. 실행 중인 브라우저에는 `playwright-cli attach --extension=chrome`(Playwright 확장 필요, Chrome/Edge 전용), `attach --cdp=chrome`(실행 중인 Chrome/Edge), `attach --cdp=<url>`(CDP 엔드포인트) 중 하나로 붙고, `playwright-cli detach`로 연결만 끊으면 외부 브라우저는 그대로 남습니다.
-- **agent-browser**(vercel-labs, Apache-2.0): `npm install -g agent-browser` 후 `agent-browser install`. `agent-browser open example.com`, `agent-browser snapshot -i`(상호작용 요소에 `@e1` 같은 ref), `agent-browser click @e1`. 백그라운드 데몬이 CDP로 Chrome for Testing을 제어하며, 실행 중인 Chrome에는 `--cdp`/`--auto-connect`로 붙을 수 있다고 README에 있습니다.
-- **chrome-devtools CLI**: `npm i chrome-devtools-mcp@latest -g` 후 `chrome-devtools <tool> ...`. 기본은 헤드리스, 격리 모드입니다.
-- 공통 특성: 명령 한 번마다 짧은 텍스트가 돌아오므로 컨텍스트가 덜 쌓입니다.
-
-#### ③ MCP 서버형
-
-- **Playwright MCP**: `npx @playwright/mcp@latest`. 접근성 스냅샷이 기본이고 `--caps=vision`으로 좌표 기반 도구를 추가합니다. 기본은 작업공간별 영구 프로필이며 `--isolated`는 메모리 프로필입니다. `--extension`으로 기존 Chrome/Edge의 로그인 세션을 재사용할 수 있습니다. Chrome Web Store에서 Playwright 확장을 설치하고 MCP 설정의 `args`에 `--extension`을 넣으면, LLM이 처음 브라우저를 쓸 때 제어할 탭을 고르는 페이지가 열립니다. 확장 상태 페이지의 `PLAYWRIGHT_MCP_EXTENSION_TOKEN`을 `env`에 넣으면 승인 절차를 건너뜁니다. README는 CLI+스킬이 토큰 효율적이라 코딩 에이전트에 선호되고, MCP는 영속 상태, 풍부한 페이지 조사, 장시간 자율 작업에 맞는다고 정리합니다. 또 "보안 경계가 아니다"라고 명시합니다.
-- **Chrome DevTools MCP**: `npx -y chrome-devtools-mcp@latest`. 성능 트레이스, 네트워크, 소스맵이 적용된 콘솔 스택트레이스 등 **디버깅**이 강점입니다. 공식 지원 브라우저는 Chrome과 Chrome for Testing뿐입니다. 실행 중인 Chrome 세션에는 `--autoConnect`로 붙을 수 있습니다(Chrome 144 이상, `chrome://inspect/#remote-debugging`에서 허용, 연결 때마다 허용 대화상자, 제어 중 배너 표시). 이는 Chrome 블로그 글 기준이라 현재 세부는 달라졌을 수 있습니다. 사용 통계 수집이 기본 켜져 있어 `--no-usage-statistics`로 끌 수 있습니다.
-- MCP는 도구 스키마가 컨텍스트에 상주하므로 도구가 많을수록 기본 비용이 큽니다(Playwright 문서의 비교표에서도 MCP 토큰 비용은 "Higher").
-
-#### ④ 코딩 에이전트·IDE 내장 브라우저
-
-- **Cursor**: 편집기 안 창으로 열리고 MCP 서버(확장)가 제어합니다. 이동, 클릭, 입력, 스크린샷, 콘솔, 네트워크 확인이 가능하고 쿠키와 스토리지는 에이전트 세션 사이에 유지되지만 워크스페이스별로 격리됩니다. 에이전트는 실행 중인 개발 서버를 감지해 맞는 포트를 쓰도록 안내받고, 관리자는 `http://localhost:3000` 같은 허용 origin 목록으로 자동 이동 범위를 제한할 수 있습니다. 기본적으로 승인이 필요하며 허용/차단 목록은 "최선 노력 보호"라고 문서가 말합니다. 낯선 사이트에서 자동 실행은 쓰지 말라고 합니다.
-- **ChatGPT 앱 내장 브라우저**: 사용자와 에이전트가 같은 화면을 보며 로컬 또는 공개 페이지를 미리 보고 시각적 코멘트를 남길 수 있습니다. 별도 프로필이라 로그인은 직접 해야 합니다. 개발자 모드(전체 CDP 접근)는 사이트별 명시 승인이 필요한 옵트인입니다.
-- 프런트엔드 개발자가 가장 자주 쓰는 범주입니다. 로그인이 필요 없는 로컬 개발 서버 확인에는 이것만으로 충분한 경우가 많습니다.
-
-#### ⑤ 클라우드 브라우저·computer use
-
-- **Browserbase / Stagehand**: Browserbase는 헤드리스 클라우드 브라우저와 세션 관찰(로그, 라이브 뷰, 리플레이)을 제공하고, Stagehand는 Playwright 수준 제어 위에 `act`/`extract`/`observe`를 얹은 SDK입니다. 서비스 운영(수집, 대규모 병렬)에 적합하고 개발 중 화면 확인에는 과합니다. 세션을 만들면 받는 `connectUrl`을 Playwright의 `chromium.connectOverCDP(session.connectUrl)`로 연결합니다. Contexts는 쿠키, 세션 토큰, 로컬 스토리지를 저장해 두는 기능으로, 세션 생성 때 `browserSettings.context`에 `{ id, persist: true }`를 주면 같은 context ID의 세션이 로그인된 채 시작합니다.
-- **Claude computer use**: 스크린샷과 마우스, 키보드 좌표 방식입니다. API 문서는 `{"type": "computer_toolset_20260801"}` 한 줄로 켜고 17개 구성 도구가 있다고 하며, 웹페이지 안에서 끝나는 작업은 브라우저 도구가 더 낫다고 안내합니다. 스크린샷 한 장이 대략 1,000~1,800 입력 토큰이라고 문서가 밝힙니다. 보안 권고는 전용 VM/컨테이너, 민감 정보 미제공, 도메인 허용 목록, 중요 동작 전 사람 확인입니다.
-
-### 4. 범주별 보안 주의점
-
-- **프롬프트 인젝션**: 웹페이지의 텍스트가 에이전트에게 명령처럼 읽힐 수 있습니다. OpenAI, Cursor, Anthropic 문서 모두 페이지 내용을 신뢰할 수 없는 입력으로 취급하라고 합니다. 어떤 방어 수치도 "사고가 없다"는 보증이 아닙니다.
-- **실제 계정 권한**: ①과 ③의 확장/autoConnect 방식은 에이전트가 내 세션으로 메일, 결제, 관리자 화면까지 갈 수 있다는 뜻입니다. 업무와 개인 계정이 섞인 프로필을 그대로 쓰지 말고, 작업용 프로필을 따로 두세요.
-- **권고**: 읽기 위주 작업부터 시작하고, 결제, 삭제, 게시, 권한 변경은 사람이 승인하며, 인증 파일과 토큰은 저장소에 두지 않습니다. 확인 대화상자를 에이전트가 우회하게 두지 마세요.
-
-### 5. 상황별 선택 가이드
-
-| 상황 | 추천 | 이유 |
-| --- | --- | --- |
-| 로컬 개발 서버 화면, 레이아웃 확인 | IDE/앱 내장 브라우저(Cursor, ChatGPT 앱) 또는 playwright-cli | 로그인 불필요, 스크린샷과 콘솔을 바로 확인 |
-| E2E 테스트 작성, 검증 | playwright-cli(셸 가능 시) 또는 Playwright MCP | Playwright 스택과 같은 모델, 재현 가능한 명령 |
-| 성능, 네트워크, 콘솔 디버깅 | Chrome DevTools MCP / chrome-devtools CLI | 트레이스와 소스맵 스택트레이스 |
-| 로그인이 필요한 사이트(사내 도구, 관리자 화면) 작업 | ego, aside, Claude in Chrome 등 실제 세션 공유형 | 매번 로그인하지 않아도 됨. 단 계정 권한 위험 |
-| 로그인은 필요하지만 계정은 보호하고 싶음 | 별도 프로필 + 격리 브라우저(`--isolated` 등) | 피해 범위 제한 |
-| 사람이 지켜보며 협업 | ego(Space와 인계), Claude in Chrome | 에이전트 작업을 보며 개입 가능 |
-| 대규모 병렬, 서버 환경 | Browserbase 같은 클라우드 브라우저 | 인프라를 직접 운영하지 않음 |
-| DOM 정보가 빈약한 캔버스, 데스크톱 앱 | computer use | 스크린샷+좌표가 유일한 수단일 때만 |
-
-### 6. 짧은 사용 예: 에이전트에게 화면 확인 맡기기
-
-**프롬프트 예(로컬 개발 서버, 로그인 불필요)**
-
-```text
-http://localhost:3000/settings 를 열어서 모바일 폭(390px)과 데스크톱 폭에서
-각각 스크린샷을 찍고, 카드 레이아웃이 깨지거나 가로 스크롤이 생기는지 알려줘.
-콘솔에 에러가 있으면 함께 보고하고, 코드는 수정하지 말고 원인 후보만 적어줘.
-```
-
-**ego-browser로 직접 실행하는 최소 예**(로컬 스킬 문서에 나온 API만 사용했습니다. 뷰포트 크기를 바꾸는 전용 API는 없지만, `page.cdp("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true })`로 폰 너비를 흉내 낼 수 있습니다.)
-
-```bash
-ego-browser nodejs <<'EOF'
-const task = await taskSpace("check settings page");
-const page = task.page("p1");
-await page.goto("http://localhost:3000/settings");
-console.log(await page.snapshot());
-await page.screenshot({ path: "/absolute/path/settings.png" });
-await task.finish({ keep: [] });
-EOF
-```
-
-핵심 습관은 세 가지입니다. 먼저 스냅샷(텍스트)으로 구조를 보고, 시각 확인이 필요할 때만 스크린샷을 찍고, 작업이 끝나면 만든 창과 세션을 정리하는 것입니다.
-
-# 5. 프롬프트 엔지니어링 고급
-
-> 에이전트가 볼 수 없는 정보를 전달하고, 스스로 검증할 기준을 제시하는 방법
-
-## 목표와 완료 기준 중심 프롬프트
-
-에이전트는 절차를 스스로 찾을 수 있습니다. 사용자가 제공해야 하는 것은 목표, 작업 범위, 그리고 완료 여부를 판단할 기준입니다.
-
-### 나쁜 예 (모호하거나 절차만 지시)
-
-```text
-# 모호한 요청
-"이 코드 좀 개선해줘"
-
-# 절차를 하나하나 지시
-"1. 먼저 파일을 읽어
- 2. 그 다음 함수를 찾아
- 3. 타입을 추가해"
-```
-
-### 좋은 예 (목표·범위·완료 기준 제시)
-
-```text
-# 목표 + 범위 + 완료 기준
-"src/utils/date.ts 의 모든 함수에
-매개변수와 반환 타입을 추가해줘.
-기존 동작은 바꾸지 말고,
-bun run typecheck 가 통과하면 완료야."
-```
-
-## 컨텍스트 참조
-
-에이전트는 저장소의 코드를 읽을 수는 있지만, 사용자의 머릿속에 있는 배경 지식까지는 파악하지 못합니다. @로 관련 파일을 직접 지정하고, 따라야 할 기존 패턴, 코드에 드러나지 않는 제약, 에러 메시지 전문과 재현 조건을 함께 전달하면 불필요한 탐색이 줄고 결과가 정확해집니다.
-
-```bash
-# @ 로 파일을 직접 참조
-> @src/utils/validation.ts 의 함수들을 리팩토링해줘
-
-# 따라 할 기존 패턴을 지정
-> @src/components/button.tsx 와 같은 패턴으로 input 컴포넌트를 만들어줘
-
-# 에이전트가 볼 수 없는 정보를 알려주기
-> 결제 API 는 스테이징에서 5초 넘게 걸릴 때가 있어.
-  타임아웃은 10초로 잡고 재시도는 하지 마.
-
-# 에러는 전문과 재현 조건을 함께
-> 로그아웃 후 /dashboard 에 접근하면 아래 에러가 나:
-  TypeError: Cannot read properties of undefined (reading 'user')
-```
-
-## 제약 조건과 검증 기준 명시
-
-테스트 케이스, 기대 출력, 스크린샷처럼 에이전트가 직접 실행해 볼 수 있는 검증 수단을 제공하면, 사용자가 지적하기 전에 스스로 문제를 발견하고 수정합니다. 이는 결과물의 품질을 높이는 효과적인 방법입니다.
-
-```bash
-> 인증 미들웨어를 구현해줘.
-  제약:
-  - 새 의존성 추가 금지 (jose 만 허용)
-  - 기존 User 타입 재사용
-  - 에러는 커스텀 AppError 로 throw
-  검증:
-  - src/middleware/auth.test.ts 에 만료 토큰·변조 토큰 케이스 추가
-  - bun run test 통과
-```
-
-## 반복적 개선 패턴
-
-복잡한 작업은 큰 그림, 세부 구현, 엣지 케이스 순으로 점진적으로 구체화하는 것이 좋습니다. 에이전트가 잘못된 방향으로 진행하기 시작하면 지켜보지 말고 즉시 중단한 뒤 되돌리는 편이 비용을 줄일 수 있습니다. 서로 무관한 작업을 한 세션에 누적하지 말고, 작업 주제가 바뀌면 컨텍스트를 새로 초기화하세요.
-
-```bash
-# 1차: 큰 그림 (plan 모드)
-> 결제 모듈 구조를 설계해줘. 아직 코드는 쓰지 마
-
-# 2차: 세부 구현
-> 승인한 설계대로 PaymentService 부터 구현해줘
-
-# 3차: 엣지 케이스
-> 결제 실패 시 재시도와 부분 환불 케이스를 추가해줘
-
-# 방향이 틀렸다면: Esc 로 중단하고 /rewind 로 되돌린다
-# 다른 작업으로 넘어갈 때: /clear 로 컨텍스트를 비운다
-```
-
-# 6. 실전 워크플로우
-
-> 기능 개발, 버그 수정, 코드 리뷰, 그리고 무인 자동화
-
-## 기능 개발 워크플로우
-
-탐색, 계획, 구현, 검증, 리뷰, 커밋의 순서로 진행합니다. 계획 단계에서 방향을 합의하고, 구현 단계마다 타입 체크와 테스트로 검증하게 하면 마지막에 한꺼번에 고치는 일이 줄어듭니다.
-
-```bash
-# 1. 탐색 + 계획 (plan 모드)
-claude --permission-mode plan
-> PRD.md 를 읽고 구현 계획을 세워줘
-
-# 2. 구현 — 계획 승인 후
-> 승인한 계획대로 구현해줘. 단계마다 typecheck 를 돌려줘
-
-# 3. 검증
-> 테스트를 작성하고 bun run test 가 통과할 때까지 수정해줘
-
-# 4. 리뷰 — 번들 스킬
-> /code-review
-
-# 5. 커밋과 PR
-> 변경사항을 커밋하고 PR 을 만들어줘
-```
-
-## 버그 수정 워크플로우
-
-에러 메시지 전문과 재현 조건을 함께 주고, 먼저 실패하는 테스트로 버그를 재현하게 하세요. 테스트가 통과로 바뀌는 것이 곧 수정의 증거가 됩니다.
-
-```bash
-> 이 에러를 수정해줘:
-
-  TypeError: Cannot read properties of undefined (reading 'user')
-      at AuthGuard (src/guards/auth.guard.ts:15)
-
-  재현 조건: 로그아웃 후 보호된 페이지 접근
-  먼저 실패하는 테스트로 재현한 다음 고쳐줘.
-
-# 에이전트가 수행하는 작업:
-# 1. 에러 위치와 관련 코드 분석
-# 2. 실패하는 테스트로 재현
-# 3. 원인 진단 후 수정
-# 4. 테스트 통과로 검증
-```
-
-## 코드 리뷰 워크플로우
-
-```bash
-# 현재 diff 리뷰 (번들 스킬)
-> /code-review
-
-# 관점을 지정한 리뷰
-> 현재 브랜치를 main 과 비교해서 리뷰해줘.
-  특히 보안 취약점, 성능, 타입 안정성, 테스트 누락을 확인해줘
-
-# PR 번호로 리뷰 (gh CLI 또는 GitHub MCP 필요)
-> PR #123 을 리뷰하고 코멘트를 달아줘
-```
-
-## 병렬 실행과 자동화
-
-claude -p는 대화 없이 한 번 실행하고 종료되는 headless 모드로, CI나 스크립트에 연동하기에 적합합니다. 여러 작업을 동시에 진행할 때는 worktree로 세션별 작업 디렉터리를 분리해 변경 사항이 서로 섞이지 않도록 방지합니다. 오래 걸리는 작업은 백그라운드 세션으로 실행한 뒤 agent view에서 진행 상황을 확인합니다.
-
-```bash
-# headless 실행 — CI·스크립트에서
-claude -p "변경된 파일의 린트 에러를 수정해줘" --max-turns 10
-
-# 파이프 입력
-cat build-error.log | claude -p "이 빌드 에러의 원인을 요약해줘"
-
-# worktree 로 격리된 병렬 세션
-claude -w fix-login
-claude -w refactor-cart
-
-# 백그라운드 세션 실행과 모니터링
-claude --bg "의존성을 업데이트하고 테스트를 통과시켜줘"
-claude agents
-```
-
-### 자동화 팁
-
-- PR 생성과 리뷰는 gh CLI나 GitHub MCP 서버로 연결하세요
-- 반복되는 팀 절차(커밋 규칙, 릴리스 체크)는 프로젝트 skill로 만들어 공유하세요
-- 자동 실행 시에는 권한 규칙으로 허용 범위를 미리 좁혀 두세요
-
-# 7. 검증과 안전한 사용
-
-> AI 생성 코드의 검증, 권한 관리, 프롬프트 인젝션 대응, 팀 가이드라인
-
-## 자동 검증 설정
-
-PostToolUse hook을 활용하면 파일이 수정될 때마다 린트나 타입 검사를 실행할 수 있습니다. 검사에 실패했을 때 종료 코드 2와 함께 오류를 stderr로 출력하면 에이전트에게 해당 내용이 전달되어 스스로 수정을 시도합니다. 작업 완료 시점에 전체 테스트를 강제하고 싶다면 Stop hook을 사용합니다.
-
-```jsonc
-// .claude/settings.json
-{
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/lint-file.sh"
-          }
-        ]
-      }
-    ]
-  }
-}
-
-#!/bin/bash
-# .claude/hooks/lint-file.sh
-FILE=$(jq -r '.tool_input.file_path')
-if ! npx eslint "$FILE" >&2; then
-  exit 2   # 린트 결과(stderr)가 에이전트에게 전달된다
-fi
-```
-
-## 수동 검증 체크리스트
-
-- [ ] 비즈니스 로직이 요구사항과 일치하는가?
-- [ ] 기존 코드 패턴과 일관성을 유지하고 있는가?
-- [ ] 보안 취약점은 없는가? (입력 검증, 인증/인가)
-- [ ] 존재하지 않는 패키지나 API를 사용하지 않았는가?
-- [ ] 성능 문제는 없는가? (N+1, 메모리 누수)
-- [ ] 에러 처리가 적절하게 이루어졌는가?
-- [ ] 테스트가 실제 동작을 검증하는가? (단순 통과만을 위한 테스트가 아닌가)
-
-## 권한 관리
-
-settings.json의 permissions에 도구별 규칙을 지정하여 허용 범위를 설정합니다. 규칙은 deny, ask, allow 순서로 평가되며 먼저 일치한 규칙이 결과를 결정하므로, allow 규칙으로 deny 규칙에 예외를 둘 수는 없습니다. 프로젝트의 .claude/settings.json에 커밋하면 팀 전체가 동일한 규칙을 공유하여 사용하게 됩니다.
-
-```jsonc
-// .claude/settings.json
-{
-  "permissions": {
-    "defaultMode": "acceptEdits",
-    "allow": [
-      "Bash(bun run test *)",
-      "Bash(git commit *)",
-      "mcp__github__get_*"
-    ],
-    "ask": [
-      "Bash(git push *)"
-    ],
-    "deny": [
-      "Read(./.env)",
-      "Read(./.env.*)",
-      "Read(./secrets/**)",
-      "Bash(rm -rf *)"
-    ]
-  }
-}
-```
-
-### 프롬프트 인젝션에 대비하기
-
-에이전트가 읽는 웹 페이지, 이슈 본문, MCP 도구의 응답에는 에이전트를 속이려는 지시문이 숨어 있을 수 있습니다. 외부에서 유입된 내용은 지시가 아닌 데이터로 취급해야 하며, 출처를 모르는 MCP 서버·skill·플러그인은 설치하지 않습니다. 비밀 값이 포함된 파일은 deny 규칙으로 차단하고, 모든 검사를 생략하는 bypassPermissions 모드는 격리된 환경에서만 사용합니다.
-
-## 팀 가이드라인
-
-### 허용되는 사용
-
-- 보일러플레이트 코드 생성
-- 테스트 코드 작성 보조
-- 문서화 작업 지원
-- 코드 리뷰 보조
-- 디버깅 지원
-
-### 필수 검증 사항
-
-- 모든 AI 생성 코드는 사람의 리뷰를 거친 뒤 머지
-- 보안 관련 코드는 시니어 개발자의 승인 필요
-- 프로덕션 배포 전 전체 테스트 통과 여부 확인
-
-### 금지 사항
-
-- 비밀 키나 개인정보를 프롬프트에 포함
-- AI 생성 코드를 검토 없이 커밋
-- 프로덕션 DB에 MCP로 직접 연결
-- 출처를 모르는 MCP 서버·skill·플러그인 설치
-
-> **최종 책임** AI 에이전트가 아무리 강력해도 최종 책임은 항상 개발자에게 있습니다. 모든 AI 생성 코드는 반드시 검토를 거친 후 커밋하세요.
-
-# 8. 토큰 절약과 컨텍스트 최적화
-
-> 컨텍스트를 작게 유지해 비용과 품질을 함께 관리하는 습관
-
-## 컨텍스트 최적화 루틴
-
-토큰 비용은 컨텍스트 크기에 비례합니다. 에이전트는 요청마다 이전 대화 전체를 다시 전송하므로, 온종일 켜 둔 세션에서는 단순한 한 줄 질문에도 그동안 누적된 대화 전체가 함께 처리됩니다. 따라서 컨텍스트 크기를 작게 유지하는 것이 가장 효과적인 절약 방법입니다.
-
-```bash
-# 무엇이 컨텍스트를 차지하는지 확인
-> /context
-
-# 관련 없는 작업으로 넘어갈 때 비우기
-> /clear
-
-# 남길 내용을 지정해서 압축
-> /compact 코드 변경 내역과 테스트 결과 위주로 남겨줘
-
-# 사용량 확인, 모델·추론 강도 조절
-> /usage
-> /model
-> /effort
-
-# 장황한 출력은 서브에이전트에 맡기기
-> 서브에이전트로 전체 테스트를 실행하고 실패한 케이스만 요약해줘
-```
-
-- 관련 없는 작업으로 넘어갈 때는 /clear로 세션을 새로 시작하세요
-- CLAUDE.md는 200줄 이하로 유지하고, 특정 작업용 지침은 skill로 옮기세요
-- 테스트 실행이나 로그 분석처럼 출력량이 많은 작업은 서브에이전트에 위임하세요
-- 전용 CLI가 제공되는 도구(gh, aws 등)는 MCP 대신 CLI를 쓰고, 사용하지 않는 MCP 서버는 비활성화하세요
-- 대부분의 작업은 가벼운 모델로 처리하고, 복잡한 설계 단계에만 상위 모델과 높은 effort를 적용하세요
-- 모호한 요청은 불필요하게 넓은 탐색을 유발하므로 대상 파일, 작업 범위, 완료 기준을 구체적으로 명시하세요
-- 에이전트의 진행 방향이 잘못되었다면 Esc로 즉시 중단하고 /rewind로 되돌리세요
 
 # 참고 자료
 
