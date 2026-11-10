@@ -30,19 +30,7 @@ export const VerificationSection = () => {
           </InfoBox>
 
           <CodeBlock
-            code={`// Hook으로 자동 검증 설정
-{
-  "PostToolUse": [
-    {
-      "matcher": "Write|Edit",
-      "hooks": [
-        { "type": "command", "command": "npx tsc --noEmit" },
-        { "type": "command", "command": "npx eslint $FILE_PATH" },
-        { "type": "command", "command": "npx jest --findRelatedTests $FILE_PATH" }
-      ]
-    }
-  ]
-}`}
+            code={t('verification.autoVerifyCode')}
             language="json"
             className="mt-4 text-xs"
           />
@@ -80,32 +68,26 @@ export const VerificationSection = () => {
           icon
           iconColor="red"
         >
-          <CodeBlock
-            code={`// .claude/settings.json
-{
-  "permissions": {
-    "allowedTools": ["Read", "Write", "Edit", "Glob", "Grep"],
-    "deniedTools": ["Bash"],  // 위험한 명령 차단
-    "allowedPaths": ["src/**", "tests/**"],
-    "deniedPaths": [".env*", "secrets/**"]
-  }
-}
+          <InfoBox
+            variant="blue"
+            title={t('verification.permissionsInfoTitle')}
+          >
+            <p className="text-sm leading-relaxed">
+              {t('verification.permissionsInfoDesc')}
+            </p>
+          </InfoBox>
 
-// MCP 서버 권한 제한
-{
-  "mcpServers": {
-    "postgres": {
-      "command": "...",
-      "env": {
-        "DATABASE_URL": "...",
-        "READONLY": "true"  // 읽기 전용 모드
-      }
-    }
-  }
-}`}
+          <CodeBlock
+            code={t('verification.permissionsCode')}
             language="json"
-            className="text-xs"
+            className="mt-4 text-xs"
           />
+
+          <InfoBox variant="red" title={t('verification.injectionTitle')}>
+            <p className="text-sm leading-relaxed">
+              {t('verification.injectionDesc')}
+            </p>
+          </InfoBox>
         </SubSection>
 
         <SubSection

@@ -11,6 +11,7 @@ export const SkillsHooksSection = () => {
   const { t, raw } = useTranslation('week17');
   const hooks = raw('skillsHooks.hookTypes');
   const skills = raw('skillsHooks.skillExamples');
+  const skillFields = raw('skillsHooks.skillFields');
 
   return (
     <SectionCard
@@ -25,7 +26,10 @@ export const SkillsHooksSection = () => {
             </p>
           </InfoBox>
 
-          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <h4 className="mt-4 font-bold text-sm text-green-800">
+            {t('skillsHooks.skillExamplesTitle')}
+          </h4>
+          <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
             {skills.map((skill) => (
               <div
                 key={skill.name}
@@ -43,24 +47,23 @@ export const SkillsHooksSection = () => {
           </div>
 
           <CodeBlock
-            code={`<!-- .claude/skills/create-component/SKILL.md -->
-# Create Component Skill
-
-## 트리거
-사용자가 "컴포넌트 만들어줘" 또는 "/component" 입력 시
-
-## 워크플로우
-1. 컴포넌트 이름과 위치 확인
-2. 프로젝트의 기존 컴포넌트 패턴 분석
-3. 동일한 패턴으로 새 컴포넌트 생성:
-   - TypeScript 인터페이스
-   - 스타일 파일 (CSS Modules / Tailwind)
-   - 테스트 파일
-   - Storybook 스토리
-4. barrel export 업데이트`}
+            code={t('skillsHooks.skillCode')}
             language="markdown"
             className="mt-4 text-xs"
           />
+
+          <h4 className="mt-4 font-bold text-sm text-green-800">
+            {t('skillsHooks.skillFieldsTitle')}
+          </h4>
+          <ul className="mt-2 space-y-1 text-xs text-gray-700">
+            {skillFields.map((field) => (
+              <li key={field.name}>
+                <code className="font-bold text-green-700">{field.name}</code>
+                {' — '}
+                {field.desc}
+              </li>
+            ))}
+          </ul>
         </SubSection>
 
         <SubSection title={t('skillsHooks.hooksTitle')} icon iconColor="orange">
@@ -105,34 +108,18 @@ export const SkillsHooksSection = () => {
               </tbody>
             </table>
           </div>
+          <p className="mt-2 text-xs text-gray-600 leading-relaxed">
+            {t('skillsHooks.hookTypesNote')}
+          </p>
 
           <CodeBlock
-            code={`// .claude/settings.json
-{
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          { "type": "command", "command": "prettier --write $FILE_PATH" },
-          { "type": "command", "command": "eslint --fix $FILE_PATH" }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if echo '$TOOL_INPUT' | grep -q 'rm -rf /'; then exit 1; fi"
-          }
-        ]
-      }
-    ]
-  }
-}`}
+            code={t('skillsHooks.hookConfigCode')}
             language="json"
+            className="mt-4 text-xs"
+          />
+          <CodeBlock
+            code={t('skillsHooks.hookScriptCode')}
+            language="bash"
             className="mt-4 text-xs"
           />
         </SubSection>
@@ -149,27 +136,7 @@ export const SkillsHooksSection = () => {
           </InfoBox>
 
           <CodeBlock
-            code={`<!-- CLAUDE.md -->
-# 프로젝트: E-commerce Platform
-
-## 기술 스택
-- Next.js 15 (App Router)
-- TypeScript 5.x
-- Tailwind CSS + shadcn/ui
-- Prisma + PostgreSQL
-
-## 코드 컨벤션
-- 컴포넌트: PascalCase, 폴더별 index.ts barrel export
-- 훅: use 접두사, src/hooks 폴더
-- 타입: src/types 폴더, interface 선호
-
-## 중요 규칙
-- 서버 컴포넌트 기본, 클라이언트는 'use client' 명시
-- API 라우트는 src/app/api 하위에 구성
-
-## 자주 사용하는 명령어
-- \`pnpm dev\`: 개발 서버
-- \`pnpm test\`: 테스트 실행`}
+            code={t('skillsHooks.claudeMdCode')}
             language="markdown"
             className="mt-4 text-xs"
           />

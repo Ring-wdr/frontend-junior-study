@@ -46,7 +46,7 @@ export const TokenOptimizationSection = () => {
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
               <h4 className="font-bold text-sm text-blue-700 mb-2">
-                MCP + AI 액션
+                {t('tokenOptimization.playwrightMcpLabel')}
               </h4>
               <p className="text-xs text-blue-700">
                 {t('tokenOptimization.playwrightTip1')}
@@ -54,7 +54,7 @@ export const TokenOptimizationSection = () => {
             </div>
             <div className="bg-green-50 p-4 rounded-lg border border-green-100">
               <h4 className="font-bold text-sm text-green-700 mb-2">
-                Playwright CLI
+                {t('tokenOptimization.playwrightCliLabel')}
               </h4>
               <p className="text-xs text-green-700">
                 {t('tokenOptimization.playwrightTip2')}
@@ -96,10 +96,10 @@ export const TokenOptimizationSection = () => {
                     {t('tokenOptimization.dimension')}
                   </th>
                   <th className="px-3 py-2 text-left font-semibold text-purple-800 border-b border-purple-200">
-                    MCP
+                    {t('tokenOptimization.playwrightColumn')}
                   </th>
                   <th className="px-3 py-2 text-left font-semibold text-purple-800 border-b border-purple-200">
-                    CDP(Chrome DevTools)
+                    {t('tokenOptimization.cdpColumn')}
                   </th>
                   <th className="px-3 py-2 text-left font-semibold text-purple-800 border-b border-purple-200">
                     {t('tokenOptimization.whenToUse')}

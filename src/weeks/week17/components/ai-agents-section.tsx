@@ -19,6 +19,7 @@ const toolIconMap = {
 export const AiAgentsSection = () => {
   const { t, raw } = useTranslation('week17');
   const tools = raw('aiAgents.tools');
+  const standards = raw('aiAgents.standards');
   const strengths = raw('aiAgents.strengths');
   const humanTasks = raw('aiAgents.humanTasks');
 
@@ -54,6 +55,7 @@ export const AiAgentsSection = () => {
                 <li>• {t('aiAgents.agentsFeatures.multiFile')}</li>
                 <li>• {t('aiAgents.agentsFeatures.toolIntegration')}</li>
                 <li>• {t('aiAgents.agentsFeatures.selfCorrection')}</li>
+                <li>• {t('aiAgents.agentsFeatures.parallel')}</li>
               </ul>
             </div>
           </div>
@@ -83,6 +85,32 @@ export const AiAgentsSection = () => {
                 </div>
               );
             })}
+          </div>
+          <p className="mt-3 text-xs text-gray-600 leading-relaxed">
+            {t('aiAgents.toolsNote')}
+          </p>
+        </SubSection>
+
+        <SubSection
+          title={t('aiAgents.standardsTitle')}
+          icon
+          iconColor="purple"
+        >
+          <p className="text-sm text-gray-700 leading-relaxed">
+            {t('aiAgents.standardsIntro')}
+          </p>
+          <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+            {standards.map((standard) => (
+              <div
+                key={standard.name}
+                className="bg-purple-50 p-3 rounded-lg border border-purple-100"
+              >
+                <h5 className="font-bold text-xs text-purple-800 mb-1">
+                  {standard.name}
+                </h5>
+                <p className="text-xs text-gray-600">{standard.desc}</p>
+              </div>
+            ))}
           </div>
         </SubSection>
 
@@ -135,23 +163,13 @@ export const AiAgentsSection = () => {
           </InfoBox>
         </SubSection>
 
-        <CodeBlock
-          code={`// AI 에이전트에게 태스크 요청 예시
-claude "사용자 인증 기능을 구현해줘:
-       - JWT 기반 인증
-       - 리프레시 토큰 구현
-       - 로그인/로그아웃 API
-       - 프론트엔드 컴포넌트"
-
-// AI가 자동으로 수행:
-// 1. 프로젝트 구조 분석
-// 2. 기존 패턴에 맞춰 코드 생성
-// 3. 필요한 파일들 생성/수정
-// 4. 테스트 코드 작성
-// 5. 결과 검증`}
-          language="bash"
-          className="text-xs"
-        />
+        <SubSection title={t('aiAgents.exampleTitle')} icon iconColor="blue">
+          <CodeBlock
+            code={t('aiAgents.exampleCode')}
+            language="bash"
+            className="text-xs"
+          />
+        </SubSection>
       </div>
     </SectionCard>
   );

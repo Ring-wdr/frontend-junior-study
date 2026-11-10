@@ -23,6 +23,8 @@ import { CodeBlock } from '../../../components/ui/code-block';
 export const AgentModeSection = () => {
   const { t, raw } = useTranslation('week17');
   const subAgents = raw('agentMode.subAgents');
+  const permissionModes = raw('agentMode.permissionModes');
+  const teamsGuide = raw('agentMode.teamsGuide');
   const withGenerative = raw('agentMode.teamsWithGenerative');
   const withoutGenerative = raw('agentMode.teamsWithoutGenerative');
   const teamsVsSubAgentsParallelItems = raw(
@@ -62,17 +64,39 @@ export const AgentModeSection = () => {
           iconColor="purple"
         >
           <CodeBlock
-            code={`# 단순 질문
-claude "이 함수가 뭘 하는지 설명해줘"
-
-# 에이전트 태스크
-claude "사용자 인증 기능을 구현해줘" --agent
-
-# 백그라운드 실행
-claude "테스트 전체 실행하고 실패하면 수정해줘" --background`}
+            code={t('agentMode.basicUsageCode')}
             language="bash"
             className="text-xs"
           />
+        </SubSection>
+
+        <SubSection
+          title={t('agentMode.permissionModesTitle')}
+          icon
+          iconColor="orange"
+        >
+          <InfoBox
+            variant="orange"
+            title={t('agentMode.permissionModesInfoTitle')}
+          >
+            <p className="text-sm leading-relaxed">
+              {t('agentMode.permissionModesInfoDesc')}
+            </p>
+          </InfoBox>
+
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {permissionModes.map((mode) => (
+              <div
+                key={mode.name}
+                className="bg-orange-50 p-3 rounded-lg border border-orange-100"
+              >
+                <code className="text-xs font-bold text-orange-800">
+                  {mode.name}
+                </code>
+                <p className="mt-1 text-xs text-gray-600">{mode.desc}</p>
+              </div>
+            ))}
+          </div>
         </SubSection>
 
         <SubSection
@@ -87,13 +111,7 @@ claude "테스트 전체 실행하고 실패하면 수정해줘" --background`}
           </InfoBox>
 
           <CodeBlock
-            code={`claude "대규모 리팩토링이 필요해" --plan
-
-# AI가 먼저 계획을 세우고 승인을 요청:
-# 1. 영향받는 파일 목록
-# 2. 변경 순서
-# 3. 예상 위험도
-            # 사용자 승인 후 실행`}
+            code={t('agentMode.planModeCode')}
             language="bash"
             className="mt-4 text-xs"
           />
@@ -111,14 +129,7 @@ claude "테스트 전체 실행하고 실패하면 수정해줘" --background`}
           </InfoBox>
 
           <CodeBlock
-            code={`claude "현재 로그인 테스트 커버리지를 점검해줘"
-
-# Interview mode (대화형) 실행
-claude --interview "로그인 플로우를 리팩토링했어. 아래 항목을 단계별로 검토해줘:
-1) 실패 재현 조건
-2) 원인 후보
-3) 수정 제안
-4) 적용 후 검증 스텝"`}
+            code={t('agentMode.interviewCode')}
             language="bash"
             className="mt-4 text-xs"
           />
@@ -273,7 +284,13 @@ claude --interview "로그인 플로우를 리팩토링했어. 아래 항목을 
         </SubSection>
 
         <SubSection title={t('agentMode.subAgentsTitle')} icon iconColor="blue">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <InfoBox variant="blue" title={t('agentMode.subAgentsInfoTitle')}>
+            <p className="text-sm leading-relaxed">
+              {t('agentMode.subAgentsInfoDesc')}
+            </p>
+          </InfoBox>
+
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
             {subAgents.map((agent) => (
               <div
                 key={agent.name}
@@ -291,14 +308,8 @@ claude --interview "로그인 플로우를 리팩토링했어. 아래 항목을 
           </div>
 
           <CodeBlock
-            code={`claude "이 프로젝트의 성능을 분석하고 개선해줘"
-
-# 메인 에이전트가 서브에이전트 생성:
-# - Explore 에이전트: 코드베이스 분석
-# - Bash 에이전트: 벤치마크 실행
-# - Plan 에이전트: 개선 계획 수립
-# 결과를 종합하여 최적화 수행`}
-            language="bash"
+            code={t('agentMode.subAgentCode')}
+            language="markdown"
             className="mt-4 text-xs"
           />
         </SubSection>
@@ -481,16 +492,18 @@ claude --interview "로그인 플로우를 리팩토링했어. 아래 항목을 
           </DemoBox>
 
           <CodeBlock
-            code={`claude "로그인 회복 시나리오를 설계하고 3개 대안을 비교해줘"
-
-# 병렬형(Sub-Agent)
-claude "성능/테스트/코드 안정성 관점에서 3가지 점검 항목만 제안"
-
-# 의사결정형(Teams)
-claude "요구사항 변화 기반으로 UX/우선순위 관점에서 대안을 비교하고 최종 선택 기준을 제시해줘"`}
+            code={t('agentMode.teamsCode')}
             language="bash"
             className="mt-4 text-xs"
           />
+
+          <InfoBox variant="green" title={t('agentMode.teamsGuideTitle')}>
+            <ul className="list-disc pl-5 space-y-1 text-sm">
+              {teamsGuide.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </InfoBox>
         </SubSection>
 
         <SubSection title={t('agentMode.cursorTitle')} icon iconColor="pink">
@@ -501,19 +514,7 @@ claude "요구사항 변화 기반으로 UX/우선순위 관점에서 대안을 
           </InfoBox>
 
           <CodeBlock
-            code={`// .cursor/rules
-## 코드 스타일
-- 항상 TypeScript strict 모드 준수
-- 함수형 컴포넌트만 사용
-- any 타입 금지
-
-## 자동 작업
-- 파일 생성 시 테스트 파일도 함께 생성
-- import 정리는 항상 실행
-
-## 금지 사항
-- console.log 프로덕션 코드에 금지
-- inline 스타일 금지`}
+            code={t('agentMode.cursorCode')}
             language="markdown"
             className="mt-4 text-xs"
           />
