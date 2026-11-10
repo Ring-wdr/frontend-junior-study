@@ -112,30 +112,46 @@
     "notice": "This is based on official docs and GitHub repositories checked on 2026-11-10. Tools change every few months, so re-check commands in each official doc before using them. Prices and benchmark rankings are not covered.",
     "principleTitle": "The one idea",
     "principleBody": "Use one step thoroughly, and move to the next only when you can see that step's limit. Running more agents does not give better results. When the checking work (review, tests) piles up on one person, things get slower.",
-    "overviewTitle": "The six steps at a glance",
-    "overview": {
-      "headers": ["Step", "Summary"],
-      "rows": [
-        ["① Simple use", "Ask in conversation and hand over one small task"],
-        [
-          "② Instructions and procedures",
-          "Remove repeated explanations with rule files and skills"
-        ],
-        [
-          "③ Plan and verify",
-          "Get a plan first, then check the result with tests"
-        ],
-        ["④ Subagents", "Delegate research or review inside one session"],
-        [
-          "⑤ Parallel sessions",
-          "Run several sessions with worktrees, background, or cloud"
-        ],
-        [
-          "⑥ Orchestration",
-          "Manage many agents on one screen with tools like herdr and Orca"
-        ]
-      ]
+    "ui": {
+      "stepsLabel": "Choose a step",
+      "progress": "Current position",
+      "prev": "Previous step",
+      "next": "Next step",
+      "tabsLabel": "Step details",
+      "toolsLabel": "Choose a tool",
+      "toolsTab": "Tools and commands",
+      "teamsTab": "Built-in teams",
+      "aboutTitle": "About",
+      "criterionLabel": "Pick a criterion",
+      "checklistHint": "Tap items to check them off. This resets when you reload.",
+      "done": "done"
     },
+    "steps": [
+      {
+        "name": "① Simple use",
+        "summary": "Ask in conversation and hand over one small task"
+      },
+      {
+        "name": "② Instructions and procedures",
+        "summary": "Remove repeated explanations with rule files and skills"
+      },
+      {
+        "name": "③ Plan and verify",
+        "summary": "Get a plan first, then check the result with tests"
+      },
+      {
+        "name": "④ Subagents",
+        "summary": "Delegate research or review inside one session"
+      },
+      {
+        "name": "⑤ Parallel sessions",
+        "summary": "Run several sessions with worktrees, background, or cloud"
+      },
+      {
+        "name": "⑥ Orchestration",
+        "summary": "Manage many agents on one screen with tools like herdr and Orca"
+      }
+    ],
     "labels": {
       "does": "What you do",
       "command": "Commands and settings",
@@ -178,7 +194,7 @@
           ],
           [
             "Gemini family",
-            "GEMINI.md (see \"Note on the Google family\" below)"
+            "GEMINI.md (see \"Note on the Google family\" in step ⑥)"
           ]
         ]
       },
@@ -287,7 +303,17 @@
       "teamsTitle": "Built-in teams: Claude Code agent teams",
       "teamsLead": "An experimental feature that is off by default. Turn it on with an environment variable.",
       "teamsCode": "{\n  \"env\": {\n    \"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS\": \"1\"\n  }\n}",
-      "teamsNote": "A team lead session creates teammates (independent Claude Code sessions) and coordinates through a shared task list and messages between teammates. The docs recommend 3 to 5 teammates to start and suggest beginning with work that writes no code, such as review and research. The docs also list limits: one team per session, no nested teams, and far more token use than subagents. Split-pane mode needs tmux or iTerm2 (the --teammate-mode flag)."
+      "teamsNote": "A team lead session creates teammates (independent Claude Code sessions) and coordinates through a shared task list and messages between teammates. The docs recommend 3 to 5 teammates to start and suggest beginning with work that writes no code, such as review and research. The docs also list limits: one team per session, no nested teams, and far more token use than subagents. Split-pane mode needs tmux or iTerm2 (the --teammate-mode flag).",
+      "whenLabel": "When to move up (and when not to)",
+      "when": [
+        "Move up when you have several independent tasks, each with automatic verification (tests), and time to review.",
+        "If the tasks are sequential or touch the same files a lot, ④ or a single session is better. The Claude Code docs say the same."
+      ],
+      "mistakes": [
+        "Making \"run many agents\" the goal itself.",
+        "Leaving several agents unsupervised with all permissions allowed (such as --dangerously-skip-permissions). The docs say that in Claude Code teams, teammates inherit the lead's permission mode.",
+        "Treating messages between agents as human approval. The docs say Claude Code is designed not to trust an \"approved\" claim relayed by another agent."
+      ]
     },
     "herdr": {
       "title": "herdr",
@@ -364,19 +390,6 @@
       "title": "Note on the Google family",
       "body": "On 2026-05-19 Google announced the transition from Gemini CLI to Antigravity CLI (agy). Agent Skills, Hooks, Subagents, and Extensions (Antigravity plugins) carry over, and Google said there is no one-to-one feature parity at launch. Gemini CLI service for personal accounts (Google AI Pro, Ultra, and free) ended on 2026-06-18. So the Gemini CLI subagent information here is for existing users only. Antigravity CLI installs on macOS and Linux with curl -fsSL https://antigravity.google/cli/install.sh | bash and is checked with agy --version. Run it with agy; agy -p \"<prompt>\" runs non-interactively, agy models lists models, and /plan inside a session asks for a plan first."
     },
-    "s6end": {
-      "title": "⑥ When to move up, and when not to",
-      "whenLabel": "When to move up (and when not to)",
-      "when": [
-        "Move up when you have several independent tasks, each with automatic verification (tests), and time to review.",
-        "If the tasks are sequential or touch the same files a lot, ④ or a single session is better. The Claude Code docs say the same."
-      ],
-      "mistakes": [
-        "Making \"run many agents\" the goal itself.",
-        "Leaving several agents unsupervised with all permissions allowed (such as --dangerously-skip-permissions). The docs say that in Claude Code teams, teammates inherit the lead's permission mode.",
-        "Treating messages between agents as human approval. The docs say Claude Code is designed not to trust an \"approved\" claim relayed by another agent."
-      ]
-    },
     "wrap": {
       "title": "Wrap-up: what to try this week",
       "steps": [
@@ -425,18 +438,25 @@
       "basisTitle": "How to read this list",
       "basisBody": "Server names, addresses, commands, and config keys are listed only where they were confirmed in each provider's official docs or official repository. \"Widely used\" here is not a ranking: it means the official docs provide separate install instructions for the major agents."
     },
+    "ui": {
+      "prev": "Previous",
+      "next": "Next"
+    },
     "catalog": {
       "title": "Servers by category",
       "hint": "Do not install every server. Starting with \"docs search + browser + the server for your framework\" is enough.",
-      "headers": {
-        "name": "Name",
+      "chipsLabel": "Choose a category",
+      "cardsLabel": "Choose a server",
+      "fields": {
         "provider": "Provider",
         "what": "What it does",
         "address": "Address or package",
-        "when": "When to use"
+        "when": "When to use",
+        "notes": "Additional notes"
       },
       "categories": [
         {
+          "chip": "Design, docs, repos",
           "title": "Design, docs, repositories",
           "rows": [
             {
@@ -467,6 +487,7 @@
           ]
         },
         {
+          "chip": "Deploy, errors, backend",
           "title": "Deployment, error monitoring, backend",
           "rows": [
             {
@@ -496,6 +517,7 @@
           ]
         },
         {
+          "chip": "Browser, debugging",
           "title": "Browser and debugging",
           "rows": [
             {
@@ -519,6 +541,7 @@
           ]
         },
         {
+          "chip": "Framework and UI official",
           "title": "MCP servers provided directly by frameworks and UI libraries",
           "rows": [
             {
@@ -571,10 +594,11 @@
       ]
     },
     "retired": {
+      "chip": "No longer used",
       "title": "Servers no longer to use (archived, moved, replaced)",
+      "tag": "Do not use",
       "refServers": "The current reference servers in the official `modelcontextprotocol/servers` repository are Everything, Fetch, Filesystem, Git, Memory, Sequential Thinking, and Time. The servers below, which often appeared in older introductory articles, were moved to `servers-archived` in that repository.",
-      "headers": {
-        "old": "Often seen before",
+      "fields": {
         "status": "Current status",
         "instead": "Look at instead"
       },
@@ -623,9 +647,10 @@
       "warnTitle": "Do not install archived servers anew",
       "warnBody": "\"Still on npm\" is not the same as \"maintained\". You cannot expect security patches for an archived server."
     },
-    "agents": {
+    "install": {
       "title": "How to add a server per agent",
       "hint": "We use one remote server (Vercel) and one local server (Playwright) as examples. These are the formats confirmed in each tool's official docs.",
+      "tabsLabel": "Choose an agent",
       "items": [
         {
           "name": "Claude Code",
@@ -716,6 +741,7 @@
     },
     "shifts": {
       "title": "How usage has changed in 2026",
+      "pickLabel": "Choose a change",
       "items": [
         {
           "title": "Remote (HTTP) servers and OAuth are the default",
@@ -769,6 +795,8 @@
       "incidentsTitle": "Disclosed security cases",
       "incidentsBody": "On 2025-12-17, GitHub security advisories disclosed three vulnerabilities in Anthropic's reference Git MCP server (`mcp-server-git`): CVE-2025-68143, CVE-2025-68144, and CVE-2025-68145. The `git_init` tool could create a repository at any path, `git_diff` and `git_checkout` had argument injection, and the `--repository` option lacked path validation. They were fixed in versions 2025.9.25 or 2025.12.18, and the `git_init` tool was removed. In Cursor, CVE-2025-54136 let an already-trusted MCP configuration file be modified in versions 1.2.4 and below so that code ran without re-approval; it was fixed in 1.3.",
       "practicesTitle": "Practical rules",
+      "practicesHint": "Tick each rule as you adopt it.",
+      "progressLabel": "Rules checked",
       "practices": [
         "Confirm the address is official, and check the domain of one-click install links on marketplaces.",
         "Limit to read-only and project scope where possible (`read_only=true`, `project_ref`, `--read-only`).",
@@ -780,6 +808,8 @@
     },
     "start": {
       "title": "Recommended order to get started",
+      "hint": "Click a step to jump, or use Previous and Next.",
+      "stepsLabel": "Recommended order",
       "steps": [
         "Connect Context7 to reduce the outdated API problem.",
         "Connect the official server of the framework you use (`next-devtools-mcp` for Next.js).",
@@ -1029,112 +1059,22 @@
         "Does the agent use my real logged-in browser, or a clean separate browser?",
         "Does the agent see the page as text (an accessibility snapshot) or as an image (screenshot + coordinates)?"
       ],
-      "tableLead": "Along these two axes, the tools fall into roughly five categories.",
-      "head": {
-        "category": "Category",
-        "tools": "Representative tools",
-        "browser": "Default browser",
-        "view": "How it sees the page"
-      },
-      "rows": [
-        {
-          "category": "(1) Browsers and extensions shared by human and agent",
-          "tools": "Aside, ego(lite), Claude in Chrome, ChatGPT browser extension",
-          "browser": "Your real profile (including imports)",
-          "view": "Varies by tool"
-        },
-        {
-          "category": "(2) CLIs called from the shell",
-          "tools": "playwright-cli, agent-browser, chrome-devtools CLI",
-          "browser": "A separate (isolated) browser by default",
-          "view": "Accessibility snapshot + ref"
-        },
-        {
-          "category": "(3) MCP servers",
-          "tools": "Playwright MCP, Chrome DevTools MCP, aside mcp",
-          "browser": "A separate profile by default, with an option to connect to an existing Chrome",
-          "view": "Accessibility snapshot (default)"
-        },
-        {
-          "category": "(4) Browsers built into coding agents and IDEs",
-          "tools": "Cursor browser, ChatGPT/Codex app built-in browser",
-          "browser": "App-specific profile",
-          "view": "Screenshots, console and network logs, etc."
-        },
-        {
-          "category": "(5) Cloud browsers and computer use",
-          "tools": "Browserbase (+Stagehand), Claude computer use",
-          "browser": "Remote/virtual environment",
-          "view": "CDP or screenshot + coordinates"
-        }
-      ]
+      "tableLead": "Along these two axes, the tools fall into roughly five categories."
     },
-    "duo": {
-      "title": "The Two Stars: ego and aside",
-      "egoTitle": "ego (ego lite, ego-browser)",
-      "egoItems": [
-        {
-          "label": "What it is",
-          "body": "A free Chromium-based browser built by Citro Labs. It is designed so that a human and an AI agent can work in the same browser without fighting over control. The CLI is named ego-browser."
-        },
-        {
-          "label": "Install",
-          "body": "Per the official repository (citrolabs/ego-lite), download and run the installer for macOS (Apple Silicon/Intel) or Windows, and the ego-browser skill is installed into the agent's skills directory along with it. To add only the skill first, use npx skills add citrolabs/ego-lite; the agent's first browser task then walks you through installing the app. Linux is only on the roadmap. The repository contents are MIT-licensed, and the browser app is distributed separately for free."
-        },
-        {
-          "label": "Login session",
-          "body": "On first launch it asks whether to import your Chrome logins, cookies, extensions, and bookmarks. You can also import from the CLI, and after importing, the agent inherits that logged-in state."
-        }
-      ],
-      "egoCode": "# Install only the skill first\nnpx skills add citrolabs/ego-lite\n\n# Import your Chrome login state\nego-browser import list\nego-browser import --browser chrome --profile Default\n\n# Other commands\nego-browser skill      # print the skill guide\nego-browser upgrade",
-      "egoHowTitle": "How it works",
-      "egoHow": [
-        "When the agent passes JavaScript to ego-browser nodejs, it runs in the browser's built-in Node.js runtime. The script runs in Node, not inside the page, so code that must run inside the page goes into page.evaluate().",
-        "Each agent task gets an isolated workspace called a Space, and the user's existing tabs are left alone. The user can watch the agent work and take over at any time (task.handOff()).",
-        "For observing the page there are page.snapshot() (structure and refs, the default tool) and page.screenshot() (visual check). You act on refs from the snapshot, such as @21, like page.click(\"@21\").",
-        "It looks like Playwright but is not Playwright. The skill document explicitly says not to guess at Playwright APIs such as locator() or getByRole(). Anything not in the list is handled with page.evaluate() or page.cdp()."
-      ],
-      "egoAfter": [
-        {
-          "label": "Token cost profile",
-          "body": "The skill document recommends using only the one of snapshot or screenshot you need, batching several actions into one script, and taking a single snapshot at the end. In other words, it is designed to cut round trips."
-        },
-        {
-          "label": "Caution",
-          "body": "The content of the pages the agent works on is sent to the model the user selected (official site). Because it uses your real logged-in session, whatever the agent can do is whatever your account can do."
-        }
-      ],
-      "asideTitle": "aside",
-      "asideItems": [
-        {
-          "label": "What it is",
-          "body": "A 'browser rebuilt for humans and agents' made by Aside Computer Inc. (a Y Combinator company). Its core message is working on logged-in sites without integrations. It supports macOS 15 or later and Windows 10 22H2 or later / Windows 11. An outside agent has two ways in. aside exec hands the whole task to the Aside agent inside the browser; the CLI guide recommends treating it like spawning a subagent. aside repl drives tabs directly with Playwright-style JavaScript, where snapshot() is the primary way to read a page and annotatedScreenshot() and page.screenshot() are for visual checks."
-        },
-        {
-          "label": "Login session",
-          "body": "Onboarding imports browsing history, cookies, and bookmarks from Chrome and others. The official site says the agent logs in through autofill so credentials are not exposed to the agent, and that sensitive actions such as payments, posting, and messaging wait for user confirmation."
-        },
-        {
-          "label": "Coding agent integration",
-          "body": "The developer docs (aside.com/developers.md) list three options: CLI, MCP, and REPL."
-        }
-      ],
-      "asideCode": "# macOS install (developer docs)\ncurl -fsSL https://releases.aside.com/install.sh | bash\n\n# Login: set the auth file path first, then approve the code in the browser under Settings > Account > Devices\nexport ASIDE_CLI_AUTH_PATH=\"/absolute/path/aside-auth.json\"\naside login --email \"you@example.com\"\n\naside \"smoke test localhost:3000\"   # natural-language task\naside repl \"const p = await openTab('https://example.com')\"   # deterministic step\naside mcp                                     # stdio MCP server",
-      "asideMcp": "For MCP, in mcp.json under mcpServers set command to aside and args to [\"mcp\"]. Running aside mcp directly shows four tools: exec (run the browser agent on logged-in sites), repl (run Playwright-style JavaScript), memory_search (search the user memory Aside has built), and browser_profiles (list browser profiles).",
-      "asideExtra": "Other commands: aside session resume <session-id> \"Continue\", aside account list/status/use. The auth file is set with ASIDE_CLI_AUTH_PATH; if unset, ~/.aside/cli/auth.json is used.",
-      "asideCautionLabel": "Caution",
-      "asideCaution": "With a curl | bash install, it is safer to read the script before running it. Never commit the auth file (the official docs give the same warning).",
-      "compareTitle": "What the Two Tools Share and Where They Differ",
-      "compareItems": [
-        "Shared: both are 'browsers shared by human and agent' where the agent inherits your logged-in session. Both import Chrome data.",
-        "Different: ego centers on JS scripts that the outside agent writes itself (ego-browser nodejs). aside has its own agent inside the browser, so handing over the whole task with exec is the default and repl is for when you need direct control. A running task can be redirected or stopped with aside session steer, queue, and stop, and --permission (ask, guard, full-access) sets the permission scope. ego's skill repository is public (MIT), and for aside the CLI's aside guide plays the same role."
-      ]
-    },
-    "others": {
-      "title": "The Other Categories",
+    "explorer": {
+      "pickLabel": "Pick a category",
+      "prev": "Previous",
+      "next": "Next",
+      "toolsLabel": "Representative tools",
+      "loginLabel": "How it handles login sessions",
+      "viewLabel": "How it reads the page",
       "categories": [
         {
-          "title": "(1) Browsers and extensions from AI companies",
+          "title": "(1) Browsers and extensions shared by human and agent",
+          "tools": "Aside, ego(lite), Claude in Chrome, ChatGPT browser extension",
+          "login": "Your real profile (including imports)",
+          "view": "Varies by tool",
+          "detailTitle": "(1) Browsers and extensions from AI companies",
           "items": [
             {
               "name": "Claude in Chrome",
@@ -1149,10 +1089,16 @@
               "desc": "Google's blog says auto browse is available only to Google AI Pro/Ultra subscribers in the U.S. Gemini in Chrome asks for confirmation before sensitive actions such as sending an email or adding a calendar event."
             }
           ],
-          "note": ""
+          "note": "",
+          "hint": "Aside and ego are covered in detail right below, in \"The Two Stars\".",
+          "security": [0, 1, 2]
         },
         {
-          "title": "(2) CLI type",
+          "title": "(2) CLIs called from the shell",
+          "tools": "playwright-cli, agent-browser, chrome-devtools CLI",
+          "login": "A separate (isolated) browser by default",
+          "view": "Accessibility snapshot + ref",
+          "detailTitle": "(2) CLI type",
           "items": [
             {
               "name": "playwright-cli",
@@ -1167,10 +1113,16 @@
               "desc": "npm i chrome-devtools-mcp@latest -g, then use it as chrome-devtools <tool> ... The default is headless, isolated mode."
             }
           ],
-          "note": "Shared traits: each command returns a short piece of text, so less context piles up."
+          "note": "Shared traits: each command returns a short piece of text, so less context piles up.",
+          "hint": "",
+          "security": [0, 2]
         },
         {
-          "title": "(3) MCP server type",
+          "title": "(3) MCP servers",
+          "tools": "Playwright MCP, Chrome DevTools MCP, aside mcp",
+          "login": "A separate profile by default, with an option to connect to an existing Chrome",
+          "view": "Accessibility snapshot (default)",
+          "detailTitle": "(3) MCP server type",
           "items": [
             {
               "name": "Playwright MCP",
@@ -1181,10 +1133,16 @@
               "desc": "npx -y chrome-devtools-mcp@latest. Its strength is debugging: performance traces, network, and console stack traces with source maps applied. The only officially supported browsers are Chrome and Chrome for Testing. You can attach to a running Chrome session with --autoConnect (Chrome 144 or later, allow it at chrome://inspect/#remote-debugging, a permission dialog on every connection, and a banner while being controlled). This is based on a Chrome blog post, so current details may have changed. Usage statistics collection is on by default and can be turned off with --no-usage-statistics."
             }
           ],
-          "note": "MCP tool schemas stay resident in context, so the more tools there are, the higher the baseline cost (the comparison table in the Playwright docs also lists MCP token cost as \"Higher\")."
+          "note": "MCP tool schemas stay resident in context, so the more tools there are, the higher the baseline cost (the comparison table in the Playwright docs also lists MCP token cost as \"Higher\").",
+          "hint": "",
+          "security": [0, 1, 2]
         },
         {
           "title": "(4) Browsers built into coding agents and IDEs",
+          "tools": "Cursor browser, ChatGPT/Codex app built-in browser",
+          "login": "App-specific profile",
+          "view": "Screenshots, console and network logs, etc.",
+          "detailTitle": "(4) Browsers built into coding agents and IDEs",
           "items": [
             {
               "name": "Cursor",
@@ -1195,10 +1153,16 @@
               "desc": "The user and the agent look at the same screen, can preview local or public pages, and can leave visual comments. It uses a separate profile, so you log in yourself. Developer mode (full CDP access) is an opt-in that requires explicit per-site approval."
             }
           ],
-          "note": "This is the category frontend developers use most often. For checking a local dev server that needs no login, this alone is often enough."
+          "note": "This is the category frontend developers use most often. For checking a local dev server that needs no login, this alone is often enough.",
+          "hint": "",
+          "security": [0, 2]
         },
         {
           "title": "(5) Cloud browsers and computer use",
+          "tools": "Browserbase (+Stagehand), Claude computer use",
+          "login": "Remote/virtual environment",
+          "view": "CDP or screenshot + coordinates",
+          "detailTitle": "(5) Cloud browsers and computer use",
           "items": [
             {
               "name": "Browserbase / Stagehand",
@@ -1209,7 +1173,9 @@
               "desc": "It works with screenshots and mouse/keyboard coordinates. The API docs say you enable it with the single line {\"type\": \"computer_toolset_20260801\"}, that it has 17 component tools, and that browser tools are better for tasks that stay inside a web page. The docs state that one screenshot costs roughly 1,000 to 1,800 input tokens. The security recommendations are a dedicated VM/container, not providing sensitive information, a domain allowlist, and human confirmation before important actions."
             }
           ],
-          "note": ""
+          "note": "",
+          "hint": "",
+          "security": [0, 2]
         }
       ]
     },
@@ -1230,13 +1196,86 @@
         }
       ]
     },
+    "duo": {
+      "title": "The Two Stars: ego and aside",
+      "criterionLabel": "Criterion",
+      "toolLabel": "Tool",
+      "sideBySide": "Compare side by side",
+      "codeLabel": "Install and usage commands",
+      "criteria": [
+        "What it is",
+        "Install",
+        "Login session",
+        "How it works",
+        "Caution"
+      ],
+      "tools": {
+        "ego": {
+          "name": "ego",
+          "title": "ego (ego lite, ego-browser)",
+          "code": "# Install only the skill first\nnpx skills add citrolabs/ego-lite\n\n# Import your Chrome login state\nego-browser import list\nego-browser import --browser chrome --profile Default\n\n# Other commands\nego-browser skill      # print the skill guide\nego-browser upgrade",
+          "sections": [
+            [
+              "A free Chromium-based browser built by Citro Labs. It is designed so that a human and an AI agent can work in the same browser without fighting over control. The CLI is named ego-browser."
+            ],
+            [
+              "Per the official repository (citrolabs/ego-lite), download and run the installer for macOS (Apple Silicon/Intel) or Windows, and the ego-browser skill is installed into the agent's skills directory along with it. To add only the skill first, use npx skills add citrolabs/ego-lite; the agent's first browser task then walks you through installing the app. Linux is only on the roadmap. The repository contents are MIT-licensed, and the browser app is distributed separately for free."
+            ],
+            [
+              "On first launch it asks whether to import your Chrome logins, cookies, extensions, and bookmarks. You can also import from the CLI, and after importing, the agent inherits that logged-in state."
+            ],
+            [
+              "When the agent passes JavaScript to ego-browser nodejs, it runs in the browser's built-in Node.js runtime. The script runs in Node, not inside the page, so code that must run inside the page goes into page.evaluate().",
+              "Each agent task gets an isolated workspace called a Space, and the user's existing tabs are left alone. The user can watch the agent work and take over at any time (task.handOff()).",
+              "For observing the page there are page.snapshot() (structure and refs, the default tool) and page.screenshot() (visual check). You act on refs from the snapshot, such as @21, like page.click(\"@21\").",
+              "It looks like Playwright but is not Playwright. The skill document explicitly says not to guess at Playwright APIs such as locator() or getByRole(). Anything not in the list is handled with page.evaluate() or page.cdp().",
+              "Token cost profile: The skill document recommends using only the one of snapshot or screenshot you need, batching several actions into one script, and taking a single snapshot at the end. In other words, it is designed to cut round trips."
+            ],
+            [
+              "The content of the pages the agent works on is sent to the model the user selected (official site). Because it uses your real logged-in session, whatever the agent can do is whatever your account can do."
+            ]
+          ]
+        },
+        "aside": {
+          "name": "aside",
+          "title": "aside",
+          "code": "# macOS install (developer docs)\ncurl -fsSL https://releases.aside.com/install.sh | bash\n\n# Login: set the auth file path first, then approve the code in the browser under Settings > Account > Devices\nexport ASIDE_CLI_AUTH_PATH=\"/absolute/path/aside-auth.json\"\naside login --email \"you@example.com\"\n\naside \"smoke test localhost:3000\"   # natural-language task\naside repl \"const p = await openTab('https://example.com')\"   # deterministic step\naside mcp                                     # stdio MCP server",
+          "sections": [
+            [
+              "A 'browser rebuilt for humans and agents' made by Aside Computer Inc. (a Y Combinator company). Its core message is working on logged-in sites without integrations."
+            ],
+            [
+              "It supports macOS 15 or later and Windows 10 22H2 or later / Windows 11."
+            ],
+            [
+              "Onboarding imports browsing history, cookies, and bookmarks from Chrome and others. The official site says the agent logs in through autofill so credentials are not exposed to the agent, and that sensitive actions such as payments, posting, and messaging wait for user confirmation.",
+              "Other commands: aside session resume <session-id> \"Continue\", aside account list/status/use. The auth file is set with ASIDE_CLI_AUTH_PATH; if unset, ~/.aside/cli/auth.json is used."
+            ],
+            [
+              "An outside agent has two ways in. aside exec hands the whole task to the Aside agent inside the browser; the CLI guide recommends treating it like spawning a subagent.",
+              "aside repl drives tabs directly with Playwright-style JavaScript, where snapshot() is the primary way to read a page and annotatedScreenshot() and page.screenshot() are for visual checks.",
+              "Coding agent integration: The developer docs (aside.com/developers.md) list three options: CLI, MCP, and REPL.",
+              "For MCP, in mcp.json under mcpServers set command to aside and args to [\"mcp\"]. Running aside mcp directly shows four tools: exec (run the browser agent on logged-in sites), repl (run Playwright-style JavaScript), memory_search (search the user memory Aside has built), and browser_profiles (list browser profiles)."
+            ],
+            [
+              "With a curl | bash install, it is safer to read the script before running it. Never commit the auth file (the official docs give the same warning)."
+            ]
+          ]
+        }
+      },
+      "compareTitle": "What the Two Tools Share and Where They Differ",
+      "compareItems": [
+        "Shared: both are 'browsers shared by human and agent' where the agent inherits your logged-in session. Both import Chrome data.",
+        "Different: ego centers on JS scripts that the outside agent writes itself (ego-browser nodejs). aside has its own agent inside the browser, so handing over the whole task with exec is the default and repl is for when you need direct control. A running task can be redirected or stopped with aside session steer, queue, and stop, and --permission (ask, guard, full-access) sets the permission scope. ego's skill repository is public (MIT), and for aside the CLI's aside guide plays the same role."
+      ],
+      "prev": "Previous",
+      "next": "Next"
+    },
     "guide": {
       "title": "Choosing by Situation",
-      "head": {
-        "situation": "Situation",
-        "pick": "Recommended",
-        "reason": "Why"
-      },
+      "pickLabel": "Pick your situation",
+      "pickHead": "Recommended",
+      "reasonHead": "Why",
       "rows": [
         {
           "situation": "Checking the screen and layout of a local dev server",
@@ -1282,6 +1321,9 @@
     },
     "example": {
       "title": "A Short Example: Delegating a Screen Check to the Agent",
+      "tabPrompt": "Prompt",
+      "tabEgo": "ego-browser code",
+      "tabHabits": "Key habits",
       "promptTitle": "Prompt example (local dev server, no login needed)",
       "prompt": "Open http://localhost:3000/settings, take a screenshot at mobile width (390px)\nand at desktop width, and tell me whether the card layout breaks or a horizontal scroll appears.\nIf there are console errors, report them too, and don't modify any code, just list likely causes.",
       "egoTitle": "A minimal example run directly with ego-browser",
