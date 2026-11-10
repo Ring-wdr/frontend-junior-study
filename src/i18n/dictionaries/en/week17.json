@@ -1021,7 +1021,7 @@
   },
   "browserAutomation": {
     "badge": "Browser Automation",
-    "description": "A map of the tools for handing a browser to an agent, grouped by category. The reference date is 2026-11-10, and the content centers on what was verified in official docs and repositories. Anything we could not verify is marked 'not verified'.",
+    "description": "A map of the tools for handing a browser to an agent, grouped by category. The reference date is 2026-11-10, and the content centers on what was verified in official docs and repositories. For ego and aside it also includes what we confirmed by running them, and anything we could not verify is marked 'not verified'.",
     "overview": {
       "title": "The Big Picture: Which Browser Does the Agent Use?",
       "lead": "When you hand a browser to an agent, the first questions are not about tool names. They are these two.",
@@ -1108,7 +1108,7 @@
       "asideItems": [
         {
           "label": "What it is",
-          "body": "A 'browser rebuilt for humans and agents' made by Aside Computer Inc. (a Y Combinator company). Its core message is working on logged-in sites without integrations. It supports macOS 15 or later and Windows 10 22H2 or later / Windows 11. How the agent works internally (CDP, DOM, or screenshots) is not stated in the official docs, so it is not verified."
+          "body": "A 'browser rebuilt for humans and agents' made by Aside Computer Inc. (a Y Combinator company). Its core message is working on logged-in sites without integrations. It supports macOS 15 or later and Windows 10 22H2 or later / Windows 11. An outside agent has two ways in. aside exec hands the whole task to the Aside agent inside the browser; the CLI guide recommends treating it like spawning a subagent. aside repl drives tabs directly with Playwright-style JavaScript, where snapshot() is the primary way to read a page and annotatedScreenshot() and page.screenshot() are for visual checks (confirmed from the aside guide output of CLI 1.26.1107)."
         },
         {
           "label": "Login session",
@@ -1120,14 +1120,14 @@
         }
       ],
       "asideCode": "# macOS install (developer docs)\ncurl -fsSL https://releases.aside.com/install.sh | bash\n\n# Login: set the auth file path first, then approve the code in the browser under Settings > Account > Devices\nexport ASIDE_CLI_AUTH_PATH=\"/absolute/path/aside-auth.json\"\naside login --email \"you@example.com\"\n\naside \"smoke test localhost:3000\"   # natural-language task\naside repl \"const p = await openTab('https://example.com')\"   # deterministic step\naside mcp                                     # stdio MCP server",
-      "asideMcp": "For MCP, in mcp.json under mcpServers set command to aside and args to [\"mcp\"]. The list of tools it exposes is not in the docs, so it is not verified.",
+      "asideMcp": "For MCP, in mcp.json under mcpServers set command to aside and args to [\"mcp\"]. Running aside mcp directly shows four tools: exec (run the browser agent on logged-in sites), repl (run Playwright-style JavaScript), memory_search (search the user memory Aside has built), and browser_profiles (list browser profiles).",
       "asideExtra": "Other commands: aside session resume <session-id> \"Continue\", aside account list/status/use. The auth file is set with ASIDE_CLI_AUTH_PATH; if unset, ~/.aside/cli/auth.json is used.",
       "asideCautionLabel": "Caution",
       "asideCaution": "With a curl | bash install, it is safer to read the script before running it. Never commit the auth file (the official docs give the same warning).",
       "compareTitle": "What the Two Tools Share and Where They Differ",
       "compareItems": [
         "Shared: both are 'browsers shared by human and agent' where the agent inherits your logged-in session. Both import Chrome data.",
-        "Different: ego centers on JS scripts that the outside agent writes itself (ego-browser nodejs). aside has its own agent inside the browser, and the outside agent calls it through CLI/MCP/REPL, as far as we can read it. ego's skill is public (MIT) so you can read its operating rules, while aside's internals are less public."
+        "Different: ego centers on JS scripts that the outside agent writes itself (ego-browser nodejs). aside has its own agent inside the browser, so handing over the whole task with exec is the default and repl is for when you need direct control. A running task can be redirected or stopped with aside session steer, queue, and stop, and --permission (ask, guard, full-access) sets the permission scope. ego's skill repository is public (MIT), and for aside the CLI's aside guide plays the same role."
       ]
     },
     "others": {
@@ -1285,7 +1285,7 @@
       "promptTitle": "Prompt example (local dev server, no login needed)",
       "prompt": "Open http://localhost:3000/settings, take a screenshot at mobile width (390px)\nand at desktop width, and tell me whether the card layout breaks or a horizontal scroll appears.\nIf there are console errors, report them too, and don't modify any code, just list likely causes.",
       "egoTitle": "A minimal example run directly with ego-browser",
-      "egoNote": "It uses only APIs shown in the local skill document. The API for changing the viewport size was not verified, so it is left out.",
+      "egoNote": "It uses only APIs shown in the local skill document. There is no dedicated API for changing the viewport size, but page.cdp(\"Emulation.setDeviceMetricsOverride\", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true }) emulates a phone width (confirmed by running it).",
       "egoCode": "ego-browser nodejs <<'EOF'\nconst task = await taskSpace(\"check settings page\");\nconst page = task.page(\"p1\");\nawait page.goto(\"http://localhost:3000/settings\");\nconsole.log(await page.snapshot());\nawait page.screenshot({ path: \"/absolute/path/settings.png\" });\nawait task.finish({ keep: [] });\nEOF",
       "habitsTitle": "Three key habits",
       "habits": [
@@ -1297,8 +1297,8 @@
     "unverified": {
       "title": "What We Could Not Verify",
       "items": [
-        "How the Aside agent reads and operates pages internally (CDP, DOM, or screenshots), the list of tools Aside MCP exposes, and Aside pricing. Its own claim of ranking first on benchmarks also lacks third-party verification.",
-        "ego's snapshot internals, security model details, agent isolation method, and token savings figures.",
+        "Aside pricing, and third-party verification of its own claim of ranking first on benchmarks. (How it reads pages and the MCP tool list were confirmed by running the CLI. We did not run an actual task, which requires login.)",
+        "ego's snapshot internals (whether it injects scripts), security model details, and token savings figures. (That each task gets its own Space and that pages are operated through snapshot refs were confirmed by running it.)",
         "ChatGPT Atlas retirement (around 2026-08-09) and the move to the desktop app and extension: we only saw secondary reports and search summaries, and the original OpenAI help page would not open.",
         "The current regions and plans for Gemini in Chrome auto browse, and the status of Perplexity Comet (Comet was not researched).",
         "The playwright-cli attach procedure, the Playwright MCP --extension setup procedure, and Browserbase's CDP connection and login persistence (Contexts) method.",

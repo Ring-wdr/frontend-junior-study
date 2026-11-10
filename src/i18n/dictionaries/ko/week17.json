@@ -1009,7 +1009,7 @@
   },
   "browserAutomation": {
     "badge": "브라우저 자동화",
-    "description": "에이전트에게 브라우저를 맡길 때의 도구 지형을 범주별로 정리합니다. 기준일은 2026-11-10이며 공식 문서와 저장소에서 확인한 내용 중심입니다. 확인하지 못한 부분은 '확인 못함'으로 표시했습니다.",
+    "description": "에이전트에게 브라우저를 맡길 때의 도구 지형을 범주별로 정리합니다. 기준일은 2026-11-10이며 공식 문서와 저장소에서 확인한 내용 중심입니다. ego와 aside는 직접 실행해 확인한 내용을 함께 적었고, 확인하지 못한 부분은 '확인 못함'으로 표시했습니다.",
     "overview": {
       "title": "큰 그림: 에이전트는 어떤 브라우저를 쓰는가",
       "lead": "에이전트에게 브라우저를 맡길 때 가장 먼저 갈리는 질문은 도구 이름이 아니라 아래 두 가지입니다.",
@@ -1096,7 +1096,7 @@
       "asideItems": [
         {
           "label": "정체",
-          "body": "Aside Computer Inc.(Y Combinator 소속)가 만든 '사람과 에이전트를 위해 다시 만든 브라우저'입니다. 로그인된 사이트에서 연동(integration) 없이 작업하는 것이 핵심 메시지입니다. macOS 15 이상, Windows 10 22H2 이상/Windows 11을 지원합니다. 에이전트의 동작 원리(CDP인지 DOM인지 스크린샷인지)는 공식 문서에 나와 있지 않아 확인 못함입니다."
+          "body": "Aside Computer Inc.(Y Combinator 소속)가 만든 '사람과 에이전트를 위해 다시 만든 브라우저'입니다. 로그인된 사이트에서 연동(integration) 없이 작업하는 것이 핵심 메시지입니다. macOS 15 이상, Windows 10 22H2 이상/Windows 11을 지원합니다. 바깥 에이전트가 쓰는 길은 두 가지입니다. aside exec은 브라우저 안의 Aside 에이전트에게 작업을 통째로 맡기는 방식으로, CLI 안내문은 서브에이전트를 띄우는 것처럼 쓰라고 권합니다. aside repl은 Playwright 스타일 JavaScript로 탭을 직접 다루는 방식으로, snapshot()이 페이지를 읽는 기본 수단이고 annotatedScreenshot()과 page.screenshot()은 시각 확인용입니다(CLI 1.26.1107의 aside guide 출력에서 확인)."
         },
         {
           "label": "로그인 세션",
@@ -1108,14 +1108,14 @@
         }
       ],
       "asideCode": "# macOS 설치 (개발자 문서)\ncurl -fsSL https://releases.aside.com/install.sh | bash\n\n# 로그인: 인증 파일 경로를 먼저 지정하고, 브라우저의 Settings > Account > Devices에서 코드 승인\nexport ASIDE_CLI_AUTH_PATH=\"/절대/경로/aside-auth.json\"\naside login --email \"you@example.com\"\n\naside \"localhost:3000을 스모크 테스트해줘\"   # 자연어 작업\naside repl \"const p = await openTab('https://example.com')\"   # 결정적 단계\naside mcp                                     # stdio MCP 서버",
-      "asideMcp": "MCP 설정은 mcp.json의 mcpServers에서 command를 aside, args를 [\"mcp\"]로 두면 됩니다. 노출되는 도구 목록은 문서에 없어 확인 못함입니다.",
+      "asideMcp": "MCP 설정은 mcp.json의 mcpServers에서 command를 aside, args를 [\"mcp\"]로 두면 됩니다. aside mcp를 직접 실행해 보면 도구는 네 개입니다: exec(로그인된 사이트에서 브라우저 에이전트 실행), repl(Playwright 스타일 JavaScript 실행), memory_search(Aside가 쌓은 사용자 메모리 검색), browser_profiles(브라우저 프로필 목록).",
       "asideExtra": "그 밖의 명령: aside session resume <session-id> \"Continue\", aside account list/status/use. 인증 파일은 ASIDE_CLI_AUTH_PATH로 지정하며, 지정하지 않으면 ~/.aside/cli/auth.json을 씁니다.",
       "asideCautionLabel": "주의점",
       "asideCaution": "curl | bash 설치는 스크립트를 먼저 읽고 실행하는 편이 안전합니다. 인증 파일은 절대 커밋하지 마세요(공식 문서도 같은 경고).",
       "compareTitle": "두 도구의 공통점과 차이",
       "compareItems": [
         "공통: 내 로그인 세션을 에이전트가 이어받는 '사람과 에이전트 공유 브라우저'입니다. 둘 다 Chrome 데이터를 가져옵니다.",
-        "차이: ego는 바깥 에이전트가 직접 짜는 JS 스크립트(ego-browser nodejs)가 중심입니다. aside는 브라우저 안에 자체 에이전트가 있고, CLI/MCP/REPL로 바깥 에이전트가 이를 부르는 구조로 읽힙니다. ego는 스킬이 공개(MIT)되어 동작 규칙을 읽을 수 있고, aside는 내부 방식이 덜 공개되어 있습니다."
+        "차이: ego는 바깥 에이전트가 직접 짜는 JS 스크립트(ego-browser nodejs)가 중심입니다. aside는 브라우저 안에 자체 에이전트가 있어 작업을 통째로 맡기는 exec이 기본이고, 직접 제어가 필요할 때만 repl을 씁니다. 실행 중인 작업은 aside session steer·queue·stop으로 방향을 바꾸거나 멈출 수 있고, --permission(ask, guard, full-access)으로 권한 범위를 정합니다. ego는 스킬 저장소가 공개(MIT)되어 있고, aside는 CLI의 aside guide가 같은 역할을 합니다."
       ]
     },
     "others": {
@@ -1273,7 +1273,7 @@
       "promptTitle": "프롬프트 예 (로컬 개발 서버, 로그인 불필요)",
       "prompt": "http://localhost:3000/settings 를 열어서 모바일 폭(390px)과 데스크톱 폭에서\n각각 스크린샷을 찍고, 카드 레이아웃이 깨지거나 가로 스크롤이 생기는지 알려줘.\n콘솔에 에러가 있으면 함께 보고하고, 코드는 수정하지 말고 원인 후보만 적어줘.",
       "egoTitle": "ego-browser로 직접 실행하는 최소 예",
-      "egoNote": "로컬 스킬 문서에 나온 API만 사용했습니다. 뷰포트 크기 변경 API는 확인하지 않았으므로 제외했습니다.",
+      "egoNote": "로컬 스킬 문서에 나온 API만 사용했습니다. 뷰포트 크기를 바꾸는 전용 API는 없지만, page.cdp(\"Emulation.setDeviceMetricsOverride\", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true })로 폰 너비를 흉내 낼 수 있습니다(직접 실행해 확인).",
       "egoCode": "ego-browser nodejs <<'EOF'\nconst task = await taskSpace(\"check settings page\");\nconst page = task.page(\"p1\");\nawait page.goto(\"http://localhost:3000/settings\");\nconsole.log(await page.snapshot());\nawait page.screenshot({ path: \"/absolute/path/settings.png\" });\nawait task.finish({ keep: [] });\nEOF",
       "habitsTitle": "핵심 습관",
       "habits": [
@@ -1285,8 +1285,8 @@
     "unverified": {
       "title": "확인하지 못한 것",
       "items": [
-        "Aside 에이전트가 페이지를 읽고 조작하는 내부 방식(CDP, DOM, 스크린샷 여부), Aside MCP가 노출하는 도구 목록, Aside 가격. 자체 벤치마크 1위 주장도 제3자 검증을 못했습니다.",
-        "ego의 스냅샷 내부 구현, 보안 모델 상세, 에이전트 격리 방식, 토큰 절감 수치.",
+        "Aside 가격, 그리고 자체 벤치마크 1위 주장의 제3자 검증. (페이지를 읽는 방식과 MCP 도구 목록은 CLI를 직접 실행해 확인했습니다. 로그인이 필요한 실제 작업 실행은 해 보지 않았습니다.)",
+        "ego의 스냅샷 내부 구현(스크립트 주입 여부), 보안 모델 상세, 토큰 절감 수치. (작업마다 Space가 따로 생기는 것과 스냅샷 ref로 조작하는 방식은 직접 실행해 확인했습니다.)",
         "ChatGPT Atlas 은퇴(2026-08-09 전후)와 데스크톱 앱, 확장으로의 이동: 2차 보도와 검색 요약만 확인했고 OpenAI 도움말 원문은 열리지 않았습니다.",
         "Gemini in Chrome auto browse의 현재 지역과 요금제 범위, Perplexity Comet 현황(Comet은 조사하지 않음).",
         "playwright-cli attach 절차, Playwright MCP --extension 설치 절차, Browserbase의 CDP 연결과 로그인 유지(Contexts) 방식.",

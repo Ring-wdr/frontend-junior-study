@@ -974,7 +974,7 @@ alwaysApply: false
 
 #### aside
 
-- **정체**: Aside Computer Inc.(Y Combinator 소속)가 만든 "사람과 에이전트를 위해 다시 만든 브라우저"입니다. 로그인된 사이트에서 연동(integration) 없이 작업하는 것이 핵심 메시지입니다. macOS 15 이상, Windows 10 22H2 이상/Windows 11을 지원합니다. 에이전트의 동작 원리(CDP인지 DOM인지 스크린샷인지)는 공식 문서에 나와 있지 않아 **확인 못함**입니다.
+- **정체**: Aside Computer Inc.(Y Combinator 소속)가 만든 "사람과 에이전트를 위해 다시 만든 브라우저"입니다. 로그인된 사이트에서 연동(integration) 없이 작업하는 것이 핵심 메시지입니다. macOS 15 이상, Windows 10 22H2 이상/Windows 11을 지원합니다. 바깥 에이전트가 쓰는 길은 두 가지입니다. aside exec은 브라우저 안의 Aside 에이전트에게 작업을 통째로 맡기는 방식으로, CLI 안내문은 서브에이전트를 띄우는 것처럼 쓰라고 권합니다. aside repl은 Playwright 스타일 JavaScript로 탭을 직접 다루는 방식으로, snapshot()이 페이지를 읽는 기본 수단이고 annotatedScreenshot()과 page.screenshot()은 시각 확인용입니다(CLI 1.26.1107의 aside guide 출력에서 확인).
 - **로그인 세션**: 온보딩에서 Chrome 등의 방문 기록, 쿠키, 북마크를 가져옵니다. 에이전트는 자동 입력(autofill)으로 로그인하며 자격 증명이 에이전트에게 노출되지 않는다고 공식 사이트는 설명합니다. 결제, 게시, 메시지 같은 민감한 동작은 사용자 확인을 기다립니다.
 - **코딩 에이전트 연동**: 개발자 문서(`aside.com/developers.md`)에 CLI, MCP, REPL 세 가지가 있습니다.
 
@@ -991,13 +991,13 @@ aside repl "const p = await openTab('https://example.com')"   # 결정적 단계
 aside mcp                                     # stdio MCP 서버
 ```
 
-  MCP 설정은 `mcp.json`의 `mcpServers`에서 `command`를 `aside`, `args`를 `["mcp"]`로 두면 됩니다. 노출되는 도구 목록은 문서에 없어 **확인 못함**입니다.
+  MCP 설정은 `mcp.json`의 `mcpServers`에서 `command`를 `aside`, `args`를 `["mcp"]`로 두면 됩니다. `aside mcp`를 직접 실행해 보면 도구는 네 개입니다: `exec`, `repl`, `memory_search`, `browser_profiles`.
 - **주의점**: `curl | bash` 설치는 스크립트를 먼저 읽고 실행하는 편이 안전합니다. 인증 파일은 절대 커밋하지 마세요(공식 문서도 같은 경고).
 
 #### 두 도구의 공통점과 차이
 
 - 공통: 내 로그인 세션을 에이전트가 이어받는 "사람과 에이전트 공유 브라우저"입니다. 둘 다 Chrome 데이터를 가져옵니다.
-- 차이: ego는 바깥 에이전트가 직접 짜는 JS 스크립트(`ego-browser nodejs`)가 중심입니다. aside는 브라우저 안에 자체 에이전트가 있고, CLI/MCP/REPL로 바깥 에이전트가 이를 부르는 구조로 읽힙니다. ego는 스킬이 공개(MIT)되어 동작 규칙을 읽을 수 있고, aside는 내부 방식이 덜 공개되어 있습니다.
+- 차이: ego는 바깥 에이전트가 직접 짜는 JS 스크립트(ego-browser nodejs)가 중심입니다. aside는 브라우저 안에 자체 에이전트가 있어 작업을 통째로 맡기는 exec이 기본이고, 직접 제어가 필요할 때만 repl을 씁니다. 실행 중인 작업은 aside session steer·queue·stop으로 방향을 바꾸거나 멈출 수 있고, --permission(ask, guard, full-access)으로 권한 범위를 정합니다. ego는 스킬 저장소가 공개(MIT)되어 있고, aside는 CLI의 aside guide가 같은 역할을 합니다.
 
 ### 3. 나머지 범주
 
