@@ -3,13 +3,34 @@
 import { Trans, useTranslation } from '@/i18n/client';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { TextList } from './text-list';
+
+const COMPILE_INPUT = `/* Button.module.css */
+.button { color: white; }
+.icon { margin-right: 8px; }
+.primary { composes: button; background: blue; }
+:global(.dark) .button { color: black; }`;
+
+const COMPILE_OUTPUT = `// What \`import styles from './Button.module.css'\` receives
+{
+  button: 'Button-module_button__yrx1x',
+  icon: 'Button-module_icon__8HSa0',
+  primary: 'Button-module_primary__X49dh Button-module_button__yrx1x',
+}
+
+/* Emitted stylesheet */
+.Button-module_button__yrx1x { color: white; }
+.Button-module_icon__8HSa0 { margin-right: 8px; }
+.Button-module_primary__X49dh { background: blue; }
+.dark .Button-module_button__yrx1x { color: black; }`;
 
 export const CssModulesSection = () => {
-  const { t } = useTranslation('week6');
+  const { t, raw } = useTranslation('week6');
   return (
     <SectionCard
       badge={{ label: t('cssModules.badge'), color: 'green' }}
       description={t('cssModules.description')}
+      testId="css-modules-section"
     >
       <div className="space-y-8">
         <SubSection
@@ -87,6 +108,29 @@ export function Button() {
               </li>
             </ul>
           </InfoBox>
+        </SubSection>
+
+        <SubSection
+          title={t('cssModules.compile.title')}
+          icon
+          iconColor="green"
+        >
+          <div className="space-y-3">
+            <TextList items={raw('cssModules.compile.steps')} ordered />
+            <CodeBlock
+              code={COMPILE_INPUT}
+              language="css"
+              className="text-xs"
+            />
+            <CodeBlock code={COMPILE_OUTPUT} className="text-xs" />
+            <p className="text-sm text-gray-700">
+              {t('cssModules.compile.note')}
+            </p>
+          </div>
+        </SubSection>
+
+        <SubSection title={t('cssModules.dedupe.title')} icon iconColor="green">
+          <TextList items={raw('cssModules.dedupe.points')} />
         </SubSection>
       </div>
     </SectionCard>

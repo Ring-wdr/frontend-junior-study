@@ -1,22 +1,33 @@
 ---
 title: "Modern Styling Strategies"
-description: "Mastering Design Systems, Utility-First CSS, CSS-in-JS, and Responsive Design."
+description: "From design tokens and the cascade to how CSS is compiled into JS class maps, how duplicates and conflicts are handled, and how design systems such as shadcn/ui and Astryx are built."
 namespace: week6
 ---
 
 import { DesignSystemSection } from '@/weeks/week6/components/design-system-section';
+import { CascadeSection } from '@/weeks/week6/components/cascade-section';
 import { CssModulesSection } from '@/weeks/week6/components/css-modules-section';
 import { CssInJsSection } from '@/weeks/week6/components/css-in-js-section';
+import { VanillaExtractSection } from '@/weeks/week6/components/vanilla-extract-section';
+import { StylexSection } from '@/weeks/week6/components/stylex-section';
 import { TailwindSection } from '@/weeks/week6/components/tailwind-section';
+import { MergingSection } from '@/weeks/week6/components/merging-section';
+import { ComponentSystemsSection } from '@/weeks/week6/components/component-systems-section';
+import { ThemeSection } from '@/weeks/week6/components/theme-section';
 import { ResponsiveSection } from '@/weeks/week6/components/responsive-section';
+import { AccessibilitySection } from '@/weeks/week6/components/accessibility-section';
 
 # Modern Styling Strategies
 
-Mastering Design Systems, Utility-First CSS, CSS-in-JS, and Responsive Design.
+From design tokens and the cascade to how CSS is compiled into JS class maps, how duplicates and conflicts are handled, and how design systems such as shadcn/ui and Astryx are built.
 
 ## Design Systems & Design Tokens [#design-system]
 
 <DesignSystemSection />
+
+## Cascade, Specificity & @layer [#cascade]
+
+<CascadeSection />
 
 ## CSS Modules [#css-modules]
 
@@ -26,10 +37,34 @@ Mastering Design Systems, Utility-First CSS, CSS-in-JS, and Responsive Design.
 
 <CssInJsSection />
 
+## Vanilla Extract [#vanilla-extract]
+
+<VanillaExtractSection />
+
+## StyleX [#stylex]
+
+<StylexSection />
+
 ## Tailwind CSS [#tailwind]
 
 <TailwindSection />
 
+## Class Maps, Deduplication & Merging [#style-merging]
+
+<MergingSection />
+
+## Design System Architecture: shadcn/ui & Astryx [#component-systems]
+
+<ComponentSystemsSection />
+
+## Theme System [#theme]
+
+<ThemeSection />
+
 ## Responsive Design Strategy [#responsive]
 
 <ResponsiveSection />
+
+## Accessibility & Styling [#accessibility]
+
+<AccessibilitySection />

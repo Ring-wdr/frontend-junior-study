@@ -2,7 +2,7 @@
 
 import { useTranslation } from '@/i18n/client';
 import { DemoBox, InfoBox, SectionCard, SubSection } from '../../../components';
-import { CodeTabs } from './code-tabs';
+import { CodeTabs } from '../../../components/ui/code-tabs';
 import { V8PipelineVisualizer } from './v8-pipeline-visualizer';
 
 const PRACTICE_CODES = [

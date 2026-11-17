@@ -6,8 +6,8 @@ import { useRef, useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { CodeTabs } from '../../../components/ui/code-tabs';
 import { cn } from '../../../lib/utils';
-import { CodeTabs } from './code-tabs';
 
 const DETAIL_CODES = [
   `const base = {

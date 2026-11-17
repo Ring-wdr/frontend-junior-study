@@ -3,13 +3,39 @@
 import { Trans, useTranslation } from '@/i18n/client';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { TextList } from './text-list';
+
+const ENGINE_CODE = `/* Source: class="p-4 p-2 flex md:flex text-red-500" and class="p-4 px-2" */
+@layer theme, base, components, utilities;
+
+@layer utilities {
+  .flex { display: flex; }
+  .p-2 { padding: calc(var(--spacing) * 2); }
+  .p-4 { padding: calc(var(--spacing) * 4); }
+  .px-2 { padding-inline: calc(var(--spacing) * 2); }
+  .text-red-500 { color: var(--color-red-500); }
+  @media (width >= 48rem) {
+    .md\\:flex { display: flex; }
+  }
+}`;
+
+const MERGE_CODE = `import { twMerge } from 'tailwind-merge';
+
+twMerge('p-2 p-4');           // 'p-4'
+twMerge('px-2 py-1 p-4');     // 'p-4': the shorthand removes both
+twMerge('p-4 px-2');          // 'p-4 px-2': a refinement is kept
+twMerge('text-red-500 text-lg text-blue-500');
+// 'text-lg text-blue-500': color and size are different groups
+twMerge('hover:bg-red-500 bg-blue-500 hover:bg-green-500');
+// 'bg-blue-500 hover:bg-green-500': variants are compared separately`;
 
 export const TailwindSection = () => {
-  const { t } = useTranslation('week6');
+  const { t, raw } = useTranslation('week6');
   return (
     <SectionCard
       badge={{ label: t('tailwind.badge'), color: 'blue' }}
       description={t('tailwind.description')}
+      testId="tailwind-section"
     >
       <div className="space-y-8">
         <SubSection
@@ -80,6 +106,23 @@ export const TailwindSection = () => {
               </li>
             </ul>
           </InfoBox>
+        </SubSection>
+
+        <SubSection title={t('tailwind.engine.title')} icon iconColor="blue">
+          <div className="space-y-3">
+            <TextList items={raw('tailwind.engine.steps')} ordered />
+            <CodeBlock code={ENGINE_CODE} language="css" className="text-xs" />
+            <p className="text-sm text-gray-700">{t('tailwind.engine.note')}</p>
+          </div>
+        </SubSection>
+
+        <SubSection title={t('tailwind.conflict.title')} icon iconColor="blue">
+          <div className="space-y-3 text-sm text-gray-700">
+            <p>{t('tailwind.conflict.body')}</p>
+            <p>{t('tailwind.conflict.mergeBody')}</p>
+            <CodeBlock code={MERGE_CODE} className="text-xs" />
+            <InfoBox variant="green">{t('tailwind.conflict.note')}</InfoBox>
+          </div>
         </SubSection>
       </div>
     </SectionCard>

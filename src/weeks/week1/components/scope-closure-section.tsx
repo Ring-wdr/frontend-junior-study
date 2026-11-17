@@ -3,8 +3,8 @@
 import { useTranslation } from '@/i18n/client';
 import { DemoBox, InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { CodeTabs } from '../../../components/ui/code-tabs';
 import { ClosureDemo } from './closure-demo';
-import { CodeTabs } from './code-tabs';
 import { EnvRecordVisualizer } from './env-record-visualizer';
 
 const PITFALL_CODES = [

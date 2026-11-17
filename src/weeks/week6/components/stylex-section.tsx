@@ -3,9 +3,40 @@
 import { Trans, useTranslation } from '@/i18n/client';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { TextList } from './text-list';
+
+const COMPILE_CODE = `// Input
+const styles = stylex.create({
+  base: { color: 'red', padding: 8, fontSize: 16 },
+  primary: { color: 'white', backgroundColor: 'blue' },
+});
+const props = stylex.props(styles.base, styles.primary);
+
+// Output
+const styles = {
+  base: {
+    kMwMTN: 'x1e2nbdu', // color
+    kmVPX3: 'xe8ttls',  // padding
+    kGuDYH: 'x1j61zf2', // fontSize
+    $$css: true,
+  },
+  primary: {
+    kMwMTN: 'x1awj2ng', // color: same key as base, so it replaces it
+    kWkggS: 'x1t391ir', // backgroundColor
+    $$css: true,
+  },
+};
+const props = { className: 'xe8ttls x1j61zf2 x1awj2ng x1t391ir' };`;
+
+const COMPILE_CSS = `/* Emitted stylesheet, sorted by priority */
+.xe8ttls { padding: 8px }            /* 1000 */
+.x1e2nbdu { color: red }             /* 3000 */
+.x1j61zf2 { font-size: 16px }        /* 3000 */
+.x1awj2ng { color: white }           /* 3000 */
+.x1t391ir { background-color: blue } /* 3000 */`;
 
 export const StylexSection = () => {
-  const { t } = useTranslation('week6');
+  const { t, raw } = useTranslation('week6');
 
   const basicUsageCode = `import * as stylex from '@stylexjs/stylex';
 
@@ -175,6 +206,7 @@ function Button({ color = 'primary', size = 'medium', children }: ButtonProps) {
     <SectionCard
       badge={{ label: t('stylex.badge'), color: 'blue' }}
       description={t('stylex.description')}
+      testId="stylex-section"
     >
       <div className="space-y-8">
         <SubSection title={t('stylex.overview.title')} icon iconColor="blue">
@@ -335,6 +367,19 @@ function Button({ color = 'primary', size = 'medium', children }: ButtonProps) {
               </table>
             </div>
           </InfoBox>
+        </SubSection>
+
+        <SubSection title={t('stylex.compile.title')} icon iconColor="blue">
+          <div className="space-y-3">
+            <TextList items={raw('stylex.compile.steps')} ordered />
+            <CodeBlock code={COMPILE_CODE} className="text-xs" />
+            <CodeBlock code={COMPILE_CSS} language="css" className="text-xs" />
+            <p className="text-sm text-gray-700">{t('stylex.compile.note')}</p>
+          </div>
+        </SubSection>
+
+        <SubSection title={t('stylex.merge.title')} icon iconColor="blue">
+          <TextList items={raw('stylex.merge.points')} />
         </SubSection>
       </div>
     </SectionCard>

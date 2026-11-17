@@ -3,13 +3,27 @@
 import { useTranslation } from '@/i18n/client';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { TextList } from './text-list';
+
+const RUNTIME_CODE = `import { css, cache } from '@emotion/css';
+
+const a = css\`color: hotpink; padding: 8px;\`;
+const b = css\`color: hotpink; padding: 8px;\`;
+const c = css\`color: white; padding: 8px;\`;
+
+a;       // 'css-l5i0wd'
+a === b; // true: same string, same hash, inserted once
+c;       // 'css-6fp7gy': one declaration differs, a whole new rule
+
+Object.keys(cache.inserted); // ['l5i0wd', '6fp7gy']`;
 
 export const CssInJsSection = () => {
-  const { t } = useTranslation('week6');
+  const { t, raw } = useTranslation('week6');
   return (
     <SectionCard
       badge={{ label: t('cssInJs.badge'), color: 'pink' }}
       description={t('cssInJs.description')}
+      testId="css-in-js-section"
     >
       <div className="space-y-8">
         <SubSection
@@ -71,6 +85,18 @@ render(<Button primary>Primary Button</Button>);`}
               </div>
             </div>
           </InfoBox>
+        </SubSection>
+
+        <SubSection title={t('cssInJs.runtime.title')} icon iconColor="pink">
+          <div className="space-y-3">
+            <TextList items={raw('cssInJs.runtime.steps')} ordered />
+            <CodeBlock code={RUNTIME_CODE} className="text-xs" />
+            <p className="text-sm text-gray-700">{t('cssInJs.runtime.note')}</p>
+          </div>
+        </SubSection>
+
+        <SubSection title={t('cssInJs.limits.title')} icon iconColor="pink">
+          <TextList items={raw('cssInJs.limits.points')} />
         </SubSection>
       </div>
     </SectionCard>
