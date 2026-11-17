@@ -77,7 +77,15 @@ describe('V8HiddenClassDemo', () => {
     expect(
       screen.getByText(/All objects share the same Hidden Class/),
     ).toBeInTheDocument();
-    expect(screen.getAllByText('HC1')).toHaveLength(3);
+    expect(screen.getAllByText('HC2')).toHaveLength(3);
+    expect(screen.getByTestId('v8-tree-HC2-HC2')).toHaveAttribute(
+      'data-used',
+      'true',
+    );
+    expect(screen.getByTestId('v8-tree-HC4-HC4')).toHaveAttribute(
+      'data-used',
+      'false',
+    );
   });
 
   test('Bad Pattern shows different hidden class message', () => {
@@ -86,11 +94,17 @@ describe('V8HiddenClassDemo', () => {
 
     fireEvent.click(badButton);
 
-    expect(screen.getByText(/Polymorphic \(Slow\)/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Polymorphic \(several hidden classes\)/),
+    ).toBeInTheDocument();
     expect(screen.getByText(/Different Hidden Classes/)).toBeInTheDocument();
-    expect(screen.getAllByText('HC1').length).toBeGreaterThan(0);
     expect(screen.getByText('HC2')).toBeInTheDocument();
-    expect(screen.getByText('HC3')).toBeInTheDocument();
+    expect(screen.getByText('HC4')).toBeInTheDocument();
+    expect(screen.getByText('HC1')).toBeInTheDocument();
+    expect(screen.getByTestId('v8-tree-HC2-HC1')).toHaveAttribute(
+      'data-used',
+      'true',
+    );
   });
 
   test('Reset button clears objects', async () => {
@@ -98,13 +112,13 @@ describe('V8HiddenClassDemo', () => {
     const goodButton = screen.getByTestId('v8-good-pattern');
     fireEvent.click(goodButton);
 
-    expect(screen.getAllByText('HC1').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('HC2').length).toBeGreaterThan(0);
 
     const resetButton = screen.getByTestId('v8-reset');
     fireEvent.click(resetButton);
 
     await waitFor(() => {
-      expect(screen.queryAllByText('HC1')).toHaveLength(0);
+      expect(screen.queryAllByText('HC2')).toHaveLength(0);
     });
   });
 });

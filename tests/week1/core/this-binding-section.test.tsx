@@ -117,4 +117,44 @@ describe('ThisBindingSection', () => {
       within(section).getByText("call/apply/bind → manually specify 'this'"),
     ).toBeInTheDocument();
   });
+
+  test('arrow example no longer depends on a global name property', () => {
+    render(<ThisBindingSection />);
+
+    const section = screen.getByTestId('this-binding-section');
+    fireEvent.click(within(section).getByTestId('this-binding-arrow'));
+
+    expect(
+      within(section).getByText(
+        "Arrow functions have no 'this' of their own and use the enclosing scope's 'this'",
+      ),
+    ).toBeInTheDocument();
+  });
+
+  test('lists the precedence of the rules', () => {
+    render(<ThisBindingSection />);
+
+    const section = screen.getByTestId('this-binding-section');
+    expect(
+      within(section).getByRole('heading', {
+        level: 3,
+        name: 'Precedence of the rules',
+      }),
+    ).toBeInTheDocument();
+    expect(
+      within(section).getByText(/When a bound function is called with new/),
+    ).toBeInTheDocument();
+  });
+
+  test('pitfall tabs switch the selected example', () => {
+    render(<ThisBindingSection />);
+
+    const tab = screen.getByTestId('this-pitfalls-tab-1');
+    fireEvent.click(tab);
+
+    expect(tab).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByTestId('this-pitfalls-panel-1')).toHaveTextContent(
+      'Class fields are code that runs inside the constructor',
+    );
+  });
 });

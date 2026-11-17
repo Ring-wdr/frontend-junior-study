@@ -71,7 +71,7 @@ describe('AdvancedDataStructureSection', () => {
 
     const section = screen.getByTestId('advanced-data-structure-section');
     expect(
-      within(section).getByText('Map, Set, WeakMap, WeakSet, and WeakRef.'),
+      within(section).getByText(/^Map, Set, WeakMap, WeakSet, WeakRef\./),
     ).toBeInTheDocument();
   });
 

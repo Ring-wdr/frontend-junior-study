@@ -66,7 +66,7 @@ describe('EventLoopSection', () => {
     const section = screen.getByTestId('event-loop-section');
     expect(
       within(section).getByText(
-        /Step through the Event Loop to understand how JavaScript handles async/,
+        /Step through the event loop to see the order in which tasks/,
       ),
     ).toBeInTheDocument();
   });
@@ -79,7 +79,8 @@ describe('EventLoopSection', () => {
     expect(
       within(section).getByText((content) => {
         return (
-          content.includes('Microtasks') && content.includes('are processed')
+          content.includes('Microtasks') &&
+          content.includes('whenever the call stack empties')
         );
       }),
     ).toBeInTheDocument();
@@ -114,5 +115,27 @@ describe('EventLoopSection', () => {
       0,
     );
     expect(within(section).getAllByText(/Promise/i).length).toBeGreaterThan(0);
+  });
+
+  test('describes one turn of the loop and the deep dive tabs', () => {
+    render(<EventLoopSection />);
+
+    const section = screen.getByTestId('event-loop-section');
+    expect(
+      within(section).getByRole('heading', {
+        level: 3,
+        name: 'One turn of the event loop',
+      }),
+    ).toBeInTheDocument();
+    for (const label of [
+      'async/await',
+      'Microtask starvation',
+      'rAF and setTimeout',
+      'Node.js',
+    ]) {
+      expect(
+        within(section).getByRole('button', { name: label }),
+      ).toBeInTheDocument();
+    }
   });
 });

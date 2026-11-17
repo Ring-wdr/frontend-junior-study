@@ -254,5 +254,20 @@
         "safeMode": "SAFE MODE: Operations ignored"
       }
     }
+  },
+  "dsl": {
+    "badge": "DSL",
+    "title": "Domain-Specific Language",
+    "description": "Mini-languages tailored for specific problem domains.",
+    "whatIsDsl": {
+      "title": "What is a DSL?",
+      "description": "Unlike General Purpose Languages (GPL) like Java or Python, DSLs are focused on specific tasks.",
+      "internal": "Internal DSL: Using host language features (e.g., jQuery, React JSX, builder patterns).",
+      "external": "External DSL: Separate syntax/parser (e.g., SQL, CSS, Regex, Markdown)."
+    },
+    "examples": {
+      "reactJsx": "Example: React JSX (Internal DSL)",
+      "sql": "Example: SQL (External DSL)"
+    }
   }
 }
