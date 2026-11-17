@@ -286,3 +286,23 @@ const applyStrategy = (data, strategy) => strategy(data);
 - [Velog – 함수형 프로그래밍 다시 보기](https://velog.io/@teo/functional-programming)
 - [wormwlrm 블로그 – 함수형 자바스크립트 책 후기](https://wormwlrm.github.io/2022/03/08/Functional-Programming-in-JavaScript.html)
 - [Refactoring.Guru – 디자인 패턴 카탈로그](https://refactoring.guru/design-patterns)
+
+---
+
+## DSL (Domain-Specific Language) 이해
+
+**개념**
+- **DSL**: 특정 분야 문제 해결에 특화된 미니 언어
+- 특정 영역의 개념과 규칙으로 구성된 언어
+
+**예시**
+- SQL, HTML, 정규표현식
+- Terraform의 HCL (Infrastructure as Code)
+- React JSX (UI를 위한 DSL)
+
+**학습 의도**
+- **메타프로그래밍**의 한 갈래 이해
+- 기존 DSL을 활용하는 능력 배양 (DSL 제작은 흔치 않음)
+
+**학습 자료**
+- 블로그 – DSL 이해하기

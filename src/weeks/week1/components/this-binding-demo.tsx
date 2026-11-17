@@ -1,7 +1,7 @@
 'use client';
 
-import { motion } from 'motion/react';
 import { Play } from 'lucide-react';
+import { motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
@@ -45,13 +45,15 @@ greet.call(person); // 'Alice'`,
 const alice = new Person('Alice');
 console.log(alice.name); // 'Alice'`,
   arrow: `const obj = {
-  name: 'JavaScript',
-  greet: () => {
-    console.log(this.name);
-  }
+  title: 'JavaScript',
+  regular() {
+    return this.title;
+  },
+  arrow: () => this?.title,
 };
 
-obj.greet(); // undefined (inherits from outer scope)`,
+obj.regular(); // 'JavaScript'
+obj.arrow();   // undefined: 'this' is the enclosing scope's this, not obj`,
 };
 
 export const ThisBindingDemo = () => {

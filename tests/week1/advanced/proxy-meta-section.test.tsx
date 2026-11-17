@@ -149,4 +149,19 @@ describe('ProxyMetaSection', () => {
         within(section).getAllByText(/Reflect\.set/i).length,
     ).toBeGreaterThanOrEqual(2);
   });
+
+  test('deep dive tabs cover receiver, invariants and reactivity', () => {
+    render(<ProxyMetaSection />);
+
+    const section = screen.getByTestId('proxy-meta-section');
+    for (const label of [
+      'Why receiver matters',
+      'Invariants',
+      'Building reactivity',
+    ]) {
+      expect(
+        within(section).getByRole('button', { name: label }),
+      ).toBeInTheDocument();
+    }
+  });
 });

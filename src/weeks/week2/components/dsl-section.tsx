@@ -5,7 +5,7 @@ import { InfoBox, SectionCard } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
 export const DslSection = () => {
-  const { t } = useTranslation('week1');
+  const { t } = useTranslation('week2');
 
   return (
     <SectionCard

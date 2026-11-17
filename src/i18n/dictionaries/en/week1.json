@@ -1,7 +1,7 @@
 {
   "header": {
     "title": "Internal Mechanism",
-    "description": "Deep dive into the JavaScript Runtime, Execution Context, and Memory Model."
+    "description": "A deep dive into how JavaScript works inside: execution contexts, closures, the event loop, V8's compilation pipeline, and the memory model."
   },
   "tabs": {
     "all": "All",
@@ -10,36 +10,168 @@
     "async": "Async",
     "advanced": "Advanced"
   },
-  "eventLoop": {
-    "badge": "Runtime",
-    "title": "Event Loop Visualizer",
-    "description": "Step through the Event Loop to understand how JavaScript handles async code.",
-    "keyRule": {
-      "title": "Key Rule",
-      "content": "Microtasks (Promises, queueMicrotask) are processed immediately after the current script and before any new Macrotask (setTimeout, I/O)."
+  "stepper": {
+    "prev": "Previous",
+    "next": "Next Step",
+    "reset": "Start Over",
+    "progress": "Step {{step}}/{{total}}"
+  },
+  "executionContext": {
+    "badge": "Core",
+    "description": "Look at the execution context and environment records the engine builds before any code runs. Hoisting, the TDZ, the scope chain, and closures all fall out of this model.",
+    "structure": {
+      "title": "What an execution context holds",
+      "body": "The engine creates one execution context for global code, each function call, each module, and each eval, and pushes it onto the call stack. It is the specification's device for tracking which code is running and in which environment, and it has the components below.",
+      "items": [
+        {
+          "title": "LexicalEnvironment",
+          "description": "The environment record where identifier lookup starts. Entering a block swaps in a new record, and leaving restores the previous one. This is why let, const, and class are block scoped."
+        },
+        {
+          "title": "VariableEnvironment",
+          "description": "The environment record that holds var declarations and top-level function declarations. It does not change when a block is entered, so var ignores blocks and is visible in the whole function."
+        },
+        {
+          "title": "Realm, ScriptOrModule",
+          "description": "The global object with its own set of built-ins (the Realm), and the script or module record this code belongs to. Realms are why Array is a different object in each iframe."
+        },
+        {
+          "title": "Where this lives",
+          "description": "Up to ES5, ThisBinding was a component of the context. In the current specification it is stored in the function environment record's [[ThisValue]]. An arrow function's record has no this binding, so the lookup continues outward."
+        }
+      ]
+    },
+    "records": {
+      "title": "Kinds of environment records",
+      "body": "An environment record is a table of identifier-to-value bindings. Every record points at its enclosing record through [[OuterEnv]], and that chain of links is the scope chain.",
+      "items": [
+        {
+          "title": "Declarative",
+          "description": "Stores bindings directly for let, const, class, blocks, and catch clauses. The basic form."
+        },
+        {
+          "title": "Function",
+          "description": "A declarative record plus parameters, this ([[ThisValue]]), new.target, and what super needs. A new one is created on every call."
+        },
+        {
+          "title": "Object",
+          "description": "Stores bindings as properties of a real object. Used for the global object and the with statement."
+        },
+        {
+          "title": "Global",
+          "description": "An object record (var and function declarations become window properties) combined with a declarative record (let, const, and class do not appear on window)."
+        },
+        {
+          "title": "Module",
+          "description": "Stores import bindings as indirect references to the exporting module's bindings (live bindings), not as copies of values."
+        }
+      ]
+    },
+    "phases": {
+      "title": "Creation and execution: hoisting and the TDZ",
+      "body": "When a function is called, the engine scans all declarations and creates their bindings in the environment record before running the body (FunctionDeclarationInstantiation in the specification). Hoisting is not code moving upward. It is the result of this creation phase.",
+      "bindings": "Environment record",
+      "output": "Console output",
+      "noOutput": "No output yet",
+      "currentLine": "Line {{line}}",
+      "creationPhase": "Creation phase",
+      "uninitialized": "<uninitialized>",
+      "steps": [
+        "Creation phase: bindings exist before the body runs. var a is initialized to undefined, the function declaration fn already has its function object, and let b has a binding that is not initialized yet.",
+        "Reads a. The binding is already initialized to undefined, so this logs undefined without an error.",
+        "Calls fn. A function declaration gets its function object in the creation phase, so it can be called above its declaration.",
+        "The assignment part of var a = 1 runs. The declaration already happened, so only the value changes here.",
+        "Reading b at this point throws a ReferenceError. The binding exists but is uninitialized. The span from the start of the scope to the declaration is the TDZ (Temporal Dead Zone).",
+        "let b = 2 runs and initializes b. From here on it can be read.",
+        "Both a and b have values, so this logs 3."
+      ]
+    },
+    "takeaway": {
+      "title": "Summary",
+      "content": "let and const are hoisted too. If they were not, an outer variable with the same name would be visible inside the TDZ, but you get a ReferenceError instead. The difference is not whether the binding is created but when it is initialized."
+    }
+  },
+  "scopeClosure": {
+    "badge": "Scope",
+    "title": "Closures",
+    "description": "Follow closures step by step: how a function remembers the environment it was born in ([[Environment]]), the usual mistakes, and how the engine represents them in memory.",
+    "demo": {
+      "createCounter": "Create Counter",
+      "reset": "Reset",
+      "explanationTitle": "Each counter has its own environment record!",
+      "explanation": "Every call to <code>createCounter()</code> creates a new environment record, and the returned function references the <code>count</code> binding in that record.",
+      "increment": "Increment",
+      "privateScope": "Captured environment:",
+      "emptyHint": "Click \"Create Counter\" to see closures in action!",
+      "keyConcept": {
+        "title": "Key Concept",
+        "content": "A closure is the combination of a function and the lexical environment it was defined in. Each call to createCounter() creates a new environment record, so the counters do not share count. They do not hold copies of a variable. They reference different environments."
+      }
+    },
+    "mechanism": {
+      "title": "How closures really work",
+      "points": [
+        "When a function object is created, the LexicalEnvironment of the running execution context is saved in the function's [[Environment]] internal slot. This is why scope depends on where a function is defined, not where it is called (lexical scope).",
+        "Calling the function creates a new function environment record whose [[OuterEnv]] is the function's [[Environment]], not the caller's environment.",
+        "An identifier is looked up in the current record first and then outward through [[OuterEnv]] up to the global record. That path is the scope chain.",
+        "When the outer function returns, its execution context leaves the call stack. The environment record that an inner function references through [[Environment]] is still reachable, so it is not garbage collected. That pairing of a function and its surviving environment is a closure."
+      ]
     },
     "visualizer": {
-      "nextStep": "Next Step",
-      "runAll": "Run All",
-      "reset": "Reset",
-      "consoleOutput": "Console Output:",
-      "stepProgress": "Step {{step}}/{{total}}: {{desc}}",
-      "clickToBegin": "Click \"Next Step\" to begin",
-      "steps": {
-        "execute": "Execute: {{code}}",
-        "popCallStack": "Pop Call Stack",
-        "registerTimeout": "Register setTimeout (Macrotask)",
-        "registerPromise": "Register Promise.then (Microtask)",
-        "processMicrotask": "Process Microtask Queue",
-        "processMacrotask": "Process Macrotask Queue",
-        "popDone": "Pop Call Stack - Done!"
-      }
+      "title": "Tracing environment records",
+      "callStack": "Call stack",
+      "records": "Environment records (heap)",
+      "outer": "[[OuterEnv]]",
+      "retained": "Kept alive by a closure",
+      "empty": "(no bindings)",
+      "steps": [
+        "Creation phase of the global code. The createCounter function object is created and its [[Environment]] is set to the global environment. const counter is not initialized yet (TDZ).",
+        "createCounter() is called. A new execution context is pushed and a new function environment record is created. Its [[OuterEnv]] is createCounter.[[Environment]], the global environment. count is initialized to 0.",
+        "The increment function object is created. The running environment is createCounter's record, so increment.[[Environment]] points at that record.",
+        "createCounter returns and its execution context is popped. The environment record stays on the heap because counter (the increment function) references it through [[Environment]].",
+        "counter() is called. A new record for increment is created with [[OuterEnv]] set to increment.[[Environment]]. count is not in its own record, so the lookup goes one level out and changes that binding to 1 in place.",
+        "After the call nothing references increment's record, so it can be collected. createCounter's record remains, holding count: 1.",
+        "counter() is called again. Another new record is created, but [[OuterEnv]] is the same record. The same count binding becomes 2.",
+        "createCounter's environment record lives as long as the counter variable does. Setting counter = null drops the function object and the record together."
+      ]
+    },
+    "practice": {
+      "title": "Try it: a new environment per call"
+    },
+    "pitfalls": {
+      "title": "Common mistakes",
+      "ariaLabel": "Closure pitfall examples",
+      "items": [
+        {
+          "label": "Reference, not copy",
+          "note": "deposit and getBalance do not each hold a copy of balance. They see the same binding in the same environment record. A closure captures the variable (the binding), not its value."
+        },
+        {
+          "label": "Loops with var and let",
+          "note": "var i has a single binding in the function environment, so all three callbacks see the same i. let creates a new environment record for each iteration and copies the previous value into it (CreatePerIterationEnvironment in the specification), so each callback captures a different binding."
+        },
+        {
+          "label": "Stale closure",
+          "note": "A React component function is called again on every render, so each render has its own environment record. The callback of an effect with [] dependencies keeps holding the first render's environment (count: 0). A functional update that receives the previous value does not depend on the captured one."
+        }
+      ]
+    },
+    "engine": {
+      "title": "The engine's view: V8 Contexts",
+      "points": [
+        "During parsing, V8's scope analysis picks only the variables that inner functions reference and allocates those in a Context object on the heap. Locals that are not captured stay on the stack (in registers) and disappear when the function returns.",
+        "Closures created in the same scope share one Context. A large object referenced by any one of them stays alive as long as another closure from that scope is alive.",
+        "A direct eval call or a with statement makes it impossible to know statically which variables are used, so every variable goes into the Context.",
+        "console.dir(fn) in the DevTools console shows the captured variables under [[Scopes]] in a Closure entry. Variables the function does not use are not listed."
+      ],
+      "leakTitle": "A leak through a shared Context",
+      "leakBody": "The returned function does not use big, but useBig in the same scope captures it, so big is placed in the shared Context. big stays alive as long as keep does."
     }
   },
   "thisBinding": {
     "badge": "Core",
     "title": "5 Rules of 'this'",
-    "description": "Explore how 'this' binding works in different contexts.",
+    "description": "this is decided by how a function is called, not where it is defined. Explore the five rules, their precedence, and how a binding gets lost.",
     "demo": {
       "run": "Run",
       "output": "Output:",
@@ -66,28 +198,95 @@
         },
         "arrow": {
           "title": "Lexical Binding (Arrow)",
-          "desc": "Arrow functions inherit 'this' from parent scope",
-          "result": "undefined (lexical scope)"
+          "desc": "Arrow functions have no 'this' of their own and use the enclosing scope's 'this'",
+          "result": "'JavaScript', then undefined (the outer this is not obj)"
         }
       }
+    },
+    "precedence": {
+      "title": "Precedence of the rules",
+      "items": [
+        "Called with new: the newly created object.",
+        "Set with call, apply, or bind: that object. When a bound function is called with new, new wins.",
+        "Called as obj.method(): the object before the dot.",
+        "Otherwise the default binding: undefined in strict mode (including modules and class bodies), the global object if not."
+      ],
+      "arrowNote": "Arrow functions do not follow these rules. They have no this binding, so the lookup goes up the scope chain to the enclosing function's this, and call or bind cannot change it."
+    },
+    "pitfalls": {
+      "title": "Common mistakes",
+      "ariaLabel": "this binding pitfall examples",
+      "items": [
+        {
+          "label": "Lost binding",
+          "note": "Storing a method in a variable or passing it as a callback passes only the function object. The object before the dot is gone, because this is not stored in the function. It is decided at call time."
+        },
+        {
+          "label": "Class field arrow functions",
+          "note": "Class fields are code that runs inside the constructor, so an arrow function there captures the constructor's this (the instance). The binding cannot be lost, but each instance gets its own function instead of sharing one on the prototype."
+        },
+        {
+          "label": "new, bind, and arrows",
+          "note": "new ignores the this fixed by bind and uses the new object (arguments pre-filled by bind are kept). In the other direction, call, apply, and bind cannot change the this of an arrow function."
+        }
+      ]
     }
   },
-  "scopeClosure": {
-    "badge": "Scope",
-    "title": "Closures",
-    "description": "Create multiple counters to see how closures maintain independent state.",
-    "demo": {
-      "createCounter": "Create Counter",
+  "eventLoop": {
+    "badge": "Runtime",
+    "title": "Event Loop Visualizer",
+    "description": "Step through the event loop to see the order in which tasks, microtasks, and rendering are processed.",
+    "keyRule": {
+      "title": "Key Rule",
+      "content": "Microtasks (promise reactions, queueMicrotask, MutationObserver) are processed whenever the call stack empties, that is right after each task or callback finishes, until the queue is empty. No other task (setTimeout, I/O, events) and no rendering can run in between."
+    },
+    "visualizer": {
+      "nextStep": "Next Step",
+      "runAll": "Run All",
       "reset": "Reset",
-      "explanationTitle": "Each counter has its own closure!",
-      "explanation": "Every time you call <code>createCounter()</code>, a new closure is created with its own private <code>count</code> variable.",
-      "increment": "Increment",
-      "privateScope": "Private scope:",
-      "emptyHint": "Click \"Create Counter\" to see closures in action!",
-      "keyConcept": {
-        "title": "Key Concept",
-        "content": "A closure is a function that remembers its outer variables and can access them even when the outer function has finished executing. Each closure maintains its own independent copy of the variables."
+      "consoleOutput": "Console Output:",
+      "stepProgress": "Step {{step}}/{{total}}: {{desc}}",
+      "clickToBegin": "Click \"Next Step\" to begin",
+      "steps": {
+        "execute": "Execute: {{code}}",
+        "popCallStack": "Pop Call Stack",
+        "registerTimeout": "Register setTimeout (Macrotask)",
+        "registerPromise": "Register Promise.then (Microtask)",
+        "processMicrotask": "Process Microtask Queue",
+        "processMacrotask": "Process Macrotask Queue",
+        "popDone": "Pop Call Stack - Done!"
       }
+    },
+    "loop": {
+      "title": "One turn of the event loop",
+      "steps": [
+        "Take the oldest task from the task queue and run it to completion. The specification's word is task. Macrotask is an informal name used to contrast it with microtasks.",
+        "Run the microtask queue until it is empty. Microtasks added while it runs are processed in this same turn.",
+        "If it is time to render (usually in step with the display, about every 16.7ms at 60Hz): requestAnimationFrame callbacks, then style calculation, layout, and paint.",
+        "If no task is waiting and time is left, run requestIdleCallback callbacks, then wait for the next task."
+      ]
+    },
+    "details": {
+      "title": "Going deeper",
+      "ariaLabel": "Event loop deep dive examples",
+      "items": [
+        {
+          "label": "async/await",
+          "note": "await schedules the rest of the function as a microtask and returns control to the caller. Code after an await therefore runs after all current synchronous code. await is another syntax for Promise.then."
+        },
+        {
+          "label": "Microtask starvation",
+          "note": "If microtasks keep scheduling microtasks, the queue never empties and the event loop cannot move on. Rendering, clicks, and timers all stop. To break up long work, yield with a task (setTimeout, scheduler.postTask)."
+        },
+        {
+          "label": "rAF and setTimeout",
+          "note": "setTimeout runs independently of screen updates, so it can fire several times in one frame or skip a frame. requestAnimationFrame runs once per frame, right before style calculation and layout, which suits visual changes. It pauses in background tabs."
+        },
+        {
+          "label": "Node.js",
+          "note": "The Node.js (libuv) loop goes through timers, pending callbacks, poll (I/O), check (setImmediate), and close phases. Between callbacks it drains the process.nextTick queue first and promise microtasks second (in CommonJS). Unlike a browser it has no rendering step."
+        }
+      ]
     }
   },
   "async": {
@@ -163,7 +362,7 @@
   "advancedDataStructure": {
     "badge": "Data Structures",
     "title": "Advanced Data Structures",
-    "description": "Map, Set, WeakMap, WeakSet, and WeakRef.",
+    "description": "Map, Set, WeakMap, WeakSet, WeakRef. Compare what can be a key and how strongly each one holds its references.",
     "tabs": {
       "map": "Map",
       "set": "Set",
@@ -216,13 +415,77 @@
       "solved": "<strong>Solved:</strong> Map keeps object references distinct."
     }
   },
+  "v8Pipeline": {
+    "badge": "V8",
+    "description": "Follow source code on its way to machine code through V8's parser, interpreter, three JIT compilers, and deoptimization.",
+    "overview": {
+      "title": "Why several tiers",
+      "body": "A compiler cannot both compile quickly and produce fast code. V8 solves this with tiers: every function starts in the interpreter, and only frequently called (hot) functions move up to more expensive compilers."
+    },
+    "visualizer": {
+      "title": "The life of the add function",
+      "feedback": "FeedbackVector: a + b",
+      "feedbackNone": "(none yet)",
+      "feedbackSmi": "Smi + Smi",
+      "feedbackMixed": "Smi + Smi, String + String",
+      "deopt": "Deopt",
+      "stages": [
+        {
+          "title": "Parser",
+          "desc": "Splits the source into tokens and builds an AST. Function bodies that are not called right away are only pre-parsed for syntax errors and fully parsed on their first call (lazy parsing), which cuts the cost of code a page never uses while loading."
+        },
+        {
+          "title": "Ignition",
+          "desc": "The AST is turned into bytecode and run by Ignition, a register-based interpreter. The body of add is three instructions: Ldar a1, Add a0, Return. Nothing is known about types yet."
+        },
+        {
+          "title": "Ignition + feedback",
+          "desc": "While running, Ignition records the types seen at each operation in the function's FeedbackVector. So far a + b has only seen small integers (Smi). Every later optimization is based on this record."
+        },
+        {
+          "title": "Sparkplug",
+          "desc": "After repeated calls, Sparkplug translates the bytecode almost one to one into machine code. It does not optimize, but the cost of interpreting each instruction goes away. Compilation is very fast."
+        },
+        {
+          "title": "Maglev",
+          "desc": "When the function gets hotter, Maglev uses the feedback to produce code specialized for the observed types. It is a middle tier that compiles much faster than TurboFan and produces much faster code than Sparkplug (since Chrome 117)."
+        },
+        {
+          "title": "TurboFan",
+          "desc": "The hottest functions go to TurboFan. It assumes a and b are always Smis, emits integer-add machine code, and puts a guard in front that checks the assumption. Heavy optimizations such as inlining and escape analysis happen here. This is called speculative optimization."
+        },
+        {
+          "title": "Deoptimization",
+          "desc": "Calling add('a', 'b') fails the guard (not a Smi). V8 throws the optimized code away and continues in the Ignition bytecode at the same point. The feedback now includes String, and the next optimized version will be more general code that handles both cases."
+        }
+      ]
+    },
+    "practice": {
+      "title": "See it yourself",
+      "ariaLabel": "V8 pipeline hands-on examples",
+      "items": [
+        {
+          "label": "Optimization and deopt",
+          "note": "Run with node --allow-natives-syntax --trace-opt --trace-deopt add.js. Functions starting with % are V8's internal testing API. They need this flag and are for experiments only."
+        },
+        {
+          "label": "Bytecode",
+          "note": "Output of node --print-bytecode --print-bytecode-filter=add add.js. Ldar a1 loads the second argument into the accumulator, and Add a0, [0] adds the first argument while recording the types in slot 0 of the FeedbackVector."
+        }
+      ]
+    },
+    "takeaway": {
+      "title": "What it means for your code",
+      "content": "An optimizing compiler bets that the types seen so far will keep coming. Passing the same types and object shapes to a function makes the bet pay off, and types that keep changing lead to repeated deoptimization and reoptimization. Code that uses types consistently in TypeScript usually meets this condition without extra effort."
+    }
+  },
   "optimization": {
-    "badge": "Advanced",
+    "badge": "V8",
     "title": "V8 Hidden Classes",
-    "description": "Visualize how V8 optimizes objects with consistent shapes.",
+    "description": "See how V8 treats dynamic objects as if they had a fixed layout: hidden classes (Maps), the transition tree, and inline caches.",
     "keyTakeaway": {
       "title": "Key Takeaway",
-      "content": "Always initialize properties in the exact same order to help V8 share hidden classes and optimize property access (Monomorphism)."
+      "content": "Always initialize every property of the same kind of object in the exact same order in the constructor or literal, and do not delete properties later (assign undefined or null to clear a value). That said, this matters on hot paths that run tens of thousands of times per second. In ordinary application code readability comes first, and optimization comes after profiling shows a bottleneck."
     },
     "demo": {
       "goodPattern": "Good Pattern",
@@ -233,11 +496,159 @@
         "description": "All objects share the same hidden class. V8 can optimize property access."
       },
       "polymorphic": {
-        "title": "Polymorphic (Slow)",
-        "description": "Different property orders create different hidden classes. V8 cannot optimize."
+        "title": "Polymorphic (several hidden classes)",
+        "description": "A different property order or set gives a different hidden class. Inline caches in code that reads these objects must compare hidden classes one by one, which is slower than monomorphic, and with five or more kinds the site turns megamorphic and optimization is severely limited."
       },
-      "shared": "✓ All objects share the same Hidden Class (Fast!)",
-      "different": "✗ Different Hidden Classes (Slow!)"
+      "shared": "✓ All objects share the same Hidden Class (HC2). Code that reads these objects stays monomorphic.",
+      "different": "✗ Three Different Hidden Classes. obj3's HC1 is an intermediate node on the transition path obj1 went through, and obj2 took another branch (HC4) because of its property order.",
+      "tree": "Transition tree"
+    },
+    "shapes": {
+      "title": "Hidden classes and the transition tree",
+      "body": "A JavaScript object can gain properties at any time, but V8 attaches a hidden class (called Map inside V8) to every object that records which property lives at which offset. Adding a property transitions the object to a new hidden class, and objects that add the same properties in the same order follow the same path to the same hidden class."
+    },
+    "inlineCache": {
+      "title": "Inline caches (IC)",
+      "body": "At every property access site such as o.x, V8 caches the hidden class it saw last time and the offset it found in the FeedbackVector. When an object with the same hidden class arrives, the value is read straight from the offset with no lookup. The number of hidden classes in the cache decides the state of the access site.",
+      "callSame": "Call with the same shape",
+      "callNew": "Call with a new shape",
+      "reset": "Reset",
+      "state": "IC state",
+      "cache": "Cache entries",
+      "cacheEmpty": "Not called yet",
+      "calls": "{{count}} calls",
+      "offset": "x → offset {{offset}}",
+      "overflow": "Too many entries: moved to the global stub cache",
+      "states": {
+        "uninitialized": {
+          "label": "Uninitialized",
+          "desc": "Never executed, so there is no feedback."
+        },
+        "monomorphic": {
+          "label": "Monomorphic",
+          "desc": "One hidden class seen. One comparison, then a direct read from the offset. The fastest state, and the optimizing compiler can inline the access."
+        },
+        "polymorphic": {
+          "label": "Polymorphic",
+          "desc": "Two to four hidden classes seen. The cache entries are compared one by one. Still optimized, but slower than monomorphic."
+        },
+        "megamorphic": {
+          "label": "Megamorphic",
+          "desc": "Five or more seen. The per-site cache is given up for a lookup in a global hash table (the stub cache). The optimizing compiler cannot specialize this access either."
+        }
+      }
+    },
+    "storage": {
+      "title": "Where properties are stored",
+      "items": [
+        {
+          "title": "In-object properties",
+          "description": "Stored directly inside the object. One offset is enough to read them, which makes them the fastest. The number of slots is fixed when the object is created."
+        },
+        {
+          "title": "Properties array",
+          "description": "When the in-object slots run out, properties go into a separate array the object points to. One more hop, but still accessed by hidden class and offset (fast mode)."
+        },
+        {
+          "title": "Dictionary mode",
+          "description": "Deleting a property or adding a great many properties dynamically makes V8 give up sharing hidden classes and keep a hash table per object. Inline caches cannot be used, so it is slow (slow mode)."
+        },
+        {
+          "title": "Elements",
+          "description": "Integer-indexed properties are stored separately from named ones. That is why pushing to an array does not change its hidden class."
+        }
+      ]
+    },
+    "elements": {
+      "title": "Array elements kinds and number representation",
+      "body": "V8 uses a different internal representation (elements kind) depending on what an array holds. The more specific the representation, the faster it is, and transitions only go toward the more general kind and never back.",
+      "numbers": "Small integers (Smi, 31 or 32 bits) are stored directly in the pointer slot with a tag bit and need no heap allocation. Other numbers are allocated on the heap as a HeapNumber (a 64-bit double). A DOUBLE elements array, however, stores raw doubles side by side without boxing."
+    },
+    "practice": {
+      "title": "See it yourself",
+      "note": "Run with node --allow-natives-syntax shapes.js. To log how hidden classes are created, use the --log-maps flag (formerly --trace-maps)."
+    }
+  },
+  "memoryGc": {
+    "badge": "Memory",
+    "description": "Where values are stored and when they are reclaimed: the stack and heap, reachability, and V8's generational garbage collector.",
+    "model": {
+      "title": "Stack and heap",
+      "points": [
+        "The call stack holds execution contexts (stack frames), local variable slots, and immediate values such as Smis. When a function returns, its whole frame is freed at once.",
+        "The heap holds objects, arrays, functions, closure Contexts, strings, and HeapNumbers. Variables hold their addresses (pointers).",
+        "\"Primitives on the stack, objects on the heap\" is a simplification. In V8, strings and large numbers live on the heap, and an object that never leaves a function can skip heap allocation through escape analysis. What matters at the language level is that primitives are immutable and behave like values, while objects are shared by reference."
+      ]
+    },
+    "reachability": {
+      "title": "Reachability",
+      "body": "The GC's criterion is not a reference count. It is whether an object can be reached by following references from the roots (the global object, locals on the call stack, pending callbacks, and so on). So a cycle of objects that reference each other is collected together once it is cut off from the roots."
+    },
+    "generational": {
+      "title": "Generational GC",
+      "body": "Most objects die right after they are created (the generational hypothesis). V8 splits the heap into a young and an old generation. The small young generation, which fills up often, is collected frequently with a fast algorithm, and the large old generation rarely with a heavier one.",
+      "demo": {
+        "allocate": "Allocate 3 objects",
+        "scavenge": "Minor GC (Scavenge)",
+        "major": "Major GC (Mark-Compact)",
+        "reset": "Reset",
+        "hint": "Click an object to drop or restore its reference.",
+        "nursery": "Young · Nursery",
+        "intermediate": "Young · Intermediate",
+        "old": "Old",
+        "empty": "Empty",
+        "reachable": "Object {{id}}: reachable",
+        "unreachable": "Object {{id}}: unreachable",
+        "legendReachable": "Reachable",
+        "legendUnreachable": "Unreachable",
+        "status": {
+          "idle": "Allocate objects to begin. New objects are always created in the nursery.",
+          "allocated": "Allocated 3 objects in the nursery. Allocation only bumps a pointer, so it is very fast.",
+          "full": "The nursery is full. In real V8 this allocation failure triggers a scavenge.",
+          "scavenged": "Scavenge done: {{collected}} unreachable reclaimed, {{moved}} survivors moved, {{promoted}} promoted to old after surviving twice.",
+          "major": "Mark-Compact done: reclaimed {{collected}} unreachable objects from the whole heap.",
+          "toggled": "Reference changed. Memory stays the same until a GC runs."
+        }
+      }
+    },
+    "algorithms": {
+      "title": "Collection algorithms",
+      "items": [
+        {
+          "title": "Scavenger (Minor GC)",
+          "description": "Works on the young generation only. It copies live objects to another space and frees the original space wholesale. The cost depends on the number of survivors, not on the dead objects, which fits a generation where most objects die. Objects that survive twice are promoted to the old generation."
+        },
+        {
+          "title": "Mark-Compact (Major GC)",
+          "description": "Works on the whole heap. It marks objects reachable from the roots, frees the memory of unmarked ones (sweep), and moves live objects together on badly fragmented pages (compact)."
+        },
+        {
+          "title": "Parallel, incremental, concurrent",
+          "description": "Techniques introduced by the Orinoco project. Parallel: several threads work together while the main thread is paused. Incremental: marking is cut into small pieces interleaved with JS execution. Concurrent: background threads mark and sweep while JS keeps running."
+        },
+        {
+          "title": "Why pause time matters",
+          "description": "While the GC pauses the main thread (stop-the-world), neither JS nor rendering makes progress. One frame at 60Hz is about 16.7ms, so a pause of tens of milliseconds shows up directly as dropped frames."
+        }
+      ]
+    },
+    "leaks": {
+      "title": "Common memory leaks",
+      "items": [
+        "Event listeners, setInterval timers, and subscriptions that are never removed: everything the callback closure holds stays alive with it.",
+        "Map or array caches that only grow: use a WeakMap when keys are objects, or a size limit (LRU) when they are not.",
+        "Detached DOM: a node removed from the document is not collected while a JS variable or closure still references it.",
+        "Accidental global variables, and large objects held through the shared Context of a long-lived closure."
+      ]
+    },
+    "finalization": {
+      "title": "WeakRef and FinalizationRegistry",
+      "body": "A WeakRef references an object while leaving it collectable, and a FinalizationRegistry registers a callback to run after an object has been collected.",
+      "warning": "There is no guarantee when a cleanup callback runs, or that it runs at all. Never put essential cleanup such as closing a file there. Use it only for secondary work such as removing cache entries."
+    },
+    "practice": {
+      "title": "See it yourself",
+      "note": "node --trace-gc app.js prints one line per collection with its kind, the heap size before and after, and how long it took. In a browser, take two heap snapshots in the DevTools Memory tab and compare them to see which objects were added in between and the reference path that keeps them alive (Retainers)."
     }
   },
   "proxyMeta": {
@@ -253,21 +664,25 @@
       "title": "Proxy Logs",
       "clear": "Clear",
       "placeholder": "Interactions will appear here..."
-    }
-  },
-  "dsl": {
-    "badge": "DSL",
-    "title": "Domain-Specific Language",
-    "description": "Mini-languages tailored for specific problem domains.",
-    "whatIsDsl": {
-      "title": "What is a DSL?",
-      "description": "Unlike General Purpose Languages (GPL) like Java or Python, DSLs are focused on specific tasks.",
-      "internal": "Internal DSL: Using host language features (e.g., jQuery, React JSX, builder patterns).",
-      "external": "External DSL: Separate syntax/parser (e.g., SQL, CSS, Regex, Markdown)."
     },
-    "examples": {
-      "reactJsx": "Example: React JSX (Internal DSL)",
-      "sql": "Example: SQL (External DSL)"
+    "details": {
+      "title": "Going deeper",
+      "ariaLabel": "Proxy deep dive examples",
+      "items": [
+        {
+          "label": "Why receiver matters",
+          "note": "receiver is the object the property access started on. Unless this inside a getter is set to it, a getter reached through an object that inherits from the proxy runs with the original target as this. The third argument of Reflect.get does exactly that."
+        },
+        {
+          "label": "Invariants",
+          "note": "A handler cannot return just anything. The engine checks that a trap's result does not contradict the real state of the target. A non-writable, non-configurable property, for example, must report its actual value."
+        },
+        {
+          "label": "Building reactivity",
+          "note": "This is the idea behind reactive in Vue 3. The get trap records who read a property, and the set trap reruns those subscribers. Unlike the Object.defineProperty approach, it also sees properties added later."
+        }
+      ],
+      "cost": "Access through a Proxy involves calling a trap function and gets almost no help from inline caches, so it is slower than plain property access. Be careful with objects that are read constantly on a hot path."
     }
   }
 }

@@ -129,7 +129,7 @@ describe('ScopeClosureSection', () => {
     fireEvent.click(createButton);
 
     expect(
-      within(section).getByText('Each counter has its own closure!'),
+      within(section).getByText('Each counter has its own environment record!'),
     ).toBeInTheDocument();
   });
 

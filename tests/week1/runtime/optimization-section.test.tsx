@@ -54,7 +54,7 @@ describe('OptimizationSection', () => {
     render(<OptimizationSection />);
 
     const section = screen.getByTestId('optimization-section');
-    expect(within(section).getByText('Advanced')).toBeInTheDocument();
+    expect(within(section).getByText('V8')).toBeInTheDocument();
     expect(
       within(section).queryByText('V8 Hidden Classes'),
     ).not.toBeInTheDocument();
@@ -66,7 +66,7 @@ describe('OptimizationSection', () => {
     const section = screen.getByTestId('optimization-section');
     expect(
       within(section).getByText(
-        'Visualize how V8 optimizes objects with consistent shapes.',
+        /See how V8 treats dynamic objects as if they had a fixed layout/,
       ),
     ).toBeInTheDocument();
   });
@@ -90,5 +90,24 @@ describe('OptimizationSection', () => {
       within(section).getAllByText(/Always/i).length +
         within(section).getAllByText(/exact same order/i).length,
     ).toBeGreaterThanOrEqual(2);
+  });
+
+  test('covers inline caches, storage modes and elements kinds', () => {
+    render(<OptimizationSection />);
+
+    const section = screen.getByTestId('optimization-section');
+    for (const name of [
+      'Hidden classes and the transition tree',
+      'Inline caches (IC)',
+      'Where properties are stored',
+      'Array elements kinds and number representation',
+    ]) {
+      expect(
+        within(section).getByRole('heading', { level: 3, name }),
+      ).toBeInTheDocument();
+    }
+    expect(
+      within(section).getByTestId('inline-cache-demo'),
+    ).toBeInTheDocument();
   });
 });

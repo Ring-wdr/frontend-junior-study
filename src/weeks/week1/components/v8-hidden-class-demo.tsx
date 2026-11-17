@@ -1,11 +1,24 @@
 'use client';
 
-import { AnimatePresence, motion } from 'motion/react';
 import { AlertCircle, CheckCircle } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
+
+const TRANSITION_TREE = [
+  [
+    { id: 'HC0', shape: '{}', via: null },
+    { id: 'HC1', shape: '{ x }', via: '+x' },
+    { id: 'HC2', shape: '{ x, y }', via: '+y' },
+  ],
+  [
+    { id: 'HC0', shape: '{}', via: null },
+    { id: 'HC3', shape: '{ y }', via: '+y' },
+    { id: 'HC4', shape: '{ y, x }', via: '+x' },
+  ],
+];
 
 interface ObjectShape {
   id: string;
@@ -24,19 +37,19 @@ export const V8HiddenClassDemo = () => {
       {
         id: 'obj1',
         properties: ['x', 'y'],
-        hiddenClass: 'HC1',
+        hiddenClass: 'HC2',
         color: 'green',
       },
       {
         id: 'obj2',
         properties: ['x', 'y'],
-        hiddenClass: 'HC1',
+        hiddenClass: 'HC2',
         color: 'green',
       },
       {
         id: 'obj3',
         properties: ['x', 'y'],
-        hiddenClass: 'HC1',
+        hiddenClass: 'HC2',
         color: 'green',
       },
     ]);
@@ -47,19 +60,19 @@ export const V8HiddenClassDemo = () => {
       {
         id: 'obj1',
         properties: ['x', 'y'],
-        hiddenClass: 'HC1',
+        hiddenClass: 'HC2',
         color: 'red',
       },
       {
         id: 'obj2',
         properties: ['y', 'x'],
-        hiddenClass: 'HC2',
+        hiddenClass: 'HC4',
         color: 'red',
       },
       {
         id: 'obj3',
         properties: ['x'],
-        hiddenClass: 'HC3',
+        hiddenClass: 'HC1',
         color: 'orange',
       },
     ]);
@@ -69,7 +82,10 @@ export const V8HiddenClassDemo = () => {
     setObjects([]);
   };
 
-  const sharedHiddenClass = objects.every((obj) => obj.hiddenClass === 'HC1');
+  const sharedHiddenClass = objects.every(
+    (obj) => obj.hiddenClass === objects[0].hiddenClass,
+  );
+  const usedClasses = new Set(objects.map((obj) => obj.hiddenClass));
 
   return (
     <div className="space-y-6">
@@ -197,6 +213,40 @@ const p3 = { x: 1 }; // Missing property!`}
             </motion.div>
           ))}
         </AnimatePresence>
+      </div>
+
+      <div className="rounded-xl border border-gray-200 bg-white p-3">
+        <div className="mb-2 text-xs font-semibold text-gray-500">
+          {t('optimization.demo.tree')}
+        </div>
+        <div className="space-y-2">
+          {TRANSITION_TREE.map((branch) => (
+            <ol
+              key={branch[2].id}
+              className="flex flex-wrap items-center gap-1.5 font-mono text-xs"
+            >
+              {branch.map((node) => (
+                <li key={node.id} className="flex items-center gap-1.5">
+                  {node.via && (
+                    <span className="text-gray-500">— {node.via} →</span>
+                  )}
+                  <span
+                    data-testid={`v8-tree-${branch[2].id}-${node.id}`}
+                    data-used={usedClasses.has(node.id)}
+                    className={cn(
+                      'rounded-lg border-2 px-2 py-1 transition-colors',
+                      usedClasses.has(node.id)
+                        ? 'border-blue-600 bg-blue-50 font-bold text-blue-900'
+                        : 'border-gray-200 bg-gray-50 text-gray-600',
+                    )}
+                  >
+                    {node.id} {node.shape}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          ))}
+        </div>
       </div>
 
       {objects.length > 0 && (

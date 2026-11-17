@@ -1,15 +1,72 @@
 'use client';
 
-import { AnimatePresence, motion } from 'motion/react';
 import { Eye, ShieldAlert, Zap } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useRef, useState } from 'react';
 import { useTranslation } from '@/i18n/client';
-import { SectionCard } from '../../../components';
+import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 import { cn } from '../../../lib/utils';
+import { CodeTabs } from './code-tabs';
+
+const DETAIL_CODES = [
+  `const base = {
+  _name: 'base',
+  get name() { return this._name; },
+};
+
+const proxy = new Proxy(base, {
+  get(target, prop, receiver) {
+    return Reflect.get(target, prop, receiver); // this = receiver
+    // return target[prop];                     // this = target
+  },
+});
+
+const child = Object.create(proxy, { _name: { value: 'child' } });
+child.name; // 'child' with Reflect.get, 'base' with target[prop]`,
+  `const frozen = Object.freeze({ id: 1 });
+
+const liar = new Proxy(frozen, {
+  get() { return 42; },
+});
+
+liar.id;
+// TypeError: 'get' on proxy: property 'id' is a read-only and
+// non-configurable data property on the proxy target but the proxy
+// did not return its actual value (expected '1' but got '42')`,
+  `const subscribers = new Map();
+let activeEffect = null;
+
+function reactive(target) {
+  return new Proxy(target, {
+    get(target, key, receiver) {
+      if (activeEffect) {
+        if (!subscribers.has(key)) subscribers.set(key, new Set());
+        subscribers.get(key).add(activeEffect); // track
+      }
+      return Reflect.get(target, key, receiver);
+    },
+    set(target, key, value, receiver) {
+      const ok = Reflect.set(target, key, value, receiver);
+      subscribers.get(key)?.forEach((effect) => effect()); // trigger
+      return ok;
+    },
+  });
+}
+
+function watchEffect(effect) {
+  activeEffect = effect;
+  effect();
+  activeEffect = null;
+}
+
+const state = reactive({ count: 0 });
+watchEffect(() => console.log('count is', state.count)); // count is 0
+state.count++;                                           // count is 1`,
+];
 
 export const ProxyMetaSection = () => {
-  const { t } = useTranslation('week1');
+  const { t, raw } = useTranslation('week1');
   const [logs, setLogs] = useState<{ id: number; text: string }[]>([]);
   const nextLogId = useRef(0);
 
@@ -146,6 +203,23 @@ const proxy = new Proxy(target, handler);`}
           </div>
         </div>
       </div>
+
+      <SubSection
+        title={t('proxyMeta.details.title')}
+        icon
+        iconColor="blue"
+        className="mt-8"
+      >
+        <CodeTabs
+          items={raw('proxyMeta.details.items')}
+          codes={DETAIL_CODES}
+          ariaLabel={t('proxyMeta.details.ariaLabel')}
+          testId="proxy-details"
+        />
+        <InfoBox variant="orange" className="mt-4">
+          {t('proxyMeta.details.cost')}
+        </InfoBox>
+      </SubSection>
     </SectionCard>
   );
 };
