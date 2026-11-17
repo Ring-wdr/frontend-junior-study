@@ -3,9 +3,10 @@
 import { Trans, useTranslation } from '@/i18n/client';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { TextList } from './text-list';
 
 export const VanillaExtractSection = () => {
-  const { t } = useTranslation('week6');
+  const { t, raw } = useTranslation('week6');
 
   const basicStyleCode = `// styles.css.ts
 import { style, createTheme } from '@vanilla-extract/css';
@@ -168,6 +169,7 @@ export const sprinkles = createSprinkles(responsiveProperties);
     <SectionCard
       badge={{ label: t('vanillaExtract.badge'), color: 'purple' }}
       description={t('vanillaExtract.description')}
+      testId="vanilla-extract-section"
     >
       <div className="space-y-8">
         <SubSection
@@ -279,6 +281,19 @@ export const sprinkles = createSprinkles(responsiveProperties);
             {t('vanillaExtract.sprinkles.content')}
           </p>
           <CodeBlock code={sprinklesCode} language="tsx" className="text-xs" />
+        </SubSection>
+
+        <SubSection
+          title={t('vanillaExtract.compile.title')}
+          icon
+          iconColor="purple"
+        >
+          <div className="space-y-3">
+            <TextList items={raw('vanillaExtract.compile.steps')} ordered />
+            <p className="text-sm text-gray-700">
+              {t('vanillaExtract.compile.note')}
+            </p>
+          </div>
         </SubSection>
       </div>
     </SectionCard>

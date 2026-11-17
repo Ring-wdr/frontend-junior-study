@@ -1,7 +1,7 @@
 {
   "header": {
     "title": "Modern Styling Strategies",
-    "description": "Mastering Design Systems, Utility-First CSS, CSS-in-JS, and Responsive Design."
+    "description": "From design tokens and the cascade to how CSS is compiled into JS class maps, how duplicates and conflicts are handled, and how design systems such as shadcn/ui and Astryx are built."
   },
   "tabs": {
     "all": "All",
@@ -30,6 +30,58 @@
       "maintainabilityDesc": "Change one token value to update the entire app (e.g., Rebranding).",
       "communication": "Communication:",
       "communicationDesc": "Common language between designers and developers."
+    },
+    "tiers": {
+      "title": "Three tiers of tokens",
+      "body": "With a single tier of tokens, a name like \"blue 500\" spreads through the whole codebase, and changing the brand color or adding dark mode means touching every usage. So tokens are split into three tiers by role.",
+      "items": [
+        {
+          "title": "Primitive tokens",
+          "description": "A palette that names raw values, such as blue-500, gray-900, and space-4. They carry no meaning, and components do not reference them directly."
+        },
+        {
+          "title": "Semantic tokens",
+          "description": "Names for a purpose, such as background, foreground, primary, and border, each pointing at a primitive token. Switching themes means changing what this tier points at."
+        },
+        {
+          "title": "Component tokens",
+          "description": "Tokens scoped to one component, such as button-bg and card-radius. They point at semantic tokens, so they need no change when the theme changes."
+        }
+      ],
+      "demo": {
+        "light": "Light",
+        "dark": "Dark",
+        "themeLabel": "Choose a theme",
+        "primitive": "Primitive",
+        "semantic": "Semantic",
+        "component": "Component",
+        "preview": "Preview",
+        "previewText": "Button",
+        "changed": "changed",
+        "hint": "Switching the theme only changes what the semantic tier points at. The primitive palette and the component token definitions stay the same."
+      }
+    }
+  },
+  "cascade": {
+    "badge": "Foundation",
+    "description": "The order in which the browser picks a winner when several rules apply to one element. Every styling tool in this week is a different way of dealing with these rules.",
+    "order": {
+      "title": "How the cascade picks a winner",
+      "body": "The browser compares the criteria below from the top, and once one of them decides the result the later ones are not consulted.",
+      "items": [
+        "Origin and importance: browser defaults < user styles < author styles. !important reverses this order.",
+        "Cascade layers (@layer): a layer declared later wins. Styles outside any layer beat every layer.",
+        "Specificity: IDs > classes, attributes, and pseudo-classes > elements. An inline style ranks above all of them.",
+        "Order of appearance: when everything above is equal, the rule that appears later in the stylesheet wins. The order of class names inside the class attribute has no effect."
+      ]
+    },
+    "layers": {
+      "title": "Declaring the order with @layer",
+      "body": "Layer order is fixed by the order of first declaration. Declaring the order in one line at the top of the file therefore gives the same result no matter the order in which stylesheets load. Specificity is not compared across layers, so in the example below .text-red in the utilities layer beats the more specific .card .title."
+    },
+    "why": {
+      "title": "Why this comes first",
+      "content": "CSS Modules solves class name collisions, runtime CSS-in-JS solves insertion order, and StyleX and tailwind-merge solve who wins when one property is set twice. All of them try not to leave the result to the fourth criterion of the cascade, the order of appearance."
     }
   },
   "cssModules": {
@@ -49,6 +101,25 @@
       "reuseDesc": "Can compose styles from other files.",
       "learning": "Zero Learning Curve:",
       "learningDesc": "It's just standard CSS syntax."
+    },
+    "compile": {
+      "title": "Compiled output: how class names become a JS object",
+      "steps": [
+        "The bundler's CSS loader parses the .module.css file and finds every class selector.",
+        "Each class name is replaced with one that carries a hash built from the file path and the original name. The same .button in another file becomes a different name.",
+        "The rewritten CSS is emitted as a stylesheet, and on the JS side a module is generated that exports an object mapping original names to rewritten names. That object is what import styles receives.",
+        "composes does not copy CSS. It appends another class name to the value in the map, so both classes are applied to the element.",
+        "Selectors wrapped in :global(...) are left as they are, without a hash."
+      ],
+      "note": "The output above is a real transform by postcss-modules. The two classes in the value of primary are the result of composes."
+    },
+    "dedupe": {
+      "title": "Duplicates and order",
+      "points": [
+        "When several components import the same .module.css, it is one module in the bundler's module graph, so its CSS is emitted once.",
+        "Writing the same declaration (display: flex, for example) in different files still adds CSS each time. There is no deduplication at the declaration level.",
+        "Name collisions are prevented, but precedence still depends on the order of appearance. If code splitting loads CSS chunks in a different order on different pages, the same component can look different."
+      ]
     }
   },
   "cssInJs": {
@@ -76,76 +147,25 @@
         "bundle": "Larger bundle size compared to utility classes.",
         "ssr": "Setup needed for SSR (Next.js App Router limitation)."
       }
-    }
-  },
-  "tailwind": {
-    "badge": "Industry Standard",
-    "title": "Tailwind CSS",
-    "description": "A utility-first CSS framework for rapidly building custom user interfaces.",
-    "utilityFirst": {
-      "title": "Utility-First",
-      "content": "Instead of writing custom CSS, you use pre-existing classes directly in your HTML. This leads to very fast development cycles and consistent UI."
     },
-    "keyFeatures": {
-      "title": "Key Features",
-      "infoTitle": "Why distinct?",
-      "jit": "JIT Engine:",
-      "jitDesc": "Generates styles on demand, keeping bundle sizes tiny.",
-      "standardization": "Standardization:",
-      "standardizationDesc": "spacing, colors, and sizes are pre-defined (or customized in config).",
-      "responsiveness": "Responsiveness:",
-      "responsivenessDesc": "<code>md:flex</code>, <code>lg:grid</code> prefixes make responsive design trivial.",
-      "darkMode": "Dark Mode:",
-      "darkModeDesc": "<code>dark:bg-black</code> prefix handles theme switching."
-    }
-  },
-  "responsive": {
-    "badge": "Essential",
-    "title": "Responsive Design Strategy",
-    "description": "Creating interfaces that adapt seamlessly to any screen size, from mobile phones to large desktops.",
-    "mobileFirst": {
-      "title": "Mobile-First Approach",
-      "content": "Design for the smallest screen first, then add complexity for larger screens. In Tailwind, this means unwrapped classes target mobile, and <code>md:</code>, <code>lg:</code> target larger screens."
+    "runtime": {
+      "title": "What happens at runtime",
+      "steps": [
+        "When a component renders, the props are put into the template literal to build the final CSS string (serialization).",
+        "That string is hashed into a class name such as css-l5i0wd. The same string always gives the same name.",
+        "The cache (hash to inserted flag) is checked. A rule is inserted into a <style> tag only for a hash that has not been seen.",
+        "The class name is put on the element. When props change and the string differs, there is a new hash, a new class, and a new rule."
+      ],
+      "note": "The output above comes from actually running @emotion/css. Defining the same style twice gives one class, and the cache records only two rules."
     },
-    "toolsTechniques": {
-      "title": "Tools & Techniques",
-      "infoTitle": "Techniques",
-      "breakpoints": "Breakpoints:",
-      "breakpointsDesc": "Standardize widths (e.g., sm: 640px, md: 768px, lg: 1024px).",
-      "fluidTypography": "Fluid Typography:",
-      "fluidTypographyDesc": "Use <code>clamp()</code> for smooth font scaling. <br /><code>font-size: clamp(1rem, 2.5vw, 2rem);</code>",
-      "artDirection": "Art Direction:",
-      "artDirectionDesc": "Use <code>&lt;picture&gt;</code> to serve different images for different screens to save bandwidth."
-    }
-  },
-  "theme": {
-    "badge": "UX",
-    "title": "Theme Systems",
-    "description": "Implementing Dark/Light modes and custom themes effectively.",
-    "cssVariables": {
-      "title": "CSS Variables Strategy",
-      "content": "Define semantic color names mapped to CSS variables. Changing the class on <code>&lt;html&gt;</code> swaps the variable values."
-    },
-    "tailwindDarkMode": {
-      "title": "Tailwind Dark Mode",
-      "content": "Tailwind supports dark mode out-of-the-box with the <code>dark:</code> prefix. It can use system preference (`media`) or a class selector (`class`)."
-    }
-  },
-  "accessibility": {
-    "badge": "A11y",
-    "title": "Accessibility (A11y) & Styling",
-    "description": "ensure your styles do not exclude users. Valid HTML and thoughtful CSS are key.",
-    "checklist": {
-      "title": "Checklist",
-      "infoTitle": "Critical Rules",
-      "focusRings": "Focus Rings:",
-      "focusRingsDesc": "Never set <code>outline: none</code> on focusable elements without replacing it. Is users navigate via keyboard, they must see where they are.",
-      "contrast": "Contrast Ratio:",
-      "contrastDesc": "Ensure text has sufficient contrast against the background (WCAG AA/AAA).",
-      "reducedMotion": "Reduced Motion:",
-      "reducedMotionDesc": "Respect user preference for standard motion.",
-      "colorAlone": "Don't rely on color alone:",
-      "colorAloneDesc": "Use icons or text labels along with color to convey state (error, success)."
+    "limits": {
+      "title": "Limits of this design",
+      "points": [
+        "The unit of deduplication is the whole style block. A single different declaration inserts the whole block as a new rule, so many prop combinations mean many rules.",
+        "Serialization, hashing, and insertion run during rendering. Inserting a rule makes the browser recalculate styles, which raises the cost of rendering.",
+        "It cannot be used in React Server Components. A server component has no Context to collect styles during rendering and no client runtime, so a styled component has to be 'use client'.",
+        "styled-components announced maintenance mode in March 2025 (releases have continued since). New projects tend to look at build-time approaches first."
+      ]
     }
   },
   "vanillaExtract": {
@@ -183,6 +203,16 @@
     "sprinkles": {
       "title": "Sprinkles",
       "content": "Sprinkles is a utility class system for responsive and conditional styling, providing a Tailwind-like development experience without runtime cost."
+    },
+    "compile": {
+      "title": "What happens at build time",
+      "steps": [
+        "The bundler plugin actually executes the .css.ts file during the build.",
+        "Each style() call gets a unique class name from the file path and variable name, and its style object is recorded as a CSS rule.",
+        "The recorded rules are emitted as a static .css file.",
+        "The exports of the .css.ts module are replaced with class name strings. Neither the style objects nor a library runtime reach the browser's JS."
+      ],
+      "note": "The shape of the output is the same as CSS Modules (names mapped to class strings, plain CSS rules). The difference is that styles are written in TypeScript, so tokens and variants are type checked. Declaration-level deduplication only happens when you design atomic classes yourself with Sprinkles."
     }
   },
   "stylex": {
@@ -191,7 +221,7 @@
     "description": "A scalable and performant styling system developed by Meta.",
     "overview": {
       "title": "Overview",
-      "content": "StyleX is a styling system developed by Facebook/Meta for large-scale applications. It generates atomic CSS and ensures predictable results through deterministic style merging."
+      "content": "StyleX is the styling system Meta built for large applications. It generates atomic CSS at build time and merges styles per property so that results are predictable. Astryx, Meta's open source design system, is built on StyleX."
     },
     "features": {
       "title": "Key Features",
@@ -244,8 +274,328 @@
         "bundleSizeSX": "Very small (atomic)",
         "ecosystem": "Ecosystem",
         "ecosystemVE": "Sprinkles, Recipes",
-        "ecosystemSX": "Meta internal tooling"
+        "ecosystemSX": "Astryx (Meta's open source design system)"
       }
+    },
+    "compile": {
+      "title": "Compiled output: how a style object becomes a class map",
+      "steps": [
+        "The Babel plugin finds stylex.create calls and splits each style object into single declarations.",
+        "Each declaration gets a class name from a hash of its property and value (plus pseudo-class and media query). color: white is x1awj2ng in every file.",
+        "The stylex.create call is replaced with an object mapping property keys to atomic classes. The original CSS values do not stay in the JS bundle.",
+        "The CSS rule for each declaration is collected as metadata, deduplicated across the whole app, and emitted as one stylesheet.",
+        "When all arguments of stylex.props are static, the merge itself is done at build time and only a className string remains."
+      ],
+      "note": "The code above is a real transform by @stylexjs/babel-plugin. In the merge of base and primary, the class for color: red (x1e2nbdu) is gone and only the color class of primary (x1awj2ng) remains."
+    },
+    "merge": {
+      "title": "Handling duplicates and conflicts",
+      "points": [
+        "Deduplication: a class name is the hash of a declaration, so hundreds of components using display: flex produce one rule. The larger the app, the less new CSS each addition brings.",
+        "Conflict resolution: stylex.props combines the maps it receives by overwriting per property key. When a key appears several times, only the class from the last argument is kept. The element ends up with one class per property, so stylesheet order cannot affect the result.",
+        "Shorthands: overlapping properties such as padding and padding-inline have different keys, so both remain. Here the stylesheet is sorted by a priority number assigned to each rule (padding 1000, padding-inline 2000, color 3000) so that the more specific property always wins.",
+        "Constraint: all of this is computed at build time, so style values must be statically analyzable. Dynamic values are passed through CSS variables."
+      ]
+    }
+  },
+  "tailwind": {
+    "badge": "Industry Standard",
+    "title": "Tailwind CSS",
+    "description": "A utility-first CSS framework for rapidly building custom user interfaces.",
+    "utilityFirst": {
+      "title": "Utility-First",
+      "content": "Instead of writing custom CSS, you use pre-existing classes directly in your HTML. This leads to very fast development cycles and consistent UI."
+    },
+    "keyFeatures": {
+      "title": "Key Features",
+      "infoTitle": "Why distinct?",
+      "jit": "Only what is used:",
+      "jitDesc": "CSS is generated only for classes found in your source. This began with the JIT engine in v3, and in v4 an engine rewritten in Rust does the job.",
+      "standardization": "Standardization:",
+      "standardizationDesc": "Spacing, colors, and sizes are predefined. In v4, tokens are defined in a <code>@theme</code> block in your CSS file, and each one is also exposed as a CSS variable.",
+      "responsiveness": "Responsiveness:",
+      "responsivenessDesc": "<code>md:flex</code>, <code>lg:grid</code> prefixes make responsive design trivial.",
+      "darkMode": "Dark Mode:",
+      "darkModeDesc": "<code>dark:bg-black</code> prefix handles theme switching."
+    },
+    "engine": {
+      "title": "What happens in the build",
+      "steps": [
+        "Source files are scanned as plain text to collect every string that looks like a class (a candidate). No JS is executed or parsed.",
+        "Each candidate is matched against the utility definitions, and only valid ones become CSS rules. A class used a thousand times still produces one rule.",
+        "The rules are sorted in a fixed order and emitted into the utilities layer. The order depends on the property and the utility, not on the order in your source.",
+        "The whole output is wrapped in cascade layers in the order theme, base, components, utilities."
+      ],
+      "note": "Because candidates are found as text, a class name assembled like 'text-' + color is not found. Class names must appear in the source in their complete form."
+    },
+    "conflict": {
+      "title": "Conflicts: why tailwind-merge is needed",
+      "body": "In the output above .p-2 comes before .p-4. So even if you write class=\"p-4 p-2\", p-4 wins. Every utility is a single-class selector with the same specificity, so the winner is decided by the order of appearance in the stylesheet. Appending a className prop after a component's base classes does not guarantee an override.",
+      "mergeBody": "tailwind-merge solves this at the string level. It parses each class to find its conflict group (padding, background-color, and so on) and removes the earlier one when the same group appears again. It knows about shorthands too, so a later p-4 removes an earlier px-2 and py-1 together. Results are stored per string in an LRU cache.",
+      "note": "The cn function in this project's src/lib/utils.ts is exactly that: clsx combined with twMerge."
+    }
+  },
+  "merging": {
+    "badge": "Deep Dive",
+    "description": "A side by side look at what each approach leaves in JS and where it handles duplicates and conflicts.",
+    "table": {
+      "title": "Comparison by approach",
+      "headers": {
+        "approach": "Approach",
+        "map": "What stays in JS",
+        "dedupe": "Unit of deduplication",
+        "conflict": "Conflict resolution"
+      },
+      "rows": [
+        {
+          "approach": "CSS Modules",
+          "map": "Object of names to hashed class names",
+          "dedupe": "File (a file is emitted once)",
+          "conflict": "Stylesheet order of appearance"
+        },
+        {
+          "approach": "Runtime CSS-in-JS",
+          "map": "Style strings, the runtime library, an insertion cache",
+          "dedupe": "Style block (when the string hash matches)",
+          "conflict": "Insertion order"
+        },
+        {
+          "approach": "Vanilla Extract",
+          "map": "Names to class strings",
+          "dedupe": "style() call",
+          "conflict": "Stylesheet order of appearance"
+        },
+        {
+          "approach": "StyleX",
+          "map": "Object of property keys to atomic classes",
+          "dedupe": "Declaration (whole app)",
+          "conflict": "stylex.props merges by property key, the last argument wins"
+        },
+        {
+          "approach": "Tailwind",
+          "map": "Nothing (the class string itself)",
+          "dedupe": "Utility (whole app)",
+          "conflict": "Stylesheet order, overrides through tailwind-merge"
+        }
+      ]
+    },
+    "atomic": {
+      "title": "Building an atomic class map",
+      "body": "Watch how the number of CSS rules changes as components are added. The left side creates one class per component, and the right side creates one class per declaration. The class names are the ones StyleX actually generated.",
+      "toggleLabel": "Components to compile",
+      "scoped": "Class per component",
+      "atomic": "Atomic classes",
+      "declarations": "Declarations written",
+      "rules": "CSS declarations emitted",
+      "saved": "Declarations saved by reuse",
+      "usedBy": "used in {{count}}",
+      "map": "Map left in JS",
+      "sheet": "Emitted stylesheet",
+      "empty": "Select a component to see the result.",
+      "hint": "Try adding Badge. Its declarations almost all overlap with Button, so the atomic side grows by a single rule."
+    },
+    "playground": {
+      "title": "Override experiment",
+      "body": "A button with base classes receives a className meant to override them. Compare the values that actually apply when the strings are simply concatenated and when they are combined with tailwind-merge. The stylesheet order is the order Tailwind v4 actually emits.",
+      "base": "Component base classes",
+      "overrides": "className to pass",
+      "concat": "Concatenation",
+      "merged": "tailwind-merge",
+      "classes": "Final class",
+      "applied": "Applied values",
+      "paddingInline": "Inline padding",
+      "paddingBlock": "Block padding",
+      "background": "Background",
+      "ignored": "Override ignored",
+      "ok": "Applied as intended",
+      "preview": "Button",
+      "none": "No className passed yet. Pick one above.",
+      "sheetOrder": "Stylesheet order of appearance"
+    },
+    "takeaway": {
+      "title": "Summary",
+      "content": "Atomic CSS removes the duplication problem by construction, but an element now carries many classes, which raises a new question: of two classes for the same property, which one wins? StyleX's compiler knows the property keys, so its merge function answers precisely. Tailwind only has class strings, so tailwind-merge answers by interpreting the strings."
+    }
+  },
+  "componentSystems": {
+    "badge": "Design System",
+    "description": "Ways of shipping components on top of tokens and a styling engine. Compare headless primitives, shadcn/ui, which copies source into your project, and Astryx, which ships as a package.",
+    "layers": {
+      "title": "Layers of a design system",
+      "items": [
+        {
+          "title": "1. Tokens",
+          "description": "The single source for color, spacing, and typography. Usually exposed as CSS variables."
+        },
+        {
+          "title": "2. Primitives (headless)",
+          "description": "Components that implement behavior and accessibility without styles. They handle focus management, keyboard interaction, and ARIA attributes. Radix UI, React Aria, and Base UI belong here."
+        },
+        {
+          "title": "3. Styled components",
+          "description": "Button, Dialog, and Select: primitives dressed with tokens and variants. This is the layer shadcn/ui and Astryx provide."
+        },
+        {
+          "title": "4. Product code",
+          "description": "Screens composed from the components above. The less styling is written by hand at this layer, the better the system is working."
+        }
+      ]
+    },
+    "shadcn": {
+      "title": "shadcn/ui: source copied into your project",
+      "points": [
+        "It is not a component library installed as an npm dependency. A CLI downloads component source from a registry and adds it as files under components/ui in your project. From then on the code is yours.",
+        "It is assembled from primitives such as Radix UI (behavior and accessibility), Tailwind classes (styles), cva (the variant map), and cn (clsx with tailwind-merge).",
+        "Tokens are semantic CSS variables such as --background, --foreground, and --primary. With Tailwind v4, @theme inline connects those variables to utilities like bg-background. Dark mode only changes the variable values under .dark.",
+        "Every component accepts className and passes it as the last argument of cn. Thanks to tailwind-merge, classes passed at the call site always beat the base classes.",
+        "A team can distribute its own components through the same CLI by following the registry format in components.json."
+      ]
+    },
+    "astryx": {
+      "title": "Astryx: shipped as a package",
+      "points": [
+        "An open source React design system released by Meta in 2026 (MIT, currently in beta). It was refined over eight years of use inside Meta and provides more than 150 components. React 19 or later is required.",
+        "It is written with StyleX internally, but that is invisible to consumers. You import precompiled atomic CSS files, and no build plugin or Babel configuration is needed.",
+        "A theme is \"a set of CSS custom property overrides\". The look changes by changing token values, without forking or wrapping component source. Themes ship as separate packages.",
+        "Its styles live in the reset, astryx-base, and astryx-theme cascade layers. To use it with Tailwind, one @layer line puts the Astryx layers below utilities, and then utilities passed through className beat the component styles.",
+        "The swizzle command ejects the source of a single component into your project so you own it. It is an escape hatch that moves just that component to the shadcn model."
+      ]
+    },
+    "compare": {
+      "title": "The two distribution models compared",
+      "headers": {
+        "aspect": "Aspect",
+        "shadcn": "shadcn/ui",
+        "astryx": "Astryx"
+      },
+      "rows": [
+        {
+          "aspect": "Distribution",
+          "shadcn": "Source files copied into the project",
+          "astryx": "npm package with prebuilt CSS"
+        },
+        {
+          "aspect": "Styling engine",
+          "shadcn": "Tailwind utilities with cva",
+          "astryx": "StyleX (prebuilt atomic CSS)"
+        },
+        {
+          "aspect": "Conflict resolution",
+          "shadcn": "tailwind-merge at runtime",
+          "astryx": "Build-time merge plus cascade layers"
+        },
+        {
+          "aspect": "Customization",
+          "shadcn": "Edit the source directly",
+          "astryx": "Tokens and themes, className, swizzle when needed"
+        },
+        {
+          "aspect": "Updates",
+          "shadcn": "Fetch again and diff against your edits",
+          "astryx": "Bump the package version"
+        },
+        {
+          "aspect": "Good fit",
+          "shadcn": "Products that will change the design heavily, small teams",
+          "astryx": "Several apps that must share one look and behavior"
+        }
+      ]
+    },
+    "code": {
+      "title": "In code",
+      "ariaLabel": "Design system code examples",
+      "items": [
+        {
+          "label": "shadcn Button",
+          "note": "cva turns a combination of variants into a class string, and cn combines it with the className from the call site. In the last line the px-3 from size=\"sm\" is gone and only px-6 remains, which is tailwind-merge at work (actual output)."
+        },
+        {
+          "label": "shadcn tokens",
+          "note": "Semantic tokens are defined as CSS variables and connected to Tailwind utilities with @theme inline. A component only knows bg-primary, and the theme decides the actual color."
+        },
+        {
+          "label": "Using Astryx",
+          "note": "Import three CSS files (reset, components, theme) and use the components. The code comes from the Next.js setup in the official README."
+        },
+        {
+          "label": "Astryx + Tailwind",
+          "note": "The @layer declaration on the first line is the key. If that line sits below the Tailwind import, the layer order is inverted and utilities can no longer beat component styles."
+        }
+      ]
+    },
+    "choose": {
+      "title": "How to choose",
+      "content": "The two models are different answers to who owns the component code. Owning it means anything can be changed, but accessibility and bug fixes have to be pulled in by hand. Leaving it to a package makes updates easy, but you move within what the tokens and props allow. Astryx is also in beta, so its API may still change."
+    }
+  },
+  "theme": {
+    "badge": "UX",
+    "title": "Theme Systems",
+    "description": "Implementing Dark/Light modes and custom themes effectively.",
+    "cssVariables": {
+      "title": "CSS Variables Strategy",
+      "content": "Define semantic color names mapped to CSS variables. Changing the class on <code>&lt;html&gt;</code> swaps the variable values."
+    },
+    "tailwindDarkMode": {
+      "title": "Tailwind Dark Mode",
+      "content": "Tailwind supports dark mode with the <code>dark:</code> prefix. By default it follows the system setting (<code>prefers-color-scheme</code>). To switch manually in v4, declare a <code>@custom-variant</code> in your CSS (the equivalent of <code>darkMode: 'class'</code> in v3)."
+    },
+    "flash": {
+      "title": "Avoiding the flash on first paint",
+      "body": "If the saved theme is applied after React loads, the light page sent by the server is shown first and then switches to dark. An inline script that runs before the body is painted has to set the theme on <html> first. Setting the color-scheme property as well makes browser UI such as scrollbars and form controls follow the theme."
+    }
+  },
+  "responsive": {
+    "badge": "Essential",
+    "title": "Responsive Design Strategy",
+    "description": "Creating interfaces that adapt seamlessly to any screen size, from mobile phones to large desktops.",
+    "mobileFirst": {
+      "title": "Mobile-First Approach",
+      "content": "Design for the smallest screen first, then add complexity for larger screens. In Tailwind, this means unwrapped classes target mobile, and <code>md:</code>, <code>lg:</code> target larger screens."
+    },
+    "toolsTechniques": {
+      "title": "Tools & Techniques",
+      "infoTitle": "Techniques",
+      "breakpoints": "Breakpoints:",
+      "breakpointsDesc": "Standardize widths (e.g., sm: 640px, md: 768px, lg: 1024px).",
+      "fluidTypography": "Fluid Typography:",
+      "fluidTypographyDesc": "Use <code>clamp()</code> for smooth font scaling. <br /><code>font-size: clamp(1rem, 2.5vw, 2rem);</code>",
+      "artDirection": "Art Direction:",
+      "artDirectionDesc": "Use <code>&lt;picture&gt;</code> to serve different images for different screens to save bandwidth."
+    },
+    "modern": {
+      "title": "Responsive beyond the viewport",
+      "items": [
+        {
+          "title": "Container queries",
+          "description": "Media queries only see the viewport width. If the same card goes into a wide main column and a narrow sidebar, the reference should be the parent's width, not the viewport. @container responds to the size of the parent container."
+        },
+        {
+          "title": "Dynamic viewport units",
+          "description": "On mobile, 100vh is the height with the address bar hidden, which is taller than the visible screen. dvh follows the actually visible height as the address bar appears and disappears."
+        },
+        {
+          "title": "Logical properties",
+          "description": "Using margin-inline-start instead of margin-left flips the direction automatically in RTL languages such as Arabic. Tailwind's ms-4 and ps-4, and the padding-inline that px-* generates, are logical properties."
+        }
+      ]
+    }
+  },
+  "accessibility": {
+    "badge": "A11y",
+    "title": "Accessibility (A11y) & Styling",
+    "description": "ensure your styles do not exclude users. Valid HTML and thoughtful CSS are key.",
+    "checklist": {
+      "title": "Checklist",
+      "infoTitle": "Critical Rules",
+      "focusRings": "Focus Rings:",
+      "focusRingsDesc": "Never set <code>outline: none</code> on focusable elements without replacing it. Is users navigate via keyboard, they must see where they are.",
+      "contrast": "Contrast Ratio:",
+      "contrastDesc": "Ensure text has sufficient contrast against the background (WCAG AA/AAA).",
+      "reducedMotion": "Reduced Motion:",
+      "reducedMotionDesc": "Respect user preference for standard motion.",
+      "colorAlone": "Don't rely on color alone:",
+      "colorAloneDesc": "Use icons or text labels along with color to convey state (error, success)."
     }
   }
 }

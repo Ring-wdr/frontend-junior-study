@@ -1,15 +1,32 @@
 'use client';
 
 import { Trans, useTranslation } from '@/i18n/client';
-import { InfoBox, SectionCard, SubSection } from '../../../components';
+import {
+  ContentGrid,
+  InfoBox,
+  SectionCard,
+  SubSection,
+} from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
+const MODERN_CODE = `.card-list { container-type: inline-size; }
+
+@container (width >= 28rem) {
+  .card { display: grid; grid-template-columns: 8rem 1fr; }
+}
+
+.hero { min-height: 100dvh; }
+.title { margin-inline-start: 1rem; }
+
+/* Tailwind: class="@container" on the parent, class="@md:grid" on the child */`;
+
 export const ResponsiveSection = () => {
-  const { t } = useTranslation('week6');
+  const { t, raw } = useTranslation('week6');
   return (
     <SectionCard
       badge={{ label: t('responsive.badge'), color: 'orange' }}
       description={t('responsive.description')}
+      testId="responsive-section"
     >
       <div className="space-y-8">
         <SubSection
@@ -77,6 +94,15 @@ export const ResponsiveSection = () => {
               </ul>
             </InfoBox>
           </div>
+        </SubSection>
+
+        <SubSection
+          title={t('responsive.modern.title')}
+          icon
+          iconColor="orange"
+        >
+          <ContentGrid items={raw('responsive.modern.items')} columns={1} />
+          <CodeBlock code={MODERN_CODE} language="css" className="text-xs" />
         </SubSection>
       </div>
     </SectionCard>

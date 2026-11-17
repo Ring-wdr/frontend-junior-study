@@ -4,12 +4,24 @@ import { Trans, useTranslation } from '@/i18n/client';
 import { SectionCard, SubSection } from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
 
+const FLASH_CODE = `<head>
+  <script>
+    const saved = localStorage.getItem('theme');
+    const dark = saved
+      ? saved === 'dark'
+      : matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.classList.toggle('dark', dark);
+    document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+  </script>
+</head>`;
+
 export const ThemeSection = () => {
   const { t } = useTranslation('week6');
   return (
     <SectionCard
       badge={{ label: t('theme.badge'), color: 'purple' }}
       description={t('theme.description')}
+      testId="theme-section"
     >
       <div className="space-y-8">
         <SubSection
@@ -60,12 +72,12 @@ body {
           </p>
 
           <CodeBlock
-            code={`// tailwind.config.js
-module.exports = {
-  darkMode: 'class', // manually toggle via class="dark" on html
-  // ...
-}`}
-            language="javascript"
+            code={`/* app.css (Tailwind v4) */
+@import "tailwindcss";
+
+/* dark: now applies under class="dark" on <html> */
+@custom-variant dark (&:where(.dark, .dark *));`}
+            language="css"
             className="text-xs"
           />
           <CodeBlock
@@ -78,6 +90,13 @@ module.exports = {
             language="html"
             className="text-xs mt-4"
           />
+        </SubSection>
+
+        <SubSection title={t('theme.flash.title')} icon iconColor="purple">
+          <div className="space-y-3">
+            <p className="text-sm text-gray-700">{t('theme.flash.body')}</p>
+            <CodeBlock code={FLASH_CODE} language="html" className="text-xs" />
+          </div>
         </SubSection>
       </div>
     </SectionCard>

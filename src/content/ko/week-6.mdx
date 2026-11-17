@@ -1,22 +1,33 @@
 ---
 title: "Modern Styling Strategies"
-description: "디자인 시스템, Utility-First CSS, CSS-in-JS, 그리고 반응형 디자인 마스터하기."
+description: "디자인 토큰과 캐스케이드부터 CSS가 JS의 클래스 맵으로 컴파일되는 과정, 중복과 충돌 처리, shadcn/ui와 Astryx 같은 디자인 시스템의 구조까지 살펴봅니다."
 namespace: week6
 ---
 
 import { DesignSystemSection } from '@/weeks/week6/components/design-system-section';
+import { CascadeSection } from '@/weeks/week6/components/cascade-section';
 import { CssModulesSection } from '@/weeks/week6/components/css-modules-section';
 import { CssInJsSection } from '@/weeks/week6/components/css-in-js-section';
+import { VanillaExtractSection } from '@/weeks/week6/components/vanilla-extract-section';
+import { StylexSection } from '@/weeks/week6/components/stylex-section';
 import { TailwindSection } from '@/weeks/week6/components/tailwind-section';
+import { MergingSection } from '@/weeks/week6/components/merging-section';
+import { ComponentSystemsSection } from '@/weeks/week6/components/component-systems-section';
+import { ThemeSection } from '@/weeks/week6/components/theme-section';
 import { ResponsiveSection } from '@/weeks/week6/components/responsive-section';
+import { AccessibilitySection } from '@/weeks/week6/components/accessibility-section';
 
 # Modern Styling Strategies
 
-디자인 시스템, Utility-First CSS, CSS-in-JS, 그리고 반응형 디자인 마스터하기.
+디자인 토큰과 캐스케이드부터 CSS가 JS의 클래스 맵으로 컴파일되는 과정, 중복과 충돌 처리, shadcn/ui와 Astryx 같은 디자인 시스템의 구조까지 살펴봅니다.
 
 ## Design Systems & Design Tokens [#design-system]
 
 <DesignSystemSection />
+
+## Cascade, Specificity & @layer [#cascade]
+
+<CascadeSection />
 
 ## CSS Modules [#css-modules]
 
@@ -26,10 +37,34 @@ import { ResponsiveSection } from '@/weeks/week6/components/responsive-section';
 
 <CssInJsSection />
 
+## Vanilla Extract [#vanilla-extract]
+
+<VanillaExtractSection />
+
+## StyleX [#stylex]
+
+<StylexSection />
+
 ## Tailwind CSS [#tailwind]
 
 <TailwindSection />
 
+## Class Maps, Deduplication & Merging [#style-merging]
+
+<MergingSection />
+
+## Design System Architecture: shadcn/ui & Astryx [#component-systems]
+
+<ComponentSystemsSection />
+
+## Theme System [#theme]
+
+<ThemeSection />
+
 ## 반응형 디자인 전략 [#responsive]
 
 <ResponsiveSection />
+
+## Accessibility & Styling [#accessibility]
+
+<AccessibilitySection />

@@ -9,6 +9,7 @@ export const AccessibilitySection = () => {
     <SectionCard
       badge={{ label: t('accessibility.badge'), color: 'orange' }}
       description={t('accessibility.description')}
+      testId="accessibility-section"
     >
       <div className="space-y-8">
         <SubSection

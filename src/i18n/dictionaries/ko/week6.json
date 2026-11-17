@@ -1,7 +1,7 @@
 {
   "header": {
     "title": "Modern Styling Strategies",
-    "description": "디자인 시스템, Utility-First CSS, CSS-in-JS, 그리고 반응형 디자인 마스터하기."
+    "description": "디자인 토큰과 캐스케이드부터 CSS가 JS의 클래스 맵으로 컴파일되는 과정, 중복과 충돌 처리, shadcn/ui와 Astryx 같은 디자인 시스템의 구조까지 살펴봅니다."
   },
   "tabs": {
     "all": "전체",
@@ -30,6 +30,58 @@
       "maintainabilityDesc": "하나의 토큰 값을 변경하여 전체 앱을 업데이트할 수 있습니다 (예: 리브랜딩).",
       "communication": "커뮤니케이션:",
       "communicationDesc": "디자이너와 개발자 간의 공통 언어를 제공합니다."
+    },
+    "tiers": {
+      "title": "토큰의 세 계층",
+      "body": "토큰을 한 층으로만 두면 '파란색 500'이라는 이름이 코드 전체에 퍼져서, 브랜드 색을 바꾸거나 다크 모드를 넣을 때 모든 사용처를 고쳐야 합니다. 그래서 토큰을 역할에 따라 세 층으로 나눕니다.",
+      "items": [
+        {
+          "title": "Primitive (원시 토큰)",
+          "description": "blue-500, gray-900, space-4처럼 값 자체에 이름을 붙인 팔레트입니다. 의미가 없고, 컴포넌트가 직접 참조하지 않습니다."
+        },
+        {
+          "title": "Semantic (의미 토큰)",
+          "description": "background, foreground, primary, border처럼 용도에 이름을 붙이고 원시 토큰을 가리킵니다. 테마 전환은 이 층이 가리키는 대상을 바꾸는 일입니다."
+        },
+        {
+          "title": "Component (컴포넌트 토큰)",
+          "description": "button-bg, card-radius처럼 특정 컴포넌트에 한정된 토큰입니다. 의미 토큰을 가리키므로 테마가 바뀌어도 수정할 필요가 없습니다."
+        }
+      ],
+      "demo": {
+        "light": "라이트",
+        "dark": "다크",
+        "themeLabel": "테마 선택",
+        "primitive": "Primitive",
+        "semantic": "Semantic",
+        "component": "Component",
+        "preview": "미리보기",
+        "previewText": "버튼",
+        "changed": "변경됨",
+        "hint": "테마를 바꾸면 Semantic 층이 가리키는 대상만 달라집니다. Primitive 팔레트와 Component 토큰의 정의는 그대로입니다."
+      }
+    }
+  },
+  "cascade": {
+    "badge": "Foundation",
+    "description": "같은 요소에 여러 규칙이 걸렸을 때 브라우저가 승자를 정하는 순서입니다. 이 주차에 나오는 모든 스타일링 도구는 결국 이 규칙을 다루는 서로 다른 방법입니다.",
+    "order": {
+      "title": "캐스케이드가 승자를 정하는 순서",
+      "body": "브라우저는 아래 기준을 위에서부터 차례로 비교하고, 앞 기준에서 승부가 나면 뒤 기준은 보지 않습니다.",
+      "items": [
+        "출처와 중요도: 브라우저 기본 스타일 < 사용자 스타일 < 작성자 스타일. !important가 붙으면 이 순서가 뒤집힙니다.",
+        "캐스케이드 레이어(@layer): 나중에 선언된 레이어가 이깁니다. 레이어에 속하지 않은 스타일은 모든 레이어보다 우선합니다.",
+        "명시도(specificity): ID > 클래스·속성·의사 클래스 > 요소 순으로 셉니다. 인라인 style은 그보다 위입니다.",
+        "출현 순서: 위의 모든 것이 같으면 스타일시트에서 나중에 나온 규칙이 이깁니다. class 속성 안에서 클래스를 적은 순서는 아무 영향이 없습니다."
+      ]
+    },
+    "layers": {
+      "title": "@layer로 순서를 선언하기",
+      "body": "레이어 순서는 처음 선언된 순서로 고정됩니다. 그래서 파일 맨 위에 순서를 한 줄로 선언해 두면, 이후 스타일시트가 어떤 순서로 로드되든 결과가 같습니다. 레이어가 다르면 명시도는 비교하지 않으므로, 아래 예시에서 명시도가 더 높은 .card .title보다 utilities 레이어의 .text-red가 이깁니다."
+    },
+    "why": {
+      "title": "왜 이 내용이 먼저인가",
+      "content": "CSS Modules는 클래스 이름 충돌을, 런타임 CSS-in-JS는 삽입 순서를, StyleX와 tailwind-merge는 '같은 속성을 두 번 지정했을 때 누가 이기는가'를 해결합니다. 전부 캐스케이드의 네 번째 기준, 즉 출현 순서에 결과를 맡기지 않으려는 시도입니다."
     }
   },
   "cssModules": {
@@ -49,6 +101,25 @@
       "reuseDesc": "다른 파일의 스타일을 조합할 수 있습니다.",
       "learning": "학습 곡선 없음:",
       "learningDesc": "표준 CSS 구문일 뿐입니다."
+    },
+    "compile": {
+      "title": "컴파일 결과: 클래스 이름이 JS 객체가 되는 과정",
+      "steps": [
+        "번들러의 CSS 로더가 .module.css 파일을 파싱해 클래스 선택자를 모두 찾습니다.",
+        "각 클래스 이름을 '파일 경로 + 원래 이름'으로 만든 해시가 붙은 이름으로 바꿉니다. 파일이 다르면 같은 .button도 서로 다른 이름이 됩니다.",
+        "바뀐 CSS는 스타일시트로 내보내고, JS 쪽에는 '원래 이름 → 바뀐 이름' 객체를 export하는 모듈을 만듭니다. import styles가 받는 것이 이 객체입니다.",
+        "composes는 CSS를 복사하지 않습니다. 맵의 값에 클래스 이름을 하나 더 붙여, 요소에 클래스 두 개가 함께 적용되게 합니다.",
+        ":global(...)로 감싼 선택자는 해시를 붙이지 않고 그대로 둡니다."
+      ],
+      "note": "위 결과는 postcss-modules로 실제 변환한 출력입니다. primary의 값에 클래스가 두 개 들어 있는 것이 composes의 결과입니다."
+    },
+    "dedupe": {
+      "title": "중복과 순서",
+      "points": [
+        "같은 .module.css를 여러 컴포넌트가 import해도 번들러의 모듈 그래프에서 모듈 하나이므로 CSS는 한 번만 출력됩니다.",
+        "하지만 서로 다른 파일에 같은 선언(예: display: flex)을 적으면 그만큼 CSS가 늘어납니다. 선언 단위의 중복 제거는 하지 않습니다.",
+        "이름 충돌은 막아 주지만 우선순위는 여전히 출현 순서에 달려 있습니다. 코드 분할로 CSS 청크의 로드 순서가 페이지마다 달라지면 같은 컴포넌트가 다르게 보일 수 있습니다."
+      ]
     }
   },
   "cssInJs": {
@@ -76,76 +147,25 @@
         "bundle": "유틸리티 클래스에 비해 더 큰 번들 크기.",
         "ssr": "SSR을 위한 설정 필요 (Next.js App Router 제한사항)."
       }
-    }
-  },
-  "tailwind": {
-    "badge": "Industry Standard",
-    "title": "Tailwind CSS",
-    "description": "맞춤형 사용자 인터페이스를 빠르게 구축하기 위한 유틸리티 우선 CSS 프레임워크입니다.",
-    "utilityFirst": {
-      "title": "유틸리티 우선",
-      "content": "커스텀 CSS를 작성하는 대신, HTML에서 직접 미리 존재하는 클래스를 사용합니다. 이는 매우 빠른 개발 주기와 일관된 UI로 이어집니다."
     },
-    "keyFeatures": {
-      "title": "주요 기능",
-      "infoTitle": "왜 차별화되는가?",
-      "jit": "JIT 엔진:",
-      "jitDesc": "필요에 따라 스타일을 생성하여 번들 크기를 작게 유지합니다.",
-      "standardization": "표준화:",
-      "standardizationDesc": "간격, 색상, 크기가 미리 정의되어 있습니다 (또는 설정에서 커스터마이징 가능).",
-      "responsiveness": "반응성:",
-      "responsivenessDesc": "<code>md:flex</code>, <code>lg:grid</code> 접두사로 반응형 디자인이 간단해집니다.",
-      "darkMode": "다크 모드:",
-      "darkModeDesc": "<code>dark:bg-black</code> 접두사로 테마 전환을 처리합니다."
-    }
-  },
-  "responsive": {
-    "badge": "Essential",
-    "title": "반응형 디자인 전략",
-    "description": "모바일 폰부터 대형 데스크톱까지 모든 화면 크기에 원활하게 적응하는 인터페이스를 만듭니다.",
-    "mobileFirst": {
-      "title": "모바일 우선 접근법",
-      "content": "가장 작은 화면을 먼저 디자인한 다음, 더 큰 화면을 위한 복잡성을 추가합니다. Tailwind에서는 래핑되지 않은 클래스가 모바일을 대상으로 하고, <code>md:</code>, <code>lg:</code>가 더 큰 화면을 대상으로 합니다."
+    "runtime": {
+      "title": "런타임에 일어나는 일",
+      "steps": [
+        "컴포넌트가 렌더링될 때 템플릿 리터럴에 props를 넣어 최종 CSS 문자열을 만듭니다(직렬화).",
+        "그 문자열을 해시해 css-l5i0wd 같은 클래스 이름을 만듭니다. 같은 문자열은 항상 같은 이름이 됩니다.",
+        "캐시(해시 → 삽입 여부)를 조회합니다. 처음 보는 해시일 때만 <style> 태그에 규칙을 삽입합니다.",
+        "요소에는 그 클래스 이름을 붙입니다. props가 바뀌어 문자열이 달라지면 새 해시, 새 클래스, 새 규칙이 생깁니다."
+      ],
+      "note": "위 출력은 @emotion/css를 실제로 실행한 결과입니다. 같은 스타일을 두 번 정의해도 클래스는 하나이고, 캐시에는 규칙이 두 개만 기록됩니다."
     },
-    "toolsTechniques": {
-      "title": "도구 및 기법",
-      "infoTitle": "기법",
-      "breakpoints": "중단점:",
-      "breakpointsDesc": "너비 표준화 (예: sm: 640px, md: 768px, lg: 1024px).",
-      "fluidTypography": "유동적 타이포그래피:",
-      "fluidTypographyDesc": "부드러운 글꼴 스케일링을 위해 <code>clamp()</code>를 사용합니다. <br /><code>font-size: clamp(1rem, 2.5vw, 2rem);</code>",
-      "artDirection": "아트 디렉션:",
-      "artDirectionDesc": "대역폭을 절약하기 위해 <code>&lt;picture&gt;</code>를 사용하여 다른 화면에 다른 이미지를 제공합니다."
-    }
-  },
-  "theme": {
-    "badge": "UX",
-    "title": "테마 시스템",
-    "description": "다크/라이트 모드 및 커스텀 테마를 효과적으로 구현합니다.",
-    "cssVariables": {
-      "title": "CSS 변수 전략",
-      "content": "CSS 변수에 매핑된 의미 있는 색상 이름을 정의합니다. <code>&lt;html&gt;</code>의 클래스를 변경하면 변수 값이 바뀝니다."
-    },
-    "tailwindDarkMode": {
-      "title": "Tailwind 다크 모드",
-      "content": "Tailwind는 <code>dark:</code> 접두사로 기본적으로 다크 모드를 지원합니다. 시스템 환경설정(`media`) 또는 클래스 선택자(`class`)를 사용할 수 있습니다."
-    }
-  },
-  "accessibility": {
-    "badge": "A11y",
-    "title": "접근성 (A11y) & 스타일링",
-    "description": "스타일이 사용자를 배제하지 않도록 보장합니다. 유효한 HTML과 신중한 CSS가 핵심입니다.",
-    "checklist": {
-      "title": "체크리스트",
-      "infoTitle": "중요 규칙",
-      "focusRings": "포커스 링:",
-      "focusRingsDesc": "대체하지 않고는 포커스 가능한 요소에 <code>outline: none</code>을 설정하지 마세요. 사용자가 키보드로 탐색할 때 자신이 어디에 있는지 볼 수 있어야 합니다.",
-      "contrast": "대비 비율:",
-      "contrastDesc": "텍스트가 배경과 충분한 대비를 가지도록 보장합니다 (WCAG AA/AAA).",
-      "reducedMotion": "동작 감소:",
-      "reducedMotionDesc": "표준 동작에 대한 사용자 환경설정을 존중합니다.",
-      "colorAlone": "색상만 의존하지 말기:",
-      "colorAloneDesc": "상태(오류, 성공)를 전달할 때 색상과 함께 아이콘이나 텍스트 레이블을 사용하세요."
+    "limits": {
+      "title": "이 구조의 한계",
+      "points": [
+        "중복 제거 단위가 '스타일 블록 전체'입니다. 선언 하나만 달라도 블록 전체가 새 규칙으로 들어가므로, props 조합이 많으면 규칙 수도 그만큼 늘어납니다.",
+        "직렬화, 해시, 삽입이 렌더링 중에 실행됩니다. 규칙을 삽입하면 브라우저가 스타일을 다시 계산해야 해서 렌더링 비용이 커집니다.",
+        "React 서버 컴포넌트에서는 쓸 수 없습니다. 서버 컴포넌트에는 렌더링 중 스타일을 모아 둘 Context나 클라이언트 런타임이 없어서, 스타일이 있는 컴포넌트는 'use client'가 되어야 합니다.",
+        "styled-components는 2025년 3월 유지보수 모드를 발표했습니다(이후에도 릴리스는 이어지고 있습니다). 새 프로젝트는 빌드 타임 방식을 먼저 검토하는 흐름입니다."
+      ]
     }
   },
   "vanillaExtract": {
@@ -183,6 +203,16 @@
     "sprinkles": {
       "title": "Sprinkles",
       "content": "Sprinkles는 반응형 및 조건부 스타일링을 위한 유틸리티 클래스 시스템으로, 런타임 비용 없이 Tailwind와 유사한 개발 경험을 제공합니다."
+    },
+    "compile": {
+      "title": "빌드 타임에 일어나는 일",
+      "steps": [
+        "번들러 플러그인이 .css.ts 파일을 빌드 중에 실제로 실행합니다.",
+        "style() 호출마다 파일 경로와 변수 이름으로 고유한 클래스 이름을 만들고, 스타일 객체를 CSS 규칙으로 기록합니다.",
+        "기록된 규칙은 정적 .css 파일로 내보냅니다.",
+        ".css.ts 모듈의 export는 클래스 이름 문자열로 치환됩니다. 브라우저로 가는 JS에는 스타일 객체도 라이브러리 런타임도 남지 않습니다."
+      ],
+      "note": "결과물의 형태는 CSS Modules와 같습니다(이름 → 클래스 문자열, 일반 CSS 규칙). 차이는 작성 언어가 TypeScript라서 토큰과 variant를 타입으로 검사할 수 있다는 점입니다. 선언 단위의 중복 제거는 Sprinkles를 써서 원자 클래스를 직접 설계할 때만 일어납니다."
     }
   },
   "stylex": {
@@ -191,7 +221,7 @@
     "description": "Meta에서 개발한 확장 가능하고 성능이 뛰어난 스타일링 시스템입니다.",
     "overview": {
       "title": "개요",
-      "content": "StyleX는 Facebook/Meta에서 대규모 애플리케이션을 위해 개발한 스타일링 시스템입니다. 원자적 CSS를 생성하고 스타일 병합을 통해 예측 가능한 결과를 보장합니다."
+      "content": "StyleX는 Meta가 대규모 애플리케이션을 위해 만든 스타일링 시스템입니다. 빌드 타임에 원자적 CSS를 생성하고, 스타일을 속성 단위로 병합해 예측 가능한 결과를 보장합니다. Meta의 오픈소스 디자인 시스템 Astryx가 StyleX 위에 만들어졌습니다."
     },
     "features": {
       "title": "핵심 기능",
@@ -244,8 +274,328 @@
         "bundleSizeSX": "매우 작음 (원자적)",
         "ecosystem": "생태계",
         "ecosystemVE": "Sprinkles, Recipes",
-        "ecosystemSX": "Meta 내부 도구 통합"
+        "ecosystemSX": "Astryx (Meta의 오픈소스 디자인 시스템)"
       }
+    },
+    "compile": {
+      "title": "컴파일 결과: 스타일 객체가 클래스 맵이 되는 과정",
+      "steps": [
+        "Babel 플러그인이 stylex.create 호출을 찾아 스타일 객체를 선언 하나씩으로 쪼갭니다.",
+        "선언마다 '속성 + 값(+ 의사 클래스, 미디어 쿼리)'을 해시해 클래스 이름을 만듭니다. color: white는 어느 파일에 있든 x1awj2ng입니다.",
+        "stylex.create 호출은 '속성 키 → 원자 클래스' 객체로 치환됩니다. 원래의 CSS 값은 JS 번들에 남지 않습니다.",
+        "선언별 CSS 규칙은 메타데이터로 모아 두었다가, 앱 전체에서 중복을 제거한 뒤 스타일시트 하나로 내보냅니다.",
+        "stylex.props의 인자가 모두 정적이면 병합까지 빌드 타임에 끝내고 className 문자열만 남깁니다."
+      ],
+      "note": "위 코드는 @stylexjs/babel-plugin으로 실제 변환한 출력입니다. base와 primary를 병합한 결과에서 color: red의 클래스(x1e2nbdu)는 사라지고 primary의 color 클래스(x1awj2ng)만 남았습니다."
+    },
+    "merge": {
+      "title": "중복과 충돌 처리",
+      "points": [
+        "중복 제거: 클래스 이름이 선언의 해시이므로, 컴포넌트 수백 개가 display: flex를 써도 규칙은 하나입니다. 앱이 커질수록 새로 추가되는 CSS가 줄어듭니다.",
+        "충돌 해결: stylex.props는 인자로 받은 맵들을 속성 키 기준으로 덮어쓰며 합칩니다. 같은 키가 여러 번 나오면 마지막 인자의 클래스만 남습니다. 요소에는 속성당 클래스가 하나만 붙으므로 스타일시트의 출현 순서가 결과에 영향을 주지 못합니다.",
+        "축약 속성: padding과 padding-inline처럼 겹치는 속성은 키가 달라 둘 다 남습니다. 이때는 각 규칙에 매긴 우선순위 숫자(padding 1000, padding-inline 2000, color 3000)대로 스타일시트를 정렬해, 더 구체적인 속성이 항상 이기게 합니다.",
+        "제약: 이 모든 것이 빌드 타임에 계산되어야 하므로 스타일 값은 정적으로 분석 가능해야 합니다. 동적인 값은 CSS 변수로 전달합니다."
+      ]
+    }
+  },
+  "tailwind": {
+    "badge": "Industry Standard",
+    "title": "Tailwind CSS",
+    "description": "맞춤형 사용자 인터페이스를 빠르게 구축하기 위한 유틸리티 우선 CSS 프레임워크입니다.",
+    "utilityFirst": {
+      "title": "유틸리티 우선",
+      "content": "커스텀 CSS를 작성하는 대신, HTML에서 직접 미리 존재하는 클래스를 사용합니다. 이는 매우 빠른 개발 주기와 일관된 UI로 이어집니다."
+    },
+    "keyFeatures": {
+      "title": "주요 기능",
+      "infoTitle": "왜 차별화되는가?",
+      "jit": "필요한 것만 생성:",
+      "jitDesc": "소스에서 실제로 쓰인 클래스만 찾아 CSS를 만듭니다. v3의 JIT 엔진에서 시작했고 v4에서는 Rust로 다시 작성된 엔진이 이 일을 합니다.",
+      "standardization": "표준화:",
+      "standardizationDesc": "간격, 색상, 크기가 미리 정의되어 있습니다. v4에서는 CSS 파일의 <code>@theme</code> 블록에서 토큰을 정의하고, 각 토큰은 CSS 변수로도 노출됩니다.",
+      "responsiveness": "반응성:",
+      "responsivenessDesc": "<code>md:flex</code>, <code>lg:grid</code> 접두사로 반응형 디자인이 간단해집니다.",
+      "darkMode": "다크 모드:",
+      "darkModeDesc": "<code>dark:bg-black</code> 접두사로 테마 전환을 처리합니다."
+    },
+    "engine": {
+      "title": "빌드에서 일어나는 일",
+      "steps": [
+        "소스 파일을 일반 텍스트로 훑어 클래스처럼 보이는 문자열(후보)을 모두 수집합니다. JS를 실행하거나 파싱하지 않습니다.",
+        "후보 각각을 유틸리티 정의와 대조해, 유효한 것만 CSS 규칙으로 만듭니다. 같은 클래스가 천 번 쓰여도 규칙은 하나입니다.",
+        "규칙을 정해진 순서로 정렬해 utilities 레이어에 내보냅니다. 순서는 속성과 유틸리티에 따라 결정되고, 소스에 적은 순서와는 무관합니다.",
+        "전체 출력은 theme, base, components, utilities 순서의 캐스케이드 레이어로 감싸집니다."
+      ],
+      "note": "후보를 텍스트로 찾기 때문에 'text-' + color처럼 조합해 만든 클래스 이름은 찾지 못합니다. 클래스 이름은 소스에 완성된 형태로 적혀 있어야 합니다."
+    },
+    "conflict": {
+      "title": "충돌: 왜 tailwind-merge가 필요한가",
+      "body": "위 출력에서 .p-2가 .p-4보다 먼저 나옵니다. 그래서 class=\"p-4 p-2\"라고 적어도 p-4가 이깁니다. 유틸리티는 모두 클래스 하나짜리 선택자라 명시도가 같고, 승자는 스타일시트의 출현 순서로 정해지기 때문입니다. 컴포넌트가 기본 클래스 뒤에 className prop을 이어 붙이는 것만으로는 덮어쓰기가 보장되지 않습니다.",
+      "mergeBody": "tailwind-merge는 이 문제를 문자열 단계에서 풉니다. 클래스를 하나씩 파싱해 어떤 충돌 그룹(padding, background-color 등)에 속하는지 판별하고, 같은 그룹이 다시 나오면 앞의 것을 지웁니다. 축약 관계도 알고 있어서 p-4가 뒤에 오면 앞의 px-2와 py-1을 함께 지웁니다. 결과는 문자열별로 LRU 캐시에 저장합니다.",
+      "note": "이 프로젝트의 src/lib/utils.ts에 있는 cn이 바로 clsx와 twMerge를 조합한 함수입니다."
+    }
+  },
+  "merging": {
+    "badge": "Deep Dive",
+    "description": "지금까지 본 방식들이 JS에 무엇을 남기고, 중복과 충돌을 어디에서 처리하는지 한자리에서 비교합니다.",
+    "table": {
+      "title": "방식별 비교",
+      "headers": {
+        "approach": "방식",
+        "map": "JS에 남는 것",
+        "dedupe": "중복 제거 단위",
+        "conflict": "충돌 해결"
+      },
+      "rows": [
+        {
+          "approach": "CSS Modules",
+          "map": "이름 → 해시된 클래스 이름 객체",
+          "dedupe": "파일 (같은 파일은 한 번만 출력)",
+          "conflict": "스타일시트 출현 순서"
+        },
+        {
+          "approach": "런타임 CSS-in-JS",
+          "map": "스타일 문자열과 런타임 라이브러리, 삽입 캐시",
+          "dedupe": "스타일 블록 (문자열 해시가 같을 때)",
+          "conflict": "삽입 순서"
+        },
+        {
+          "approach": "Vanilla Extract",
+          "map": "이름 → 클래스 문자열",
+          "dedupe": "style() 호출",
+          "conflict": "스타일시트 출현 순서"
+        },
+        {
+          "approach": "StyleX",
+          "map": "속성 키 → 원자 클래스 객체",
+          "dedupe": "선언 (앱 전체)",
+          "conflict": "stylex.props가 속성 키로 병합, 마지막 인자가 이김"
+        },
+        {
+          "approach": "Tailwind",
+          "map": "없음 (클래스 문자열 그대로)",
+          "dedupe": "유틸리티 (앱 전체)",
+          "conflict": "스타일시트 순서, 덮어쓰기는 tailwind-merge로"
+        }
+      ]
+    },
+    "atomic": {
+      "title": "원자 클래스 맵 만들기",
+      "body": "컴포넌트를 추가하면서 CSS 규칙 수가 어떻게 변하는지 봅니다. 왼쪽은 컴포넌트마다 클래스를 하나씩 만드는 방식이고, 오른쪽은 선언마다 클래스를 만드는 원자적 방식입니다. 클래스 이름은 StyleX가 실제로 생성한 값입니다.",
+      "toggleLabel": "컴파일할 컴포넌트",
+      "scoped": "컴포넌트 단위 클래스",
+      "atomic": "원자 클래스",
+      "declarations": "작성한 선언",
+      "rules": "출력된 CSS 선언",
+      "saved": "재사용으로 줄어든 선언",
+      "usedBy": "{{count}}곳에서 사용",
+      "map": "JS에 남는 맵",
+      "sheet": "출력된 스타일시트",
+      "empty": "컴포넌트를 선택하면 결과가 나타납니다.",
+      "hint": "Badge를 추가해 보세요. Button과 선언이 거의 겹치므로 원자 방식에서는 규칙이 하나만 늘어납니다."
+    },
+    "playground": {
+      "title": "덮어쓰기 실험",
+      "body": "기본 클래스를 가진 버튼에 className을 넘겨 덮어쓰려고 합니다. 문자열을 그냥 이어 붙였을 때와 tailwind-merge로 합쳤을 때 실제로 적용되는 값을 비교합니다. 스타일시트 순서는 Tailwind v4가 실제로 출력한 순서를 따릅니다.",
+      "base": "컴포넌트 기본 클래스",
+      "overrides": "넘길 className",
+      "concat": "이어 붙이기",
+      "merged": "tailwind-merge",
+      "classes": "최종 class",
+      "applied": "적용된 값",
+      "paddingInline": "좌우 패딩",
+      "paddingBlock": "상하 패딩",
+      "background": "배경",
+      "ignored": "덮어쓰기 무시됨",
+      "ok": "의도대로 적용",
+      "preview": "버튼",
+      "none": "아직 넘긴 className이 없습니다. 위에서 선택해 보세요.",
+      "sheetOrder": "스타일시트 출현 순서"
+    },
+    "takeaway": {
+      "title": "정리",
+      "content": "원자적 CSS는 중복 문제를 구조적으로 없애지만, 요소에 클래스가 여러 개 붙으므로 '같은 속성의 클래스 두 개 중 누가 이기는가'라는 문제가 새로 생깁니다. StyleX는 컴파일러가 속성 키를 알고 있어서 병합 함수가 정확하게 풀고, Tailwind는 클래스 문자열만 있어서 tailwind-merge가 문자열을 해석해 풉니다."
+    }
+  },
+  "componentSystems": {
+    "badge": "Design System",
+    "description": "토큰과 스타일링 엔진 위에 컴포넌트를 올려 배포하는 방식입니다. Headless 프리미티브, 소스를 복사해 주는 shadcn/ui, 패키지로 배포되는 Astryx를 비교합니다.",
+    "layers": {
+      "title": "디자인 시스템의 층",
+      "items": [
+        {
+          "title": "1. 토큰",
+          "description": "색, 간격, 타이포그래피의 단일 출처입니다. 대부분 CSS 변수로 노출됩니다."
+        },
+        {
+          "title": "2. 프리미티브 (Headless)",
+          "description": "스타일 없이 동작과 접근성만 구현한 컴포넌트입니다. 포커스 관리, 키보드 조작, ARIA 속성을 담당합니다. Radix UI, React Aria, Base UI가 여기에 속합니다."
+        },
+        {
+          "title": "3. 스타일이 입혀진 컴포넌트",
+          "description": "프리미티브에 토큰과 variant를 입힌 Button, Dialog, Select입니다. shadcn/ui와 Astryx가 제공하는 것이 이 층입니다."
+        },
+        {
+          "title": "4. 제품 코드",
+          "description": "위 컴포넌트를 조합해 화면을 만듭니다. 이 층에서 스타일을 직접 작성하는 양이 적을수록 시스템이 잘 작동하는 것입니다."
+        }
+      ]
+    },
+    "shadcn": {
+      "title": "shadcn/ui: 소스를 복사해 주는 방식",
+      "points": [
+        "npm 의존성으로 설치하는 컴포넌트 라이브러리가 아닙니다. CLI가 레지스트리에서 컴포넌트 소스를 내려받아 프로젝트의 components/ui에 파일로 추가합니다. 그 순간부터 코드는 내 것입니다.",
+        "구성은 Radix UI 같은 프리미티브(동작과 접근성) + Tailwind 클래스(스타일) + cva(variant 맵) + cn(clsx와 tailwind-merge)입니다.",
+        "토큰은 --background, --foreground, --primary 같은 의미 토큰 CSS 변수입니다. Tailwind v4에서는 @theme inline으로 이 변수를 bg-background 같은 유틸리티에 연결합니다. 다크 모드는 .dark에서 변수 값만 바꿉니다.",
+        "모든 컴포넌트가 className을 받아 cn의 마지막 인자로 넘깁니다. 앞에서 본 tailwind-merge 덕분에 사용처에서 넘긴 클래스가 항상 기본 클래스를 이깁니다.",
+        "components.json의 레지스트리 형식을 따르면 우리 팀의 컴포넌트도 같은 CLI로 배포할 수 있습니다."
+      ]
+    },
+    "astryx": {
+      "title": "Astryx: 패키지로 배포되는 방식",
+      "points": [
+        "Meta가 2026년에 공개한 오픈소스 React 디자인 시스템입니다(MIT, 현재 베타). Meta 내부에서 8년간 쓰이며 다듬어졌고 150개 이상의 컴포넌트를 제공합니다. React 19 이상이 필요합니다.",
+        "내부는 StyleX로 작성되었지만 사용하는 쪽에는 보이지 않습니다. 미리 컴파일된 원자적 CSS 파일을 import하면 되고, 빌드 플러그인이나 Babel 설정이 필요 없습니다.",
+        "테마는 'CSS 커스텀 프로퍼티 재정의의 묶음'입니다. 컴포넌트 소스를 포크하거나 감싸지 않고 토큰 값만 바꿔서 모양을 바꿉니다. 테마 패키지가 따로 배포됩니다.",
+        "스타일은 reset, astryx-base, astryx-theme 캐스케이드 레이어에 들어 있습니다. Tailwind와 함께 쓸 때는 @layer 순서를 한 줄로 선언해 Astryx 레이어를 utilities 아래에 두고, 그러면 className으로 넘긴 유틸리티가 컴포넌트 스타일을 이깁니다.",
+        "swizzle 명령은 특정 컴포넌트의 소스를 프로젝트로 꺼내 직접 소유하게 해 줍니다. 필요한 컴포넌트만 shadcn 방식으로 전환하는 탈출구입니다."
+      ]
+    },
+    "compare": {
+      "title": "두 배포 모델의 비교",
+      "headers": {
+        "aspect": "기준",
+        "shadcn": "shadcn/ui",
+        "astryx": "Astryx"
+      },
+      "rows": [
+        {
+          "aspect": "배포 형태",
+          "shadcn": "소스 파일을 프로젝트에 복사",
+          "astryx": "npm 패키지 + 미리 빌드된 CSS"
+        },
+        {
+          "aspect": "스타일 엔진",
+          "shadcn": "Tailwind 유틸리티 + cva",
+          "astryx": "StyleX (빌드된 원자적 CSS)"
+        },
+        {
+          "aspect": "충돌 해결",
+          "shadcn": "런타임에 tailwind-merge",
+          "astryx": "빌드 타임 병합 + 캐스케이드 레이어"
+        },
+        {
+          "aspect": "커스터마이징",
+          "shadcn": "소스를 직접 수정",
+          "astryx": "토큰과 테마, className, 필요하면 swizzle"
+        },
+        {
+          "aspect": "업데이트",
+          "shadcn": "직접 다시 받아 수정분과 비교",
+          "astryx": "패키지 버전 올리기"
+        },
+        {
+          "aspect": "잘 맞는 경우",
+          "shadcn": "디자인을 크게 바꿀 제품, 작은 팀",
+          "astryx": "여러 앱이 같은 모양과 동작을 공유해야 할 때"
+        }
+      ]
+    },
+    "code": {
+      "title": "코드로 보기",
+      "ariaLabel": "디자인 시스템 코드 예제",
+      "items": [
+        {
+          "label": "shadcn Button",
+          "note": "cva가 variant 조합을 클래스 문자열로 바꾸고, cn이 사용처의 className과 합칩니다. 마지막 줄에서 size=\"sm\"의 px-3이 사라지고 px-6만 남은 것이 tailwind-merge의 결과입니다(실제 실행 결과)."
+        },
+        {
+          "label": "shadcn 토큰",
+          "note": "의미 토큰을 CSS 변수로 정의하고, @theme inline으로 Tailwind 유틸리티에 연결합니다. 컴포넌트는 bg-primary만 알고, 실제 색은 테마가 결정합니다."
+        },
+        {
+          "label": "Astryx 사용",
+          "note": "CSS 세 개(리셋, 컴포넌트, 테마)를 import하고 컴포넌트를 가져다 씁니다. 공식 README의 Next.js 설정에서 가져온 코드입니다."
+        },
+        {
+          "label": "Astryx + Tailwind",
+          "note": "첫 줄의 @layer 선언이 핵심입니다. 이 줄이 Tailwind import보다 아래에 있으면 레이어 순서가 뒤집혀, 유틸리티가 컴포넌트 스타일을 이기지 못합니다."
+        }
+      ]
+    },
+    "choose": {
+      "title": "선택 기준",
+      "content": "두 방식은 '누가 컴포넌트 코드를 소유하는가'에 대한 서로 다른 답입니다. 코드를 소유하면 무엇이든 바꿀 수 있지만 접근성 수정과 버그 수정도 직접 가져와야 합니다. 패키지에 맡기면 업데이트는 쉽지만 토큰과 props가 허용하는 범위 안에서 움직여야 합니다. Astryx는 베타라서 API가 바뀔 수 있다는 점도 고려해야 합니다."
+    }
+  },
+  "theme": {
+    "badge": "UX",
+    "title": "테마 시스템",
+    "description": "다크/라이트 모드 및 커스텀 테마를 효과적으로 구현합니다.",
+    "cssVariables": {
+      "title": "CSS 변수 전략",
+      "content": "CSS 변수에 매핑된 의미 있는 색상 이름을 정의합니다. <code>&lt;html&gt;</code>의 클래스를 변경하면 변수 값이 바뀝니다."
+    },
+    "tailwindDarkMode": {
+      "title": "Tailwind 다크 모드",
+      "content": "Tailwind는 <code>dark:</code> 접두사로 다크 모드를 지원합니다. 기본값은 시스템 설정(<code>prefers-color-scheme</code>)을 따르고, 수동으로 전환하려면 v4에서는 CSS에 <code>@custom-variant</code>를 선언합니다(v3의 <code>darkMode: 'class'</code> 설정에 해당)."
+    },
+    "flash": {
+      "title": "첫 화면 깜빡임 막기",
+      "body": "저장된 테마를 React가 로드된 뒤에 적용하면, 서버가 보낸 라이트 화면이 먼저 보였다가 다크로 바뀝니다. 본문이 그려지기 전에 실행되는 인라인 스크립트로 <html>에 테마를 먼저 지정해야 합니다. color-scheme 속성을 함께 지정하면 스크롤바와 폼 컨트롤 같은 브라우저 기본 UI도 테마를 따릅니다."
+    }
+  },
+  "responsive": {
+    "badge": "Essential",
+    "title": "반응형 디자인 전략",
+    "description": "모바일 폰부터 대형 데스크톱까지 모든 화면 크기에 원활하게 적응하는 인터페이스를 만듭니다.",
+    "mobileFirst": {
+      "title": "모바일 우선 접근법",
+      "content": "가장 작은 화면을 먼저 디자인한 다음, 더 큰 화면을 위한 복잡성을 추가합니다. Tailwind에서는 래핑되지 않은 클래스가 모바일을 대상으로 하고, <code>md:</code>, <code>lg:</code>가 더 큰 화면을 대상으로 합니다."
+    },
+    "toolsTechniques": {
+      "title": "도구 및 기법",
+      "infoTitle": "기법",
+      "breakpoints": "중단점:",
+      "breakpointsDesc": "너비 표준화 (예: sm: 640px, md: 768px, lg: 1024px).",
+      "fluidTypography": "유동적 타이포그래피:",
+      "fluidTypographyDesc": "부드러운 글꼴 스케일링을 위해 <code>clamp()</code>를 사용합니다. <br /><code>font-size: clamp(1rem, 2.5vw, 2rem);</code>",
+      "artDirection": "아트 디렉션:",
+      "artDirectionDesc": "대역폭을 절약하기 위해 <code>&lt;picture&gt;</code>를 사용하여 다른 화면에 다른 이미지를 제공합니다."
+    },
+    "modern": {
+      "title": "뷰포트 너머의 반응형",
+      "items": [
+        {
+          "title": "컨테이너 쿼리",
+          "description": "미디어 쿼리는 뷰포트 너비만 봅니다. 같은 카드가 넓은 본문과 좁은 사이드바에 모두 들어간다면, 기준은 뷰포트가 아니라 부모의 너비여야 합니다. @container는 부모 컨테이너의 크기에 반응합니다."
+        },
+        {
+          "title": "동적 뷰포트 단위",
+          "description": "모바일에서 100vh는 주소창이 숨겨진 상태의 높이라서 실제 화면보다 큽니다. dvh는 주소창이 나타나고 사라질 때마다 실제 보이는 높이를 따릅니다."
+        },
+        {
+          "title": "논리 속성",
+          "description": "margin-left 대신 margin-inline-start를 쓰면 아랍어 같은 RTL 언어에서 방향이 자동으로 뒤집힙니다. Tailwind의 ms-4, ps-4, 그리고 px-*가 만드는 padding-inline이 논리 속성입니다."
+        }
+      ]
+    }
+  },
+  "accessibility": {
+    "badge": "A11y",
+    "title": "접근성 (A11y) & 스타일링",
+    "description": "스타일이 사용자를 배제하지 않도록 보장합니다. 유효한 HTML과 신중한 CSS가 핵심입니다.",
+    "checklist": {
+      "title": "체크리스트",
+      "infoTitle": "중요 규칙",
+      "focusRings": "포커스 링:",
+      "focusRingsDesc": "대체하지 않고는 포커스 가능한 요소에 <code>outline: none</code>을 설정하지 마세요. 사용자가 키보드로 탐색할 때 자신이 어디에 있는지 볼 수 있어야 합니다.",
+      "contrast": "대비 비율:",
+      "contrastDesc": "텍스트가 배경과 충분한 대비를 가지도록 보장합니다 (WCAG AA/AAA).",
+      "reducedMotion": "동작 감소:",
+      "reducedMotionDesc": "표준 동작에 대한 사용자 환경설정을 존중합니다.",
+      "colorAlone": "색상만 의존하지 말기:",
+      "colorAloneDesc": "상태(오류, 성공)를 전달할 때 색상과 함께 아이콘이나 텍스트 레이블을 사용하세요."
     }
   }
 }

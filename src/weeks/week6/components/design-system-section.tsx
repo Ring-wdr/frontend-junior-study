@@ -1,15 +1,23 @@
 'use client';
 
 import { useTranslation } from '@/i18n/client';
-import { InfoBox, SectionCard, SubSection } from '../../../components';
+import {
+  ContentGrid,
+  DemoBox,
+  InfoBox,
+  SectionCard,
+  SubSection,
+} from '../../../components';
 import { CodeBlock } from '../../../components/ui/code-block';
+import { TokenTierDemo } from './token-tier-demo';
 
 export const DesignSystemSection = () => {
-  const { t } = useTranslation('week6');
+  const { t, raw } = useTranslation('week6');
   return (
     <SectionCard
       badge={{ label: t('designSystem.badge'), color: 'blue' }}
       description={t('designSystem.description')}
+      testId="design-system-section"
     >
       <div className="space-y-8">
         <SubSection
@@ -59,6 +67,18 @@ export const DesignSystemSection = () => {
               </li>
             </ul>
           </InfoBox>
+        </SubSection>
+
+        <SubSection title={t('designSystem.tiers.title')} icon iconColor="blue">
+          <p className="text-sm text-gray-700">
+            {t('designSystem.tiers.body')}
+          </p>
+          <ContentGrid items={raw('designSystem.tiers.items')} />
+          <div className="mt-4">
+            <DemoBox>
+              <TokenTierDemo />
+            </DemoBox>
+          </div>
         </SubSection>
       </div>
     </SectionCard>

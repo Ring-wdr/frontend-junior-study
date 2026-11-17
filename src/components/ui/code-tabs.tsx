@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { CodeBlock } from '../../../components/ui/code-block';
-import { StablePanels } from '../../../components/ui/stable-panels';
-import { cn } from '../../../lib/utils';
+import { cn } from '../../lib/utils';
+import { CodeBlock } from './code-block';
+import { StablePanels } from './stable-panels';
 
 interface CodeTabItem {
   label: string;

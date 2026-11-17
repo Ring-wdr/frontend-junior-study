@@ -2,7 +2,7 @@
 
 import { useTranslation } from '@/i18n/client';
 import { InfoBox, SectionCard, SubSection } from '../../../components';
-import { CodeTabs } from './code-tabs';
+import { CodeTabs } from '../../../components/ui/code-tabs';
 import { EventLoopVisualizer } from './event-loop-visualizer';
 
 const DETAIL_CODES = [
